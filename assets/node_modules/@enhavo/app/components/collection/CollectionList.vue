@@ -13,7 +13,7 @@
         </div>
 
 
-        <template v-if="collection.sortable">
+        <template v-if="collection.sortable && !collection.filtered">
             <draggable
                 v-model="collection.items"
                 group="list"

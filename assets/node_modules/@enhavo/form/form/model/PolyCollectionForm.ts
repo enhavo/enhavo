@@ -1,5 +1,6 @@
 import {ListForm} from "@enhavo/form/form/model/ListForm";
 import {Form} from "@enhavo/vue-form/model/Form";
+import {indexOf} from "lodash";
 
 export class PolyCollectionForm extends ListForm
 {
@@ -8,6 +9,9 @@ export class PolyCollectionForm extends ListForm
     public prototypeStorage: string;
     public confirmDelete: boolean;
     public collapsed: boolean;
+    public collapsable: boolean = true;
+
+    private collapsedIds: string[] = [];
 
     public toggleMenu()
     {
@@ -31,6 +35,38 @@ export class PolyCollectionForm extends ListForm
                 return prototype;
             }
         }
+    }
+
+    public isCollapsed(form: Form): boolean
+    {
+        return this.collapsedIds.indexOf(form.key) >= 0;
+    }
+
+    public collapse(form: Form): void
+    {
+        this.collapsedIds.push(form.key);
+    }
+
+    public uncollapse(form: Form): void
+    {
+        let index = this.collapsedIds.indexOf(form.key)
+        if (index >= 0) {
+            this.collapsedIds.splice(index, 1);
+        }
+    }
+
+    public collapseAll()
+    {
+        for (let child of this.children) {
+            if (!this.isCollapsed(child)) {
+                this.collapse(child);
+            }
+        }
+    }
+
+    public uncollapseAll()
+    {
+        this.collapsedIds = [];
     }
 }
 

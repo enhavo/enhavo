@@ -28,6 +28,10 @@ class BetweenFilterType extends AbstractFilterType
         $data->set('labelFrom', $this->translator->trans($options['label_from'], [], $options['translation_domain']));
         $data->set('labelTo', $this->translator->trans($options['label_to'], [], $options['translation_domain']));
         $data->set('initialValue', $this->getInitialValue($options));
+        $data->set('value', [
+            'from' => null,
+            'to' => null
+        ]);
     }
 
     public function getInitialValue($options): array

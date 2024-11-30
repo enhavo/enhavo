@@ -35,12 +35,12 @@ export class TableCollection implements CollectionInterface
     count: number;
 
     constructor(
-        private router: Router,
-        private filterManager: FilterManager,
-        private columnManager: ColumnManager,
-        private frameManager: FrameManager,
-        private flashMessenger: FlashMessenger,
-        private translator: Translator,
+        protected router: Router,
+        protected filterManager: FilterManager,
+        protected columnManager: ColumnManager,
+        protected frameManager: FrameManager,
+        protected flashMessenger: FlashMessenger,
+        protected translator: Translator,
     ) {
     }
 

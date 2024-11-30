@@ -14,7 +14,6 @@ import {
 import {Frame} from "@enhavo/app/frame/Frame";
 import {FrameAdded, FrameUpdated} from "@enhavo/app/frame/FrameStack";
 import {Event, Subscriber} from "@enhavo/app/frame/FrameEventDispatcher";
-import generateId from "uuid/v4";
 
 export class FrameManager
 {

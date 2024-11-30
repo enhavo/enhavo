@@ -30,6 +30,10 @@ class FormTabType extends AbstractTabType
 
     private function generateArrangement($arrangement): array
     {
+        if ($arrangement === null) {
+            return [];
+        }
+
         $lines = is_array($arrangement) ? $arrangement : explode("\n", $arrangement);
 
         $rows = [];

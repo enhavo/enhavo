@@ -107,19 +107,10 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
 
     private function checkFile(FormatInterface|FileInterface $file): void
     {
-        if ($file instanceof FileInterface) {
-            if ($file->getChecksum() === null) {
-                throw new StorageException(sprintf(
-                    'File with name "%s" need checksum for storing to filesystem. Make sure you saved it before.', $file->getBasename()
-                ));
-            }
-        } else {
-            $originFile = $file->getFile();
-            if ($originFile->getId() === null) {
-                throw new StorageException(sprintf(
-                    'File with name "%s" need checksum for storing to filesystem. Make sure you saved it before.', $file->getBasename()
-                ));
-            }
+        if ($file->getChecksum() === null) {
+            throw new StorageException(sprintf(
+                'File with name "%s" need checksum for storing to filesystem.', $file->getBasename()
+            ));
         }
     }
 

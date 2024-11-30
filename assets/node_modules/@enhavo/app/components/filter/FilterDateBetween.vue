@@ -2,16 +2,15 @@
     <div class="view-table-filter-search wide view-table-filter">
         <span class="label">{{ data.label }}</span>
         <div class="multi-input-container">
-            <datepicker :typeable="true" :inputFormat="data.format" :locale="getLocale()" :placeholder="data.labelFrom" v-model="valueFrom" @update:modelValue="update"></datepicker>
+            <datepicker :typeable="true" :inputFormat="data.format" :locale="data.locale" :placeholder="data.labelFrom" v-model="valueFrom" @update:modelValue="update"></datepicker>
             <div class="separator">-</div>
-            <datepicker :typeable="true" :inputFormat="data.format" :locale="getLocale()" :placeholder="data.labelTo" v-model="valueTo" @update:modelValue="update"></datepicker>
+            <datepicker :typeable="true" :inputFormat="data.format" :locale="data.locale" :placeholder="data.labelTo" v-model="valueTo" @update:modelValue="update"></datepicker>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import {onMounted, watch, ref} from "vue";
-import {de, enUS} from 'date-fns/locale';
 import {DateBetweenFilter} from "@enhavo/app/filter/model/DateBetweenFilter";
 
 const props = defineProps<{
@@ -41,14 +40,6 @@ function update()
 {
     props.data.value.from = formatDate(valueFrom);
     props.data.value.to = formatDate(valueTo);
-}
-
-function getLocale()
-{
-    if (props.data.locale == 'de') {
-        return de;
-    }
-    return enUS;
 }
 
 function formatDate(date: Date): string
@@ -81,8 +72,3 @@ function toDate(str: string): Date
     }
 }
 </script>
-
-
-
-
-

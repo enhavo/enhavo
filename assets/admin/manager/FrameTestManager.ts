@@ -1,6 +1,6 @@
 import {Frame} from "@enhavo/app/frame/Frame";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
-import {reactive} from "vue";
+
 export class FrameTestManager
 {
     public frames: Frame[] = [];
@@ -16,11 +16,11 @@ export class FrameTestManager
     {
         this.frameManager.loaded();
 
-        this.frameManager.getFrames().then((frames) => {
+        this.frameManager.getFrames().then((frames: Frame[]) => {
             this.frames = frames;
         });
 
-        this.frameManager.getFrame().then((frame) => {
+        this.frameManager.getFrame().then((frame: Frame) => {
             if (frame) {
                 this.currentFrame = frame;
                 frame.label = frame.id;

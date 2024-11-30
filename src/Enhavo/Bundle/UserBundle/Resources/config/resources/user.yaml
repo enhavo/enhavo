@@ -64,23 +64,9 @@ enhavo_resource:
                         groups
 
         enhavo_user.user.update:
-            extends: enhavo_resource.input
-            resource: enhavo_user.user
-            form: Enhavo\Bundle\UserBundle\Form\Type\UserType
+            extends: enhavo_user.user.create
             form_options:
                 validation_groups: [update, unique_email]
-            tabs:
-                main:
-                    type: form
-                    label: user.label.user
-                    translation_domain: EnhavoUserBundle
-                    arrangement: |
-                        email
-                        plainPassword.first | plainPassword.second
-                        firstName | lastName
-                        enabled | verified
-                        admin | superAdmin
-                        groups
 
         enhavo_user.user.change_password:
             resource: enhavo_user.user

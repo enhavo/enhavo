@@ -5,9 +5,8 @@
             <div class="form-list-item-buttons" v-if="sortable || deletable || collapsable">
                 <slot name="buttons">
                     <slot name="collapse-button">
-                        <!-- TODO: Replace true/false with condition for collapsed state -->
-                        <div v-if="collapsable && true" class="button"><i class="icon icon-unfold_less"></i></div>
-                        <div v-if="collapsable && false" class="button"><i class="icon icon-unfold_more"></i></div>
+                        <div v-if="collapsable && collapsed" class="button" @click="$emit('uncollapse', form)"><i class="icon icon-unfold_less"></i></div>
+                        <div v-if="collapsable && !collapsed" class="button" @click="$emit('collapse', form)"><i class="icon icon-unfold_more"></i></div>
                     </slot>
 
                     <slot name="down-button">
@@ -29,7 +28,7 @@
             </div>
         </div>
         <slot>
-            <div class="form-list-item-content">
+            <div class="form-list-item-content" v-show="!collapsed">
                 <form-widget :form="form" />
             </div>
         </slot>
@@ -44,6 +43,7 @@ const props = defineProps<{
     sortable: boolean,
     deletable: boolean,
     collapsable: boolean,
+    collapsed: boolean
     blockName?: string,
 }>()
 </script>

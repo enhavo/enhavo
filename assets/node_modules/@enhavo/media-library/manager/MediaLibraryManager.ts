@@ -18,6 +18,7 @@ import {CollectionFactory} from "@enhavo/app/collection/CollectionFactory";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {MediaFileSelectEvent} from "@enhavo/media-library/event/MediaFileSelectEvent";
 import {MediaLibraryCollection} from "@enhavo/media-library/collection/MediaLibraryCollection";
+import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
 import $ from "jquery";
 
 export class MediaLibraryManager
@@ -56,7 +57,6 @@ export class MediaLibraryManager
         private readonly collectionFactory: CollectionFactory,
         private readonly uiManager: UiManager,
     ) {
-
     }
 
     public async load(route: string, parameters: object = {})
@@ -155,6 +155,7 @@ export class MediaLibraryManager
                 if (uploadedFiles > 0) {
                     this.flashMessenger.success(uploadedFiles +' Files uploaded');
                     this.collection.load();
+                    this.dispatchCollectionUpdate();
                 }
                 resolve();
             });
@@ -272,6 +273,11 @@ export class MediaLibraryManager
 
         this.frameManager.close(true);
     }
+
+    public dispatchCollectionUpdate()
+    {
+        this.frameManager.dispatch(new UpdateMediaCollectionEvent());
+    }
 }
 
 export class FileUpload
@@ -285,5 +291,12 @@ export class FileUpload
     cancel()
     {
         this.source.cancel();
+    }
+}
+
+export class UpdateMediaCollectionEvent extends Event
+{
+    constructor() {
+        super('update_media_collection');
     }
 }

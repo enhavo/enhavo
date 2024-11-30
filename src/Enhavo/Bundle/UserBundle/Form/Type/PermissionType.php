@@ -27,6 +27,7 @@ class PermissionType extends AbstractType
             'multiple' => true,
             'expanded' => true,
             'list' => true,
+            'component' => 'form-user-group-permission'
         ]);
     }
 
@@ -47,11 +48,7 @@ class PermissionType extends AbstractType
             $groups[$lastPrefix][] = $index;
         }
         $view->vars['groups'] = $groups;
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_user_permission';
+        $view->vars['vue_data']['groups'] = $groups;
     }
 
     public function getParent(): string

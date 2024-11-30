@@ -34,3 +34,7 @@ services:
             - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
         tags:
             - { name: enhavo_api.data_normalizer }
+
+    Enhavo\Bundle\BlockBundle\Action\Type\BlockCollapseActionType:
+        tags:
+            - { name: enhavo_resource.action }

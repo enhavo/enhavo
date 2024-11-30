@@ -18,11 +18,14 @@
                         :form="element"
                         :deletable="form.allowDelete"
                         :sortable="form.sortable"
-                        :collapsable="true"
+                        :collapsable="form.collapsable"
+                        :collapsed="form.isCollapsed(element)"
                         :block-name="form.blockName"
-                        @delete="event => { form.deleteItem(event) }"
+                        @delete="event => { form.deleteItem(event)} "
                         @up="event => { form.moveItemUp(event) }"
                         @down="event => { form.moveItemDown(event) }"
+                        @uncollapse="event => { form.uncollapse(element) }"
+                        @collapse="event => { form.collapse(element) }"
                     >
                         <template v-slot>
                             <slot name="item"></slot>
