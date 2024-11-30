@@ -34,7 +34,6 @@
     "doctrine/orm": "^2.14",
     "ezyang/htmlpurifier": "^4.12",
     "friendsofsymfony/jsrouting-bundle": "^3.1",
-    "guzzlehttp/guzzle": "^6.5",
     "imagine/imagine": "^1.2",
     "johngrogg/ics-parser": "^2.2",
     "laminas/laminas-stdlib": "^3.2",
@@ -99,6 +98,7 @@
     "symfony/web-link": "^6.4",
     "symfony/webpack-encore-bundle": "^1.5",
     "symfony/yaml": "^6.4",
+    "symfony/http-client": "^6.4",
     "tecnickcom/tcpdf": "^6.2",
     "twig/twig": "^2.15"
   },
