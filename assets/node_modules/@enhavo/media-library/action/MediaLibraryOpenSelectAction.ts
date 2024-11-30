@@ -9,7 +9,6 @@ import {MediaFileSelectEvent} from "@enhavo/media-library/event/MediaFileSelectE
 export class MediaLibraryOpenSelectAction extends AbstractAction implements ActionMediaInterface
 {
     private url: string;
-
     public form: MediaForm;
 
     constructor(
@@ -27,7 +26,8 @@ export class MediaLibraryOpenSelectAction extends AbstractAction implements Acti
             key: 'media_library_select',
             keepAlive: true,
             parameters: {
-                fullName: this.form.fullName
+                fullName: this.form.fullName,
+                multiple: this.form.multiple,
             },
         });
     }

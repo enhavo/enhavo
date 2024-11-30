@@ -49,5 +49,7 @@ services:
             - { name: enhavo_block.block }
 
     Enhavo\Bundle\BlockBundle\Tab\BlockTabType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Action\ActionManager'
         tags:
             - { name: enhavo_resource.tab }

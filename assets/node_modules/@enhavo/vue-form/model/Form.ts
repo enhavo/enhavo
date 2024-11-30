@@ -39,6 +39,10 @@ export class Form
 
     public get(name: string): Form
     {
+        if (typeof name == 'number') {
+            name = (name as number).toString();
+        }
+
         let propertyChain = name.split('.');
 
         let searchElement: Form = this;

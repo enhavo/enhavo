@@ -18,8 +18,6 @@ enhavo_resource:
                 sortable: true
                 sorting:
                     position: ASC
-                criteria:
-                    parent: ~
             filters:
                 title:
                     type: text

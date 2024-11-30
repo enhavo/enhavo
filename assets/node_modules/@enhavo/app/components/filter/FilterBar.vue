@@ -2,6 +2,7 @@
     <div class="filter-bar">
         <div class="view-table-filter filter-headline" v-if="hasActiveFilter(filters)">{{ translator.trans('enhavo_app.grid.label.filter', {}, 'javascript') }}</div>
         <template v-for="filter in filterManager.getActiveFilters(filters)">
+            <div @click="deactivateFilter(filter)">x</div>
             <component
                 :is="filter.component"
                 :data="filter"
@@ -39,6 +40,13 @@ function apply()
 function reset()
 {
     emit('reset');
+}
+
+function deactivateFilter(filter: FilterInterface)
+{
+    filter.reset();
+    filter.active = false;
+    emit('apply');
 }
 
 function hasActiveFilter(filters: FilterInterface[]): boolean

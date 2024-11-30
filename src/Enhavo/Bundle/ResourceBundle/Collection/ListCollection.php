@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Collection;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQueryFactory;
@@ -35,7 +36,7 @@ class ListCollection extends AbstractCollection
     {
         $resolver->setDefaults([
             'children_property' => null,
-            'parent_property' => true,
+            'parent_property' => null,
             'position_property' => true,
             'repository_method' => null,
             'repository_arguments' => null,
@@ -67,10 +68,12 @@ class ListCollection extends AbstractCollection
             $filterQuery = $this->createFilterQuery($context);
             $resources = $this->repository->filter($filterQuery);
         } else {
-            $resources = $this->repository->findBy($this->options['criteria'], $this->options['sorting'], $this->options['limit']);
+            $resources = $this->repository->findBy($this->getCriteria($context), $this->options['sorting'], $this->options['limit']);
         }
 
-        $items = new ResourceItems($this->createItems($resources, $context));
+        $meta = new Data();
+        $meta->set('filtered', $this->isFiltered($context));
+        $items = new ResourceItems($this->createItems($resources, $context), $meta);
         return $items;
     }
 
@@ -82,7 +85,7 @@ class ListCollection extends AbstractCollection
             $context['filters'] ?? [],
             $this->columns,
             [],
-            $this->options['criteria'],
+            $this->getCriteria($context),
             $this->options['sorting'],
         );
 
@@ -91,6 +94,25 @@ class ListCollection extends AbstractCollection
         }
 
         return $filterQuery;
+    }
+
+    private function getCriteria($context = [])
+    {
+        $criteria = [];
+        if (!$this->isFiltered($context) && $this->options['parent_property']) {
+            $criteria[$this->options['parent_property']] = null;
+        }
+
+        foreach ($this->options['criteria'] as $key => $value) {
+            $criteria[$key] = $value;
+        }
+
+        return $criteria;
+    }
+
+    private function isFiltered($context = [])
+    {
+        return isset($context['filters']) && count($context['filters']) > 0;
     }
 
     private function getRepositoryArguments(array $options, FilterQuery $filterQuery, ?Request $request): array
@@ -135,7 +157,7 @@ class ListCollection extends AbstractCollection
             }
 
             $item['children'] = [];
-            if ($this->options['children_property']) {
+            if (!$this->isFiltered($context) && $this->options['children_property']) {
                 $children = $propertyAccessor->getValue($resource, $this->options['children_property']);
                 if (count($children)) {
                     $item['children'] = $this->createItems($children, $context);

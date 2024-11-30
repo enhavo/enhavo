@@ -28,17 +28,17 @@ class UrlGenerator implements UrlGeneratorInterface
     public function generate(FileInterface $file, $referenceType = SymfonyUrlGenerator::ABSOLUTE_PATH): string
     {
         if ($this->getFirewallName() === 'admin') {
-            return $this->adminUrlGenerator->generateFormat($file, $referenceType);
+            return $this->adminUrlGenerator->generate($file, $referenceType);
         }
-        return $this->themeUrlGenerator->generateFormat($file, $referenceType);
+        return $this->themeUrlGenerator->generate($file, $referenceType);
     }
 
     public function generateFormat(FileInterface $file, string $format, $referenceType = SymfonyUrlGenerator::ABSOLUTE_PATH): string
     {
         if ($this->getFirewallName() === 'admin') {
-            return $this->adminUrlGenerator->generateFormat($file, $referenceType);
+            return $this->adminUrlGenerator->generateFormat($file, $format, $referenceType);
         }
-        return $this->themeUrlGenerator->generateFormat($file, $referenceType);
+        return $this->themeUrlGenerator->generateFormat($file, $format, $referenceType);
     }
 
     private function getFirewallName(): ?string

@@ -23,6 +23,7 @@ enhavo_resource:
                     label: group.label.name
                     property: name
                     width: 12
+                    translation_domain: EnhavoUserBundle
             batches:
                 delete:
                     type: delete
@@ -32,18 +33,11 @@ enhavo_resource:
             extends: enhavo_resource.input
             resource: enhavo_user.group
             form: Enhavo\Bundle\UserBundle\Form\Type\GroupType
-            form_options: {  }
-            actions: {  }
             tabs:
                 main:
                     label: group.label.group
                     translation_domain: EnhavoUserBundle
                     type: form
-                    arrangement:
-                        - name
-                permission:
-                    label: group.label.permission
-                    translation_domain: EnhavoUserBundle
-                    type: form
-                    arrangement:
-                        - roles
+                    arrangement: |
+                        name
+                        roles

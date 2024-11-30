@@ -57,7 +57,7 @@
                         v-if="manager.batches"
                         :ids="manager.collection.getIds()"
                         :batches="manager.batches"
-                        @executed="manager.collection.load()"
+                        @executed="batchExecuted"
                     ></batch-dropdown>
                 </div>
             </div>
@@ -105,4 +105,11 @@ function change(event)
 {
     manager.change(event);
 }
+
+function batchExecuted()
+{
+    manager.collection.load()
+    manager.dispatchCollectionUpdate();
+}
+
 </script>

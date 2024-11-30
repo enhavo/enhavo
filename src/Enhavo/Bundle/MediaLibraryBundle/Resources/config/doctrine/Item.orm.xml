@@ -7,7 +7,14 @@
 
         <field name="contentType" length="50" nullable="true" />
 
-        <one-to-many field="usedFiles" target-entity="Enhavo\Bundle\MediaLibraryBundle\Entity\File" mapped-by="item" />
+        <one-to-many field="usedFiles" target-entity="Enhavo\Bundle\MediaLibraryBundle\Entity\File" mapped-by="item">
+            <cascade>
+                <cascade-persist/>
+                <cascade-remove/>
+                <cascade-refresh/>
+            </cascade>
+        </one-to-many>
+
         <many-to-one field="file" target-entity="Enhavo\Bundle\MediaBundle\Model\FileInterface">
             <cascade>
                 <cascade-persist/>
@@ -15,6 +22,7 @@
                 <cascade-refresh/>
             </cascade>
         </many-to-one>
+
         <many-to-many field="tags" target-entity="Enhavo\Bundle\TaxonomyBundle\Model\TermInterface">
             <cascade>
                 <cascade-persist/>

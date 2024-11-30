@@ -30,6 +30,7 @@ export class ListCollection
     sortable: boolean = false;
     dragging: boolean = false;
     treeable: boolean = false;
+    filtered: boolean = false;
 
     constructor(
         private router: Router,
@@ -70,6 +71,7 @@ export class ListCollection
         let data = await this.fetch(parameters);
 
         this.items = this.createRowData(data.items);
+        this.filtered = data.meta.filtered;
         this.loading = false;
 
         this.checkSelectedItems();
