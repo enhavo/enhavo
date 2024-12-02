@@ -103,8 +103,9 @@ class AutoCompleteEntityType extends AbstractFilterType
         $resolver->setDefaults([
             'route_parameters' => [],
             'minimum_input_length' => 3,
-            'component' => 'filter-autocomplete-entity',
-            'model' => 'AutocompleteEntityFilter',
+            'component' => 'filter-auto-complete',
+            'model' => 'AutoCompleteEntityFilter',
+            'initial_value' => null,
             'initial_value_arguments' => null,
             'initial_value_repository' => null,
             'initial_value_choice_label' => null
@@ -112,7 +113,8 @@ class AutoCompleteEntityType extends AbstractFilterType
 
         $resolver->setRequired([
             'route',
-            'resource'
+            'resource',
+            'property',
         ]);
     }
 

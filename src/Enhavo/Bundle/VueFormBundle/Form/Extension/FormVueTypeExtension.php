@@ -27,7 +27,7 @@ class FormVueTypeExtension extends AbstractVueTypeExtension
         $data['id'] = $view->vars['id'];
         $data['required'] = $view->vars['required'];
         $data['fullName'] = $view->vars['full_name'];
-        $data['help'] = $view->vars['help'];
+        $data['help'] = $view->vars['help'] ? $this->translator->trans($view->vars['help'], [], $options['translation_domain']) : null;
         $data['helpAttr'] = $view->vars['help_attr'];
         $data['helpHtml'] = $view->vars['help_html'];
 

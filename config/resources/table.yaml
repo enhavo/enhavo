@@ -1,0 +1,34 @@
+enhavo_resource:
+    resources:
+        app.table:
+            priority: -10
+            classes:
+                model: App\Entity\Table
+            label: Table
+    grids:
+        app.table:
+            extends: enhavo_resource.grid
+            resource: app.table
+            columns:
+                id:
+                    property: id
+                    width: 1
+                    label: id
+                    type: text
+                name:
+                    property: name
+                    width: 11
+                    label: Name
+                    type: text
+            batches:
+                delete:
+                    type: delete
+    inputs:
+        app.table:
+            extends: enhavo_resource.input
+            resource: app.table
+            form: App\Form\Type\TableType
+            tabs:
+                main:
+                    label: Table
+                    type: form

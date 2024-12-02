@@ -7,6 +7,7 @@
 namespace App\Form\Type;
 
 use App\Entity\TableCell;
+use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,7 +19,7 @@ class TableCellType extends AbstractType
     {
         $builder->add('name', TextType::class);
         $builder->add('value', TextType::class);
-        $builder->add('position', TextType::class, [
+        $builder->add('position', PositionType::class, [
             'attr' => [
                 'data-position' => 'data-position',
             ]

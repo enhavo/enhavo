@@ -33,6 +33,9 @@ export class Form
     eventDispatcher: FormEventDispatcherInterface;
     errors: FormErrors[] = [];
     type: string;
+    help: string;
+    helpAttr: [];
+    helpHtml: boolean;
 
     protected morphStartValue: any;
     protected visibleValue: boolean = null;

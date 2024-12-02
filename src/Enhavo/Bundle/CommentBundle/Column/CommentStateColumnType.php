@@ -49,6 +49,7 @@ class CommentStateColumnType extends AbstractColumnType
     {
         $resolver->setDefaults([
             'component' => 'column-state',
+            'model' => 'StateColumn',
         ]);
     }
 
