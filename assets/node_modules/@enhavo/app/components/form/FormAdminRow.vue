@@ -6,7 +6,7 @@
         <div class="formwidget-container">
             <form-widget :form="form"></form-widget>
         </div>
-        <form-help :form="form"></form-help>
+        <form-admin-help :form="form"></form-admin-help>
     </div>
 </template>
 

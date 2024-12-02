@@ -90,8 +90,7 @@ services:
             - { name: twig.extension }
 
     Enhavo\Bundle\CommentBundle\Column\CommentStateColumnType:
-        public: true
+        arguments:
+            - '@translator'
         tags:
-            - { name: enhavo.column, alias: 'comment_state' }
-        calls:
-            - [setContainer, ['@service_container']]
+            - { name: enhavo_resource.column }

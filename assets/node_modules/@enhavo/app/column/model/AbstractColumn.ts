@@ -1,5 +1,4 @@
 import {ColumnInterface} from "@enhavo/app/column/ColumnInterface";
-import ExpressionLanguage from "expression-language/lib/index";
 
 export class AbstractColumn implements ColumnInterface
 {
@@ -32,7 +31,6 @@ export class AbstractColumn implements ColumnInterface
     checkVisibility(): void
     {
         if (typeof this.visibleCondition === 'string') {
-            const expressionLanguage = new ExpressionLanguage();
 
             let context = {
                 mobile: window.innerWidth <= this.mobileMaxWidth,
@@ -42,9 +40,25 @@ export class AbstractColumn implements ColumnInterface
                 column: this
             };
 
-            this.visibleValue = expressionLanguage.evaluate(this.visibleCondition, context) && (this.visible !== false);
+            this.visibleValue = this.evaluate(this.visibleCondition, context) && (this.visible !== false);
         } else {
             this.visibleValue = this.visible !== false;
         }
+    }
+
+    private evaluate(code: string, args: object = {})
+    {
+        // Call is used to define where "this" within the evaluated code should reference.
+        // eval does not accept the likes of eval.call(...) or eval.apply(...) and cannot
+        // be an arrow function
+        return function evaluateEval() {
+            // Create an args definition list e.g. "arg1 = this.arg1, arg2 = this.arg2"
+            const argsStr = Object.keys(args)
+                .map(key => `${key} = this.${key}`)
+                .join(',');
+            const argsDef = argsStr ? `let ${argsStr};` : '';
+
+            return eval(`${argsDef}${code}`);
+        }.call(args);
     }
 }

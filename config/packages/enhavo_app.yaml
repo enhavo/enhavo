@@ -45,10 +45,10 @@ enhavo_app:
             route: app_admin_frame_test
             icon: video_label
             clear: false
-        list:
+        table:
             type: link
             label: Table
-            route: app_table_index
+            route: app_admin_table_index
             icon: view_comfy
 
     area:

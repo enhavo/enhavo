@@ -8,6 +8,7 @@ namespace App\Form\Type;
 
 use App\Entity\TableRow;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
+use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -22,7 +23,7 @@ class TableRowType extends AbstractType
             'entry_type' => TableCellType::class,
             'sortable' => true,
         ]);
-        $builder->add('position', TextType::class, [
+        $builder->add('position', PositionType::class, [
             'attr' => [
                 'data-position' => 'data-position',
             ]

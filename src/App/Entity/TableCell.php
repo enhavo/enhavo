@@ -22,12 +22,12 @@ class TableCell
     private string $name;
     #[Column(nullable: true)]
     private string $value;
-    #[Column]
-    private int $position = 0;
+    #[ORM\Column(nullable: true)]
+    private ?int $position = 0;
     #[ORM\ManyToOne(targetEntity: TableRow::class, inversedBy: 'children')]
     private ?TableRow $row = null;
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -62,12 +62,12 @@ class TableCell
         $this->value = $value;
     }
 
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    public function setPosition(int $position): void
+    public function setPosition(?int $position): void
     {
         $this->position = $position;
     }

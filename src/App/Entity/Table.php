@@ -26,7 +26,7 @@ class Table
         $this->children = new ArrayCollection();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -57,5 +57,4 @@ class Table
         $child->setTable(null);
         $this->children->removeElement($child);
     }
-
 }

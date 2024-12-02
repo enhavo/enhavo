@@ -75,12 +75,12 @@ class TableCollection extends AbstractCollection
                 $resources->setCurrentPage($context['page'] ?? 1);
             }
         } else if ($this->isPaginated($context)) {
-            $paginator = $this->createPaginator($this->repository, $this->options['criteria'], $this->options['sorting']);
+            $paginator = $this->createPaginator($this->repository, $this->getCriteria(), $this->options['sorting']);
             $paginator->setMaxPerPage($context['limit'] ?? $this->options['limit']);
             $paginator->setCurrentPage($context['page'] ?? 1);
             $resources = $paginator;
         } else {
-            $resources = $this->repository->findBy($this->options['criteria'], $this->options['sorting'], $this->options['limit']);
+            $resources = $this->repository->findBy($this->getCriteria(), $this->options['sorting'], $this->options['limit']);
         }
 
         if ($resources instanceof Pagerfanta) {
@@ -102,7 +102,7 @@ class TableCollection extends AbstractCollection
             $context['filters'] ?? [],
             $this->columns,
             $context['sorting'] ?? [],
-            $this->options['criteria'],
+            $this->getCriteria(),
             $this->options['sorting'],
             $this->isPaginated($context),
         );
@@ -112,6 +112,11 @@ class TableCollection extends AbstractCollection
         }
 
         return $filterQuery;
+    }
+
+    private function getCriteria()
+    {
+        return $this->expressionLanguage->evaluateArray($this->options['criteria']);
     }
 
     private function createItems(iterable $resources, array $context): array

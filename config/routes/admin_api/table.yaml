@@ -1,0 +1,102 @@
+app_admin_api_table_index:
+    path: /table/index
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: app.table
+
+app_admin_api_table_list:
+    path: /table/list
+    methods: [GET,POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: app.table
+
+app_admin_api_table_create:
+    path: /table/create
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: app.table
+
+app_admin_api_table_update:
+    path: /table/update/{id}
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: app.table
+
+app_admin_api_table_delete:
+    path: /table/delete/{id}
+    methods: [DELETE, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_delete
+            input: app.table
+
+app_admin_api_table_batch:
+    path: /table/batch
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: app.table
+
+app_admin_api_table_duplicate:
+    path: /table/duplicate/{id}
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_duplicate
+            input: app.table
+
+app_admin_api_preview:
+    path: /table/preview/{id}
+    methods: [GET, POST]
+    defaults:
+        _expose: admin_api
+        _area: theme
+        _endpoint:
+            type: preview
+            input: app.table
+            endpoint:
+                type: Enhavo\Bundle\ArticleBundle\Endpoint\ArticleEndpointType
+                resource: expr:resource
+                preview: true
+
+app_admin_api_table_auto_complete:
+    path: /table/auto-complete
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: auto_complete
+            resource: app.table
+            repository_method: findByTerm
+            choice_label: title
+
+app_admin_api_table_revision_restore:
+    path: /table/revision/restore/{id}/{revisionId}
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: revision_restore
+            input: app.table
+
+app_admin_api_table_revision_archive:
+    path: /table/revision/archive/{id}
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: revision_archive
+            input: app.table

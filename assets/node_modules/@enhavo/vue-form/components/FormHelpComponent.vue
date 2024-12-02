@@ -1,6 +1,6 @@
 <template>
-    <div v-if="false" v-show="form.isVisible()">
-        Help
+    <div v-show="form.isVisible()">
+        {{ form.help }}
     </div>
 </template>
 

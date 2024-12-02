@@ -20,15 +20,15 @@ class TableRow
     private Collection $children;
     #[ORM\ManyToOne(targetEntity: Table::class, inversedBy: 'children')]
     private ?Table $table = null;
-    #[ORM\Column]
-    private int $position = 0;
+    #[ORM\Column(nullable: true)]
+    private ?int $position = 0;
 
     public function __construct()
     {
         $this->children = new ArrayCollection();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -60,12 +60,12 @@ class TableRow
         $this->children->removeElement($child);
     }
 
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    public function setPosition(int $position): void
+    public function setPosition(?int $position): void
     {
         $this->position = $position;
     }

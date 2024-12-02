@@ -107,6 +107,8 @@ class ListCollection extends AbstractCollection
             $criteria[$key] = $value;
         }
 
+        $this->expressionLanguage->evaluateArray($criteria);
+
         return $criteria;
     }
 

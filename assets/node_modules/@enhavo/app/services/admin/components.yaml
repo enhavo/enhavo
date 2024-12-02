@@ -341,3 +341,9 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'form-admin-widget' }
+
+    '@enhavo/app/components/form/FormAdminHelp.vue':
+        chunk: 'form'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-admin-help' }

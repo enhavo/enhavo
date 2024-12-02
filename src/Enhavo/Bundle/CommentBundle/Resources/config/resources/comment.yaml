@@ -13,12 +13,16 @@ enhavo_resource:
             actions:
                 create:
                     type: create
-                    route: enhavo_comment_comment_create
+                    route: enhavo_comment_admin_comment_create
                     route_parameters:
                         id: $id
-            repository_method: findByThreadId
-            repository_arguments:
-                - expr:request.get('id')
+            collection:
+                class: Enhavo\Bundle\ResourceBundle\Collection\ListCollection
+                parent_property: parent
+                children_property: children
+                repository_method: findByThreadId
+                repository_arguments:
+                    - expr:request.get('id')
             filters: {  }
             columns:
                 title:
@@ -35,10 +39,7 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
-            collection:
-                class: Enhavo\Bundle\ResourceBundle\Collection\ListCollection
-                parent_property: parent
-                children_property: children
+
     inputs:
         enhavo_comment.comment:
             extends: enhavo_resource.input

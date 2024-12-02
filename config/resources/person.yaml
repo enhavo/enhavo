@@ -40,7 +40,6 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
-
     inputs:
         app.person:
             extends: enhavo_resource.input
@@ -59,7 +58,6 @@ enhavo_resource:
                     label: Revision
                     type: revision
                     enabled: 'expr:input.getResource()?.getId()'
-
             actions:
                 duplicate:
                     type: duplicate
