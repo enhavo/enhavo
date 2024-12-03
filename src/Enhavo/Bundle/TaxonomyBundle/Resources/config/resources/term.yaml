@@ -46,4 +46,5 @@ enhavo_resource:
                     arrangement: |
                         name
                         text
+                        parent
                         slug

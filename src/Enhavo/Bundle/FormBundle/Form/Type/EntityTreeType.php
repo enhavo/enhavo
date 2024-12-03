@@ -29,10 +29,10 @@ class EntityTreeType extends AbstractType
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $builder = $view->vars['choice_tree_builder'];
-        if($builder instanceof EntityTreeChoiceBuilder) {
+        if ($builder instanceof EntityTreeChoiceBuilder) {
             $builder->map($view);
         }
-        if(!$options['expanded']) {
+        if (!$options['expanded']) {
             $view->vars['choices'] = $builder->getChoiceViews();
         }
     }

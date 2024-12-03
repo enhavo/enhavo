@@ -59,6 +59,18 @@ services:
         tags:
             - { name: vue.component, component: 'form-admin-choice' }
 
+    '@enhavo/form/components/FormChoiceTree.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-choice-tree' }
+
+    '@enhavo/form/components/FormChoiceTreeRow.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-choice-tree-row' }
+
     '@enhavo/form/components/FormICheckCheckbox.vue':
         chunk: 'vue'
         static: true

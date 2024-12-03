@@ -1,0 +1,18 @@
+enhavo_resource:
+    grids:
+        app.category:
+            extends: enhavo_taxonomy.term_list
+            collection:
+                children_property: children
+                parent_property: parent
+                sortable: true
+                repository_arguments:
+                    - 'app_category'
+
+    inputs:
+        app.category:
+            extends: enhavo_taxonomy.term
+            form_options:
+                parent: true
+            factory_arguments:
+                - 'app_category'

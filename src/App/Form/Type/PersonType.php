@@ -3,9 +3,11 @@
 namespace App\Form\Type;
 
 use App\Entity\Person;
+use Enhavo\Bundle\FormBundle\Form\Helper\EntityTreeChoice;
 use Enhavo\Bundle\FormBundle\Form\Type\DateType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoSuggestionEntityType;
+use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermTreeChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,6 +28,13 @@ class PersonType extends AbstractType
             'formats' => [
                 'person_image' => 'Person Image',
             ]
+        ]);
+        $builder->add('category', TermTreeChoiceType::class, [
+            'taxonomy' => 'app_category',
+        ]);
+        $builder->add('otherCategory', TermTreeChoiceType::class, [
+            'expanded' => false,
+            'taxonomy' => 'app_category',
         ]);
     }
 

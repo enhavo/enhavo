@@ -4,3 +4,9 @@ enhavo_page:
             label: Imprint
         privacy:
             label: Privacy
+
+enhavo_taxonomy:
+    taxonomies:
+        app_category:
+            label: Category
+

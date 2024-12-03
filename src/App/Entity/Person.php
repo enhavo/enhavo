@@ -46,10 +46,25 @@ class Person implements RevisionInterface
         targetEntity: Term::class,
         cascade: ['persist', 'remove', 'refresh']
     )]
-    #[Duplicate('model', [
-        'group' => ['duplicate']
-    ])]
+    #[ORM\JoinColumn( onDelete: 'SET NULL')]
+    #[Duplicate('model', [ 'group' => ['duplicate']])]
     private ?Term $occupation = null;
+
+    #[ORM\ManyToOne(
+        targetEntity: Term::class,
+        cascade: ['persist', 'remove', 'refresh']
+    )]
+    #[ORM\JoinColumn( onDelete: 'SET NULL')]
+    #[Duplicate('model', ['group' => ['duplicate']])]
+    private ?Term $category = null;
+
+    #[ORM\ManyToOne(
+        targetEntity: Term::class,
+        cascade: ['persist', 'remove', 'refresh']
+    )]
+    #[ORM\JoinColumn( onDelete: 'SET NULL')]
+    #[Duplicate('model', ['group' => ['duplicate']])]
+    private ?Term $otherCategory = null;
 
     #[ORM\ManyToOne(
         targetEntity: FileInterface::class,
@@ -132,5 +147,20 @@ class Person implements RevisionInterface
     public function setPicture(?FileInterface $picture): void
     {
         $this->picture = $picture;
+    }
+
+    public function getCategory(): ?Term
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Term $category): void
+    {
+        $this->category = $category;
+    }
+
+    public function getOtherCategory(): ?Term
+    {
+        return $this->otherCategory;
     }
 }
