@@ -1,13 +1,13 @@
 <template>
     <div v-show="form.isVisible()">
-        <select style="width: 100%" :name="form.fullName" :ref="(el) => form.setElement(el as HTMLElement)" :multiple="form.multiple">
+        <select style="width: 100%" :name="form.fullName" :ref="(el) => form.setElement(el as HTMLElement)" :multiple="form.multiple" v-once>
             <option selected v-for="item in form.value" :value="item.id">{{ item.text }}</option>
         </select>
     </div>
 </template>
 
 <script setup lang="ts">
-import {onMounted} from "vue";
+import {onBeforeUnmount, onMounted, onUpdated, watch} from "vue";
 import {AutoCompleteForm} from "@enhavo/form/form/model/AutoCompleteForm";
 import $ from "jquery";
 import select2 from "select2";

@@ -1,6 +1,7 @@
 <template>
     <div class="flash-message" :class="message.type">
         {{ message.message }}
+        <div class="delete-indicator icon icon-close"></div>
     </div>
 </template>
 

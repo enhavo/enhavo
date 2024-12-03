@@ -12,7 +12,7 @@ export function defaults(options)
         assetTypes: ["ts", "css", "json", "html"],
         fontsUrl: "",
         prefix: name,
-        descent: 33,
+        descent: 60,
         normalize: true,
         formatOptions: {
             svg: { ascent: 0 },

@@ -1,8 +1,8 @@
 <template>
-    <div class="form-list-item" :ref="(el) => form.setElement(el as HTMLElement)" v-show="form.isVisible()">
+    <div class="form-poly-collection-item" :ref="(el) => form.setElement(el as HTMLElement)" v-show="form.isVisible()">
         <div class="buttons-label-container" v-if="blockName || sortable || deletable">
-            <div class="form-list-item-label" v-if="blockName || form.label">{{ blockName ?? form.label }}</div>
-            <div class="form-list-item-buttons" v-if="sortable || deletable || collapsable">
+            <div class="form-poly-collection-item-label" v-if="blockName || form.label">{{ blockName ?? form.label }}</div>
+            <div class="form-poly-collection-item-buttons" v-if="sortable || deletable || collapsable">
                 <slot name="buttons">
                     <slot name="collapse-button">
                         <div v-if="collapsable && collapsed" class="button" @click="$emit('uncollapse', form)"><i class="icon icon-unfold_less"></i></div>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <slot>
-            <div class="form-list-item-content" v-show="!collapsed">
+            <div class="form-poly-collection-item-content" v-show="!collapsed">
                 <form-widget :form="form" />
             </div>
         </slot>

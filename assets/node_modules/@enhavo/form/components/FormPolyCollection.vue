@@ -1,5 +1,5 @@
 <template>
-    <div class="form-list" :ref="(el) => form.setElement(el as HTMLElement)" v-show="form.isVisible()">
+    <div class="form-poly-collection" :ref="(el) => form.setElement(el as HTMLElement)" v-show="form.isVisible()">
         <slot name="list">
             <draggable
                 v-model="form.children"
@@ -10,7 +10,7 @@
                 :group="form.draggableGroup"
                 :handle="form.draggableHandle"
                 :disabled="!form.sortable"
-                class="form-list-items"
+                class="form-poly-collection-items"
             >
                 <template #item="{ element }">
                     <component
@@ -41,15 +41,15 @@
         </slot>
 
         <slot name="button-row">
-            <div class="form-list-add-button-row" v-if="form.allowAdd">
+            <div class="form-poly-collection-add-button-row" v-if="form.allowAdd">
                 <slot name="buttons">
-                    <div class="form-list-add-button" @click.prevent="form.toggleMenu()">
+                    <div class="form-poly-collection-add-button" @click.prevent="form.toggleMenu()">
                         <slot name="add-button">
                             <i class="icon icon-add"></i>
                         </slot>
                     </div>
                 </slot>
-                <div v-if="form.isOpen" class="form-list-add-menu">
+                <div v-if="form.isOpen" class="form-poly-collection-add-menu">
                     <div v-for="entryLabel of form.entryLabels" @click.prevent="form.addItem(entryLabel.key); form.toggleMenu()" class="add-menu-item">{{ entryLabel.label }}</div>
                 </div>
             </div>

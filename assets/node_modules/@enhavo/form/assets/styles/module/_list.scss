@@ -1,71 +1,35 @@
 @use "@enhavo/app/assets/styles/import/variables";
 
-.list-type {
-  .list-add-button-row {margin:6px 0 12px 0;
-    .list-add-button {cursor:pointer;display:inline-block;background: variables.$grey1;padding:4px 12px 4px;color: variables.$grey3;font-size:0.85rem;
-      &:hover {background: variables.$grey5;}
+.form-list {
+  .form-list-button-row {margin:6px 0 12px 0;
+    .form-list-button {cursor: pointer;z-index:1;top:0;text-align:center;width:33px;background: variables.$grey1;border-radius:3px;color: variables.$grey3;padding:4px 0;
+      &:hover {color:#fff;background: variables.$color1;}
     }
   }
-  .list-fields {
-    &.border {
-      .listElement {padding:10px;border:1px solid variables.$grey5;border-radius:3px;
+  .form-list-items {display:flex;flex-direction:column;gap:10px;margin-top:2px;
+    &.bordered {
+      .form-list-item {padding:10px;border:1px solid variables.$grey5;
         .buttons-container {top:-1px;}
       }
     }
-    &.delete {padding-right:28px;}
-    &.sortable {padding-right:56px;
-      &.delete {padding-right:84px;}
+    &.deletable {padding-right:28px;
+      &.sortable {padding-right:56px;}
     }
-    .listElement {position: relative;padding:8px 7px 7px 7px;border-radius:0px 0px 12px 12px;margin-top:14px;border:1px dashed variables.$grey4;
-      + li {margin-top:10px;}
-      .buttons-container {position:absolute;left:calc(100% + 3px);top:0;width:82px;
-        .button {display:inline-block;width:26px;line-height:26px;background:#fff;text-align:center;padding:0;margin:0;cursor:pointer;border-radius:3px;color: variables.$grey3;
-          + .button {margin-left:2px;}
-          &.button-delete {background:rgba(variables.$color6b,0.1);
-            &:hover {background: variables.$color6b;}
-          }
-          &:hover {background: variables.$color1;
-            i { color:#fff;}
-          }
+    &.sortable {padding-right:56px;
+      &:not(.deletable) {padding-right:84px;}
+    }
+  }
+
+  .form-list-item {position: relative;padding:8px 7px 7px 7px;border:1px solid variables.$grey5;
+    .buttons-container {position:absolute;left:calc(100% + 3px);top:0;width:54px;display:flex;gap:2px;flex-wrap:wrap;
+      .button {width:26px;line-height:26px;background:#fff;text-align:center;padding:0;margin:0;cursor:pointer;border-radius:3px;color: variables.$grey3;
+        &.delete-button {background:rgba(variables.$color6b,0.1);
+          &:hover {background: variables.$color6b;}
+        }
+        &:hover {background: variables.$color1;
+          i { color:#fff;}
         }
       }
     }
   }
-}
-
-.form-list {
-  .form-list-add-button-row {margin:10px 0;position:relative;z-index:1;
-    .form-list-add-button {background: variables.$color1;padding:5px 10px;cursor:pointer;text-align:center; transition:all 300ms;border-radius:10px;color:#fff;display:inline-block;
-      &:hover { background: variables.$color1b;}
-    }
-  }
-
-  .form-list-add-menu {margin:10px 0;padding:8px 13px;background:#FFF;border:1px solid variables.$color1;border-radius:19px;display:flex;flex-wrap:wrap;gap:8px;
-    .add-menu-item {width:150px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding:7px;border-radius:10px;text-align:center;cursor:pointer;flex:1 1 auto;background: variables.$grey1;font-size:0.875rem;line-height:1.3em;
-      &:hover {background: variables.$color1;color:#fff;}
-    }
-  }
-}
-
-.form-list-items {display:flex;flex-direction:column;gap:16px;}
-
-.form-list-item {background:#fff;overflow:hidden;border:1px solid variables.$grey5;
-  .buttons-label-container {border-bottom: 1px solid variables.$grey5;padding:6px;display:flex;align-items:center;
-    .form-list-item-buttons {margin-left:auto;display:flex;
-      .button {cursor: pointer;height:100%;z-index:1;top:0;text-align:center;width:33px;background:#FFF;border-radius:3px;color: variables.$grey3;padding:4px 0;
-        &:hover {color:#fff;background: variables.$color1;}
-      }
-      .button-delete {order:5;background:rgba(variables.$color6b,0.1);
-        &:hover {background: variables.$color6b;}
-      }
-      .button-down {order:2;}
-      .button-up {order:1;}
-      .button-expand {order:3;}
-      .button-collapse {order:3;}
-    }
-    .form-list-item-label {font-weight: 700;order: 0;margin-right:auto;letter-spacing: 0.5px;padding:1px 0 0 9px;
-      .custom { font-weight:normal;color: variables.$grey6;text-overflow:ellipsis;margin-left:5px; }
-    }
-  }
-  .form-list-item-content {padding:10px;}
 }

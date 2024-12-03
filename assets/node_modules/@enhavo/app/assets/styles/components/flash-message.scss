@@ -1,17 +1,18 @@
 @use "../import/variables";
 
-.flash-message-container {position:fixed;top:85px;left:0;z-index:1010;display:flex; flex-direction:column; gap:8px;
-  .flash-message {background: variables.$grey3;color:#fff;padding:12px 20px; font-weight: variables.$fontSemibold;white-space:nowrap;animation:flashMessage 350ms ease-out forwards;
+.flash-message-container {position:fixed;top:140px;right:0;z-index:1010;display:flex; flex-direction:column; gap:5px;
+  .flash-message {background: variables.$grey3;color:#fff;padding:10px 50px 10px 20px; font-weight: variables.$fontSemibold;white-space:nowrap;animation:flashMessage 350ms ease-out forwards;position:relative;cursor:pointer;
     &.error {background: variables.$color4;}
     &.success {background: variables.$color5;}
     &.warning {background: variables.$color3;}
+    .delete-indicator {position:absolute;right:12px;top:9px;font-size:1.2rem;}
   }
 }
 
 @keyframes flashMessage {
   0% {
     opacity:0;
-    transform:translateX(-100%);
+    transform:translateX(100%);
   }
   100% {
     opacity:1;

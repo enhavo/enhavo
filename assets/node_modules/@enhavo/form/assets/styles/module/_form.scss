@@ -34,15 +34,13 @@
         }
     }
 
-    .label-help-container {font-size:0.85rem;line-height:1.1em;margin-bottom:1px;
-        .label {display:inline-block; margin-bottom:2px;
-            + .help-container {margin-left:5px;}
-        }
-        .help-container {display:inline-block;position:relative;cursor:pointer;top:-1px;padding-right:2px;
+    .label-help-container {font-size:0.85rem;line-height:1.1em;margin-bottom:1px;display:flex;justify-content:flex-start;gap:5px;
+        .help-container {position:relative;cursor:pointer;top:-2px;
             &:hover {
                 .help-text {display:block;}
             }
-            .help-text {position:absolute;top:-3px;left:calc(100% + 1px);min-width:260px;padding:6px;box-shadow:1px 1px 3px rgba(#000,0.16);border-radius:3px;background:rgba(#fff,0.95);display:none;z-index:2;line-height:1.25em;}
+            label {margin-bottom:2px;}
+            .help-text {position:absolute;top:-3px;left:calc(100% + 1px);min-width:280px;padding:6px;box-shadow:1px 1px 3px rgba(#000,0.16);border-radius:3px;background:rgba(#fff,0.95);display:none;z-index:2;line-height:1.25em;}
         }
     }
 }

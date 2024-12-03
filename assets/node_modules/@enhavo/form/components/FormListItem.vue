@@ -1,26 +1,22 @@
 <template>
     <div class="form-list-item" :ref="(el) => form.setElement(el as HTMLElement)" v-show="form.isVisible()">
-        <ul class="form-list-item-buttons-row" v-if="sortable || deletable">
+        <div class="buttons-container" v-if="sortable || deletable">
             <slot name="buttons">
-                <slot name="down-button">
-                    <li v-if="sortable" class="form-list-item-buttons-button" @click="$emit('down', form)"><i class="icon icon-arrow_downward">down</i></li>
-                </slot>
-
-                <slot name="up-button">
-                    <li v-if="sortable" class="form-list-item-buttons-button" @click="$emit('up', form)"><i class="icon icon-arrow_upward">up</i></li>
-                </slot>
-
                 <slot name="drag-button">
-                    <li v-if="sortable" class="form-list-item-buttons-button drag-button"><i class="icon icon-drag">=</i></li>
+                    <div v-if="sortable" class="button drag-button"><i class="icon icon-drag_handle"></i></div>
                 </slot>
-
                 <slot name="delete-button">
-                    <li  v-if="deletable" class="form-list-item-buttons-button" @click="$emit('delete', form)"><i class="icon icon-close">x</i></li>
+                    <div v-if="deletable" class="button delete-button" @click="$emit('delete', form)"><i class="icon icon-close"></i></div>
+                </slot>
+                <slot name="up-button">
+                    <div v-if="sortable" class="button" @click="$emit('up', form)"><i class="icon icon-arrow_upward"></i></div>
+                </slot>
+                <slot name="down-button">
+                    <div v-if="sortable" class="button" @click="$emit('down', form)"><i class="icon icon-arrow_downward"></i></div>
                 </slot>
             </slot>
-        </ul>
+        </div>
         <slot>
-            <div class="form-list-item-label" v-if="blockName">{{ blockName }}</div>
             <form-widget :form="form" />
         </slot>
     </div>

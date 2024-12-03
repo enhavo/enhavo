@@ -32,6 +32,8 @@ enhavo_app:
         label:
             entry_per_page: 'Ergebnisse pro Seite'
             filter: 'Filter'
+            filter_apply: 'Filter anwenden'
+            filter_reset: 'Filter zurücksetzen'
     list:
         message:
             save: 'Erfolgreich gespeichert'
