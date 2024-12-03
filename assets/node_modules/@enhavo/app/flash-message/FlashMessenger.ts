@@ -31,7 +31,7 @@ export class FlashMessenger
 
         for (let message of this.messages) {
             if (message.ttl <= 0) {
-                this.messages.splice(this.messages.indexOf(message), 1);
+                this.deleteMessage(message)
             }
         }
     }
@@ -69,6 +69,11 @@ export class FlashMessenger
         } else {
             this.frameManager.dispatch(new FlashMessageEvent(message.message, message.type));
         }
+    }
+
+    public deleteMessage(message: FlashMessage)
+    {
+        this.messages.splice(this.messages.indexOf(message), 1);
     }
 
     public has(type: string)

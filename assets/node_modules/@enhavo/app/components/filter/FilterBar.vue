@@ -1,17 +1,21 @@
 <template>
-    <div class="filter-bar">
-        <div class="view-table-filter filter-headline" v-if="hasActiveFilter(filters)">{{ translator.trans('enhavo_app.grid.label.filter', {}, 'javascript') }}</div>
-        <template v-for="filter in filterManager.getActiveFilters(filters)">
-            <div @click="deactivateFilter(filter)">x</div>
-            <component
-                :is="filter.component"
-                :data="filter"
-                @apply="apply()"
-            ></component>
-        </template>
-        <div v-if="hasActiveFilter(filters)" class="filter-buttons">
-            <button @click="apply()" class="apply-button"><i class="icon icon-check"></i></button>
-            <button @click="reset()" class="reset-button red"><i class="icon icon-close"></i></button>
+    <div class="filter-bar" v-if="hasActiveFilter(filters)">
+        <div class="filter-headline">{{ translator.trans('enhavo_app.grid.label.filter', {}, 'javascript') }}</div>
+        <div class="filters">
+            <template v-for="filter in filterManager.getActiveFilters(filters)">
+                <div class="filter">
+                    <div @click="deactivateFilter(filter)" class="deactivate"><i class="icon icon-close"></i></div>
+                    <component
+                        :is="filter.component"
+                        :data="filter"
+                        @apply="apply()"
+                    ></component>
+                </div>
+            </template>
+        </div>
+        <div class="filter-buttons">
+            <button @click="apply()" class="apply-button"><i class="icon icon-check"></i> {{ translator.trans('enhavo_app.grid.label.filter_apply', {}, 'javascript') }}</button>
+            <button @click="reset()" class="reset-button red"><i class="icon icon-close"></i> {{ translator.trans('enhavo_app.grid.label.filter_reset', {}, 'javascript') }}</button>
         </div>
     </div>
 </template>

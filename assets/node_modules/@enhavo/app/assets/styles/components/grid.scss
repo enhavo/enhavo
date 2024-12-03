@@ -1,13 +1,23 @@
 @use "../import/variables";
 @use "../import/blueprints";
 
-.filter-bar {display:flex;margin-bottom:40px;flex-wrap:wrap;
-  .filter-buttons { width: 100%; text-align: right;
-    .apply-button {@extend %iconButton;}
-    .reset-button {@extend %iconButton;margin-left:10px;}
+.filter-bar {display:flex;margin-bottom:40px;flex-direction:column;gap:4px;
+  .filter-buttons {margin-top:10px;display:flex;gap:10px;
+    .apply-button {@extend %iconButton;width:auto;height:auto;padding:8px 12px;border-radius:10px;line-height:1.3em;
+      i {line-height:inherit;}
+    }
+    .reset-button {@extend %iconButton;width:auto;height:auto;padding:8px 12px;border-radius:10px;line-height:1.3em;
+      i {line-height:inherit;}
+    }
   }
-  .view-table-filter { padding: 0 10px 10px 10px; width: 25%;
-    &.wide { width: 50%; }
+  .filters {display:flex;gap:20px 40px;flex-wrap:wrap;align-items:flex-start;padding:15px;border:1px solid variables.$grey5;
+    .filter {display:flex;gap:12px;align-items:flex-start;
+      .deactivate {cursor:pointer;background:variables.$color6;padding:2px 5px;border-radius:3px;
+        &:hover {background:variables.$color6b;}
+      }
+    }
+  }
+  .view-table-filter {
     &.filter-headline { width: 100%; padding-left: 0; font-weight: 600; font-size: 0.875rem; line-height: 1.1em; }
     .label { display: block; font-size:0.85rem;line-height:1.1em;margin-bottom:1px; }
     input[type="text"] {@extend %textfield;
@@ -16,7 +26,7 @@
     .v-select { flex: none; width: 100%;
       .vs__selected {  }
     }
-    .checkbox-container {@extend %checkboxContainer; margin-top: 10px; }
+    .checkbox-container {@extend %checkboxContainer;margin-top:8px; }
     .multi-input-container { width: 100%; display: flex;
       div { flex: 1 1 100%;
         &.separator { flex: 0 0 auto; padding: 6px 8px; }

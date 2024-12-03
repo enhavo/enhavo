@@ -32,6 +32,8 @@ enhavo_app:
         label:
             entry_per_page: 'Entries per page'
             filter: 'Filter'
+            filter_apply: 'Apply filter'
+            filter_reset: 'Reset filter'
     list:
         message:
             save: 'Save successful'

@@ -1,10 +1,9 @@
 <template>
-    <div class="view-table-filter-search">
-        <span class="label">&nbsp;</span>
+    <div class="view-table-filter">
+        <span class="label">{{ data.label }}</span>
         <div class="checkbox-container">
             <input type="checkbox" @change="change" :checked="data.value" />
             <span></span>
-            <div class="label">{{ data.label }}</div>
         </div>
     </div>
 </template>
