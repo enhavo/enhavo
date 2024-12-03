@@ -53,6 +53,8 @@ enhavo_resource:
                         name
                         birthday
                         occupation
+                        category
+                        otherCategory
                         picture
                 revision:
                     label: Revision

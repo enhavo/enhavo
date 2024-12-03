@@ -34,22 +34,32 @@ enhavo_app:
             type: revision_bin
         archive:
             type: revision_archive
-        person:
-            type: link
-            label: Person
-            route: app_admin_person_index
-            icon: accessibility
-        frame_test:
-            type: link
-            label: Frame Test
-            route: app_admin_frame_test
-            icon: video_label
-            clear: false
-        table:
-            type: link
-            label: Table
-            route: app_admin_table_index
+        test:
+            type: list
             icon: view_comfy
+            label: App
+            items:
+                person:
+                    type: link
+                    label: Person
+                    route: app_admin_person_index
+                    icon: accessibility
+                category:
+                    type: link
+                    label: Category
+                    route: app_admin_category_index
+                    icon: view_comfy
+                table:
+                    type: link
+                    label: Table
+                    route: app_admin_table_index
+                    icon: view_comfy
+                frame_test:
+                    type: link
+                    label: Frame Test
+                    route: app_admin_frame_test
+                    icon: video_label
+                    clear: false
 
     area:
         theme:

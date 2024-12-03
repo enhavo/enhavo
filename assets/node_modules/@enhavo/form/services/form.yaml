@@ -46,3 +46,9 @@ services:
         import: DateTimeForm
         tags:
             - { name: form.model }
+
+    '@enhavo/form/form/model/ChoiceTreeForm':
+        chunk: 'vue'
+        import: ChoiceTreeForm
+        tags:
+            - { name: form.model }

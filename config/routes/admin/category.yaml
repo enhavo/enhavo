@@ -1,0 +1,35 @@
+app_admin_category_index:
+    path: /category/index
+    defaults:
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: app_admin_api_category_index
+        _endpoint:
+            type: admin
+
+app_admin_category_create:
+    path: /category/create
+    defaults:
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: app_admin_api_category_create
+        _endpoint:
+            type: admin
+
+app_admin_category_update:
+    path: /category/update/{id}
+    defaults:
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: app_admin_api_category_update
+        _endpoint:
+            type: admin
