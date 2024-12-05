@@ -18,6 +18,7 @@ class WysiwygType extends AbstractType
 {
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
+        $view->vars['configName'] = $options['config'];
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -25,6 +26,7 @@ class WysiwygType extends AbstractType
         $resolver->setDefaults([
             'component' => 'form-wysiwyg',
             'component_model' => 'WysiwygForm',
+            'config' => 'default',
         ]);
     }
 

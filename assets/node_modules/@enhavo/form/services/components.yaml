@@ -35,6 +35,54 @@ services:
         tags:
             - { name: vue.component, component: 'form-wysiwyg' }
 
+    '@enhavo/form/components/wysiwyg/FormWysiwygMenuGroup.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-wysiwyg-menu-group' }
+
+    '@enhavo/form/components/wysiwyg/FormWysiwygMenuButton.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-wysiwyg-menu-button' }
+
+    '@enhavo/form/components/wysiwyg/FormWysiwygMenuSubmenu.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-wysiwyg-menu-submenu' }
+
+    '@enhavo/form/components/wysiwyg/FormWysiwygMenuSpacer.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-wysiwyg-menu-spacer' }
+
+    '@enhavo/form/components/wysiwyg/FormWysiwygModalContainer.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-wysiwyg-modal-container' }
+
+    '@enhavo/form/components/wysiwyg/FormWysiwygModalLink.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-wysiwyg-modal-link' }
+
+    '@enhavo/form/components/wysiwyg/FormWysiwygModalSourceCode.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-wysiwyg-modal-source-code' }
+
+    '@enhavo/form/components/wysiwyg/FormWysiwygSearchReplaceInlineForm.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-wysiwyg-search-replace-inline-form' }
+
     '@enhavo/form/components/FormConditional.vue':
         chunk: 'vue'
         static: true

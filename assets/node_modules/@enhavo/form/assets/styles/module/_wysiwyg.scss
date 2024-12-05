@@ -1,4 +1,299 @@
-.form-row {
-    .wysiwyg-container {
+@use "sass:color";
+@use "@enhavo/app/assets/styles/import/variables";
+
+$fontSizeText: 14px;
+$fontSizeIcon: 18px;
+
+%menu-item {
+  display: flex; align-items: center;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  font-size: $fontSizeText; line-height: 16px;
+  padding: 5px;
+
+  &:first-child {
+    border-top-left-radius: 5px; border-bottom-left-radius: 5px;
+  }
+  &:last-child {
+    border-top-right-radius: 5px; border-bottom-right-radius: 5px;
+  }
+
+  &:hover {
+    background-color: variables.$grey1;
+  }
+}
+
+%icon-style {
+  font-family: icon !important; font-style: normal; font-weight: normal !important; font-variant: normal; text-transform: none; line-height: 1; font-size: $fontSizeIcon;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.form-wysiwyg {
+  .wysiwyg-menu {
+    display: flex; gap: 5px; flex-wrap: wrap;
+    padding: 5px 0 9px 0;
+    color: variables.$grey3;
+
+    .wysiwyg-menu-group {
+      display: flex; flex-wrap: wrap;
+      border: 1px solid variables.$grey5; border-radius: 5px;
+
+      .wysiwyg-submenu {
+        @extend %menu-item;
+        display: flex; align-items: stretch;
+        position: relative;
+        padding: 0;
+
+        &.is-active {
+          background-color: variables.$grey1;
+        }
+
+        &.has-click {
+          &:hover {
+            background: color.adjust(variables.$grey1, $alpha: -0.8);
+          }
+          &.is-active {
+            background-color: color.adjust(variables.$grey1, $alpha: -0.8);
+            &> .wysiwyg-submenu-label {
+              background-color: variables.$grey1;
+            }
+          }
+
+          &> .wysiwyg-submenu-label {
+            &:hover {
+              background-color: variables.$grey1;
+            }
+          }
+
+          &> .wysiwyg-submenu-dropdown {
+            &:hover {
+              background-color: variables.$grey1;
+            }
+          }
+        }
+
+        .wysiwyg-submenu-label {
+          display: flex; align-items: center;
+          user-select: none;
+          padding: 5px;
+        }
+        .wysiwyg-submenu-dropdown {
+          display: flex; align-items: center;
+        }
+
+        .wysiwyg-submenu-items {
+          display: none; flex-direction: column;
+          position: absolute; top: 30px; left: 0;
+          border: 1px solid variables.$grey5;
+          background: #fff;
+          white-space: nowrap;
+          z-index: 1;
+
+          .wysiwyg-button {
+            padding-right: 30px;
+
+            &.is-active {
+              &:after {
+                @extend %icon-style;
+                content: "\f201";
+                position: absolute; right: 5px;
+              }
+            }
+          }
+
+          .wysiwyg-submenu {
+            width: 100%;
+            justify-content: space-between;
+
+            .wysiwyg-submenu-dropdown {
+              display: none;
+            }
+
+            &:after {
+              @extend %icon-style;
+              display: flex; align-items: center;
+              content: '\f2bd';
+              position: relative; top: -2px;
+            }
+
+            .wysiwyg-submenu-items {
+              left: 100%; top: 0;
+            }
+
+            &.open {
+              .wysiwyg-submenu-items {
+                display: none;
+              }
+            }
+            &:hover {
+              .wysiwyg-submenu-items {
+                display: flex;
+              }
+            }
+          }
+        }
+
+        &.open {
+          .wysiwyg-submenu-dropdown {
+            transform: rotate(180deg);
+          }
+
+          &> .wysiwyg-submenu-items {
+            display: flex;
+          }
+        }
+      }
+
+      .wysiwyg-spacer {
+        border-left: 1px solid variables.$grey5;
+        margin: 0 3px;
+      }
     }
+  }
+
+  .wysiwyg-button {
+    @extend %menu-item;
+    color:  variables.$grey3;
+    text-align: left;
+    user-select: none;
+
+    .icon {
+      color: variables.$grey2;
+      font-size: $fontSizeIcon;
+    }
+    &.is-active {
+      background-color: variables.$grey1;
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      color: variables.$grey5;
+      .icon {
+        color: variables.$grey5;
+      }
+    }
+  }
+
+  .wysiwyg-inline-menu-form {
+    display: flex; gap: 15px; flex-wrap: wrap; align-items: center;
+    margin: 5px 0 9px 0; padding: 5px 15px;
+    width: fit-content;
+    color: variables.$grey3;
+    border: 1px solid variables.$grey5; border-radius: 5px;
+
+    .wysiwyg-inline-menu-form-row {
+      display: flex; gap: 10px; align-items: center;
+      font-size: $fontSizeText;
+
+      &+ .wysiwyg-inline-menu-form-row {
+        margin-top: 0;
+      }
+
+      .wysiwyg-inline-menu-form-input {
+        font-size: $fontSizeText;
+        padding: 2px 10px;
+      }
+    }
+
+    .wysiwyg-inline-menu-form-actions {
+      display: flex;
+    }
+  }
+
+  .wysiwyg-editor-container {
+    border: 1px solid variables.$grey5; border-top-left-radius: 5px; border-top-right-radius: 5px;
+    cursor: text;
+    .wysiwyg-editor {
+      border-top-left-radius: 5px; border-top-right-radius: 5px;
+    }
+  }
+
+  .wysiwyg-editor-bottom-line {
+    height: 30px;
+    border: 1px solid variables.$grey5; border-top: none; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;
+    padding: 5px 12px;
+  }
+
+  .wysiwyg-modal-container {
+    position: relative;
+
+    .wysiwyg-modal {
+      position: absolute; left: 50%;
+      border: 1px solid variables.$grey5;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 0 5px variables.$black;
+      z-index: 100;
+      transform: translateX(-50%);
+
+      &.full-width {
+        width: 100%;
+      }
+
+      .wysiwyg-modal-header {
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      .wysiwyg-modal-content {}
+
+      .wysiwyg-modal-actions {
+        display: flex; gap: 10px; justify-content: right;
+        margin-top: 20px;
+      }
+    }
+  }
+}
+
+// Default editor style, defined on root level to make it easier to be overridden in projects
+.wysiwyg-editor-container {
+  .wysiwyg-editor {
+    min-height: 200px;
+    padding: 10px 12px 20px 12px;
+    background: variables.$grey1;
+    &:focus-within {
+      background: #fff;
+    }
+
+    p, h1, h2, h3, h4, h5, h6 { margin-bottom: 1em; }
+    em { font-style: italic; }
+    strong { font-weight: bold; }
+    sub { vertical-align: sub; font-size: smaller; }
+    sup { vertical-align: super; font-size: smaller; }
+    h1 {
+      font-size: 2em; font-weight: bold;
+    }
+    h2 {
+      font-size: 1.5em; font-weight: bold;
+    }
+    h3 {
+      font-size: 1.17em; font-weight: bold;
+    }
+    h4 {
+      font-weight: bold;
+    }
+    h5 {
+      font-size: 0.83em; font-weight: bold;
+    }
+    h6 {
+      font-size: 0.67em; font-weight: bold;
+    }
+    ul {
+      padding-left: 23px;
+      list-style: disc;
+    }
+    ol {
+      padding-left: 23px;
+      list-style: decimal;
+    }
+
+    .search-result {
+      background-color: variables.$color3;
+      &.search-result-current {
+        background-color: variables.$color5;
+      }
+    }
+  }
 }

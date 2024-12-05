@@ -957,6 +957,8 @@ export function fantasticonSetting(setting)
             'wrap_text': 0xf4ad,
             'youtube_searched_for': 0xf4ae,
             'zoom_out_map': 0xf4af,
+            'format_subscript': 0xf4b0,
+            'format_superscript': 0xf4b1,
         },
     };
 

@@ -6,30 +6,3 @@ enhavo_dashboard:
             repository: enhavo_page.page
             repository_method: findAll
             width: 6
-        page_number2:
-            type: number
-            label: Total page numbers
-            repository: enhavo_page.page
-            repository_method: findAll
-            width: 3
-        page_number3:
-            type: number
-            label: Total page numbers
-            repository: enhavo_page.page
-            repository_method: findAll
-            width: 3
-        page_number4:
-            type: number
-            label: Total page numbers
-            repository: enhavo_page.page
-            repository_method: findAll
-        page_number5:
-            type: number
-            label: Total page numbers
-            repository: enhavo_page.page
-            repository_method: findAll
-        page_number6:
-            type: number
-            label: Total page numbers
-            repository: enhavo_page.page
-            repository_method: findAll
