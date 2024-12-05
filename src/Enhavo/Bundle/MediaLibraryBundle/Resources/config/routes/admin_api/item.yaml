@@ -43,8 +43,7 @@ enhavo_media_library_admin_api_item_update:
 
 enhavo_media_library_admin_api_item_delete:
     path: '/item/delete/{id}'
-    methods:
-        - DELETE
+    methods: [DELETE, POST]
     defaults:
         _expose: admin_api
         _endpoint:

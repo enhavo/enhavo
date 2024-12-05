@@ -43,8 +43,7 @@ enhavo_setting_admin_api_setting_update:
 
 enhavo_setting_admin_api_setting_delete:
     path: '/setting/delete/{id}'
-    methods:
-        - DELETE
+    methods: [DELETE, POST]
     defaults:
         _expose: admin_api
         _endpoint:

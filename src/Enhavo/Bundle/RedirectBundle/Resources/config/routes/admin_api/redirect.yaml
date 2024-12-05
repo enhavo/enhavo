@@ -43,8 +43,7 @@ enhavo_redirect_admin_api_redirect_update:
 
 enhavo_redirect_admin_api_redirect_delete:
     path: '/redirect/delete/{id}'
-    methods:
-        - DELETE
+    methods: [DELETE, POST]
     defaults:
         _expose: admin_api
         _endpoint:

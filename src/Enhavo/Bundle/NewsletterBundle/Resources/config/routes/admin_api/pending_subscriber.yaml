@@ -43,8 +43,7 @@ enhavo_newsletter_admin_api_pending_subscriber_update:
 
 enhavo_newsletter_admin_api_pending_subscriber_delete:
     path: '/pending_subscriber/delete/{id}'
-    methods:
-        - DELETE
+    methods: [DELETE, POST]
     defaults:
         _expose: admin_api
         _endpoint:

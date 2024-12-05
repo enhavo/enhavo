@@ -7,6 +7,9 @@ use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\MediaBundle\Repository\FileRepository;
+use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,6 +23,8 @@ class FileReplaceEndpointType extends AbstractEndpointType
         private readonly FileFactory $fileFactory,
         private readonly MediaManager $mediaManager,
         private readonly ValidatorInterface $validator,
+        private readonly FileRepository $fileRepository,
+        private readonly ResourceManager $resourceManager,
     )
     {
     }
@@ -44,9 +49,24 @@ class FileReplaceEndpointType extends AbstractEndpointType
         $file->setMimeType($newFile->getMimeType());
         $file->setBasename($newFile->getBasename());
 
-        $this->mediaManager->saveFile($file);
+        $this->resourceManager->save($file);
 
         $context->setResponse($this->createFileResponse($file));
+    }
+
+    private function getFileByToken(Request $request): FileInterface
+    {
+        $token = $request->get('token');
+
+        $file = $this->fileRepository->findOneBy([
+            'token' => $token
+        ]);
+
+        if (!$file) {
+            throw $this->createNotFoundException();
+        }
+
+        return $file;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

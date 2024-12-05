@@ -28,7 +28,7 @@
 
                 <nav class="main-navigation">
                     {% block navigation %}
-                        {% if navigation.main %}
+                        {% if navigation.main is defined %}
                             {% for node in navigation.main.nodes %}
                                 {{ navigation_node_render(node, 'main') }}
                             {% endfor %}
@@ -47,8 +47,8 @@
     <div class="container">
         <div class="inner">
             <nav class="footer-navigation">
-                {% if navigation.main %}
-                    {% for node in navigation.main.nodes %}
+                {% if navigation.footer is defined %}
+                    {% for node in navigation.footer.nodes %}
                         {{ navigation_node_render(node, 'main') }}
                     {% endfor %}
                 {% endif %}
