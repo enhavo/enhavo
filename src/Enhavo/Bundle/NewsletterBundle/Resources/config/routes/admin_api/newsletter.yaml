@@ -43,8 +43,7 @@ enhavo_newsletter_admin_api_newsletter_update:
 
 enhavo_newsletter_admin_api_newsletter_delete:
     path: '/newsletter/delete/{id}'
-    methods:
-        - DELETE
+    methods: [DELETE, POST]
     defaults:
         _expose: admin_api
         _endpoint:

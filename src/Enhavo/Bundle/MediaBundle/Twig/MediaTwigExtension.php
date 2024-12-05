@@ -37,15 +37,16 @@ class MediaTwigExtension extends AbstractExtension
             return null;
         } else if ($format !== null) {
             return $this->twigRouter->generate('enhavo_media_theme_format', [
-                'id' => $file['id'],
-                'shortChecksum' => substr($file['checksum'], 0, 6),
+                'token' => $file['token'],
+                'shortChecksum' => $file['shortChecksum'],
                 'filename' => $file['filename'],
+                'extension' => $file['extension'],
                 'format' => $format,
             ], $referenceType);
         } else {
             return $this->twigRouter->generate('enhavo_media_file_show', [
-                'id' => $file['id'],
-                'shortChecksum' => substr($file['checksum'], 0, 6),
+                'token' => $file['token'],
+                'shortChecksum' => $file['shortChecksum'],
                 'filename' => $file['filename'],
             ], $referenceType);
         }

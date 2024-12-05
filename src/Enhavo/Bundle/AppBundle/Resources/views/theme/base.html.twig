@@ -20,11 +20,17 @@
                 {% block footer %}{% endblock %}
             </footer>
 
-        {% block javascripts %}
-            <script id="routes" type="application/json">{{ routes()|raw }}</script>
-            {{ vite_js_tags('entrypoints/main.js', 'theme') }}
-        {% endblock %}
+            {% if routes is defined %}
+                <script id="routes" type="application/json">{{ routes|json_encode|e }}</script>
+            {% endif %}
 
-    {% endblock %}
+            {% if translations is defined %}
+                <script id="translations" type="application/json">{{ translations|json_encode|e }}</script>
+            {% endif %}
+
+            {% block javascripts %}
+                {{ vite_js_tags('entrypoints/main.js', 'theme') }}
+            {% endblock %}
+        {% endblock %}
     </body>
 </html>

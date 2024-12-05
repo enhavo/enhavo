@@ -18,6 +18,8 @@ services:
             - '@enhavo_media.file.factory'
             - '@Enhavo\Bundle\MediaBundle\Media\MediaManager'
             - '@validator'
+            - '@enhavo_media.file.repository'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:

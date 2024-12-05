@@ -43,8 +43,7 @@ enhavo_comment_admin_api_comment_update:
 
 enhavo_comment_admin_api_comment_delete:
     path: '/comment/delete/{id}'
-    methods:
-        - DELETE
+    methods: [DELETE, POST]
     defaults:
         _expose: admin_api
         _endpoint:

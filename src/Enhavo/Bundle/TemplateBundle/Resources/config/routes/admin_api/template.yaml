@@ -43,8 +43,7 @@ enhavo_template_admin_api_template_update:
 
 enhavo_template_admin_api_template_delete:
     path: '/template/delete/{id}'
-    methods:
-        - DELETE
+    methods: [DELETE, POST]
     defaults:
         _expose: admin_api
         _endpoint:

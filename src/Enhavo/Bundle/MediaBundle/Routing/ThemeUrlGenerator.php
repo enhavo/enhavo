@@ -26,8 +26,8 @@ class ThemeUrlGenerator implements UrlGeneratorInterface
     public function generate(FileInterface $file, $referenceType = SymfonyUrlGenerator::ABSOLUTE_PATH): string
     {
         return $this->router->generate('enhavo_media_file_show', [
-            'id' => $file->getId(),
-            'shortChecksum' => substr($file->getChecksum(), 0, 6),
+            'token' => $file->getToken(),
+            'shortChecksum' => $file->getShortChecksum(),
             'filename' => $file->getFilename()
         ], $referenceType);
     }
@@ -41,8 +41,8 @@ class ThemeUrlGenerator implements UrlGeneratorInterface
         ]);
 
         return $this->router->generate('enhavo_media_theme_format', [
-            'id' => $file->getId(),
-            'shortChecksum' => substr($file->getChecksum(), 0, 6),
+            'token' => $file->getToken(),
+            'shortChecksum' => $file->getShortChecksum(),
             'filename' => $file->getFilename(),
             'format' => $format,
             'extension' => $formatEntity->getExtension(),

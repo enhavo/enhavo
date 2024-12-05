@@ -1,5 +1,5 @@
 enhavo_media_theme_format:
-    path:  /media/format/{id}/{format}/{shortChecksum}/{filename}.{extension}
+    path: /media/format/{token}/{format}/{shortChecksum}/{filename}.{extension}
     methods: [GET]
     requirements:
         filename: .+
@@ -8,7 +8,7 @@ enhavo_media_theme_format:
         _endpoint:
             type: media_format
             repository_arguments:
-                - id: expr:request.get("id")
+                - token: expr:request.get("token")
                   filename: expr:request.get("filename")
                   extension: expr:request.get("extension")
                   shortChecksum: expr:request.get("shortChecksum")

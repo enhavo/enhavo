@@ -43,8 +43,7 @@ enhavo_navigation_admin_api_navigation_update:
 
 enhavo_navigation_admin_api_navigation_delete:
     path: '/navigation/delete/{id}'
-    methods:
-        - DELETE
+    methods: [DELETE, POST]
     defaults:
         _expose: admin_api
         _endpoint:

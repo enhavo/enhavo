@@ -1,4 +1,0 @@
-enhavo_media:
-    cache_control:
-        max_age: 86400
-        class: Enhavo\Bundle\MediaBundle\Cache\HttpCache

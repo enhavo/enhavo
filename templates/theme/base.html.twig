@@ -3,8 +3,6 @@
 {% block header_inner %}
     {{ parent() }}
 
-    <a href="{{ path('enhavo_shop_theme_cart_summary') }}">Cart</a>
-
     {% if page_path_exists('imprint') %}
         <a href="{{ page_path('imprint') }}">Imprint</a>
     {% endif %}

@@ -43,8 +43,7 @@ enhavo_newsletter_admin_api_group_update:
 
 enhavo_newsletter_admin_api_group_delete:
     path: /group/delete/{id}
-    methods:
-        - DELETE
+    methods: [DELETE, POST]
     defaults:
         _expose: admin_api
         _endpoint:

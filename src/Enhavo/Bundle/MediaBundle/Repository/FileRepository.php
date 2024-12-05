@@ -56,9 +56,13 @@ class FileRepository extends EntityRepository
         }
 
         if (array_key_exists('shortChecksum', $criteria)) {
+            if (!preg_match('/[0-9a-z]{8}/', $criteria['shortChecksum'])) {
+                return null;
+            }
+
             $qb
-                ->andWhere('SUBSTRING(f.checksum, 0, 8) = :checksum')
-                ->setParameter('checksum', $criteria['shortChecksum']);
+                ->andWhere('f.checksum LIKE :shortChecksum')
+                ->setParameter('shortChecksum', $criteria['shortChecksum'] . '%');
         }
 
         return $qb->getQuery()->getOneOrNullResult();

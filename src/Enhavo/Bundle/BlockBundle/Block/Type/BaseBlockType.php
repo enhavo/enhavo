@@ -77,7 +77,7 @@ class BaseBlockType extends AbstractType implements BlockTypeInterface
             'translation_domain' => null,
             'template' => null,
             'component' => null,
-            'serialization_groups' => ['endpoint'],
+            'serialization_groups' => ['endpoint.block'],
         ]);
 
         $resolver->setRequired([

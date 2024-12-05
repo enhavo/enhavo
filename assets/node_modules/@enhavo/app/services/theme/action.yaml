@@ -1,0 +1,11 @@
+services:
+    '@enhavo/app/action/ActionFactory':
+        import: ActionFactory
+
+    '@enhavo/app/action/ActionManager':
+        import: ActionManager
+        chunk: 'action'
+        arguments:
+            - '@enhavo/app/action/ActionFactory'
+        tags:
+            - { name: vue.service, service: 'actionManager' }

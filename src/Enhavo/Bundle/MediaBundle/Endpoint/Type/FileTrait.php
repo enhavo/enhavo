@@ -25,10 +25,11 @@ trait FileTrait
                     'id' => $file->getId(),
                     'token' => $file->getToken(),
                     'filename' => $file->getFilename(),
-                    'extension' => $file->getExtension(),
                     'basename' => $file->getBasename(),
+                    'extension' => $file->getExtension(),
                     'mimeType' => $file->getMimeType(),
-                    'shortChecksum' => $file->getShortChecksum()
+                    'checksum' => $file->getChecksum(),
+                    'shortChecksum' => $file->getShortChecksum(),
                 ];
             }
         }
@@ -41,26 +42,12 @@ trait FileTrait
                 'basename' => $files->getBasename(),
                 'extension' => $files->getExtension(),
                 'mimeType' => $files->getMimeType(),
-                'checksum' => $files->getChecksum()
+                'checksum' => $files->getChecksum(),
+                'shortChecksum' => $files->getShortChecksum(),
             ];
         }
 
         return new JsonResponse($data);
-    }
-
-    protected function getFileByToken(Request $request): FileInterface
-    {
-        $token = $request->get('token');
-
-        $file = $this->mediaManager->findOneBy([
-            'token' => $token
-        ]);
-
-        if (!$file) {
-            throw $this->createNotFoundException();
-        }
-
-        return $file;
     }
 
     protected function getUploadedFile(Request $request): UploadedFile

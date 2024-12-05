@@ -43,8 +43,7 @@ enhavo_calendar_admin_api_appointment_update:
 
 enhavo_calendar_admin_api_appointment_delete:
     path: '/appointment/delete/{id}'
-    methods:
-        - DELETE
+    methods: [DELETE, POST]
     defaults:
         _expose: admin_api
         _endpoint:

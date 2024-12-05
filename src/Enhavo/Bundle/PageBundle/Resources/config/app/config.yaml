@@ -1,7 +1,7 @@
 cmf_routing:
     dynamic:
         controllers_by_class:
-            Enhavo\Bundle\PageBundle\Entity\Page: enhavo_page.controller.page::showResourceAction
+            Enhavo\Bundle\PageBundle\Entity\Page: Enhavo\Bundle\PageBundle\Controller\PageController::showResourceAction
 
 doctrine:
     orm:

@@ -28,7 +28,6 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
-
     inputs:
         enhavo_newsletter.group:
             extends: enhavo_resource.input

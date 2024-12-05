@@ -45,6 +45,10 @@ class FormatEndpointType extends AbstractEndpointType
         $arguments = $this->expressionLanguage->evaluateArray($options['repository_arguments'], [], true);
         $file = call_user_func_array([$this->fileRepository, $options['repository_method']], $arguments);
 
+        if ($file === null) {
+            throw $this->createNotFoundException();
+        }
+
         if ($options['permission'] && !$this->authorizationChecker->isGranted($options['permission'], $file)) {
             throw $this->createAccessDeniedException();
         }

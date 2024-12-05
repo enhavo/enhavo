@@ -40,7 +40,7 @@ class PageType extends AbstractType
                 'placeholder' => '---',
                 'query_builder' => function (EntityRepository $er) use ($data) {
                     $query =  $er->createQueryBuilder('p');
-                    if ($data->getId()) {
+                    if ($data && $data->getId()) {
                         $query->where('p.id != :id');
                         $query->setParameter('id', $data->getId());
                     }
@@ -67,7 +67,7 @@ class PageType extends AbstractType
                 'placeholder' => '---',
                 'query_builder' => function (EntityRepository $er) use ($data) {
                     $query =  $er->createQueryBuilder('p');
-                    if ($data->getId()) {
+                    if ($data && $data->getId()) {
                         $query->where('p.id != :id');
                         $query->setParameter('id', $data->getId());
                     }

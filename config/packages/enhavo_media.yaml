@@ -29,3 +29,9 @@ when@dev:
     enhavo_media:
         file_not_found:
             handler: Enhavo\Bundle\MediaBundle\FileNotFound\CreateDummyFileNotFoundHandler
+
+when@prod:
+    enhavo_media:
+        cache_control:
+            max_age: 86400
+            class: Enhavo\Bundle\MediaBundle\Cache\HttpCache

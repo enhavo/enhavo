@@ -2,15 +2,15 @@
 
 namespace Enhavo\Bundle\ArticleBundle\Controller;
 
-use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Endpoint;
 use Enhavo\Bundle\ArticleBundle\Endpoint\ArticleEndpointType;
 use Enhavo\Bundle\ArticleBundle\Entity\Article;
 use Enhavo\Component\Type\FactoryInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ArticleController extends AbstractEndpointType
+class ArticleController extends AbstractController
 {
     public function __construct(
         private readonly FactoryInterface $endpointFactory,
