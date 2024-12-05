@@ -108,3 +108,13 @@ services:
         tags:
             - { name: enhavo_api.endpoint_extension }
             - { name: container.service_subscriber }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Type\ErrorEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
+            - '@twig'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
