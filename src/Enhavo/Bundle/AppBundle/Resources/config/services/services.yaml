@@ -39,10 +39,6 @@ services:
             - '%twig.default_path%'
             - '%kernel.project_dir%/assets/theme'
 
-    Enhavo\Bundle\AppBundle\Controller\ArgumentResolver:
-        arguments:
-            - '@argument_metadata_factory'
-
     Enhavo\Bundle\AppBundle\Security\ExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 300 }
@@ -51,11 +47,9 @@ services:
         class: Enhavo\Bundle\AppBundle\ErrorRenderer\EnhavoErrorRenderer
         decorates: twig.error_renderer.html
         arguments:
-            - '@twig'
-            - '%kernel.project_dir%'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
-            - '@enhavo.error_handler.html.inner'
+            - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
             - '@request_stack'
+            - '@enhavo.error_handler.html.inner'
             - '%kernel.debug%'
 
     Enhavo\Bundle\AppBundle\Mailer\MailerManager:

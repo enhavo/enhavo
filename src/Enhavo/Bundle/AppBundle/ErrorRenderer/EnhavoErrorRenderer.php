@@ -2,13 +2,14 @@
 
 namespace Enhavo\Bundle\AppBundle\ErrorRenderer;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
+use Enhavo\Bundle\ApiBundle\Endpoint\Endpoint;
+use Enhavo\Bundle\AppBundle\Endpoint\Type\ErrorEndpointType;
+use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Bridge\Twig\ErrorRenderer\TwigErrorRenderer;
 use Symfony\Component\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Twig\Environment;
 
 class EnhavoErrorRenderer implements ErrorRendererInterface
 {
@@ -16,11 +17,9 @@ class EnhavoErrorRenderer implements ErrorRendererInterface
     private \Closure $debug;
 
     public function __construct(
-        private Environment $twigEnvironment,
-        private string $projectDir,
-        private TemplateResolver $templateResolver,
+        private readonly FactoryInterface $endpointFactory,
+        private readonly RequestStack $requestStack,
         ErrorRendererInterface $fallbackErrorRenderer,
-        RequestStack $requestStack,
         bool $debug,
     ) {
         $this->fallbackErrorRenderer = $fallbackErrorRenderer ?? new HtmlErrorRenderer();
@@ -40,23 +39,17 @@ class EnhavoErrorRenderer implements ErrorRendererInterface
             return $exception;
         }
 
-        $template = $this->getTemplate($exception->getStatusCode());
-
-        return $exception->setAsString($this->twigEnvironment->render($template, [
+        /** @var Endpoint $errorEndpoint */
+        $errorEndpoint = $this->endpointFactory->create([
+            'type' => ErrorEndpointType::class,
             'exception' => $exception,
             'status_code' => $exception->getStatusCode(),
             'status_text' => $exception->getStatusText(),
-        ]));
-    }
+        ]);
 
-    private function getTemplate(int $statusCode): string
-    {
-        $template = $this->templateResolver->resolve(sprintf('theme/error/%s.html.twig', $statusCode));
-        if ($this->twigEnvironment->getLoader()->exists($template)) {
-            return $template;
-        }
+        $response = $errorEndpoint->getResponse($this->requestStack->getCurrentRequest());
 
-        return $this->templateResolver->resolve('theme/error/default.html.twig');
+        return $exception->setAsString($response->getContent());
     }
 
     private function enhanceExceptionString(string $content): string
