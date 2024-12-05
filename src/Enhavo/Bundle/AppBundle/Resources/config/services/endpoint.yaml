@@ -107,4 +107,28 @@ services:
             - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:
             - { name: enhavo_api.endpoint_extension }
+<<<<<<< HEAD
             - { name: container.service_subscriber }
+=======
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Type\ModalFormEndpointType:
+        arguments:
+            - '@form.factory'
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Type\ErrorEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
+            - '@twig'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+>>>>>>> 70960fa8a (feat: error endpoint type (#2131))
