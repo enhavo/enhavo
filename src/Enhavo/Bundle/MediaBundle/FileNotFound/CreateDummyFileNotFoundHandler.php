@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\MediaBundle\FileNotFound;
 
 use Enhavo\Bundle\MediaBundle\Content\Content;
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
+use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileNotFoundException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
@@ -13,40 +14,46 @@ use Imagine\Image\Box;
 use Imagine\Image\Fill\Gradient\Vertical;
 use Imagine\Image\Palette\RGB as RGBPalette;
 use Imagine\Image\Point;
+use Symfony\Component\Filesystem\Filesystem;
 
 class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
 {
-    public function setParameters(array $parameters)
+    const PARAMETER_SAVE_TO_DISK = 'save_to_disk';
+
+    public function __construct(
+        private readonly Filesystem $filesystem,
+        private readonly string $savePath,
+    ) {}
+
+    public function handleSave(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
     {
         // do nothing
     }
 
-    public function handleSave(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception): void
-    {
-        // do nothing
-    }
-
-    public function handleLoad(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception): void
+    public function handleLoad(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
     {
         if ($file instanceof FormatInterface) {
             $file = $file->getFile();
         }
 
-        if ($file->isImage()) {
-            $content = $this->createRandomImage($file);
-        } else {
-            $content = $this->createBlankFile($file);
+        $content = $this->loadDummyIfExists($file, $parameters);
+        if (!$content) {
+            if ($file->isImage()) {
+                $content = $this->createRandomImage($file, $parameters);
+            } else {
+                $content = $this->createBlankFile($file, $parameters);
+            }
         }
 
         $file->setContent($content);
     }
 
-    public function handleDelete(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception): void
+    public function handleDelete(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
     {
         // do nothing
     }
 
-    private function createRandomImage(FileInterface $file): ContentInterface
+    private function createRandomImage(FileInterface $file, array $parameters): ContentInterface
     {
         $imagine = new Imagine();
 
@@ -68,11 +75,48 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
 
         $image->paste($box, new Point(150, 150));
 
-        $content = new Content();
-        $image->save($content->getFilePath(), [
+        $path = $this->getSavePath($file->getChecksum(), $parameters);
+        $this->filesystem->dumpFile($path, '');
+        $image->save($path, [
             'format' => 'jpg',
         ]);
-        return $content;
+        return new PathContent($path);
+    }
+
+    private function createBlankFile(FileInterface $file, array $parameters): ContentInterface
+    {
+        $path = $this->getSavePath($file->getChecksum(), $parameters);
+        $this->filesystem->dumpFile($path, '');
+        return new PathContent($path);
+    }
+
+    private function loadDummyIfExists(FileInterface $file, array $parameters): ?ContentInterface
+    {
+        if (!$this->saveToDisk($parameters)) {
+            return null;
+        }
+
+        $path = $this->getSavePath($file->getChecksum(), $parameters);
+        if ($this->filesystem->exists($path)) {
+            return new PathContent($path);
+        }
+        return null;
+    }
+
+    private function getSavePath($checksum, array $parameters): string
+    {
+        if (!$this->saveToDisk($parameters)) {
+            return tempnam(sys_get_temp_dir(), 'Content');
+        }
+        return $this->savePath . '/' . substr($checksum, 0, 2) . '/' . substr($checksum, 2);
+    }
+
+    private function saveToDisk(array $parameters): bool
+    {
+        if (array_key_exists(self::PARAMETER_SAVE_TO_DISK, $parameters)) {
+            return $parameters[self::PARAMETER_SAVE_TO_DISK];
+        }
+        return true;
     }
 
     private function generateColors($randomSeed): array
@@ -128,10 +172,5 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
         }
 
         return '#' . dechex(floor($red * 255)) . dechex(floor($green * 255)) . dechex(floor($blue * 255));
-    }
-
-    private function createBlankFile(FileInterface $file): ContentInterface
-    {
-        return new Content();
     }
 }

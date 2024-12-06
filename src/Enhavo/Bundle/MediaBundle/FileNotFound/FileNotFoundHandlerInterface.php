@@ -9,8 +9,7 @@ use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 
 interface FileNotFoundHandlerInterface
 {
-    public function setParameters(array $parameters);
-    public function handleSave(FileInterface|FormatInterface $file, StorageInterface $storage, FileNotFoundException $exception): void;
-    public function handleLoad(FileInterface|FormatInterface $file, StorageInterface $storage, FileNotFoundException $exception): void;
-    public function handleDelete(FileInterface|FormatInterface $file, StorageInterface $storage, FileNotFoundException $exception): void;
+    public function handleSave(FileInterface|FormatInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void;
+    public function handleLoad(FileInterface|FormatInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void;
+    public function handleDelete(FileInterface|FormatInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void;
 }

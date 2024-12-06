@@ -62,10 +62,9 @@ class RemoteFileNotFoundHandlerTest extends TestCase
         $instance = $this->createInstance($dependencies);
         $file = new File();
 
-        $instance->setParameters([
-            RemoteFileNotFoundHandler::SERVER_URL_PARAMETER => 'http://127.0.0.1:1234'
+        $instance->handleLoad($file, $dependencies->storage, $dependencies->exception, [
+            RemoteFileNotFoundHandler::PARAMETER_SERVER_URL => 'http://127.0.0.1:1234'
         ]);
-        $instance->handleLoad($file, $dependencies->storage, $dependencies->exception);
 
         $this->assertEquals("File could not be found.", $file->getContent()->getContent());
     }

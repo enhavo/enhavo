@@ -26,6 +26,7 @@ class DoctrineContentSubscriber implements EventSubscriber
     public function __construct(
         private readonly StorageInterface $storage,
         private readonly FileNotFoundHandlerInterface $handler,
+        private readonly array $fileNotFoundHandlerParameters,
     ) {}
 
     public function getSubscribedEvents(): array
@@ -45,7 +46,7 @@ class DoctrineContentSubscriber implements EventSubscriber
             try {
                 $object->setContent($this->storage->saveContent($object));
             } catch (FileNotFoundException $exception) {
-                $this->handler->handleSave($object, $this->storage, $exception);
+                $this->handler->handleSave($object, $this->storage, $exception, $this->fileNotFoundHandlerParameters);
             }
         }
     }
@@ -57,7 +58,7 @@ class DoctrineContentSubscriber implements EventSubscriber
             try {
                 $object->setContent($this->storage->saveContent($object));
             } catch (FileNotFoundException $exception) {
-                $this->handler->handleSave($object, $this->storage, $exception);
+                $this->handler->handleSave($object, $this->storage, $exception, $this->fileNotFoundHandlerParameters);
             }
         }
     }
@@ -69,7 +70,7 @@ class DoctrineContentSubscriber implements EventSubscriber
             try {
                 $object->setContent($this->storage->getContent($object));
             } catch (FileNotFoundException $exception) {
-                $this->handler->handleLoad($object, $this->storage, $exception);
+                $this->handler->handleLoad($object, $this->storage, $exception, $this->fileNotFoundHandlerParameters);
             }
         }
     }
@@ -81,7 +82,7 @@ class DoctrineContentSubscriber implements EventSubscriber
             try {
                 $this->storage->deleteContent($object);
             } catch (FileNotFoundException $exception) {
-                $this->handler->handleDelete($object, $this->storage, $exception);
+                $this->handler->handleDelete($object, $this->storage, $exception, $this->fileNotFoundHandlerParameters);
             }
         }
     }

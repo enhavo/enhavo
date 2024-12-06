@@ -7,3 +7,6 @@ services:
             - '@http_client'
 
     Enhavo\Bundle\MediaBundle\FileNotFound\CreateDummyFileNotFoundHandler:
+        arguments:
+            - '@filesystem'
+            - '%kernel.project_dir%/var/media/dummy'
