@@ -65,6 +65,7 @@ class DeleteActionType extends AbstractActionType
             'model' => 'DeleteAction',
             'route' => null,
             'route_parameters' => [],
+            'permission' => 'expr:permission(resource, "delete")'
         ]);
     }
 

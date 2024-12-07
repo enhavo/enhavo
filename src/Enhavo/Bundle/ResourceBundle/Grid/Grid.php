@@ -137,7 +137,14 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
             return $this->collection;
         }
 
-        $this->collection = $this->createCollection($this->getRepository($this->getResourceName()), $this->getFilters(), $this->getColumns(), $this->options['routes'], $this->options['collection']);
+        $this->collection = $this->createCollection(
+            $this->getRepository($this->getResourceName()),
+            $this->getFilters(),
+            $this->getColumns(),
+            $this->options['routes'],
+            $this->options['collection'],
+            $this->getResourceName(),
+        );
 
         return $this->collection;
     }

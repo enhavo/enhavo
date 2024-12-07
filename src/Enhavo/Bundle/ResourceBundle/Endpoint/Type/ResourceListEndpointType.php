@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
+use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
 use Enhavo\Bundle\ResourceBundle\Grid\Grid;
 use Enhavo\Bundle\ResourceBundle\Grid\GridFactory;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
@@ -29,6 +30,8 @@ class ResourceListEndpointType extends AbstractEndpointType
     {
         /** @var Grid $grid */
         $grid = $this->gridFactory->create($options['grid']);
+
+        $this->denyAccessUnlessGranted(new Permission($grid->getResourceName(), $options['permission']));
 
         if ($request->isMethod(Request::METHOD_POST) && $this->hasAction($request)) {
             $grid->handleAction($request->getPayload()->get('action'), $request->getPayload()->all());
@@ -58,6 +61,10 @@ class ResourceListEndpointType extends AbstractEndpointType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        $resolver->setDefaults([
+            'permission' => Permission::INDEX
+        ]);
+
         $resolver->setRequired('grid');
     }
 

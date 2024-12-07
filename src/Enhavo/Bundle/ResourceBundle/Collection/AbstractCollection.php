@@ -15,6 +15,7 @@ abstract class AbstractCollection implements CollectionInterface
     /** @var Column[] */
     protected array $columns;
     protected array $routes;
+    protected string $resourceName;
 
     public function setRepository(EntityRepository $repository): void
     {
@@ -41,4 +42,8 @@ abstract class AbstractCollection implements CollectionInterface
         $this->routes = $routes;
     }
 
+    public function setResourceName(string $resourceName): void
+    {
+        $this->resourceName = $resourceName;
+    }
 }

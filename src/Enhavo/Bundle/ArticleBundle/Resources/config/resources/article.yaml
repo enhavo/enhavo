@@ -11,6 +11,11 @@ enhavo_resource:
         enhavo_article.article:
             extends: enhavo_resource.grid
             resource: enhavo_article.article
+            actions:
+                create:
+                    type: create
+                    permission: 'expr:permission("enhavo_article.article", "create")'
+                    route: 'expr:resolve_route("create", {api: false})'
             filters:
                 title:
                     type: text
@@ -55,8 +60,10 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
+                    permission: 'expr:permission("enhavo_article.article", "delete")'
                 publish:
                     type: publish
+                    permission: 'expr:permission("enhavo_article.article", "update")'
 
     inputs:
         enhavo_article.article:

@@ -33,7 +33,7 @@ class TabManager
                 continue;
             }
 
-            if ($tab->getPermission($input) !== null && !$this->checker->isGranted($tab->getPermission())) {
+            if ($tab->getPermission($input) !== null && !$this->checker->isGranted($tab->getPermission($input))) {
                 continue;
             }
 

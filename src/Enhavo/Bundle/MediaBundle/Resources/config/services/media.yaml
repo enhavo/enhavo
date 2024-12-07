@@ -162,7 +162,7 @@ services:
     Enhavo\Bundle\MediaBundle\Routing\ThemeUrlGenerator:
         arguments:
             - '@router'
-            - '@enhavo_media.format.repository'
+            - '@enhavo_media.media.format_manager'
 
     Enhavo\Bundle\MediaBundle\Routing\UrlGenerator:
         arguments:

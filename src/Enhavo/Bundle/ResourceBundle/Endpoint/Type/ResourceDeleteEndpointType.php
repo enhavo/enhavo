@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
+use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
 use Enhavo\Bundle\ResourceBundle\Input\Input;
 use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
@@ -33,8 +34,9 @@ class ResourceDeleteEndpointType extends AbstractEndpointType
     {
         /** @var Input $input */
         $input = $this->inputFactory->create($options['input']);
-
         $resource = $input->getResource();
+
+        $this->denyAccessUnlessGranted(new Permission($input->getResourceName(), $options['permission']), $resource);
 
         if ($resource === null) {
             throw $this->createNotFoundException();
@@ -52,6 +54,10 @@ class ResourceDeleteEndpointType extends AbstractEndpointType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        $resolver->setDefaults([
+            'permission' => Permission::DELETE
+        ]);
+
         $resolver->setRequired('input');
     }
 

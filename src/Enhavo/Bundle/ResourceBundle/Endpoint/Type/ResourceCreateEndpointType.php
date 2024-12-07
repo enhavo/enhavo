@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
+use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
 use Enhavo\Bundle\ResourceBundle\Input\Input;
 use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
@@ -28,6 +29,8 @@ class ResourceCreateEndpointType extends AbstractEndpointType
     {
         /** @var Input $input */
         $input = $this->inputFactory->create($options['input']);
+
+        $this->denyAccessUnlessGranted(new Permission($input->getResourceName(), $options['permission']));
 
         $resource = $input->createResource();
 
@@ -69,6 +72,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
         $resolver->setDefaults([
             'update_route' => null,
             'update_api_route' => null,
+            'permission' => Permission::CREATE,
         ]);
 
         $resolver->setRequired('input');

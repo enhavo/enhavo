@@ -33,13 +33,9 @@ class PreviewEndpointType extends AbstractEndpointType
         /** @var Input $input */
         $input = $this->inputFactory->create($options['input']);
 
-        $resource = $input->getResource();
+        $resource = $input->getResource() ?? $input->createResource();
 
-        if ($resource === null) {
-            throw $this->createNotFoundException();
-        }
-
-        $form = $input->getForm();
+        $form = $input->getForm($resource);
         if ($form) {
             $form->setData($resource);
             $form->handleRequest($request);

@@ -34,7 +34,7 @@ class ActionManager
                 continue;
             }
 
-            if ($action->getPermission($resource) !== null && !$this->checker->isGranted($action->getPermission())) {
+            if ($action->getPermission($resource) !== null && !$this->checker->isGranted($action->getPermission($resource))) {
                 continue;
             }
 

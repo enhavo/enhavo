@@ -63,7 +63,8 @@ class SaveActionType extends AbstractActionType
             'icon' => 'save',
             'route' => null,
             'route_parameters' => [],
-            'model' => 'SaveAction'
+            'model' => 'SaveAction',
+            'permission' => 'expr:permission(resource, "create")'
         ]);
     }
 

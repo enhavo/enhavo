@@ -10,5 +10,4 @@ enhavo_media_theme_format:
             repository_arguments:
                 - token: expr:request.get("token")
                   filename: expr:request.get("filename")
-                  extension: expr:request.get("extension")
                   shortChecksum: expr:request.get("shortChecksum")

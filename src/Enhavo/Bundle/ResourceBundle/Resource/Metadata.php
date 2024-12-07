@@ -5,15 +5,20 @@ namespace Enhavo\Bundle\ResourceBundle\Resource;
 class Metadata
 {
     public function __construct(
-        private readonly string $alias,
+        private readonly string $name,
         private readonly array $config
     )
     {
     }
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
     public function getAlias(): string
     {
-        return $this->alias;
+        return $this->getName();
     }
 
     public function getModelClass(): string

@@ -4,6 +4,7 @@ namespace Enhavo\Bundle\ResourceBundle\Collection;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQueryFactory;
@@ -40,7 +41,7 @@ class ListCollection extends AbstractCollection
             'position_property' => true,
             'repository_method' => null,
             'repository_arguments' => null,
-            'permission' => null,
+            'permission' => Permission::CREATE,
             'csrf_protection' => true,
             'filters' => [],
             'criteria' => [],
@@ -225,7 +226,7 @@ class ListCollection extends AbstractCollection
 
     public function handleAction(string $action, array $payload): void
     {
-        if ($this->options['permission'] && !$this->authorizationChecker->isGranted($this->options['permission'])) {
+        if ($this->options['permission'] && !$this->authorizationChecker->isGranted(new Permission($this->resourceName, $this->options['permission']))) {
             throw new HttpException(Response::HTTP_FORBIDDEN);
         }
 

@@ -66,6 +66,7 @@ class FormatManager
                 throw new FormatException(sprintf('Can\'t create format: "%s"', $e->getMessage()), 0, $e);
             }
             $this->unlockFormat($fileFormat);
+            $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
             return $fileFormat;
         }
 
@@ -99,6 +100,7 @@ class FormatManager
             $this->lockFormat($fileFormat); // will flush entity
             $this->applyFilter($fileFormat, $parameters);
             $this->unlockFormat($fileFormat);
+            $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
         } catch (\Exception $e) {
             $this->unlockFormat($fileFormat);
             if ($new) {
@@ -146,7 +148,6 @@ class FormatManager
 
         $this->resourceManager->save($fileFormat);
 
-        $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
         $fileFormat->setChecksum($this->checksumGenerator->getChecksum($fileFormat->getContent()));
 
         return $fileFormat;

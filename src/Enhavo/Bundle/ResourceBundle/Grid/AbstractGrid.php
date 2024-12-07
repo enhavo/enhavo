@@ -137,7 +137,7 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
      * @return CollectionInterface
      * @throws GridException
      */
-    protected function createCollection(EntityRepository $repository, array $filters, array $columns, array $routes, array $configuration): CollectionInterface
+    protected function createCollection(EntityRepository $repository, array $filters, array $columns, array $routes, array $configuration, string $resourceName): CollectionInterface
     {
         if (!$this->container->has(CollectionFactory::class)) {
             throw GridException::missingService(CollectionFactory::class);
@@ -146,7 +146,7 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
         /** @var CollectionFactory $collectionFactory */
         $collectionFactory = $this->container->get(CollectionFactory::class);
 
-        return $collectionFactory->create($repository, $filters, $columns, $routes, $configuration);
+        return $collectionFactory->create($repository, $filters, $columns, $routes, $configuration, $resourceName);
     }
 
     protected function evaluate($expression, $parameters = [])

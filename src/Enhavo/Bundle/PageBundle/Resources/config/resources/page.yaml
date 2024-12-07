@@ -9,6 +9,11 @@ enhavo_resource:
     grids:
         enhavo_page.page:
             extends: enhavo_resource.grid
+            actions:
+                create:
+                    type: create
+                    permission: 'expr:permission("enhavo_page.page", "create")'
+                    route: 'expr:resolve_route("create", {api: false})'
             resource: enhavo_page.page
             collection:
                 class: Enhavo\Bundle\ResourceBundle\Collection\ListCollection
@@ -56,8 +61,10 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
+                    permission: 'expr:permission("enhavo_page.page", "delete")'
                 publish:
                     type: publish
+                    permission: 'expr:permission("enhavo_page.page", "delete")'
 
     inputs:
         enhavo_page.page:

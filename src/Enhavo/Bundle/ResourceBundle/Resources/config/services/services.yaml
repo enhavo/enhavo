@@ -22,6 +22,12 @@ services:
         tags:
             - { name: enhavo_resource.expression_language_function_provider }
 
+    Enhavo\Bundle\ResourceBundle\ExpressionLanguage\PermissionExpressionFunctionProvider:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        tags:
+            - { name: enhavo_resource.expression_language_function_provider }
+
     Enhavo\Bundle\ResourceBundle\ExpressionLanguage\RequestResourceExpressionVariableProvider:
         arguments:
             - '@request_stack'
@@ -74,3 +80,9 @@ services:
     Enhavo\Bundle\ResourceBundle\Maker\MakeAction:
         tags:
             - { name: 'maker.command' }
+
+    Enhavo\Bundle\ResourceBundle\Authorization\PermissionVoter:
+        arguments:
+            - '@Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface'
+        tags:
+            - { name: 'security.voter' }

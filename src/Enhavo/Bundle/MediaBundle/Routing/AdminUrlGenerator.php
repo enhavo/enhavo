@@ -29,7 +29,6 @@ class AdminUrlGenerator implements UrlGeneratorInterface
 
     public function generateFormat(FileInterface $file, string $format, $referenceType = SymfonyUrlGenerator::ABSOLUTE_PATH): string
     {
-
         return $this->router->generate('enhavo_media_admin_api_file_format', [
             'token' => $file->getToken(),
             'format' => $format,

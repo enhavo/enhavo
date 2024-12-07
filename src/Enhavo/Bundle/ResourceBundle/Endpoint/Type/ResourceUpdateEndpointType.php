@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
+use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
 use Enhavo\Bundle\ResourceBundle\Input\Input;
 use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
@@ -39,6 +40,8 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
             throw $this->createNotFoundException();
         }
 
+        $this->denyAccessUnlessGranted(new Permission($input->getResourceName(), $options['permission']), $resource);
+
         $form = $input->getForm($resource);
         if ($form) {
             $form->handleRequest($request);
@@ -64,6 +67,10 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        $resolver->setDefaults([
+            'permission' => Permission::UPDATE
+        ]);
+
         $resolver->setRequired('input');
     }
 

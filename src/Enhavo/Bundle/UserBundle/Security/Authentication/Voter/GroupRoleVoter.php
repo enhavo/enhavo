@@ -12,18 +12,8 @@ use Enhavo\Bundle\UserBundle\Model\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-class GroupRoleVoter  implements VoterInterface
+class GroupRoleVoter implements VoterInterface
 {
-    public function supportsAttribute($attribute)
-    {
-        return true;
-    }
-
-    public function supportsClass($class)
-    {
-        return true;
-    }
-
     public function vote(TokenInterface $token, mixed $subject, array $attributes): int
     {
         $user = $token->getUser();
