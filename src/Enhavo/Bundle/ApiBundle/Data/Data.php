@@ -120,10 +120,6 @@ class Data implements \IteratorAggregate, \Countable, \ArrayAccess
 
     public function offsetSet($offset, $value): void
     {
-        if ($value !== null && !is_array($value) && !is_scalar($value)) {
-            throw new \Exception(sprintf('Data value must be of type array or scalar. "%s" given.', gettype($value)));
-        }
-
         if (is_null($offset)) {
             $this->data[] = $value;
         } else {
@@ -144,5 +140,12 @@ class Data implements \IteratorAggregate, \Countable, \ArrayAccess
     public function offsetGet($offset): mixed
     {
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
+    }
+
+    private function isValueNormalized($value): void
+    {
+        if ($value !== null && !is_array($value) && !is_scalar($value)) {
+            throw new \Exception(sprintf('Data value must be of type array or scalar. "%s" given.', gettype($value)));
+        }
     }
 }

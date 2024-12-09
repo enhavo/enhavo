@@ -52,16 +52,16 @@ enhavo_article_admin_api_article_batch:
             type: resource_batch
             grid: enhavo_article.article
 
-enhavo_article_admin_api_duplicate:
+enhavo_article_admin_api_article_duplicate:
     path: /article/duplicate/{id}
     methods: [POST]
     defaults:
         _expose: admin_api
         _endpoint:
             type: resource_duplicate
-            grid: enhavo_article.article
+            input: enhavo_article.article
 
-enhavo_article_admin_api_preview:
+enhavo_article_admin_api_article_preview:
     path: /article/preview/{id}
     methods: [GET, POST]
     defaults:

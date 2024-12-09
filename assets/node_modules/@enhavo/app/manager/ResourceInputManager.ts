@@ -11,6 +11,7 @@ import {Theme} from "@enhavo/vue-form/form/Theme";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {VueRouterFactory} from "@enhavo/app/vue/VueRouterFactory";
 import {UiManager} from "@enhavo/app/ui/UiManager";
+import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
 
 export class ResourceInputManager
 {
@@ -20,6 +21,7 @@ export class ResourceInputManager
     public tabs: TabInterface[] = null;
     public routes: RouteContainer;
     public form: Form;
+    public resource: object;
 
     private visitors: FormVisitorInterface[] = [];
     private loadedPromiseResolveCalls: Array<() => void> = [];
@@ -49,12 +51,15 @@ export class ResourceInputManager
         const data = await response.json();
 
         this.url = data.url;
+        this.resource = data.resource;
+
         this.routes = new RouteContainer(data.routes);
         this.form = this.formFactory.create(data.form, this.visitors);
         this.tabs = this.tabManager.createTabs(data.tabs);
 
         this.actions = this.actionManager.createActions(data.actions);
         this.actionsSecondary = this.actionManager.createActions(data.actionsSecondary);
+
 
         this.initTab(window.location.href);
 
@@ -84,6 +89,7 @@ export class ResourceInputManager
         const data = await response.json();
 
         this.url = data.url;
+        this.resource = data.resource;
         this.routes = new RouteContainer(data.routes);
 
         if (morph) {
@@ -209,5 +215,14 @@ export class ResourceInputManager
         for (let visitor of theme.getVisitors()) {
             this.visitors.push(visitor);
         }
+    }
+}
+
+export class InputChangedEvent extends Event
+{
+    constructor(
+        public resource: object
+    ) {
+        super('input_changed');
     }
 }

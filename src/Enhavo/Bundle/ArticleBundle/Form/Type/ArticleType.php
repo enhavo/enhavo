@@ -57,7 +57,7 @@ class ArticleType extends AbstractType
             'route' => 'enhavo_article_admin_api_tag_auto_complete',
             'translation_domain' => 'EnhavoArticleBundle',
             'create_route' => 'enhavo_article_admin_tag_create',
-            'edit_route' => 'enhavo_article_tag_update',
+            'edit_route' => 'enhavo_article_admin_tag_update',
             'frame_key' => 'article_tags',
         ]);
     }

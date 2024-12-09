@@ -38,6 +38,19 @@ class CommentsActionType extends AbstractActionType
         $data['key'] = 'comment-view';
     }
 
+    public function isEnabled(array $options, object $resource = null): bool
+    {
+        if (!$resource instanceof CommentSubjectInterface) {
+            throw CommentSubjectException::createTypeException($resource);
+        }
+
+        if ($resource->getThread() === null) {
+            return false;
+        }
+
+        return $this->parent->isEnabled($options, $resource);
+    }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

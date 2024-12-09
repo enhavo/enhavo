@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AutoCompleteEntityType extends AbstractType
 {
@@ -21,6 +22,7 @@ class AutoCompleteEntityType extends AbstractType
         private readonly RouterInterface $router,
         private readonly EntityManagerInterface $entityManager,
         private readonly PropertyAccessorInterface $propertyAccessor,
+        private readonly TranslatorInterface $translator,
     )
     {
     }
@@ -124,8 +126,9 @@ class AutoCompleteEntityType extends AbstractType
             'id_property' => $options['id_property'],
             'label_property' => $options['label_property'],
             'sortable' => $options['sortable'],
-            'editable' => $options['editable'],
+            'editable' => $options['editable'] || !empty($options['edit_route']),
             'edit_route' => $options['edit_route'],
+            'edit_label' => $this->translator->trans($options['edit_label'], [], $options['edit_label_translation_domain']),
             'edit_route_parameters' => $options['edit_route_parameters'],
             'frame_key' => $options['frame_key'],
         ];
@@ -167,6 +170,8 @@ class AutoCompleteEntityType extends AbstractType
             'editable' => false,
             'edit_route' => null,
             'edit_route_parameters' => [],
+            'edit_label' => 'label.create',
+            'edit_label_translation_domain' => 'EnhavoFormBundle',
             'create_route' => null,
             'create_route_parameters' => [],
             'frame_key' => uniqid(),

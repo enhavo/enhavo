@@ -1,10 +1,13 @@
 enhavo_media_theme_file:
     path:  /media/file/{token}/{shortChecksum}/{filename}.{extension}
     methods: [GET]
+    requirements:
+        filename: .+
     defaults:
         _expose: [theme]
         _endpoint:
             type: media_file
+            permission: ~
             repository_arguments:
                 - token: expr:request.get("token")
                   filename: expr:request.get("filename")

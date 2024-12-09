@@ -9,7 +9,6 @@
 namespace Enhavo\Bundle\CommentBundle\Form\Type;
 
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
-use Enhavo\Bundle\FormBundle\Form\Type\AutoCompleteEntityType;
 use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
 use Enhavo\Bundle\UserBundle\Form\Type\UserAutoCompleteEntityType;
 use Symfony\Component\Form\AbstractType;
