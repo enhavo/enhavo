@@ -33,6 +33,9 @@ services:
 
     Enhavo\Bundle\AppBundle\Action\Type\DuplicateActionType:
         arguments:
+            - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
             - '@security.csrf.token_manager'
         tags:
             - { name: enhavo_resource.action }

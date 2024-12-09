@@ -24,8 +24,11 @@ class AutoCompleteVueTypeExtension extends AbstractVueTypeExtension
         $data['labelProperty'] = $view->vars['auto_complete_data']['label_property'];
         $data['sortable'] = $view->vars['auto_complete_data']['sortable'];
         $data['editable'] = $view->vars['auto_complete_data']['editable'];
+        $data['editLabel'] = $view->vars['auto_complete_data']['edit_label'];
         $data['editRoute'] = $view->vars['auto_complete_data']['edit_route'];
         $data['editRouteParameters'] = $view->vars['auto_complete_data']['edit_route_parameters'];
+        $data['createRoute'] = $options['create_route'];
+        $data['createRouteParameters'] = $options['create_route_parameters'];
         $data['frameKey'] = $view->vars['auto_complete_data']['frame_key'];
     }
 

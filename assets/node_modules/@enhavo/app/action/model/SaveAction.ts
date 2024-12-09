@@ -1,7 +1,6 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import {ResourceInputManager} from "@enhavo/app/manager/ResourceInputManager";
+import {ResourceInputManager, InputChangedEvent} from "@enhavo/app/manager/ResourceInputManager";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
-import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 import {Translator} from "@enhavo/app/translation/Translator";
@@ -27,7 +26,7 @@ export class SaveAction extends AbstractAction
             const success = await this.resourceInputManager.save(this.resourceInputManager.url, true);
             if (success) {
                 this.flashMessenger.add(this.translator.trans('enhavo_app.input.message.save_success', {}, 'javascript'));
-                this.frameManager.dispatch(new Event('input_changed'));
+                this.frameManager.dispatch(new InputChangedEvent(this.resourceInputManager.resource));
             } else {
                 this.flashMessenger.error(this.translator.trans('enhavo_app.save.message.not_valid', {}, 'javascript'));
             }

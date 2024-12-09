@@ -10,7 +10,7 @@ export class Form
     visibleCondition: string;
     parent: Form;
     children: Form[] = [];
-    value: string;
+    value: any;
     name: string;
     label: string|boolean;
     labelFormat: string;

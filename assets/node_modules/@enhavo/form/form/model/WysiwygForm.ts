@@ -103,6 +103,7 @@ export class WysiwygForm extends Form
             ],
             onUpdate: ({ editor }) => {
                 this.value = editor.getHTML();
+                this.dispatchChange();
             },
         });
     }

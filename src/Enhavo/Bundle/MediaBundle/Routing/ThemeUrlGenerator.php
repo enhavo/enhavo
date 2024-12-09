@@ -24,10 +24,11 @@ class ThemeUrlGenerator implements UrlGeneratorInterface
 
     public function generate(FileInterface $file, $referenceType = SymfonyUrlGenerator::ABSOLUTE_PATH): string
     {
-        return $this->router->generate('enhavo_media_file_show', [
+        return $this->router->generate('enhavo_media_theme_file', [
             'token' => $file->getToken(),
             'shortChecksum' => $file->getShortChecksum(),
-            'filename' => $file->getFilename()
+            'filename' => $file->getFilename(),
+            'extension' => $file->getExtension(),
         ], $referenceType);
     }
 

@@ -38,6 +38,9 @@ services:
     '@enhavo/form/form/model/AutoCompleteForm':
         chunk: 'vue'
         import: AutoCompleteForm
+        arguments:
+            - '@enhavo/app/routing/Router'
+            - '@enhavo/app/frame/FrameManager'
         tags:
             - { name: form.model }
 
