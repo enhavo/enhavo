@@ -60,7 +60,8 @@ class ElasticaORMAdapter implements AdapterInterface
                 $data = $document->getData();
                 $id = $data['id'];
                 $className = $data['className'];
-                $entries[] = new ResultEntry(new EntitySubjectLoader($this->entityResolver, $className, $id), $data['filterData'], $document->getScore());
+                $score = $document->getScore();
+                $entries[] = new ResultEntry(new EntitySubjectLoader($this->entityResolver, $className, $id), $data['filterData'], $score === [] ? null : $score);
             }
 
             $this->resultCache = $entries;

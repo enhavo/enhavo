@@ -66,4 +66,4 @@ services:
 #        arguments:
 #            - '@enhavo_translation.locale_resolver'
 #        tags:
-#            - { name: kernel.event_listener, event: enhavo_app.init_preview, method: onInitPreview }
+#            - { name: kernel.event_listener, event: enhavo_resource.init_preview, method: onInitPreview }
