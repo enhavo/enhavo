@@ -94,6 +94,9 @@ class Person implements RevisionInterface
     #[ORM\Column(type: Types::JSON, nullable: true)]
     private array $revisionParameters = [];
 
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    private ?int $amountChildren = null;
+
     public function __construct()
     {
         $this->revisions = new ArrayCollection();
@@ -162,5 +165,15 @@ class Person implements RevisionInterface
     public function getOtherCategory(): ?Term
     {
         return $this->otherCategory;
+    }
+
+    public function getAmountChildren(): ?int
+    {
+        return $this->amountChildren;
+    }
+
+    public function setAmountChildren(?int $amountChildren): void
+    {
+        $this->amountChildren = $amountChildren;
     }
 }

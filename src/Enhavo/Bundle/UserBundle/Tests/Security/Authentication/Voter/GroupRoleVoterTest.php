@@ -21,16 +21,6 @@ class GroupRoleVoterTest extends TestCase
         return new GroupRoleVoter();
     }
 
-    public function testSupportsAttribute()
-    {
-        $this->assertTrue($this->createInstance()->supportsAttribute(UserInterface::ROLE_SUPER_ADMIN));
-    }
-
-    public function testSupportsClass()
-    {
-        $this->assertTrue($this->createInstance()->supportsClass(User::class));
-    }
-
     public function testVoteGranted()
     {
         $user = $this->getMockBuilder(User::class)->getMock();

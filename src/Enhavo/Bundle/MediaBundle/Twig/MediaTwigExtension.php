@@ -44,10 +44,11 @@ class MediaTwigExtension extends AbstractExtension
                 'format' => $format,
             ], $referenceType);
         } else {
-            return $this->twigRouter->generate('enhavo_media_file_show', [
+            return $this->twigRouter->generate('enhavo_media_theme_file', [
                 'token' => $file['token'],
                 'shortChecksum' => $file['shortChecksum'],
                 'filename' => $file['filename'],
+                'extension' => $file['extension'],
             ], $referenceType);
         }
     }

@@ -7,6 +7,7 @@ enhavo_media_theme_format:
         _expose: [theme, admin]
         _endpoint:
             type: media_format
+            permission: ~
             repository_arguments:
                 - token: expr:request.get("token")
                   filename: expr:request.get("filename")

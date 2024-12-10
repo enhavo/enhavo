@@ -9,6 +9,7 @@ use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoSuggestionEntityType;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermTreeChoiceType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -35,6 +36,9 @@ class PersonType extends AbstractType
         $builder->add('otherCategory', TermTreeChoiceType::class, [
             'expanded' => false,
             'taxonomy' => 'app_category',
+        ]);
+        $builder->add('amountChildren', NumberType::class, [
+            'label' => 'Amount children',
         ]);
     }
 

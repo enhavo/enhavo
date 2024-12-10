@@ -40,7 +40,7 @@ class ItemType extends AbstractType
                 'route' => 'enhavo_media_library_admin_api_tag_auto_complete',
                 'translation_domain' => 'EnhavoMediaLibraryBundle',
                 'create_route' => 'enhavo_media_library_admin_tag_create',
-                'edit_route' => 'enhavo_media_library_tag_update',
+                'edit_route' => 'enhavo_media_library_admin_tag_update',
                 'frame_key' => 'media_library_tags'
             ])
         ;

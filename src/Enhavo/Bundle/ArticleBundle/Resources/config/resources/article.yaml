@@ -94,15 +94,12 @@ enhavo_resource:
             actions:
                 duplicate:
                     type: duplicate
-                    route: enhavo_article_admin_api_duplicate
                     permission: ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE
                     enabled: 'expr:resource && resource.getId()'
                 preview:
                     type: preview
-                    api_route: enhavo_article_admin_api_preview
                     enabled: 'expr:resource && resource.getId()'
                 comments:
                     type: comments
-                    enabled: 'expr:resource && resource.getId()'
 #                auto_save:
 #                    type: auto_save
