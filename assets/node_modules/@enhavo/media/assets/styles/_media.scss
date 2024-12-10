@@ -62,7 +62,6 @@
     .icon {text-align: center; }
   }
   .edit-container {display:none;flex-direction:column;gap:15px;padding:10px;border-radius:10px;border:1px solid variables.$grey5;margin-top:10px;
-    &.show {display:flex;}
     .button-row {display:flex;gap:10px;}
   }
   .thumb {padding:5px;width:82px; height:82px; border-radius:6px;cursor: pointer;position:relative;background: variables.$grey1;
@@ -72,6 +71,14 @@
     }
     .icons {display: none; position: absolute; z-index: 15; width:100%; height:100%; text-align: center;
       .icon { color: #fff; font-size: 22px; line-height: 70px; display: none }
+    }
+  }
+  &.edit-show {
+    .edit-container {
+      display:flex;
+    }
+    .thumb {
+      background: variables.$color1;
     }
   }
 }
