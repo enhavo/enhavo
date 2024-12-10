@@ -56,6 +56,7 @@ enhavo_resource:
                         category
                         otherCategory
                         picture
+                        amountChildren
                 revision:
                     label: Revision
                     type: revision
