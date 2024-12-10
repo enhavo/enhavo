@@ -99,8 +99,7 @@ enhavo_resource:
                 preview:
                     type: preview
                     enabled: 'expr:resource && resource.getId()'
-                #comments:
-                #    type: comments
-                #    enabled: 'expr:resource && resource.getId()'
+                comments:
+                    type: comments
 #                auto_save:
 #                    type: auto_save
