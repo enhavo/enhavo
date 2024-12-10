@@ -4,15 +4,15 @@ services:
         arguments:
             - '@enhavo_search.search.engine'
         tags:
-            - { name: kernel.event_listener, event: enhavo_app.post_create, method: onSave }
-            - { name: kernel.event_listener, event: enhavo_app.post_update, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_resource.post_create, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_resource.post_update, method: onSave }
 
     enhavo_search.delete_listener:
         class: Enhavo\Bundle\SearchBundle\EventListener\DeleteListener
         arguments:
             - '@enhavo_search.search.engine'
         tags:
-            - { name: kernel.event_listener, event: enhavo_app.pre_delete, method: onDelete }
+            - { name: kernel.event_listener, event: enhavo_resource.pre_delete, method: onDelete }
 
     enhavo_search_render:
         class: Enhavo\Bundle\SearchBundle\Twig\SearchForm

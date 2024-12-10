@@ -27,4 +27,4 @@ services:
             - '%enhavo_media.garbage_collection.enable_listener%'
         tags:
             - { name: doctrine.event_listener, event: preRemove, method: preRemove }
-            - { name: kernel.event_listener, event: enhavo_app.post_delete, method: postDelete }
+            - { name: kernel.event_listener, event: enhavo_resource.post_delete, method: postDelete }
