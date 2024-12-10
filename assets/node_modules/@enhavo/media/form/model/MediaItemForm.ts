@@ -11,6 +11,8 @@ export class MediaItemForm extends Form
     public actions: ActionInterface[] = [];
     public formats: object;
 
+    public editOpen: boolean;
+
     private _actions: ActionInterface[] = null;
 
     constructor(

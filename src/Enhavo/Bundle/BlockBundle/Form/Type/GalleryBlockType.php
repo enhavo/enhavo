@@ -44,4 +44,4 @@ class GalleryBlockType extends AbstractType
     {
         return 'enhavo_block_block_gallery';
     }
-} 
+}

@@ -279,6 +279,15 @@ export class MediaForm extends ListForm
         this.eventDispatcher.start();
         return item;
     }
+
+    public closeEditForChildren(openingChild: Form)
+    {
+        for(let child of this.children) {
+            if (child !== openingChild) {
+                (child as MediaItemForm).editOpen = false;
+            }
+        }
+    }
 }
 
 export class MediaFormButton

@@ -30,6 +30,7 @@
                                 @delete="event => { form.deleteFile(event) }"
                                 @up="event => { form.moveItemUp(event) }"
                                 @down="event => { form.moveItemDown(event) }"
+                                @editOpen="event => { form.closeEditForChildren(event) }"
                             />
                         </li>
                     </template>
