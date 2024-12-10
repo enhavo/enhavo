@@ -77,6 +77,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\MediaBundle\Storage\StorageInterface'
             - '@Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface'
+            - '%enhavo_media.file_not_found.parameters%'
         tags:
             - { name: doctrine.event_listener, event: postLoad, method: postLoad }
             - { name: doctrine.event_listener, event: postUpdate, method: postUpdate }

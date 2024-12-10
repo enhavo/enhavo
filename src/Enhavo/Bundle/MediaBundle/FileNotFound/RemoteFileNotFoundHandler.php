@@ -13,27 +13,21 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class RemoteFileNotFoundHandler implements FileNotFoundHandlerInterface
 {
-    private $parameters = [];
-    const SERVER_URL_PARAMETER = 'server_url';
+    const PARAMETER_SERVER_URL = 'server_url';
 
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
         private HttpClientInterface $client,
     ) {}
 
-    public function setParameters(array $parameters)
-    {
-        $this->parameters = $parameters;
-    }
-
-    public function handleSave(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception): void
+    public function handleSave(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
     {
         // do nothing
     }
 
-    public function handleLoad(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception): void
+    public function handleLoad(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
     {
-        $url = $this->getRemoteServerUrl($this->parameters) . $this->urlGenerator->generate($file);
+        $url = $this->getRemoteServerUrl($parameters) . $this->urlGenerator->generate($file);
 
         $response = $this->client->request('GET', $url);
         if($response->getStatusCode() != 200) {
@@ -44,7 +38,7 @@ class RemoteFileNotFoundHandler implements FileNotFoundHandlerInterface
         $storage->saveContent($file);
     }
 
-    public function handleDelete(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception): void
+    public function handleDelete(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
     {
         // do nothing
     }
@@ -56,9 +50,9 @@ class RemoteFileNotFoundHandler implements FileNotFoundHandlerInterface
 
     private function getRemoteServerUrl($parameters)
     {
-        if (!isset($parameters[self::SERVER_URL_PARAMETER])) {
-            throw new \Exception(sprintf('FileNotFound Strategy of type "%s" requires parameter "%s"', $this->getType(), self::SERVER_URL_PARAMETER));
+        if (!isset($parameters[self::PARAMETER_SERVER_URL])) {
+            throw new \Exception(sprintf('FileNotFoundHandler of type "%s" requires parameter "%s"', self::class, self::PARAMETER_SERVER_URL));
         }
-        return $parameters[self::SERVER_URL_PARAMETER];
+        return $parameters[self::PARAMETER_SERVER_URL];
     }
 }
