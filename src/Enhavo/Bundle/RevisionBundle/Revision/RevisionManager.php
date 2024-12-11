@@ -8,27 +8,27 @@ use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\RevisionBundle\Entity\Archive;
 use Enhavo\Bundle\RevisionBundle\Entity\Bin;
 use Enhavo\Bundle\RevisionBundle\Model\RevisionInterface;
-use Enhavo\Bundle\RevisionBundle\Restore\Restorer;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class RevisionManager
 {
     public function __construct(
         private readonly ResourceManager $resourceManager,
         private readonly EntityManagerInterface $em,
-        private readonly Restorer $restorer,
         private readonly FactoryInterface $binFactory,
         private readonly FactoryInterface $archiveFactory,
     )
     {
     }
 
-    public function saveRevision(RevisionInterface $subject): RevisionInterface
+    public function saveRevision(RevisionInterface $subject, ?UserInterface $user = null): RevisionInterface
     {
         /** @var RevisionInterface $revision */
-        $revision = $this->resourceManager->duplicate($subject);
+        $revision = $this->resourceManager->duplicate($subject, null, ['groups' => 'revision']);
         $revision->setRevisionState(RevisionInterface::STATE_REVISION);
         $revision->setRevisionDate(new \DateTime());
         $revision->setRevisionSubject($subject);
+        $revision->setRevisionUser($user);
         $this->em->persist($revision);
         $this->em->flush();
         return $revision;
@@ -140,7 +140,7 @@ class RevisionManager
             throw new \InvalidArgumentException('Revision must be a revision of subject');
         }
 
-        $this->restorer->restore($subject, $revision);
+        $this->resourceManager->duplicate($revision, $subject, ['groups' => 'restore']);
         $this->em->flush();
     }
 }

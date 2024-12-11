@@ -3,26 +3,31 @@
 namespace Enhavo\Bundle\ResourceBundle\Duplicate\Type;
 
 use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateType;
-use Enhavo\Bundle\ResourceBundle\Duplicate\Value;
+use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
+use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StringDuplicateType extends AbstractDuplicateType
 {
-    public function duplicate($options, Value $newValue, Value $originalValue, $context): void
+    public function duplicate($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void
     {
-        if ($originalValue->getValue() === null) {
-            $newValue->setValue(null);
+        if (!$this->isGroupSelected($options, $context)) {
             return;
         }
 
-        $value = $options['prefix'].$originalValue->getValue().$options['postfix'];
-        $newValue->setValue($value);
+        if ($sourceValue->getValue() === null) {
+            $targetValue->setValue(null);
+            return;
+        }
+
+        $value = $options['prefix'].$sourceValue->getValue().$options['postfix'];
+        $targetValue->setValue($value);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'group' => null,
+            'groups' => null,
             'prefix' => null,
             'postfix' => null,
         ]);

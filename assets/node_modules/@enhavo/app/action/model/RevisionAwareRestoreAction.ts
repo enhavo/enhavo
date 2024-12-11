@@ -4,6 +4,7 @@ import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {Translator} from "@enhavo/app/translation/Translator";
 import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
+import {ResourceInputManager} from "@enhavo/app/manager/ResourceInputManager";
 
 export class RevisionAwareRestoreAction extends AbstractAction
 {
@@ -19,6 +20,7 @@ export class RevisionAwareRestoreAction extends AbstractAction
         private readonly flashMessenger: FlashMessenger,
         private readonly frameManager: FrameManager,
         private readonly translator: Translator,
+        private readonly resourceInputManager: ResourceInputManager,
     ) {
         super();
     }
@@ -53,7 +55,9 @@ export class RevisionAwareRestoreAction extends AbstractAction
         if (response.ok) {
             this.frameManager.dispatch(new Event('input_changed'));
             this.flashMessenger.success(this.translator.trans('enhavo_app.revision.message.restored', {}, 'javascript'));
+            (await this.frameManager.getFrame()).loaded = false;
             this.uiManager.loading(false);
+            window.location.reload();
         } else {
             this.uiManager.loading(false);
             this.flashMessenger.error(this.translator.trans('enhavo_app.error', {}, 'javascript'));

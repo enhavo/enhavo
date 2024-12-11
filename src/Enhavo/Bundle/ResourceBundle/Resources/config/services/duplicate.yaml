@@ -47,3 +47,7 @@ services:
             - '@Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory'
         tags:
             - { name: enhavo_resource.duplicate }
+
+    Enhavo\Bundle\ResourceBundle\Duplicate\Type\ReferenceDuplicateType:
+        tags:
+            - { name: enhavo_resource.duplicate }

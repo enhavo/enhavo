@@ -55,10 +55,15 @@ export class DuplicateAction extends AbstractAction
 
             this.uiManager.loading(false);
             this.frameManager.dispatch(new Event('input_changed'));
-            this.flashMessenger.success(this.translator.trans('enhavo_app.delete.message.success', {}, 'javascript'));
+            this.flashMessenger.success(this.translator.trans('enhavo_app.duplicate.message.success', {}, 'javascript'));
 
-            await this.resourceInputManager.redirect(data.redirect);
-            await this.resourceInputManager.load(data.url);
+            (await this.frameManager.getFrame()).loaded = false;
+            this.uiManager.loading(false);
+            window.location.href = data.redirect;
+
+            // ToDo: Better load data from api and replace, but have to solve form issues first
+            // await this.resourceInputManager.redirect(data.redirect);
+            // await this.resourceInputManager.load(data.url);
         } else {
             this.uiManager.loading(false);
             this.flashMessenger.error(this.translator.trans('enhavo_app.error', {}, 'javascript'));

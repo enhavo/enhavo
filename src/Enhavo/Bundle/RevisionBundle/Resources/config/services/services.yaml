@@ -3,7 +3,6 @@ services:
         arguments:
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
             - '@doctrine.orm.entity_manager'
-            - '@Enhavo\Bundle\RevisionBundle\Restore\Restorer'
             - '@enhavo_revision.bin.factory'
             - '@enhavo_revision.archive.factory'
 
@@ -11,7 +10,9 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
         calls:
-            - [setRevisionManager, ['@Enhavo\Bundle\RevisionBundle\Revision\RevisionManager']]
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: container.service_subscriber }
 
     Enhavo\Bundle\RevisionBundle\Tab\Type\RevisionTabType:
         arguments:

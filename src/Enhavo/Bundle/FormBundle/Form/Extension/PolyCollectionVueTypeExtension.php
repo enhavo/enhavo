@@ -24,6 +24,7 @@ class PolyCollectionVueTypeExtension extends AbstractVueTypeExtension
         $data['allowDelete'] = $view->vars['allow_delete'];
         $data['allowAdd'] = $view->vars['allow_add'];
         $data['entryLabels'] = $view->vars['entry_labels'];
+        $data['entryKeys'] = $view->vars['poly_collection_config']['entryKeys'];
         $data['sortable'] = true;
         $data['index'] = null;
 

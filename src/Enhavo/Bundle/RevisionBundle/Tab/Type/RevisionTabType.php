@@ -48,7 +48,8 @@ class RevisionTabType extends AbstractTabType
 
                 $revisions[] = [
                     'id' => $revision->getId(),
-                    'date' => $this->normalizer->normalize($revision->getRevisionDate()),
+                    'date' => $this->normalizer->normalize($revision->getRevisionDate(), null, ['groups' => $options['serialization_groups']]),
+                    'user' => $this->normalizer->normalize($revision->getRevisionUser(), null, ['groups' => $options['serialization_groups']]),
                     'url' => $this->router->generate($route, $routeParameters),
                 ];
             }
@@ -59,6 +60,7 @@ class RevisionTabType extends AbstractTabType
         $data->set('confirmMessage', $this->translator->trans($options['confirm_message'], [], $options['translation_domain']));
         $data->set('confirmLabelOk', $this->translator->trans($options['confirm_label_ok'], [], $options['translation_domain']));
         $data->set('confirmLabelCancel', $this->translator->trans($options['confirm_label_cancel'], [], $options['translation_domain']));
+        $data->set('userLabel', $options['user_label']);
     }
 
     private function getRoute(array $options): string
@@ -92,6 +94,8 @@ class RevisionTabType extends AbstractTabType
             'confirm_label_ok' => 'restore.action.restore',
             'confirm_label_cancel' => 'restore.action.cancel',
             'translation_domain' => 'EnhavoRevisionBundle',
+            'serialization_groups' => ['endpoint', 'endpoint.admin'],
+            'user_label' => 'email',
         ]);
     }
 

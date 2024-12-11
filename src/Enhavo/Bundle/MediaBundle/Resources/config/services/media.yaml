@@ -92,10 +92,7 @@ services:
 
     enhavo_media.file.factory:
         public: true
-        alias: Enhavo\Bundle\MediaBundle\Factory\FileFactory
-
-    Enhavo\Bundle\MediaBundle\Factory\FileFactory:
-        public: true
+        class: '%enhavo_media.file.factory.class%'
         arguments:
             - '%enhavo_media.file.model.class%'
             - '@enhavo_app.util.secure_url_token_generator'
@@ -171,3 +168,9 @@ services:
             - '@request_stack'
             - '@Enhavo\Bundle\MediaBundle\Routing\AdminUrlGenerator'
             - '@Enhavo\Bundle\MediaBundle\Routing\ThemeUrlGenerator'
+
+    Enhavo\Bundle\MediaBundle\Duplicate\Type\FileDuplicateType:
+        arguments:
+            - '@enhavo_media.file.factory'
+        tags:
+            - { name: enhavo_resource.duplicate }

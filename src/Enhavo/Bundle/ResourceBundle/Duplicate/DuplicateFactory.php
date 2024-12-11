@@ -15,34 +15,35 @@ class DuplicateFactory
     {
     }
 
-    public function duplicate(object $value, $context = []): object
+    public function duplicate(object $source, object $target = null, $context = []): object
     {
         /** @var Metadata $metadata */
-        $metadata = $this->metadataRepository->getMetadata($value);
+        $metadata = $this->metadataRepository->getMetadata($source);
 
         if ($metadata->getClass()) {
             /** @var Duplicate $duplicate */
             $duplicate = $this->duplicateFactory->create($metadata->getClass());
-            return $duplicate->duplicate($value, $context);
+            return $duplicate->duplicate($source, $target, $context);
         }
 
-        $object = new ($metadata->getClassName());
+        $target = $target ?? new ($metadata->getClassName());
 
-        $reflection = new \ReflectionClass($value);
+        $reflection = new \ReflectionClass($source);
 
         foreach ($metadata->getProperties() as $property => $config) {
 
             $property = $reflection->getProperty($property);
             $property->setAccessible(true);
 
-            $originalValue = $property->getValue($value);
+            $sourceValue = $property->getValue($source);
+            $targetValue = $target ? $property->getValue($target) : null;
 
             /** @var Duplicate $duplicate */
             $duplicate = $this->duplicateFactory->create($config);
-            $newValue = $duplicate->duplicate($originalValue, $context);
-            $property->setValue($object, $newValue);
+            $newValue = $duplicate->duplicate($sourceValue, $targetValue, $context);
+            $property->setValue($target, $newValue);
         }
 
-        return $object;
+        return $target;
     }
 }

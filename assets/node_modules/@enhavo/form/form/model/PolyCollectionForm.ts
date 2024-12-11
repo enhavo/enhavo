@@ -6,6 +6,7 @@ export class PolyCollectionForm extends ListForm
 {
     public isOpen: boolean;
     public entryLabels: EntryLabel[];
+    public entryKeys: string[];
     public prototypeStorage: string;
     public confirmDelete: boolean;
     public collapsed: boolean;

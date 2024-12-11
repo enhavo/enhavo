@@ -1,17 +1,17 @@
 <?php
 
-namespace Enhavo\Bundle\ResourceBundle\Duplicate\Type;
+namespace Enhavo\Bundle\MediaBundle\Duplicate\Type;
 
+use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
 use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateType;
-use Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ModelDuplicateType extends AbstractDuplicateType
+class FileDuplicateType extends AbstractDuplicateType
 {
     public function __construct(
-        private readonly DuplicateFactory $duplicateFactory,
+        private readonly FileFactory $fileFactory,
     )
     {
     }
@@ -27,8 +27,8 @@ class ModelDuplicateType extends AbstractDuplicateType
             return;
         }
 
-        $value = $this->duplicateFactory->duplicate($sourceValue->getValue(), $context);
-        $targetValue->setValue($value);
+        $newFile = $this->fileFactory->createFromFile($sourceValue->getValue());
+        $targetValue->setValue($newFile);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -40,6 +40,6 @@ class ModelDuplicateType extends AbstractDuplicateType
 
     public static function getName(): ?string
     {
-        return 'model';
+        return 'file';
     }
 }

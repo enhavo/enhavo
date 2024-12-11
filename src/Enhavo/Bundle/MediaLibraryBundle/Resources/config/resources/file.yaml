@@ -4,3 +4,4 @@ enhavo_resource:
             priority: -5
             classes:
                 model: Enhavo\Bundle\MediaLibraryBundle\Entity\File
+                factory: Enhavo\Bundle\MediaLibraryBundle\Factory\FileFactory

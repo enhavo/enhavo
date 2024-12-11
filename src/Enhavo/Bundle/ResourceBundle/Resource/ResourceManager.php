@@ -97,9 +97,9 @@ class ResourceManager
         $this->dispatch(new ResourcePostDeleteEvent($resource), 'post_delete');
     }
 
-    public function duplicate(object $resource, array $context = []): object
+    public function duplicate(object $resource, $target = null, array $context = []): object
     {
-        return $this->duplicateFactory->duplicate($resource, $context);
+        return $this->duplicateFactory->duplicate($resource, $target, $context);
     }
 
     public function getRepository($name): EntityRepository

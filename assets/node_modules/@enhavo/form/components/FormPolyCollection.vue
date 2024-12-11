@@ -50,7 +50,9 @@
                     </div>
                 </slot>
                 <div v-if="form.isOpen" class="form-poly-collection-add-menu">
-                    <div v-for="entryLabel of form.entryLabels" @click.prevent="form.addItem(entryLabel.key); form.toggleMenu()" class="add-menu-item">{{ entryLabel.label }}</div>
+                    <template v-for="entryLabel of form.entryLabels">
+                        <div v-if="isAllowed(entryLabel.key)" @click.prevent="form.addItem(entryLabel.key); form.toggleMenu()" class="add-menu-item">{{ entryLabel.label }}</div>
+                    </template>
                 </div>
             </div>
         </slot>
@@ -65,4 +67,10 @@ const draggable = draggableComponent;
 const props = defineProps<{
     form: PolyCollectionForm
 }>()
+
+function isAllowed(key: string): boolean
+{
+    return props.form.entryKeys.indexOf(key) >= 0;
+}
+
 </script>

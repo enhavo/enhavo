@@ -15,6 +15,7 @@ export class RevisionTab extends AbstractTab
     public confirmMessage: string;
     public confirmLabelOk: string;
     public confirmLabelCancel: string;
+    public userLabel: string;
 
     constructor(
         private readonly uiManager: UiManager,
@@ -57,7 +58,9 @@ export class RevisionTab extends AbstractTab
             this.frameManager.dispatch(new Event('input_changed'));
             this.flashMessenger.success(this.translator.trans('enhavo_app.revision.message.restored', {}, 'javascript'));
             await this.resourceInputManager.load(this.resourceInputManager.url);
+            (await this.frameManager.getFrame()).loaded = false;
             this.uiManager.loading(false);
+            window.location.reload();
         } else {
             this.uiManager.loading(false);
             this.flashMessenger.error(this.translator.trans('enhavo_app.error', {}, 'javascript'));
@@ -76,4 +79,5 @@ export class Revision
     id: number;
     date: string;
     url: string;
+    user: object;
 }

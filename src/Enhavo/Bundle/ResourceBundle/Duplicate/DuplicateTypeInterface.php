@@ -7,9 +7,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 interface DuplicateTypeInterface extends TypeInterface
 {
-    public function duplicate($options, Value $newValue, Value $originalValue, $context): void;
+    public function duplicate($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void;
 
-    public function finish($options, Value $newValue, Value $originalValue, $context): void;
+    public function finish($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void;
 
     public function configureOptions(OptionsResolver $resolver);
 }
