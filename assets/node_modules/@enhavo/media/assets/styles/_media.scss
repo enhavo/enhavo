@@ -23,17 +23,7 @@
       &:before {position:relative;top:2px;}
     }
   }
-  .related-buttons-row {
-    display: flex; gap: 10px;
-    .action {
-      @extend %btn-primary;
-      display: flex; gap: 10px;
-      .label {
-        order: -1;
-      }
-    }
-  }
-  .media-items {min-height: 82px; margin:0 0 5px 0; padding: 0;width: 82px;border-radius:10px;position:relative;display:flex;flex-wrap:wrap;gap:10px;
+  .media-items {min-height: 82px;padding: 0;width: 82px;border-radius:10px;position:relative;display:flex;flex-wrap:wrap;gap:10px;
     &.drop-zone {
       &.hover {background: variables.$color1;}
       &.fade {@include mixins.transition(all 300ms ease-out);opacity: 1;background: variables.$grey1;width: 100%;display: block;}
@@ -65,7 +55,7 @@
     .button-row {display:flex;gap:10px;}
   }
   .thumb {padding:5px;width:82px; height:82px; border-radius:6px;cursor: pointer;position:relative;background: variables.$grey1;
-    .icon { position: absolute; z-index: 5; font-size: 40px; line-height: 70px; color: #0090ba; left: 50%; transform: translateX(-50%) translateY(-50%); top:50%; }
+    .icon { position: absolute; z-index:2; font-size: 40px; line-height: 70px; color: #0090ba; left: 50%; transform: translateX(-50%) translateY(-50%); top:50%; }
     &:hover {
       .icons { display: block }
     }

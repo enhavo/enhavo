@@ -8,8 +8,20 @@
 
     .formwidget-container {
         input[type="file"] {border:0;background:transparent;}
-        input[type="text"],input[type="password"] {@extend %textfield;}
+        input:not([type]), input[type="text"],input[type="password"] {@extend %textfield;}
         textarea {@extend %textarea;}
+
+        .related-buttons-row {display:flex;gap:10px;
+          &:not(:first-child) {margin-top:5px;}
+          &:not(:last-child) {margin-bottom:5px;}
+          .action {
+            @extend %btn-primary;
+            display: flex; gap: 10px;
+            .label {
+              order: -1;
+            }
+          }
+        }
     }
 }
 

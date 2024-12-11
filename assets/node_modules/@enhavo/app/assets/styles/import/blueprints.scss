@@ -1,7 +1,7 @@
 @use "sass:color";
 @use "variables";
 
-%btn {border-radius:10px;font-family:inherit;margin:0;padding:6px 14px 4px 14px;border:0;cursor:pointer;transition:all .2s; font-size: variables.$fontSize; text-align:center; line-height:1.3em;display:inline-block;text-decoration:none;
+%btn {border-radius:10px;font-family:inherit;margin:0;padding:7px 14px 4px 14px;border:0;cursor:pointer;transition:all .2s; font-size: variables.$fontSize; text-align:center; line-height:1.3em;display:inline-block;text-decoration:none;
   &.has-symbol {display:flex;gap:10px;}
   &.disabled, &:disabled { background:transparent; padding-top:6px; padding-bottom:4px; border:2px solid variables.$grey2; color: variables.$grey2;cursor:not-allowed;
     &:hover {background:transparent; border:2px solid variables.$grey2; color: variables.$grey2;}

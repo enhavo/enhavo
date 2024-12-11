@@ -1,7 +1,7 @@
 <template>
-    <div v-if="form.errors" v-show="form.isVisible()">
-        <div v-for="error in form.errors">{{ error.message }}</div>
-    </div>
+    <ul v-if="form.errors" v-show="form.isVisible()" class="form-error-list">
+        <li v-for="error in form.errors">{{ error.message }}</li>
+    </ul>
 </template>
 
 <script setup lang="ts">
