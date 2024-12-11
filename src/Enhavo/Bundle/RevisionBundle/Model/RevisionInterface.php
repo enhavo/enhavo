@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\RevisionBundle\Model;
 
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 interface RevisionInterface
 {
@@ -18,6 +19,8 @@ interface RevisionInterface
     public function getRevisionState(): ?string;
     public function setRevisionSubject(?RevisionInterface $revision);
     public function getRevisionSubject(): ?RevisionInterface;
+    public function setRevisionUser(?UserInterface $revision);
+    public function getRevisionUser(): ?UserInterface;
     public function setRevisionParameters(array $parameters = []);
     public function getRevisionParameters(): array;
     /** @return Collection<RevisionInterface> */

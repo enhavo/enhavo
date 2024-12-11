@@ -1,5 +1,6 @@
 <template>
     <input
+        v-once
         v-show="form.isVisible()"
         type="checkbox"
         :ref="(el) => updateElement(el as HTMLElement)"
@@ -24,9 +25,9 @@ const props = defineProps<{
 }>()
 
 watch(() => props.form, () => {
-    if (props.form.checked && !props.form.element.checked) {
+    if (props.form.checked && props.form.element && !props.form.element.checked) {
         $(props.form.element).iCheck('check');
-    } else if (!props.form.checked && props.form.element.checked) {
+    } else if (!props.form.checked && props.form.element && props.form.element.checked) {
         $(props.form.element).iCheck('uncheck');
     }
 })

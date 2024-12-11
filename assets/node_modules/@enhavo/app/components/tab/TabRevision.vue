@@ -19,7 +19,8 @@
                         {{ formatDate(revision.date) }}
                     </div>
                     <div class="view-table-col view-table-col-text revision-col">
-                        TODO: User
+                        <template v-if="revision.user">{{ revision.user[tab.userLabel] }}</template>
+                        <template v-else>-</template>
                     </div>
                     <div class="view-table-col view-table-col-text revision-col-actions">
                         <div class="action action-container" @click="tab.activateRevision(revision)">
@@ -30,7 +31,6 @@
                         </div>
                     </div>
                 </div>
-<!--                <button @click.prevent="tab.activateRevision(revision)">{{ translator.trans('enhavo_app.revision.action.restore', {}, 'javascript') }}</button>-->
             </div>
         </div>
     </div>
@@ -52,12 +52,13 @@ function formatDate(value: string): string
     let date = new Date(value);
 
     let day = String(date.getDate()).padStart(2, '0');
-    let month = String(date.getMonth() + 1).padStart(2, '0'); // JavaScript Date months are 0-indexed
+    let month = String(date.getMonth() + 1).padStart(2, '0');
     let year = date.getFullYear();
 
     let hours = String(date.getHours()).padStart(2, '0');
     let minutes = String(date.getMinutes()).padStart(2, '0');
+    let seconds = String(date.getSeconds()).padStart(2, '0');
 
-    return `${day}.${month}.${year} ${hours}:${minutes}`;
+    return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
 }
 </script>

@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\RevisionBundle\Model;
 
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 trait RevisionTrait
 {
@@ -10,6 +11,7 @@ trait RevisionTrait
     private ?string $revisionState = null;
     private array $revisionParameters = [];
     private ?RevisionInterface $revisionSubject = null;
+    private ?UserInterface $revisionUser = null;
     private Collection $revisions;
 
     public function getRevisionDate(): ?\DateTime
@@ -55,5 +57,15 @@ trait RevisionTrait
     public function getRevisions(): Collection
     {
         return $this->revisions;
+    }
+
+    public function getRevisionUser(): ?UserInterface
+    {
+        return $this->revisionUser;
+    }
+
+    public function setRevisionUser(?UserInterface $revisionUser): void
+    {
+        $this->revisionUser = $revisionUser;
     }
 }

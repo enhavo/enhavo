@@ -16,10 +16,10 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ResourceBundle\Attribute\Duplicate;
-use Enhavo\Bundle\RevisionBundle\Attribute\Restore;
 use Enhavo\Bundle\RevisionBundle\Model\RevisionInterface;
 use Enhavo\Bundle\RevisionBundle\Model\RevisionTrait;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: PersonRepository::class)]
 #[ORM\Table(name: 'app_person')]
@@ -33,13 +33,12 @@ class Person implements RevisionInterface
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Duplicate('clone', ['group' => ['duplicate']])]
+    #[Duplicate('clone', ['groups' => ['duplicate', 'revision', 'restore']])]
     private ?DateTime $birthday = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Duplicate('string', ['postfix' => ' Copy!!', 'group' => ['duplicate']])]
-    #[Duplicate('string', ['group' => ['revision']])]
-    #[Restore('property')]
+    #[Duplicate('property', ['groups' => ['revision', 'restore']])]
     private ?string $name = null;
 
     #[ORM\ManyToOne(
@@ -47,7 +46,7 @@ class Person implements RevisionInterface
         cascade: ['persist', 'remove', 'refresh']
     )]
     #[ORM\JoinColumn( onDelete: 'SET NULL')]
-    #[Duplicate('model', [ 'group' => ['duplicate']])]
+    #[Duplicate('reference', [ 'groups' => ['duplicate', 'revision', 'restore']])]
     private ?Term $occupation = null;
 
     #[ORM\ManyToOne(
@@ -55,7 +54,7 @@ class Person implements RevisionInterface
         cascade: ['persist', 'remove', 'refresh']
     )]
     #[ORM\JoinColumn( onDelete: 'SET NULL')]
-    #[Duplicate('model', ['group' => ['duplicate']])]
+    #[Duplicate('reference', ['groups' => ['duplicate', 'revision', 'restore']])]
     private ?Term $category = null;
 
     #[ORM\ManyToOne(
@@ -63,13 +62,14 @@ class Person implements RevisionInterface
         cascade: ['persist', 'remove', 'refresh']
     )]
     #[ORM\JoinColumn( onDelete: 'SET NULL')]
-    #[Duplicate('model', ['group' => ['duplicate']])]
+    #[Duplicate('reference', ['groups' => ['duplicate', 'revision', 'restore']])]
     private ?Term $otherCategory = null;
 
     #[ORM\ManyToOne(
         targetEntity: FileInterface::class,
         cascade: ['persist', 'remove', 'refresh']
     )]
+    #[Duplicate('file', ['groups' => ['duplicate', 'revision', 'restore']])]
     private ?FileInterface $picture = null;
 
     #[ORM\ManyToOne(
@@ -93,6 +93,11 @@ class Person implements RevisionInterface
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
     private array $revisionParameters = [];
+
+    #[ORM\ManyToOne(
+        targetEntity: \Enhavo\Bundle\UserBundle\Model\UserInterface::class,
+    )]
+    private ?UserInterface $revisionUser = null;
 
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $amountChildren = null;

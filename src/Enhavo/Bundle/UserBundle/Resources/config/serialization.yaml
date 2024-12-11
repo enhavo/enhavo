@@ -1,0 +1,12 @@
+Enhavo\Bundle\UserBundle\Model\User:
+    attributes:
+        id:
+            groups: ['endpoint']
+        firstName:
+            groups: ['endpoint']
+        lastName:
+            groups: ['endpoint']
+        email:
+            groups: ['endpoint']
+        username:
+            groups: ['endpoint']

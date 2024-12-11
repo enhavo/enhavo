@@ -46,6 +46,9 @@ enhavo_app:
             delete: 'Löschen'
             cancel: 'Abbrechen'
             close: 'Schließen'
+    duplicate:
+        message:
+            success: 'Resource erfolgreich dupliziert'
     save:
         message:
             save: 'Erfolgreich gespeichert'

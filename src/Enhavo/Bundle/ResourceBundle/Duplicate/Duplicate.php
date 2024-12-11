@@ -16,19 +16,23 @@ use Enhavo\Component\Type\AbstractContainerType;
  */
 class Duplicate extends AbstractContainerType
 {
-    function duplicate($value, array $context = []): mixed
+    function duplicate($source, $target = null, array $context = []): mixed
     {
-        $newValue = new Value();
-
-        $originalValue = new Value();
-        $originalValue->setValue($value);
+        $sourceValue = new SourceValue($source);
+        $targetValue = new TargetValue($target);
 
         foreach ($this->parents as $parent) {
-            $parent->duplicate($this->options, $newValue, $originalValue, $context);
+            $parent->duplicate($this->options, $sourceValue, $targetValue, $context);
         }
 
-        $this->type->duplicate($this->options, $newValue, $originalValue, $context);
+        $this->type->duplicate($this->options, $sourceValue, $targetValue, $context);
 
-        return $newValue->getValue();
+        foreach ($this->parents as $parent) {
+            $parent->finish($this->options, $sourceValue, $targetValue, $context);
+        }
+
+        $this->type->finish($this->options, $sourceValue, $targetValue, $context);
+
+        return $targetValue->getValue();
     }
 }

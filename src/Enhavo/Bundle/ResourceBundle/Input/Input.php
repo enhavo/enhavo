@@ -31,7 +31,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
             'repository_arguments' => [
                 'expr:request.get("id", 0)'
             ],
-            'serialization_groups' => 'endpoint'
+            'serialization_groups' => ['endpoint', 'endpoint.admin']
         ]);
 
         $resolver->setRequired('resource');

@@ -46,7 +46,7 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
             return;
         }
 
-        $duplicateResource = $this->resourceManager->duplicate($resource);
+        $duplicateResource = $this->resourceManager->duplicate($resource, null, ['groups' => 'duplicate']);
         $this->resourceManager->save($duplicateResource);
 
         $redirectRoute = $this->routeResolver->getRoute('update', ['api' => false]) ?? $options['update_route'];
@@ -64,6 +64,7 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
             'update_route' => null,
             'update_api_route' => null,
             'permission' => Permission::UPDATE,
+            'groups' => 'duplicate'
         ]);
 
         $resolver->setRequired('input');

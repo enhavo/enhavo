@@ -8,8 +8,6 @@ use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ResourceBundle\Factory\Factory;
-use Symfony\Component\Finder\SplFileInfo;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -119,7 +117,7 @@ class FileFactory extends Factory
         $headers = $response->getHeaders();
         $contentType = $headers['content-type'];
         if (!empty($contentType)) {
-            $parsedHeader = $this->parse($contentType[count($contentType)-1]);
+            $parsedHeader = $this->parseHeader($contentType[count($contentType)-1]);
             if(!empty($parsedHeader) && isset($parsedHeader[0]) && isset($parsedHeader[0][0])) {
                 $file->setMimeType($parsedHeader[0][0]);
             }
@@ -154,12 +152,12 @@ class FileFactory extends Factory
         return $file;
     }
 
-    private function parse($header): array
+    private function parseHeader($header): array
     {
         $trimmed = "\"'  \n\t\r";
         $params = $matches = [];
 
-        foreach ($this->normalize($header) as $val) {
+        foreach ($this->normalizeHeader($header) as $val) {
             $part = [];
             foreach (preg_split('/;(?=([^"]*"[^"]*")*[^"]*$)/', $val) as $kvp) {
                 if (preg_match_all('/<[^>]+>|[^=]+/', $kvp, $matches)) {
@@ -179,7 +177,7 @@ class FileFactory extends Factory
         return $params;
     }
 
-    private function normalize($header): array
+    private function normalizeHeader($header): array
     {
         if (!is_array($header)) {
             return array_map('trim', explode(',', $header));
@@ -201,7 +199,7 @@ class FileFactory extends Factory
         return $result;
     }
 
-    private function updateFile(FileInterface $file): void
+    protected function updateFile(FileInterface $file): void
     {
         $file->setToken($this->tokenGenerator->generateToken(10));
         $file->setChecksum($this->checksumGenerator->getChecksum($file->getContent()));

@@ -3,25 +3,30 @@
 namespace Enhavo\Bundle\ResourceBundle\Duplicate\Type;
 
 use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateType;
-use Enhavo\Bundle\ResourceBundle\Duplicate\Value;
+use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
+use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PropertyDuplicateType extends AbstractDuplicateType
 {
-    public function duplicate($options, Value $newValue, Value $originalValue, $context): void
+    public function duplicate($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void
     {
-        $value = $originalValue->getValue();
+        if (!$this->isGroupSelected($options, $context)) {
+            return;
+        }
+
+        $value = $sourceValue->getValue();
         if (!is_null($value) && !is_scalar($value)) {
             throw new \InvalidArgumentException(sprintf('Duplicate type property only accept scalar values but "%s" given', gettype($value)));
         }
 
-        $newValue->setValue($value);
+        $targetValue->setValue($value);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'group' => null
+            'groups' => null
         ]);
     }
 
