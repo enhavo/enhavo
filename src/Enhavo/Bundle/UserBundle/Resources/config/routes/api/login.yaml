@@ -1,6 +1,4 @@
 enhavo_user_theme_api_login:
-    options:
-        expose: true
     path: /login
     methods: [GET, POST]
     defaults:

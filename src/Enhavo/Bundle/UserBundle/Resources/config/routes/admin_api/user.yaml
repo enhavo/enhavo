@@ -51,13 +51,10 @@ enhavo_user_admin_api_user_delete:
             input: enhavo_user.user
 
 enhavo_user_admin_api_user_auto_complete:
-    options:
-        expose: true
     path: '/user/auto-complete'
     methods: [GET]
     defaults:
-        _controller: enhavo_form.controller.auto_complete::searchAction
-        _config:
-            class: '%enhavo_user.user.model.class%'
-            repository:
-                method: findByTerm
+        _expose: admin_api
+        _endpoint:
+            type: auto_complete
+            input: enhavo_user.user

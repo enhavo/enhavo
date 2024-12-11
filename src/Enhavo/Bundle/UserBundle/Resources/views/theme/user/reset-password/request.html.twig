@@ -5,7 +5,7 @@
     <form action="{{ path('enhavo_user_theme_reset_password_request') }}" method="POST">
         {{ form_row(form.username, {'label': 'registration.form.email'}) }}
         <button type="submit">{{ 'reset_password.request.submit'|trans|nl2br }}</button>
-        <a href="{{ path('enhavo_user_theme_security_login') }}">{{ 'reset_password.label.login'|trans|nl2br }}</a>
+        <a href="{{ path('enhavo_user_theme_login') }}">{{ 'reset_password.label.login'|trans|nl2br }}</a>
         {{ form_row(form._token) }}
     </form>
 {% endblock %}

@@ -1,17 +1,17 @@
 enhavo_user_theme_delete_confirm:
-    options:
-        expose: true
     path: /delete/confirm
     methods: [GET, POST]
-    controller: Enhavo\Bundle\UserBundle\Controller\DeleteController::confirmAction
     defaults:
         _config: theme
+        _expose: [theme]
+        _endpoint:
+            type: Enhavo\Bundle\UserBundle\Endpoint\Type\Delete\DeleteConfirmEndpointType
 
 enhavo_user_theme_delete_finish:
-    options:
-        expose: true
     path: /delete/finish
     methods: [GET, POST]
-    controller: Enhavo\Bundle\UserBundle\Controller\DeleteController::finishAction
     defaults:
         _config: theme
+        _expose: [theme]
+        _endpoint:
+            type: Enhavo\Bundle\UserBundle\Endpoint\Type\Delete\DeleteFinishEndpointType

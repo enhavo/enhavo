@@ -1,31 +1,35 @@
 enhavo_user_theme_registration_register:
-    options:
-        expose: true
     path: /registration/register
     methods: [GET, POST]
-    controller: Enhavo\Bundle\UserBundle\Controller\RegistrationController::registerAction
     defaults:
         _config: theme
+        _expose: [theme]
+        _endpoint:
+            type: Enhavo\Bundle\UserBundle\Endpoint\Type\Registration\RegistrationRegisterEndpointType
 
 enhavo_user_theme_registration_check:
     path: /registration/check
     methods: [GET]
-    controller: Enhavo\Bundle\UserBundle\Controller\RegistrationController::checkAction
     defaults:
         _config: theme
+        _expose: [theme]
+        _endpoint:
+            type: Enhavo\Bundle\UserBundle\Endpoint\Type\Registration\RegistrationCheckEndpointType
 
 enhavo_user_theme_registration_confirm:
     path: /registration/confirm/{token}
     methods: [GET]
-    controller: Enhavo\Bundle\UserBundle\Controller\RegistrationController::confirmAction
     defaults:
         _config: theme
+        _expose: [theme]
+        _endpoint:
+            type: Enhavo\Bundle\UserBundle\Endpoint\Type\Registration\RegistrationConfirmEndpointType
 
 enhavo_user_theme_registration_finish:
-    options:
-        expose: true
     path: /registration/finish
     methods: [GET, POST]
-    controller: Enhavo\Bundle\UserBundle\Controller\RegistrationController::finishAction
     defaults:
         _config: theme
+        _expose: [theme]
+        _endpoint:
+            type: Enhavo\Bundle\UserBundle\Endpoint\Type\Registration\RegistrationFinishEndpointType

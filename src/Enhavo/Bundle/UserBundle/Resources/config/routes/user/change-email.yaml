@@ -1,35 +1,35 @@
 enhavo_user_theme_change_email_request:
-    options:
-        expose: true
     path: /change-email/request
     methods: [GET, POST]
-    controller: Enhavo\Bundle\UserBundle\Controller\ChangeEmailController::requestAction
     defaults:
         _config: theme
+        _expose: [theme]
+        _endpoint:
+            type: Enhavo\Bundle\UserBundle\Endpoint\Type\ChangeEmail\ChangeEmailRequestEndpointType
 
 enhavo_user_theme_change_email_check:
-    options:
-        expose: true
     path: /change-email/check
     methods: [GET, POST]
-    controller: Enhavo\Bundle\UserBundle\Controller\ChangeEmailController::checkAction
     defaults:
         _config: theme
+        _expose: [theme]
+        _endpoint:
+            type: Enhavo\Bundle\UserBundle\Endpoint\Type\ChangeEmail\ChangeEmailCheckEndpointType
 
 enhavo_user_theme_change_email_confirm:
-    options:
-        expose: true
     path: /change-email/confirm/{token}
     methods: [GET, POST]
-    controller: Enhavo\Bundle\UserBundle\Controller\ChangeEmailController::confirmAction
     defaults:
         _config: theme
+        _expose: [theme]
+        _endpoint:
+            type: Enhavo\Bundle\UserBundle\Endpoint\Type\ChangeEmail\ChangeEmailConfirmEndpointType
 
 enhavo_user_theme_change_email_finish:
-    options:
-        expose: true
     path: /change-email/finish
     methods: [GET, POST]
-    controller: Enhavo\Bundle\UserBundle\Controller\ChangeEmailController::finishAction
     defaults:
         _config: theme
+        _expose: [theme]
+        _endpoint:
+            type: Enhavo\Bundle\UserBundle\Endpoint\Type\ChangeEmail\ChangeEmailFinishEndpointType

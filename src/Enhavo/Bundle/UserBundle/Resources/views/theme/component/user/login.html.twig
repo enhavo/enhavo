@@ -2,7 +2,7 @@
 
 <div id="login-box">
     <div class="login-container">
-        <form action="{{ path("enhavo_user_theme_security_login") }}" method="post">
+        <form action="{{ path("enhavo_user_theme_login") }}" method="post">
             {% if error %}
                 <div class="col-md-push-2 col-md-4 error loginMessage" id="overlayMessage" style="display: block;">
                     <div>{{ error|trans|nl2br }}</div>

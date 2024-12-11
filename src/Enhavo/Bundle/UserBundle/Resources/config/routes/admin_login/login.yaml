@@ -1,6 +1,4 @@
 enhavo_user_admin_login:
-    options:
-        expose: true
     path: /login
     methods: [GET, POST]
     defaults:
@@ -13,8 +11,6 @@ enhavo_user_admin_login:
             type: admin
 
 enhavo_user_admin_logout:
-    options:
-        expose: true
     path: /logout
     methods: [GET, POST]
     defaults:
