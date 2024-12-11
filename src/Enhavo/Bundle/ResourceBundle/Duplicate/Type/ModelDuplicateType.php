@@ -27,7 +27,7 @@ class ModelDuplicateType extends AbstractDuplicateType
             return;
         }
 
-        $value = $this->duplicateFactory->duplicate($sourceValue->getValue(), $context);
+        $value = $this->duplicateFactory->duplicate($sourceValue->getValue(), $targetValue->getOriginalValue(), $context);
         $targetValue->setValue($value);
     }
 
