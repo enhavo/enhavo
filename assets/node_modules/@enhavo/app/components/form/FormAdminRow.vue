@@ -5,10 +5,10 @@
             <form-label :form="form"></form-label>
             <form-admin-help :form="form"></form-admin-help>
         </div>
-        <form-errors :form="form"></form-errors>
         <div class="formwidget-container">
             <form-widget :form="form"></form-widget>
         </div>
+        <form-errors :form="form"></form-errors>
     </div>
 </template>
 

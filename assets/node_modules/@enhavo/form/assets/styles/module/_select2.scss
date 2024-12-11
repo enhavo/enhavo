@@ -9,6 +9,7 @@
 
   &--default {
     &.select2-container--open {
+      .select2-dropdown {top:4px;}
       .select2-selection--single {
         .select2-selection__arrow {
           b {border:0;transform:scaleY(-1);top:calc(50% + 11px);}
@@ -23,7 +24,7 @@
             &:before {font-family:"icon";content:"\f2bb";}
           }
         }
-        .select2-selection__rendered {border-radius:10px;padding:5px 14px;background: variables.$grey1;}
+        .select2-selection__rendered {border-radius:10px;padding:5px 14px;background: variables.$grey1;min-height:37px;}
       }
     }
   }

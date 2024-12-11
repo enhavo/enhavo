@@ -27,6 +27,12 @@
         .choice-input-with-label {display:flex;gap:6px;}
     }
 
+    .form-error-list {color:variables.$color4;list-style:square;padding-left:20px;font-size:0.875rem;
+      &:not(:first-child) {margin-top:2px;}
+      &:not(:last-child) {margin-bottom:2px;}
+      li {padding-left:0;}
+    }
+
     .html-tag-widget { position:relative;
         .flex-container {display:flex;width:100%;
             .html-tag-widget-choice {margin-left:2px;width:120px;flex:0 0 auto;}

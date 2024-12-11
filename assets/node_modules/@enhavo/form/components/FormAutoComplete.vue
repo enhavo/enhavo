@@ -5,8 +5,8 @@
         </select>
         <div class="related-buttons-row" v-if="form.createRoute">
             <a href="#" class="btn-secondary has-symbol" @click.prevent="form.openCreate()">
-                <i aria-hidden="true" class="icon icon-add_circle_outline"> {{ form.editLabel }}
-            </i></a>
+                {{ form.editLabel }} <i aria-hidden="true" class="icon icon-add_circle_outline"></i>
+            </a>
         </div>
     </div>
 </template>
