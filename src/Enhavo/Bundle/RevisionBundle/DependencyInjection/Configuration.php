@@ -15,8 +15,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_resource');
         $rootNode = $treeBuilder->getRootNode();
 
-        $this->addRestoreSection($rootNode);
-
         return $treeBuilder;
     }
 }
