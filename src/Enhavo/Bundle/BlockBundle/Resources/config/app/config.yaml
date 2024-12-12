@@ -25,3 +25,30 @@ enhavo_doctrine_extension:
                 block:
                     idField: blockId
                     nameField: blockClass
+
+
+enhavo_resource:
+    duplicate:
+        Enhavo\Bundle\BlockBundle\Entity\Node:
+            properties:
+                position:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']
+                children:
+                    type: collection
+                    groups: ['duplicate', 'revision', 'restore']
+                name:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']
+                block:
+                    type: model
+                    groups: ['duplicate', 'revision', 'restore']
+                property:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']
+                enable:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']
+                type:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']

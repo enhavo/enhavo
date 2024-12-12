@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Duplicate;
 
+use Doctrine\Common\Proxy\Proxy;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Metadata\Metadata;
 use Enhavo\Component\Type\FactoryInterface;
@@ -29,6 +30,10 @@ class DuplicateFactory
         $target = $target ?? new ($metadata->getClassName());
 
         $reflection = new \ReflectionClass($source);
+
+        if ($source instanceof Proxy) {
+            $reflection = $reflection->getParentClass();
+        }
 
         foreach ($metadata->getProperties() as $property => $config) {
 

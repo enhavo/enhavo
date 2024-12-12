@@ -9,8 +9,8 @@ use Enhavo\Component\Metadata\MetadataRepository;
 
 class ElasticSearchIndexRemover
 {
-    private readonly Client $client;
-    private readonly string $indexName;
+    private readonly ?Client $client;
+    private readonly ?string $indexName;
 
     public function __construct(
         private readonly MetadataRepository $metadataRepository,
@@ -18,6 +18,10 @@ class ElasticSearchIndexRemover
         ClientFactory $clientFactory,
         $dsn,
     ) {
+        if (!ElasticSearchEngine::supports($dsn)) {
+            return;
+        }
+
         $this->indexName = $clientFactory->getIndexName($dsn);
         $this->client = $clientFactory->create($dsn);
     }
