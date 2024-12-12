@@ -22,9 +22,6 @@ class EnhavoRevisionExtension extends Extension implements PrependExtensionInter
         $configuration = new Configuration();
 
         $config = $this->processConfiguration($configuration, $configs);
-
-        $container->setParameter('enhavo_revision.restore', $config['restore'] ?? []);
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $loader->load('services/services.yaml');

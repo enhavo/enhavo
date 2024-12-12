@@ -51,3 +51,13 @@ services:
     Enhavo\Bundle\ResourceBundle\Duplicate\Type\ReferenceDuplicateType:
         tags:
             - { name: enhavo_resource.duplicate }
+
+    Enhavo\Bundle\ResourceBundle\Duplicate\Type\CollectionDuplicateType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory'
+        tags:
+            - { name: enhavo_resource.duplicate }
+
+    Enhavo\Bundle\ResourceBundle\Duplicate\Type\CollectionReferenceDuplicateType:
+        tags:
+            - { name: enhavo_resource.duplicate }

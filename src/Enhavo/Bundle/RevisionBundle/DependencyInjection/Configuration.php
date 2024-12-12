@@ -19,16 +19,4 @@ class Configuration implements ConfigurationInterface
 
         return $treeBuilder;
     }
-
-    private function addRestoreSection(ArrayNodeDefinition $node): void
-    {
-        $node
-            ->children()
-                ->arrayNode('restore')
-                    ->useAttributeAsKey('name')
-                    ->variablePrototype()->end()
-                ->end()
-            ->end()
-        ;
-    }
 }

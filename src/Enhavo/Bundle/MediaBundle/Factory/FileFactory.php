@@ -99,6 +99,8 @@ class FileFactory extends Factory
         $newFile->setMimeType($file->getMimeType());
         $newFile->setFilename($file->getFilename());
         $newFile->setExtension($file->getExtension());
+        $newFile->setParameters($file->getParameters());
+        $newFile->setOrder($file->getOrder());
 
         $this->updateFile($newFile);
         return $newFile;

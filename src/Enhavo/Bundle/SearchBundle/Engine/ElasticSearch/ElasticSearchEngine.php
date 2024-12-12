@@ -35,7 +35,7 @@ use Elastica\Mapping;
 class ElasticSearchEngine implements SearchEngineInterface
 {
     private readonly ?Client $client;
-    private readonly string $indexName;
+    private readonly ?string $indexName;
 
     public function __construct(
         private readonly IndexDataProvider $indexDataProvider,
@@ -50,6 +50,10 @@ class ElasticSearchEngine implements SearchEngineInterface
         $dsn,
         private readonly ?array $indexSettings
     ) {
+        if (!self::supports($dsn)) {
+            return;
+        }
+
         $this->indexName = $clientFactory->getIndexName($dsn);
         $this->client = $clientFactory->create($dsn);
     }
