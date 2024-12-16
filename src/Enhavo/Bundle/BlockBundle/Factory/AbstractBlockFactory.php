@@ -9,19 +9,16 @@
 namespace Enhavo\Bundle\BlockBundle\Factory;
 
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
-use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
-abstract class AbstractBlockFactory implements ContainerAwareInterface, FactoryInterface
+abstract class AbstractBlockFactory implements ContainerAwareInterface, BlockFactoryInterface
 {
     use ContainerAwareTrait;
 
-    protected $dataClass;
-
-    public function __construct($dataClass)
-    {
-        $this->dataClass = $dataClass;
+    public function __construct(
+        protected string $dataClass
+    ) {
     }
 
     public function createNew()

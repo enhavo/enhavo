@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\BlockBundle;
 use Doctrine\ORM\Mapping\Driver\XmlDriver;
 use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\DependencyInjection\CompilerPass\BlockManagerCompilerPass;
+use Enhavo\Bundle\BlockBundle\Factory\BlockFactoryInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Enhavo\Component\Type\TypeCompilerPass;
@@ -33,6 +34,10 @@ class EnhavoBlockBundle extends Bundle
         );
 
         $container->addCompilerPass(new BlockManagerCompilerPass());
+
+        $container->registerForAutoconfiguration(BlockFactoryInterface::class)
+            ->addTag('enhavo_block.factory')
+        ;
     }
 
     private function buildDoctrineBlockCompilerPass($configDir, $namespace, $enableParameter): DoctrineOrmMappingsPass
