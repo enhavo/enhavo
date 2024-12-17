@@ -21,6 +21,13 @@ class BlockManagerCompilerPass implements CompilerPassInterface
             }
         }
 
+        $factoryServices = $container->findTaggedServiceIds('enhavo_block.factory');
+        foreach ($factoryServices as $factoryId => $factoryTags) {
+            if (!isset($services[$factoryId])) {
+                $services[$factoryId] = new Reference($factoryId);
+            }
+        }
+
         $blockManager = $container->findDefinition(BlockManager::class);
         $blockManager->addMethodCall('setContainer', [ServiceLocatorTagPass::register($container, $services)]);
     }
