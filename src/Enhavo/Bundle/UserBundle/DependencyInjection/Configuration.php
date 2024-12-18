@@ -189,6 +189,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->scalarNode('template')->isRequired()->cannotBeEmpty()->end()
                         ->scalarNode('auto_enabled')->defaultValue(true)->end()
+                        ->scalarNode('auto_login')->defaultValue(true)->end()
                         ->append($this->addConfigMailNode())
                         ->scalarNode('translation_domain')->defaultValue(null)->end()
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
