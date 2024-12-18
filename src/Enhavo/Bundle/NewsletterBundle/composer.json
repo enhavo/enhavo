@@ -13,10 +13,16 @@
   ],
   "require": {
     "php": "^8.0",
+<<<<<<< HEAD
     "enhavo/app-bundle": "^0.14",
     "enhavo/form-bundle": "^0.14",
     "enhavo/block-bundle": "^0.14",
     "guzzlehttp/guzzle": "^6.2",
+=======
+    "enhavo/app-bundle": "dev-master",
+    "enhavo/form-bundle": "dev-master",
+    "enhavo/block-bundle": "dev-master",
+>>>>>>> 2c5ab95d4 (Remove guzzle-http from composer.json. (#2029))
     "symfony/lock": "^6.4",
     "symfony/http-client": "^6.4",
     "enhavo/cleverreach": "^0.14",
