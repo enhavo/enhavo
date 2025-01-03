@@ -18,7 +18,7 @@
     "require": {
         "ext-json": "*",
         "symfony/http-client": "^6.4",
-        "psr/log": "^1.1"
+        "psr/log": "^1|^2|^3"
     },
     "autoload": {
         "psr-4": {
