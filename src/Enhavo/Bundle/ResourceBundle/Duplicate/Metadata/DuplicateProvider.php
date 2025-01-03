@@ -16,10 +16,29 @@ class DuplicateProvider implements ProviderInterface
         $properties = $metadata->getProperties();
 
         $normalizedProperties = $normalizedData['properties'] ?? [];
-        foreach ($normalizedProperties as $key => $value) {
-            $properties[$key] = $value;
+        foreach ($normalizedProperties as $propertyName => $config) {
+            $configArray = is_int(array_keys($config)[0]) ? $config : [$config];
+            foreach ($configArray as $value) {
+                if (!array_key_exists($propertyName, $properties)) {
+                    $properties[$propertyName] = [];
+                }
+
+                if (!$this->configExists($properties[$propertyName], $value)) {
+                    $properties[$propertyName][] = $value;
+                }
+            }
         }
 
         $metadata->setProperties($properties);
+    }
+
+    private function configExists($configs, $config): bool
+    {
+        foreach ($configs as $checkConfig) {
+            if ($config === $checkConfig) {
+                return true;
+            }
+        }
+        return false;
     }
 }

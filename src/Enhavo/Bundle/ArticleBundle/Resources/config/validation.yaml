@@ -1,6 +1,8 @@
 Enhavo\Bundle\ArticleBundle\Entity\Article:
     properties:
         title:
-            - NotBlank: { groups: [default] }
+            - NotBlank:
+                groups: [default]
         content:
-            - Valid: { groups: [default] }
+            - Valid:
+                groups: [default]

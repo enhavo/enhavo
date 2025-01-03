@@ -51,8 +51,11 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('duplicate')
-                    ->useAttributeAsKey('name')
-                    ->variablePrototype()->end()
+                    ->prototype('array')
+                        ->children()
+                            ->variableNode('properties')->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
         ;

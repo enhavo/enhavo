@@ -25,8 +25,11 @@ class DuplicateAttributeDriver implements DriverInterface
                 $options = $arguments[1] ?? [];
                 $options['type'] = $arguments[0];
 
-                $properties[$property->getName()] = $options;
+                if (!array_key_exists($property->getName(), $properties)) {
+                    $properties[$property->getName()] = [];
+                }
 
+                $properties[$property->getName()][] = $options;
             }
         }
 

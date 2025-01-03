@@ -34,7 +34,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
 
         $resource = $input->createResource();
 
-        $form = $input->getForm($resource);
+        $form = $input->createForm($resource);
 
         if ($form) {
             $form->handleRequest($request);
@@ -48,6 +48,8 @@ class ResourceCreateEndpointType extends AbstractEndpointType
                 if ($form->isValid()) {
                     $this->resourceManager->save($resource);
                     $context->setStatusCode(201);
+
+                    $form = $input->createForm($resource);
 
                     $redirectRoute = $this->routeResolver->getRoute('update', ['api' => false]) ?? $options['update_route'];
                     $apiRoute = $this->routeResolver->getRoute('update', ['api' => true])  ?? $options['update_api_route'];

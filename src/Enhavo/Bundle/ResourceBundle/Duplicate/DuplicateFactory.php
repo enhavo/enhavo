@@ -24,7 +24,7 @@ class DuplicateFactory
         if ($metadata->getClass()) {
             /** @var Duplicate $duplicate */
             $duplicate = $this->duplicateFactory->create($metadata->getClass());
-            return $duplicate->duplicate($source, $target, $context);
+            return $duplicate->duplicate(new SourceValue($source), new TargetValue($target), $context);
         }
 
         $target = $target ?? new ($metadata->getClassName());
@@ -32,21 +32,25 @@ class DuplicateFactory
         $reflection = new \ReflectionClass($source);
 
         if ($source instanceof Proxy) {
+            if (!$source->__isInitialized()) {
+                $source->__load();
+            }
             $reflection = $reflection->getParentClass();
         }
 
-        foreach ($metadata->getProperties() as $property => $config) {
+        foreach ($metadata->getProperties() as $property => $configs) {
+            foreach ($configs as $config) {
+                $reflectionProperty = $reflection->getProperty($property);
+                $reflectionProperty->setAccessible(true);
 
-            $property = $reflection->getProperty($property);
-            $property->setAccessible(true);
+                $sourceValue = new SourceValue($reflectionProperty->getValue($source), $source, $property);
+                $targetValue = new TargetValue($target ? $reflectionProperty->getValue($target) : null, $target, $property);
 
-            $sourceValue = $property->getValue($source);
-            $targetValue = $target ? $property->getValue($target) : null;
-
-            /** @var Duplicate $duplicate */
-            $duplicate = $this->duplicateFactory->create($config);
-            $newValue = $duplicate->duplicate($sourceValue, $targetValue, $context);
-            $property->setValue($target, $newValue);
+                /** @var Duplicate $duplicate */
+                $duplicate = $this->duplicateFactory->create($config);
+                $newValue = $duplicate->duplicate($sourceValue, $targetValue, $context);
+                $reflectionProperty->setValue($target, $newValue);
+            }
         }
 
         return $target;

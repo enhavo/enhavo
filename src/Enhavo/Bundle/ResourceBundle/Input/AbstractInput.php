@@ -153,11 +153,6 @@ abstract class AbstractInput implements InputInterface, ServiceSubscriberInterfa
         return $requestStack->getMainRequest();
     }
 
-    protected function createForm(string $type, $data = null, array $options = []): FormInterface
-    {
-        return $this->container->get('form.factory')->create($type, $data, $options);
-    }
-
     protected function normalize(mixed $data, ?string $format = null, array $context = []): array|string|int|float|bool|\ArrayObject|null
     {
         return $this->container->get(SerializerInterface::class)->normalize($data, $format, $context);

@@ -9,6 +9,7 @@ use Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class CollectionDuplicateType extends AbstractDuplicateType
 {
@@ -26,6 +27,16 @@ class CollectionDuplicateType extends AbstractDuplicateType
 
         if ($sourceValue->getValue() === null) {
             $targetValue->setValue(null);
+        } else if ($options['by_reference']) {
+            $propertyAccessor = new PropertyAccessor();
+            $target = $targetValue->getParent();
+            $values = [];
+            foreach ($sourceValue->getValue() as $key => $item) {
+                $values[] = $this->duplicateFactory->duplicate($item, null, $context);
+            }
+            $propertyAccessor->setValue($target, $targetValue->getPropertyName(), $values);
+            $collection = $propertyAccessor->getValue($target, $targetValue->getPropertyName());
+            $targetValue->setValue($collection);
         } else if (is_array($sourceValue->getValue())) {
             $collection = [];
             foreach ($sourceValue->getValue() as $key => $item) {
@@ -50,6 +61,7 @@ class CollectionDuplicateType extends AbstractDuplicateType
         $resolver->setDefaults([
             'groups' => null,
             'map_target' => false,
+            'by_reference' => false,
         ]);
     }
 

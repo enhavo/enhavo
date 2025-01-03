@@ -25,3 +25,6 @@ bin:
         date: Datum
     message:
         confirm: Wollen sie diese Resource wieder aus dem Papierkorb holen?
+revision:
+    label:
+        revision: Revision

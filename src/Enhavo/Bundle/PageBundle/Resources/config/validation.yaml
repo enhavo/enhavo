@@ -1,6 +1,10 @@
 Enhavo\Bundle\PageBundle\Entity\Page:
     properties:
+        title:
+            - NotBlank:
+                  groups: [default]
         content:
-            - Valid: ~
+            - Valid:
+                  groups: [default]
     constraints:
         - Enhavo\Bundle\FormBundle\Validator\Constraints\HierarchyNotCircular: ~

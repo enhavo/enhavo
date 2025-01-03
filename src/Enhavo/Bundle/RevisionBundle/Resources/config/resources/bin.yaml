@@ -40,6 +40,4 @@ enhavo_resource:
                             confirm_message: bin.message.confirm
             batches:
                 delete:
-                    type: delete
-
-
+                    type: Enhavo\Bundle\RevisionBundle\Batch\Type\BinDeleteBatchType

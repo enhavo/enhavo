@@ -92,7 +92,7 @@ class Person implements RevisionInterface
     private ?string $revisionState = null;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
-    private array $revisionParameters = [];
+    private ?array $revisionParameters = [];
 
     #[ORM\ManyToOne(
         targetEntity: \Enhavo\Bundle\UserBundle\Model\UserInterface::class,

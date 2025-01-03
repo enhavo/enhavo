@@ -6,3 +6,51 @@ enhavo_app:
             path: '@EnhavoContentBundle/Resources/views'
             alias: EnhavoContent
             priority: 10
+
+
+enhavo_resource:
+    duplicate:
+        Enhavo\Bundle\ContentBundle\Entity\Content:
+            properties:
+                title:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']
+                slug:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']
+                metaDescription:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']
+                pageTitle:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']
+                public:
+                    type: property
+                    groups: ['revision', 'restore']
+                publicationDate:
+                    type: clone
+                    groups: ['revision', 'restore']
+                publishedUntil:
+                    type: clone
+                    groups: ['revision', 'restore']
+                noIndex:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']
+                noFollow:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']
+                openGraphImage:
+                    type: file
+                    groups: ['duplicate', 'revision', 'restore']
+                openGraphTitle:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']
+                openGraphDescription:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']
+                route:
+                    type: reference
+                    groups: ['revision', 'restore']
+                canonicalUrl:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']

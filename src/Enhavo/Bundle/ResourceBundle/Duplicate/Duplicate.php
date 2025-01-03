@@ -16,11 +16,8 @@ use Enhavo\Component\Type\AbstractContainerType;
  */
 class Duplicate extends AbstractContainerType
 {
-    function duplicate($source, $target = null, array $context = []): mixed
+    function duplicate(SourceValue $sourceValue, TargetValue $targetValue, array $context = []): mixed
     {
-        $sourceValue = new SourceValue($source);
-        $targetValue = new TargetValue($target);
-
         foreach ($this->parents as $parent) {
             $parent->duplicate($this->options, $sourceValue, $targetValue, $context);
         }

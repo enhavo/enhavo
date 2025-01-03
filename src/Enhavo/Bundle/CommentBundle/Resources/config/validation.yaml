@@ -1,4 +1,5 @@
 Enhavo\Bundle\CommentBundle\Entity\Comment:
     properties:
         comment:
-            - NotBlank: { groups: [submit] }
+            - NotBlank:
+                groups: [default]

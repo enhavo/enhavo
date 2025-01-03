@@ -1,16 +1,6 @@
 enhavo_routing:
     classes:
         Enhavo\Bundle\PageBundle\Entity\Page:
-            router:
-                default:
-                    type: routable
-                view:
-                    type: id
-                    route: enhavo_page_page_update
-                admin:
-                    type: admin
-                    index_route: enhavo_page_page_index
-                    update_route: enhavo_page_page_update
             generators:
                 prefix:
                     type: locale_prefix

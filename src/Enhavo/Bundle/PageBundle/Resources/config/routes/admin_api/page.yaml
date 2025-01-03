@@ -52,14 +52,14 @@ enhavo_page_admin_api_page_batch:
             type: resource_batch
             grid: enhavo_page.page
 
-enhavo_page_admin_api_duplicate:
+enhavo_page_admin_api_page_duplicate:
     path: /page/duplicate/{id}
     methods: [POST]
     defaults:
         _expose: admin_api
         _endpoint:
             type: resource_duplicate
-            grid: enhavo_page.page
+            input: enhavo_page.page
 
 enhavo_page_admin_api_preview:
     path: /page/preview/{id}
@@ -85,3 +85,11 @@ enhavo_page_admin_api_page_auto_complete:
             resource: enhavo_page.page
             repository_method: findByTerm
             choice_label: title
+
+enhavo_page_admin_api_page_revision_restore:
+    path: /page/revision/restore/{id}/{revisionId}
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: revision_restore
+            input: enhavo_page.page
