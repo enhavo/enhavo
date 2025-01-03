@@ -19,7 +19,7 @@ class DuplicateFactory
     public function duplicate(object $source, object $target = null, $context = []): object
     {
         /** @var Metadata $metadata */
-         $metadata = $this->metadataRepository->getMetadata($source);
+        $metadata = $this->metadataRepository->getMetadata($source);
 
         if ($metadata->getClass()) {
             /** @var Duplicate $duplicate */

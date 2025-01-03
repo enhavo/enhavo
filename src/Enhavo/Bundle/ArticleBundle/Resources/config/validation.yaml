@@ -4,4 +4,5 @@ Enhavo\Bundle\ArticleBundle\Entity\Article:
             - NotBlank:
                 groups: [default]
         content:
-            - Valid: ~
+            - Valid:
+                groups: [default]

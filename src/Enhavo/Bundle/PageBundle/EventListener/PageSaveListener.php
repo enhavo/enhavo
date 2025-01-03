@@ -12,13 +12,14 @@ class PageSaveListener
     public function __construct(
         private readonly RevisionManager $revisionManager,
         private readonly TokenStorageInterface $tokenStorage,
+        private readonly bool $revisionEnabled,
     )
     {
     }
 
     function onSave(ResourceEvent $resourceEvent)
     {
-        if ($resourceEvent->getSubject() instanceof PageInterface) {
+        if ($this->revisionEnabled && $resourceEvent->getSubject() instanceof PageInterface) {
             $this->revisionManager->saveRevision($resourceEvent->getSubject(), $this->tokenStorage->getToken()?->getUser());
         }
     }

@@ -32,7 +32,3 @@ services:
             - '@enhavo_routing.route.repository'
         tags:
             - { name: enhavo_app.vue_route_provider }
-
-    Enhavo\Bundle\RoutingBundle\Duplicate\Type\RouteDuplicateType:
-        tags:
-            - { name: enhavo_resource.duplicate }
