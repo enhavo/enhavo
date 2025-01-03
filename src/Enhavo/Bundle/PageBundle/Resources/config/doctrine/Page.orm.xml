@@ -3,14 +3,27 @@
     <entity name="Enhavo\Bundle\PageBundle\Entity\Page" table="page_page" repository-class="Enhavo\Bundle\PageBundle\Repository\PageRepository">
         <field name="code" nullable="true" />
         <field name="position" type="integer" nullable="true" />
+        <field name="revisionDate" type="datetime" nullable="true" />
+        <field name="revisionState" nullable="true" />
+        <field name="revisionParameters" type="json" nullable="true" />
 
         <many-to-one field="parent" target-entity="Enhavo\Bundle\PageBundle\Model\PageInterface" inversed-by="children">
             <join-column on-delete="SET NULL" />
         </many-to-one>
 
+        <many-to-one field="revisionSubject" target-entity="Enhavo\Bundle\PageBundle\Model\PageInterface" inversed-by="revisions" />
+
+        <many-to-one field="revisionUser" target-entity="Enhavo\Bundle\UserBundle\Model\UserInterface" />
+
         <one-to-many field="children" target-entity="Enhavo\Bundle\PageBundle\Model\PageInterface" mapped-by="parent">
             <order-by>
                 <order-by-field name="position" direction="ASC" />
+            </order-by>
+        </one-to-many>
+
+        <one-to-many field="revisions" target-entity="Enhavo\Bundle\PageBundle\Model\PageInterface" mapped-by="revisionSubject">
+            <order-by>
+                <order-by-field name="revisionDate" direction="DESC" />
             </order-by>
         </one-to-many>
 

@@ -17,31 +17,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LocalePrefixGenerator extends AbstractGenerator
 {
-    /** @var TranslationManager */
-    private $translationManager;
-
-    /** @var TranslatorInterface */
-    private $routeTranslator;
-
-    /** @var TranslatorInterface */
-    private $textTranslator;
-
-    /** @var RouteFactory */
-    private $routeFactory;
-
-    /**
-     * LocalePrefixGenerator constructor.
-     * @param TranslationManager $translationManager
-     * @param TranslatorInterface $routeTranslator
-     * @param TranslatorInterface $textTranslator
-     * @param RouteFactory $routeFactory
-     */
-    public function __construct(TranslationManager $translationManager, TranslatorInterface $routeTranslator, TranslatorInterface $textTranslator, RouteFactory $routeFactory)
+    public function __construct(
+        private TranslationManager $translationManager,
+        private TranslatorInterface $routeTranslator,
+        private TranslatorInterface $textTranslator,
+        private RouteFactory $routeFactory,
+    )
     {
-        $this->translationManager = $translationManager;
-        $this->routeTranslator = $routeTranslator;
-        $this->textTranslator = $textTranslator;
-        $this->routeFactory = $routeFactory;
     }
 
 

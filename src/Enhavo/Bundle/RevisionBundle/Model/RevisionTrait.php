@@ -9,7 +9,7 @@ trait RevisionTrait
 {
     private ?\DateTime $revisionDate = null;
     private ?string $revisionState = null;
-    private array $revisionParameters = [];
+    private ?array $revisionParameters = [];
     private ?RevisionInterface $revisionSubject = null;
     private ?UserInterface $revisionUser = null;
     private Collection $revisions;

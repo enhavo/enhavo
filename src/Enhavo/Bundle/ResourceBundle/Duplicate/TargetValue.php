@@ -8,6 +8,8 @@ class TargetValue
 
     public function __construct(
         private mixed $originalValue = null,
+        private ?object $parent = null,
+        private ?string $propertyName = null,
     )
     {
     }
@@ -25,5 +27,15 @@ class TargetValue
     public function getOriginalValue(): mixed
     {
         return $this->originalValue;
+    }
+
+    public function getParent(): ?object
+    {
+        return $this->parent;
+    }
+
+    public function getPropertyName(): ?string
+    {
+        return $this->propertyName;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Enhavo\Bundle\PageBundle\Page;
+
 use Enhavo\Bundle\PageBundle\Entity\Page;
 use Enhavo\Bundle\PageBundle\Repository\PageRepository;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -8,21 +9,11 @@ use Symfony\Component\Routing\RouterInterface;
 
 class PageManager
 {
-    /** @var PageRepository */
-    private $pageRepository;
-
-    /** @var RouterInterface */
-    private $router;
-
-    /**
-     * PageManager constructor.
-     * @param PageRepository $pageRepository
-     * @param RouterInterface $router
-     */
-    public function __construct(PageRepository $pageRepository, RouterInterface $router)
+    public function __construct(
+        private readonly PageRepository $pageRepository,
+        private readonly RouterInterface $router
+    )
     {
-        $this->pageRepository = $pageRepository;
-        $this->router = $router;
     }
 
     public function getPagePath($code, $parameters, $referenceType)

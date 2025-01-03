@@ -91,3 +91,11 @@ services:
         tags:
             - { name: controller.service_arguments }
             - { name: container.service_subscriber }
+
+    Enhavo\Bundle\PageBundle\EventListener\PageSaveListener:
+        arguments:
+            - '@Enhavo\Bundle\RevisionBundle\Revision\RevisionManager'
+            - '@security.token_storage'
+        tags:
+            - { name: kernel.event_listener, event: enhavo_resource.post_create, method: onSave }
+            - { name: kernel.event_listener, event: enhavo_resource.post_update, method: onSave }

@@ -90,3 +90,9 @@ services:
             - '@translator'
         tags:
             - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\RevisionBundle\Batch\Type\BinDeleteBatchType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Delete\DoctrineDeleteHandler'
+        tags:
+            - { name: enhavo_resource.batch }

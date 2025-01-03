@@ -7,36 +7,21 @@ use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Enhavo\Bundle\PageBundle\Model\PageInterface;
+use Enhavo\Bundle\RevisionBundle\Model\RevisionInterface;
+use Enhavo\Bundle\RevisionBundle\Model\RevisionTrait;
 
 /**
  * Page
  */
-class Page extends Content implements PageInterface
+class Page extends Content implements PageInterface, RevisionInterface
 {
-    /**
-     * @var NodeInterface
-     */
-    private $content;
+    use RevisionTrait;
 
-    /**
-     * @var string
-     */
-    private $code;
-
-    /**
-     * @var PageInterface
-     */
-    private $parent;
-
-    /**
-     * @var Collection
-     */
-    private $children;
-
-    /**
-     * @var ?int
-     */
-    private $position;
+    private ?NodeInterface $content = null;
+    private ?string $code = null;
+    private ?PageInterface $parent = null;
+    private Collection $children;
+    private ?int $position = null;
 
     /**
      * Page constructor.
@@ -44,6 +29,7 @@ class Page extends Content implements PageInterface
     public function __construct()
     {
         $this->children = new ArrayCollection();
+        $this->revisions = new ArrayCollection();
     }
 
     /**
@@ -195,5 +181,8 @@ class Page extends Content implements PageInterface
         $this->position = $position;
     }
 
-
+    public function getRevisionTitle(): ?string
+    {
+        return $this->getTitle();
+    }
 }

@@ -26,7 +26,6 @@ enhavo_doctrine_extension:
                     idField: blockId
                     nameField: blockClass
 
-
 enhavo_resource:
     duplicate:
         Enhavo\Bundle\BlockBundle\Entity\Node:
@@ -36,12 +35,13 @@ enhavo_resource:
                     groups: ['duplicate', 'revision', 'restore']
                 children:
                     type: collection
+                    by_reference: true
                     groups: ['duplicate', 'revision', 'restore']
                 name:
                     type: property
                     groups: ['duplicate', 'revision', 'restore']
                 block:
-                    type: model
+                    type: Enhavo\Bundle\BlockBundle\Duplicate\BlockDuplicateType
                     groups: ['duplicate', 'revision', 'restore']
                 property:
                     type: property
@@ -52,3 +52,72 @@ enhavo_resource:
                 type:
                     type: property
                     groups: ['duplicate', 'revision', 'restore']
+
+        Enhavo\Bundle\BlockBundle\Model\Column\OneColumnBlock:
+            properties:
+                column:
+                    type: model
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+
+        Enhavo\Bundle\BlockBundle\Model\Column\TwoColumnBlock:
+            properties:
+                columnOne:
+                    type: model
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                columnTwo:
+                    type: model
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+
+        Enhavo\Bundle\BlockBundle\Model\Column\ThreeColumnBlock:
+            properties:
+                columnOne:
+                    type: model
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                columnTwo:
+                    type: model
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                columnThree:
+                    type: model
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+
+        Enhavo\Bundle\BlockBundle\Model\Block\TextBlock:
+            properties:
+                title:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                text:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+
+        Enhavo\Bundle\BlockBundle\Model\Block\BlockquoteBlock:
+            properties:
+                title:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                author:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+
+        Enhavo\Bundle\BlockBundle\Model\Block\GalleryBlock:
+            properties:
+                title:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                text:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                files:
+                    type: file
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+
+        Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock:
+            properties:
+                title:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                caption:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                file:
+                    type: file
+                    groups: [ 'duplicate', 'revision', 'restore' ]

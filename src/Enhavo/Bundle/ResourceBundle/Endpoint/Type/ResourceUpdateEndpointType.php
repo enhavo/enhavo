@@ -42,7 +42,7 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
 
         $this->denyAccessUnlessGranted(new Permission($input->getResourceName(), $options['permission']), $resource);
 
-        $form = $input->getForm($resource);
+        $form = $input->createForm($resource);
         if ($form) {
             $form->handleRequest($request);
 
@@ -53,6 +53,7 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
                 if ($form->isValid()) {
                     $this->resourceManager->save($resource);
                     $context->setStatusCode(200);
+                    $form = $input->createForm($resource);
                 } else {
                     $context->setStatusCode(400);
                 }

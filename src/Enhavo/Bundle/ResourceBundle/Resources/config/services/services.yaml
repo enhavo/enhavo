@@ -63,6 +63,12 @@ services:
         tags:
             - { name: console.command }
 
+    Enhavo\Bundle\ResourceBundle\Command\DebugDuplicateCommand:
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataRepository[Duplicate]'
+        tags:
+            - { name: console.command }
+
     Enhavo\Bundle\ResourceBundle\Delete\DoctrineDeleteHandler:
         arguments:
             - '@doctrine.orm.entity_manager'

@@ -2,202 +2,86 @@
 
 namespace Enhavo\Bundle\BlockBundle\Model\Block;
 
-use Enhavo\Bundle\ContentBundle\Content\Publishable;
-use Enhavo\Bundle\ContentBundle\Content\PublishableTrait;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Enhavo\Bundle\SliderBundle\Entity\Slider;
-use Enhavo\Bundle\SliderBundle\Model\SlideInterface;
-use Enhavo\Bundle\SliderBundle\Model\SliderInterface;
 
-/**
- * Slider
- */
-class SliderBlockSlide implements SlideInterface, Publishable
+class SliderBlockSlide
 {
-    use PublishableTrait;
+    private ?int $id;
 
-    /**
-     * @var integer
-     */
-    protected $id;
+    private ?string $title;
 
-    /**
-     * @var string
-     */
-    protected $title;
+    private ?string $text;
 
-    /**
-     * @var string
-     */
-    protected $text;
+    private ?string $url;
 
-    /**
-     * @var string
-     */
-    protected $url;
+    private ?int $position;
 
-    /**
-     * @var integer
-     */
-    protected $position;
+    private ?FileInterface $image;
 
-    /**
-     * @var FileInterface
-     */
-    protected $image;
+    private ?SliderBlock $slider;
 
-    /**
-     * @var Slider
-     */
-    protected $slider;
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set title
-     *
-     * @param string $title
-     * @return SliderBlockSlide
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * Set text
-     *
-     * @param string $text
-     * @return SliderBlockSlide
-     */
-    public function setText($text)
+    public function setTitle(?string $title): void
     {
-        $this->text = $text;
-
-        return $this;
+        $this->title = $title;
     }
 
-    /**
-     * Get text
-     *
-     * @return string
-     */
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }
 
-    /**
-     * Set url
-     *
-     * @param string $url
-     * @return SliderBlockSlide
-     */
-    public function setUrl($url)
+    public function setText(?string $text): void
     {
-        $this->url = $url;
-
-        return $this;
+        $this->text = $text;
     }
 
-    /**
-     * Get url
-     *
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    /**
-     * Set position
-     *
-     * @param integer $position
-     * @return Slider
-     */
-    public function setPosition($position)
+    public function setUrl(?string $url): void
     {
-        $this->position = $position;
-
-        return $this;
+        $this->url = $url;
     }
 
-    /**
-     * Get position
-     *
-     * @return integer
-     */
-    public function getPosition()
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    /**
-     * Set slider
-     *
-     * @param SliderInterface $slider
-     * @return SliderBlockSlide
-     */
-    public function setSlider(SliderInterface $slider = null)
+    public function setPosition(?int $position): void
     {
-        $this->slider = $slider;
-        if(!$this->slider->getSlides()->contains($this)) {
-            $this->slider->addSlide($this);
-        }
-        return $this;
+        $this->position = $position;
     }
 
-    /**
-     * Get slider
-     *
-     * @return Slider
-     */
-    public function getSlider()
+    public function getImage(): ?FileInterface
+    {
+        return $this->image;
+    }
+
+    public function setImage(?FileInterface $image): void
+    {
+        $this->image = $image;
+    }
+
+    public function getSlider(): ?SliderBlock
     {
         return $this->slider;
     }
 
-    /**
-     * Set image
-     *
-     * @param FileInterface|null $image
-     * @return SliderBlockSlide
-     */
-    public function setImage(FileInterface $image = null)
+    public function setSlider(?SliderBlock $slider): void
     {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return FileInterface|null
-     */
-    public function getImage()
-    {
-        return $this->image;
+        $this->slider = $slider;
     }
 }

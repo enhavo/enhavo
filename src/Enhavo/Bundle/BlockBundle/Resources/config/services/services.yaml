@@ -38,3 +38,7 @@ services:
     Enhavo\Bundle\BlockBundle\Action\Type\BlockCollapseActionType:
         tags:
             - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\BlockBundle\Duplicate\BlockDuplicateType:
+        tags:
+            - { name: enhavo_resource.duplicate }

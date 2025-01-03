@@ -25,3 +25,6 @@ bin:
         date: Date
     message:
         confirm: Do you really want to restore it from bin?
+revision:
+    label:
+        revision: Revision

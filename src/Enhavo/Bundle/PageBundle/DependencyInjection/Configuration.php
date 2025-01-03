@@ -14,6 +14,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
 
         $this->addSpecialPageConfiguration($rootNode);
+        $this->addRevisionConfiguration($rootNode);
 
         return $treeBuilder;
     }
@@ -30,6 +31,19 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('label')->isRequired()->end()
                             ->scalarNode('translation_domain')->defaultValue(null)->end()
                         ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    public function addRevisionConfiguration(NodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->arrayNode('revision')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('enabled')->defaultValue(true)->end()
                     ->end()
                 ->end()
             ->end();

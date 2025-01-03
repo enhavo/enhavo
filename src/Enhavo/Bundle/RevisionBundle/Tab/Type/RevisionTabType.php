@@ -96,6 +96,7 @@ class RevisionTabType extends AbstractTabType
             'translation_domain' => 'EnhavoRevisionBundle',
             'serialization_groups' => ['endpoint', 'endpoint.admin'],
             'user_label' => 'email',
+            'label' => 'revision.label.revision',
         ]);
     }
 

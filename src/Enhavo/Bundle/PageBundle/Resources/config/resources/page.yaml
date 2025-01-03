@@ -87,15 +87,36 @@ enhavo_resource:
                     property: content
                 meta:
                     type: meta
+                revision:
+                    type: revision
             actions:
                 save:
                     type: save
                 duplicate:
                     type: duplicate
-                    route: enhavo_page_admin_api_duplicate
+                    route: enhavo_page_admin_api_page_duplicate
                     permission: ROLE_ENHAVO_PAGE_PAGE_CREATE
                     enabled: 'expr:resource && resource.getId()'
                 preview:
                     type: preview
                     api_route: enhavo_page_admin_api_preview
                     enabled: 'expr:resource && resource.getId()'
+
+    duplicate:
+        Enhavo\Bundle\PageBundle\Entity\Page:
+            properties:
+                content:
+                    type: model
+                    groups: ['duplicate', 'revision', 'restore']
+                code:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']
+                parent:
+                    type: reference
+                    groups: ['duplicate', 'revision', 'restore']
+                children:
+                    type: collection_reference
+                    groups: ['duplicate', 'revision', 'restore']
+                position:
+                    type: property
+                    groups: ['duplicate', 'revision', 'restore']

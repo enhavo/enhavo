@@ -1,6 +1,6 @@
 <?php
 
-namespace Enhavo\Bundle\RoutingBundle\Form\Type;
+namespace Enhavo\Bundle\RoutingBundle\Tests\Form\Type;
 
 use Symfony\Component\Form\Test\TypeTestCase;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;

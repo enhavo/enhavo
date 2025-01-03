@@ -15,7 +15,6 @@ class Input extends AbstractInput implements ConfigMergeInterface
     /** @var Tab[]|null  */
     private ?array $tabs = null;
     private ?array $actionsSecondary = null;
-    private ?FormInterface $form = null;
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -31,7 +30,8 @@ class Input extends AbstractInput implements ConfigMergeInterface
             'repository_arguments' => [
                 'expr:request.get("id", 0)'
             ],
-            'serialization_groups' => ['endpoint', 'endpoint.admin']
+            'serialization_groups' => ['endpoint', 'endpoint.admin'],
+            'validation_groups' => ['default'],
         ]);
 
         $resolver->setRequired('resource');
@@ -155,13 +155,14 @@ class Input extends AbstractInput implements ConfigMergeInterface
         ];
     }
 
-    public function getForm(mixed $data = null, array $context = []): ?FormInterface
+    public function createForm(mixed $data = null, array $context = []): ?FormInterface
     {
-        if ($this->form !== null) {
-            return $this->form;
-        } else if ($this->options['form']) {
-            $this->form = $this->createForm($this->options['form'], $data, $this->options['form_options']);
-            return $this->form;
+        if ($this->options['form']) {
+            $options = [
+                'validation_groups' => $this->options['validation_groups'],
+            ];
+
+            return $this->container->get('form.factory')->create($this->options['form'], $data, array_merge($options, $this->options['form_options']));
         }
 
         return null;
