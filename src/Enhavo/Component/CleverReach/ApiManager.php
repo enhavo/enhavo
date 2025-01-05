@@ -27,7 +27,8 @@ class ApiManager implements ApiManagerInterface
         int $groupId,
         bool $active = false,
         array $attributes = [],
-        array $globalAttributes = []
+        array $globalAttributes = [],
+        array $tags = [],
     ) {
         $now = time();
 
@@ -40,6 +41,7 @@ class ApiManager implements ApiManagerInterface
                 'activated' => $active ? $now : 0,
                 'attributes' => $attributes,
                 'global_attributes' => $globalAttributes,
+                'tags' => $tags,
             ]
         );
     }

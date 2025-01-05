@@ -9,20 +9,19 @@ use PHPUnit\Framework\TestCase;
 
 class ApiManagerTest extends TestCase
 {
-    private function createDependencies()
+    private function createDependencies(): ApiManagerTestDependencies
     {
         $dependencies = new ApiManagerTestDependencies();
         $dependencies->adapter = $this->getMockBuilder(AdapterInterface::class)->getMock();
         return $dependencies;
     }
 
-    private function createInstance(ApiManagerTestDependencies $dependencies)
+    private function createInstance(ApiManagerTestDependencies $dependencies): ApiManager
     {
-        $instance = new ApiManager($dependencies->adapter);
-        return$instance;
+        return new ApiManager($dependencies->adapter);
     }
 
-    public function testCreateSubscriber()
+    public function testCreateSubscriber(): void
     {
         $dependencies = $this->createDependencies();
 
@@ -42,7 +41,41 @@ class ApiManagerTest extends TestCase
         $this->assertEquals('john.doe@example.org', $data['email']);
     }
 
-    public function testGetSubscriber()
+    public function testCreateSubscriberWithTags(): void
+    {
+        $dependencies = $this->createDependencies();
+
+        $groupId = 456;
+        $tags = ['tag 1', 'tag 2'];
+
+        $email = 'johnny.doe@example.org';
+        $dependencies->adapter
+            ->method('action')
+            ->with('post',
+                '/v3/groups.json/' . $groupId .'/receivers',
+                [
+                    'email' => $email,
+                    'registered' => time(),
+                    'activated' => false,
+                    'attributes' => ['salutation' => 'Mr.', 'firstname' => 'John', 'lastname' => 'Doe',],
+                    'global_attributes' => [],
+                    'tags' => $tags,
+                ])
+            ->willReturn(['email' => $email, 'tags' => $tags]);
+
+        $manager = $this->createInstance($dependencies);
+
+        $data = $manager->createSubscriber($email, $groupId, false, [
+            'salutation' => 'Mr.',
+            'firstname' => 'John',
+            'lastname' => 'Doe',
+        ], [], $tags);
+
+        $this->assertArrayHasKey('tags', $data);
+        $this->assertSame($tags, $data['tags']);
+    }
+
+    public function testGetSubscriber(): void
     {
         $dependencies = $this->createDependencies();
 
