@@ -29,7 +29,6 @@ export default defineConfig({
     },
     plugins: [
         vue(),
-        splitVendorChunkPlugin(),
         containerDIPlugin(),
         fantasticon(fantasticonSetting({
             outputDir: path.resolve(__dirname, '../../public/build/admin'),
@@ -75,7 +74,8 @@ export default defineConfig({
 
         rollupOptions: {
             input: '/entrypoints/application.js',
-        }
+        },
+
     },
     server: {
         strictPort: true,
