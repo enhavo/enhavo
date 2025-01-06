@@ -62,7 +62,7 @@ enhavo_article_admin_api_article_duplicate:
             input: enhavo_article.article
 
 enhavo_article_admin_api_article_preview:
-    path: /article/preview/{id}
+    path: /article/preview
     methods: [GET, POST]
     defaults:
         _expose: admin_api

@@ -34,8 +34,8 @@ security:
             custom_authenticators:
                 - Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator
             logout:
-                path: enhavo_user_theme_security_logout
-                target: enhavo_user_theme_security_login
+                path: enhavo_user_theme_logout
+                target: enhavo_user_theme_login
 
     access_control:
         - { path: ^/admin/login$, role: PUBLIC_ACCESS }

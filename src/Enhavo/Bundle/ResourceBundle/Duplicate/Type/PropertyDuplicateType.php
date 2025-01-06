@@ -16,8 +16,12 @@ class PropertyDuplicateType extends AbstractDuplicateType
         }
 
         $value = $sourceValue->getValue();
-        if (!is_null($value) && !is_scalar($value)) {
-            throw new \InvalidArgumentException(sprintf('Duplicate type property only accept scalar values but "%s" given', gettype($value)));
+        if (!is_null($value) && !(is_scalar($value) || is_array($value))) {
+            throw new \InvalidArgumentException(sprintf('Duplicate type property only accept scalar or array values but "%s" given for property "%s" on class "%s"',
+                gettype($value),
+                $sourceValue->getPropertyName(),
+                get_class($sourceValue->getParent()
+            )));
         }
 
         $targetValue->setValue($value);

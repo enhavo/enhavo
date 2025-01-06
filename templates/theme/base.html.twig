@@ -8,8 +8,8 @@
     {% endif %}
 
     {% if app.user %}
-        <a href="{{ path('enhavo_user_theme_security_logout') }}">Logout</a>
+        <a href="{{ path('enhavo_user_theme_logout') }}">Logout</a>
     {% else %}
-        <a href="{{ path('enhavo_user_theme_security_login') }}">Login</a>
+        <a href="{{ path('enhavo_user_theme_login') }}">Login</a>
     {% endif %}
 {% endblock %}

@@ -35,7 +35,7 @@ class PreviewEndpointType extends AbstractEndpointType
 
         $resource = $input->getResource() ?? $input->createResource();
 
-        $form = $input->getForm($resource);
+        $form = $input->createForm($resource);
         if ($form) {
             $form->setData($resource);
             $form->handleRequest($request);

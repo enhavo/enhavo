@@ -130,6 +130,7 @@ services:
             - '@enhavo/app/manager/ResourceInputManager'
             - '@enhavo/app/translation/Translator'
             - '@enhavo/vue-form/form/FormEventDispatcher'
+            - '@enhavo/app/frame/FrameManager'
         tags:
             - { name: 'enhavo_app.action', class: 'AutoSaveAction' }
 
