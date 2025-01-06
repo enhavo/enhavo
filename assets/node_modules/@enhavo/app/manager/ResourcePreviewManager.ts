@@ -1,4 +1,3 @@
-import {Router} from "@enhavo/app/routing/Router";
 import {ActionManager} from "@enhavo/app/action/ActionManager";
 import {ActionInterface} from "@enhavo/app/action/ActionInterface";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
@@ -73,11 +72,8 @@ export class ResourcePreviewManager
             if ((event as PreviewData).target == this.frameManager.getId()) {
                 this.previewData = (event as PreviewData).data;
                 if (this.iframe) {
-                    this.iframe.contentWindow.document.open();
-                    this.iframe.contentWindow.document.write(this.previewData);
-                    this.iframe.contentWindow.document.close();
+                    this.iframe.contentWindow.document.querySelector('html').innerHTML = this.previewData
                 }
-
                 event.resolve();
             }
         })

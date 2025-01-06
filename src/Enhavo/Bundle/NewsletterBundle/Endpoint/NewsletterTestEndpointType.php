@@ -39,7 +39,7 @@ class NewsletterTestEndpointType extends AbstractEndpointType
 
         $input = $this->inputFactory->create($options['input']);
 
-        $form = $input->getForm();
+        $form = $input->createForm();
         $form->setData($newsletter);
 
         $submittedFormData = [];

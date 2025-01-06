@@ -61,7 +61,7 @@ enhavo_comment_admin_api_comment_batch:
             grid: enhavo_comment.comment
 
 enhavo_comment_admin_api_preview:
-    path: /comment/preview/{id}
+    path: /comment/preview
     methods: [GET, POST]
     defaults:
         _expose: admin_api

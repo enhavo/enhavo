@@ -62,7 +62,7 @@ enhavo_page_admin_api_page_duplicate:
             input: enhavo_page.page
 
 enhavo_page_admin_api_preview:
-    path: /page/preview/{id}
+    path: /page/preview
     methods: [GET, POST]
     defaults:
         _expose: admin_api
