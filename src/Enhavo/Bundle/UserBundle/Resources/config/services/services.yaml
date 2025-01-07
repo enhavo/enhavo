@@ -48,7 +48,6 @@ services:
 
     Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator:
         arguments:
-            - '@enhavo_user.user.repository'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@router'
             - '@event_dispatcher'
@@ -151,5 +150,5 @@ services:
     Enhavo\Bundle\UserBundle\UserIdentifier\EmailUserIdentifierProvider:
         public: true
 
-    Enhavo\Bundle\UserBundle\UserIdentifier\UsernamelUserIdentifieProvider:
+    Enhavo\Bundle\UserBundle\UserIdentifier\UsernameUserIdentifierProvider:
         public: true

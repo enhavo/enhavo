@@ -33,14 +33,15 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
 class FormLoginAuthenticator extends AbstractAuthenticator
 {
+    private UserBadge $userBadge;
+
     public function __construct(
-        private readonly UserRepository $userRepository,
         private readonly ConfigurationProvider $configurationProvider,
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly FormFactoryInterface $formFactory,
         private readonly FactoryInterface $endpointFactory,
-        string $className
+        string $className,
     )
     {
     }
@@ -70,8 +71,10 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
         $tokenBadge = new CsrfTokenBadge('authenticate', $credentials->getCsrfToken());
 
+        $this->userBadge = new UserBadge($credentials->getUserIdentifier());
+
         return new Passport(
-            new UserBadge($credentials->getUserIdentifier(), [$this->userRepository, $loginConfiguration->getRepositoryMethod()]),
+            $this->userBadge,
             new PasswordCredentials($credentials->getPassword()),
             [ $rememberMeBadge, $tokenBadge ],
         );
@@ -98,6 +101,10 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $user = $token->getUser();
         $event = $this->dispatchSuccess($user);
 
+        if ($event->getResponse() !== null) {
+            return $event->getResponse();
+        }
+
         $endpointConfig = $request->attributes->get('_endpoint');
         if ($endpointConfig) {
             /** @var Endpoint $endpoint */
@@ -105,12 +112,11 @@ class FormLoginAuthenticator extends AbstractAuthenticator
             return $endpoint->getResponse($request);
         }
 
-        return $event->getResponse();
+        return null;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
-        $loginConfiguration = $this->configurationProvider->getLoginConfiguration();
         $credentials = $this->getCredentials($request);
 
         if ($request->hasSession()) {
@@ -121,7 +127,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $user = $exception->getToken()?->getUser();
 
         if ($user === null) {
-            $user = call_user_func([$this->userRepository, $loginConfiguration->getRepositoryMethod()], $credentials->getUserIdentifier());
+            $user = $this->userBadge->getUser();
         }
 
         $event = $this->dispatchFailure($user, $exception);

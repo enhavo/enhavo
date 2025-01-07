@@ -8,7 +8,7 @@ security:
         entity_user_provider:
             entity:
                 class: Enhavo\Bundle\UserBundle\Model\User
-                property: username
+                property: userIdentifier
 
     firewalls:
         dev:
