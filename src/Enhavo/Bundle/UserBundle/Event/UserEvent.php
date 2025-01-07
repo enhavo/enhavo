@@ -2,9 +2,9 @@
 
 namespace Enhavo\Bundle\UserBundle\Event;
 
-use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class UserEvent extends Event

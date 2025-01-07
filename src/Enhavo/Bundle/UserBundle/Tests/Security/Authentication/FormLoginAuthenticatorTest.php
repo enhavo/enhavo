@@ -40,7 +40,6 @@ class FormLoginAuthenticatorTest extends TestCase
         $className = $className ?? User::class;
 
         return new FormLoginAuthenticator(
-            $dependencies->userRepository,
             $dependencies->configurationProvider,
             $dependencies->urlGenerator,
             $dependencies->eventDispatcher,
@@ -125,7 +124,6 @@ class FormLoginAuthenticatorTest extends TestCase
             $configuration->setRoute('config.login.route');
             $configuration->setFormClass('formClass');
             $configuration->setFormOptions([]);
-            $configuration->setRepositoryMethod('loadUserByIdentifier');
             return $configuration;
         });
 
@@ -204,9 +202,18 @@ class FormLoginAuthenticatorTest extends TestCase
             $loginConfiguration->setRoute('login_route');
             $loginConfiguration->setFormClass('formClass');
             $loginConfiguration->setFormOptions([]);
-            $loginConfiguration->setRepositoryMethod('loadUserByIdentifier');
             return $loginConfiguration;
         });
+
+        $dependencies->formFactory->method('create')->willReturn($dependencies->form);
+
+        $credentials = new Credentials();
+        $credentials->setUserIdentifier('1337.user@enhavo.com');
+        $credentials->setPassword('__PW__');
+        $credentials->setCsrfToken('__CSRF__');
+        $dependencies->form->method('getData')->willReturn($credentials);
+
+        $instance = $this->createInstance($dependencies);
 
 
         $dependencies->formFactory->method('create')->willReturn($dependencies->form);
@@ -216,6 +223,12 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies->form->method('getData')->willReturn($credentials);
 
         $instance = $this->createInstance($dependencies);
+
+        // need to call authenticate first, to set the userBadge
+        $passport = $instance->authenticate($dependencies->request);
+        /** @var UserBadge $userBadge */
+        $userBadge = $passport->getBadge(UserBadge::class);
+        $userBadge->setUserLoader([$dependencies->userRepository, 'loadUserByIdentifier']);
 
         $response = $instance->onAuthenticationFailure($dependencies->request, new AuthenticationException());
 

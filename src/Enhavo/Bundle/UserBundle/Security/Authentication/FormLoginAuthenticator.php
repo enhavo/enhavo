@@ -12,8 +12,6 @@ use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\ConfigurationException;
 use Enhavo\Bundle\UserBundle\Model\CredentialsInterface;
-use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -23,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
@@ -33,7 +32,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
 class FormLoginAuthenticator extends AbstractAuthenticator
 {
-    private UserBadge $userBadge;
+    private ?UserBadge $userBadge = null;
 
     public function __construct(
         private readonly ConfigurationProvider $configurationProvider,
@@ -62,8 +61,6 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
     public function authenticate(Request $request): Passport
     {
-        $loginConfiguration = $this->configurationProvider->getLoginConfiguration();
-
         $credentials = $this->getCredentials($request);
 
         $rememberMeBadge = new RememberMeBadge();
