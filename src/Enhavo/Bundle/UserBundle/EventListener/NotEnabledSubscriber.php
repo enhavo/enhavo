@@ -8,7 +8,7 @@ namespace Enhavo\Bundle\UserBundle\EventListener;
 
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\NotEnabledException;
-use Enhavo\Bundle\UserBundle\Model\User;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class NotEnabledSubscriber implements EventSubscriberInterface
@@ -24,7 +24,7 @@ class NotEnabledSubscriber implements EventSubscriberInterface
     {
         $user = $userEvent->getUser();
 
-        if ($user instanceof User && !$user->isEnabled()) {
+        if ($user instanceof UserInterface && !$user->isEnabled()) {
             $exception = new NotEnabledException('Not enabled');
             $exception->setUser($user);
             $userEvent->setException($exception);
