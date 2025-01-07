@@ -36,11 +36,12 @@ class PasswordExpiredSubscriber implements EventSubscriberInterface
 
     public function onPreAuth(UserEvent $event): void
     {
-        if ($this->isPasswordExpired($event->getUser())) {
+        $user = $event->getUser();
+        if ($user instanceof UserInterface && $this->isPasswordExpired($user)) {
             $exception = new PasswordExpiredException('Password expired');
-            $exception->setUser($event->getUser());
+            $exception->setUser($user);
             $event->setException($exception);
-            $this->userManager->resetPassword($event->getUser(), $this->configurationProvider->getResetPasswordRequestConfiguration());
+            $this->userManager->resetPassword($user, $this->configurationProvider->getResetPasswordRequestConfiguration());
         }
     }
 

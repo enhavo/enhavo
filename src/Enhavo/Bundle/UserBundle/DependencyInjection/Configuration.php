@@ -278,7 +278,6 @@ class Configuration implements ConfigurationInterface
                                 ->variableNode('options')->defaultValue([])->end()
                             ->end()
                         ->end()
-                        ->scalarNode('repository_method')->defaultValue('loadUserByIdentifier')->cannotBeEmpty()->end()
                         ->scalarNode('template')->defaultValue('{{ area }}/user/login/login.html.twig')->end()
                         ->scalarNode('redirect_route')->defaultValue(null)->end()
                         ->scalarNode('route')->isRequired()->cannotBeEmpty()->end()

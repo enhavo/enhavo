@@ -12,8 +12,6 @@ use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\ConfigurationException;
 use Enhavo\Bundle\UserBundle\Model\CredentialsInterface;
-use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -23,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
@@ -33,14 +32,15 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
 class FormLoginAuthenticator extends AbstractAuthenticator
 {
+    private ?UserBadge $userBadge = null;
+
     public function __construct(
-        private readonly UserRepository $userRepository,
         private readonly ConfigurationProvider $configurationProvider,
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly FormFactoryInterface $formFactory,
         private readonly FactoryInterface $endpointFactory,
-        string $className
+        string $className,
     )
     {
     }
@@ -61,8 +61,6 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
     public function authenticate(Request $request): Passport
     {
-        $loginConfiguration = $this->configurationProvider->getLoginConfiguration();
-
         $credentials = $this->getCredentials($request);
 
         $rememberMeBadge = new RememberMeBadge();
@@ -70,8 +68,10 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
         $tokenBadge = new CsrfTokenBadge('authenticate', $credentials->getCsrfToken());
 
+        $this->userBadge = new UserBadge($credentials->getUserIdentifier());
+
         return new Passport(
-            new UserBadge($credentials->getUserIdentifier(), [$this->userRepository, $loginConfiguration->getRepositoryMethod()]),
+            $this->userBadge,
             new PasswordCredentials($credentials->getPassword()),
             [ $rememberMeBadge, $tokenBadge ],
         );
@@ -98,6 +98,10 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $user = $token->getUser();
         $event = $this->dispatchSuccess($user);
 
+        if ($event->getResponse() !== null) {
+            return $event->getResponse();
+        }
+
         $endpointConfig = $request->attributes->get('_endpoint');
         if ($endpointConfig) {
             /** @var Endpoint $endpoint */
@@ -105,12 +109,11 @@ class FormLoginAuthenticator extends AbstractAuthenticator
             return $endpoint->getResponse($request);
         }
 
-        return $event->getResponse();
+        return null;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
-        $loginConfiguration = $this->configurationProvider->getLoginConfiguration();
         $credentials = $this->getCredentials($request);
 
         if ($request->hasSession()) {
@@ -121,7 +124,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $user = $exception->getToken()?->getUser();
 
         if ($user === null) {
-            $user = call_user_func([$this->userRepository, $loginConfiguration->getRepositoryMethod()], $credentials->getUserIdentifier());
+            $user = $this->userBadge->getUser();
         }
 
         $event = $this->dispatchFailure($user, $exception);

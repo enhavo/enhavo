@@ -36,11 +36,13 @@ class VerificationRequiredListenerSubscriber implements EventSubscriberInterface
 
     public function onPreAuth(UserEvent $event): void
     {
-        if ($this->isVerificationRequired($event->getUser())) {
+        $user = $event->getUser();
+
+        if ($user instanceof UserInterface && $this->isVerificationRequired($user)) {
             $exception = new VerificationRequiredException('Verification required');
             $exception->setUser($event->getUser());
             $event->setException($exception);
-            $this->userManager->requestVerification($event->getUser(), $this->configurationProvider->getVerificationRequestConfiguration());
+            $this->userManager->requestVerification($user, $this->configurationProvider->getVerificationRequestConfiguration());
         }
     }
 

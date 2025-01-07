@@ -3,7 +3,6 @@
 namespace Enhavo\Bundle\UserBundle\Configuration\Login;
 
 use Enhavo\Bundle\UserBundle\Configuration\Attribute\FormTrait;
-use Enhavo\Bundle\UserBundle\Configuration\Attribute\MaxFailedLoginAttemptsTrait;
 use Enhavo\Bundle\UserBundle\Configuration\Attribute\RedirectRouteTrait;
 use Enhavo\Bundle\UserBundle\Configuration\Attribute\TemplateTrait;
 
@@ -18,7 +17,6 @@ class LoginConfiguration
     private ?int $maxFailedLoginAttempts = null;
     private ?string $passwordMaxAge = null;
     private bool $verificationRequired = false;
-    private ?string $repositoryMethod = null;
 
     public function getRoute(): ?string
     {
@@ -58,16 +56,6 @@ class LoginConfiguration
     public function setVerificationRequired(bool $verificationRequired): void
     {
         $this->verificationRequired = $verificationRequired;
-    }
-
-    public function getRepositoryMethod(): ?string
-    {
-        return $this->repositoryMethod;
-    }
-
-    public function setRepositoryMethod(?string $repositoryMethod): void
-    {
-        $this->repositoryMethod = $repositoryMethod;
     }
 
     public function getCheckRoute(): ?string

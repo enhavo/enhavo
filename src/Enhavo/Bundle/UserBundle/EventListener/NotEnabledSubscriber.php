@@ -8,6 +8,7 @@ namespace Enhavo\Bundle\UserBundle\EventListener;
 
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\NotEnabledException;
+use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class NotEnabledSubscriber implements EventSubscriberInterface
@@ -21,9 +22,11 @@ class NotEnabledSubscriber implements EventSubscriberInterface
 
     public function onPreAuth(UserEvent $userEvent): void
     {
-        if (!$userEvent->getUser()->isEnabled()) {
+        $user = $userEvent->getUser();
+
+        if ($user instanceof UserInterface && !$user->isEnabled()) {
             $exception = new NotEnabledException('Not enabled');
-            $exception->setUser($userEvent->getUser());
+            $exception->setUser($user);
             $userEvent->setException($exception);
         }
     }

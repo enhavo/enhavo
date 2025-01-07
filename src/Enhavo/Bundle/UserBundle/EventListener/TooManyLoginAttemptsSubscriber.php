@@ -43,7 +43,7 @@ class TooManyLoginAttemptsSubscriber implements EventSubscriberInterface
         $user = $event->getUser();
         $exception = $event->getException();
 
-        if ($user && $exception instanceof BadCredentialsException) {
+        if ($user instanceof UserInterface && $exception instanceof BadCredentialsException) {
             $user->setLastFailedLoginAttempt(new DateTime());
             $user->setFailedLoginAttempts(1 + $user->getFailedLoginAttempts());
             $this->userManager->update($user);
@@ -52,20 +52,25 @@ class TooManyLoginAttemptsSubscriber implements EventSubscriberInterface
 
     public function onPreAuth(UserEvent $event): void
     {
-        if ($this->hasTooManyLoginAttempts($event->getUser())) {
+        $user = $event->getUser();
+
+        if ($user instanceof UserInterface && $this->hasTooManyLoginAttempts($user)) {
             $exception = new TooManyLoginAttemptsException('Too many login attempts');
             $exception->setUser($event->getUser());
             $event->setException($exception);
-            $this->userManager->resetPassword($event->getUser(), $this->configurationProvider->getResetPasswordRequestConfiguration());
+            $this->userManager->resetPassword($user, $this->configurationProvider->getResetPasswordRequestConfiguration());
         }
     }
 
     public function onLoginSuccess(UserEvent $event): void
     {
         $user = $event->getUser();
-        $user->setLastFailedLoginAttempt(null);
-        $user->setFailedLoginAttempts(0);
-        $this->userManager->update($user);
+
+        if ($user instanceof UserInterface) {
+            $user->setLastFailedLoginAttempt(null);
+            $user->setFailedLoginAttempts(0);
+            $this->userManager->update($user);
+        }
     }
 
     public function hasTooManyLoginAttempts(UserInterface $user): bool
