@@ -24,7 +24,7 @@ const props = defineProps<{
     form: RadioForm
 }>()
 
-watch(() => props.form, () => {
+watch(() => props.form.checked, () => {
     if (props.form.checked && props.form.element && !props.form.element.checked) {
         $(props.form.element).iCheck('check');
     } else if (!props.form.checked && props.form.element && props.form.element.checked) {
