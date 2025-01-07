@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
@@ -124,7 +125,9 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $user = $exception->getToken()?->getUser();
 
         if ($user === null) {
-            $user = $this->userBadge->getUser();
+            try {
+                $user = $this->userBadge->getUser();
+            } catch (UserNotFoundException $e) {}
         }
 
         $event = $this->dispatchFailure($user, $exception);
