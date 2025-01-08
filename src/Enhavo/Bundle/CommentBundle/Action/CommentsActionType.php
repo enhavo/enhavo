@@ -54,7 +54,7 @@ class CommentsActionType extends AbstractActionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'open-action',
+            'component' => 'action-action',
             'model' => 'OpenAction',
             'route' => 'enhavo_comment_admin_comment_index',
             'label' => 'comment.label.comments',

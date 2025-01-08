@@ -70,20 +70,16 @@ class TableCollection extends AbstractCollection
         } else if ($this->repository instanceof FilterRepositoryInterface) {
             $filterQuery = $this->createFilterQuery($context);
             $resources = $this->repository->filter($filterQuery);
-            if ($resources instanceof Pagerfanta) {
-                $resources->setMaxPerPage($context['limit'] ?? $this->options['limit']);
-                $resources->setCurrentPage($context['page'] ?? 1);
-            }
         } else if ($this->isPaginated($context)) {
-            $paginator = $this->createPaginator($this->repository, $this->getCriteria(), $this->options['sorting']);
-            $paginator->setMaxPerPage($context['limit'] ?? $this->options['limit']);
-            $paginator->setCurrentPage($context['page'] ?? 1);
-            $resources = $paginator;
+            $resources = $this->createPaginator($this->repository, $this->getCriteria(), $this->options['sorting']);
         } else {
             $resources = $this->repository->findBy($this->getCriteria(), $this->options['sorting'], $this->options['limit']);
         }
 
         if ($resources instanceof Pagerfanta) {
+            $resources->setMaxPerPage($context['limit'] ?? $this->options['limit']);
+            $resources->setCurrentPage($context['page'] ?? 1);
+
             $result = new ResourceItems($this->createItems($resources->getIterator(), $context));
             $result->getMeta()->set('page', $resources->getCurrentPage());
             $result->getMeta()->set('count', $resources->getNbResults());

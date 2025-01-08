@@ -57,4 +57,6 @@ enhavo_user_admin_api_user_auto_complete:
         _expose: admin_api
         _endpoint:
             type: auto_complete
-            input: enhavo_user.user
+            resource: enhavo_user.user
+            repository_method: findByTerm
+            choice_label: email
