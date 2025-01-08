@@ -45,13 +45,20 @@ class TableCollection extends AbstractCollection
     public function getViewData(array $context = []): array
     {
         return [
-            'component' => $this->options['component'],
-            'model' => $this->options['model'],
-            'paginated' => $this->options['paginated'],
-            'page' => $this->options['paginated'] ? $context['page'] ?? 1 : false,
+            'component' => $this->evaluateExpressionLanguage($this->options['component']),
+            'model' => $this->evaluateExpressionLanguage($this->options['model']),
+            'paginated' => $this->evaluateExpressionLanguage($this->options['paginated']),
+            'page' => $this->evaluateExpressionLanguage($this->options['paginated']) ? $context['page'] ?? 1 : false,
             'paginationSteps' => $this->options['pagination_steps'],
-            'paginationStep' => $this->options['paginated'] ? $context['limit'] ?? $this->options['limit'] : false,
+            'paginationStep' => $this->evaluateExpressionLanguage($this->options['paginated']) ? $context['limit'] ?? $this->evaluateExpressionLanguage($this->options['limit']) : false,
         ];
+    }
+
+    private function evaluateExpressionLanguage($option)
+    {
+        return $this->expressionLanguage->evaluate($option, [
+            'options' => $this->options,
+        ]);
     }
 
     public function getItems(array $context = []): ResourceItems
