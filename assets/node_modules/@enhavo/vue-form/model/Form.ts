@@ -244,7 +244,7 @@ export class Form
 
     public add(form: Form)
     {
-        if (this.get(form.name)) {
+        if (this.has(form.name)) {
             this.remove(form.name);
         }
 
@@ -286,6 +286,10 @@ export class Form
 
     public morphMerge(form: Form)
     {
+        this.component = form.component;
+        this.label = form.label;
+        this.disabled = form.disabled;
+
         if (!this.compound) {
             if (this.morphStartValue == this.value) {
                 this.value = form.value;

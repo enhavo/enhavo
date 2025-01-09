@@ -15,5 +15,7 @@ interface InputInterface
 
     public function getResource(array $context = []): ?object;
 
+    public function setResource(?object $resource): void;
+
     public function getViewData(object $resource, array $context = []): array;
 }
