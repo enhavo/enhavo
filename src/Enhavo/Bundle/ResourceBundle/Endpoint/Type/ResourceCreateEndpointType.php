@@ -47,6 +47,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
             if ($form->isSubmitted()) {
                 if ($form->isValid()) {
                     $this->resourceManager->save($resource);
+                    $input->setResource($resource);
                     $context->setStatusCode(201);
 
                     $form = $input->createForm($resource);

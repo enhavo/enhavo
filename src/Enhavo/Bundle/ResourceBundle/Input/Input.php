@@ -15,6 +15,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
     /** @var Tab[]|null  */
     private ?array $tabs = null;
     private ?array $actionsSecondary = null;
+    private ?object $resource = null;
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -118,12 +119,21 @@ class Input extends AbstractInput implements ConfigMergeInterface
 
     public function getResource(array $context = []): ?object
     {
+        if ($this->resource !== null) {
+            return $this->resource;
+        }
         $callable = [$this->getRepository($this->getResourceName()), $this->options['repository_method']];
         $arguments = $this->evaluateArray($this->options['repository_arguments'], [
             'request' => $this->getRequest(),
             'context' => $context,
         ]);
-        return call_user_func_array($callable, $arguments);
+        $this->resource = call_user_func_array($callable, $arguments);
+        return $this->resource;
+    }
+
+    public function setResource(?object $resource): void
+    {
+        $this->resource = $resource;
     }
 
     public function createResource(array $context = []): object
