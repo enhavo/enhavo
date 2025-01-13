@@ -32,6 +32,7 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
 
     public function handleLoad(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
     {
+        $originalFile = $file;
         if ($file instanceof FormatInterface) {
             $file = $file->getFile();
         }
@@ -45,7 +46,7 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
             }
         }
 
-        $file->setContent($content);
+        $originalFile->setContent($content);
     }
 
     public function handleDelete(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void

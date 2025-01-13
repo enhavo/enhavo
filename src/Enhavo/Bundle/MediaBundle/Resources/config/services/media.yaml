@@ -124,6 +124,8 @@ services:
         arguments:
             - '%kernel.project_dir%/data/media'
             - '@enhavo_media.file.factory'
+            - '@enhavo_media.factory.format'
+            - '@enhavo_media.media.format_manager'
             - '@filesystem'
         tags:
             - { name: enhavo_api.endpoint }

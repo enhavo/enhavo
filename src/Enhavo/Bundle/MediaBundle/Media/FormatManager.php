@@ -59,7 +59,9 @@ class FormatManager
             $fileFormat = $this->createFormat($file, $format, $parameters);
             $this->lockFormat($fileFormat); // will flush entity
             try {
-                $this->applyFilter($fileFormat, $parameters);
+                $this->saveFormat(
+                    $this->applyFilter($fileFormat, $parameters)
+                );
             } catch (\Exception $e) {
                 $this->unlockFormat($fileFormat);
                 $this->deleteFormat($fileFormat);
@@ -98,7 +100,9 @@ class FormatManager
 
         try {
             $this->lockFormat($fileFormat); // will flush entity
-            $this->applyFilter($fileFormat, $parameters);
+            $this->saveFormat(
+                $this->applyFilter($fileFormat, $parameters)
+            );
             $this->unlockFormat($fileFormat);
             $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
         } catch (\Exception $e) {
@@ -132,7 +136,7 @@ class FormatManager
         return $filter;
     }
 
-    private function applyFilter(FormatInterface $fileFormat, $parameters): FormatInterface
+    public function applyFilter(FormatInterface $fileFormat, $parameters = []): FormatInterface
     {
         $parameters = array_merge($fileFormat->getParameters(), $parameters);
         $settings = $this->getFormatSettings($fileFormat->getName(), $parameters);
@@ -140,12 +144,16 @@ class FormatManager
         $newFileFormat = $this->formatFactory->createFromMediaFile($fileFormat->getName(), $fileFormat->getFile());
         $fileFormat->setContent($newFileFormat->getContent());
 
-
         foreach ($settings as $setting) {
             $filter = $this->getFilter($setting->getType());
             $filter->apply($fileFormat, $setting);
         }
 
+        return $fileFormat;
+    }
+
+    private function saveFormat(FormatInterface $fileFormat): FormatInterface
+    {
         $this->resourceManager->save($fileFormat);
 
         $fileFormat->setChecksum($this->checksumGenerator->getChecksum($fileFormat->getContent()));
