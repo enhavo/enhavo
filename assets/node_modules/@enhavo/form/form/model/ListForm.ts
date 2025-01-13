@@ -257,12 +257,10 @@ export class ListForm extends Form
         }
     }
 
-    public morphMerge(form: Form)
+    protected morphChildren(form: Form)
     {
-        super.morphMerge(form);
         let index = 0;
-        for (let child of this.children)
-        {
+        for (let child of this.children) {
             child.name = index.toString();
             index++;
         }

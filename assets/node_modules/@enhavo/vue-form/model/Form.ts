@@ -297,22 +297,24 @@ export class Form
             }
             this.errors = form.errors;
         } else {
-            this.component = form.component;
-            this.label = form.label;
+            this.morphChildren(form);
+        }
+    }
 
-            for (let formChild of form.children) {
-                if (this.has(formChild.name)) {
-                    this.get(formChild.name).morphMerge(formChild);
-                } else {
-                    this.add(formChild);
-                }
+    protected morphChildren(form: Form)
+    {
+        for (let formChild of form.children) {
+            if (this.has(formChild.name)) {
+                this.get(formChild.name).morphMerge(formChild);
+            } else {
+                this.add(formChild);
             }
+        }
 
-            for (let child of this.children) {
-                if (!form.has(child.name)) {
-                    this.remove(child.name);
-                    child.destroy();
-                }
+        for (let child of this.children) {
+            if (!form.has(child.name)) {
+                this.remove(child.name);
+                child.destroy();
             }
         }
     }
