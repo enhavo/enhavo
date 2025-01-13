@@ -10,18 +10,6 @@ enhavo_comment_admin_comment_index:
         _endpoint:
             type: admin
 
-enhavo_comment_admin_comment_create:
-    path: /comment/create
-    defaults:
-        _expose: admin
-        _vue:
-            component: resource-input
-            groups: admin
-            meta:
-                api: enhavo_comment_admin_api_comment_create
-        _endpoint:
-            type: admin
-
 enhavo_comment_admin_comment_update:
     path: '/comment/update/{id}'
     defaults:

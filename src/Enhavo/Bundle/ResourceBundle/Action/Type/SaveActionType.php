@@ -51,7 +51,7 @@ class SaveActionType extends AbstractActionType
         if ($resource !== null && $resource->getId() !== null) {
             $parameters['id'] = $resource->getId();
         }
-        $parameters = array_merge_recursive($parameters, $routeParameters);
+        $parameters = array_merge($parameters, $routeParameters);
         return $this->router->generate($route, $parameters);
     }
 

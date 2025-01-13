@@ -74,3 +74,8 @@ doctrine:
     orm:
         resolve_target_entities:
             Enhavo\Bundle\ArticleBundle\Model\ArticleInterface: Enhavo\Bundle\ArticleBundle\Entity\Article
+
+enhavo_comment:
+    subjects:
+        Enhavo\Bundle\ArticleBundle\Entity\Article:
+            title_property: title

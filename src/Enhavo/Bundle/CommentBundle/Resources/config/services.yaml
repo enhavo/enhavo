@@ -89,8 +89,30 @@ services:
         tags:
             - { name: twig.extension }
 
+    Enhavo\Bundle\CommentBundle\Manager\CommentManager:
+        arguments:
+            - '%enhavo_comment.subjects%'
+            - '@translator'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+
     Enhavo\Bundle\CommentBundle\Column\CommentStateColumnType:
         arguments:
             - '@translator'
         tags:
             - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\CommentBundle\Column\CommentSubjectLabelColumnType:
+        arguments:
+            - '@Enhavo\Bundle\CommentBundle\Manager\CommentManager'
+        tags:
+            - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\CommentBundle\Column\CommentSubjectTitleColumnType:
+        arguments:
+            - '@Enhavo\Bundle\CommentBundle\Manager\CommentManager'
+        tags:
+            - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\CommentBundle\Menu\CommentMenuType:
+        tags:
+            - { name: enhavo_app.menu }

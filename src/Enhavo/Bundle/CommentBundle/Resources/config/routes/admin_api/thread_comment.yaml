@@ -1,0 +1,33 @@
+enhavo_comment_admin_api_thread_comment_index:
+    path: /comment/thread/{id}/index
+    methods:
+        - GET
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_index
+            grid: enhavo_comment.thread_comment
+
+enhavo_comment_admin_api_thread_comment_list:
+    path: /comment/thread/{id}/list
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_list
+            grid: enhavo_comment.thread_comment
+
+enhavo_comment_admin_api_thread_comment_create:
+    path: /comment/thread/{id}/create
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_create
+            input: enhavo_comment.thread_comment.create
+            update_route: enhavo_comment_admin_comment_update
+            update_api_route: enhavo_comment_admin_api_comment_update

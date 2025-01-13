@@ -36,6 +36,7 @@ export class Form
     help: string;
     helpAttr: [];
     helpHtml: boolean;
+    model: string;
 
     protected morphStartValue: any;
     protected visibleValue: boolean = null;
@@ -296,6 +297,9 @@ export class Form
             }
             this.errors = form.errors;
         } else {
+            this.component = form.component;
+            this.label = form.label;
+
             for (let formChild of form.children) {
                 if (this.has(formChild.name)) {
                     this.get(formChild.name).morphMerge(formChild);

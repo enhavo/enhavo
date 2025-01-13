@@ -20,6 +20,8 @@ enhavo_app:
             type: newsletter
         calendar:
             type: calendar
+        comment:
+            type: comment
         navigation:
             type: navigation
         redirect:

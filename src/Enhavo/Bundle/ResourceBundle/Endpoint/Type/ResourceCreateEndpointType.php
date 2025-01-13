@@ -6,6 +6,7 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\Input\Input;
 use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
@@ -21,6 +22,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
         private readonly ResourceManager $resourceManager,
         private readonly VueForm $vueForm,
         private readonly RouteResolverInterface $routeResolver,
+        private readonly ResourceExpressionLanguage $expressionLanguage,
     )
     {
     }
@@ -53,10 +55,20 @@ class ResourceCreateEndpointType extends AbstractEndpointType
                     $form = $input->createForm($resource);
 
                     $redirectRoute = $this->routeResolver->getRoute('update', ['api' => false]) ?? $options['update_route'];
+                    if ($redirectRoute === null) {
+                        throw new \Exception('Can\'t find update route, please provide a route over the "update_route" option');
+                    }
+                    $redirectRouteParameters = array_merge(['id' => $resource->getId()], $this->expressionLanguage->evaluateArray($options['update_route_parameters']));
+
                     $apiRoute = $this->routeResolver->getRoute('update', ['api' => true])  ?? $options['update_api_route'];
-                    $data->set('url', $this->generateUrl($apiRoute, ['id' => $resource->getId()]));
+                    if ($apiRoute === null) {
+                        throw new \Exception('Can\'t find update api route, please provide a route over the "update_api_route" option');
+                    }
+                    $apiRouteParameters = array_merge(['id' => $resource->getId()], $this->expressionLanguage->evaluateArray($options['update_api_route_parameters']));
+
+                    $data->set('url', $this->generateUrl($apiRoute, $apiRouteParameters));
                     if ($redirectRoute) {
-                        $data->set('redirect', $this->generateUrl($redirectRoute, ['id' => $resource->getId()]));
+                        $data->set('redirect', $this->generateUrl($redirectRoute, $redirectRouteParameters));
                     }
                 } else {
                     $context->setStatusCode(400);
@@ -74,7 +86,9 @@ class ResourceCreateEndpointType extends AbstractEndpointType
     {
         $resolver->setDefaults([
             'update_route' => null,
+            'update_route_parameters' => [],
             'update_api_route' => null,
+            'update_api_route_parameters' => [],
             'permission' => Permission::CREATE,
         ]);
 

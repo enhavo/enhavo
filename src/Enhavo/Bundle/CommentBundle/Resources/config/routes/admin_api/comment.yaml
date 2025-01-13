@@ -19,17 +19,6 @@ enhavo_comment_admin_api_comment_list:
             type: resource_list
             grid: enhavo_comment.comment
 
-enhavo_comment_admin_api_comment_create:
-    path: /comment/create
-    methods:
-        - GET
-        - POST
-    defaults:
-        _expose: admin_api
-        _endpoint:
-            type: resource_create
-            input: enhavo_comment.comment
-
 enhavo_comment_admin_api_comment_update:
     path: '/comment/update/{id}'
     methods:
@@ -59,17 +48,3 @@ enhavo_comment_admin_api_comment_batch:
         _endpoint:
             type: resource_batch
             grid: enhavo_comment.comment
-
-enhavo_comment_admin_api_preview:
-    path: /comment/preview
-    methods: [GET, POST]
-    defaults:
-        _expose: admin_api
-        _area: theme
-        _endpoint:
-            type: preview
-            input: enhavo_comment.comment
-            endpoint:
-                type: Enhavo\Bundle\CommentBundle\Endpoint\CommentEndpointType
-                resource: expr:resource
-                preview: true
