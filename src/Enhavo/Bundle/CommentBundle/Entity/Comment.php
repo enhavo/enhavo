@@ -9,73 +9,39 @@
 namespace Enhavo\Bundle\CommentBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
-use Symfony\Component\Validator\Constraints\Collection;
+
 
 class Comment implements CommentInterface
 {
-    /**
-     * @var int
-     */
-    private $id;
+    private ?int $id = null;
 
-    /**
-     * @var Thread|null
-     */
-    private $thread;
+    private ?Thread $thread = null;
 
-    /**
-     * @var Comment|null
-     */
-    private $parent;
+    private Comment|null $parent = null;
 
-    /**
-     * @var Collection|Comment[]
-     */
-    private $children;
+    /** @var Collection|Comment[] */
+    private Collection $children;
 
-    /**
-     * @var string|null
-     */
-    private $comment;
+    private ?string $comment;
 
-    /**
-     * @var \DateTime
-     */
-    private $createdAt;
+    private \DateTime $createdAt;
 
-    /**
-     * @var \DateTime|null
-     */
-    private $publishedAt;
+    private ?\DateTime $publishedAt = null;
 
-    /**
-     * @var string
-     */
-    private $state = CommentInterface::STATE_PENDING;
+    private string $state = CommentInterface::STATE_PENDING;
 
-    /**
-     * @var string|null
-     */
-    private $email;
+    private ?string $email = null;
 
-    /**
-     * @var string|null
-     */
-    private $name;
+    private ?string $name = null;
 
-    /**
-     * @var UserInterface|null
-     */
-    private $user;
+    private ?UserInterface $user = null;
 
-    /**
-     * @var
-     */
-    private $stateChanged = false;
+    private bool $stateChanged = false;
 
     /**
      * Comment constructor.

@@ -12,30 +12,26 @@ enhavo_resource:
             resource: enhavo_comment.comment
             actions:
                 create:
-                    type: create
-                    route: enhavo_comment_admin_comment_create
-                    route_parameters:
-                        id: $id
-            collection:
-                class: Enhavo\Bundle\ResourceBundle\Collection\ListCollection
-                parent_property: parent
-                children_property: children
-                repository_method: findByThreadId
-                repository_arguments:
-                    - expr:request.get('id')
+                    type: "null"
             filters: {  }
             columns:
-                title:
+                comment:
                     type: text
                     property: comment
-                    width: 8
+                    width: 4
+                label:
+                    type: comment_subject_label
+                    width: 4
+                title:
+                    type: comment_subject_title
+                    width: 4
                 createdAt:
                     type: datetime
                     property: createdAt
-                    width: 4
+                    width: 2
                 state:
                     type: comment_state
-                    width: 4
+                    width: 2
             batches:
                 delete:
                     type: delete
@@ -49,5 +45,6 @@ enhavo_resource:
             factory_method: createWithThreadId
             factory_arguments:
                 - expr:request.get('id')
-            actions: {  }
-            tabs: {  }
+            tabs:
+                main:
+                    type: form

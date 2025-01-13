@@ -35,7 +35,7 @@ class CommentsActionType extends AbstractActionType
 
         $data['url'] = $url;
         $data['target'] = '_frame';
-        $data['key'] = 'comment-view';
+        $data['frameKey'] = 'comment-view';
     }
 
     public function isEnabled(array $options, object $resource = null): bool
@@ -56,10 +56,10 @@ class CommentsActionType extends AbstractActionType
         $resolver->setDefaults([
             'component' => 'action-action',
             'model' => 'OpenAction',
-            'route' => 'enhavo_comment_admin_comment_index',
+            'route' => 'enhavo_comment_admin_thread_comment_index',
             'label' => 'comment.label.comments',
             'translation_domain' => 'EnhavoCommentBundle',
-            'icon' => 'comment'
+            'icon' => 'comment',
         ]);
     }
 

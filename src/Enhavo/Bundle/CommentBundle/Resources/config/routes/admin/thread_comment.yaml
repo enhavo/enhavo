@@ -1,0 +1,25 @@
+enhavo_comment_admin_thread_comment_index:
+    path: /comment/thread/{id}/comment/index
+    defaults:
+        _expose: admin
+        _vue:
+            component: resource-index
+            groups: admin
+            meta:
+                api: enhavo_comment_admin_api_thread_comment_index
+                api_parameters:
+                    id: expr:route.params.id
+        _endpoint:
+            type: admin
+
+enhavo_comment_admin_thread_comment_create:
+    path: /comment/thread/{id}/comment/create
+    defaults:
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_comment_admin_api_thread_comment_create
+        _endpoint:
+            type: admin

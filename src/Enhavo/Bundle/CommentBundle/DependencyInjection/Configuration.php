@@ -29,6 +29,15 @@ class Configuration implements ConfigurationInterface
                         ->variableNode('options')->defaultValue([])->end()
                     ->end()
                 ->end()
+                ->arrayNode('subjects')
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('label')->defaultValue(null)->end()
+                            ->scalarNode('translation_domain')->defaultValue(null)->end()
+                            ->scalarNode('title_property')->defaultValue(null)->end()
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

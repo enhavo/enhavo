@@ -22,6 +22,7 @@ class EnhavoCommentExtension extends Extension implements PrependExtensionInterf
         $container->setParameter('enhavo_comment.submit_form.validation_groups', $config['submit_form']['validation_groups']);
         $container->setParameter('enhavo_comment.publish_strategy.strategy', $config['publish_strategy']['strategy']);
         $container->setParameter('enhavo_comment.publish_strategy.options', $config['publish_strategy']['options']);
+        $container->setParameter('enhavo_comment.subjects', $config['subjects']);
 
         $configFiles = array(
             'services.yaml',
@@ -37,6 +38,7 @@ class EnhavoCommentExtension extends Extension implements PrependExtensionInterf
         return [
             __DIR__.'/../Resources/config/app/config.yaml',
             __DIR__.'/../Resources/config/resources/comment.yaml',
+            __DIR__.'/../Resources/config/resources/thread_comment.yaml',
             __DIR__.'/../Resources/config/resources/thread.yaml',
         ];
     }

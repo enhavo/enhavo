@@ -23,6 +23,7 @@ services:
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
             - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
             - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:

@@ -74,7 +74,7 @@ services:
 
     enhavo.error_renderer.html:
         class: Enhavo\Bundle\PageBundle\ErrorRenderer\SpecialPageErrorRenderer
-        decorates: enhavo.error_handler.html
+        decorates: twig.error_renderer.html
         arguments:
             - '@enhavo_page.page.repository'
             - '@enhavo.error_renderer.html.inner'

@@ -1,0 +1,61 @@
+enhavo_resource:
+    grids:
+        enhavo_comment.thread_comment:
+            extends: enhavo_resource.grid
+            resource: enhavo_comment.comment
+            actions:
+                create:
+                    type: create
+                    route: enhavo_comment_admin_thread_comment_create
+                    route_parameters:
+                        id: expr:request.get('id')
+            collection:
+                class: Enhavo\Bundle\ResourceBundle\Collection\ListCollection
+                parent_property: parent
+                children_property: children
+                repository_method: findByThreadId
+                repository_arguments:
+                    id: expr:request.get('id')
+            filters: {  }
+            routes:
+                list: enhavo_comment_admin_api_thread_comment_list
+                list_parameters:
+                    id: expr:request.get('id')
+                open: enhavo_comment_admin_comment_update
+            columns:
+                title:
+                    type: text
+                    property: comment
+                    width: 8
+                createdAt:
+                    type: datetime
+                    property: createdAt
+                    width: 4
+                state:
+                    type: comment_state
+                    width: 4
+            batches:
+                delete:
+                    type: delete
+
+    inputs:
+        enhavo_comment.thread_comment.create:
+            extends: enhavo_resource.input
+            resource: enhavo_comment.comment
+            form: Enhavo\Bundle\CommentBundle\Form\Type\CommentType
+            form_options: {  }
+            factory_method: createWithThreadId
+            factory_arguments:
+                - expr:request.get('id')
+            actions:
+                save:
+                    type: save
+                    route: enhavo_comment_admin_api_thread_comment_create
+                    route_parameters:
+                        id: expr:request.get('id')
+            actions_secondary:
+                delete:
+                    type: "null"
+            tabs:
+                main:
+                    type: form

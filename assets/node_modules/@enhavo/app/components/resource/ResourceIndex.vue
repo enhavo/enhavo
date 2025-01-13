@@ -33,7 +33,10 @@ import {Router} from "@enhavo/app/routing/Router";
 const manager = inject<ResourceIndexManager>('resourceIndexManager');
 const expressionLanguage = inject<ExpressionLanguage>('expressionLanguage');
 const route = useRoute();
-const parameters = expressionLanguage.evaluateObject(HtmlEntities.encodeObject(route.meta.api_parameters as Object));
+
+const parameters = expressionLanguage.evaluateObject(HtmlEntities.encodeObject(route.meta.api_parameters as Object), {
+    route: route
+});
 const router = inject<Router>('router');
 
 manager.load(router.generate(route.meta.api as string, parameters));
