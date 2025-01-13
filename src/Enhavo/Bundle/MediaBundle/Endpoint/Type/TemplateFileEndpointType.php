@@ -25,19 +25,19 @@ class TemplateFileEndpointType extends AbstractEndpointType
 
     public function getResponse($options, Request $request, Data $data, Context $context): Response
     {
-        $id = $request->get('id');
-        if (!$id) {
+        $checksum = $request->get('shortChecksum');
+        if (!$checksum) {
             throw new NotFoundHttpException();
         }
 
         $path = null;
         $format = $request->get('format');
         if ($format) {
-            $path = $this->searchFile($this->dataPath . '/format/' . $format, $id);
+            $path = $this->searchFile($this->dataPath . '/format/' . $format, $checksum);
         }
 
         if ($path === null) {
-            $path = $this->searchFile($this->dataPath . '/file', $id);
+            $path = $this->searchFile($this->dataPath . '/file', $checksum);
         }
 
         if ($path === null) {
@@ -50,7 +50,7 @@ class TemplateFileEndpointType extends AbstractEndpointType
         return $response;
     }
 
-    private function searchFile(string $path, $id): ?string
+    private function searchFile(string $path, $checksum): ?string
     {
         if (!$this->fs->exists($path)) {
             return null;
@@ -65,7 +65,7 @@ class TemplateFileEndpointType extends AbstractEndpointType
 
         foreach ($finder as $file) {
             $filename = pathinfo($file->getRealPath(), PATHINFO_FILENAME);
-            if ($filename == $id) {
+            if ($filename == $checksum) {
                 return $file->getRealPath();
             }
         }
