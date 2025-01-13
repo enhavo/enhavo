@@ -5,6 +5,8 @@ namespace Enhavo\Bundle\MediaBundle\Endpoint\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
+use Enhavo\Bundle\MediaBundle\Factory\FormatFactory;
+use Enhavo\Bundle\MediaBundle\Media\FormatManager;
 use Symfony\Component\Filesystem\Filesystem;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaBundle\Http\FileResponse;
@@ -18,6 +20,8 @@ class TemplateFileEndpointType extends AbstractEndpointType
     public function __construct(
         private readonly string $dataPath,
         private readonly FileFactory $fileFactory,
+        private readonly FormatFactory $formatFactory,
+        private readonly FormatManager $formatManager,
         private readonly Filesystem $fs,
     )
     {
@@ -31,13 +35,17 @@ class TemplateFileEndpointType extends AbstractEndpointType
         }
 
         $path = null;
-        $format = $request->get('format');
-        if ($format) {
-            $path = $this->searchFile($this->dataPath . '/format/' . $format, $checksum);
+        $formatName = $request->get('format');
+        if ($formatName) {
+            $path = $this->searchFile($this->dataPath . '/format/' . $formatName, $checksum);
         }
 
         if ($path === null) {
             $path = $this->searchFile($this->dataPath . '/file', $checksum);
+
+            if ($path && $formatName) {
+                $path = $this->generateFormat($path, $formatName, $checksum, $request->get('extension'));
+            }
         }
 
         if ($path === null) {
@@ -71,6 +79,23 @@ class TemplateFileEndpointType extends AbstractEndpointType
         }
 
         return null;
+    }
+
+    private function generateFormat($path, $formatName, $checksum, $extension = null): string
+    {
+        $file = $this->fileFactory->createFromPath($path);
+        $format = $this->formatFactory->createFromMediaFile($formatName, $file);
+
+        $format = $this->formatManager->applyFilter($format);
+
+        $targetPath = sprintf('%s/format/%s/%s', $this->dataPath, $formatName, $checksum);
+        if ($extension) {
+            $targetPath .= '.' . $extension;
+        }
+
+        $this->fs->dumpFile($targetPath, $format->getContent()->getContent());
+
+        return $targetPath;
     }
 
     public static function getName(): ?string

@@ -1,12 +1,12 @@
-enhavo_media_file_show:
-    path: /file/show/{id}
+enhavo_media_theme_show:
+    path: /media/file/{token}/{shortChecksum}/{filename}.{extension}
     defaults:
         _expose: template
         _endpoint:
             type: template_file
 
-enhavo_media_file_format:
-    path: /file/show/format/{format}/{id}
+enhavo_media_theme_format:
+    path: /media/format/{token}/{format}/{shortChecksum}/{filename}.{extension}
     defaults:
         _expose: template
         _endpoint:
