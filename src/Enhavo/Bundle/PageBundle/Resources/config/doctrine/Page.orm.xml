@@ -22,6 +22,11 @@
         </one-to-many>
 
         <one-to-many field="revisions" target-entity="Enhavo\Bundle\PageBundle\Model\PageInterface" mapped-by="revisionSubject">
+            <cascade>
+                <cascade-persist />
+                <cascade-remove />
+                <cascade-refresh />
+            </cascade>
             <order-by>
                 <order-by-field name="revisionDate" direction="DESC" />
             </order-by>

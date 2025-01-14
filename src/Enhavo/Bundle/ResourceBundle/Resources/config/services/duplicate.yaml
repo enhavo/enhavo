@@ -61,3 +61,7 @@ services:
     Enhavo\Bundle\ResourceBundle\Duplicate\Type\CollectionReferenceDuplicateType:
         tags:
             - { name: enhavo_resource.duplicate }
+
+    Enhavo\Bundle\ResourceBundle\Duplicate\Type\DateTimeDuplicateType:
+        tags:
+            - { name: enhavo_resource.duplicate }
