@@ -91,6 +91,7 @@ class NodeCollectionType extends AbstractType
         foreach($this->navItemManager->getNavItems() as $key => $item) {
             /** @var NodeInterface $node */
             $node = new $this->class;
+            $node->setName($key);
             $modelClass = $item->getModel();
             if ($modelClass !== null) {
                 $node->setSubject(new $modelClass);
