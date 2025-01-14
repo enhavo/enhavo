@@ -3,12 +3,12 @@
 namespace Enhavo\Bundle\MediaBundle\Duplicate\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
 use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateType;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Collection;
 
 class FileDuplicateType extends AbstractDuplicateType
 {

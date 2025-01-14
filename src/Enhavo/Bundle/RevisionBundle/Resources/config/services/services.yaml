@@ -94,5 +94,6 @@ services:
     Enhavo\Bundle\RevisionBundle\Batch\Type\BinDeleteBatchType:
         arguments:
             - '@Enhavo\Bundle\ResourceBundle\Delete\DoctrineDeleteHandler'
+            - '@doctrine.orm.entity_manager'
         tags:
             - { name: enhavo_resource.batch }
