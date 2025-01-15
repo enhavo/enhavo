@@ -1,7 +1,9 @@
 <template>
-    <button v-if="data.hasFormats()" class="btn has-symbol" :class="data.class" @click.prevent="execute($event)" :data-action="data.key">{{ data.label }} <span :class="['icon', getIcon()]"></span></button>
-    <div v-if="data.open">
-        <div v-for="format in data.getFormats()" @click="data.openFormat(format.key)">{{ format.label }}</div>
+    <div class="action-media-format" v-click-outside="() => { data.open = false; }">
+        <button v-if="data.hasFormats()" class="btn has-symbol" :class="data.class" @click.prevent="execute($event)" :data-action="data.key">{{ data.label }} <span :class="['icon', getIcon()]"></span></button>
+        <div class="formats" v-if="data.open">
+            <div class="format btn" v-for="format in data.getFormats()" @click="data.openFormat(format.key, format.label); data.open = false;">{{ format.label }}</div>
+        </div>
     </div>
 </template>
 

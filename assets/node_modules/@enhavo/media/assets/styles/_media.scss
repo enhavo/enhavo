@@ -41,6 +41,12 @@
     }
   }
   .upload-input {display: none;}
+
+  .action-media-format { display: flex;
+    .formats { display: flex; gap: 5px; flex-wrap: wrap; padding: 2px 5px; margin-left: 5px;
+      .format { padding: 5px 10px 2px 10px; border-radius: 10px; }
+    }
+  }
 }
 
 .form-media-item {width: 82px; min-height: 82px; position:relative; list-style: none;border-radius:10px;

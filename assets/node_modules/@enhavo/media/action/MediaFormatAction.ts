@@ -36,7 +36,7 @@ export class MediaFormatAction extends AbstractAction implements ActionMediaItem
         return Object.keys(this.form.formats).length > 0;
     }
 
-    openFormat(key: string)
+    openFormat(key: string, label: string)
     {
         let url = this.router.generate('enhavo_media_admin_image_cropper', {
             format: key,
@@ -45,6 +45,7 @@ export class MediaFormatAction extends AbstractAction implements ActionMediaItem
         this.frameManager.openFrame({
             url: url,
             key: 'image_cropper',
+            label: label
         })
     }
 }
