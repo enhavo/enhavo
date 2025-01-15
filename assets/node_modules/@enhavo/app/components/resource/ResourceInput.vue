@@ -16,6 +16,9 @@
 
             <div class="form-container" v-if="manager.tabs">
                 <form-form v-if="manager.form" :form="manager.form">
+                    <div class="form-errors-global">
+                        <form-errors :form="manager.form"></form-errors>
+                    </div>
                     <template v-for="tab of manager.tabs">
                         <component v-show="tab.active" :tab="tab" :form="manager.form" :is="tab.component"></component>
                     </template>

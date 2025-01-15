@@ -27,12 +27,6 @@
         .choice-input-with-label {display:flex;gap:6px;}
     }
 
-    .form-error-list {color:variables.$color4;list-style:square;padding-left:20px;font-size:0.875rem;
-      &:not(:first-child) {margin-top:2px;}
-      &:not(:last-child) {margin-bottom:2px;}
-      li {padding-left:0;}
-    }
-
     .html-tag-widget { position:relative;
         .flex-container {display:flex;width:100%;
             .html-tag-widget-choice {margin-left:2px;width:120px;flex:0 0 auto;}
@@ -49,4 +43,16 @@
             .help-text {position:absolute;top:-3px;left:calc(100% + 1px);min-width:280px;padding:6px;box-shadow:1px 1px 3px rgba(#000,0.16);border-radius:3px;background:rgba(#fff,0.95);display:none;z-index:2;line-height:1.25em;}
         }
     }
+}
+
+.form-row, .form-errors-global {
+  .form-error-list {color: variables.$color4;list-style:square;padding-left:20px;font-size:0.875rem;
+    &:not(:first-child) {margin-top:2px;}
+    &:not(:last-child) {margin-bottom:2px;}
+    li {padding-left:0;}
+  }
+}
+
+.form-errors-global {
+  .form-error-list { margin: 15px; padding: 15px; }
 }
