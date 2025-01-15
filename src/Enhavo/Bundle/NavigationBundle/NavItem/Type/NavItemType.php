@@ -11,9 +11,14 @@ namespace Enhavo\Bundle\NavigationBundle\NavItem\Type;
 use Enhavo\Bundle\NavigationBundle\NavItem\NavItemTypeInterface;
 use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class NavItemType extends AbstractType implements NavItemTypeInterface
 {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+    ) {}
+
     public function getModel($options)
     {
         return $options['model'];
@@ -31,7 +36,7 @@ class NavItemType extends AbstractType implements NavItemTypeInterface
 
     public function getLabel(array $options)
     {
-        return $options['label'];
+        return $this->translator->trans($options['label'], [], $options['translation_domain']);
     }
 
     public function getTranslationDomain(array $options)

@@ -25,6 +25,8 @@ services:
             - { name: form.type }
 
     Enhavo\Bundle\NavigationBundle\NavItem\Type\NavItemType:
+        arguments:
+            - '@translator'
         tags:
             - { name: enhavo_navigation.nav_item }
 
