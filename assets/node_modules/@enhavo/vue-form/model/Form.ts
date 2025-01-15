@@ -290,12 +290,12 @@ export class Form
         this.component = form.component;
         this.label = form.label;
         this.disabled = form.disabled;
+        this.errors = form.errors;
 
         if (!this.compound) {
             if (this.morphStartValue == this.value) {
                 this.value = form.value;
             }
-            this.errors = form.errors;
         } else {
             this.morphChildren(form);
         }
