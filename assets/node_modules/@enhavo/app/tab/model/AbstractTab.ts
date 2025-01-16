@@ -15,5 +15,7 @@ export abstract class AbstractTab implements TabInterface
         this.model = source.model;
         this.label = source.label;
     }
+
+    update(parameters: object) {}
 }
 

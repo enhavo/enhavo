@@ -62,6 +62,7 @@ export class ResourceInputManager
 
 
         this.initTab(window.location.href);
+        this.updateTabs();
 
         this.frameManager.loaded();
         this.loaded = true
@@ -101,6 +102,7 @@ export class ResourceInputManager
             this.actionManager.morphActions(this.actionsSecondary, this.actionManager.createActions(data.actionsSecondary));
 
             this.tabManager.morphTabs(this.tabs, this.tabManager.createTabs(data.tabs));
+            this.updateTabs();
         } else {
             this.form.destroy();
             this.form = this.formFactory.create(data.form, this.visitors);
@@ -191,6 +193,15 @@ export class ResourceInputManager
             this.selectTab(tabKey);
         } else {
             this.selectFirstTab();
+        }
+    }
+
+    private updateTabs()
+    {
+        for(let tab of this.tabs) {
+            tab.update({
+                form: this.form,
+            });
         }
     }
 
