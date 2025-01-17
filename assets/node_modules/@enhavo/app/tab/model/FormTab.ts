@@ -9,8 +9,7 @@ export class FormTab extends AbstractTab
     update(parameters: object): void
     {
         this.error = false;
-        if (parameters.hasOwnProperty('form')) {
-
+        if (parameters.hasOwnProperty('form') && this.arrangement) {
             for (let row of this.arrangement) {
                 for (let column of row) {
                     if (parameters.form.has(column.key)) {
@@ -24,7 +23,7 @@ export class FormTab extends AbstractTab
         }
     }
 
-    private formHasErrors(form: Form): boolean
+    protected formHasErrors(form: Form): boolean
     {
         if (form.errors && form.errors.length > 0) {
             return true;

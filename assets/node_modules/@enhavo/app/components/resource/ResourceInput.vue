@@ -16,7 +16,7 @@
 
             <div class="form-container" v-if="manager.tabs">
                 <form-form v-if="manager.form" :form="manager.form">
-                    <div class="form-errors-global">
+                    <div class="form-errors-global" v-if="manager.form.errors && manager.form.errors.length > 0">
                         <form-errors :form="manager.form"></form-errors>
                     </div>
                     <template v-for="tab of manager.tabs">
