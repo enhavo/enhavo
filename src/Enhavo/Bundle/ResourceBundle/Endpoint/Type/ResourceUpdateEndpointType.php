@@ -58,7 +58,9 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
                     $context->setStatusCode(400);
                 }
             }
-            $data->set('form', $this->vueForm->createData($form->createView()));
+
+            $formFields = $request->get('form-fields') ? explode(',', $request->get('form-fields')) : null;
+            $data->set('form', $this->vueForm->createData($form->createView(), $formFields));
             $data->set('url', $request->getPathInfo());
         }
 

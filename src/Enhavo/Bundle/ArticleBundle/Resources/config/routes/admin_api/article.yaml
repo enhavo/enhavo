@@ -27,7 +27,7 @@ enhavo_article_admin_api_article_create:
 
 enhavo_article_admin_api_article_update:
     path: /article/update/{id}
-    methods: [GET, POST]
+    methods: [GET, POST, PATCH]
     defaults:
         _expose: admin_api
         _endpoint:

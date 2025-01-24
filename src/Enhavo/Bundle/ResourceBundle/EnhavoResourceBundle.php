@@ -12,6 +12,7 @@ use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\CollectionCompiler
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\DeleteHandlerCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\GridCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\InputCompilerPass;
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\RequestHandlerCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\ResourceCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\ResourceManagerCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\ResourceExpressionCompilerPass;
@@ -38,6 +39,7 @@ class EnhavoResourceBundle extends Bundle
         $container->addCompilerPass(new InputCompilerPass());
         $container->addCompilerPass(new ResourceExpressionCompilerPass());
         $container->addCompilerPass(new DeleteHandlerCompilerPass());
+        $container->addCompilerPass(new RequestHandlerCompilerPass());
 
         $container->addCompilerPass(new TypeCompilerPass('Action', 'enhavo_resource.action', Action::class));
         $container->addCompilerPass(new TypeCompilerPass('Batch', 'enhavo_resource.batch', Batch::class));

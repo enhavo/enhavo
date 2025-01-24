@@ -36,3 +36,9 @@ services:
             - '@twig'
         tags:
             - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\UserBundle\EventListener\CsrfDisableSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Security\CsrfChecker'
+        tags:
+            - { name: kernel.event_subscriber }

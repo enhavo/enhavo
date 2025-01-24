@@ -57,3 +57,9 @@ services:
         arguments:
             - '@request_stack'
             - '@security.csrf.token_manager'
+
+    Enhavo\Bundle\UserBundle\Form\Extension\CsrfDisableFormTypeExtension:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Security\CsrfChecker'
+        tags:
+            - { name: form.type_extension }

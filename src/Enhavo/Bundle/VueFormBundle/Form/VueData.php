@@ -6,6 +6,8 @@ use Symfony\Component\Form\FormView;
 
 final class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
 {
+    private array $data = [];
+
     private ?VueData $parent = null;
     private array $normalizer = [];
     private array $children = [];

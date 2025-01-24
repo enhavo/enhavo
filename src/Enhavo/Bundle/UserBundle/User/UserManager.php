@@ -19,6 +19,7 @@ use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationRegisterConf
 use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Verification\VerificationRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
+use Enhavo\Bundle\UserBundle\Model\ApiTokenAwareInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -67,9 +68,31 @@ class UserManager
 
         $this->updatePassword($user);
 
+        if ($user instanceof ApiTokenAwareInterface) {
+            if ($user->getApiAccess() && $user->getApiToken() === null) {
+                $this->updateApiToken($user, false);
+            } else if (!$user->getApiAccess() && $user->getApiToken() !== null) {
+                $user->setApiToken(null);
+                $user->setApiTokenCreatedAt(null);
+            }
+        }
+
         if ($flush) {
             $this->em->flush();
         }
+    }
+
+    public function updateApiToken(UserInterface $user, $flush = true): string
+    {
+        $token = $this->tokenGenerator->generateToken(32);
+        $user->setApiToken($token);
+        $user->setApiTokenCreatedAt(new \DateTime());
+
+        if ($flush) {
+            $this->em->flush();
+        }
+
+        return $token;
     }
 
     private function updatePassword(UserInterface $user): void

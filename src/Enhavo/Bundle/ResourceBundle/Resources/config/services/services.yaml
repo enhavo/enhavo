@@ -92,3 +92,7 @@ services:
             - '@Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface'
         tags:
             - { name: 'security.voter' }
+
+    Enhavo\Bundle\ResourceBundle\Security\CsrfChecker:
+        arguments:
+            - '%form.type_extension.csrf.enabled%'

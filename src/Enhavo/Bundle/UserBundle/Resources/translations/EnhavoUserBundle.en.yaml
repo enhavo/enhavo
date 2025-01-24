@@ -50,6 +50,7 @@ user:
             enabled: 'Enabled'
             super_admin: 'Super Admin'
             verified: 'Verified'
+            api_access: 'Api Access'
         help:
             admin: 'Only if this field is set to true, the user is able to login into the admin area'
     label:

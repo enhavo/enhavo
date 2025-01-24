@@ -8,7 +8,7 @@ class VueForm
 {
     use VueDataHelperTrait;
 
-    public function createData(FormView $formView)
+    public function createData(FormView $formView, ?array $fields = null)
     {
         $data = $this->getVueData($formView);
 
@@ -20,7 +20,13 @@ class VueForm
 
         $this->callNormalizer($data);
 
-        return $data->toArray();
+        $returnData = $data->toArray();
+
+        if (is_array($fields)) {
+            $returnData = $this->filterFields($returnData, $fields);
+        }
+
+        return $returnData;
     }
 
     private function assembleRelations(VueData $data)
@@ -47,16 +53,20 @@ class VueForm
         }
     }
 
-    public function submit(array $data)
+    private function filterFields(array $returnData, array $fields): array
     {
-        if ($data['compound']) {
-            $returnData = [];
-            foreach ($data['children'] as $child) {
-                $returnData[$child['name']] = $this->submit($child);
+        $data = [];
+        foreach ($returnData as $key => $value) {
+            if (in_array($key, $fields) || $key == 'name') {
+                $data[$key] = $value;
             }
-            return $returnData;
         }
 
-        return $data['value'];
+        $data['children'] = [];
+        foreach ($returnData['children'] as $child) {
+            $data['children'][] = $this->filterFields($child, $fields);
+        }
+
+        return $data;
     }
 }

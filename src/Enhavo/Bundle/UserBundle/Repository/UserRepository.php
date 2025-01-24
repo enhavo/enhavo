@@ -65,4 +65,14 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
         // Deprecated but still required by the interface
         return $this->loadUserByIdentifier($username);
     }
+
+    public function findIdentifierByApToken(string $apiToken): ?string
+    {
+        $user = $this->findOneBy([
+            'apiToken' => $apiToken,
+            'apiAccess' => true,
+        ]);
+
+        return $user?->getUserIdentifier();
+    }
 }
