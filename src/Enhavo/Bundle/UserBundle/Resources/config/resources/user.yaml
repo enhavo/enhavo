@@ -61,6 +61,7 @@ enhavo_resource:
                         firstName | lastName
                         enabled | verified
                         admin | superAdmin
+                        apiAccess
                         groups
 
         enhavo_user.user.update:

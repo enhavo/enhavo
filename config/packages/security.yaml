@@ -22,6 +22,7 @@ security:
             entry_point: Enhavo\Bundle\UserBundle\Security\EntryPoint\FormAuthenticationEntryPoint
             custom_authenticators:
                 - Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator
+                - Enhavo\Bundle\UserBundle\Security\Authentication\ApiTokenAuthenticator
             logout:
                 path: enhavo_user_admin_logout
                 target: enhavo_user_admin_login

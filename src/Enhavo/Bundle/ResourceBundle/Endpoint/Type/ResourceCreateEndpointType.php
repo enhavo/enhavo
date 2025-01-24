@@ -75,7 +75,8 @@ class ResourceCreateEndpointType extends AbstractEndpointType
                 }
             }
 
-            $data->set('form', $this->vueForm->createData($form->createView()));
+            $formFields = $request->get('form-fields') ? explode(',', $request->get('form-fields')) : null;
+            $data->set('form', $this->vueForm->createData($form->createView(), $formFields));
         }
 
         $viewData = $input->getViewData($resource);

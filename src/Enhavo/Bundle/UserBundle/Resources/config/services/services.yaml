@@ -55,6 +55,10 @@ services:
             - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
             - '%enhavo_user.user.model.class%'
 
+    Enhavo\Bundle\UserBundle\Security\Authentication\ApiTokenAuthenticator:
+        arguments:
+            - '@enhavo_user.user.repository'
+
     Enhavo\Bundle\UserBundle\Security\UserChecker:
         arguments:
             - '@event_dispatcher'

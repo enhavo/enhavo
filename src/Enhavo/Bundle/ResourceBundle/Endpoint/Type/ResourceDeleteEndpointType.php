@@ -15,6 +15,7 @@ use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
 use Enhavo\Bundle\ResourceBundle\Input\Input;
 use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
+use Enhavo\Bundle\ResourceBundle\Security\CsrfChecker;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfToken;
@@ -26,6 +27,7 @@ class ResourceDeleteEndpointType extends AbstractEndpointType
         private readonly InputFactory $inputFactory,
         private readonly ResourceManager $resourceManager,
         private readonly CsrfTokenManagerInterface $csrfTokenManager,
+        private readonly CsrfChecker $csrfChecker,
     )
     {
     }
@@ -42,7 +44,7 @@ class ResourceDeleteEndpointType extends AbstractEndpointType
             throw $this->createNotFoundException();
         }
 
-        if (!$this->csrfTokenManager->isTokenValid(new CsrfToken('resource_delete', $request->getPayload()->get('token')))) {
+        if ($this->csrfChecker->isEnabled() && !$this->csrfTokenManager->isTokenValid(new CsrfToken('resource_delete', $request->getPayload()->get('token')))) {
             $context->setStatusCode(400);
             $data['success'] = false;
             $data['message'] = 'Invalid token';

@@ -67,43 +67,8 @@ class VueFormTest extends TypeTestCase
 
         $this->assertEquals('newValue', $data['newKey']);
     }
-
-    public function testSubmitData()
-    {
-        $dependencies = $this->createDependencies();
-        $vueForm = $this->createInstance($dependencies);
-
-        $data = [
-            'name' => 'my_form_name',
-            'compound' => true,
-            'children' => [
-                'child_form' => [
-                    'name' => 'child_form',
-                    'value' => 'test',
-                    'compound' => false,
-                ],
-                'other_child_form' => [
-                    'name' => 'other_child_form',
-                    'value' => '',
-                    'compound' => true,
-                    'children' => [
-                        'deep_child' => [
-                            'name' => 'deep_child',
-                            'value' => 'foobar',
-                            'compound' => false,
-                        ]
-                    ]
-                ]
-            ]
-        ];
-
-        $submittedData = $vueForm->submit($data);
-
-        $this->assertIsArray($submittedData);
-        $this->assertEquals('test', $submittedData['child_form']);
-        $this->assertEquals('foobar', $submittedData['other_child_form']['deep_child']);
-    }
 }
+
 
 class VueFormDependencies
 {

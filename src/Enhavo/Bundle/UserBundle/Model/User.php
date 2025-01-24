@@ -6,7 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\AppBundle\Model\TimestampableTrait;
 
-class User implements UserInterface
+class User implements UserInterface, ApiTokenAwareInterface
 {
     use TimestampableTrait;
 
@@ -24,6 +24,9 @@ class User implements UserInterface
     private ?string $confirmationToken = null;
     private ?DateTime $passwordRequestedAt = null;
     private ?DateTime $lastFailedLoginAttempt = null;
+    private bool $apiAccess = false;
+    private ?string $apiToken = null;
+    private ?DateTime $apiTokenCreatedAt = null;
 
     /** @var GroupInterface[] */
     private $groups;
@@ -318,5 +321,35 @@ class User implements UserInterface
     public function setLastFailedLoginAttempt(?DateTime $lastFailedLoginAttempt): void
     {
         $this->lastFailedLoginAttempt = $lastFailedLoginAttempt;
+    }
+
+    public function getApiToken(): ?string
+    {
+        return $this->apiToken;
+    }
+
+    public function setApiToken(?string $token): void
+    {
+        $this->apiToken = $token;
+    }
+
+    public function getApiAccess(): bool
+    {
+        return $this->apiAccess;
+    }
+
+    public function setApiAccess(bool $apiAccess): void
+    {
+        $this->apiAccess = $apiAccess;
+    }
+
+    public function getApiTokenCreatedAt(): ?DateTime
+    {
+        return $this->apiTokenCreatedAt;
+    }
+
+    public function setApiTokenCreatedAt(?DateTime $apiTokenCreatedAt): void
+    {
+        $this->apiTokenCreatedAt = $apiTokenCreatedAt;
     }
 }
