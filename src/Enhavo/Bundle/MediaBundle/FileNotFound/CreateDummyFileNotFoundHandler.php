@@ -2,7 +2,6 @@
 
 namespace Enhavo\Bundle\MediaBundle\FileNotFound;
 
-use Enhavo\Bundle\MediaBundle\Content\Content;
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\FileNotFoundException;
@@ -32,21 +31,18 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
 
     public function handleLoad(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
     {
-        $originalFile = $file;
-        if ($file instanceof FormatInterface) {
-            $file = $file->getFile();
-        }
-
         $content = $this->loadDummyIfExists($file, $parameters);
         if (!$content) {
-            if ($file->isImage()) {
+            if ($this->isImage($file)) {
                 $content = $this->createRandomImage($file, $parameters);
+            } elseif ($this->isPdf($file)) {
+                $content = $this->createPdf($file, $parameters);
             } else {
                 $content = $this->createBlankFile($file, $parameters);
             }
         }
 
-        $originalFile->setContent($content);
+        $file->setContent($content);
     }
 
     public function handleDelete(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
@@ -54,7 +50,7 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
         // do nothing
     }
 
-    private function createRandomImage(FileInterface $file, array $parameters): ContentInterface
+    private function createRandomImage(FileInterface|FormatInterface $file, array $parameters): ContentInterface
     {
         $imagine = new Imagine();
 
@@ -84,14 +80,55 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
         return new PathContent($path);
     }
 
-    private function createBlankFile(FileInterface $file, array $parameters): ContentInterface
+    private function isImage(FileInterface|FormatInterface $file): bool
+    {
+        return strtolower(substr($file->getMimeType(), 0, 5)) == 'image';
+    }
+
+    private function isPdf(FileInterface|FormatInterface $file): bool
+    {
+        return $file->getMimeType() === 'application/pdf';
+    }
+
+    private function createPdf(FileInterface|FormatInterface $file, array $parameters)
+    {
+        $path = $this->getSavePath($file->getChecksum(), $parameters);
+
+        // Empty PDF
+        $this->filesystem->dumpFile($path, base64_decode(
+            'JVBERi0xLjUKJcOkw7zDtsOfCjIgMCBvYmoKPDwvTGVuZ3RoIDMgMCBSL0ZpbHRlci9GbGF0ZURl
+            Y29kZT4+CnN0cmVhbQp4nDPQM1Qo5ypUMFAw0DMwslAwtTTVMzI3VbAwMdSzMDNUKErlCtdSyOMK
+            VAAAtxIIrgplbmRzdHJlYW0KZW5kb2JqCgozIDAgb2JqCjUwCmVuZG9iagoKNSAwIG9iago8PAo+
+            PgplbmRvYmoKCjYgMCBvYmoKPDwvRm9udCA1IDAgUgovUHJvY1NldFsvUERGL1RleHRdCj4+CmVu
+            ZG9iagoKMSAwIG9iago8PC9UeXBlL1BhZ2UvUGFyZW50IDQgMCBSL1Jlc291cmNlcyA2IDAgUi9N
+            ZWRpYUJveFswIDAgNTk1LjMwMzkzNzAwNzg3NCA4NDEuODg5NzYzNzc5NTI4XS9Hcm91cDw8L1Mv
+            VHJhbnNwYXJlbmN5L0NTL0RldmljZVJHQi9JIHRydWU+Pi9Db250ZW50cyAyIDAgUj4+CmVuZG9i
+            agoKNCAwIG9iago8PC9UeXBlL1BhZ2VzCi9SZXNvdXJjZXMgNiAwIFIKL01lZGlhQm94WyAwIDAg
+            NTk1IDg0MSBdCi9LaWRzWyAxIDAgUiBdCi9Db3VudCAxPj4KZW5kb2JqCgo3IDAgb2JqCjw8L1R5
+            cGUvQ2F0YWxvZy9QYWdlcyA0IDAgUgovT3BlbkFjdGlvblsxIDAgUiAvWFlaIG51bGwgbnVsbCAw
+            XQovTGFuZyhkZS1ERSkKPj4KZW5kb2JqCgo4IDAgb2JqCjw8L0NyZWF0b3I8RkVGRjAwNTcwMDcy
+            MDA2OTAwNzQwMDY1MDA3Mj4KL1Byb2R1Y2VyPEZFRkYwMDRDMDA2OTAwNjIwMDcyMDA2NTAwNEYw
+            MDY2MDA2NjAwNjkwMDYzMDA2NTAwMjAwMDM2MDAyRTAwMzQ+Ci9DcmVhdGlvbkRhdGUoRDoyMDI1
+            MDExNTE1MzYyOSswMScwMCcpPj4KZW5kb2JqCgp4cmVmCjAgOQowMDAwMDAwMDAwIDY1NTM1IGYg
+            CjAwMDAwMDAyMzQgMDAwMDAgbiAKMDAwMDAwMDAxOSAwMDAwMCBuIAowMDAwMDAwMTQwIDAwMDAw
+            IG4gCjAwMDAwMDA0MDIgMDAwMDAgbiAKMDAwMDAwMDE1OSAwMDAwMCBuIAowMDAwMDAwMTgxIDAw
+            MDAwIG4gCjAwMDAwMDA1MDAgMDAwMDAgbiAKMDAwMDAwMDU5NiAwMDAwMCBuIAp0cmFpbGVyCjw8
+            L1NpemUgOS9Sb290IDcgMCBSCi9JbmZvIDggMCBSCi9JRCBbIDwwNjY5QUEwM0M1ODExMTNCQ0ND
+            OEEzNzBCNEJFNkQ4ND4KPDA2NjlBQTAzQzU4MTExM0JDQ0M4QTM3MEI0QkU2RDg0PiBdCi9Eb2ND
+            aGVja3N1bSAvNTg3QjE1MkEzNEI1MjZCRkM5MzIyMTM2NjMxMDNCQTAKPj4Kc3RhcnR4cmVmCjc3
+            MAolJUVPRgo='
+        ));
+        return new PathContent($path);
+    }
+
+    private function createBlankFile(FileInterface|FormatInterface $file, array $parameters): ContentInterface
     {
         $path = $this->getSavePath($file->getChecksum(), $parameters);
         $this->filesystem->dumpFile($path, '');
         return new PathContent($path);
     }
 
-    private function loadDummyIfExists(FileInterface $file, array $parameters): ?ContentInterface
+    private function loadDummyIfExists(FileInterface|FormatInterface $file, array $parameters): ?ContentInterface
     {
         if (!$this->saveToDisk($parameters)) {
             return null;
