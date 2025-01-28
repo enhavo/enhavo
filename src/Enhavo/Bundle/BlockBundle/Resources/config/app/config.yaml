@@ -34,8 +34,7 @@ enhavo_resource:
                     type: property
                     groups: ['duplicate', 'revision', 'restore']
                 children:
-                    type: collection
-                    by_reference: true
+                    type: Enhavo\Bundle\BlockBundle\Duplicate\NodeChildCollectionType
                     groups: ['duplicate', 'revision', 'restore']
                 name:
                     type: property

@@ -42,3 +42,9 @@ services:
     Enhavo\Bundle\BlockBundle\Duplicate\BlockDuplicateType:
         tags:
             - { name: enhavo_resource.duplicate }
+
+    Enhavo\Bundle\BlockBundle\Duplicate\NodeChildCollectionType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory'
+        tags:
+            - { name: enhavo_resource.duplicate }
