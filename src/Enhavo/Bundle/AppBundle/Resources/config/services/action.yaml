@@ -49,10 +49,15 @@ services:
             - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
         tags:
             - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\TransitionActionType:
+        arguments:
+            - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
         tags:
             - { name: enhavo_resource.action }
 

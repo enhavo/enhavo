@@ -4,10 +4,17 @@ enhavo_resource:
             classes:
                 model: Enhavo\Bundle\NewsletterBundle\Entity\Group
                 repository: Enhavo\Bundle\NewsletterBundle\Repository\GroupRepository
+            label: group.label.group
+            translation_domain: EnhavoNewsletterBundle
     grids:
         enhavo_newsletter.group:
             extends: enhavo_resource.grid
             resource: enhavo_newsletter.group
+            actions:
+                create:
+                    type: create
+                    permission: 'expr:permission("enhavo_newsletter.group", "create")'
+                    route: 'expr:resolve_route("create", {api: false})'
             columns:
                 name:
                     sortable: true
@@ -24,7 +31,7 @@ enhavo_resource:
                     actions:
                         update:
                             type: update
-                            route: enhavo_newsletter_group_update
+                            route: enhavo_newsletter_admin_group_update
             batches:
                 delete:
                     type: delete
@@ -33,3 +40,11 @@ enhavo_resource:
             extends: enhavo_resource.input
             resource: enhavo_newsletter.group
             form: Enhavo\Bundle\NewsletterBundle\Form\Type\GroupType
+            tabs:
+                main:
+                    type: form
+                    label: group.label.group
+                    translation_domain: EnhavoNewsletterBundle
+                    arrangement: |
+                        name
+                        code

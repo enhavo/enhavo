@@ -1,7 +1,12 @@
 <template>
     <div v-show="form.isVisible()">
         <select style="width: 100%" :name="form.fullName" :ref="(el) => form.setElement(el as HTMLElement)" :multiple="form.multiple" v-once>
-            <option selected v-for="item in form.value" :value="item.id">{{ item.text }}</option>
+            <template v-if="form.multiple">
+                <option selected v-for="item in form.value" :value="item.id">{{ item.text }}</option>
+            </template>
+            <template v-else>
+                <option selected :value="form.value.id">{{ form.value.text }}</option>
+            </template>
         </select>
         <div class="related-buttons-row" v-if="form.createRoute">
             <a href="#" class="btn-secondary has-symbol" @click.prevent="form.openCreate()">
