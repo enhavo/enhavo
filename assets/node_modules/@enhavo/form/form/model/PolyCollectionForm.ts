@@ -19,11 +19,22 @@ export class PolyCollectionForm extends ListForm
         this.isOpen = !this.isOpen;
     }
 
-    public addItem(key?: string): Form
+    public addItem(key?: string, after: Form = null): Form
     {
         let prototype = this.findPrototype(key);
         let item = this.createItem(prototype.form, prototype.name);
-        this.children.push(item);
+
+        if (after === null) {
+            this.children.splice(0, 0, item);
+        } else {
+            const index = this.children.indexOf(after);
+            if (index > -1) {
+                this.children.splice(index + 1, 0, item);
+            } else {
+                this.children.push(item);
+            }
+        }
+
         this.updatePosition();
         return item;
     }
@@ -88,5 +99,6 @@ class EntryLabel
 {
     key: string;
     label: string;
+    filteredOut: boolean = false;
 }
 

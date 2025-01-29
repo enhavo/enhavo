@@ -1,4 +1,5 @@
 @use "@enhavo/app/assets/styles/import/variables";
+@use "@enhavo/app/assets/styles/import/blueprints";
 
 .tab-container {
   .poly-collection-actions {
@@ -17,13 +18,16 @@
   }
 
   .form-poly-collection-add-menu {margin:10px 0;padding:8px 13px;background:#FFF;border:1px solid variables.$color1;border-radius:19px;display:flex;flex-wrap:wrap;gap:8px;
+    .form-poly-collection-add-menu-filter-line {width:100%;
+      .form-poly-collection-add-menu-filter {@extend %textfield;font-size:0.875rem;}
+    }
     .add-menu-item {width:150px;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;padding:7px;border-radius:10px;text-align:center;cursor:pointer;flex:1 1 auto;background: variables.$grey1;font-size:0.875rem;line-height:1.3em;
       &:hover {background: variables.$color1;color:#fff;}
     }
   }
 }
 
-.form-poly-collection-items {display:flex;flex-direction:column;gap:16px;}
+.form-poly-collection-items {display:flex;flex-direction:column;}
 
 .form-poly-collection-item {background:#fff;overflow:hidden;border:1px solid variables.$grey5;
   .buttons-label-container {border-bottom: 1px solid variables.$grey5;padding:6px;display:flex;align-items:center;
