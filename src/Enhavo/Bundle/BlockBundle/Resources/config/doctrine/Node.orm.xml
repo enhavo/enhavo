@@ -5,6 +5,7 @@
             <generator/>
         </id>
 
+        <field name="uuid" length="36" nullable="true" unique="true" />
         <field name="name" length="255" nullable="true" />
         <field name="position" type="integer" nullable="true" />
         <field name="blockId" type="integer" nullable="true" />

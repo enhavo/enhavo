@@ -8,13 +8,14 @@
 
 namespace Enhavo\Bundle\FormBundle\Tests\Type;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
 use Enhavo\Bundle\FormBundle\Tests\Form\PreloadExtensionFactory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Symfony\Component\Form\Exception\InvalidConfigurationException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Test\TypeTestCase;
@@ -72,7 +73,7 @@ class PolyCollectionTypeTest extends TypeTestCase
     public function testSameTypes()
     {
         $form = $this->factory->create(PolyCollectionType::class, [], [
-            'entry_types' => ['first' => ContainerType::class, 'second' => ContainerType::class],
+            'entry_types' => ['first' => ContainerDataType::class, 'second' => ContainerDataType::class],
             'entry_types_options' => ['first' => ['type' => FirstType::class], 'second' => ['type' => SecondType::class]],
             'allow_add' => true
         ]);
@@ -260,6 +261,107 @@ class PolyCollectionTypeTest extends TypeTestCase
         $view = $form->createView();
         $this->assertEquals(['nested'], $view->vars['poly_collection_config']['entryKeys']);
     }
+
+    public function testChangingSubmitIndex()
+    {
+        $data = new ItemsContainer();
+
+        $first = new First('Bob');
+        $second = new Second('Alice');
+
+        $data->addItem($first);
+        $data->addItem($second);
+
+        $formOptions = [
+            'entry_types' => [
+                'first' => FirstType::class,
+                'second' => SecondType::class
+            ],
+            'entry_types_options' => [
+                'first' => ['data_class' => First::class, 'uuid_field' => true],
+                'second' => ['data_class' => Second::class, 'uuid_field' => true],
+            ],
+            'uuid_property' => 'uuid'
+        ];
+
+
+        $form = $this->factory->createNamedBuilder('container', options: [
+            'data_class' => ItemsContainer::class,
+        ])
+            ->setData($data)
+            ->add('items', PolyCollectionType::class, $formOptions)
+            ->getForm();
+
+        $form->submit([
+            'items' => [
+                0 => ['_key' => 'first', 'name' => 'Bob', 'uuid' => $first->uuid],
+                2 => ['_key' => 'second', 'label' => 'Alice', 'uuid' => $second->uuid],
+            ]
+        ]);
+
+        $this->assertTrue($form->isSubmitted(), 'submitted');
+        $this->assertTrue($form->isValid(), 'valid');
+        $this->assertTrue($second === $data->getItems()->get(1), 'same reference');
+    }
+
+    public function testSendingWrongAndMissingIndex()
+    {
+        $data = new ItemsContainer();
+        $first = new First('Bob');
+        $second = new Second('Alice');
+        $data->addItem($first);
+        $data->addItem($second);
+
+        $formOptions = [
+            'entry_types' => [
+                'first' => FirstType::class,
+                'second' => SecondType::class
+            ],
+            'entry_types_options' => [
+                'first' => ['data_class' => First::class, 'uuid_field' => true],
+                'second' => ['data_class' => Second::class, 'uuid_field' => true],
+            ],
+            'uuid_property' => 'uuid'
+        ];
+
+
+        $form = $this->factory->createNamedBuilder('container', options: [
+            'data_class' => ItemsContainer::class,
+        ])
+            ->setData($data)
+            ->add('items', PolyCollectionType::class, $formOptions)
+            ->getForm();
+
+        $form->submit([
+            'items' => [
+                3 => ['_key' => 'first', 'name' => 'Bob2', 'uuid' => $first->uuid],
+                6 => ['_key' => 'first', 'name' => 'Bob3', 'uuid' => '022208e6-3f95-4add-a24e-9f2ee04ddd83'],
+            ]
+        ]);
+
+        $this->assertTrue($form->isSubmitted(), 'submitted');
+        $this->assertTrue($form->isValid(), 'valid');
+        $this->assertCount(2, $data->getItems());
+        $this->assertTrue($first === $data->getItems()->get(0), 'same reference');
+        $this->assertEquals('022208e6-3f95-4add-a24e-9f2ee04ddd83', $data->getItems()->get(2)->uuid);
+    }
+}
+
+class UuidType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        if ($options['uuid_field']) {
+            $builder->add('uuid', TextType::class);
+        }
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'uuid_field' => false
+        ]);
+    }
 }
 
 class FirstType extends AbstractType
@@ -268,6 +370,11 @@ class FirstType extends AbstractType
     {
         $builder->add('name', TextType::class);
     }
+
+    public function getParent()
+    {
+        return UuidType::class;
+    }
 }
 
 class SecondType extends AbstractType
@@ -275,6 +382,11 @@ class SecondType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('label', TextType::class);
+    }
+
+    public function getParent()
+    {
+        return UuidType::class;
     }
 }
 
@@ -292,19 +404,7 @@ class NestedType extends AbstractType
     }
 }
 
-class NestedCollectionType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder->add('children', CollectionType::class, [
-            'entry_type' => NestedCollectionType::class,
-            'allow_add' => true,
-            'allow_delete' => true
-        ]);
-    }
-}
-
-class ContainerType extends AbstractType
+class ContainerDataType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -317,36 +417,72 @@ class ContainerType extends AbstractType
     }
 }
 
-class First
+class ItemsContainer
 {
-    public $id;
-    public $name;
+    public Collection $items;
 
-    /**
-     * First constructor.
-     * @param $id
-     * @param $name
-     */
-    public function __construct($id = null, $name = null)
+    public function __construct()
     {
-        $this->id = $id;
-        $this->name = $name;
+        $this->items = new ArrayCollection();
+    }
+
+    public function addItem(Item $item): void
+    {
+        $this->items->add($item);
+    }
+
+    public function removeItem(Item $item): void
+    {
+        $this->items->removeElement($item);
+    }
+
+    public function getItems(): Collection
+    {
+        return $this->items;
     }
 }
 
-class Second
-{
-    public $id;
-    public $label;
 
-    /**
-     * Second constructor.
-     * @param $id
-     * @param $label
-     */
-    public function __construct($id = null, $label = null)
+interface Item
+{
+
+}
+
+class First implements Item
+{
+    public function __construct(
+        public ?string $id = null,
+        public ?string $name = null,
+        public ?string $uuid = null,
+    )
     {
-        $this->id = $id;
-        $this->label = $label;
+        if ($this->uuid === null) {
+            $this->uuid = generateUuid();
+        }
     }
+}
+
+class Second implements Item
+{
+    public function __construct(
+        public ?string $id = null,
+        public ?string $label = null,
+        public ?string $uuid = null,
+    )
+    {
+        if ($this->uuid === null) {
+            $this->uuid = generateUuid();
+        }
+    }
+}
+
+function generateUuid(): ?string
+{
+    return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+        mt_rand( 0, 0xffff ),
+        mt_rand( 0, 0x0fff ) | 0x4000,
+        mt_rand( 0, 0x3fff ) | 0x8000,
+        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+    );
 }

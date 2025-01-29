@@ -6,8 +6,6 @@ use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;
 use Enhavo\Bundle\VueFormBundle\Form\VueData;
 use Enhavo\Bundle\VueFormBundle\Form\VueDataHelperTrait;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
-use Enhavo\Bundle\VueFormBundle\Form\VueType\FormVueTypeExtension;
-use Enhavo\Bundle\VueFormBundle\Form\VueType\TextVueTypeExtension;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;

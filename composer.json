@@ -68,6 +68,7 @@
     "symfony/translation": "^6.4",
     "symfony/twig-bridge": "^6.4",
     "symfony/twig-bundle": "^6.4",
+    "symfony/uid": "^6.4",
     "symfony/ux-twig-component": "^2.6",
     "symfony/validator": "^6.4",
     "symfony/web-link": "^6.4",

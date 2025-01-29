@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\BlockBundle\Form\Type;
 use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
 use Enhavo\Bundle\FormBundle\Form\Type\TypeNameType;
+use Enhavo\Bundle\FormBundle\Form\Type\UuidType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,6 +21,7 @@ class NodeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('position', PositionType::class);
+        $builder->add('uuid', UuidType::class);
         $builder->add('name', TypeNameType::class);
         $builder->add('block', $options['block_type'], $options['block_type_options']);
     }

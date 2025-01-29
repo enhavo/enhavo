@@ -8,6 +8,7 @@
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
+use Enhavo\Bundle\FormBundle\Form\EventListener\MapSubmittedUuidDataListener;
 use Enhavo\Bundle\FormBundle\Form\EventListener\ResizePolyFormListener;
 use Enhavo\Bundle\FormBundle\Prototype\PrototypeManager;
 use Symfony\Component\Form\AbstractType;
@@ -53,6 +54,7 @@ class PolyCollectionType extends AbstractType
             $options['entry_type_resolver']
         );
 
+        $builder->addEventSubscriber(new MapSubmittedUuidDataListener($options['uuid_property']));
         $builder->addEventSubscriber($resizeListener);
     }
 
@@ -85,6 +87,7 @@ class PolyCollectionType extends AbstractType
         $view->vars['allow_delete'] = $options['allow_delete'];
         $view->vars['add_label'] = $options['add_label'];
         $view->vars['entry_labels'] = $this->buildEntryLabels($options);
+        $view->vars['uuid_check'] = !!$options['uuid_property'];
 
         $view->vars['poly_collection_config'] = [
             'entryKeys' => $this->buildEntryKeys($options),
@@ -158,7 +161,8 @@ class PolyCollectionType extends AbstractType
             'by_reference' => false,
             'custom_name_property' => null,
             'add_label' => '',
-            'confirm_delete' => false
+            'confirm_delete' => false,
+            'uuid_property' => null,
         ]);
 
         $resolver->setRequired(array(

@@ -1,6 +1,7 @@
 <template>
     <form-widget :form="form.get('name')" />
     <form-widget :form="form.get('position')" />
+    <form-widget :form="form.get('uuid')" />
     <form-widget :form="form.get('block')" />
 </template>
 

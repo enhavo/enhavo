@@ -34,31 +34,33 @@ class BooleanType extends AbstractType
     {
         $builder->addModelTransformer(new CallbackTransformer(
             function ($originalDescription) use ($options) {
-                if(true === $originalDescription) {
+                if (true === $originalDescription) {
                     return self::VALUE_TRUE;
                 }
-                if(false === $originalDescription) {
+                if (false === $originalDescription) {
                     return self::VALUE_FALSE;
                 }
-                if(null === $originalDescription || '' === $originalDescription) {
-                    if(true === $options['default'] || self::VALUE_TRUE === $options['default']) {
+                if (null === $originalDescription || '' === $originalDescription) {
+                    if (true === $options['default'] || self::VALUE_TRUE === $options['default']) {
                         return self::VALUE_TRUE;
                     }
-                    if(false === $options['default']|| self::VALUE_FALSE === $options['default']) {
+                    if (false === $options['default']|| self::VALUE_FALSE === $options['default']) {
                         return self::VALUE_FALSE;
                     }
                     return self::VALUE_NULL;
                 }
                 return $originalDescription;
             },
-            function ($submittedDescription) {
-                if(self::VALUE_TRUE === $submittedDescription) {
+            function ($submittedDescription) use ($options) {
+                if (self::VALUE_TRUE === $submittedDescription) {
                     return true;
-                }
-                if(self::VALUE_FALSE === $submittedDescription) {
+                } else if (self::VALUE_FALSE === $submittedDescription) {
                     return false;
+                } else if (self::VALUE_NULL === $submittedDescription) {
+                    return null;
                 }
-                return null;
+
+                return $options['default'];
             }
         ));
     }
@@ -84,7 +86,7 @@ class BooleanType extends AbstractType
             'translation_domain' => 'EnhavoAppBundle',
             'expanded' => true,
             'multiple' => false,
-            'default' => null
+            'default' => false
         ));
     }
 

@@ -31,6 +31,7 @@ class PolyCollectionVueTypeExtension extends AbstractVueTypeExtension
         $data['prototypeStorage'] = $view->vars['poly_collection_config']['prototypeStorage'];
         $data['collapsed'] = $view->vars['poly_collection_config']['collapsed'];
         $data['confirmDelete'] = $view->vars['poly_collection_config']['confirmDelete'];
+        $data['uuidCheck'] = $view->vars['uuid_check'];
 
         $data['itemComponent'] = $options['item_component'];
 

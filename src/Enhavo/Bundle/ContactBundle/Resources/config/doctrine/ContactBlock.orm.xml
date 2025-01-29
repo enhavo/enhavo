@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
     <entity name="Enhavo\Bundle\ContactBundle\Entity\ContactBlock" table="contact_contact_block">
-        <field name="key" column="key" nullable="true" />
+        <field name="key" column="`key`" nullable="true" />
     </entity>
 </doctrine-mapping>

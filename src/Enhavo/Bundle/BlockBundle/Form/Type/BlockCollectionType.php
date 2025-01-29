@@ -41,6 +41,7 @@ class BlockCollectionType extends AbstractType
             'allow_delete' => true,
             'item_groups' => [],
             'items' => [],
+            'uuid_property' => 'uuid',
             'prototype_storage' => 'enhavo_block',
             'row_component' => 'form-block-collection-row',
             'custom_name_property' => function (NodeInterface $node) {

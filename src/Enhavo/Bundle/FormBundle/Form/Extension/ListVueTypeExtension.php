@@ -36,6 +36,7 @@ class ListVueTypeExtension extends AbstractVueTypeExtension
         $data['index'] = null;
         $data['draggableGroup'] = $view->vars['draggable_group'];
         $data['draggableHandle'] = $view->vars['draggable_handle'];
+        $data['uuidCheck'] = $view->vars['uuid_check'];
         $data['onDelete'] = null;
     }
 
