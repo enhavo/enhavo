@@ -72,10 +72,30 @@ export class ResourcePreviewManager
             if ((event as PreviewData).target == this.frameManager.getId()) {
                 this.previewData = (event as PreviewData).data;
                 if (this.iframe) {
-                    this.iframe.contentWindow.document.querySelector('html').innerHTML = this.previewData
+                    let element = this.iframe.contentWindow.document.querySelector('html')
+                    this.setHtml(element, this.previewData);
                 }
                 event.resolve();
             }
         })
+    }
+
+    private setHtml(element: HTMLElement, html: string)
+    {
+        element.innerHTML = html;
+
+        // replace script elements to execute scripts
+        Array.from(element.querySelectorAll("script")).forEach((scriptElement) => {
+            const newScriptElement = document.createElement("script");
+
+            Array.from((scriptElement as HTMLElement).attributes).forEach( attr => {
+                newScriptElement.setAttribute(attr.name, attr.value)
+            });
+
+            const scriptText = document.createTextNode((scriptElement as HTMLElement).innerHTML);
+            newScriptElement.appendChild(scriptText);
+
+            (scriptElement as HTMLElement).parentNode.replaceChild(newScriptElement, scriptElement as HTMLElement);
+        });
     }
 }
