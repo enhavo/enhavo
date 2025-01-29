@@ -34,6 +34,7 @@ class BlockCollectionTypeTest extends TypeTestCase
 
         $form->submit([
             0 => [
+                'uuid' => '8758e476-0696-46d0-8733-752d6d180a1e',
                 'name' => 'column',
                 'block' => [
                     'text' => 'Foobar',
@@ -43,6 +44,7 @@ class BlockCollectionTypeTest extends TypeTestCase
                 ]
             ],
             1 => [
+                'uuid' => 'f4ce058f-7097-4644-9d4e-3dacf8e99538',
                 'name' => 'text',
                 'block' => [
                     'text' => 'Hello World!'
