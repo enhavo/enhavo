@@ -1,16 +1,22 @@
-Enhavo\Bundle\BlockBundle\Entity\Container:
-    properties:
-        blocks:
-            - Valid: ~
-
 Enhavo\Bundle\BlockBundle\Entity\Node:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: uuid
+            groups: [default]
+
     properties:
         block:
-            - Valid: ~
+            - Valid:
+                  groups: [default]
         children:
-            - Valid: ~
+            - Valid:
+                  groups: [default]
+        uuid:
+            - Uuid:
+                  groups: [default]
 
 Enhavo\Bundle\BlockBundle\Entity\Video:
     properties:
         url:
-            - Enhavo\Bundle\BlockBundle\Validator\Constraints\VideoUrl: ~
+            - Enhavo\Bundle\BlockBundle\Validator\Constraints\VideoUrl:
+                  groups: [default]

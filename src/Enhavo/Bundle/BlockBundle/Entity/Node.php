@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\BlockBundle\Model\CustomNameInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * Block
@@ -15,6 +16,8 @@ class Node implements NodeInterface, CustomNameInterface
 {
     /** @var integer */
     private $id;
+
+    private string $uuid;
 
     /** @var integer */
     private $position;
@@ -55,6 +58,12 @@ class Node implements NodeInterface, CustomNameInterface
     /** @var string */
     private $template;
 
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+        $this->uuid = Uuid::v4();
+    }
+
     /**
      * Get id
      *
@@ -65,9 +74,14 @@ class Node implements NodeInterface, CustomNameInterface
         return $this->id;
     }
 
-    public function __construct()
+    public function getUuid(): ?string
     {
-        $this->children = new ArrayCollection();
+        return $this->uuid;
+    }
+
+    public function setUuid(?string $uuid): void
+    {
+        $this->uuid = $uuid;
     }
 
     /**
@@ -142,11 +156,11 @@ class Node implements NodeInterface, CustomNameInterface
      */
     public function setBlock(BlockInterface $block = null)
     {
-        if($this->block) {
+        if ($this->block) {
             $this->block->setNode(null);
         }
 
-        if($block) {
+        if ($block) {
             $this->setType(NodeInterface::TYPE_BLOCK);
             $block->setNode($this);
         }

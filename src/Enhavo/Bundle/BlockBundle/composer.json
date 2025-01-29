@@ -16,7 +16,8 @@
     "enhavo/app-bundle": "dev-master",
     "enhavo/doctrine-extension-bundle": "dev-master",
     "enhavo/form-bundle": "dev-master",
-    "enhavo/media-bundle": "dev-master"
+    "enhavo/media-bundle": "dev-master",
+    "symfony/uid": "^6.4"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\BlockBundle\\": "" }

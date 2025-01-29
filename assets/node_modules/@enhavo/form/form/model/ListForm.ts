@@ -5,6 +5,8 @@ import {MoveEvent} from "@enhavo/form/form/event/MoveEvent";
 import {DeleteEvent} from "@enhavo/form/form/event/DeleteEvent";
 import {CreateEvent} from "@enhavo/form/form/event/CreateEvent";
 import {ChangeEvent} from "@enhavo/vue-form/event/ChangeEvent";
+import {UuidForm} from "@enhavo/form/form/model/UuidForm";
+import generateId from "uuid/v4";
 
 export class ListForm extends Form
 {
@@ -19,6 +21,7 @@ export class ListForm extends Form
     public itemComponent: string;
     public draggableGroup: string;
     public draggableHandle: string;
+    public uuidCheck: boolean;
 
     constructor(
         protected formFactory: FormFactory,
@@ -80,6 +83,10 @@ export class ListForm extends Form
         item = this.formFactory.create(item, this.getRoot().visitors, this);
         item.name = this.index.toString();
         item.update();
+        let uuidForm = this.getUuidForm(item);
+        if (uuidForm !== null) {
+            uuidForm.value = generateId();
+        }
         this.index++;
 
         let event = new CreateEvent(item)
@@ -195,6 +202,17 @@ export class ListForm extends Form
         return null;
     }
 
+    private getUuidForm(form: Form): UuidForm|null
+    {
+        for (let child of form.children) {
+            if ((<UuidForm>child).uuid === true) {
+                return <UuidForm>child;
+            }
+        }
+
+        return null;
+    }
+
     public dragStart(event: any)
     {
         let item = null;
@@ -259,10 +277,32 @@ export class ListForm extends Form
 
     protected morphChildren(form: Form)
     {
-        let index = 0;
-        for (let child of this.children) {
-            child.name = index.toString();
-            index++;
+        if (!this.uuidCheck) {
+            // if uuid check is off, we can't morph the form, and just keep it, as it is!
+            return;
+        }
+
+        // We only update or add a child, if uuid is matching. We can't delete missing forms,
+        // because after sending an update, a new child could be added, before we morph the form,
+        // this child will not appear in the morph form and would be deleted.
+
+        // Using index as identifier is not possible, because if we skip an index (add & remove a child),
+        // and creating a total new form on the server side, may not match our index in the browser.
+        // Just reassign ascend indices won't help, because keeping the form will give us the indices
+        // with skipped numbers. We don't know if the form was recreated or not, so we can't guarantee a correct matching
+
+        for (let formChild of form.children) {
+            let exists = false;
+            for (let child of this.children) {
+                if (this.getUuidForm(formChild)?.value == this.getUuidForm(child)?.value) {
+                    child.morphMerge(formChild);
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists && this.getUuidForm(formChild) !== null) {
+                this.add(formChild);
+            }
         }
     }
 }

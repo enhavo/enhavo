@@ -95,6 +95,7 @@ class HtmlTagType extends AbstractType
             'class_placeholder' => '---',
             'class_empty_data' => null,
             'class_fallback_tag' => 'span',
+            'error_bubbling' => false,
         ]);
 
         $resolver->setAllowedTypes('class_fallback_tag', 'string');
