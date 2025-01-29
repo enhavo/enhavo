@@ -44,7 +44,7 @@ class CommentsActionType extends AbstractActionType
             throw CommentSubjectException::createTypeException($resource);
         }
 
-        if ($resource->getThread() === null) {
+        if ($resource->getThread()?->getId() === null) {
             return false;
         }
 
