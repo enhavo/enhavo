@@ -5,7 +5,7 @@
  * Date: 19.11.17
  */
 
-namespace Enhavo\Bundle\ResourceBundle\Column\Type;
+namespace Enhavo\Bundle\RoutingBundle\Column\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Column\AbstractColumnType;

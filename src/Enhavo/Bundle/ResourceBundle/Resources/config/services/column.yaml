@@ -41,12 +41,6 @@ services:
         tags:
             - { name: enhavo_resource.column }
 
-    Enhavo\Bundle\ResourceBundle\Column\Type\UrlColumnType:
-        arguments:
-            - '@Enhavo\Bundle\RoutingBundle\Router\Router'
-        tags:
-            - { name: enhavo_resource.column }
-
     Enhavo\Bundle\ResourceBundle\Column\Type\TextColumnType:
         tags:
             - { name: enhavo_resource.column }

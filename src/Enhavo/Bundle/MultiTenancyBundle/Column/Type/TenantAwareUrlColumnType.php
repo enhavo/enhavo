@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\MultiTenancyBundle\Column\Type;
 
 use Enhavo\Bundle\MultiTenancyBundle\Model\TenantAwareInterface;
 use Enhavo\Bundle\MultiTenancyBundle\Tenant\TenantManager;
-use Enhavo\Bundle\ResourceBundle\Column\Type\UrlColumnType;
+use Enhavo\Bundle\RoutingBundle\Column\Type\UrlColumnType;
 use Enhavo\Bundle\RoutingBundle\Router\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGenerator;
