@@ -35,7 +35,8 @@ export default defineConfig({
     server: {
         strictPort: true,
         port: process.env.VITE_THEME_PORT,
-        origin: 'http://localhost:' + process.env.VITE_THEME_PORT
+        origin: 'http://localhost:' + process.env.VITE_THEME_PORT,
+        cors: true,
     },
     resolve: {
         alias: {

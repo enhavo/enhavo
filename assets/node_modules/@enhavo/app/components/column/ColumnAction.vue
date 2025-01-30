@@ -1,6 +1,6 @@
 <template>
     <div class="view-table-col-text">
-        <component v-for="action in column.getActions(data.actions)" class="action-container" :is="action.component" :data="action"></component>
+        <component v-for="action in column.getActions(data.actions)" class="action-container" :is="action.component" :data="action" :click-stop="true"></component>
     </div>
 </template>
 

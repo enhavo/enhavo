@@ -24,7 +24,8 @@
             &:before {font-family:"icon";content:"\f2bb";}
           }
         }
-        .select2-selection__rendered {border-radius:10px;padding:5px 14px;background: variables.$grey1;min-height:37px;}
+        .select2-selection__rendered {border-radius:10px;padding:5px 20px 5px 14px;background: variables.$grey1;min-height:37px;}
+        .select2-selection__clear {padding:0 5px;}
       }
     }
   }

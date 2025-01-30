@@ -80,7 +80,8 @@ export default defineConfig({
     server: {
         strictPort: true,
         port: process.env.VITE_ADMIN_PORT,
-        origin: 'http://localhost:' + process.env.VITE_ADMIN_PORT
+        origin: 'http://localhost:' + process.env.VITE_ADMIN_PORT,
+        cors: true,
     },
     resolve: {
         preserveSymlinks: true,
