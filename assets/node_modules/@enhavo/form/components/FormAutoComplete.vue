@@ -5,7 +5,7 @@
                 <option selected v-for="item in form.value" :value="item.id">{{ item.text }}</option>
             </template>
             <template v-else>
-                <option selected :value="form.value.id">{{ form.value.text }}</option>
+                <option selected :value="form.value.id" v-if="form.value">{{ form.value.text }}</option>
             </template>
         </select>
         <div class="related-buttons-row" v-if="form.createRoute">
