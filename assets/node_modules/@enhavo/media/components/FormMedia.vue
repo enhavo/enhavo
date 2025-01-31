@@ -13,7 +13,7 @@
                     v-model="form.children"
                     item-key="name"
                     @change="event => { form.changeOrder(event) }"
-                    @start="event => { form.dragStart(event) }"
+                    @start="event => { form.dragStart(event); form.closeEditForChildren(null); }"
                     @end="event => { form.dragEnd(event) }"
                     :group="form.draggableGroup"
                     :handle="form.draggableHandle"

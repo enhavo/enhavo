@@ -1,7 +1,7 @@
 <template>
     <div class="form-media-item" :class="{ 'edit-show': form.editOpen }" :ref="(el) => form.setElement(el as HTMLElement)" v-click-outside="closeEdit">
-        <div class="thumb" @click="toggleEdit">
-            <img v-if="isImage(form.file)" :src="form.path('enhavoPreviewThumb')" />
+        <div class="thumb" :class="{ 'drag-button' : sortable }" @click="toggleEdit">
+            <img v-if="isImage(form.file)" :src="form.path('enhavoPreviewThumb')" draggable="false" />
             <div v-else><span class="icon" :class="'icon-'+getIcon(form.file)"></span></div>
         </div>
         <div v-if="deletable" class="delete-button" @click="$emit('delete', form)"><i class="icon icon-close"></i></div>
