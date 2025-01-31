@@ -41,8 +41,8 @@ class NodeCollectionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'label' => 'block.label.blocks',
-            'translation_domain' => 'EnhavoBlockBundle',
+            'label' => 'node.label.items',
+            'translation_domain' => 'EnhavoNavigationBundle',
             'entry_types' => $this->getEntryTypes(),
             'entry_types_options' => $this->getEntryTypesOptions(),
             'entry_types_prototype_data' => $this->getEntryTypesPrototypeData(),
