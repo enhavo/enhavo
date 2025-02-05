@@ -1,6 +1,10 @@
 <template>
-    <form-widget :form="form.get('conditional')" />
-    <form-widget :form="form.get('key')" />
+    <div>
+        <form-widget :form="form.get('key')" />
+        <div v-if="form.get('conditional')">
+            <form-widget :form="form.get('conditional')" />
+        </div>
+    </div>
 </template>
 
 <script lang="ts">
