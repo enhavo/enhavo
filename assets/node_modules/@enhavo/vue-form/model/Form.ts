@@ -237,6 +237,10 @@ export class Form
 
     public remove(name: string)
     {
+        if (!this.has(name)) {
+            return;
+        }
+
         let element = this.get(name);
         let parent = element.parent;
 

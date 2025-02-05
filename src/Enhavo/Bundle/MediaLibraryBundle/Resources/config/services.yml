@@ -82,8 +82,6 @@ services:
             - { name: enhavo_resource.action }
 
     Enhavo\Bundle\MediaLibraryBundle\Action\MediaLibrarySelectActionType:
-        arguments:
-            - '@router'
         tags:
             - { name: enhavo_resource.action }
 
