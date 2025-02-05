@@ -25,6 +25,11 @@ export class ConditionalForm extends Form
             form.name = 'conditional';
             form.update();
             this.replace(form);
+        } else {
+            let child = this.get('conditional');
+            if (child) {
+                this.remove('conditional');
+            }
         }
     }
 
@@ -42,7 +47,11 @@ export class ConditionalForm extends Form
     private replace(form: Form)
     {
         let child = this.get('conditional');
-        this.children[this.children.indexOf(child)] = form;
+        if (child) {
+            this.children[this.children.indexOf(child)] = form;
+        } else {
+            this.children.push(form);
+        }
     }
 }
 
