@@ -4,3 +4,9 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: console.command }
+
+    Enhavo\Bundle\DoctrineExtensionBundle\Command\DebugLikeSearchCommand:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: console.command }
