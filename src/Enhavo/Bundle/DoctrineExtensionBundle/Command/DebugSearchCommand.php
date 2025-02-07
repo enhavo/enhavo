@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class DebugLikeSearchCommand extends Command
+class DebugSearchCommand extends Command
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
@@ -21,7 +21,7 @@ class DebugLikeSearchCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('debug:doctrine:like-search')
+            ->setName('debug:doctrine:search')
             ->setDescription('Perform sql LIKE search in all text fields of all entities')
             ->addArgument('searchTerm', InputArgument::REQUIRED, 'Search term in sql LIKE search syntax (use % as wildcard)')
             ->addOption('includeVarchar', null, InputOption::VALUE_NONE, 'Include VARCHAR fields, not only TEXT fields')

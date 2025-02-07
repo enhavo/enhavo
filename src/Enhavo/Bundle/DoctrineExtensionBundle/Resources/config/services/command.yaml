@@ -5,7 +5,7 @@ services:
         tags:
             - { name: console.command }
 
-    Enhavo\Bundle\DoctrineExtensionBundle\Command\DebugLikeSearchCommand:
+    Enhavo\Bundle\DoctrineExtensionBundle\Command\DebugSearchCommand:
         arguments:
             - '@doctrine.orm.entity_manager'
         tags:
