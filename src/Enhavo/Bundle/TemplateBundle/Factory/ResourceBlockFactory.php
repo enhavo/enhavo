@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\TemplateBundle\Factory;
 
-use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
+use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
 
-class ResourceBlockFactory extends AbstractBlockFactory
+class ResourceBlockFactory extends BlockFactory
 {
 }

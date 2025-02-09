@@ -1,0 +1,5 @@
+enhavo_resource:
+    resources:
+        enhavo_block.node:
+            classes:
+                model: Enhavo\Bundle\BlockBundle\Entity\Node

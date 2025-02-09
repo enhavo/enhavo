@@ -55,9 +55,3 @@ services:
             - '@translator'
         tags:
             - { name: enhavo_resource.column }
-
-    enhavo_newsletter.newsletter.factory:
-        class: '%enhavo_newsletter.newsletter.factory.class%'
-        arguments:
-            - '%enhavo_newsletter.newsletter.model.class%'
-            - '@enhavo_block.node.factory'

@@ -78,10 +78,10 @@ class BaseBlockType extends AbstractType implements BlockTypeInterface
             'template' => null,
             'component' => null,
             'serialization_groups' => ['endpoint.block'],
+            'factory' => null,
         ]);
 
         $resolver->setRequired([
-            'factory',
             'model',
             'form',
             'label',

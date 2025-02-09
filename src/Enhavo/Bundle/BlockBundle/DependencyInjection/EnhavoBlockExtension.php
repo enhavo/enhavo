@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\DependencyInjection;
 
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\PrependExtensionTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -16,6 +17,8 @@ use Symfony\Component\Yaml\Yaml;
  */
 class EnhavoBlockExtension extends Extension implements PrependExtensionInterface
 {
+    use PrependExtensionTrait;
+
     /**
      * {@inheritDoc}
      */
@@ -42,22 +45,15 @@ class EnhavoBlockExtension extends Extension implements PrependExtensionInterfac
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/command.yaml');
         $loader->load('services/services.yaml');
-        $loader->load('services/factory.yaml');
         $loader->load('services/block.yaml');
         $loader->load('services/form.yaml');
     }
 
-
-    /**
-     * @inheritDoc
-     */
-    public function prepend(ContainerBuilder $container)
+    protected function prependFiles(): array
     {
-        $configs = Yaml::parse(file_get_contents(__DIR__.'/../Resources/config/app/config.yaml'));
-        foreach($configs as $name => $config) {
-            if (is_array($config)) {
-                $container->prependExtensionConfig($name, $config);
-            }
-        }
+        return [
+            __DIR__.'/../Resources/config/app/config.yaml',
+            __DIR__.'/../Resources/config/resources/node.yaml',
+        ];
     }
 }

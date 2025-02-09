@@ -88,19 +88,19 @@ class BlockCollectionType extends AbstractType
         });
     }
 
-    private function getEntryTypes()
+    private function getEntryTypes(): array
     {
         $types = [];
-        foreach($this->blockManager->getBlocks() as $key => $block) {
+        foreach ($this->blockManager->getBlocks() as $key => $block) {
             $types[$key] = NodeType::class;
         }
         return $types;
     }
 
-    private function getEntryTypesOptions()
+    private function getEntryTypesOptions(): array
     {
         $types = [];
-        foreach($this->blockManager->getBlocks() as $key => $block) {
+        foreach ($this->blockManager->getBlocks() as $key => $block) {
             $types[$key] = [
                 'block_type' => $block->getForm(),
                 'label' => $block->getLabel(),
@@ -109,20 +109,20 @@ class BlockCollectionType extends AbstractType
         return $types;
     }
 
-    private function getEntryTypesPrototypeData()
+    private function getEntryTypesPrototypeData(): array
     {
         $data = [];
-        foreach($this->blockManager->getBlocks() as $key => $block) {
+        foreach ($this->blockManager->getBlocks() as $key => $block) {
             $node = new Node();
             $node->setName($key);
-            $modelClass = $block->getModel();
-            $node->setBlock(new $modelClass);
+            $block = $this->blockManager->getFactory($key)->createNew();
+            $node->setBlock($block);
             $data[$key] = $node;
         }
         return $data;
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return PolyCollectionType::class;
     }
