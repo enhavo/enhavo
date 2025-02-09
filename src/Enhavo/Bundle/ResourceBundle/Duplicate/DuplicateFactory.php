@@ -18,41 +18,65 @@ class DuplicateFactory
 
     public function duplicate(object $source, object $target = null, $context = []): object
     {
-        /** @var Metadata $metadata */
-        $metadata = $this->metadataRepository->getMetadata($source);
+        $classes = $this->getClasses($source);
 
-        if ($metadata->getClass()) {
-            /** @var Duplicate $duplicate */
-            $duplicate = $this->duplicateFactory->create($metadata->getClass());
-            return $duplicate->duplicate(new SourceValue($source), new TargetValue($target), $context);
+        /** @var Metadata[] $metadataList */
+        $metadataList = [];
+        foreach ($classes as $class) {
+            $metadataList[$class] = $this->metadataRepository->getMetadata($class);
         }
 
-        $target = $target ?? new ($metadata->getClassName());
+        foreach ($metadataList as $metadata) {
+            if ($metadata->getClass()) {
+                /** @var Duplicate $duplicate */
+                $duplicate = $this->duplicateFactory->create($metadata->getClass());
+                return $duplicate->duplicate(new SourceValue($source), new TargetValue($target), $context);
+            }
+        }
 
-        $reflection = new \ReflectionClass($source);
+        $target = $target ?? new (get_class($source));
 
         if ($source instanceof Proxy) {
             if (!$source->__isInitialized()) {
                 $source->__load();
             }
-            $reflection = $reflection->getParentClass();
         }
 
-        foreach ($metadata->getProperties() as $property => $configs) {
-            foreach ($configs as $config) {
-                $reflectionProperty = $reflection->getProperty($property);
-                $reflectionProperty->setAccessible(true);
+        foreach ($metadataList as $class => $metadata) {
+            $reflection = new \ReflectionClass($class);
 
-                $sourceValue = new SourceValue($reflectionProperty->getValue($source), $source, $property);
-                $targetValue = new TargetValue($target ? $reflectionProperty->getValue($target) : null, $target, $property);
+            foreach ($metadata->getProperties() as $property => $configs) {
+                foreach ($configs as $config) {
+                    $reflectionProperty = $reflection->getProperty($property);
+                    $reflectionProperty->setAccessible(true);
 
-                /** @var Duplicate $duplicate */
-                $duplicate = $this->duplicateFactory->create($config);
-                $newValue = $duplicate->duplicate($sourceValue, $targetValue, $context);
-                $reflectionProperty->setValue($target, $newValue);
+                    $sourceValue = new SourceValue($reflectionProperty->getValue($source), $source, $property);
+                    $targetValue = new TargetValue($target ? $reflectionProperty->getValue($target) : null, $target, $property);
+
+                    /** @var Duplicate $duplicate */
+                    $duplicate = $this->duplicateFactory->create($config);
+                    $newValue = $duplicate->duplicate($sourceValue, $targetValue, $context);
+                    $reflectionProperty->setValue($target, $newValue);
+                }
             }
         }
 
         return $target;
+    }
+
+    private function getClasses(object $source)
+    {
+        $classes = [];
+        $classes[] = get_class($source);
+
+        $parentClass = get_class($source);
+        do {
+            $parentClass = get_parent_class($parentClass);
+            if ($parentClass !== false) {
+                $classes[] = $parentClass;
+            }
+        } while($parentClass !== false);
+
+        return $classes;
     }
 }

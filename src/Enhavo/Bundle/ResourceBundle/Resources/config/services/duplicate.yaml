@@ -3,7 +3,7 @@ services:
         class: Enhavo\Component\Metadata\MetadataRepository
         arguments:
             - '@Enhavo\Component\Metadata\MetadataFactory[Duplicate]'
-            - true
+            - false
             - false
 
     Enhavo\Component\Metadata\MetadataFactory[Duplicate]:
