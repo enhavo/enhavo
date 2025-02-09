@@ -34,13 +34,15 @@ class DuplicateFactory
             }
         }
 
-        $target = $target ?? new (get_class($source));
-
+        $sourceClass = get_class($source);
         if ($source instanceof Proxy) {
+            $sourceClass = get_parent_class($source);
             if (!$source->__isInitialized()) {
                 $source->__load();
             }
         }
+
+        $target = $target ?? new ($sourceClass);
 
         foreach ($metadataList as $class => $metadata) {
             $reflection = new \ReflectionClass($class);
