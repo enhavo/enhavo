@@ -4,9 +4,9 @@ namespace Enhavo\Bundle\BlockBundle\Maker;
 
 use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
-use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
-use Enhavo\Bundle\BlockBundle\Factory\NodeFactory;
+use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
+use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 use Exception;
 use ReflectionClass;
 use ReflectionException;
@@ -31,11 +31,10 @@ class MakeBlockEndpointData extends AbstractMaker
 
     public function __construct(
         private readonly BlockManager        $blockManager,
-        private readonly BlockFactory        $blockFactory,
         private readonly KernelInterface     $kernel,
         private readonly Filesystem          $fileSystem,
         private readonly NormalizerInterface $normalizer,
-        private readonly NodeFactory         $nodeFactory,
+        private readonly FactoryInterface    $nodeFactory,
     )
     {
 
@@ -103,7 +102,7 @@ class MakeBlockEndpointData extends AbstractMaker
      */
     private function generateDataArray(string $blockName, Block $blockType): array
     {
-        $blockInstance = $this->blockFactory->createNew($blockName);
+        $blockInstance = $this->blockManager->getFactory($blockName)->createNew();
 
         return $this->hydrateBlockNode($blockName, $blockType, $blockInstance);
     }
@@ -123,6 +122,7 @@ class MakeBlockEndpointData extends AbstractMaker
      */
     private function hydrateBlockNode(string $blockName, Block $blockType, BlockInterface $blockInstance): array
     {
+        /** @var Node $blockNode */
         $blockNode = $this->nodeFactory->createNew();
         $blockNode->setBlock($blockInstance);
         $blockNode->setName($blockName);

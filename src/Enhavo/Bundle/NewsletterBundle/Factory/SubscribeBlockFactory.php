@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Factory;
 
-use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
+use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
 
-class SubscribeBlockFactory extends AbstractBlockFactory
+class SubscribeBlockFactory extends BlockFactory
 {
 }

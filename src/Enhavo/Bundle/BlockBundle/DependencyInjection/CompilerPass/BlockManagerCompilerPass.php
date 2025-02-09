@@ -6,6 +6,7 @@ use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 class BlockManagerCompilerPass implements CompilerPassInterface
@@ -14,10 +15,15 @@ class BlockManagerCompilerPass implements CompilerPassInterface
     {
         $blocks = $container->getParameter('enhavo_block.blocks');
         $services = [];
-        foreach ($blocks as $block) {
+        foreach ($blocks as $key => $block) {
             $factory = $block['factory'] ?? null;
             if ($factory && $container->hasDefinition($factory)) {
                 $services[$factory] = new Reference($factory);
+            } else if ($factory) {
+                $definition = new Definition($factory);
+                $name = sprintf('block.%s.factory', $key);
+                $container->set($name, $definition);
+                $services[$name] = new Reference($name);
             }
         }
 

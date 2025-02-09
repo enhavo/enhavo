@@ -46,11 +46,6 @@ services:
         tags:
             - { name: enhavo_block.block }
 
-    enhavo_newsletter.subscriber.factory:
-        class: Enhavo\Bundle\AppBundle\Factory\Factory
-        arguments:
-            - 'Enhavo\Bundle\NewsletterBundle\Model\Subscriber'
-
     enhavo_newsletter.local_subscriber.factory:
         class: Enhavo\Bundle\NewsletterBundle\Factory\LocalSubscriberFactory
         arguments:

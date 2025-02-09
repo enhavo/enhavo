@@ -2,8 +2,8 @@
 
 namespace <?= $definition->getFactoryNamespace() ?>;
 
-use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
+use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
 
-class <?= $definition->getFactoryName() ?> extends AbstractBlockFactory
+class <?= $definition->getFactoryName() ?> extends BlockFactory
 {
 }

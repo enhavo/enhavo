@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\ContactBundle\Factory;
 
-use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
+use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
 
-class ContactBlockFactory extends AbstractBlockFactory
+class ContactBlockFactory extends BlockFactory
 {
 }

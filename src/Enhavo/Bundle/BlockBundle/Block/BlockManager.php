@@ -9,7 +9,8 @@
 namespace Enhavo\Bundle\BlockBundle\Block;
 
 use Enhavo\Bundle\AppBundle\Output\OutputLoggerInterface;
-use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
+use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
+use Enhavo\Bundle\BlockBundle\Factory\BlockFactoryInterface;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
@@ -40,12 +41,12 @@ class BlockManager
         $this->container = $container;
     }
 
-    public function getBlocks()
+    public function getBlocks(): array
     {
         return $this->blocks;
     }
 
-    public function getBlock($name)
+    public function getBlock($name): Block
     {
         return $this->blocks[$name];
     }
@@ -76,29 +77,24 @@ class BlockManager
         }
     }
 
-    public function getFactory($name)
+    public function getFactory($name): BlockFactoryInterface
     {
         $block = $this->getBlock($name);
         $factoryClass = $block->getFactory();
         if ($factoryClass) {
             if ($this->container->has($factoryClass)) {
                 $factory = $this->container->get($factoryClass);
+                return $factory;
             } else {
-                /** @var AbstractBlockFactory $factory */
-                $factory = new $factoryClass($block->getModel());
             }
-            return $factory;
         }
-        return null;
+        return new BlockFactory($block->getModel());
     }
 
     /**
      * Find the resource that references the block tree that contains the given block
-     *
-     * @param BlockInterface $block
-     * @return object|null
      */
-    public function findRootResource(BlockInterface $block)
+    public function findRootResource(BlockInterface $block): object|null
     {
         if (!$block->getNode()) {
             return null;
@@ -116,12 +112,8 @@ class BlockManager
 
     /**
      * Search database for orphaned or erroneous nodes and blocks and delete them.
-     *
-     * @param OutputLoggerInterface? $outputLogger
-     * @param bool $dryRun
-     * @throws \Exception
      */
-    public function cleanUp($outputLogger = null, $dryRun = false)
+    public function cleanUp(OutputLoggerInterface $outputLogger = null, bool $dryRun = false): void
     {
         $this->cleaner->clean($outputLogger, $dryRun);
     }

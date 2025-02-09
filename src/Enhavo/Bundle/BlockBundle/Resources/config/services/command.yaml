@@ -17,7 +17,6 @@ services:
     Enhavo\Bundle\BlockBundle\Maker\MakeBlockEndpointData:
         arguments:
             - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
-            - '@enhavo_block.block.factory'
             - '@kernel'
             - '@filesystem'
             - '@Enhavo\Bundle\ApiBundle\Normalizer\DataNormalizer'

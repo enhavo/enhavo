@@ -2,8 +2,8 @@
 
 namespace Enhavo\Bundle\CalendarBundle\Factory;
 
-use Enhavo\Bundle\BlockBundle\Factory\AbstractBlockFactory;
+use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
 
-class CalendarBlockFactory extends AbstractBlockFactory
+class CalendarBlockFactory extends BlockFactory
 {
 }

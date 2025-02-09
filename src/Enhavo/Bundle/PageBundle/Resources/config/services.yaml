@@ -33,13 +33,6 @@ services:
         tags:
             - { name: enhavo_app.menu }
 
-    enhavo_page.factory.page:
-        class: '%enhavo_page.page.factory.class%'
-        arguments:
-            - '%enhavo_page.page.model.class%'
-            - '@enhavo_block.node.factory'
-            - '@enhavo_routing.route.factory'
-
     Enhavo\Bundle\PageBundle\Page\PageManager:
         arguments:
             - '@enhavo_page.page.repository'
