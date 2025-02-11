@@ -2,19 +2,26 @@ import {ActionManager} from "@enhavo/app/action/ActionManager";
 import {ActionInterface} from "@enhavo/app/action/ActionInterface";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {PreviewData} from "@enhavo/app/action/model/PreviewAction";
+import morphdom from 'morphdom';
+import {UiManager} from "@enhavo/app/ui/UiManager";
 
 export class ResourcePreviewManager
 {
+    private abortController: AbortController = null;
+    private initLoad = false;
+    private initWait = false;
+    private initWaitData: PreviewData = null;
+
     public frameClass: string;
-    public previewData :string;
     public iframe: HTMLIFrameElement;
 
     public actions: ActionInterface[];
     public actionsSecondary: ActionInterface[];
 
     constructor(
-        private actionManager: ActionManager,
-        private frameManager: FrameManager,
+        private readonly actionManager: ActionManager,
+        private readonly frameManager: FrameManager,
+        private readonly uiManager: UiManager,
     ) {
     }
 
@@ -68,34 +75,131 @@ export class ResourcePreviewManager
 
     private subscribe()
     {
-        this.frameManager.on('preview-data', (event) => {
+        this.uiManager.loading(true);
+        this.frameManager.on('preview-data', async (event) => {
+            let previewData = (event as PreviewData);
             if ((event as PreviewData).target == this.frameManager.getId()) {
-                this.previewData = (event as PreviewData).data;
-                if (this.iframe) {
-                    let element = this.iframe.contentWindow.document.querySelector('html')
-                    this.setHtml(element, this.previewData);
+                if (!this.initLoad) {
+                    this.initLoad = true;
+                    this.initWait = true;
+                    await this.initPreview(previewData);
+                    this.initWait = false;
+
+                    if (this.initWaitData) {
+                        await this.refreshPreview(previewData);
+                        this.initWaitData = null;
+                    }
+                } else if (this.initWait) {
+                    this.initWaitData = previewData;
+                } else {
+                    await this.refreshPreview(previewData);
                 }
+
                 event.resolve();
             }
         })
     }
 
-    private setHtml(element: HTMLElement, html: string)
+    private initPreview(data: PreviewData): Promise<void>
     {
-        element.innerHTML = html;
+        this.uiManager.loading(true);
+        const form = this.createForm(data)
 
-        // replace script elements to execute scripts
-        Array.from(element.querySelectorAll("script")).forEach((scriptElement) => {
-            const newScriptElement = document.createElement("script");
-
-            Array.from((scriptElement as HTMLElement).attributes).forEach( attr => {
-                newScriptElement.setAttribute(attr.name, attr.value)
+        return new Promise((resolve, reject) => {
+            this.iframe.addEventListener('load', () => {
+                resolve();
+                this.uiManager.loading(false);
             });
 
-            const scriptText = document.createTextNode((scriptElement as HTMLElement).innerHTML);
-            newScriptElement.appendChild(scriptText);
+            document.body.appendChild(form);
+            form.submit();
+        })
+    }
 
-            (scriptElement as HTMLElement).parentNode.replaceChild(newScriptElement, scriptElement as HTMLElement);
-        });
+    private createForm(data: PreviewData)
+    {
+        let form = document.createElement("form");
+        form.method = "POST";
+        form.action = data.url;
+        form.target = this.iframe.name;
+
+        let formData = new URLSearchParams(data.formData)
+        for (let singleData of formData) {
+            let input = document.createElement("input");
+            input.type = 'hidden';
+            input.value = singleData[1];
+            input.name = singleData[0];
+            form.appendChild(input);
+        }
+
+        return form;
+    }
+
+    private async refreshPreview(data: PreviewData): Promise<void>
+    {
+        if (data.forceReload) {
+            await this.initPreview(data);
+            return;
+        }
+
+        const htmlData = await this.fetchData(data);
+        const htmlElements = this.parseHTML(htmlData);
+
+        for (let htmlElement of htmlElements) {
+            if (typeof htmlElement['querySelector'] != 'function') {
+                continue;
+            }
+
+            let inspectElement = htmlElement as HTMLElement
+
+            for (let selector of data.selectors) {
+                if (inspectElement.matches(selector)) {
+                    this.replaceHtml(selector, inspectElement);
+                    continue;
+                }
+
+                let element = inspectElement.querySelector(selector);
+                if (element) {
+                    this.replaceHtml(selector, inspectElement);
+                }
+            }
+        }
+    }
+
+    async fetchData(data: PreviewData): Promise<string>
+    {
+        if (this.abortController !== null) {
+            this.abortController.abort();
+        }
+
+        this.abortController = new AbortController();
+        try {
+            const response = await fetch(data.url, {
+                method: 'POST',
+                body: data.formData,
+                signal: this.abortController.signal,
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            });
+
+            this.abortController = null;
+            return await response.text();
+        } catch (error) {
+            return null;
+        }
+    }
+
+    private parseHTML(str: string)
+    {
+        const tmp = document.implementation.createHTMLDocument('');
+        tmp.body.innerHTML = str;
+        return [...tmp.body.childNodes];
+    }
+
+    private replaceHtml(selector: string, newElement: HTMLElement)
+    {
+        let oldElement = this.iframe.contentWindow.document.querySelector(selector);
+        morphdom(oldElement, newElement);
     }
 }

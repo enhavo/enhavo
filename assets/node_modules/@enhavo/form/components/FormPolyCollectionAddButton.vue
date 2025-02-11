@@ -28,7 +28,7 @@ const translator = inject<Translator>('translator');
 
 const props = defineProps<{
     form: PolyCollectionForm,
-    addAfter: Form,
+    addAfter?: Form,
 }>()
 const filter = ref();
 const isOpen = ref(false);

@@ -103,7 +103,6 @@ services:
         chunk: 'action'
         arguments:
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/manager/ResourceInputManager'
             - '@enhavo/vue-form/form/FormEventDispatcher'
         tags:

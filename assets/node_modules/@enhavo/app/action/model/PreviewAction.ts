@@ -1,22 +1,22 @@
 import {AbstractAction} from "@enhavo/app/action/model/AbstractAction";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
-import {UiManager} from "@enhavo/app/ui/UiManager";
 import {ResourceInputManager} from "@enhavo/app/manager/ResourceInputManager";
 import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
 import {Frame} from "@enhavo/app/frame/Frame";
 import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
+import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 
 export class PreviewAction extends AbstractAction
 {
     public url: string;
     public apiUrl: string
+    public selectors: string[]
+    public forceReload: boolean
 
-    private abortController: AbortController = null;
     private timeoutId: number;
 
     constructor(
         private readonly frameManager: FrameManager,
-        private readonly uiManager: UiManager,
         private readonly resourceInputManager: ResourceInputManager,
         private readonly formEventDispatcher: FormEventDispatcher,
     ) {
@@ -26,12 +26,9 @@ export class PreviewAction extends AbstractAction
 
     async execute(): Promise<void>
     {
-        let values = await Promise.all([this.getPreviewData(), this.openPreviewFrame()]);
+        let frame = await this.openPreviewFrame();
 
-        let data = values[0] as string;
-        let frame = values[1] as Frame;
-
-        await this.frameManager.request(new PreviewData(frame.id, data))
+        await this.frameManager.request(new PreviewData(frame.id, this.getFormData(), this.apiUrl, this.selectors, true))
 
         await this.subscribe();
     }
@@ -41,31 +38,15 @@ export class PreviewAction extends AbstractAction
         let frame = await this.getPreviewFrame();
 
         if (frame) {
-            let values = await Promise.all([this.getPreviewData(),  (async() => {
-                await this.frameManager.wait(frame);
-            })()]);
-
-            let data = values[0] as string;
-            await this.frameManager.request(new PreviewData(frame.id, data))
-
+            await this.frameManager.request(new PreviewData(frame.id, this.getFormData(), this.apiUrl, this.selectors, this.forceReload))
             await this.subscribe();
         }
     }
 
-    async getPreviewData(): Promise<string>
+    getFormData(): string
     {
-        if (this.abortController !== null) {
-            this.abortController.abort();
-        }
-
-        this.abortController = new AbortController();
-        try {
-            const response = await this.resourceInputManager.sendForm(this.apiUrl, this.abortController.signal);
-            this.abortController = null;
-            return await response.text();
-        } catch (error) {
-            return null;
-        }
+        // @ts-ignore URLSearchParams also accepts FormData
+        return (new URLSearchParams(FormUtil.serializeForm(this.resourceInputManager.form))).toString();
     }
 
     async openPreviewFrame(): Promise<Frame>
@@ -107,10 +88,7 @@ export class PreviewAction extends AbstractAction
                 }
 
                 this.timeoutId = window.setTimeout(async () => {
-                    let data = await this.getPreviewData();
-                    if (data !== null) {
-                        await this.frameManager.request(new PreviewData(frame.id, data))
-                    }
+                    await this.frameManager.request(new PreviewData(frame.id, this.getFormData(), this.apiUrl, this.selectors, this.forceReload))
                     this.timeoutId = null;
                 }, 500);
             });
@@ -122,7 +100,10 @@ export class PreviewData extends Event
 {
     constructor(
         public target: string,
-        public data: any,
+        public formData: any,
+        public url: string,
+        public selectors: string[],
+        public forceReload: boolean = false,
     ) {
         super('preview-data');
     }

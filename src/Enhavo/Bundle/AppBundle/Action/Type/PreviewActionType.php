@@ -44,6 +44,8 @@ class PreviewActionType extends AbstractActionType
             'resource' => $resource,
         ]);
         $data->set('apiUrl', $this->router->generate($apiRoute, $apiParameters));
+        $data->set('selectors', is_array($options['selectors']) ? $options['selectors'] : [$options['selectors']]);
+        $data->set('forceReload', $options['force_reload']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -55,6 +57,8 @@ class PreviewActionType extends AbstractActionType
             'model' => 'PreviewAction',
             'component' => 'action-preview',
             'route' => 'enhavo_app_admin_resource_preview',
+            'selectors' => ['main'],
+            'force_reload' => false,
             'api_route' => null,
             'api_route_parameters' => [
                 'id' => 'expr:resource?.getId()'
