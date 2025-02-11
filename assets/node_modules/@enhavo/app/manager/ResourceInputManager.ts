@@ -26,6 +26,7 @@ export class ResourceInputManager
     private visitors: FormVisitorInterface[] = [];
     private loadedPromiseResolveCalls: Array<() => void> = [];
     private loaded: boolean = false;
+    private saveQueue: Promise<boolean>[] = [];
 
     constructor(
         private actionManager: ActionManager,
@@ -42,7 +43,7 @@ export class ResourceInputManager
         const response = await fetch(url);
         if (!response.ok) {
             this.frameManager.loaded();
-            this.uiManager.alert({ message: 'Error occured' }).then(() => {
+            this.uiManager.alert({ message: 'Error occurred' }).then(() => {
                 this.frameManager.close(true);
             });
             return;
@@ -82,7 +83,32 @@ export class ResourceInputManager
         })
     }
 
-    async save(url: string, morph: boolean  = false): Promise<boolean>
+    /**
+     * @param url Use null to use the manager url. If save request is in queue, then the url will be resolved on its turn.
+     * @param morph
+     */
+    async save(url: string = null, morph: boolean  = false): Promise<boolean>
+    {
+        // to synchronize parallel saves, we execute them one by one, using a promise queue
+
+        let localQueue = [];
+        for (let promise of this.saveQueue) {
+            localQueue.push(promise);
+        }
+
+        let promise: Promise<boolean> = new Promise((resolve, reject) => {
+            Promise.all(localQueue).then(async () => {
+                let onUrl = url == null ? this.url : url;
+                let success = await this.doSave(onUrl, morph);
+                resolve(success)
+            })
+        });
+
+        this.saveQueue.push(promise)
+        return promise;
+    }
+
+    private async doSave(url: string, morph: boolean  = false): Promise<boolean>
     {
         this.form.morphStart();
 

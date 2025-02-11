@@ -23,7 +23,7 @@ export class SaveAction extends AbstractAction
     {
         this.uiManager.loading(true);
         try {
-            const success = await this.resourceInputManager.save(this.resourceInputManager.url, true);
+            const success = await this.resourceInputManager.save(null, true);
             if (success) {
                 this.flashMessenger.add(this.translator.trans('enhavo_app.input.message.save_success', {}, 'javascript'));
                 this.frameManager.dispatch(new InputChangedEvent(this.resourceInputManager.resource));

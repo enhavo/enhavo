@@ -5,6 +5,7 @@ import {FlashMessenger, FlashMessage} from "@enhavo/app/flash-message/FlashMesse
 import {Translator} from "@enhavo/app/translation/Translator";
 import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
+import {InputChangedEvent} from "@enhavo/app/manager/ResourceInputManager";
 
 export class AutoSaveAction extends AbstractAction
 {
@@ -60,9 +61,10 @@ export class AutoSaveAction extends AbstractAction
 
         this.timeoutId = window.setTimeout(async () => {
             if (this.on) {
-                let success = await this.resourceInputManager.save(this.url, true);
+                let success = await this.resourceInputManager.save(null, true);
 
                 if (success) {
+                    this.frameManager.dispatch(new InputChangedEvent(this.resourceInputManager.resource));
                     this.flashMessenger.addMessage(new FlashMessage(this.translator.trans('enhavo_app.auto_save', {}, 'javascript'), FlashMessage.SUCCESS));
                 } else {
                     this.flashMessenger.error(this.translator.trans('enhavo_app.save.message.not_valid', {}, 'javascript'));

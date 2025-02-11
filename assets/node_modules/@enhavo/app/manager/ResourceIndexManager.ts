@@ -42,7 +42,7 @@ export class ResourceIndexManager
 
         if (!response.ok) {
             this.frameManager.loaded();
-            this.uiManager.alert({ message: 'Error occured' }).then(() => {
+            this.uiManager.alert({ message: 'Error occurred' }).then(() => {
                 this.frameManager.close(true);
             });
             return;

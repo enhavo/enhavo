@@ -5,7 +5,7 @@ action:
     submit: 'Execute'
     delete: 'Delete'
 error:
-  occurred: 'An error occured'
+  occurred: 'An error occurred'
   forbidden: 'You have not the rights for this action'
 form:
   delete:

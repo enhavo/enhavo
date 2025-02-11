@@ -103,7 +103,7 @@ export default class ContainerBuilder
                 let instance = await import(compilerPass.path);
                 instance.default(this, compilerPass.getOptions(), compilerPass.getContext());
             } catch (e) {
-                throw 'Error occured while using compiler pass "'+compilerPass.path+'" with error: ' + e + "\n" + e.stack;
+                throw 'Error occurred while using compiler pass "'+compilerPass.path+'" with error: ' + e + "\n" + e.stack;
             }
         }
     }
