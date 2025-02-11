@@ -41,9 +41,10 @@ class Page extends Content implements PageInterface, RevisionInterface
     public function setContent(NodeInterface $content = null)
     {
         $this->content = $content;
-        if($content) {
+        if ($content) {
             $content->setType(NodeInterface::TYPE_ROOT);
             $content->setProperty('content');
+            $content->setResource($this);
         }
         return $this;
     }

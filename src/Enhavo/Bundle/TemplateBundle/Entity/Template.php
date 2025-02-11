@@ -76,6 +76,7 @@ class Template implements Routeable
         if($content) {
             $content->setType(NodeInterface::TYPE_ROOT);
             $content->setProperty('content');
+            $content->setResource($this);
         }
         return $this;
     }

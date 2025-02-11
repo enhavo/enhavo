@@ -9,70 +9,29 @@ use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
-use Monolog\Logger;
+use Monolog\Level;
 
 class Cleaner
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    private ?BlockManager $blockManager = null;
+    private ?OutputLoggerInterface $outputLogger = null;
+    private ?bool $isDryRun = null;
+    private int $blocksDeleted = 0;
+    private int $nodesDeleted = 0;
 
-    /**
-     * @var BlockManager
-     */
-    private $blockManager;
-
-    /**
-     * @var AssociationFinder
-     */
-    private $associationFinder;
-
-    /**
-     * @var OutputLoggerInterface
-     */
-    private $outputLogger;
-
-    /**
-     * @var bool
-     */
-    private $isDryRun;
-
-    /**
-     * @var int
-     */
-    private $blocksDeleted;
-
-    /**
-     * @var int
-     */
-    private $nodesDeleted;
-
-    /**
-     * CleanUpCommand constructor.
-     * @param EntityManagerInterface $entityManager
-     * @param AssociationFinder $associationFinder
-     */
-    public function __construct(EntityManagerInterface $entityManager, AssociationFinder $associationFinder)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly AssociationFinder $associationFinder
+    )
     {
-        $this->entityManager = $entityManager;
-        $this->associationFinder = $associationFinder;
     }
 
-    /**
-     * @param BlockManager $blockManager
-     */
-    public function setBlockManager(BlockManager $blockManager)
+    public function setBlockManager(BlockManager $blockManager): void
     {
         $this->blockManager = $blockManager;
     }
 
-    /**
-     * @param OutputLoggerInterface|null $outputLogger
-     * @param bool $dryRun
-     * @throws \Exception
-     */
-    public function clean($outputLogger = null, $dryRun = false)
+    public function clean(OutputLoggerInterface $outputLogger = null, bool $dryRun = false): void
     {
         $this->isDryRun = $dryRun;
         $this->outputLogger = $outputLogger !== null ? $outputLogger : new ChainOutputLogger();
@@ -186,7 +145,7 @@ class Cleaner
             $associations = $this->associationFinder->findAssociationsTo($rootNode, NodeInterface::class, [NodeInterface::class, BlockInterface::class]);
             if (count($associations) === 0) {
                 $nodesToDelete[$rootNode->getId()] = $rootNode;
-                $this->outputLogger->write('.', Logger::DEBUG);
+                $this->outputLogger->write('.', Level::Debug);
             }
         }
 
@@ -203,7 +162,7 @@ class Cleaner
             $associations = $this->associationFinder->findAssociationsTo($listNode, NodeInterface::class, [NodeInterface::class]);
             if (count($associations) === 0) {
                 $nodesToDelete[$listNode->getId()] = $listNode;
-                $this->outputLogger->write('.', Logger::DEBUG);
+                $this->outputLogger->write('.', Level::Debug);
             }
         }
 
@@ -227,7 +186,7 @@ class Cleaner
             $associations = $this->associationFinder->findAssociationsTo($blockNode, NodeInterface::class, [NodeInterface::class]);
             if (count($associations) === 0) {
                 $nodesToDelete []= $blockNode;
-                $this->outputLogger->write('.', Logger::DEBUG);
+                $this->outputLogger->write('.', Level::Debug);
             }
         }
 
@@ -251,7 +210,7 @@ class Cleaner
         foreach($nodes as $node) {
             if ($node->getType() !== NodeInterface::TYPE_ROOT) {
                 $nodesToDelete []= $node;
-                $this->outputLogger->write('.', Logger::DEBUG);
+                $this->outputLogger->write('.', Level::Debug);
             }
         }
 
@@ -276,7 +235,7 @@ class Cleaner
 
                 if ($node === null) {
                     $blocksToDelete []= $block;
-                    $this->outputLogger->write('.', Logger::DEBUG);
+                    $this->outputLogger->write('.', Level::Debug);
                 }
             }
         }
@@ -294,7 +253,7 @@ class Cleaner
                 $this->entityManager->remove($block);
             }
             $this->blocksDeleted++;
-            $this->outputLogger->write('.', Logger::DEBUG);
+            $this->outputLogger->write('.', Level::Debug);
         }
         if (!$this->isDryRun) {
             $this->entityManager->flush();
@@ -329,7 +288,7 @@ class Cleaner
             if (!$this->isDryRun) {
                 $this->entityManager->remove($node->getBlock());
             }
-            $this->outputLogger->write('.', Logger::DEBUG);
+            $this->outputLogger->write('.', Level::Debug);
         }
 
         $this->nodesDeleted++;
@@ -337,6 +296,6 @@ class Cleaner
             $this->entityManager->remove($node);
         }
 
-        $this->outputLogger->write('.', Logger::DEBUG);
+        $this->outputLogger->write('.', Level::Debug);
     }
 }
