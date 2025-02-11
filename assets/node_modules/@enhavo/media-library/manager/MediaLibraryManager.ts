@@ -67,7 +67,7 @@ export class MediaLibraryManager
 
         if (!response.ok) {
             this.frameManager.loaded();
-            this.uiManager.alert({ message: 'Error occured' }).then(() => {
+            this.uiManager.alert({ message: 'Error occurred' }).then(() => {
                 this.frameManager.close(true);
             });
             return;
@@ -261,7 +261,7 @@ export class MediaLibraryManager
         this.uiManager.loading(false);
 
         if (!response.ok) {
-            this.uiManager.alert({ message: 'Error occured' });
+            this.uiManager.alert({ message: 'Error occurred' });
             return;
         }
 

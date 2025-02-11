@@ -18,7 +18,7 @@ class ClamAvValidator extends ConstraintValidator
     const RESULT_CODES = [
         self::RESULT_OK => 'No virus found',
         self::RESULT_VIRUS_FOUND => 'Virus(es) found',
-        self::RESULT_SOME_ERROR => 'Some error(s) occured',
+        self::RESULT_SOME_ERROR => 'Some error(s) occurred',
     ];
 
     public function __construct(

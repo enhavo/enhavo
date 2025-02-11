@@ -52,7 +52,7 @@ enhavo_app:
     save:
         message:
             save: 'Save successful'
-            error: 'An error occured'
+            error: 'An error occurred'
             not_valid: 'Please check your input'
         label:
             save: 'Save'
