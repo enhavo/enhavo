@@ -22,7 +22,7 @@ class BlockManagerCompilerPass implements CompilerPassInterface
             } else if ($factory) {
                 $definition = new Definition($factory);
                 $name = sprintf('block.%s.factory', $key);
-                $container->set($name, $definition);
+                $container->setDefinition($name, $definition);
                 $services[$name] = new Reference($name);
             }
         }
