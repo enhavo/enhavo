@@ -330,7 +330,7 @@ class Node implements NodeInterface, CustomNameInterface
         $parents = [];
         $parent = $this->getParent();
         do {
-            if($parent) {
+            if ($parent) {
                 $parents[] = $parent;
             } else {
                 break;
@@ -344,8 +344,12 @@ class Node implements NodeInterface, CustomNameInterface
      */
     public function getRoot()
     {
+        if ($this->type === self::TYPE_ROOT) {
+            return $this;
+        }
+
         $parents = $this->getParents();
-        return array_pop($parents);
+        return count($parents) ? array_pop($parents) : null;
     }
 
     /**
@@ -354,10 +358,10 @@ class Node implements NodeInterface, CustomNameInterface
     public function getDescendants()
     {
         $data = [];
-        foreach($this->getChildren() as $child) {
+        foreach ($this->getChildren() as $child) {
             $data[] = $child;
             $descendants = $child->getDescendants();
-            foreach($descendants as $descendant) {
+            foreach ($descendants as $descendant) {
                 $data[] = $descendant;
             }
         }
@@ -369,10 +373,10 @@ class Node implements NodeInterface, CustomNameInterface
      */
     public function getBefore()
     {
-        if($this->parent) {
+        if ($this->parent) {
             $index = $this->parent->getChildren()->indexOf($this);
             $beforeIndex = $this->parent->getChildren()->indexOf($index-1);
-            if($beforeIndex !== false) {
+            if ($beforeIndex !== false) {
                 return $this->parent->getChildren()->get($beforeIndex);
             }
         }
@@ -383,10 +387,10 @@ class Node implements NodeInterface, CustomNameInterface
      */
     public function getNext()
     {
-        if($this->parent) {
+        if ($this->parent) {
             $index = $this->parent->getChildren()->indexOf($this);
             $nextIndex = $this->parent->getChildren()->indexOf($index+1);
-            if($nextIndex !== false) {
+            if ($nextIndex !== false) {
                 return $this->parent->getChildren()->get($nextIndex);
             }
         }
@@ -400,12 +404,12 @@ class Node implements NodeInterface, CustomNameInterface
     {
         $return = [];
         $siblings = array_reverse($this->getBeforeSiblings());
-        foreach($siblings as $sibling) {
+        foreach ($siblings as $sibling) {
             $return[] = $sibling;
         }
 
         $siblings = $this->getNextSiblings();
-        foreach($siblings as $sibling) {
+        foreach ($siblings as $sibling) {
             $return[] = $sibling;
         }
 
@@ -420,7 +424,7 @@ class Node implements NodeInterface, CustomNameInterface
         $siblings = [];
         $sibling = $this->getNext();
         do {
-            if($sibling) {
+            if ($sibling) {
                 $siblings[] = $sibling;
             } else {
                 break;
@@ -437,7 +441,7 @@ class Node implements NodeInterface, CustomNameInterface
         $siblings = [];
         $sibling = $this->getBefore();
         do {
-            if($sibling) {
+            if ($sibling) {
                 $siblings[] = $sibling;
             } else {
                 break;

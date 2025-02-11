@@ -100,7 +100,6 @@ enhavo_resource:
                 preview:
                     type: preview
                     api_route: enhavo_page_admin_api_preview
-                    enabled: 'expr:resource && resource.getId()'
 
     duplicate:
         Enhavo\Bundle\PageBundle\Entity\Page:

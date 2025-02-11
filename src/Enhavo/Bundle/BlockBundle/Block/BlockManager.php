@@ -99,14 +99,23 @@ class BlockManager
         if (!$block->getNode()) {
             return null;
         }
+
         $rootNode = $block->getNode()->getRoot();
         if (!$rootNode) {
             return null;
         }
-        $references = $this->associationFinder->findAssociationsTo($rootNode, NodeInterface::class, [NodeInterface::class, BlockInterface::class]);
-        if (count($references) > 0) {
-            return $references[0];
+
+        if ($rootNode->getResource()) {
+            return $rootNode->getResource();
         }
+
+        if ($rootNode->getId()) {
+            $references = $this->associationFinder->findAssociationsTo($rootNode, NodeInterface::class, [NodeInterface::class, BlockInterface::class]);
+            if (count($references) > 0) {
+                return $references[0];
+            }
+        }
+
         return null;
     }
 
