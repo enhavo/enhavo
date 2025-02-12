@@ -16,6 +16,11 @@ class InputException extends \Exception
         return new self(sprintf('Input configuration with key "%s" does not exist!', $key));
     }
 
+    public static function configurationClassMissing($key): self
+    {
+        return new self(sprintf('Input configuration with key "%s" does not provide a class option!', $key));
+    }
+
     public static function notImplementInputInterface($class): self
     {
         return new self(sprintf('The class "%s" doesn\'t implement interface %s!', get_class($class), InputInterface::class));

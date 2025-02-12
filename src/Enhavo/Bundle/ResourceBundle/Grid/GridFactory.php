@@ -13,7 +13,6 @@ class GridFactory
 
     public function __construct(
         private readonly array $configurations,
-        private readonly string $defaultClass = Grid::class,
     )
     {
     }
@@ -30,12 +29,13 @@ class GridFactory
         }
 
         $configuration = $this->configurations[$key];
-
-        $class = $this->defaultClass;
-        if (isset($configuration['class'])) {
-            $class = $configuration['class'];
-            unset($configuration['class']);
+        
+        if (!isset($configuration['class'])) {
+            throw GridException::configurationClassMissing($key);
         }
+
+        $class = $configuration['class'];
+        unset($configuration['class']);
 
         if (isset($configuration['priority'])) {
             unset($configuration['priority']);

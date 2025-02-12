@@ -6,7 +6,7 @@ abstract class AbstractConfigurationMerger
 {
     abstract public function performMerge(array $configs): array;
 
-    protected function mergeConfigs(array $configs, array $allConfigs, string $name, array &$cachedConfigs): array
+    protected function mergeConfigs(array $configs, array $allConfigs, string $name, array &$cachedConfigs, string $defaultClass): array
     {
         if (isset($cachedConfigs[$name])) {
             return $cachedConfigs[$name];
@@ -28,11 +28,17 @@ abstract class AbstractConfigurationMerger
 
             $config = $this->sanitizeConfig($config);
 
+            // set class
+            if (!array_key_exists('class', $config)) {
+                $config['class'] = $beforeConfig !== null ? $beforeConfig['class'] : $defaultClass;
+            }
+            
+            // extends target config
             if (isset($extends)) {
                 if (!array_key_exists($extends, $allConfigs)) {
                     throw new \Exception(sprintf('Try to extend from "%s" in "%s" but "%s" doesn\'t exist.', $extends, $name, $extends));
                 }
-                $parentGridConfig = $this->mergeConfigs($allConfigs[$extends], $allConfigs, $extends, $cachedConfigs);
+                $parentGridConfig = $this->mergeConfigs($allConfigs[$extends], $allConfigs, $extends, $cachedConfigs, $defaultClass);
                 $config['class'] = $config['class'] ?? $parentGridConfig['class'];
                 if ($this->isCallable($config, $overwrite)) {
                     $config = $config['class']::mergeConfigs($parentGridConfig, $config);
@@ -41,10 +47,13 @@ abstract class AbstractConfigurationMerger
                 }
             }
 
-            if ($this->isCallable($config, $overwrite) && $beforeConfig !== null) {
-                $config = $config['class']::mergeConfigs($beforeConfig, $config);
+            // extends with same name
+            if ($beforeConfig !== null) {
+                if ($this->isCallable($config, $overwrite)) {
+                    $config = $config['class']::mergeConfigs($beforeConfig, $config);
+                }
             }
-
+            
             $beforeConfig = $config;
         }
 
