@@ -2,6 +2,8 @@
 
 namespace Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge;
 
+use Enhavo\Bundle\ResourceBundle\Input\Input;
+
 class InputConfigurationMerger extends AbstractConfigurationMerger
 {
     public function performMerge(array $configs): array
@@ -25,7 +27,7 @@ class InputConfigurationMerger extends AbstractConfigurationMerger
         $cachedConfigs = [];
         foreach ($inputs as $name => $inputConfigs) {
             try {
-                $newInputConfig[$name] = $this->mergeConfigs($inputConfigs, $inputs, $name, $cachedConfigs);
+                $newInputConfig[$name] = $this->mergeConfigs($inputConfigs, $inputs, $name, $cachedConfigs, Input::class);
             } catch (\Exception $exception) {
                 throw new \Exception(sprintf('Error merging input configs: %s', $exception->getMessage()), 0, $exception);
             }

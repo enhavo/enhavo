@@ -13,7 +13,6 @@ class InputFactory
 
     public function __construct(
         private array $configurations,
-        private string $defaultClass = Input::class,
     )
     {
     }
@@ -30,13 +29,14 @@ class InputFactory
         }
 
         $configuration = $this->configurations[$key];
-
-        $class = $this->defaultClass;
-        if (isset($configuration['class'])) {
-            $class = $configuration['class'];
-            unset($configuration['class']);
+        
+        if (!isset($configuration['class'])) {
+            throw InputException::configurationClassMissing($key);
         }
 
+        $class = $configuration['class'];
+        unset($configuration['class']);
+        
         if ($this->container->has($class)) {
             $input = clone $this->container->get($class);
         } else {

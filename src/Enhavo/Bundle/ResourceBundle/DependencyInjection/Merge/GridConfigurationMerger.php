@@ -2,6 +2,8 @@
 
 namespace Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge;
 
+use Enhavo\Bundle\ResourceBundle\Grid\Grid;
+
 class GridConfigurationMerger extends AbstractConfigurationMerger
 {
     public function performMerge(array $configs): array
@@ -25,7 +27,7 @@ class GridConfigurationMerger extends AbstractConfigurationMerger
         $cachedConfigs = [];
         foreach ($grids as $name => $gridConfigs) {
             try {
-                $newGridConfig[$name] = $this->mergeConfigs($gridConfigs, $grids, $name, $cachedConfigs);
+                $newGridConfig[$name] = $this->mergeConfigs($gridConfigs, $grids, $name, $cachedConfigs, Grid::class);
             } catch (\Exception $exception) {
                 throw new \Exception(sprintf('Error merging grid configs: %s', $exception->getMessage()), 0, $exception);
             }
