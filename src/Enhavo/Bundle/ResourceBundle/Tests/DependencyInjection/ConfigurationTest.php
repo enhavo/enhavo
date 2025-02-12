@@ -12,7 +12,7 @@ class ConfigurationTest extends TestCase
 {
     private function process(Configuration $configuration, array $configs)
     {
-        $gridConfigurationMerger = new GridConfigurationMerger();
+        $gridConfigurationMerger = new GridConfigurationMerger(Grid::class);
         $configs = $gridConfigurationMerger->performMerge($configs);
 
         $processor = new Processor();

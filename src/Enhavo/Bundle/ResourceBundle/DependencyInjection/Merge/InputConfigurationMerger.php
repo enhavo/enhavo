@@ -6,6 +6,12 @@ use Enhavo\Bundle\ResourceBundle\Input\Input;
 
 class InputConfigurationMerger extends AbstractConfigurationMerger
 {
+    public function __construct(
+        protected string $defaultClass = Input::class,
+    )
+    {
+    }
+
     public function performMerge(array $configs): array
     {
         $inputs = [];
@@ -27,7 +33,7 @@ class InputConfigurationMerger extends AbstractConfigurationMerger
         $cachedConfigs = [];
         foreach ($inputs as $name => $inputConfigs) {
             try {
-                $newInputConfig[$name] = $this->mergeConfigs($inputConfigs, $inputs, $name, $cachedConfigs, Input::class);
+                $newInputConfig[$name] = $this->mergeConfigs($inputConfigs, $inputs, $name, $cachedConfigs, $this->defaultClass);
             } catch (\Exception $exception) {
                 throw new \Exception(sprintf('Error merging input configs: %s', $exception->getMessage()), 0, $exception);
             }
