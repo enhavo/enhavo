@@ -25,6 +25,7 @@ enhavo_doctrine_extension:
                 block:
                     idField: blockId
                     nameField: blockClass
+                    cascade: ['persist', 'remove']
 
 enhavo_resource:
     duplicate:

@@ -44,9 +44,11 @@ enhavo_doctrine_extension:
                 subject:
                     idField: subjectId
                     nameField: subjectClass
+                    cascade: ['persist']
 
         Enhavo\Bundle\NavigationBundle\Entity\Content:
             reference:
                 content:
                     idField: contentId
                     nameField: contentClass
+                    cascade: ['persist']

@@ -11,55 +11,40 @@ namespace Enhavo\Bundle\DoctrineExtensionBundle\Metadata;
 
 class Reference
 {
-    /**
-     * @var string
-     */
-    private $property;
+    const CASCADE_REMOVE = 'remove';
+    const CASCADE_PERSIST = 'persist';
 
-    /**
-     * @var string
-     */
-    private $nameField;
-
-    /**
-     * @var string
-     */
-    private $idField;
-
-    /**
-     * Reference constructor.
-     * @param string $property
-     * @param string $nameField
-     * @param string $idField
-     */
-    public function __construct(string $property, string $nameField, string $idField)
+    public function __construct(
+        private readonly string $property,
+        private readonly string $nameField,
+        private readonly string $idField,
+        private readonly array $cascade = [],
+    )
     {
-        $this->property = $property;
-        $this->nameField = $nameField;
-        $this->idField = $idField;
     }
 
-    /**
-     * @return string
-     */
     public function getProperty(): string
     {
         return $this->property;
     }
 
-    /**
-     * @return string
-     */
     public function getNameField(): string
     {
         return $this->nameField;
     }
 
-    /**
-     * @return string
-     */
     public function getIdField(): string
     {
         return $this->idField;
+    }
+
+    public function getCascade(): array
+    {
+        return $this->cascade;
+    }
+
+    public function hasCascade(string $type): bool
+    {
+        return in_array($type, $this->cascade);
     }
 }

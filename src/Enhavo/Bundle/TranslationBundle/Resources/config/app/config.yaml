@@ -21,8 +21,11 @@ enhavo_doctrine_extension:
                 object:
                     idField: refId
                     nameField: class
+
+
         Enhavo\Bundle\TranslationBundle\Entity\TranslationFile:
             reference:
                 object:
                     idField: refId
                     nameField: class
+                    cascade: ['persist', 'remove']

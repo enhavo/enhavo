@@ -10,9 +10,11 @@ enhavo_doctrine_extension:
                 subject:
                     idField: subjectId
                     nameField: subjectClass
+                    cascade: ['remove']
 
         Enhavo\Bundle\RevisionBundle\Entity\Archive:
             reference:
                 subject:
                     idField: subjectId
                     nameField: subjectClass
+                    cascade: ['remove']

@@ -42,7 +42,8 @@ class ReferenceSubscriberTest extends SubscriberTest
                 'reference' => [
                     'node' => [
                         'nameField' => 'nodeName',
-                        'idField' => 'nodeId'
+                        'idField' => 'nodeId',
+                        'cascade' => ['persist']
                     ]
                 ]
             ]
@@ -104,7 +105,8 @@ class ReferenceSubscriberTest extends SubscriberTest
                 'reference' => [
                     'node' => [
                         'nameField' => 'nodeName',
-                        'idField' => 'nodeId'
+                        'idField' => 'nodeId',
+                        'cascade' => ['persist']
                     ]
                 ]
             ]
@@ -142,7 +144,8 @@ class ReferenceSubscriberTest extends SubscriberTest
                 'reference' => [
                     'node' => [
                         'nameField' => 'nodeName',
-                        'idField' => 'nodeId'
+                        'idField' => 'nodeId',
+                        'cascade' => ['persist']
                     ]
                 ]
             ]
@@ -187,7 +190,8 @@ class ReferenceSubscriberTest extends SubscriberTest
                 'reference' => [
                     'node' => [
                         'nameField' => 'nodeName',
-                        'idField' => 'nodeId'
+                        'idField' => 'nodeId',
+                        'cascade' => ['persist']
                     ]
                 ]
             ]
@@ -221,6 +225,86 @@ class ReferenceSubscriberTest extends SubscriberTest
         $this->assertNull($node);
     }
 
+    public function testCascadeDeleteEntity()
+    {
+        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+
+        $dependencies = $this->createDependencies([
+            Entity::class => [
+                'reference' => [
+                    'node' => [
+                        'nameField' => 'nodeName',
+                        'idField' => 'nodeId',
+                        'cascade' => ['persist', 'remove']
+                    ]
+                ]
+            ]
+        ]);
+
+        $subscriber = $this->createInstance($dependencies);
+        $this->em->getEventManager()->addEventSubscriber($subscriber);
+        $this->updateSchema();
+
+        // Entity has a reference to Node, so we create an Entity class with a Node and try to delete only the Node
+
+        $node = new NodeOne();
+        $node->setName('node');
+
+        $entity = new Entity();
+        $entity->setName('entity');
+        $entity->setNode($node);
+
+        $this->em->persist($entity);
+        $this->em->flush();
+        $this->em->clear();
+
+        $entity = $this->em->getRepository(Entity::class)->findOneBy(['name' => 'entity']);
+
+        $this->em->remove($entity);
+        $this->em->flush();
+        $this->em->clear();
+
+        $node = $this->em->getRepository(NodeOne::class)->findOneBy(['name' => 'node']);
+
+        $this->assertNull($node);
+    }
+
+    public function testCascadeDeleteContainingNullEntity()
+    {
+        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+
+        $dependencies = $this->createDependencies([
+            Entity::class => [
+                'reference' => [
+                    'node' => [
+                        'nameField' => 'nodeName',
+                        'idField' => 'nodeId',
+                        'cascade' => ['persist', 'remove']
+                    ]
+                ]
+            ]
+        ]);
+
+        $subscriber = $this->createInstance($dependencies);
+        $this->em->getEventManager()->addEventSubscriber($subscriber);
+        $this->updateSchema();
+
+        $entity = new Entity();
+        $entity->setName('entity');
+        $entity->setNode(null);
+
+        $this->em->persist($entity);
+        $this->em->flush();
+        $this->em->clear();
+
+        $entity = $this->em->getRepository(Entity::class)->findOneBy(['name' => 'entity']);
+
+        $this->em->remove($entity);
+        $this->em->flush();
+        $this->em->clear();
+
+        $this->expectNotToPerformAssertions();
+    }
 }
 
 class ReferenceSubscriberDependencies
