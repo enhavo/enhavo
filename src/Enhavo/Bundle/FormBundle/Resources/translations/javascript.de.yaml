@@ -1,3 +1,96 @@
 enhavo_form:
     label:
         filter: Filter
+
+    wysiwyg_form:
+        command:
+            undo: Rückgängig
+            redo: Wiederholen
+            bold: Fett
+            italic: Kursiv
+            underlined: Unterstrichen
+            strikethrough: Durchgestrichen
+            subscript: Tiefgestellt
+            superscript: Hochgestellt
+            link:
+                label: Link
+                modal:
+                    header: Link hinzufügen/bearbeiten
+                    label_url: Url
+                    label_target: Ziel
+                    option_target_self: Gleicher Tab
+                    option_target_blank: Neuer Tab
+                    save: Speichern
+                    unlink: Link entfernen
+                    cancel: Abbrechen
+            menu_format:
+                label: Format
+                menu_headings:
+                    label: Überschriften
+                    heading1: Überschrift 1
+                    heading2: Überschrift 2
+                    heading3: Überschrift 3
+                    heading4: Überschrift 4
+                menu_formats:
+                    label: Zeichenformate
+                    bold: Fett
+                    italic: Kursiv
+                    underlined: Unterstrichen
+                    strikethrough: Durchgestrichen
+                    subscript: Tiefgestellt
+                    superscript: Hochgestellt
+                menu_align:
+                    label: Anordnung
+                    left: Links
+                    center: Zentriert
+                    right: Rechts
+                    justify: Blocksatz
+            align_left: Linksbündig
+            align_center: Zentriert
+            align_right: Rechtsbündig
+            align_justify: Blocksatz
+            bullet_list: Aufzählung
+            bullet_list_disc: Standard
+            bullet_list_circle: Kreis
+            bullet_list_square: Quadrat
+            numbered_list: Nummerierte Liste
+            numbered_list_decimal: Standard
+            numbered_list_lower_alpha: Kleinbuchstaben
+            numbered_list_upper_alpha: Großbuchstaben
+            numbered_list_lower_roman: Römische Zahlen (Kleinbuchstaben)
+            numbered_list_upper_roman: Römische Zahlen (Großbuchstaben)
+            numbered_list_lower_greek: Griechische Buchstaben
+            search:
+                label: Suchen und Ersetzen
+                inline_form:
+                    label_search: Suchen
+                    search_next: Nächstes Ergebnis
+                    search_previous: Letztes Ergebnis
+                    label_replace: Ersetzen
+                    action_replace: Ersetzen
+                    action_replace_all: Alle ersetzen
+            table:
+                label: Tabelle einfügen
+                inline_form:
+                    label: Tabelle
+                    column_before: Spalte links einfügen
+                    column_after: Spalte rechts einfügen
+                    column_delete: Spalte löschen
+                    row_before: Zeile oberhalb einfügen
+                    row_after: Zeile unterhalb einfügen
+                    row_delete: Zeile löschen
+                    merge: Zellen verbinden
+                    split: Verbundene Zellen wieder teilen
+                    toggle_header_row: Kopfzeile umschalten
+                    toggle_header_col: Kopfspalte umschalten
+                    toggle_header_cell: Kopfzelle umschalten
+                    delete_table: Tabelle löschen
+            source_code:
+                label: Quellcode
+                modal:
+                    header: Quellcode
+                    save: Speichern
+                    cancel: Abbrechen
+            color:
+                label: Textfarbe
+
