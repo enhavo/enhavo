@@ -1,7 +1,7 @@
 <template>
     <div class="wysiwyg-inline-menu-form wysiwyg-search-replace-form">
         <div class="form-row wysiwyg-inline-menu-form-row">
-            <label>Search</label>
+            <label>{{ translator.trans('enhavo_form.wysiwyg_form.command.search.inline_form.label_search', [], 'javascript') }}</label>
             <div class="formwidget-container">
                 <input class="wysiwyg-inline-menu-form-input"
                        type="text"
@@ -14,17 +14,19 @@
         <div class="wysiwyg-inline-menu-form-actions">
             <a class="wysiwyg-button"
                @click.prevent="searchNext"
+               :title="translator.trans('enhavo_form.wysiwyg_form.command.search.inline_form.search_next', [], 'javascript')"
             >
                 <i class="icon icon-keyboard_arrow_down"></i>
             </a>
             <a class="wysiwyg-button"
                @click.prevent="searchPrevious"
+               :title="translator.trans('enhavo_form.wysiwyg_form.command.search.inline_form.search_previous', [], 'javascript')"
             >
                 <i class="icon icon-keyboard_arrow_up"></i>
             </a>
         </div>
         <div class="form-row wysiwyg-inline-menu-form-row">
-            <label>Replace</label>
+            <label>{{ translator.trans('enhavo_form.wysiwyg_form.command.search.inline_form.label_replace', [], 'javascript') }}</label>
             <div class="formwidget-container">
                 <input class="wysiwyg-inline-menu-form-input"
                        type="text"
@@ -39,13 +41,13 @@
                :class="{ 'disabled': getNumResults() == 0 }"
                @click.prevent="replace"
             >
-                Replace
+                {{ translator.trans('enhavo_form.wysiwyg_form.command.search.inline_form.action_replace', [], 'javascript') }}
             </a>
             <a class="wysiwyg-button"
                :class="{ 'disabled': getNumResults() == 0 }"
                @click.prevent="replaceAll"
             >
-                Replace All
+                {{ translator.trans('enhavo_form.wysiwyg_form.command.search.inline_form.action_replace_all', [], 'javascript') }}
             </a>
         </div>
         <div class="wysiwyg-inline-menu-form-actions">
@@ -56,8 +58,11 @@
     </div>
 </template>
 <script setup lang="ts">
-import {watch} from "vue";
+import {inject, watch} from "vue";
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
+import {Translator} from "@enhavo/app/translation/Translator";
+
+const translator = inject<Translator>('translator');
 
 const props = defineProps<{
     form: WysiwygForm

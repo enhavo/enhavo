@@ -1,7 +1,8 @@
 <template>
     <div class="wysiwyg-button"
          :class="getClass()"
-         :title="getTooltip()"
+         :title="translator.trans(configuration.getTooltip(form), {}, configuration.getTranslationDomain(form))"
+         :aria-label="translator.trans(configuration.getTooltip(form), {}, configuration.getTranslationDomain(form))"
          v-html="getLabel()"
          @click="click"
     >
@@ -11,6 +12,10 @@
 <script setup lang="ts">
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
 import {WysiwygMenuButton} from "../../wysiwyg/WysiwygMenuButton";
+import {Translator} from "@enhavo/app/translation/Translator";
+import {inject} from "vue";
+
+const translator = inject<Translator>('translator');
 
 const props = defineProps<{
     configuration: WysiwygMenuButton,
@@ -32,49 +37,20 @@ function getLabel(): string {
             result += props.configuration.icon(props.form);
         }
     }
-    if (props.configuration.label !== null) {
-        if (typeof props.configuration.label === 'string') {
-            result += props.configuration.label;
-        } else {
-            result += props.configuration.label(props.form);
-        }
+    const label = props.configuration.getLabel(props.form);
+    if (label) {
+        result += translator.trans(label, [], props.configuration.getTranslationDomain(props.form));
     }
     return result;
-}
-
-function getTooltip()
-{
-    if (props.configuration.tooltip !== null) {
-        if (typeof props.configuration.tooltip === 'string') {
-            return props.configuration.tooltip;
-        } else {
-            return props.configuration.tooltip(props.form);
-        }
-    }
-    return null;
 }
 
 function getClass(): string {
     let result = '';
-    if (props.configuration.class !== null) {
-        if (typeof props.configuration.class === 'string') {
-            result += props.configuration.class;
-        } else {
-            result += props.configuration.class(props.form);
-        }
-    }
-    if (getDisabled()) {
+    result += props.configuration.getClass(props.form);
+    if (props.configuration.getDisabled(props.form)) {
         result += ' disabled';
     }
     return result;
-}
-
-function getDisabled(): boolean {
-    if (typeof props.configuration.disabled === 'boolean') {
-        return props.configuration.disabled;
-    } else {
-        return props.configuration.disabled(props.form);
-    }
 }
 
 </script>

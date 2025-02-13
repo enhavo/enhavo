@@ -3,6 +3,10 @@
 
 $fontSizeText: 14px;
 $fontSizeIcon: 18px;
+$fontSizeIconLarge: 26px;
+$minHeightSourceCodeEditor: 500px;
+$maxHeight: 650px;
+$menuColor: variables.$grey6;
 
 %menu-item {
   display: flex; align-items: center;
@@ -31,120 +35,15 @@ $fontSizeIcon: 18px;
 }
 
 .form-wysiwyg {
+  position: relative;
   .wysiwyg-menu {
     display: flex; gap: 5px; flex-wrap: wrap;
     padding: 5px 0 9px 0;
-    color: variables.$grey3;
+    color: $menuColor;
 
     .wysiwyg-menu-group {
       display: flex; flex-wrap: wrap;
       border: 1px solid variables.$grey5; border-radius: 5px;
-
-      .wysiwyg-submenu {
-        @extend %menu-item;
-        display: flex; align-items: stretch;
-        position: relative;
-        padding: 0;
-
-        &.is-active {
-          background-color: variables.$grey1;
-        }
-
-        &.has-click {
-          &:hover {
-            background: color.adjust(variables.$grey1, $alpha: -0.8);
-          }
-          &.is-active {
-            background-color: color.adjust(variables.$grey1, $alpha: -0.8);
-            &> .wysiwyg-submenu-label {
-              background-color: variables.$grey1;
-            }
-          }
-
-          &> .wysiwyg-submenu-label {
-            &:hover {
-              background-color: variables.$grey1;
-            }
-          }
-
-          &> .wysiwyg-submenu-dropdown {
-            &:hover {
-              background-color: variables.$grey1;
-            }
-          }
-        }
-
-        .wysiwyg-submenu-label {
-          display: flex; align-items: center;
-          user-select: none;
-          padding: 5px;
-        }
-        .wysiwyg-submenu-dropdown {
-          display: flex; align-items: center;
-        }
-
-        .wysiwyg-submenu-items {
-          display: none; flex-direction: column;
-          position: absolute; top: 30px; left: 0;
-          border: 1px solid variables.$grey5;
-          background: #fff;
-          white-space: nowrap;
-          z-index: 1;
-
-          .wysiwyg-button {
-            padding-right: 30px;
-
-            &.is-active {
-              &:after {
-                @extend %icon-style;
-                content: "\f201";
-                position: absolute; right: 5px;
-              }
-            }
-          }
-
-          .wysiwyg-submenu {
-            width: 100%;
-            justify-content: space-between;
-
-            .wysiwyg-submenu-dropdown {
-              display: none;
-            }
-
-            &:after {
-              @extend %icon-style;
-              display: flex; align-items: center;
-              content: '\f2bd';
-              position: relative; top: -2px;
-            }
-
-            .wysiwyg-submenu-items {
-              left: 100%; top: 0;
-            }
-
-            &.open {
-              .wysiwyg-submenu-items {
-                display: none;
-              }
-            }
-            &:hover {
-              .wysiwyg-submenu-items {
-                display: flex;
-              }
-            }
-          }
-        }
-
-        &.open {
-          .wysiwyg-submenu-dropdown {
-            transform: rotate(180deg);
-          }
-
-          &> .wysiwyg-submenu-items {
-            display: flex;
-          }
-        }
-      }
 
       .wysiwyg-spacer {
         border-left: 1px solid variables.$grey5;
@@ -153,9 +52,116 @@ $fontSizeIcon: 18px;
     }
   }
 
+  .wysiwyg-submenu {
+    @extend %menu-item;
+    display: flex; align-items: stretch;
+    position: relative;
+    padding: 0;
+
+    &.is-active {
+      background-color: variables.$grey1;
+    }
+
+    &.has-click {
+      &:hover {
+        background: color.adjust(variables.$grey1, $alpha: -0.8);
+      }
+      &.is-active {
+        background-color: color.adjust(variables.$grey1, $alpha: -0.8);
+        &> .wysiwyg-submenu-label {
+          background-color: variables.$grey1;
+        }
+      }
+
+      &> .wysiwyg-submenu-label {
+        &:hover {
+          background-color: variables.$grey1;
+        }
+      }
+
+      &> .wysiwyg-submenu-dropdown {
+        &:hover {
+          background-color: variables.$grey1;
+        }
+      }
+    }
+
+    .wysiwyg-submenu-label {
+      display: flex; align-items: center;
+      user-select: none;
+      padding: 5px;
+    }
+    .wysiwyg-submenu-dropdown {
+      display: flex; align-items: center;
+    }
+
+    .wysiwyg-submenu-items {
+      display: none; flex-direction: column;
+      position: absolute; top: 30px; left: 0;
+      border: 1px solid variables.$grey5;
+      background: #fff;
+      white-space: nowrap;
+      z-index: 10;
+      box-shadow: 0 0 3px color.adjust(variables.$black, $alpha: -0.7);
+
+      .wysiwyg-button {
+        padding-right: 30px;
+
+        &.is-active {
+          &:after {
+            @extend %icon-style;
+            content: "\f201";
+            position: absolute; right: 5px;
+          }
+        }
+      }
+
+      .wysiwyg-submenu {
+        width: 100%;
+        justify-content: space-between;
+
+        .wysiwyg-submenu-dropdown {
+          display: none;
+        }
+
+        &:after {
+          @extend %icon-style;
+          display: flex; align-items: center;
+          content: '\f2bd';
+          position: relative; top: -2px;
+        }
+
+        .wysiwyg-submenu-items {
+          left: 100%; top: 0;
+        }
+
+        &.open {
+          .wysiwyg-submenu-items {
+            display: none;
+          }
+        }
+        &:hover {
+          .wysiwyg-submenu-items {
+            display: flex;
+          }
+        }
+      }
+    }
+
+    &.open {
+      .wysiwyg-submenu-dropdown {
+        transform: rotate(180deg);
+      }
+
+      &> .wysiwyg-submenu-items {
+        display: flex;
+      }
+    }
+  }
+
   .wysiwyg-button {
     @extend %menu-item;
-    color:  variables.$grey3;
+    color:  $menuColor;
     text-align: left;
     user-select: none;
 
@@ -163,6 +169,14 @@ $fontSizeIcon: 18px;
       color: variables.$grey2;
       font-size: $fontSizeIcon;
     }
+
+    &.large-icon {
+      padding: 2px;
+      .icon {
+        font-size: $fontSizeIconLarge;
+      }
+    }
+
     &.is-active {
       background-color: variables.$grey1;
     }
@@ -176,11 +190,48 @@ $fontSizeIcon: 18px;
     }
   }
 
+  .wysiwyg-color-button {
+    .wysiwyg-color-button-label {
+      min-width: 16px;
+      text-align: center;
+    }
+
+    .wysiwyg-color-button-palette {
+      display: flex; flex-wrap: wrap; flex-direction: row;
+      min-width: 100px;
+      background-color: variables.$grey5;
+
+      .wysiwyg-color-button-palette-color {
+        border: 1px solid transparent;
+        flex: 0 0 20%;
+        aspect-ratio: 1/1;
+
+        &:hover {
+          border: 1px solid variables.$grey1;
+        }
+      }
+    }
+    .wysiwyg-color-button-special-buttons {
+      display: flex; gap: 1px;
+      background-color: variables.$grey1;
+      padding-top: 1px;
+
+      .wysiwyg-color-button-special-button {
+        flex: 1 1 100%;
+        text-align: center;
+        background-color: #fff;
+        &:hover {
+          background-color: variables.$grey1;
+        }
+      }
+    }
+  }
+
   .wysiwyg-inline-menu-form {
     display: flex; gap: 15px; flex-wrap: wrap; align-items: center;
     margin: 5px 0 9px 0; padding: 5px 15px;
     width: fit-content;
-    color: variables.$grey3;
+    color: $menuColor;
     border: 1px solid variables.$grey5; border-radius: 5px;
 
     .wysiwyg-inline-menu-form-row {
@@ -200,6 +251,10 @@ $fontSizeIcon: 18px;
     .wysiwyg-inline-menu-form-actions {
       display: flex;
     }
+    .wysiwyg-inline-menu-form-spacer {
+      border-left: 1px solid variables.$grey5;
+      margin: 0 3px;
+    }
   }
 
   .wysiwyg-editor-container {
@@ -207,6 +262,19 @@ $fontSizeIcon: 18px;
     cursor: text;
     .wysiwyg-editor {
       border-top-left-radius: 5px; border-top-right-radius: 5px;
+      max-height: $maxHeight;
+      overflow-y: scroll;
+
+      &.source-code-open {
+        min-height: ($minHeightSourceCodeEditor + 100px);
+      }
+
+      .tiptap {
+        &.resize-cursor {
+          cursor: ew-resize;
+          cursor: col-resize;
+        }
+      }
     }
   }
 
@@ -224,7 +292,7 @@ $fontSizeIcon: 18px;
       border: 1px solid variables.$grey5;
       padding: 20px;
       background: #fff;
-      box-shadow: 0 0 5px variables.$black;
+      box-shadow: 0 0 5px color.adjust(variables.$black, $alpha: -0.5);
       z-index: 100;
       transform: translateX(-50%);
 
@@ -237,13 +305,24 @@ $fontSizeIcon: 18px;
         margin-bottom: 20px;
       }
 
-      .wysiwyg-modal-content {}
+      .wysiwyg-modal-content {
+        .wysiwyg-modal-textarea-source-code {
+          min-height: $minHeightSourceCodeEditor;
+        }
+      }
 
       .wysiwyg-modal-actions {
         display: flex; gap: 10px; justify-content: right;
         margin-top: 20px;
       }
     }
+  }
+
+  .wysiwyg-table-inline-modal {
+    position: absolute; left: 5px;
+    background-color: white;
+    box-shadow: 0 0 5px color.adjust(variables.$black, $alpha: -0.5);
+    z-index: 5;
   }
 }
 
@@ -287,6 +366,43 @@ $fontSizeIcon: 18px;
     ol {
       padding-left: 23px;
       list-style: decimal;
+    }
+
+    table {
+      width: 100%;
+      margin: 1.5rem 0; border-collapse: collapse;
+      table-layout: fixed;
+      overflow: hidden;
+
+      td, th {
+        position: relative;
+        min-width: 1em;
+        padding: 6px 8px; border: 1px solid variables.$grey6;
+        box-sizing: border-box; vertical-align: top;
+
+        > * {
+          margin-bottom: 0;
+        }
+      }
+
+      th {
+        background-color: variables.$grey5;
+        font-weight: bold; text-align: left;
+      }
+
+      .selectedCell:after {
+        content: "";
+        position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+        background: color.adjust(variables.$color1b, $alpha: -0.7);
+        pointer-events: none; z-index: 2;
+      }
+
+      .column-resize-handle {
+        position: absolute; bottom: -2px; right: -2px; top: 0;
+        width: 4px;
+        background-color: variables.$color1b;
+        pointer-events: none;
+      }
     }
 
     .search-result {

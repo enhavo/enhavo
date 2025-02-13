@@ -4,16 +4,26 @@ import {WysiwygModalConfiguration} from "@enhavo/form/wysiwyg/WysiwygModalConfig
 import {Editor} from '@tiptap/vue-3';
 import {Editor as CoreEditor} from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
+import Color from '@tiptap/extension-color';
 import Link from '@tiptap/extension-link';
 import Underline from '@tiptap/extension-underline';
 import Subscript from '@tiptap/extension-subscript';
 import Superscript from '@tiptap/extension-superscript';
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import TableRow from '@tiptap/extension-table-row';
 import TextAlign from '@tiptap/extension-text-align';
+import TextStyle from '@tiptap/extension-text-style';
 import SearchAndReplace from '@sereneinserenade/tiptap-search-and-replace';
+import {TableView} from '@enhavo/form/wysiwyg/tiptap-extensions/extension-table/TableView';
+import {CustomBulletList} from '@enhavo/form/wysiwyg/tiptap-extensions/extension-custom-bullet-list/custom-bullet-list';
+import {CustomOrderedList} from '@enhavo/form/wysiwyg/tiptap-extensions/extension-custom-ordered-list/custom-ordered-list';
 
 export class WysiwygForm extends Form
 {
     public editor: Editor = null;
+    public additionalCssClasses: string[] = [];
 
     public editorBreadcrumbs: string = '';
 
@@ -36,6 +46,9 @@ export class WysiwygForm extends Form
             content: this.value,
             extensions: [
                 StarterKit,
+                Color,
+                CustomBulletList,
+                CustomOrderedList,
                 Link.configure({
                     openOnClick: false,
                     autolink: true,
@@ -96,9 +109,18 @@ export class WysiwygForm extends Form
                 }),
                 Subscript,
                 Superscript,
+                Table.configure({
+                    resizable: true,
+                    lastColumnResizable: false,
+                    View: TableView
+                }),
+                TableRow,
+                TableHeader,
+                TableCell,
                 TextAlign.configure({
                     types: ['heading', 'paragraph'],
                 }),
+                TextStyle,
                 Underline,
             ],
             onUpdate: ({ editor }) => {
@@ -146,5 +168,20 @@ export class WysiwygForm extends Form
                 })
             ;
         });
+    }
+
+    addCssClass(cssClass: string)
+    {
+        if (this.additionalCssClasses.indexOf(cssClass) === -1) {
+            this.additionalCssClasses.push(cssClass);
+        }
+    }
+
+    removeCssClass(cssClass: string)
+    {
+        const index = this.additionalCssClasses.indexOf(cssClass);
+        if (index > -1) {
+            this.additionalCssClasses.splice(index, 1);
+        }
     }
 }

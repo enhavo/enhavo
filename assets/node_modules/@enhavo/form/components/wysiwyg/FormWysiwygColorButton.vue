@@ -1,5 +1,5 @@
 <template>
-    <div class="wysiwyg-submenu"
+    <div class="wysiwyg-submenu wysiwyg-color-button"
          :class="getClass()"
          :title="translator.trans(configuration.getTooltip(form), {}, configuration.getTranslationDomain(form))"
          :aria-label="translator.trans(configuration.getTooltip(form), {}, configuration.getTranslationDomain(form))"
@@ -8,9 +8,23 @@
         <div class="wysiwyg-submenu-label" v-html="getLabel()" @click="clickOrToggleOpen"></div>
         <div class="wysiwyg-submenu-dropdown" @click="toggleOpen"><i class="icon icon-keyboard_arrow_down"></i></div>
         <div class="wysiwyg-submenu-items">
-            <template v-for="item in configuration.items">
-                <component :is="item.component" :configuration="item" :form="form"></component>
-            </template>
+            <div class="wysiwyg-color-button-palette">
+                <template v-for="color in configuration.colorPalette">
+                    <div class="wysiwyg-color-button-palette-color"
+                         :class="{ 'active': color === configuration.selectedColor }"
+                         :style="'background-color: ' + color"
+                         @click="selectColor(color)"
+                    ></div>
+                </template>
+            </div>
+            <div class="wysiwyg-color-button-special-buttons">
+                <div class="wysiwyg-color-button-special-button wysiwyg-color-button-palette-clear" @click="selectColor(null)">
+                    <i class="icon icon-clear"></i>
+                </div>
+<!--                <div class="wysiwyg-color-button-special-button wysiwyg-color-button-palette-custom">-->
+<!--                    <i class="icon icon-palette"></i>-->
+<!--                </div>-->
+            </div>
         </div>
     </div>
 </template>
@@ -18,17 +32,28 @@
 <script setup lang="ts">
 import {inject, ref} from "vue";
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
-import {WysiwygMenuSubmenu} from "@enhavo/form/wysiwyg/WysiwygMenuSubmenu";
+import {WysiwygColorButton} from "@enhavo/form/wysiwyg/WysiwygColorButton";
 import {Translator} from "@enhavo/app/translation/Translator";
 
 const translator = inject<Translator>('translator');
 
 const props = defineProps<{
-    configuration: WysiwygMenuSubmenu,
+    configuration: WysiwygColorButton,
     form: WysiwygForm
 }>()
 
 const isOpen = ref(false);
+
+function selectColor(color: string)
+{
+    props.configuration.selectedColor = color;
+    if (color === null) {
+        props.configuration.applyClearColor(props.form);
+    } else {
+        props.configuration.applySelectedColor(props.form);
+    }
+    close();
+}
 
 function getLabel(): string {
     let result = '';
@@ -42,6 +67,14 @@ function getLabel(): string {
     const label = props.configuration.getLabel(props.form);
     if (label) {
         result += translator.trans(label, [], props.configuration.getTranslationDomain(props.form));
+    }
+    if (result === '') {
+        result = 'A';
+    }
+    if (props.configuration.selectedColor) {
+        result = '<div class="wysiwyg-color-button-label" style="border-bottom: 2px solid ' + props.configuration.selectedColor + '">' + result + '</div>';
+    } else {
+        result = '<div class="wysiwyg-color-button-label">' + result + '</div>';
     }
     return result;
 }

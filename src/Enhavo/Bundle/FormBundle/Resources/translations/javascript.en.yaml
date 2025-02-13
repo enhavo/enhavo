@@ -1,3 +1,100 @@
 enhavo_form:
     label:
         filter: Filter
+
+    wysiwyg_form:
+        command:
+            undo: Undo
+            redo: Redo
+            bold: Bold
+            italic: Italic
+            underlined: Underlined
+            strikethrough: Strikethrough
+            subscript: Subscript
+            superscript: Superscript
+            clear_format: Clear formats
+            link:
+                label: Link
+                modal:
+                    header: Insert/Edit Link
+                    label_url: Url
+                    label_target: Target
+                    option_target_self: Current window
+                    option_target_blank: New window
+                    save: Save
+                    unlink: Remove link
+                    cancel: Cancel
+            menu_format:
+                label: Format
+                menu_headings:
+                    label: Headings
+                    heading1: Heading 1
+                    heading2: Heading 2
+                    heading3: Heading 3
+                    heading4: Heading 4
+                menu_formats:
+                    label: Text formats
+                    bold: Bold
+                    italic: Italic
+                    underlined: Underlined
+                    strikethrough: Strikethrough
+                    subscript: Subscript
+                    superscript: Superscript
+                    clear_format: Clear formats
+                menu_align:
+                    label: Alignment
+                    left: Left
+                    center: Center
+                    right: Right
+                    justify: Justify
+            align_left: Align left
+            align_center: Align center
+            align_right: Align right
+            align_justify: Justify
+            bullet_list: Bullet list
+            bullet_list_disc: Default
+            bullet_list_circle: Circles
+            bullet_list_square: Squares
+            numbered_list: Numbered list
+            numbered_list_decimal: Default
+            numbered_list_lower_alpha: Lowercase letters
+            numbered_list_upper_alpha: Capital letters
+            numbered_list_lower_roman: Lowercase roman numerals
+            numbered_list_upper_roman: Capital roman numerals
+            numbered_list_lower_greek: Greek letters
+            search:
+                label: Search and replace
+                inline_form:
+                    label_search: Search
+                    search_next: Search forwards
+                    search_previous: Search backwards
+                    label_replace: Replace
+                    action_replace: Replace
+                    action_replace_all: Replace all
+            table:
+                label: Insert Table
+                inline_form:
+                    label: Table
+                    column_before: Insert column to the left
+                    column_after: Insert column to the right
+                    column_delete: Delete column
+                    row_before: Insert row above
+                    row_after: Insert row below
+                    row_delete: Delete row
+                    sub_menu:
+                        label: Additional options
+                        merge: Merge cells
+                        split: Split merged cells
+                        toggle_header_row: Toggle header row
+                        toggle_header_col: Toggle header column
+                        toggle_header_cell: Toggle header cell
+                        delete_table: Delete table
+            source_code:
+                label: Source Code
+                modal:
+                    header: Source Code
+                    save: Save
+                    cancel: Cancel
+            color:
+                label: Text color
+

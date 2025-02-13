@@ -59,6 +59,12 @@ services:
         tags:
             - { name: vue.component, component: 'form-wysiwyg-menu-spacer' }
 
+    '@enhavo/form/components/wysiwyg/FormWysiwygColorButton.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-wysiwyg-color-button' }
+
     '@enhavo/form/components/wysiwyg/FormWysiwygModalContainer.vue':
         chunk: 'vue'
         static: true
@@ -82,6 +88,12 @@ services:
         static: true
         tags:
             - { name: vue.component, component: 'form-wysiwyg-search-replace-inline-form' }
+
+    '@enhavo/form/components/wysiwyg/FormWysiwygTableInlineForm.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-wysiwyg-table-inline-form' }
 
     '@enhavo/form/components/FormConditional.vue':
         chunk: 'vue'
