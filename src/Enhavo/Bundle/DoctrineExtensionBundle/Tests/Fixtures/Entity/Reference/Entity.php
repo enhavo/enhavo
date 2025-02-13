@@ -17,19 +17,18 @@ class Entity
     #[ORM\Id]
     #[ORM\Column(name: "id", type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: "AUTO")]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private $name;
+    private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private $nodeName;
+    private ?string $nodeName = null;
 
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
-    private $nodeId;
+    private ?int $nodeId = null;
 
-    /** @var NodeInterface */
-    private $node;
+    private ?NodeInterface $node = null;
 
     public function getId()
     {

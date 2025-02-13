@@ -11,12 +11,12 @@ namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\ClassNameResolver;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EventListener\ReferenceSubscriber;
-use Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener\SubscriberTest;
 use Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference\Entity;
 use Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference\EntityContainer;
 use Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference\NodeContainer;
 use Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference\NodeOne;
 use Enhavo\Component\Metadata\MetadataRepository;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class ReferenceSubscriberTest extends SubscriberTest
 {
@@ -305,12 +305,174 @@ class ReferenceSubscriberTest extends SubscriberTest
 
         $this->expectNotToPerformAssertions();
     }
+
+    public function testPersistOnFetchEntity()
+    {
+        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+
+        $dependencies = $this->createDependencies([
+            Entity::class => [
+                'reference' => [
+                    'node' => [
+                        'nameField' => 'nodeName',
+                        'idField' => 'nodeId',
+                        'cascade' => ['persist']
+                    ]
+                ]
+            ]
+        ]);
+
+        $subscriber = $this->createInstance($dependencies);
+
+
+        $this->em->getEventManager()->addEventSubscriber($subscriber);
+        $this->updateSchema();
+
+        $entity = new Entity();
+        $entity->setName('entity');
+        $entity->setNode(null);
+
+        $this->em->persist($entity);
+        $this->em->flush();
+        $this->em->clear();
+
+        $entity = $this->em->getRepository(Entity::class)->findOneBy(['name' => 'entity']);
+
+        $node = new NodeOne();
+        $node->setName('node');
+        $entity->setNode($node);
+
+        $this->em->flush();
+        $this->em->clear();
+
+        $node = $this->em->getRepository(NodeOne::class)->findOneBy(['name' => 'node']);
+
+        $this->assertNotNull($node);
+    }
+
+    public function testCascadePersistAndRemoveOnFetchEntity()
+    {
+        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+
+        $dependencies = $this->createDependencies([
+            Entity::class => [
+                'reference' => [
+                    'node' => [
+                        'nameField' => 'nodeName',
+                        'idField' => 'nodeId',
+                        'cascade' => ['persist', 'remove']
+                    ]
+                ]
+            ]
+        ]);
+
+        $subscriber = $this->createInstance($dependencies);
+
+
+        $this->em->getEventManager()->addEventSubscriber($subscriber);
+        $this->updateSchema();
+
+        $entityOne = new Entity();
+        $entityOne->setName('one');
+        $entityOne->setNode(null);
+
+        $this->em->persist($entityOne);
+        $this->em->flush();
+        $this->em->clear();
+
+        $entityOne = $this->em->getRepository(Entity::class)->findOneBy(['name' => 'one']);
+
+        $nodeContainerOne = new NodeContainer();
+        $nodeContainerOne->setName('one');
+        $entityOne->setNode($nodeContainerOne);
+
+        $entityTwo = new Entity();
+        $entityTwo->setName('two');
+        $nodeContainerOne->setEntity($entityTwo);
+
+        $nodeContainerTwo = new NodeContainer();
+        $nodeContainerTwo->setName('two');
+        $entityTwo->setNode($nodeContainerTwo);
+
+        $entityThree = new Entity();
+        $entityThree->setName('three');
+        $nodeContainerTwo->setEntity($entityThree);
+
+        $nodeOne = new NodeOne();
+        $nodeOne->setName('one');
+        $entityThree->setNode($nodeOne);
+
+        $this->em->flush();
+        $this->em->clear();
+
+        $this->assertNotNull($this->em->getRepository(NodeContainer::class)->findOneBy(['name' => 'one']));
+        $this->assertNotNull($this->em->getRepository(NodeContainer::class)->findOneBy(['name' => 'two']));
+        $this->assertNotNull($this->em->getRepository(Entity::class)->findOneBy(['name' => 'two']));
+        $this->assertNotNull($this->em->getRepository(Entity::class)->findOneBy(['name' => 'three']));
+        $this->assertNotNull($this->em->getRepository(NodeOne::class)->findOneBy(['name' => 'one']));
+
+        $entityOne = $this->em->getRepository(Entity::class)->findOneBy(['name' => 'one']);
+        $this->em->remove($entityOne);
+
+        $this->em->flush();
+        $this->em->clear();
+
+        $this->assertNull($this->em->getRepository(NodeContainer::class)->findOneBy(['name' => 'one']));
+        $this->assertNull($this->em->getRepository(NodeContainer::class)->findOneBy(['name' => 'two']));
+        $this->assertNull($this->em->getRepository(Entity::class)->findOneBy(['name' => 'two']));
+        $this->assertNull($this->em->getRepository(Entity::class)->findOneBy(['name' => 'three']));
+        $this->assertNull($this->em->getRepository(NodeOne::class)->findOneBy(['name' => 'one']));
+    }
+
+    public function testReferenceSameEntity()
+    {
+        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+
+        $dependencies = $this->createDependencies([
+            Entity::class => [
+                'reference' => [
+                    'node' => [
+                        'nameField' => 'nodeName',
+                        'idField' => 'nodeId',
+                        'cascade' => ['persist', 'remove']
+                    ]
+                ]
+            ]
+        ]);
+
+        $subscriber = $this->createInstance($dependencies);
+
+        $this->em->getEventManager()->addEventSubscriber($subscriber);
+        $this->updateSchema();
+
+        $nodeOne = new NodeOne();
+        $nodeOne->setName('one');
+
+        $entityOne = new Entity();
+        $entityOne->setName('one');
+        $entityOne->setNode($nodeOne);
+
+        $entityTwo = new Entity();
+        $entityTwo->setName('two');
+        $entityTwo->setNode($nodeOne);
+
+        $this->em->persist($entityOne);
+        $this->em->persist($entityTwo);
+        $this->em->flush();
+        $this->em->clear();
+
+        $entityOne = $this->em->getRepository(Entity::class)->findOneBy(['name' => 'one']);
+        $entityTwo = $this->em->getRepository(Entity::class)->findOneBy(['name' => 'two']);
+
+        $this->assertNotNull($entityOne);
+        $this->assertNotNull($entityTwo);
+        $this->assertNotNull($entityTwo->getNode());
+        $this->assertTrue($entityTwo->getNode() === $entityOne->getNode());
+    }
 }
 
 class ReferenceSubscriberDependencies
 {
-    /** @var MetadataRepository|\PHPUnit_Framework_MockObject_MockObject */
-    public $metadataRepository;
-    /** @var EntityResolverInterface|\PHPUnit_Framework_MockObject_MockObject */
-    public $entityResolver;
+    public MetadataRepository|MockObject $metadataRepository;
+    public EntityResolverInterface|MockObject $entityResolver;
 }

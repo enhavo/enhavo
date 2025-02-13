@@ -18,13 +18,13 @@ class EntityContainer
     #[ORM\Id]
     #[ORM\Column(name: "id", type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: "AUTO")]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Entity::class, cascade: ['all'], fetch: 'LAZY')]
-    private $entity;
+    private ?Entity $entity = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private $name;
+    private ?string $name = null;
 
     /**
      * @return mixed

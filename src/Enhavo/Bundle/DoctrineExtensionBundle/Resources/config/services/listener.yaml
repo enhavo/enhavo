@@ -5,6 +5,8 @@ services:
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
         tags:
             - { name: doctrine.event_listener, event: postLoad, method: postLoad }
+            - { name: doctrine.event_listener, event: prePersist, method: prePersist }
+            - { name: doctrine.event_listener, event: preRemove, method: preRemove }
             - { name: doctrine.event_listener, event: preFlush, method: preFlush }
             - { name: doctrine.event_listener, event: postFlush, method: postFlush }
 

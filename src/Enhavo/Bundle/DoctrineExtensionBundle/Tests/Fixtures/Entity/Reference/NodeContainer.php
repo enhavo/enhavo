@@ -17,13 +17,13 @@ class NodeContainer implements NodeInterface
     #[ORM\Id]
     #[ORM\Column(name: "id", type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: "AUTO")]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private $name;
+    private ?string $name = null;
 
     #[ORM\ManyToOne(targetEntity: Entity::class, cascade: ['all'])]
-    private $entity;
+    private ?Entity $entity = null;
 
     public function getId()
     {

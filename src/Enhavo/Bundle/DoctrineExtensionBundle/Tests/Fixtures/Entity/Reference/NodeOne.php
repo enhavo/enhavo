@@ -17,10 +17,10 @@ class NodeOne implements NodeInterface
     #[ORM\Id]
     #[ORM\Column(name: "id", type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: "AUTO")]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private $name;
+    private ?string $name = null;
 
     public function getId()
     {
