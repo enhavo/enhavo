@@ -21,6 +21,8 @@ declare module '@tiptap/core' {
 }
 
 export const CustomBulletList = BulletList.extend({
+    name: 'customBulletList',
+
     addAttributes() {
         return {
             listStyle: {
@@ -42,27 +44,50 @@ export const CustomBulletList = BulletList.extend({
 
     addCommands() {
         return {
-            toggleBulletList: () => ({ commands, chain }) => {
+            toggleBulletList: () => ({ editor, commands, chain }) => {
+                let commandChain = chain();
+
+                if (editor.isActive('customBulletList')
+                    && !(
+                        editor.isActive('customBulletList', { 'listStyle': 'disc' })
+                        || editor.isActive('customBulletList', { 'listStyle': null })
+                    )
+                ) {
+                    // Unset current bullet list with wrong attributes before resetting it with the correct attributes
+                    commandChain.toggleList(this.name, this.options.itemTypeName, this.options.keepMarks);
+                }
+
                 if (this.options.keepAttributes) {
-                    return chain()
+                    return commandChain
                         .toggleList(this.name, this.options.itemTypeName, this.options.keepMarks, { 'listStyle': 'disc' })
                         .updateAttributes(ListItemName, this.editor.getAttributes(TextStyleName))
                         .run()
                     ;
                 }
-                return commands
+                return commandChain
                     .toggleList(this.name, this.options.itemTypeName, this.options.keepMarks, { 'listStyle': 'disc' })
+                    .run()
                 ;
             },
-            toggleStyledBulletList: (listStyle: ListStyle) => ({ commands, chain }) => {
+            toggleStyledBulletList: (listStyle: ListStyle) => ({ editor, commands, chain }) => {
+                let commandChain = chain();
+
+                if (editor.isActive('customBulletList') && !editor.isActive('customBulletList', { 'listStyle': listStyle })) {
+                    // Unset current bullet list with wrong attributes before resetting it with the correct attributes
+                    commandChain.toggleList(this.name, this.options.itemTypeName, this.options.keepMarks);
+                }
+
                 if (this.options.keepAttributes) {
-                    return chain()
+                    return commandChain
                         .toggleList(this.name, this.options.itemTypeName, this.options.keepMarks, { 'listStyle': listStyle })
                         .updateAttributes(ListItemName, this.editor.getAttributes(TextStyleName))
                         .run()
                     ;
                 }
-                return commands.toggleList(this.name, this.options.itemTypeName, this.options.keepMarks, { 'listStyle': listStyle });
+                return commandChain
+                    .toggleList(this.name, this.options.itemTypeName, this.options.keepMarks, { 'listStyle': listStyle })
+                    .run()
+                ;
             },
         };
     },

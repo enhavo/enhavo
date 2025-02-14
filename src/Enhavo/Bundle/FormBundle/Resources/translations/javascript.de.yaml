@@ -45,6 +45,17 @@ enhavo_form:
                     center: Zentriert
                     right: Rechts
                     justify: Blocksatz
+                menu_list:
+                    label: Aufzählung
+                    bullet_list_disc: Standard
+                    bullet_list_circle: Kreise
+                    bullet_list_square: Quadrate
+                    numbered_list_decimal: Nummeriert
+                    numbered_list_lower_alpha: Kleinbuchstaben
+                    numbered_list_upper_alpha: Großbuchstaben
+                    numbered_list_lower_roman: Römische Zahlen (Kleinbuchstaben)
+                    numbered_list_upper_roman: Römische Zahlen (Großbuchstaben)
+                    numbered_list_lower_greek: Griechische Buchstaben
             align_left: Linksbündig
             align_center: Zentriert
             align_right: Rechtsbündig
@@ -79,12 +90,14 @@ enhavo_form:
                     row_before: Zeile oberhalb einfügen
                     row_after: Zeile unterhalb einfügen
                     row_delete: Zeile löschen
-                    merge: Zellen verbinden
-                    split: Verbundene Zellen wieder teilen
-                    toggle_header_row: Kopfzeile umschalten
-                    toggle_header_col: Kopfspalte umschalten
-                    toggle_header_cell: Kopfzelle umschalten
-                    delete_table: Tabelle löschen
+                    sub_menu:
+                        label: Zusatzoptionen
+                        merge: Zellen verbinden
+                        split: Verbundene Zellen wieder teilen
+                        toggle_header_row: Kopfzeile umschalten
+                        toggle_header_col: Kopfspalte umschalten
+                        toggle_header_cell: Kopfzelle umschalten
+                        delete_table: Tabelle löschen
             source_code:
                 label: Quellcode
                 modal:
@@ -93,4 +106,318 @@ enhavo_form:
                     cancel: Abbrechen
             color:
                 label: Textfarbe
-
+                label_clear: Textfarbe entfernen
+                label_custom: Benutzerdefinierte Farbe
+            background_color:
+                label: Hintergrundfarbe
+                label_clear: Hintergrundfarbe entfernen
+                label_custom: Benutzerdefinierte Farbe
+            special_characters:
+                label: Sonderzeichen
+                label_filter: Filter
+                modal_cancel: Abbrechen
+                tabs:
+                    all:
+                        label: Alle
+                    ccurrency:
+                        label: Währung
+                        dollar_sign: dollar sign
+                        cent_sign: cent sign
+                        euro_sign: euro sign
+                        pound_sign: pound sign
+                        yen_sign: yen sign
+                        currency_sign: currency sign
+                        euro_currency_sign: euro-currency sign
+                        colon_sign: colon sign
+                        cruzeiro_sign: cruzeiro sign
+                        french_franc_sign: french franc sign
+                        lira_sign: lira sign
+                        mill_sign: mill sign
+                        naira_sign: naira sign
+                        peseta_sign: peseta sign
+                        rupee_sign: rupee sign
+                        won_sign: won sign
+                        new_sheqel_sign: new sheqel sign
+                        dong_sign: dong sign
+                        kip_sign: kip sign
+                        tugrik_sign: tugrik sign
+                        drachma_sign: drachma sign
+                        german_penny_symbol: german penny symbol
+                        peso_sign: peso sign
+                        guarani_sign: guarani sign
+                        austral_sign: austral sign
+                        hryvnia_sign: hryvnia sign
+                        cedi_sign: cedi sign
+                        livre_tournois_sign: livre tournois sign
+                        spesmilo_sign: spesmilo sign
+                        tenge_sign: tenge sign
+                        indian_rupee_sign: indian rupee sign
+                        turkish_lira_sign: turkish lira sign
+                        nordic_mark_sign: nordic mark sign
+                        manat_sign: manat sign
+                        ruble_sign: ruble sign
+                        yen_character: yen character
+                        yuan_character: yuan character
+                        yuan_character,_in_hong_kong_and_taiwan: yuan character, in hong kong and taiwan
+                        yen/yuan_character_variant_one: yen/yuan character variant one
+                    ttext:
+                        label: Text
+                        copyright_sign: copyright sign
+                        registered_sign: registered sign
+                        trade_mark_sign: trade mark sign
+                        per_mille_sign: per mille sign
+                        micro_sign: micro sign
+                        middle_dot: middle dot
+                        bullet: bullet
+                        three_dot_leader: three dot leader
+                        minutes_/_feet: minutes / feet
+                        seconds_/_inches: seconds / inches
+                        section_sign: section sign
+                        paragraph_sign: paragraph sign
+                        sharp_s_/_ess_zed: sharp s / ess-zed
+                    qquotations:
+                        label: Anführungszeichen
+                        single_left_pointing_angle_quotation_mark: single left-pointing angle quotation mark
+                        single_right_pointing_angle_quotation_mark: single right-pointing angle quotation mark
+                        left_pointing_guillemet: left pointing guillemet
+                        right_pointing_guillemet: right pointing guillemet
+                        left_single_quotation_mark: left single quotation mark
+                        right_single_quotation_mark: right single quotation mark
+                        left_double_quotation_mark: left double quotation mark
+                        right_double_quotation_mark: right double quotation mark
+                        single_low_9_quotation_mark: single low-9 quotation mark
+                        double_low_9_quotation_mark: double low-9 quotation mark
+                        less_than_sign: less-than sign
+                        greater_than_sign: greater-than sign
+                        less_than_or_equal_to: less-than or equal to
+                        greater_than_or_equal_to: greater-than or equal to
+                        en_dash: en dash
+                        em_dash: em dash
+                        macron: macron
+                        overline: overline
+                        currency_sign: currency sign
+                        broken_bar: broken bar
+                        diaeresis: diaeresis
+                        inverted_exclamation_mark: inverted exclamation mark
+                        turned_question_mark: turned question mark
+                        circumflex_accent: circumflex accent
+                        small_tilde: small tilde
+                        degree_sign: degree sign
+                        minus_sign: minus sign
+                        plus_minus_sign: plus-minus sign
+                        division_sign: division sign
+                        fraction_slash: fraction slash
+                        multiplication_sign: multiplication sign
+                        superscript_one: superscript one
+                        superscript_two: superscript two
+                        superscript_three: superscript three
+                        fraction_one_quarter: fraction one quarter
+                        fraction_one_half: fraction one half
+                        fraction_three_quarters: fraction three quarters
+                    mmathematical:
+                        label: Mathematik
+                        function_/_florin: function / florin
+                        integral: integral
+                        n_ary_sumation: n-ary sumation
+                        infinity: infinity
+                        square_root: square root
+                        similar_to: similar to
+                        approximately_equal_to: approximately equal to
+                        almost_equal_to: almost equal to
+                        not_equal_to: not equal to
+                        identical_to: identical to
+                        element_of: element of
+                        not_an_element_of: not an element of
+                        contains_as_member: contains as member
+                        n_ary_product: n-ary product
+                        logical_and: logical and
+                        logical_or: logical or
+                        not_sign: not sign
+                        intersection: intersection
+                        union: union
+                        partial_differential: partial differential
+                        for_all: for all
+                        there_exists: there exists
+                        diameter: diameter
+                        backward_difference: backward difference
+                        asterisk_operator: asterisk operator
+                        proportional_to: proportional to
+                        angle: angle
+                    eextended_llatin:
+                        label: Erweitertes Latein
+                        aa_grave: A - grave
+                        aa_acute: A - acute
+                        aa_circumflex: A - circumflex
+                        aa_tilde: A - tilde
+                        aa_diaeresis: A - diaeresis
+                        aa_ring_above: A - ring above
+                        aa_macron: A - macron
+                        ligature_aaee: ligature AE
+                        cc_cedilla: C - cedilla
+                        ee_grave: E - grave
+                        ee_acute: E - acute
+                        ee_circumflex: E - circumflex
+                        ee_diaeresis: E - diaeresis
+                        ee_macron: E - macron
+                        ii_grave: I - grave
+                        ii_acute: I - acute
+                        ii_circumflex: I - circumflex
+                        ii_diaeresis: I - diaeresis
+                        ii_macron: I - macron
+                        eetthh: ETH
+                        nn_tilde: N - tilde
+                        oo_grave: O - grave
+                        oo_acute: O - acute
+                        oo_circumflex: O - circumflex
+                        oo_tilde: O - tilde
+                        oo_diaeresis: O - diaeresis
+                        oo_slash: O - slash
+                        oo_macron: O - macron
+                        ligature_ooee: ligature OE
+                        ss_caron: S - caron
+                        uu_grave: U - grave
+                        uu_acute: U - acute
+                        uu_circumflex: U - circumflex
+                        uu_diaeresis: U - diaeresis
+                        uu_macron: U - macron
+                        yy_acute: Y - acute
+                        yy_diaeresis: Y - diaeresis
+                        yy_macron: Y - macron
+                        tthhoorrnn: THORN
+                        a_grave: a - grave
+                        a_acute: a - acute
+                        a_circumflex: a - circumflex
+                        a_tilde: a - tilde
+                        a_diaeresis: a - diaeresis
+                        a_ring_above: a - ring above
+                        a_macron: a - macron
+                        ligature_ae: ligature ae
+                        c_cedilla: c - cedilla
+                        e_grave: e - grave
+                        e_acute: e - acute
+                        e_circumflex: e - circumflex
+                        e_diaeresis: e - diaeresis
+                        e_macron: e - macron
+                        i_grave: i - grave
+                        i_acute: i - acute
+                        i_circumflex: i - circumflex
+                        i_diaeresis: i - diaeresis
+                        i_macron: i - macron
+                        eth: eth
+                        n_tilde: n - tilde
+                        o_grave: o - grave
+                        o_acute: o - acute
+                        o_circumflex: o - circumflex
+                        o_tilde: o - tilde
+                        o_diaeresis: o - diaeresis
+                        o_slash: o slash
+                        o_macron: o macron
+                        ligature_oe: ligature oe
+                        s_caron: s - caron
+                        u_grave: u - grave
+                        u_acute: u - acute
+                        u_circumflex: u - circumflex
+                        u_diaeresis: u - diaeresis
+                        u_macron: u - macron
+                        y_acute: y - acute
+                        thorn: thorn
+                        y_diaeresis: y - diaeresis
+                        y_macron: y - macron
+                        aalpha: Alpha
+                        bbeta: Beta
+                        ggamma: Gamma
+                        ddelta: Delta
+                        eepsilon: Epsilon
+                        zzeta: Zeta
+                        eeta: Eta
+                        ttheta: Theta
+                        iiota: Iota
+                        kkappa: Kappa
+                        llambda: Lambda
+                        mmu: Mu
+                        nnu: Nu
+                        xxi: Xi
+                        oomicron: Omicron
+                        ppi: Pi
+                        rrho: Rho
+                        ssigma: Sigma
+                        ttau: Tau
+                        uupsilon: Upsilon
+                        pphi: Phi
+                        cchi: Chi
+                        ppsi: Psi
+                        oomega: Omega
+                        alpha: alpha
+                        beta: beta
+                        gamma: gamma
+                        delta: delta
+                        epsilon: epsilon
+                        zeta: zeta
+                        eta: eta
+                        theta: theta
+                        iota: iota
+                        kappa: kappa
+                        lambda: lambda
+                        mu: mu
+                        nu: nu
+                        xi: xi
+                        omicron: omicron
+                        pi: pi
+                        rho: rho
+                        final_sigma: final sigma
+                        sigma: sigma
+                        tau: tau
+                        upsilon: upsilon
+                        phi: phi
+                        chi: chi
+                        psi: psi
+                        omega: omega
+                    ssymbols:
+                        label: Symbole
+                        alef_symbol: alef symbol
+                        pi_symbol: pi symbol
+                        real_part_symbol: real part symbol
+                        upsilon_hook_symbol: upsilon - hook symbol
+                        wweierstrass_p: Weierstrass p
+                        imaginary_part: imaginary part
+                    aarrows:
+                        label: Pfeile
+                        leftwards_arrow: leftwards arrow
+                        upwards_arrow: upwards arrow
+                        rightwards_arrow: rightwards arrow
+                        downwards_arrow: downwards arrow
+                        left_right_arrow: left right arrow
+                        carriage_return: carriage return
+                        leftwards_double_arrow: leftwards double arrow
+                        upwards_double_arrow: upwards double arrow
+                        rightwards_double_arrow: rightwards double arrow
+                        downwards_double_arrow: downwards double arrow
+                        left_right_double_arrow: left right double arrow
+                        therefore: therefore
+                        subset_of: subset of
+                        superset_of: superset of
+                        not_a_subset_of: not a subset of
+                        subset_of_or_equal_to: subset of or equal to
+                        superset_of_or_equal_to: superset of or equal to
+                        circled_plus: circled plus
+                        circled_times: circled times
+                        perpendicular: perpendicular
+                        dot_operator: dot operator
+                        left_ceiling: left ceiling
+                        right_ceiling: right ceiling
+                        left_floor: left floor
+                        right_floor: right floor
+                        left_pointing_angle_bracket: left-pointing angle bracket
+                        right_pointing_angle_bracket: right-pointing angle bracket
+                        lozenge: lozenge
+                        black_spade_suit: black spade suit
+                        black_club_suit: black club suit
+                        black_heart_suit: black heart suit
+                        black_diamond_suit: black diamond suit
+                        en_space: en space
+                        em_space: em space
+                        thin_space: thin space
+                        zero_width_non_joiner: zero width non-joiner
+                        zero_width_joiner: zero width joiner
+                        left_to_right_mark: left-to-right mark
+                        right_to_left_mark: right-to-left mark

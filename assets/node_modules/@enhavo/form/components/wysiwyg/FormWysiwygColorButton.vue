@@ -7,7 +7,7 @@
     >
         <div class="wysiwyg-submenu-label" v-html="getLabel()" @click="clickOrToggleOpen"></div>
         <div class="wysiwyg-submenu-dropdown" @click="toggleOpen"><i class="icon icon-keyboard_arrow_down"></i></div>
-        <div class="wysiwyg-submenu-items">
+        <div class="wysiwyg-submenu-items" title="">
             <div class="wysiwyg-color-button-palette">
                 <template v-for="color in configuration.colorPalette">
                     <div class="wysiwyg-color-button-palette-color"
@@ -16,14 +16,27 @@
                          @click="selectColor(color)"
                     ></div>
                 </template>
+                <div v-if="configuration.customColor !== null"
+                     class="wysiwyg-color-button-palette-color wysiwyg-color-button-palette-color-custom"
+                     :class="{ 'active': configuration.customColor === configuration.selectedColor }"
+                     :style="'background-color: ' + configuration.customColor"
+                     @click="selectColor(configuration.customColor)"
+                ></div>
             </div>
             <div class="wysiwyg-color-button-special-buttons">
-                <div class="wysiwyg-color-button-special-button wysiwyg-color-button-palette-clear" @click="selectColor(null)">
+                <div class="wysiwyg-color-button-special-button wysiwyg-color-button-palette-clear"
+                     :title="translator.trans(configuration.getLabelClear(form), {}, configuration.getTranslationDomain(form))"
+                     @click="selectColor(null)">
                     <i class="icon icon-clear"></i>
                 </div>
-<!--                <div class="wysiwyg-color-button-special-button wysiwyg-color-button-palette-custom">-->
-<!--                    <i class="icon icon-palette"></i>-->
-<!--                </div>-->
+                <div class="wysiwyg-color-button-special-button wysiwyg-color-button-palette-custom"
+                     :title="translator.trans(configuration.getLabelCustom(form), {}, configuration.getTranslationDomain(form))"
+                     @click="colorPicker.click()">
+                    <i class="icon icon-palette"></i>
+                </div>
+                <input class="wysiwyg-color-picker-input" type="color" ref="colorPicker"
+                       @change="configuration.customColor = colorPicker.value; configuration.selectedColor = configuration.customColor"
+                >
             </div>
         </div>
     </div>
@@ -43,13 +56,14 @@ const props = defineProps<{
 }>()
 
 const isOpen = ref(false);
+const colorPicker = ref();
 
 function selectColor(color: string)
 {
-    props.configuration.selectedColor = color;
     if (color === null) {
         props.configuration.applyClearColor(props.form);
     } else {
+        props.configuration.selectedColor = color;
         props.configuration.applySelectedColor(props.form);
     }
     close();

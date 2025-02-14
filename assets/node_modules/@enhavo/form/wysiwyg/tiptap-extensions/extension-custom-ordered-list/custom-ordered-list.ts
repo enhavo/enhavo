@@ -23,6 +23,8 @@ declare module '@tiptap/core' {
 }
 
 export const CustomOrderedList = OrderedList.extend({
+    name: 'customOrderedList',
+
     addAttributes() {
         return {
             listStyle: {
@@ -44,28 +46,49 @@ export const CustomOrderedList = OrderedList.extend({
 
     addCommands() {
         return {
-            toggleOrderedList: () => ({ commands, chain }) => {
+            toggleOrderedList: () => ({ editor, commands, chain }) => {
+                let commandChain = chain();
+
+                if (editor.isActive('customOrderedList')
+                    && !(
+                        editor.isActive('customOrderedList', { 'listStyle': 'decimal' })
+                        || editor.isActive('customOrderedList', { 'listStyle': null })
+                    )
+                ) {
+                    // Unset current ordered list with wrong attributes before resetting it with the correct attributes
+                    commandChain.toggleList(this.name, this.options.itemTypeName, this.options.keepMarks);
+                }
+
                 if (this.options.keepAttributes) {
-                    return chain()
+                    return commandChain
                         .toggleList(this.name, this.options.itemTypeName, this.options.keepMarks, { 'listStyle': 'decimal' })
                         .updateAttributes(ListItemName, this.editor.getAttributes(TextStyleName))
                         .run()
                     ;
                 }
-                return commands
+                return commandChain
                     .toggleList(this.name, this.options.itemTypeName, this.options.keepMarks, { 'listStyle': 'decimal' })
+                    .run()
                 ;
             },
-            toggleStyledOrderedList: (listStyle: ListStyle) => ({ commands, chain }) => {
+            toggleStyledOrderedList: (listStyle: ListStyle) => ({ editor, commands, chain }) => {
+                let commandChain = chain();
+
+                if (editor.isActive('customOrderedList') && !editor.isActive('customOrderedList', { 'listStyle': listStyle })) {
+                    // Unset current ordered list with wrong attributes before resetting it with the correct attributes
+                    commandChain.toggleList(this.name, this.options.itemTypeName, this.options.keepMarks);
+                }
+
                 if (this.options.keepAttributes) {
-                    return chain()
+                    return commandChain
                         .toggleList(this.name, this.options.itemTypeName, this.options.keepMarks, { 'listStyle': listStyle })
                         .updateAttributes(ListItemName, this.editor.getAttributes(TextStyleName))
                         .run()
                     ;
                 }
-                return commands
+                return commandChain
                     .toggleList(this.name, this.options.itemTypeName, this.options.keepMarks, { 'listStyle': listStyle })
+                    .run()
                 ;
             },
         };
