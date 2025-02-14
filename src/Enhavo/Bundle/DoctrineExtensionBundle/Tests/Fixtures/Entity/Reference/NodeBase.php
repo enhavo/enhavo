@@ -12,28 +12,13 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-class NodeTwo implements NodeInterface
+class NodeBase implements NodeInterface
 {
     #[ORM\Id]
     #[ORM\Column(name: "id", type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: "AUTO")]
-    private ?int $id = null;
+    public ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $label = null;
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getLabel()
-    {
-        return $this->label;
-    }
-
-    public function setLabel($label): void
-    {
-        $this->label = $label;
-    }
+    public ?string $name = null;
 }
