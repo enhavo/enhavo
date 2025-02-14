@@ -5,7 +5,12 @@ export class WysiwygColorButton extends WysiwygMenuButton
 {
     component: string = 'form-wysiwyg-color-button';
 
+    labelClear: string | ( (form: WysiwygForm) => string ) = 'enhavo_form.wysiwyg_form.command.color.label_clear';
+    labelCustom: string | ( (form: WysiwygForm) => string ) = 'enhavo_form.wysiwyg_form.command.color.label_custom';
+    translationDomain = 'javascript';
+
     public selectedColor: string = '#e03e2d';
+    public customColor: string = null;
     public colorPalette: string[] = [
         '#bfedd2',
         '#fbeeb8',
@@ -47,5 +52,29 @@ export class WysiwygColorButton extends WysiwygMenuButton
     public applyClearColor(form: WysiwygForm)
     {
         form.editor.chain().focus().unsetColor().run();
+    }
+
+    public getLabelClear(form: WysiwygForm)
+    {
+        if (this.labelClear !== null) {
+            if (typeof this.labelClear === 'string') {
+                return this.labelClear;
+            } else {
+                return this.labelClear(form);
+            }
+        }
+        return null;
+    }
+
+    public getLabelCustom(form: WysiwygForm)
+    {
+        if (this.labelCustom !== null) {
+            if (typeof this.labelCustom === 'string') {
+                return this.labelCustom;
+            } else {
+                return this.labelCustom(form);
+            }
+        }
+        return null;
     }
 }

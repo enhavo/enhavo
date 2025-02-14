@@ -7,7 +7,7 @@
     >
         <div class="wysiwyg-submenu-label" v-html="getLabel()" @click="clickOrToggleOpen"></div>
         <div class="wysiwyg-submenu-dropdown" @click="toggleOpen"><i class="icon icon-keyboard_arrow_down"></i></div>
-        <div class="wysiwyg-submenu-items">
+        <div class="wysiwyg-submenu-items" title="">
             <template v-for="item in configuration.items">
                 <component :is="item.component" :configuration="item" :form="form"></component>
             </template>

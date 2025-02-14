@@ -4,8 +4,10 @@ import {WysiwygMenuButton} from "@enhavo/form/wysiwyg/WysiwygMenuButton";
 import {WysiwygMenuSpacer} from "@enhavo/form/wysiwyg/WysiwygMenuSpacer";
 import {WysiwygMenuSubmenu} from "@enhavo/form/wysiwyg/WysiwygMenuSubmenu";
 import {WysiwygSourceCodeButton} from "@enhavo/form/wysiwyg/WysiwygSourceCodeButton";
-import * as _ from "lodash";
 import {WysiwygColorButton} from "@enhavo/form/wysiwyg/WysiwygColorButton";
+import {WysiwygBackgroundColorButton} from "@enhavo/form/wysiwyg/WysiwygBackgroundColorButton";
+import {WysiwygSpecialCharactersButton} from "@enhavo/form/wysiwyg/WysiwygSpecialCharactersButton";
+import * as _ from "lodash";
 
 export class WysiwygConfig
 {
@@ -93,6 +95,10 @@ export class WysiwygConfig
                     items: [
                         _.assign(new WysiwygColorButton(), {
                             tooltip: 'enhavo_form.wysiwyg_form.command.color.label',
+                            translationDomain: 'javascript',
+                        }),
+                        _.assign(new WysiwygBackgroundColorButton(), {
+                            tooltip: 'enhavo_form.wysiwyg_form.command.background_color.label',
                             translationDomain: 'javascript',
                         }),
                     ],
@@ -241,7 +247,67 @@ export class WysiwygConfig
                                             class: (form: WysiwygForm) => { return form.editor.isActive({ textAlign: 'justify' }) ? 'is-active' : ''; }
                                         }),
                                     ]
-                                })
+                                }),
+                                _.assign(new WysiwygMenuSubmenu(), {
+                                    label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.label',
+                                    translationDomain: 'javascript',
+                                    items: [
+                                        _.assign(new WysiwygMenuButton(), {
+                                            label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.bullet_list_disc',
+                                            translationDomain: 'javascript',
+                                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('disc').run(); },
+                                            class: (form: WysiwygForm) => { return (form.editor.isActive('customBulletList', { listStyle: 'disc' }) || form.editor.isActive('customBulletList', { listStyle: null })) ? 'is-active' : ''; }
+                                        }),
+                                        _.assign(new WysiwygMenuButton(), {
+                                            label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.bullet_list_circle',
+                                            translationDomain: 'javascript',
+                                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('circle').run(); },
+                                            class: (form: WysiwygForm) => { return form.editor.isActive('customBulletList', { listStyle: 'circle' }) ? 'is-active' : ''; }
+                                        }),
+                                        _.assign(new WysiwygMenuButton(), {
+                                            label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.bullet_list_square',
+                                            translationDomain: 'javascript',
+                                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('square').run(); },
+                                            class: (form: WysiwygForm) => { return form.editor.isActive('customBulletList', { listStyle: 'square' }) ? 'is-active' : ''; }
+                                        }),
+                                        _.assign(new WysiwygMenuButton(), {
+                                            label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.numbered_list_decimal',
+                                            translationDomain: 'javascript',
+                                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('decimal').run(); },
+                                            class: (form: WysiwygForm) => { return (form.editor.isActive('customOrderedList', { listStyle: 'decimal' }) || form.editor.isActive('customOrderedList', { listStyle: null })) ? 'is-active' : ''; }
+                                        }),
+                                        _.assign(new WysiwygMenuButton(), {
+                                            label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.numbered_list_lower_alpha',
+                                            translationDomain: 'javascript',
+                                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('lower-alpha').run(); },
+                                            class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'lower-alpha' }) ? 'is-active' : ''; }
+                                        }),
+                                        _.assign(new WysiwygMenuButton(), {
+                                            label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.numbered_list_upper_alpha',
+                                            translationDomain: 'javascript',
+                                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('upper-alpha').run(); },
+                                            class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'upper-alpha' }) ? 'is-active' : ''; }
+                                        }),
+                                        _.assign(new WysiwygMenuButton(), {
+                                            label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.numbered_list_lower_roman',
+                                            translationDomain: 'javascript',
+                                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('lower-roman').run(); },
+                                            class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'lower-roman' }) ? 'is-active' : ''; }
+                                        }),
+                                        _.assign(new WysiwygMenuButton(), {
+                                            label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.numbered_list_upper_roman',
+                                            translationDomain: 'javascript',
+                                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('upper-roman').run(); },
+                                            class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'upper-roman' }) ? 'is-active' : ''; }
+                                        }),
+                                        _.assign(new WysiwygMenuButton(), {
+                                            label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.numbered_list_lower_greek',
+                                            translationDomain: 'javascript',
+                                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('lower-greek').run(); },
+                                            class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'lower-greek' }) ? 'is-active' : ''; }
+                                        }),
+                                    ],
+                                }),
                             ]
                         })
                     ]
@@ -284,26 +350,26 @@ export class WysiwygConfig
                             icon: 'format_list_bulleted',
                             tooltip: 'enhavo_form.wysiwyg_form.command.bullet_list',
                             translationDomain: 'javascript',
-                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleBulletList().run(); },
-                            class: (form: WysiwygForm) => { return (form.editor.isActive('bulletList', { listStyle: 'disc' }) || form.editor.isActive('bulletList', { listStyle: null })) ? 'is-active' : ''; },
+                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('disc').run(); },
+                            class: (form: WysiwygForm) => { return (form.editor.isActive('customBulletList', { listStyle: 'disc' }) || form.editor.isActive('customBulletList', { listStyle: null })) ? 'is-active' : ''; },
                             items: [
                                 _.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.bullet_list_disc',
                                     translationDomain: 'javascript',
-                                    click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleBulletList().run(); },
-                                    class: (form: WysiwygForm) => { return (form.editor.isActive('bulletList', { listStyle: 'disc' }) || form.editor.isActive('bulletList', { listStyle: null })) ? 'is-active' : ''; },
+                                    click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('disc').run(); },
+                                    class: (form: WysiwygForm) => { return (form.editor.isActive('customBulletList', { listStyle: 'disc' }) || form.editor.isActive('customBulletList', { listStyle: null })) ? 'is-active' : ''; },
                                 }),
                                 _.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.bullet_list_circle',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('circle').run(); },
-                                    class: (form: WysiwygForm) => { return form.editor.isActive('bulletList', { listStyle: 'circle' }) ? 'is-active' : ''; },
+                                    class: (form: WysiwygForm) => { return form.editor.isActive('customBulletList', { listStyle: 'circle' }) ? 'is-active' : ''; },
                                 }),
                                 _.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.bullet_list_square',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('square').run(); },
-                                    class: (form: WysiwygForm) => { return form.editor.isActive('bulletList', { listStyle: 'square' }) ? 'is-active' : ''; },
+                                    class: (form: WysiwygForm) => { return form.editor.isActive('customBulletList', { listStyle: 'square' }) ? 'is-active' : ''; },
                                 }),
                             ],
                         }),
@@ -311,44 +377,44 @@ export class WysiwygConfig
                             icon: 'format_list_numbered',
                             tooltip: 'enhavo_form.wysiwyg_form.command.numbered_list',
                             translationDomain: 'javascript',
-                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleOrderedList().run(); },
-                            class: (form: WysiwygForm) => { return form.editor.isActive('orderedList') ? 'is-active' : ''; },
+                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('decimal').run(); },
+                            class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList') ? 'is-active' : ''; },
                             items: [
                                 _.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.numbered_list_decimal',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('decimal').run(); },
-                                    class: (form: WysiwygForm) => { return (form.editor.isActive('orderedList', { listStyle: 'decimal' }) || form.editor.isActive('orderedList', { listStyle: null })) ? 'is-active' : ''; },
+                                    class: (form: WysiwygForm) => { return (form.editor.isActive('customOrderedList', { listStyle: 'decimal' }) || form.editor.isActive('customOrderedList', { listStyle: null })) ? 'is-active' : ''; },
                                 }),
                                 _.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.numbered_list_lower_alpha',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('lower-alpha').run(); },
-                                    class: (form: WysiwygForm) => { return form.editor.isActive('orderedList', { listStyle: 'lower-alpha' }) ? 'is-active' : ''; },
+                                    class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'lower-alpha' }) ? 'is-active' : ''; },
                                 }),
                                 _.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.numbered_list_upper_alpha',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('upper-alpha').run(); },
-                                    class: (form: WysiwygForm) => { return form.editor.isActive('orderedList', { listStyle: 'upper-alpha' }) ? 'is-active' : ''; },
+                                    class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'upper-alpha' }) ? 'is-active' : ''; },
                                 }),
                                 _.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.numbered_list_lower_roman',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('lower-roman').run(); },
-                                    class: (form: WysiwygForm) => { return form.editor.isActive('orderedList', { listStyle: 'lower-roman' }) ? 'is-active' : ''; },
+                                    class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'lower-roman' }) ? 'is-active' : ''; },
                                 }),
                                 _.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.numbered_list_upper_roman',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('upper-roman').run(); },
-                                    class: (form: WysiwygForm) => { return form.editor.isActive('orderedList', { listStyle: 'upper-roman' }) ? 'is-active' : ''; },
+                                    class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'upper-roman' }) ? 'is-active' : ''; },
                                 }),
                                 _.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.numbered_list_lower_greek',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('lower-greek').run(); },
-                                    class: (form: WysiwygForm) => { return form.editor.isActive('orderedList', { listStyle: 'lower-greek' }) ? 'is-active' : ''; },
+                                    class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'lower-greek' }) ? 'is-active' : ''; },
                                 }),
                             ],
                         }),
@@ -382,6 +448,15 @@ export class WysiwygConfig
                     items: [
                         _.assign(new WysiwygSourceCodeButton(), {
                             tooltip: 'enhavo_form.wysiwyg_form.command.source_code.label',
+                            translationDomain: 'javascript',
+                        }),
+                    ]
+                },
+                {
+                    items: [
+                        _.assign(new WysiwygSpecialCharactersButton(), {
+                            icon: 'omega',
+                            tooltip: 'enhavo_form.wysiwyg_form.command.special_characters.label',
                             translationDomain: 'javascript',
                         }),
                     ]

@@ -77,6 +77,12 @@ services:
         tags:
             - { name: vue.component, component: 'form-wysiwyg-modal-link' }
 
+    '@enhavo/form/components/wysiwyg/FormWysiwygModalSpecialCharacters.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-wysiwyg-modal-special-characters' }
+
     '@enhavo/form/components/wysiwyg/FormWysiwygModalSourceCode.vue':
         chunk: 'vue'
         static: true

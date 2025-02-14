@@ -17,6 +17,7 @@ import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
 import SearchAndReplace from '@sereneinserenade/tiptap-search-and-replace';
 import {TableView} from '@enhavo/form/wysiwyg/tiptap-extensions/extension-table/TableView';
+import {BackgroundColor} from '@enhavo/form/wysiwyg/tiptap-extensions/extension-background-color/background-color';
 import {CustomBulletList} from '@enhavo/form/wysiwyg/tiptap-extensions/extension-custom-bullet-list/custom-bullet-list';
 import {CustomOrderedList} from '@enhavo/form/wysiwyg/tiptap-extensions/extension-custom-ordered-list/custom-ordered-list';
 
@@ -46,6 +47,7 @@ export class WysiwygForm extends Form
             content: this.value,
             extensions: [
                 StarterKit,
+                BackgroundColor,
                 Color,
                 CustomBulletList,
                 CustomOrderedList,

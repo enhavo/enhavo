@@ -161,12 +161,11 @@ $menuColor: variables.$grey6;
 
   .wysiwyg-button {
     @extend %menu-item;
-    color:  $menuColor;
+    color: $menuColor;
     text-align: left;
     user-select: none;
 
     .icon {
-      color: variables.$grey2;
       font-size: $fontSizeIcon;
     }
 
@@ -209,6 +208,10 @@ $menuColor: variables.$grey6;
         &:hover {
           border: 1px solid variables.$grey1;
         }
+
+        &.wysiwyg-color-button-palette-color-custom {
+          margin-left: auto;
+        }
       }
     }
     .wysiwyg-color-button-special-buttons {
@@ -223,6 +226,88 @@ $menuColor: variables.$grey6;
         &:hover {
           background-color: variables.$grey1;
         }
+      }
+
+      .wysiwyg-color-picker-input {
+        width: 0; height: 0;
+        padding: 0;
+        border: 0; border-radius: 0;
+      }
+    }
+  }
+
+  .wysiwyg-special-characters-modal {
+    width: 80%;
+
+    @media screen and (max-width:768px) {
+      width: 100%;
+    }
+
+    &.filter-active {
+      .wysiwyg-special-characters-button-tabs {
+        display: none;
+      }
+      .wysiwyg-special-characters-button-filter-results {
+        display: flex;
+      }
+    }
+
+    .wysiwyg-special-characters-button-filter-container {
+      margin-bottom: 15px;
+    }
+
+    .wysiwyg-special-characters-button-tabs {
+      display: flex; flex-direction: column;
+      background-color: variables.$grey5;
+      border: 1px solid variables.$grey5;
+
+      .wysiwyg-special-characters-button-tabs-header {
+        display: flex; gap: 1px; overflow-x: auto;
+
+        .wysiwyg-special-characters-button-tab-header {
+          padding: 5px 10px;
+          background-color: variables.$grey1;
+          cursor: pointer;
+          white-space: nowrap;
+
+          &.active {
+            background-color: #fff;
+          }
+
+          &:hover {
+            background-color: #fff;
+          }
+        }
+      }
+      .wysiwyg-special-characters-button-tab-content {
+        display: none; flex-wrap: wrap;
+        max-height: $minHeightSourceCodeEditor - 100px;
+        padding: 2px;
+        background-color: #fff;
+        overflow-y: auto;
+
+        &.active {
+          display: flex;
+        }
+      }
+    }
+
+    .wysiwyg-special-characters-button-filter-results {
+      display: none; flex-wrap: wrap;
+      max-height: $minHeightSourceCodeEditor - 100px;
+      padding: 2px;
+      border: 1px solid variables.$grey5;
+      overflow-y: auto;
+    }
+
+    .wysiwyg-special-characters-button-character {
+      flex: 0 0 32px;
+      display: flex; justify-content: center; align-items: center;
+      width: 32px; height: 32px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: variables.$grey1;
       }
     }
   }
@@ -289,6 +374,7 @@ $menuColor: variables.$grey6;
 
     .wysiwyg-modal {
       position: absolute; left: 50%;
+      max-width: 100%;
       border: 1px solid variables.$grey5;
       padding: 20px;
       background: #fff;
