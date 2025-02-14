@@ -17,34 +17,39 @@ use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Events;
+use Doctrine\ORM\UnitOfWork;
+use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\Proxy;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Metadata;
 use Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Reference;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Doctrine\ORM\UnitOfWork;
 
 /**
  * Class ReferenceSubscriber
  *
  * A reference extension for doctrine, to reference multiple entities within one property.
  */
-class ReferenceSubscriber implements EventSubscriber
+readonly class ReferenceSubscriber implements EventSubscriber
 {
-    private array $scheduleDeleted = [];
-
     public function __construct(
-        private readonly MetadataRepository $metadataRepository,
-        private readonly EntityResolverInterface $entityResolver,
-    )
-    {
+        private MetadataRepository $metadataRepository,
+        private EntityResolverInterface $entityResolver,
+    ) {
     }
 
-    /**
-     * @param $object
-     * @return Metadata|null
-     */
+    public function getSubscribedEvents(): array
+    {
+        return [
+            Events::postLoad,
+            Events::preFlush,
+            Events::postFlush,
+            Events::prePersist,
+            Events::preRemove,
+        ];
+    }
+
     private function getMetadata($object): ?Metadata
     {
         /** @var Metadata $metadata */
@@ -70,18 +75,13 @@ class ReferenceSubscriber implements EventSubscriber
         return $data;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getSubscribedEvents(): array
+    private function getClass($object): string
     {
-        return [
-            Events::postLoad,
-            Events::preFlush,
-            Events::postFlush,
-            Events::preRemove,
-            Events::prePersist,
-        ];
+        if ($object instanceof Proxy) {
+            return get_parent_class($object);
+        }
+
+        return get_class($object);
     }
 
     public function postLoad(PostLoadEventArgs $args): void
@@ -90,7 +90,7 @@ class ReferenceSubscriber implements EventSubscriber
 
         $object = $args->getObject();
 
-        $metadata = $this->getMetadata($object);
+        $metadata = $this->getMetadata($this->getClass($object));
         if ($metadata === null) {
             return;
         }
@@ -98,27 +98,6 @@ class ReferenceSubscriber implements EventSubscriber
         if ($this->getClass($object) === $metadata->getClassName() || $this->isParentClass($object, $metadata->getClassName())) {
             foreach ($metadata->getReferences() as $reference) {
                 $this->loadEntity($reference, $object);
-            }
-        }
-    }
-
-    public function prePersist(PrePersistEventArgs $args): void
-    {
-
-    }
-
-    public function preRemove(PreRemoveEventArgs $args): void
-    {
-        $metadata = $this->getMetadata($args->getObject());
-        if ($metadata !== null) {
-            foreach ($metadata->getReferences() as $reference) {
-                if ($reference->hasCascade(Reference::CASCADE_REMOVE)) {
-                    $propertyAccessor = PropertyAccess::createPropertyAccessor();
-                    $targetEntity = $propertyAccessor->getValue($args->getObject(), $reference->getProperty());
-                    if ($targetEntity !== null) {
-                        $args->getObjectManager()->remove($targetEntity);
-                    }
-                }
             }
         }
     }
@@ -149,52 +128,72 @@ class ReferenceSubscriber implements EventSubscriber
         }
     }
 
-    /**
-     * Update entity before flush to prevent possible changes after flush
-     *
-     * @param PreFlushEventArgs $args
-     */
+    public function prePersist(PrePersistEventArgs $args): void
+    {
+        $uow = $args->getObjectManager()->getUnitOfWork();
+
+        $metadata = $this->getMetadata($args->getObject());
+        if ($metadata !== null) {
+            foreach ($metadata->getReferences() as $reference) {
+                if ($reference->hasCascade(Reference::CASCADE_PERSIST)) {
+                    $propertyAccessor = PropertyAccess::createPropertyAccessor();
+                    $targetEntity = $propertyAccessor->getValue($args->getObject(), $reference->getProperty());
+                    if ($targetEntity !== null &&
+                        !$uow->isInIdentityMap($targetEntity) &&
+                        !$uow->isScheduledForDelete($targetEntity) &&
+                        !$uow->isScheduledForInsert($targetEntity)
+                    ) {
+                        $uow->persist($targetEntity);
+                    }
+                }
+            }
+        }
+    }
+
+    public function preRemove(PreRemoveEventArgs $args): void
+    {
+        $metadata = $this->getMetadata($args->getObject());
+        if ($metadata !== null) {
+            foreach ($metadata->getReferences() as $reference) {
+                if ($reference->hasCascade(Reference::CASCADE_REMOVE)) {
+                    $propertyAccessor = PropertyAccess::createPropertyAccessor();
+                    $targetEntity = $propertyAccessor->getValue($args->getObject(), $reference->getProperty());
+                    if ($targetEntity !== null) {
+                        $args->getObjectManager()->remove($targetEntity);
+                    }
+                }
+            }
+        }
+    }
+
     public function preFlush(PreFlushEventArgs $args): void
     {
         $uow = $args->getObjectManager()->getUnitOfWork();
-        $em = $args->getObjectManager();
-        $identityMap = $uow->getIdentityMap();
+        $this->persistEntities($uow, $args->getObjectManager());
+    }
 
-        foreach ($em->getUnitOfWork()->getScheduledEntityDeletions() as $scheduledEntityDeletions) {
-            $this->scheduleDeleted[] = $scheduledEntityDeletions;
-        }
+    /**
+     * Check the identity map for entities with containing new references and persist them if cascade persists and the
+     * referenced entity is not persists or removed yet. This case happen if an entity received from a repository,
+     * and apply an entity as reference afterward, so a persist call was never triggered at this point
+     */
+    public function persistEntities(UnitOfWork $uow, ObjectManager $em): void
+    {
+        $identityMap = $uow->getIdentityMap();
 
         foreach ($this->getAllMetadata() as $metadata) {
             if (isset($identityMap[$metadata->getClassName()])) {
                 foreach ($identityMap[$metadata->getClassName()] as $entity) {
                     foreach ($metadata->getReferences() as $reference) {
-                        $this->updateEntity($reference, $entity);
                         if ($reference->hasCascade(Reference::CASCADE_PERSIST)) {
-                            $this->updatePersist($reference, $entity, $em);
-                        }
-                    }
-                }
-            }
-
-            foreach ($uow->getScheduledEntityInsertions() as $entity) {
-                if ($this->getClass($entity) === $metadata->getClassName()) {
-                    foreach ($metadata->getReferences() as $reference) {
-                        $this->updateEntity($reference, $entity);
-                        if ($reference->hasCascade(Reference::CASCADE_PERSIST)) {
-                            $this->updatePersist($reference, $entity, $em);
-                        }
-                    }
-                }
-            }
-
-            foreach ($em->getUnitOfWork()->getScheduledEntityDeletions() as $entity) {
-                if ($this->getClass($entity) === $metadata->getClassName()) {
-                    foreach ($metadata->getReferences() as $reference) {
-                        if ($reference->hasCascade(Reference::CASCADE_REMOVE)) {
                             $propertyAccessor = PropertyAccess::createPropertyAccessor();
                             $targetEntity = $propertyAccessor->getValue($entity, $reference->getProperty());
-                            if ($targetEntity !== null && !in_array($targetEntity, $this->scheduleDeleted)) {
-                                $em->remove($targetEntity);
+                            if ($targetEntity !== null &&
+                                !$uow->isInIdentityMap($targetEntity) &&
+                                !$uow->isScheduledForDelete($targetEntity) &&
+                                !$uow->isScheduledForInsert($targetEntity)
+                            ) {
+                                $em->persist($targetEntity);
                             }
                         }
                     }
@@ -203,28 +202,11 @@ class ReferenceSubscriber implements EventSubscriber
         }
     }
 
-    private function updatePersist(Reference $reference, $entity, EntityManagerInterface $em): void
-    {
-        $propertyAccessor = PropertyAccess::createPropertyAccessor();
-        $targetProperty = $propertyAccessor->getValue($entity, $reference->getProperty());
-
-        if ($targetProperty
-            && $em->getUnitOfWork()->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED // is not managed yet
-            && !in_array($targetProperty, $this->scheduleDeleted) // should not be deleted
-            && $reference->hasCascade(Reference::CASCADE_PERSIST)
-        ) {
-            $em->persist($targetProperty);
-        }
-    }
-
     public function postFlush(PostFlushEventArgs $args): void
     {
         // Check if entity is not up-to-date and execute changes
-
-        $persist = false;
         $changes = [];
 
-        $em = $args->getObjectManager();
         $uow = $args->getObjectManager()->getUnitOfWork();
         $result = $uow->getIdentityMap();
 
@@ -232,21 +214,9 @@ class ReferenceSubscriber implements EventSubscriber
             if (isset($result[$metadata->getClassName()])) {
                 foreach ($result[$metadata->getClassName()] as $entity) {
                     foreach ($metadata->getReferences() as $reference) {
-                        $entityChanges = $this->updateEntity($reference, $entity);
+                        $entityChanges = $this->calculateChanges($reference, $entity);
                         foreach ($entityChanges as $entityChange) {
                             $changes[] = $entityChange;
-                        }
-
-                        $propertyAccessor = PropertyAccess::createPropertyAccessor();
-                        $targetProperty = $propertyAccessor->getValue($entity, $reference->getProperty());
-
-                        if ($targetProperty
-                            && $uow->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED // is not managed yet
-                            && !in_array($targetProperty, $this->scheduleDeleted) // should not be deleted
-                            && $reference->hasCascade(Reference::CASCADE_PERSIST) // should persist
-                        ) {
-                            $em->persist($targetProperty);
-                            $persist = true;
                         }
                     }
                 }
@@ -256,18 +226,12 @@ class ReferenceSubscriber implements EventSubscriber
         if (count($changes)) {
             $this->executeChanges($changes, $args->getObjectManager());
         }
-
-        if ($persist) {
-            $em->flush();
-        }
-
-        $this->scheduleDeleted = [];
     }
 
     /**
-     * Update entity values
+     * @return ReferenceChange[]
      */
-    private function updateEntity(Reference $reference, object $entity): array
+    private function calculateChanges(Reference $reference, object $entity): array
     {
         $changes = [];
 
@@ -341,18 +305,5 @@ class ReferenceSubscriber implements EventSubscriber
         foreach ($queries as $query) {
             $query->execute();
         }
-
-        foreach ($entities as $entity) {
-            $em->refresh($entity);
-        }
-    }
-
-    private function getClass($object): string
-    {
-        if ($object instanceof Proxy) {
-            return get_parent_class($object);
-        }
-
-        return get_class($object);
     }
 }
