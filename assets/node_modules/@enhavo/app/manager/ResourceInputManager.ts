@@ -97,10 +97,19 @@ export class ResourceInputManager
         }
 
         let promise: Promise<boolean> = new Promise((resolve, reject) => {
-            Promise.all(localQueue).then(async () => {
+            Promise.allSettled(localQueue).then(async () => {
                 let onUrl = url == null ? this.url : url;
-                let success = await this.doSave(onUrl, morph);
-                resolve(success)
+                let success = false;
+                try {
+                    success = await this.doSave(onUrl, morph);
+                } catch (err) {
+                    this.saveQueue.splice(this.saveQueue.indexOf(promise), 1);
+                    reject(err);
+                    return;
+                }
+                this.saveQueue.splice(this.saveQueue.indexOf(promise), 1);
+                resolve(success);
+
             })
         });
 

@@ -29,7 +29,6 @@ class BinDeleteBatchType extends AbstractBatchType
             $this->em->getFilters()->enable('revision');
 
             if ($resource instanceof Bin) {
-                $this->deleteHandler->delete($resource->getSubject());
                 $this->deleteHandler->delete($resource);
             }
         }

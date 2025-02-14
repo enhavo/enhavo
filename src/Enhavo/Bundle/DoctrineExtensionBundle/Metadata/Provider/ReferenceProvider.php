@@ -31,7 +31,9 @@ class ReferenceProvider implements ProviderInterface
                 } elseif(!array_key_exists('idField', $referenceData)) {
                     throw ProviderException::definitionMissing($metadata, 'idField');
                 }
-                $metadata->addReference(new Reference($name, $referenceData['nameField'], $referenceData['idField']));
+
+                $cascade = array_key_exists('cascade', $referenceData) ? $referenceData['cascade'] : [];
+                $metadata->addReference(new Reference($name, $referenceData['nameField'], $referenceData['idField'], $cascade));
             }
         }
     }

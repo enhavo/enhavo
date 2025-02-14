@@ -18,39 +18,11 @@ class EntityContainer
     #[ORM\Id]
     #[ORM\Column(name: "id", type: Types::INTEGER)]
     #[ORM\GeneratedValue(strategy: "AUTO")]
-    private $id;
+    public ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Entity::class, cascade: ['all'], fetch: 'LAZY')]
-    private $entity;
+    public ?Entity $entity = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private $name;
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getEntity()
-    {
-        return $this->entity;
-    }
-
-    public function setEntity($entity): void
-    {
-        $this->entity = $entity;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setName($name): void
-    {
-        $this->name = $name;
-    }
+    public ?string $name = null;
 }
