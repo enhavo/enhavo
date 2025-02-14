@@ -13,7 +13,6 @@ export class WysiwygSourceCodeButton extends WysiwygMenuButton
 
     click: (event: Event, form: WysiwygForm) => void =
         (event: Event, form: WysiwygForm) => {
-            form.addCssClass('source-code-open');
             form.openModal('form-wysiwyg-modal-source-code', {
                     code: WysiwygSourceCodeButton.addWhitespace(form.editor.getHTML()),
                 })
@@ -24,9 +23,6 @@ export class WysiwygSourceCodeButton extends WysiwygMenuButton
                 })
                 .catch(() => {
                     // Cancelled
-                })
-                .finally(() => {
-                    form.removeCssClass('source-code-open');
                 })
             ;
         };

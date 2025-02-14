@@ -157,6 +157,7 @@ export class WysiwygForm extends Form
 
     openModal(component: string, options: object = {}): Promise<object>
     {
+        this.addCssClass('modal-open');
         this.modal = new WysiwygModalConfiguration(component, options);
         return new Promise<object>((resolve, reject) => {
             this.modal.getPromise()
@@ -167,6 +168,9 @@ export class WysiwygForm extends Form
                 .catch(() => {
                     reject();
                     this.modal = null;
+                })
+                .finally(() => {
+                    this.removeCssClass('modal-open');
                 })
             ;
         });

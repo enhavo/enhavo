@@ -350,7 +350,7 @@ $menuColor: variables.$grey6;
       max-height: $maxHeight;
       overflow-y: scroll;
 
-      &.source-code-open {
+      &.modal-open {
         min-height: ($minHeightSourceCodeEditor + 100px);
       }
 
