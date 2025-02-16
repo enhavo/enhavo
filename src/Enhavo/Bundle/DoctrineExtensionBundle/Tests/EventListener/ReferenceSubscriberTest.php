@@ -518,6 +518,55 @@ class ReferenceSubscriberTest extends SubscriberTest
         $this->assertNotNull($entityOne->node);
         $this->assertNotNull($entityOne->node->entity);
     }
+
+    public function testDeleteSameEntity()
+    {
+        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+
+        $dependencies = $this->createDependencies([
+            Entity::class => [
+                'reference' => [
+                    'node' => [
+                        'nameField' => 'nodeName',
+                        'idField' => 'nodeId',
+                        'cascade' => ['persist', 'remove']
+                    ]
+                ]
+            ]
+        ]);
+
+        $subscriber = $this->createInstance($dependencies);
+
+        $this->em->getEventManager()->addEventSubscriber($subscriber);
+        $this->updateSchema();
+
+        $nodeOne = new NodeBase();
+        $nodeOne->name = 'one';
+
+        $entityOne = new Entity();
+        $entityOne->name = 'one';
+        $entityOne->node = $nodeOne;
+
+        $entityTwo = new Entity();
+        $entityTwo->name = 'two';
+        $entityTwo->node = $nodeOne;
+
+        $this->em->persist($entityOne);
+        $this->em->persist($entityTwo);
+        $this->em->flush();
+        $this->em->clear();
+
+        $entityOne = $this->em->getRepository(Entity::class)->findOneBy(['name' => 'one']);
+        $entityTwo = $this->em->getRepository(Entity::class)->findOneBy(['name' => 'two']);
+
+        $this->em->remove($entityOne);
+        $this->em->flush();
+
+        $this->assertNull($this->em->getRepository(NodeEntity::class)->findOneBy(['name' => 'one']));
+
+        $this->em->remove($entityTwo);
+        $this->em->flush();
+    }
 }
 
 class ReferenceSubscriberDependencies
