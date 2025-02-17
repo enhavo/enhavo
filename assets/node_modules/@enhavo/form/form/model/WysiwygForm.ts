@@ -2,7 +2,6 @@ import {Form} from "@enhavo/vue-form/model/Form";
 import {WysiwygConfig} from "@enhavo/form/wysiwyg/WysiwygConfig";
 import {WysiwygModalConfiguration} from "@enhavo/form/wysiwyg/WysiwygModalConfiguration";
 import {Editor} from '@tiptap/vue-3';
-import {Editor as CoreEditor} from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 import Color from '@tiptap/extension-color';
 import Link from '@tiptap/extension-link';
@@ -23,19 +22,28 @@ import {CustomOrderedList} from '@enhavo/form/wysiwyg/tiptap-extensions/extensio
 
 export class WysiwygForm extends Form
 {
-    public editor: Editor = null;
-    public additionalCssClasses: string[] = [];
-
-    public editorBreadcrumbs: string = '';
+    public editor: Editor;
+    public additionalCssClasses: string[];
 
     public configName: string = 'default';
-    public config: WysiwygConfig = null;
+    public config: WysiwygConfig;
 
-    public modal: WysiwygModalConfiguration = null;
+    public modal: WysiwygModalConfiguration;
 
-    public searchAndReplaceOpen: boolean = false;
-    public searchAndReplaceSearchTerm: string = '';
-    public searchAndReplaceReplaceTerm: string = '';
+    public searchAndReplaceOpen: boolean;
+    public searchAndReplaceSearchTerm: string;
+    public searchAndReplaceReplaceTerm: string;
+
+    init()
+    {
+        this.editor = null;
+        this.additionalCssClasses = [];
+        this.config = null;
+        this.modal = null;
+        this.searchAndReplaceOpen = false;
+        this.searchAndReplaceSearchTerm = '';
+        this.searchAndReplaceReplaceTerm = '';
+    }
 
     initEditor()
     {
