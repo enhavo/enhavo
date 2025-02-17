@@ -71,6 +71,12 @@ services:
         tags:
             - { name: vue.component, component: 'form-wysiwyg-modal-container' }
 
+    '@enhavo/form/components/wysiwyg/FormWysiwygModalYesNo.vue':
+        chunk: 'vue'
+        static: true
+        tags:
+            - { name: vue.component, component: 'form-wysiwyg-modal-yes-no' }
+
     '@enhavo/form/components/wysiwyg/FormWysiwygModalLink.vue':
         chunk: 'vue'
         static: true

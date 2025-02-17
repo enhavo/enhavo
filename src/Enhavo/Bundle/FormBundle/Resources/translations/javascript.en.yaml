@@ -13,6 +13,10 @@ enhavo_form:
             subscript: Subscript
             superscript: Superscript
             clear_format: Clear formats
+            modal_yes_no:
+                default_prompt: Do you really want to perform this action?
+                default_yes: Yes
+                default_no: No
             link:
                 label: Link
                 modal:
@@ -92,14 +96,15 @@ enhavo_form:
                     row_before: Insert row above
                     row_after: Insert row below
                     row_delete: Delete row
+                    merge: Merge cells
+                    split: Split merged cells
+                    toggle_header_row: Toggle header row
+                    toggle_header_col: Toggle header column
+                    toggle_header_cell: Toggle header cell
+                    delete_table: Delete table
+                    delete_table_prompt: Do you really want to delete this table?
                     sub_menu:
                         label: Additional options
-                        merge: Merge cells
-                        split: Split merged cells
-                        toggle_header_row: Toggle header row
-                        toggle_header_col: Toggle header column
-                        toggle_header_cell: Toggle header cell
-                        delete_table: Delete table
             source_code:
                 label: Source Code
                 modal:

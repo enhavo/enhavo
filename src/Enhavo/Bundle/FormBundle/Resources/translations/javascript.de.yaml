@@ -12,6 +12,11 @@ enhavo_form:
             strikethrough: Durchgestrichen
             subscript: Tiefgestellt
             superscript: Hochgestellt
+            clear_format: Formatierungen löschen
+            modal_yes_no:
+                default_prompt: Möchten Sie wirklich diese Aktion ausführen?
+                default_yes: Ja
+                default_no: Nein
             link:
                 label: Link
                 modal:
@@ -39,6 +44,7 @@ enhavo_form:
                     strikethrough: Durchgestrichen
                     subscript: Tiefgestellt
                     superscript: Hochgestellt
+                    clear_format: Formatierungen löschen
                 menu_align:
                     label: Anordnung
                     left: Links
@@ -90,14 +96,15 @@ enhavo_form:
                     row_before: Zeile oberhalb einfügen
                     row_after: Zeile unterhalb einfügen
                     row_delete: Zeile löschen
+                    merge: Zellen verbinden
+                    split: Verbundene Zellen wieder teilen
+                    toggle_header_row: Kopfzeile umschalten
+                    toggle_header_col: Kopfspalte umschalten
+                    toggle_header_cell: Kopfzelle umschalten
+                    delete_table: Tabelle löschen
+                    delete_table_prompt: Möchten Sie diese Tabelle wirklich löschen?
                     sub_menu:
                         label: Zusatzoptionen
-                        merge: Zellen verbinden
-                        split: Verbundene Zellen wieder teilen
-                        toggle_header_row: Kopfzeile umschalten
-                        toggle_header_col: Kopfspalte umschalten
-                        toggle_header_cell: Kopfzelle umschalten
-                        delete_table: Tabelle löschen
             source_code:
                 label: Quellcode
                 modal:
