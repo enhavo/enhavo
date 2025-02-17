@@ -110,7 +110,6 @@ export class WysiwygConfig
                             tooltip: 'enhavo_form.wysiwyg_form.command.link.label',
                             translationDomain: 'javascript',
                             click: (event: Event, form: WysiwygForm) => {
-
                                 form.openModal('form-wysiwyg-modal-link', {
                                     url: form.editor.getAttributes('link').href,
                                     target: form.editor.getAttributes('link').target,
