@@ -959,6 +959,18 @@ export function fantasticonSetting(setting)
             'zoom_out_map': 0xf4af,
             'format_subscript': 0xf4b0,
             'format_superscript': 0xf4b1,
+            'table': 0xf4b2,
+            'table_column_add_after': 0xf4b3,
+            'table_column_add_before': 0xf4b4,
+            'table_column_delete': 0xf4b5,
+            'table_row_add_after': 0xf4b6,
+            'table_row_add_before': 0xf4b7,
+            'table_row_delete': 0xf4b8,
+            'table_merge_cells': 0xf4b9,
+            'table_split_cells': 0xf4ba,
+            'table_toggle_header_cell': 0xf4bb,
+            'table_toggle_header_column': 0xf4bc,
+            'table_toggle_header_row': 0xf4bd,
         },
     };
 
