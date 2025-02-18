@@ -50,6 +50,15 @@ enhavo_newsletter_admin_api_newsletter_delete:
             type: resource_delete
             input: enhavo_newsletter.newsletter
 
+enhavo_newsletter_admin_api_newsletter_batch:
+    path: '/newsletter/batch'
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_newsletter.newsletter
+
 enhavo_newsletter_admin_api_newsletter_duplicate:
     path: /newsletter/duplicate/{id}
     defaults:

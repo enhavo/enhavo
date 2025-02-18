@@ -50,6 +50,14 @@ enhavo_newsletter_admin_api_group_delete:
             type: resource_delete
             input: enhavo_newsletter.group
 
+enhavo_newsletter_admin_api_group_batch:
+    path: /group/batch
+    methods: [DELETE, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_newsletter.group
 
 enhavo_newsletter_admin_api_group_auto_complete:
     path: /group/auto_complete
