@@ -49,3 +49,12 @@ enhavo_navigation_admin_api_navigation_delete:
         _endpoint:
             type: resource_delete
             input: enhavo_navigation.navigation
+
+enhavo_navigation_admin_api_navigation_batch:
+    path: '/navigation/batch'
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_navigation.navigation

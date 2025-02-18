@@ -50,6 +50,15 @@ enhavo_calendar_admin_api_appointment_delete:
             type: resource_delete
             input: enhavo_calendar.appointment
 
+enhavo_calendar_admin_api_appointment_batch:
+    path: '/appointment/batch'
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_calendar.appointment
+
 enhavo_calendar_admin_api_appointment_preview:
     path: /appointment/preview
     methods: [POST]

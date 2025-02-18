@@ -8,18 +8,17 @@ enhavo_resource:
                 repository: Enhavo\Bundle\SettingBundle\Repository\SettingRepository
     grids:
         enhavo_setting.setting:
+            class: Enhavo\Bundle\ResourceBundle\Grid\Grid
+            actions:
+                filter:
+                    type: filter
             routes:
                 list_parameters:
                     group: expr:request.get("group")
-            extends: enhavo_resource.grid
             resource: enhavo_setting.setting
             collection:
                 criteria:
                     group: expr:request.get("group")
-            actions:
-                create:
-                    type: create
-                    enabled: false
             columns:
                 label:
                     type: text

@@ -50,6 +50,15 @@ enhavo_newsletter_admin_api_pending_subscriber_delete:
             type: resource_delete
             input: enhavo_newsletter.pending_subscriber
 
+enhavo_newsletter_admin_api_pending_subscriber_batch:
+    path: '/pending_subscriber/batch'
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_newsletter.pending_subscriber
+
 enhavo_newsletter_admin_api_pending_subscriber_activate:
     options:
         expose: true

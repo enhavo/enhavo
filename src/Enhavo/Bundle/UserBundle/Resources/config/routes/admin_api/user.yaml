@@ -50,6 +50,15 @@ enhavo_user_admin_api_user_delete:
             type: resource_delete
             input: enhavo_user.user
 
+enhavo_user_admin_api_user_batch:
+    path: '/user/batch'
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_user.batch
+
 enhavo_user_admin_api_user_auto_complete:
     path: '/user/auto-complete'
     methods: [GET]

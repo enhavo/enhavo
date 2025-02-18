@@ -44,7 +44,7 @@ enhavo_doctrine_extension:
                 subject:
                     idField: subjectId
                     nameField: subjectClass
-                    cascade: ['persist']
+                    cascade: ['persist', 'remove']
 
         Enhavo\Bundle\NavigationBundle\Entity\Content:
             reference:

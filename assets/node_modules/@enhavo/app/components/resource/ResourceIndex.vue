@@ -12,7 +12,7 @@
                 :collection="manager.collection">
             </component>
             <batch-dropdown
-                v-if="manager.batches"
+                v-if="manager.batches && manager.batches.length > 0"
                 :ids="manager.collection.getIds()"
                 :batches="manager.batches"
                 @executed="manager.collection.load()"

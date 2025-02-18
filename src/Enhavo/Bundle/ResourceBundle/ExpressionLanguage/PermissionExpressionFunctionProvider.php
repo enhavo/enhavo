@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\ResourceBundle\ExpressionLanguage;
 
 use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
+use Enhavo\Bundle\ResourceBundle\Exception\MetadataException;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 
@@ -26,7 +27,10 @@ class PermissionExpressionFunctionProvider implements ResourceExpressionFunction
                     return new Permission($resource, $action);
                 }
 
-                $name = $this->resourceManager->getMetadata($resource)->getName();
+                $name = $this->resourceManager->getMetadata($resource)?->getName();
+                if ($name === null) {
+                    throw MetadataException::notExists($resource);
+                }
                 return new Permission($name, $action);
             }
         );

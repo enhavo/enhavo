@@ -41,6 +41,7 @@ export class UrlBatch extends AbstractBatch
                             resolve(true);
                         })
                         .catch((error) => {
+                            console.error(error);
                             this.uiManager.loading(false);
                             this.flashMessenger.add(this.translator.trans('enhavo_app.batch.message.error', {}, 'javascript'), FlashMessage.ERROR);
                             resolve(false);
@@ -49,6 +50,7 @@ export class UrlBatch extends AbstractBatch
                     resolve(false);
                 }
             }).catch((error) => {
+                console.error(error);
                 this.flashMessenger.add(this.translator.trans('enhavo_app.batch.message.error', {}, 'javascript'), FlashMessage.ERROR);
                 resolve(false);
             });

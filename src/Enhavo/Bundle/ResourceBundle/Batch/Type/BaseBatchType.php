@@ -26,11 +26,21 @@ class BaseBatchType extends AbstractBatchType
 
     public function createViewData(array $options, Data $data): void
     {
+        $route = $options['route'];
+        if ($route === null) {
+            $route = $this->routeResolver->getRoute('batch', ['api' => true]);
+        }
+
+        if ($route === null) {
+            throw new \Exception('Can\'t find batch route, please provide a route over the "route" option');
+        }
+
+
         $data->set('label', $this->getLabel($options));
         $data->set('confirmMessage', $this->getConfirmMessage($options));
         $data->set('position', $options['position']);
         $data->set('model', $options['model']);
-        $data->set('url', $options['route'] ? $this->router->generate($options['route'], $options['route_parameters']) : null);
+        $data->set('url', $this->router->generate($route, $options['route_parameters']));
         $data->set('token', $this->tokenManager->getToken('resource_batch')->getValue());
     }
 
@@ -71,7 +81,7 @@ class BaseBatchType extends AbstractBatchType
             'enabled' => true,
             'confirm_message' => null,
             'model' => 'UrlBatch',
-            'route' => $this->routeResolver->getRoute('batch'),
+            'route' => null,
             'route_parameters' => [],
         ]);
 

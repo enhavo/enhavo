@@ -41,6 +41,15 @@ enhavo_user_admin_api_group_update:
             type: resource_update
             input: enhavo_user.group
 
+enhavo_user_admin_api_group_batch:
+    path: '/group/batch'
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_batch
+            grid: enhavo_user.group
+
 enhavo_user_admin_api_group_delete:
     path: '/group/delete/{id}'
     methods: [DELETE, POST]
