@@ -135,6 +135,17 @@ services:
     Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\UrlFunctionProvider:
         arguments:
             - '%enhavo_app.endpoint.template_url_prefix%'
+
+    Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\GetContentFunctionProvider:
+        arguments:
+            - '%kernel.project_dir%/data'
+        tags:
+            - { name: enhavo_app.endpoint.expression_language }
+
+    Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\RenderFunctionProvider:
+        arguments:
+            - '@twig'
+            - '@Enhavo\Bundle\AppBundle\Endpoint\Template\Loader'
         tags:
             - { name: enhavo_app.endpoint.expression_language }
 

@@ -9,6 +9,9 @@ template_hello:
             vue_routes: template
             routes: template
             description: This is the hello endpoint
+            data:
+                render: 'expr:render("theme/endpoint/hello.html.twig", "message.yaml")'
+                content: 'expr:get_content("content.html")'
             variants:
                 'variant=1':
                     load: 'test/hello_variant_1.yaml'
