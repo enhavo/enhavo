@@ -58,26 +58,26 @@
             <div class="wysiwyg-inline-menu-form-spacer">&nbsp;</div>
             <a class="wysiwyg-button large-icon"
                @click.prevent="form.editor.chain().focus().toggleHeaderRow().run()"
-               :title="translator.trans('enhavo_form.wysiwyg_form.command.table.toggle_header_row', [], 'javascript')"
+               :title="translator.trans('enhavo_form.wysiwyg_form.command.table.inline_form.toggle_header_row', [], 'javascript')"
             >
                 <i class="icon icon-table_toggle_header_row"></i>
             </a>
             <a class="wysiwyg-button large-icon"
                @click.prevent="form.editor.chain().focus().toggleHeaderColumn().run()"
-               :title="translator.trans('enhavo_form.wysiwyg_form.command.table.toggle_header_col', [], 'javascript')"
+               :title="translator.trans('enhavo_form.wysiwyg_form.command.table.inline_form.toggle_header_col', [], 'javascript')"
             >
                 <i class="icon icon-table_toggle_header_column"></i>
             </a>
             <a class="wysiwyg-button large-icon"
                @click.prevent="form.editor.chain().focus().toggleHeaderCell().run()"
-               :title="translator.trans('enhavo_form.wysiwyg_form.command.table.toggle_header_cell', [], 'javascript')"
+               :title="translator.trans('enhavo_form.wysiwyg_form.command.table.inline_form.toggle_header_cell', [], 'javascript')"
             >
                 <i class="icon icon-table_toggle_header_cell"></i>
             </a>
             <div class="wysiwyg-inline-menu-form-spacer">&nbsp;</div>
             <a class="wysiwyg-button large-icon"
                @click.prevent="deleteTable"
-               :title="translator.trans('enhavo_form.wysiwyg_form.command.table.delete_table', [], 'javascript')"
+               :title="translator.trans('enhavo_form.wysiwyg_form.command.table.inline_form.delete_table', [], 'javascript')"
             >
                 <i class="icon icon-delete_forever"></i>
             </a>
