@@ -12,13 +12,8 @@ class RequestResourceExpressionVariableProvider implements ResourceExpressionVar
     {
     }
 
-    public function getVariableName(): string
+    public function getVariables(): array
     {
-        return 'request';
-    }
-
-    public function getVariableValue(): mixed
-    {
-        return $this->requestStack->getMainRequest();
+        return ['request' => $this->requestStack->getMainRequest()];
     }
 }

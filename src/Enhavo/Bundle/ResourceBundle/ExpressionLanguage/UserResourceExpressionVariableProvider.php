@@ -12,13 +12,8 @@ class UserResourceExpressionVariableProvider implements ResourceExpressionVariab
     {
     }
 
-    public function getVariableName(): string
+    public function getVariables(): array
     {
-        return 'user';
-    }
-
-    public function getVariableValue(): mixed
-    {
-        return $this->tokenStorage->getToken()?->getUser();
+        return ['user' => $this->tokenStorage->getToken()?->getUser()];
     }
 }

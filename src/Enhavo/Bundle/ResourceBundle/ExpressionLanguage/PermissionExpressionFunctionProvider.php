@@ -15,24 +15,26 @@ class PermissionExpressionFunctionProvider implements ResourceExpressionFunction
     {
     }
 
-    public function getFunction(): ExpressionFunction
+    public function getFunctions(): array
     {
-        return new ExpressionFunction(
-            'permission',
-            function () {
-                return 'new Permission()';
-            },
-            function ($args, string|object $resource, string $action) {
-                if (is_string($resource)) {
-                    return new Permission($resource, $action);
-                }
+        return [
+            new ExpressionFunction(
+                'permission',
+                function () {
+                    return 'new Permission()';
+                },
+                function ($args, string|object $resource, string $action) {
+                    if (is_string($resource)) {
+                        return new Permission($resource, $action);
+                    }
 
-                $name = $this->resourceManager->getMetadata($resource)?->getName();
-                if ($name === null) {
-                    throw MetadataException::notExists($resource);
+                    $name = $this->resourceManager->getMetadata($resource)?->getName();
+                    if ($name === null) {
+                        throw MetadataException::notExists($resource);
+                    }
+                    return new Permission($name, $action);
                 }
-                return new Permission($name, $action);
-            }
-        );
+            )
+        ];
     }
 }

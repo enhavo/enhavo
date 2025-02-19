@@ -2,6 +2,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\ExpressionLanguage;
 
+use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
 class ResourceExpressionLanguage
@@ -40,11 +41,15 @@ class ResourceExpressionLanguage
 
     public function addVariableProvider(ResourceExpressionVariableProviderInterface $provider): void
     {
-        $this->variables[$provider->getVariableName()] = $provider->getVariableValue();
+        foreach ($provider->getVariables() as $key => $value) {
+            $this->variables[$key] = $value;
+        }
     }
 
-    public function addFunctionProvider(ResourceExpressionFunctionProviderInterface $provider): void
+    public function addFunctionProvider(ExpressionFunctionProviderInterface $provider): void
     {
-        $this->expressionLanguage->addFunction($provider->getFunction());
+        foreach ($provider->getFunctions() as $function) {
+            $this->expressionLanguage->addFunction($function);
+        }
     }
 }

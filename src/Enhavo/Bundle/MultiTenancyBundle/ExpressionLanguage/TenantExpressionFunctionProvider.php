@@ -9,10 +9,11 @@
 namespace Enhavo\Bundle\MultiTenancyBundle\ExpressionLanguage;
 
 use Enhavo\Bundle\MultiTenancyBundle\Resolver\ResolverInterface;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionFunctionProviderInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionFunction;
-use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 
-class TenantExpressionFunctionProvider implements ExpressionFunctionProviderInterface
+
+class TenantExpressionFunctionProvider implements ResourceExpressionFunctionProviderInterface
 {
     public function __construct(
         private ResolverInterface $resolver
