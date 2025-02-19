@@ -135,6 +135,8 @@ services:
     Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\UrlFunctionProvider:
         arguments:
             - '%enhavo_app.endpoint.template_url_prefix%'
+        tags:
+            - { name: enhavo_app.endpoint.expression_language }
 
     Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\GetContentFunctionProvider:
         arguments:

@@ -8,6 +8,8 @@ services:
     Enhavo\Bundle\MultiTenancyBundle\ExpressionLanguage\TenantExpressionFunctionProvider:
         arguments:
             - '@enhavo_multi_tenancy.resolver'
+        tags:
+            - { name: enhavo_resource.expression_language_function_provider}
 
     Enhavo\Bundle\MultiTenancyBundle\Filter\TenancyFilterType:
         public: true

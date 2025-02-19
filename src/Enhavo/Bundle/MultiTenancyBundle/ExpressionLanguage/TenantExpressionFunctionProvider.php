@@ -9,27 +9,22 @@
 namespace Enhavo\Bundle\MultiTenancyBundle\ExpressionLanguage;
 
 use Enhavo\Bundle\MultiTenancyBundle\Resolver\ResolverInterface;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionFunctionProviderInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionFunction;
-use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 
-class TenantExpressionFunctionProvider implements ExpressionFunctionProviderInterface
+
+class TenantExpressionFunctionProvider implements ResourceExpressionFunctionProviderInterface
 {
-    /** @var ResolverInterface */
-    private $resolver;
-
-    /**
-     * MultiTenancyResolverExpressionLanguageProvider constructor.
-     * @param ResolverInterface $resolver
-     */
-    public function __construct(ResolverInterface $resolver)
+    public function __construct(
+        private ResolverInterface $resolver
+    )
     {
-        $this->resolver = $resolver;
     }
 
     public function getFunctions()
     {
         return [
-            new ExpressionFunction('tenancy', function () {
+            new ExpressionFunction('tenant', function () {
                 return '$this->getTenant()';
             }, function () {
                 return $this->resolver->getTenant()->getKey();
