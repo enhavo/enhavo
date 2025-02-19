@@ -12,6 +12,7 @@ template_hello:
             data:
                 render: 'expr:render("theme/endpoint/hello.html.twig", "message.yaml")'
                 content: 'expr:get_content("content.html")'
+                url: 'expr:url("/test")'
             variants:
                 'variant=1':
                     load: 'test/hello_variant_1.yaml'

@@ -14,22 +14,16 @@ use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
 
 class TenantExpressionFunctionProvider implements ExpressionFunctionProviderInterface
 {
-    /** @var ResolverInterface */
-    private $resolver;
-
-    /**
-     * MultiTenancyResolverExpressionLanguageProvider constructor.
-     * @param ResolverInterface $resolver
-     */
-    public function __construct(ResolverInterface $resolver)
+    public function __construct(
+        private ResolverInterface $resolver
+    )
     {
-        $this->resolver = $resolver;
     }
 
     public function getFunctions()
     {
         return [
-            new ExpressionFunction('tenancy', function () {
+            new ExpressionFunction('tenant', function () {
                 return '$this->getTenant()';
             }, function () {
                 return $this->resolver->getTenant()->getKey();
