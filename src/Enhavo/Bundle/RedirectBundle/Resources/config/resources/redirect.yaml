@@ -59,4 +59,6 @@ enhavo_resource:
             form: Enhavo\Bundle\RedirectBundle\Form\Type\RedirectType
             form_options: {  }
             actions: {  }
-            tabs: {  }
+            tabs:
+                main:
+                    type: form

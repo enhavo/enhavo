@@ -40,4 +40,6 @@ enhavo_resource:
             form: Enhavo\Bundle\NewsletterBundle\Form\Type\LocalSubscriberType
             form_options: {  }
             actions: {  }
-            tabs: {  }
+            tabs:
+                main:
+                    type: form
