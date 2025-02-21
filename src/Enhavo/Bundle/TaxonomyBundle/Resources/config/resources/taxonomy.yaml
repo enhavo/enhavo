@@ -21,4 +21,6 @@ enhavo_resource:
             form: Symfony\Component\Form\Extension\Core\Type\FormType
             form_options: {  }
             actions: {  }
-            tabs: {  }
+            tabs:
+                main:
+                    type: form

@@ -41,4 +41,6 @@ enhavo_resource:
                 delete:
                     type: delete
                     enabled: false
-            tabs: {  }
+            tabs:
+                main:
+                    type: form
