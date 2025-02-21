@@ -100,7 +100,7 @@ class SymfonyAdapter implements AdapterInterface, LoggerAwareInterface
         }
 
         try {
-            $response = $this->client->request($method, $path, ['base_uri' => $this->endpoint, 'headers' => ['Authorization' => "Bearer {$this->getAccessToken()}", 'Accept' => 'application/json',], 'json' => $data,]);
+            $response = $this->client->request(strtoupper($method), $path, ['base_uri' => $this->endpoint, 'headers' => ['Authorization' => "Bearer {$this->getAccessToken()}", 'Accept' => 'application/json',], 'json' => $data,]);
             $data = json_decode($response->getContent(), true);
             $this->log(LogLevel::INFO, 'Response data.', ['response' => $data]);
 

@@ -54,7 +54,7 @@ class SymfonyAdapterTest extends TestCase
     {
         $symfony = $this->createSymfonyAdapter();
         $symfony->authorize('cli3ntId', 'clientS3cr3t');
-        $data = $symfony->action('GET', '/action/test');
+        $data = $symfony->action('get', '/action/test');
         $this->assertEquals('test', $data['test']);
     }
 
