@@ -1,4 +1,4 @@
 <?php
 
-header("HTTP/1.1 500 Server Error");
+http_response_code(500);
 exit();
