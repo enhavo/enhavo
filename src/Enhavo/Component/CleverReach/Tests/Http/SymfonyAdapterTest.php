@@ -63,6 +63,22 @@ class SymfonyAdapterTest extends TestCase
         $this->expectException(RequestException::class);
         $symfony = $this->createSymfonyAdapter();
         $symfony->authorize('cli3ntId', 'clientS3cr3t');
-        $symfony->action('GET', '/server/error');
+        $symfony->action('GET', '/server/error-500');
+    }
+
+    public function testNotFoundAction()
+    {
+        $symfony = $this->createSymfonyAdapter();
+        $symfony->authorize('cli3ntId', 'clientS3cr3t');
+        $data = $symfony->action('GET', '/server/error-404');
+        $this->assertEquals(404, $data['error']['code']);
+    }
+
+    public function testUnauthorizedAction()
+    {
+        $this->expectException(RequestException::class);
+        $symfony = $this->createSymfonyAdapter();
+        $symfony->authorize('cli3ntId', 'clientS3cr3t');
+        $symfony->action('GET', '/server/error-403');
     }
 }
