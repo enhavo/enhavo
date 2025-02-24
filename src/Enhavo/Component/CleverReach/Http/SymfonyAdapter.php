@@ -109,7 +109,7 @@ class SymfonyAdapter implements AdapterInterface, LoggerAwareInterface
                 $this->log(LogLevel::ERROR, $e->getMessage());
                 throw new RequestException($e->getMessage());
             }
-            $data = json_decode($e->getResponse()->getContent(false));
+            $data = json_decode($e->getResponse()->getContent(false), true);
             $this->log(LogLevel::INFO, 'Response data.', ['response' => $data]);
         }
 
