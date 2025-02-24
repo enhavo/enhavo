@@ -2,10 +2,6 @@
 
 namespace Enhavo\Component\CleverReach\Http;
 
-use Enhavo\Bundle\ApiBundle\Endpoint\Endpoint;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ServerException;
 use Enhavo\Component\CleverReach\Exception\AuthorizeException;
 use Enhavo\Component\CleverReach\Exception\RequestException;
 use Psr\Log\LoggerAwareInterface;
@@ -104,16 +100,16 @@ class SymfonyAdapter implements AdapterInterface, LoggerAwareInterface
             $data = json_decode($response->getContent(), true);
             $this->log(LogLevel::INFO, 'Response data.', ['response' => $data]);
 
-
-        } catch (ClientExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface $e) {
+        } catch (TransportExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface $e) {
             $this->log(LogLevel::ERROR, $e->getMessage());
             throw new RequestException($e->getMessage());
-        } catch (TransportExceptionInterface $e) {
+
+        } catch (ClientExceptionInterface $e) {
             if ($e->getCode() !== 404) {
                 $this->log(LogLevel::ERROR, $e->getMessage());
                 throw new RequestException($e->getMessage());
             }
-            $data = json_decode($e->getResponse()->getBody()->getContents(), true);
+            $data = json_decode($e->getResponse()->getContent());
             $this->log(LogLevel::INFO, 'Response data.', ['response' => $data]);
         }
 
