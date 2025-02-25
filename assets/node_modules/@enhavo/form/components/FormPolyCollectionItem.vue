@@ -18,7 +18,7 @@
                     </slot>
 
                     <slot name="drag-button">
-                        <div v-if="sortable" class="button"><i class="icon icon-drag_handle"></i></div>
+                        <div v-if="sortable" class="button" data-draggable-handle><i class="icon icon-drag_handle"></i></div>
                     </slot>
 
                     <slot name="delete-button">
