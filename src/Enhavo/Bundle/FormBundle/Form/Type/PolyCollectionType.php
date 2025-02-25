@@ -87,6 +87,8 @@ class PolyCollectionType extends AbstractType
         $view->vars['allow_delete'] = $options['allow_delete'];
         $view->vars['add_label'] = $options['add_label'];
         $view->vars['entry_labels'] = $this->buildEntryLabels($options);
+        $view->vars['draggable_group'] = $options['draggable_group'];
+        $view->vars['draggable_handle'] = $options['draggable_handle'];
         $view->vars['uuid_check'] = !!$options['uuid_property'];
 
         $view->vars['poly_collection_config'] = [
@@ -163,6 +165,8 @@ class PolyCollectionType extends AbstractType
             'add_label' => '',
             'confirm_delete' => false,
             'uuid_property' => null,
+            'draggable_group' => null,
+            'draggable_handle' => '[data-draggable-handle]',
         ]);
 
         $resolver->setRequired(array(
