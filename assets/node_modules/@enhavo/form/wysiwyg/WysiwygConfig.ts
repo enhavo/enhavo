@@ -7,6 +7,25 @@ import {WysiwygSourceCodeButton} from "@enhavo/form/wysiwyg/WysiwygSourceCodeBut
 import {WysiwygColorButton} from "@enhavo/form/wysiwyg/WysiwygColorButton";
 import {WysiwygBackgroundColorButton} from "@enhavo/form/wysiwyg/WysiwygBackgroundColorButton";
 import {WysiwygSpecialCharactersButton} from "@enhavo/form/wysiwyg/WysiwygSpecialCharactersButton";
+import {Extensions} from "@tiptap/core";
+import StarterKit from "@tiptap/starter-kit";
+import {BackgroundColor} from "@enhavo/form/wysiwyg/tiptap-extensions/extension-background-color/background-color";
+import Color from "@tiptap/extension-color";
+import {CustomBulletList} from "@enhavo/form/wysiwyg/tiptap-extensions/extension-custom-bullet-list/custom-bullet-list";
+import {CustomOrderedList} from "@enhavo/form/wysiwyg/tiptap-extensions/extension-custom-ordered-list/custom-ordered-list";
+import Link from "@tiptap/extension-link";
+import Paragraph from "@tiptap/extension-paragraph";
+import SearchAndReplace from "@sereneinserenade/tiptap-search-and-replace";
+import Subscript from "@tiptap/extension-subscript";
+import Superscript from "@tiptap/extension-superscript";
+import Table from "@tiptap/extension-table";
+import {TableView} from "@enhavo/form/wysiwyg/tiptap-extensions/extension-table/TableView";
+import TableRow from "@tiptap/extension-table-row";
+import TableHeader from "@tiptap/extension-table-header";
+import TableCell from "@tiptap/extension-table-cell";
+import TextAlign from "@tiptap/extension-text-align";
+import TextStyle from "@tiptap/extension-text-style";
+import Underline from "@tiptap/extension-underline";
 import * as _ from "lodash";
 
 export class WysiwygConfig
@@ -14,6 +33,86 @@ export class WysiwygConfig
     private static configurations: WysiwygConfig[] = [
         {
             name: 'default',
+            extensions: [
+                StarterKit,
+                BackgroundColor,
+                Color,
+                CustomBulletList,
+                CustomOrderedList,
+                Link.configure({
+                    openOnClick: false,
+                    autolink: true,
+                    defaultProtocol: 'https',
+                    protocols: ['http', 'https'],
+                    HTMLAttributes: {
+                        rel: null,
+                    },
+                    isAllowedUri: (url, ctx) => {
+                        try {
+                            // construct URL
+                            const parsedUrl = url.includes(':') ? new URL(url) : new URL(`${ctx.defaultProtocol}://${url}`);
+
+                            // use default validation
+                            if (!ctx.defaultValidate(parsedUrl.href)) {
+                                return false;
+                            }
+
+                            // disallowed protocols
+                            const disallowedProtocols = ['ftp', 'file', 'mailto'];
+                            const protocol = parsedUrl.protocol.replace(':', '');
+
+                            if (disallowedProtocols.includes(protocol)) {
+                                return false;
+                            }
+
+                            // only allow protocols specified in ctx.protocols
+                            const allowedProtocols = ctx.protocols.map(p => (typeof p === 'string' ? p : p.scheme));
+
+                            if (!allowedProtocols.includes(protocol)) {
+                                return false;
+                            }
+
+                            // all checks have passed
+                            return true;
+                        } catch (error) {
+                            return false;
+                        }
+                    },
+                    shouldAutoLink: url => {
+                        try {
+                            // construct URL
+                            const parsedUrl = url.includes(':') ? new URL(url) : new URL(`https://${url}`);
+
+                            // only auto-link if the domain is not in the disallowed list
+                            const disallowedDomains = ['example-no-autolink.com', 'another-no-autolink.com'];
+                            const domain = parsedUrl.hostname;
+
+                            return !disallowedDomains.includes(domain);
+                        } catch (error) {
+                            return false;
+                        }
+                    },
+                }),
+                SearchAndReplace.configure({
+                    searchResultClass: "search-result",
+                    disableRegex: true,
+                }),
+                Subscript,
+                Superscript,
+                Table.configure({
+                    resizable: true,
+                    lastColumnResizable: false,
+                    View: TableView
+                }),
+                TableRow,
+                TableHeader,
+                TableCell,
+                TextAlign.configure({
+                    types: ['heading', 'paragraph'],
+                }),
+                TextStyle,
+                Underline,
+            ],
             menu: [
                 {
                     items: [
@@ -214,6 +313,24 @@ export class WysiwygConfig
                                             label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_formats.clear_format',
                                             translationDomain: 'javascript',
                                             click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().unsetAllMarks().run(); },
+                                        }),
+                                    ]
+                                }),
+                                _.assign(new WysiwygMenuSubmenu(), {
+                                    label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_blocks.label',
+                                    translationDomain: 'javascript',
+                                    items: [
+                                        _.assign(new WysiwygMenuButton(), {
+                                            label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_blocks.paragraph',
+                                            translationDomain: 'javascript',
+                                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().setParagraph().run(); },
+                                            class: (form: WysiwygForm) => { return form.editor.isActive('paragraph') ? 'is-active' : ''; }
+                                        }),
+                                        _.assign(new WysiwygMenuButton(), {
+                                            label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_blocks.blockquote',
+                                            translationDomain: 'javascript',
+                                            click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleBlockquote().run(); },
+                                            class: (form: WysiwygForm) => { return form.editor.isActive('blockquote') ? 'is-active' : ''; }
                                         }),
                                     ]
                                 }),
@@ -489,5 +606,6 @@ export class WysiwygConfig
     }
 
     name: string;
+    extensions: Extensions = [];
     menu: WysiwygMenuGroup[] = [];
 }

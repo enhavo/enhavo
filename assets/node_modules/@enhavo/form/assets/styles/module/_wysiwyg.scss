@@ -453,6 +453,10 @@ $menuColor: variables.$grey6;
       padding-left: 23px;
       list-style: decimal;
     }
+    blockquote {
+      padding-left: 10px;
+      border-left: 3px solid variables.$grey4;
+    }
 
     table {
       width: 100%;
