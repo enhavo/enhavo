@@ -45,6 +45,10 @@ enhavo_form:
                     subscript: Tiefgestellt
                     superscript: Hochgestellt
                     clear_format: Formatierungen löschen
+                menu_blocks:
+                    label: Blöcke
+                    paragraph: Absatz
+                    blockquote: Blockquote
                 menu_align:
                     label: Anordnung
                     left: Links

@@ -20,12 +20,14 @@ const translator = inject<Translator>('translator');
 const props = defineProps<{
     configuration: WysiwygMenuButton,
     form: WysiwygForm
-}>()
+}>();
+const emit = defineEmits(['clicked']);
 
 function click(event: Event) {
     if (props.configuration.click !== null) {
         props.configuration.click(event, props.form);
     }
+    emit('clicked');
 }
 
 function getLabel(): string {

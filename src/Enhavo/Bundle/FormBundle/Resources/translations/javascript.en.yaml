@@ -45,6 +45,10 @@ enhavo_form:
                     subscript: Subscript
                     superscript: Superscript
                     clear_format: Clear formats
+                menu_blocks:
+                    label: Blocks
+                    paragraph: Paragraph
+                    blockquote: Blockquote
                 menu_align:
                     label: Alignment
                     left: Left

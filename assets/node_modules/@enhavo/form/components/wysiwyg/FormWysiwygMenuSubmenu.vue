@@ -9,7 +9,7 @@
         <div class="wysiwyg-submenu-dropdown" @click="toggleOpen"><i class="icon icon-keyboard_arrow_down"></i></div>
         <div class="wysiwyg-submenu-items" title="">
             <template v-for="item in configuration.items">
-                <component :is="item.component" :configuration="item" :form="form"></component>
+                <component :is="item.component" :configuration="item" :form="form" @clicked="childClicked"></component>
             </template>
         </div>
     </div>
@@ -26,7 +26,8 @@ const translator = inject<Translator>('translator');
 const props = defineProps<{
     configuration: WysiwygMenuSubmenu,
     form: WysiwygForm
-}>()
+}>();
+const emit = defineEmits(['clicked']);
 
 const isOpen = ref(false);
 
@@ -75,6 +76,12 @@ function toggleOpen()
 function close()
 {
     isOpen.value = false;
+}
+
+function childClicked()
+{
+    close();
+    emit('clicked');
 }
 
 </script>

@@ -29,7 +29,7 @@
 
 .form-poly-collection-items {display:flex;flex-direction:column;}
 
-.form-poly-collection-item {background:#fff;overflow:hidden;border:1px solid variables.$grey5;
+.form-poly-collection-item {background:#fff;border:1px solid variables.$grey5;
   .buttons-label-container {border-bottom: 1px solid variables.$grey5;padding:6px;display:flex;align-items:center;
     .form-poly-collection-item-buttons {margin-left:auto;display:flex;
       .button {cursor: pointer;height:100%;z-index:1;top:0;text-align:center;width:33px;background:#FFF;border-radius:3px;color: variables.$grey3;padding:4px 0;
