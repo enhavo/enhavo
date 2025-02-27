@@ -15,8 +15,35 @@ Enhavo\Bundle\BlockBundle\Entity\Node:
             - Uuid:
                   groups: [default]
 
-Enhavo\Bundle\BlockBundle\Entity\Video:
+Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock:
     properties:
         url:
             - Enhavo\Bundle\BlockBundle\Validator\Constraints\VideoUrl:
+                  groups: [default]
+
+Enhavo\Bundle\BlockBundle\Model\Column\OneColumnBlock:
+    properties:
+        column:
+            - Valid:
+                  groups: [default]
+
+Enhavo\Bundle\BlockBundle\Model\Column\TwoColumnBlock:
+    properties:
+        columnOne:
+            - Valid:
+                  groups: [default]
+        columnTwo:
+            - Valid:
+                  groups: [default]
+
+Enhavo\Bundle\BlockBundle\Model\Column\ThreeColumnBlock:
+    properties:
+        columnOne:
+            - Valid:
+                  groups: [default]
+        columnTwo:
+            - Valid:
+                  groups: [default]
+        columnThree:
+            - Valid:
                   groups: [default]
