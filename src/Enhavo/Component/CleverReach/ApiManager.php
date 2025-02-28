@@ -62,8 +62,6 @@ class ApiManager implements ApiManagerInterface
         array $globalAttributes = [],
         array $tags = [],
     ) {
-        $now = time();
-
         return $this->adapter->action(
             'put',
             "/v3/groups.json/{$groupId}/receivers/{$email}",
