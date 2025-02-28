@@ -60,11 +60,11 @@ class BookEndpoint extends AbstractEndpointType
     public function handleRequest($options, Request $request, Data $data, Context $context)
     {
         // repository
-        $repository = $this->resourceManager('app.book')->getRepository();
+        $repository = $this->resourceManager->getRepository('app.book');
         $book = $repository->find($request->get('id'));
         
         // or factory
-        $factory = $this->resourceManager('app.book')->getFactory();
+        $factory = $this->resourceManager->getFactory('app.book');
         $book = $factory->createNew();
         
         // update entity and save

@@ -8,28 +8,15 @@ $ composer require enhavo/media-bundle
 $ yarn add @enhavo/media
 ```
 
-```ts
-// import statement
-import MediaFormRegistryPackage from "@enhavo/media/FormRegistryPackage";
-
-// register the package
-this.registerPackage(new MediaFormRegistryPackage(application));
+```yaml
+# assets/admin/container.di.yaml
+imports:
+    - path: '@enhavo/media/services/admin/*' // [!code ++]
 ```
-
-```ts
-// import
-const MediaPackage = require('@enhavo/media/Encore/EncoreRegistryPackage');
-
-// register package
-.register(new MediaPackage());
-```
-
-If you want to display the media library in your application you can
-change your `config/packages/enhavo.yaml` file.
 
 ```yaml
-enhavo_app:
-    menu:
-        media_library:
-            type: media_library
+# assets/theme/container.di.yaml
+imports:
+    - path: '@enhavo/media/services/theme/*' // [!code ++]
 ```
+

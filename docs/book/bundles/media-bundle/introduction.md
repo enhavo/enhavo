@@ -1,5 +1,5 @@
 ## Introduction
 
-The goal of the media bundle is provide a library to easily handle
-files. With the MediaBundle you can create, store, download, modify
-files and make link them to entities that are saved in the database.
+The media bundle provide an api to handle and store files. 
+With the file entity, it is easy to reference files in others entities.
+The bundle provide also function to change images.
