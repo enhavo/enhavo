@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\NewsletterBundle\Client;
 
 use Enhavo\Bundle\NewsletterBundle\Event\StorageEvent;
+use Enhavo\Bundle\NewsletterBundle\Exception\ActivateException;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NotFoundException;
 use Enhavo\Bundle\NewsletterBundle\Exception\RemoveException;
@@ -93,6 +94,23 @@ class CleverReachClient
         if (!isset($response['id'])) {
             throw new InsertException(
                 sprintf('Insertion into group "%s" failed.', $groupId)
+            );
+        }
+    }
+
+
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param $groupId
+     * @throws ActivateException
+     */
+    public function activateSubscriber(SubscriberInterface $subscriber, $groupId)
+    {
+        $response = $this->getApiManager()->activateSubscriber($subscriber->getEmail(), intval($groupId));
+
+        if (true !== $response) {
+            throw new ActivateException(
+                sprintf('Activation in group "%s" failed.', $groupId)
             );
         }
     }

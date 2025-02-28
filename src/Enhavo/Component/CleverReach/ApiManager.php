@@ -47,6 +47,16 @@ class ApiManager implements ApiManagerInterface
     }
 
     /**
+     * @param $email
+     * @param int $groupId
+     * @return mixed
+     */
+    public function activateSubscriber($email, int $groupId)
+    {
+        return $this->adapter->action('put', "/v3/groups.json/{$groupId}/receivers/{$email}/activate");
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getSubscriber(string $email, int $groupId = null)

@@ -8,6 +8,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
+use Enhavo\Bundle\NewsletterBundle\Exception\ActivateException;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
 use Enhavo\Bundle\NewsletterBundle\Model\CleverReachGroup;
@@ -37,9 +38,9 @@ class CleverReachStorageType extends AbstractStorageType
     /**
      * @param SubscriberInterface $subscriber
      * @param array $options
-     * @return mixed|void
+     * @return void
      * @throws NoGroupException
-     * @throws InsertException
+     * @throws InsertException|ActivateException
      */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
@@ -49,6 +50,7 @@ class CleverReachStorageType extends AbstractStorageType
 
         foreach ($groups as $group) {
             if ($this->client->exists($subscriber->getEmail(), $group)) {
+                $this->client->activateSubscriber($subscriber, $group);
                 continue;
             }
             $this->client->saveSubscriber($subscriber, $group);
