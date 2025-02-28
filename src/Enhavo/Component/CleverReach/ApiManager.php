@@ -46,6 +46,35 @@ class ApiManager implements ApiManagerInterface
         );
     }
 
+
+    /**
+     * @param string $email
+     * @param int $groupId
+     * @param array $attributes
+     * @param array $globalAttributes
+     * @param array $tags
+     * @return mixed
+     */
+    public function updateSubscriber(
+        string $email,
+        int $groupId,
+        array $attributes = [],
+        array $globalAttributes = [],
+        array $tags = [],
+    ) {
+        $now = time();
+
+        return $this->adapter->action(
+            'put',
+            "/v3/groups.json/{$groupId}/receivers/{$email}",
+            [
+                'attributes' => $attributes,
+                'global_attributes' => $globalAttributes,
+                'tags' => $tags,
+            ]
+        );
+    }
+
     /**
      * @param $email
      * @param int $groupId
