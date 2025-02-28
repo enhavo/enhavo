@@ -11,6 +11,12 @@ The naming of routes following a convention to prevent configuration (convention
 - resource name or subsystem
 - action
 
+**Examples**:
+
+* app_theme_article_show
+* app_api_article_show
+* enhavo_page_admin_page_index
+* enhavo_page_admin_api_page_index
 
 ### Usage
 

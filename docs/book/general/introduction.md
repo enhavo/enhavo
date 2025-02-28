@@ -15,22 +15,6 @@ more modules based on the modules we already created.
 If you are familiar with Symfony and its structure, you will feel
 comfortable working on enhavo.
 
-## Sylius based
-
-When we say \"enhavo is based on Sylius\", what we mean is that enhavo
-is based on the SyliusResourceBundle. If you want to know more about
-this Bundle, you can read the Sylius
-[documentation](https://docs.sylius.com/en/1.6/components_and_bundles/bundles/SyliusResourceBundle/).
-
-The SyliusResourceBundle provides a very abstract and powerful CRUD
-Controller. This frees us from having to implement our own CRUD
-Controllers in our modules, and we can focus on the models and forms
-instead. A lot of the configuration is done in the definition of the
-routes. This makes sense to us, because the route definition is the
-entry point of every request in the application. It defines the
-controller action we want use, so why not inject more configuration here
-and skip the controller completely.
-
 ## Bring your own domain model
 
 The core functionality of enhavo provides a user interface with a user
