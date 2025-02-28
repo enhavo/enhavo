@@ -65,6 +65,8 @@ class CleverReachTypeStorageTest extends TestCase
         ]);
         $dependencies->apiManager->expects($this->exactly(2))->method('getSubscriber')->willReturn(['id' => 1]);
         $dependencies->apiManager->expects($this->never())->method('createSubscriber')->willReturn([]);
+        $dependencies->apiManager->expects($this->exactly(2))->method('updateSubscriber')->willReturn(['id' => 1]);
+        $dependencies->apiManager->expects($this->exactly(2))->method('activateSubscriber')->willReturn(true);
         $dependencies->subscriber->method('getEmail')->willReturn('to@enhavo.com');
 
         $instance->saveSubscriber($dependencies->subscriber);

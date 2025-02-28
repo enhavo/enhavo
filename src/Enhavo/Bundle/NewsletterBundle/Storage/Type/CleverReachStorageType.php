@@ -8,8 +8,12 @@ namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient;
 use Enhavo\Bundle\NewsletterBundle\Entity\Group;
+use Enhavo\Bundle\NewsletterBundle\Exception\ActivateException;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
+use Enhavo\Bundle\NewsletterBundle\Exception\NotFoundException;
+use Enhavo\Bundle\NewsletterBundle\Exception\RemoveException;
+use Enhavo\Bundle\NewsletterBundle\Exception\UpdateException;
 use Enhavo\Bundle\NewsletterBundle\Model\CleverReachGroup;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupAwareInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
@@ -26,8 +30,7 @@ class CleverReachStorageType extends AbstractStorageType
     protected $client;
 
     /**
-     * CleverReachStorageType constructor.
-     * @param $cleverReachClient
+     * @param CleverReachClient $cleverReachClient
      */
     public function __construct($cleverReachClient)
     {
@@ -37,9 +40,11 @@ class CleverReachStorageType extends AbstractStorageType
     /**
      * @param SubscriberInterface $subscriber
      * @param array $options
-     * @return mixed|void
+     * @return void
      * @throws NoGroupException
      * @throws InsertException
+     * @throws UpdateException
+     * @throws ActivateException
      */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
@@ -49,12 +54,22 @@ class CleverReachStorageType extends AbstractStorageType
 
         foreach ($groups as $group) {
             if ($this->client->exists($subscriber->getEmail(), $group)) {
-                continue;
+                $this->client->updateSubscriber($subscriber, $group);
+                $this->client->activateSubscriber($subscriber, $group);
+
+            } else {
+                $this->client->saveSubscriber($subscriber, $group);
             }
-            $this->client->saveSubscriber($subscriber, $group);
         }
     }
 
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param array $options
+     * @return void
+     * @throws NoGroupException
+     * @throws RemoveException
+     */
     public function removeSubscriber(SubscriberInterface $subscriber, array $options)
     {
         $groups = $this->mapGroups($subscriber, $options['groups']);
@@ -69,6 +84,12 @@ class CleverReachStorageType extends AbstractStorageType
         }
     }
 
+    /**+
+     * @param SubscriberInterface $subscriber
+     * @param array $options
+     * @return SubscriberInterface|null
+     * @throws NotFoundException
+     */
     public function getSubscriber(SubscriberInterface $subscriber, array $options): ?SubscriberInterface
     {
         $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);

@@ -2,7 +2,7 @@ services:
     Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient:
         arguments:
             - '@event_dispatcher'
-            - 'Enhavo\Component\CleverReach\Http\GuzzleAdapter'
+            - 'Enhavo\Component\CleverReach\Http\SymfonyAdapter'
 
     Enhavo\Bundle\NewsletterBundle\Client\MailChimpClient:
         arguments:

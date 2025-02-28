@@ -9,9 +9,11 @@
 namespace Enhavo\Bundle\NewsletterBundle\Client;
 
 use Enhavo\Bundle\NewsletterBundle\Event\StorageEvent;
+use Enhavo\Bundle\NewsletterBundle\Exception\ActivateException;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NotFoundException;
 use Enhavo\Bundle\NewsletterBundle\Exception\RemoveException;
+use Enhavo\Bundle\NewsletterBundle\Exception\UpdateException;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Component\CleverReach\ApiManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -93,6 +95,57 @@ class CleverReachClient
         if (!isset($response['id'])) {
             throw new InsertException(
                 sprintf('Insertion into group "%s" failed.', $groupId)
+            );
+        }
+    }
+
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param $groupId
+     * @throws UpdateException
+     */
+    public function updateSubscriber(SubscriberInterface $subscriber, $groupId)
+    {
+        $attributes = $this->createAttributes($subscriber, $this->attributes);
+        $globalAttributes = $this->createAttributes($subscriber, $this->globalAttributes);
+
+        $event = new StorageEvent(StorageEvent::EVENT_CLEVERREACH_PRE_STORE, $subscriber, [
+            'attributes' => $attributes,
+            'global_attributes' => $globalAttributes
+        ]);
+        $this->eventDispatcher->dispatch($event);
+
+        $data = $event->getDataArray();
+        $attributes = $data['attributes'];
+        $globalAttributes = $data['global_attributes'];
+
+        $response = $this->getApiManager()->updateSubscriber(
+            $subscriber->getEmail(),
+            intval($groupId),
+            $attributes,
+            $globalAttributes
+        );
+
+        if (!isset($response['id'])) {
+            throw new UpdateException(
+                sprintf('Update within group "%s" failed.', $groupId)
+            );
+        }
+    }
+
+
+    /**
+     * @param SubscriberInterface $subscriber
+     * @param $groupId
+     * @throws ActivateException
+     */
+    public function activateSubscriber(SubscriberInterface $subscriber, $groupId)
+    {
+        $response = $this->getApiManager()->activateSubscriber($subscriber->getEmail(), intval($groupId));
+
+        if (true !== $response) {
+            throw new ActivateException(
+                sprintf('Activation in group "%s" failed.', $groupId)
             );
         }
     }
