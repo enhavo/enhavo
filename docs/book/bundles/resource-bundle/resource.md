@@ -27,7 +27,7 @@ a default ones with these classes `Enhavo\Bundle\ResourceBundle\Factory\Factory`
 
 To autowire repositories and factories, default binds are created as well. For the `app.book` example, 
 you need to name the parameter `$bookRepository`, `$bookFactory` or `$appBookRepository`, `$appBookFactory`. 
-The parameter type must match the configured ones.
+The parameter type **must** match the configured ones (Don't use interfaces here).
 
 
 ::: warning
