@@ -1,10 +1,14 @@
 <?php
 namespace Enhavo\Bundle\SearchBundle\Command;
 
+use Enhavo\Bundle\AppBundle\Output\CliOutputLogger;
 use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /*
  * This command does the reindexing
@@ -22,14 +26,20 @@ class IndexCommand extends Command
     {
         $this
             ->setName('enhavo:search:index')
+            ->addArgument('class', InputArgument::OPTIONAL, 'Class to index')
+            ->addOption('force', 'f', InputOption::VALUE_NONE, 'Ignore errors')
             ->setDescription('Runs search (re)index')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $class = $input->getArgument('class');
+        $force = !!$input->getOption('force');
+
         $output->writeln('Start reindexing');
-        $this->searchEngine->reindex();
+        $logger = new CliOutputLogger(new SymfonyStyle($input, $output));
+        $this->searchEngine->reindex($force, $class, $logger);
         $output->writeln('Indexing finished');
         return Command::SUCCESS;
     }

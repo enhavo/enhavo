@@ -9,6 +9,7 @@
 namespace Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\AppBundle\Output\OutputLoggerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Result\EntitySubjectLoader;
 use Enhavo\Bundle\SearchBundle\Engine\Result\ResultEntry;
@@ -267,7 +268,7 @@ class DatabaseSearchEngine implements SearchEngineInterface
         }
     }
 
-    public function reindex()
+    public function reindex(bool $force = false, string $class = null, OutputLoggerInterface $logger = null)
     {
         foreach ($this->classes as $class) {
             $repository = $this->em->getRepository($class);
