@@ -79,7 +79,6 @@
   },
   "require-dev": {
     "behat/behat": "^3.10",
-    "dbrekelmans/bdi": "^0.3.0",
     "overtrue/phplint": "^9.0",
     "phpstan/phpstan": "^0.12.29",
     "phpunit/php-code-coverage": "^9.2",

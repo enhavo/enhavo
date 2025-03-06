@@ -1,5 +1,5 @@
 <template>
-    <optgroup :label="choice.label">
+    <optgroup :label="choice.label" :ref="(el) => choice.element = (el as HTMLOptGroupElement)">
         <component :is="getChoiceComponent(subChoice)" v-for="subChoice of choice.choices" :choice="subChoice" />
     </optgroup>
 </template>

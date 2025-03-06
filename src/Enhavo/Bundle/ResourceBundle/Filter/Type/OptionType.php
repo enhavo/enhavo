@@ -87,7 +87,7 @@ class OptionType extends AbstractFilterType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'filter-option',
+            'component' => 'filter-dropdown',
             'model' => 'OptionFilter',
             'initial_value' => null,
         ]);

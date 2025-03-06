@@ -5,7 +5,6 @@
             v-model="form.value"
             :name="form.fullName"
             :ref="(el) => form.setElement(el as HTMLElement)"
-            @change="form.dispatchChange()"
             v-show="form.isVisible()"
             class="select2-base-select"
         >
@@ -41,8 +40,37 @@ function getChoiceComponent(choice: any)
     return 'form-choice-option';
 }
 
+function getValue()
+{
+    let choices = props.form.getFlattedChoices();
+    if (props.form.multiple) {
+        let values = [];
+        for (let choice of choices) {
+            let element = choice.element as HTMLOptionElement;
+            if (element?.selected) {
+                values.push(element.value);
+            }
+        }
+        return values;
+    } else {
+        for (let choice of choices) {
+            let element = choice.element as HTMLOptionElement;
+            if (element?.selected) {
+                return element.value;
+            }
+        }
+    }
+
+    return null;
+}
+
 onMounted(() => {
+    //@ts-ignore
     select2($);
     $(props.form.element).select2();
+    $(props.form.element).on('change', function (e) {
+        props.form.value = getValue();
+        props.form.dispatchChange();
+    });
 });
 </script>
