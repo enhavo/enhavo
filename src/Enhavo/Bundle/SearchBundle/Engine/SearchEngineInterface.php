@@ -9,10 +9,12 @@
 namespace Enhavo\Bundle\SearchBundle\Engine;
 
 
+use Enhavo\Bundle\AppBundle\Output\OutputLoggerInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Engine\Result\ResultSummary;
 use Enhavo\Bundle\SearchBundle\Result\Result;
 use Pagerfanta\Pagerfanta;
+use Psr\Log\LoggerInterface;
 
 interface SearchEngineInterface
 {
@@ -51,7 +53,7 @@ interface SearchEngineInterface
     /**
      * @return void
      */
-    public function reindex();
+    public function reindex(bool $force = false, string $class = null, OutputLoggerInterface $logger = null);
 
     /**
      * @return void

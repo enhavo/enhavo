@@ -11,6 +11,7 @@ namespace Enhavo\Bundle\SearchBundle\Engine\ElasticSearch;
 use Doctrine\ORM\EntityManager;
 use Elastica\Client;
 use Elastica\Index;
+use Enhavo\Bundle\AppBundle\Output\OutputLoggerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\BetweenQuery;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\ContainsQuery;
@@ -48,7 +49,9 @@ class ElasticSearchEngine implements SearchEngineInterface
         private readonly array $classes,
         ClientFactory $clientFactory,
         $dsn,
-        private readonly ?array $indexSettings
+        private readonly ?array $indexSettings,
+        private readonly int $pageSize = 100,
+
     ) {
         if (!self::supports($dsn)) {
             return;
@@ -435,25 +438,57 @@ class ElasticSearchEngine implements SearchEngineInterface
         $this->indexRemover->removeIndex($resource);
     }
 
-    public function reindex()
+    public function reindex(bool $force = false, string $class = null, OutputLoggerInterface $logger = null)
     {
-        $this->getIndex()->delete();
-        $this->initialize();
-        foreach ($this->classes as $class) {
-            $repository = $this->em->getRepository($class);
-            $entities = $repository->findAll();
-            foreach ($entities as $entity) {
-                try {
-                    $this->index($entity);
-                } catch (\Exception $e) {
-                    throw new IndexException(sprintf(
-                        'Can\'t index class "%s" with id "%s". Error: %s',
-                        get_class($entity),
-                        $entity->getId(),
-                        $e->getMessage()
-                    ));
+        // only delete index if we are going to reindex all
+        if ($class === null) {
+            $this->getIndex()->delete();
+            $this->initialize();
+        }
+        
+        if ($class !== null && !in_array($class, $this->classes)) {
+            $logger?->error(sprintf('Class "%s" is not configured for indexing', $class));
+            return;
+        }
+
+        foreach ($this->classes as $indexClass) {
+            if ($class !== null && $class !== $indexClass) {
+                continue;
+            }
+
+            $repository = $this->em->getRepository($indexClass);
+            $amount = $repository->count([]);
+
+            $logger?->info(sprintf('Indexing "%s" found "%s"', $indexClass, $amount));
+            $logger?->progressStart($amount);
+
+            $pages = ceil($amount/$this->pageSize);
+            for ($page = 0; $page < $pages; $page++) {
+                $entities = $repository->findBy([], [], $this->pageSize, $page*$this->pageSize);
+                foreach ($entities as $entity) {
+                    try {
+                        $logger?->progressAdvance(1);
+                        $this->index($entity);
+                    } catch (\Exception $e) {
+                        $message = sprintf(
+                            'Can\'t index class "%s" with id "%s". Error: %s',
+                            get_class($entity),
+                            $entity->getId(),
+                            $e->getMessage()
+                        );
+
+                        $logger?->error($message);
+
+                        if (!$force) {
+                            throw new IndexException();
+                        }
+                    }
+                    $this->em->detach($entity);
+                    unset($entity);
                 }
             }
+
+            $logger?->progressFinish();
         }
     }
 
