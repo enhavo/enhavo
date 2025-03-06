@@ -33,6 +33,12 @@ media_library:
                 create: 'Media-Library-File create'
                 update: 'Media-Library-File update'
                 delete: 'Media-Library-File delete'
+        item:
+            label:
+                index: 'Media-Library-Item list'
+                create: 'Media-Library-Item create'
+                update: 'Media-Library-Item update'
+                delete: 'Media-Library-Item delete'
         tag:
             label:
                 index: 'Media-Library-Tag list'
