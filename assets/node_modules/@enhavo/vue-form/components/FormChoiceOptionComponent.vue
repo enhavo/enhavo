@@ -1,5 +1,5 @@
 <template>
-    <option :value="choice.value">{{ choice.label }}</option>
+    <option :ref="(el) => choice.element = (el as HTMLOptionElement)" :value="choice.value">{{ choice.label }}</option>
 </template>
 
 <script setup lang="ts">

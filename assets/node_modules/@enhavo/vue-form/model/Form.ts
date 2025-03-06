@@ -172,7 +172,7 @@ export class Form
 
         if (recursive) {
             for (let child of this.children) {
-                child.checkVisibility();
+                child.checkVisibility(recursive);
             }
         }
     }

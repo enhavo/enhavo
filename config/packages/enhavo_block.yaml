@@ -34,11 +34,14 @@ enhavo_block:
             type: contact
         calendar:
             type: calendar
-#        slider:
-#            type: slider
         newsletter_subscribe:
             type: newsletter_subscribe
         comment:
             type: comment
-#        shop_product_list:
-#            type: shop_product_list
+        app_test:
+            type: base
+            label: Test
+            model: App\Entity\Block\TestBlock
+            form: App\Form\Type\Block\TestBlockType
+            template: 'theme/block/test.html.twig'
+            groups: ['content']

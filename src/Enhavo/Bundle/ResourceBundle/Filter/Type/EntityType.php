@@ -115,7 +115,7 @@ class EntityType extends AbstractFilterType
             'method' => 'findAll',
             'arguments' => null,
             'choice_label' => null,
-            'component' => 'filter-entity',
+            'component' => 'filter-dropdown',
             'model' => 'EntityFilter',
             'initial_value_arguments' => null,
         ]);
