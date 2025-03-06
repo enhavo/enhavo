@@ -1,4 +1,5 @@
 enhavo_content_sitemap:
     path: /sitemap.xml
     defaults:
-        _endpoint: Enhavo\Bundle\ContentBundle\Type\SitemapEndpointType
+        _endpoint:
+            type: Enhavo\Bundle\ContentBundle\Endpoint\Type\SitemapEndpointType

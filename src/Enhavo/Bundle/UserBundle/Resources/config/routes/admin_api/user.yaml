@@ -48,7 +48,7 @@ enhavo_user_admin_api_user_delete:
         _expose: admin_api
         _endpoint:
             type: resource_delete
-            input: enhavo_user.user
+            input: enhavo_user.user.update
 
 enhavo_user_admin_api_user_batch:
     path: '/user/batch'

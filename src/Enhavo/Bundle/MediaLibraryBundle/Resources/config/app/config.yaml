@@ -37,6 +37,22 @@ enhavo_app:
             role: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_DELETE
             label: media_library.role.tag.label.delete
             translation_domain: EnhavoMediaLibraryBundle
+        enhavo_media_library_item_index:
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_ITEM_INDEX
+            label: media_library.role.item.label.index
+            translation_domain: EnhavoMediaLibraryBundle
+        enhavo_media_library_item_create:
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_ITEM_CREATE
+            label: media_library.role.item.label.create
+            translation_domain: EnhavoMediaLibraryBundle
+        enhavo_media_library_item_update:
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_ITEM_UPDATE
+            label: media_library.role.item.label.update
+            translation_domain: EnhavoMediaLibraryBundle
+        enhavo_media_library_item_delete:
+            role: ROLE_ENHAVO_MEDIA_LIBRARY_ITEM_DELETE
+            label: media_library.role.item.label.delete
+            translation_domain: EnhavoMediaLibraryBundle
 
 enhavo_media_library:
     constraints:
