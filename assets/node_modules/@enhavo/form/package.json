@@ -12,6 +12,7 @@
     "@enhavo/app": "https://github.com/enhavo/app-assets.git",
     "@sereneinserenade/tiptap-search-and-replace": "^0.1.1",
     "@tiptap/extension-color": "^2.9.1",
+    "@tiptap/extension-image": "^2.9.1",
     "@tiptap/extension-link": "^2.9.1",
     "@tiptap/extension-subscript": "^2.9.1",
     "@tiptap/extension-superscript": "^2.9.1",
