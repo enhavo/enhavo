@@ -61,6 +61,9 @@ class ChoiceVueTypeExtension extends AbstractVueTypeExtension
                 $vueData->set('value', $childView->vars['value']);
             }
         }
+
+        // choice type may change full_name during buildView, so we need to reapply
+        $data->set('fullName', $view->vars['full_name']);
     }
 
     public function configureOptions(OptionsResolver $resolver)
