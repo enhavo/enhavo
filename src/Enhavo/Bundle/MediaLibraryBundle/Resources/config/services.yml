@@ -57,6 +57,7 @@ services:
     Enhavo\Bundle\MediaLibraryBundle\Form\Type\ItemType:
         arguments:
             - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
+            - '@Enhavo\Bundle\MediaBundle\Routing\ThemeUrlGenerator'
             - '%enhavo_media_library.item.model.class%'
             - '%enhavo_media.form%'
         tags:

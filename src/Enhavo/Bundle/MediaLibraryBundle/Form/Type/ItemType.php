@@ -6,17 +6,24 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Form\Type;
 
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface;
+use Enhavo\Bundle\MediaLibraryBundle\Entity\Item;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoCompleteChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ItemType extends AbstractType
 {
     public function __construct(
         private readonly MediaLibraryManager $mediaLibraryManager,
+        private readonly UrlGeneratorInterface $themeUrlGenerator,
         private readonly string $dataClass,
     )
     {
@@ -44,6 +51,25 @@ class ItemType extends AbstractType
                 'frame_key' => 'media_library_tags'
             ])
         ;
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $form = $event->getForm();
+
+            /** @var ?Item $data */
+            $data = $event->getData();
+            $urlValue = '';
+
+            if ($data && $data->getFile() && $data->getFile() instanceof FileInterface) {
+                $urlValue = $this->themeUrlGenerator->generate($data->getFile());
+            }
+
+            $form->add('url', TextType::class, [
+                'label' => 'media_library.form.label.url',
+                'translation_domain' => 'EnhavoMediaLibraryBundle',
+                'mapped' => false,
+                'data' => $urlValue,
+            ]);
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
