@@ -89,6 +89,7 @@ enhavo_resource:
                     type: form
                     arrangement:
                         - file.basename
+                        - url
                         - file.parameters.alt
                         - file.parameters.title
                         - tags

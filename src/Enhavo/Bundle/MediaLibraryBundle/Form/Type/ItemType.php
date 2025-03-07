@@ -6,17 +6,24 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Form\Type;
 
+use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface;
+use Enhavo\Bundle\MediaLibraryBundle\Entity\Item;
 use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoCompleteChoiceType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ItemType extends AbstractType
 {
     public function __construct(
         private readonly MediaLibraryManager $mediaLibraryManager,
+        private readonly UrlGeneratorInterface $themeUrlGenerator,
         private readonly string $dataClass,
     )
     {
@@ -43,7 +50,30 @@ class ItemType extends AbstractType
                 'edit_route' => 'enhavo_media_library_admin_tag_update',
                 'frame_key' => 'media_library_tags'
             ])
+            ->add('url', TextType::class, [
+                'label' => 'media_library.form.label.url',
+                'translation_domain' => 'EnhavoMediaLibraryBundle',
+                'mapped' => false,
+                'data' => '',
+            ])
         ;
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $form = $event->getForm();
+
+            /** @var ?Item $data */
+            $data = $event->getData();
+
+            if ($data && $data->getFile() && $data->getFile() instanceof FileInterface) {
+                $form->remove('url');
+                $form->add('url', TextType::class, [
+                    'label' => 'media_library.form.label.url',
+                    'translation_domain' => 'EnhavoMediaLibraryBundle',
+                    'mapped' => false,
+                    'data' => $this->themeUrlGenerator->generate($data->getFile()),
+                ]);
+            }
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
