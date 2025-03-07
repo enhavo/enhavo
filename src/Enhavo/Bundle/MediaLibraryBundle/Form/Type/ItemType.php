@@ -57,16 +57,18 @@ class ItemType extends AbstractType
 
             /** @var ?Item $data */
             $data = $event->getData();
+            $urlValue = '';
 
             if ($data && $data->getFile() && $data->getFile() instanceof FileInterface) {
-                $form->remove('url');
-                $form->add('url', TextType::class, [
-                    'label' => 'media_library.form.label.url',
-                    'translation_domain' => 'EnhavoMediaLibraryBundle',
-                    'mapped' => false,
-                    'data' => $this->themeUrlGenerator->generate($data->getFile()),
-                ]);
+                $urlValue = $this->themeUrlGenerator->generate($data->getFile());
             }
+
+            $form->add('url', TextType::class, [
+                'label' => 'media_library.form.label.url',
+                'translation_domain' => 'EnhavoMediaLibraryBundle',
+                'mapped' => false,
+                'data' => $urlValue,
+            ]);
         });
     }
 
