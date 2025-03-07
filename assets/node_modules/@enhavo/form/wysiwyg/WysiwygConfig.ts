@@ -13,8 +13,8 @@ import {BackgroundColor} from "@enhavo/form/wysiwyg/tiptap-extensions/extension-
 import Color from "@tiptap/extension-color";
 import {CustomBulletList} from "@enhavo/form/wysiwyg/tiptap-extensions/extension-custom-bullet-list/custom-bullet-list";
 import {CustomOrderedList} from "@enhavo/form/wysiwyg/tiptap-extensions/extension-custom-ordered-list/custom-ordered-list";
+import Image from '@tiptap/extension-image';
 import Link from "@tiptap/extension-link";
-import Paragraph from "@tiptap/extension-paragraph";
 import SearchAndReplace from "@sereneinserenade/tiptap-search-and-replace";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
@@ -39,6 +39,10 @@ export class WysiwygConfig
                 Color,
                 CustomBulletList,
                 CustomOrderedList,
+                Image.configure({
+                    inline: true,
+                    allowBase64: true,
+                }),
                 Link.configure({
                     openOnClick: false,
                     autolink: true,
