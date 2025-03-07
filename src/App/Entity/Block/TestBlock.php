@@ -24,6 +24,8 @@ class TestBlock extends AbstractBlock
     #[Duplicate('property', ['groups' => ['duplicate', 'revision', 'restore']])]
     public ?string $direction = null;
 
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    #[Duplicate('property', ['groups' => ['duplicate', 'revision', 'restore']])]
     public array $directions = [];
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
