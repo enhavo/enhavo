@@ -26,7 +26,7 @@ class SaveUserSubscriber implements EventSubscriberInterface
     {
         $user = $event->getSubject();
         if ($user instanceof UserInterface) {
-            $this->userManager->update($user);
+            $this->userManager->update($user, false);
         }
     }
 }
