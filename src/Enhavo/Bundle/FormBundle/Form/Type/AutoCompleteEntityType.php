@@ -41,6 +41,9 @@ class AutoCompleteEntityType extends AbstractType
                     }
                     $data = [];
                     foreach($collection as $entry) {
+                        if ($entry === null) {
+                            continue;
+                        }
                         if (!method_exists($entry, 'getId')) {
                             throw new \Exception('class need to be an entity with getId function');
                         }
