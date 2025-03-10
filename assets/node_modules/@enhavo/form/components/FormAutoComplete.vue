@@ -136,7 +136,6 @@ function buildConfig()
             },
             cache: true,
         },
-        tags: props.form.multiple,
         placeholder: props.form.placeholder,
         allowClear: props.form.placeholder != null,
     };
