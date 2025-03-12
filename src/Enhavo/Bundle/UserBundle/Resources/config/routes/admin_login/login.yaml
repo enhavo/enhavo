@@ -4,11 +4,14 @@ enhavo_user_admin_login:
     defaults:
         _expose: admin_login
         _area: admin_login
+        _format: html
         _vue:
             component: user-login
             groups: admin_login
         _endpoint:
-            type: admin
+            type: user_login
+            template: /admin/base.html.twig
+            component: 'app-app'
 
 enhavo_user_admin_logout:
     path: /logout

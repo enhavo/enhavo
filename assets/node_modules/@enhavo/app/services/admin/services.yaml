@@ -47,7 +47,8 @@ compiler_pass:
         priority: 150
     admin_form:
         path: '@enhavo/app/compiler-pass/admin-form-register.js'
-
+    client_error_handler:
+        path: '@enhavo/app/compiler-pass/client-error-handler-register.js'
 services:
     '@enhavo/core/Router':
         chunk: 'view'

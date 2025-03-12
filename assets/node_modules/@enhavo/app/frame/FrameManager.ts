@@ -10,6 +10,7 @@ import {
     FrameUpdate,
     FrameSave,
     FrameArrange,
+    FrameUnload,
 } from "@enhavo/app/frame/FrameStackSubscriber";
 import {Frame} from "@enhavo/app/frame/Frame";
 import {FrameAdded, FrameUpdated} from "@enhavo/app/frame/FrameStack";
@@ -120,6 +121,11 @@ export class FrameManager
     public loaded()
     {
         this.eventDispatcher.dispatch(new FrameLoaded(window.name));
+    }
+
+    public async unload(): Promise<Frame>
+    {
+        return await this.eventDispatcher.request(new FrameUnload(window.name)) as Frame;
     }
 
     public async addFrame(options: object): Promise<Frame>

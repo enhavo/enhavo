@@ -1,4 +1,7 @@
 enhavo_user:
+    error:
+        unauthenticated: 'Nicht eingeloggt'
+        unauthorized: 'Keine Berechtigung'
     reset_password:
         label:
             login: 'Zur Anmeldung'

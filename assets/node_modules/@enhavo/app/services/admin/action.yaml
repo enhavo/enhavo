@@ -117,6 +117,7 @@ services:
             - '@enhavo/app/manager/ResourceInputManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/translation/Translator'
+            - '@enhavo/app/client/Client'
         tags:
             - { name: 'enhavo_app.action', class: 'SaveAction' }
 
@@ -130,6 +131,7 @@ services:
             - '@enhavo/app/translation/Translator'
             - '@enhavo/vue-form/form/FormEventDispatcher'
             - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/client/Client'
         tags:
             - { name: 'enhavo_app.action', class: 'AutoSaveAction' }
 

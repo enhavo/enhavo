@@ -197,6 +197,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@security.firewall.map'
+            - '@security.token_storage'
         calls:
 #            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]

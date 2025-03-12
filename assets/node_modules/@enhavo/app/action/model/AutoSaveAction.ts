@@ -6,6 +6,7 @@ import {Translator} from "@enhavo/app/translation/Translator";
 import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {InputChangedEvent} from "@enhavo/app/manager/ResourceInputManager";
+import {ClientInterface} from "@enhavo/app/client/ClientInterface";
 
 export class AutoSaveAction extends AbstractAction
 {
@@ -23,6 +24,7 @@ export class AutoSaveAction extends AbstractAction
         private readonly translator: Translator,
         private readonly formEventDispatcher: FormEventDispatcher,
         private readonly frameManager: FrameManager,
+        private readonly client: ClientInterface,
     ) {
         super();
     }
@@ -60,15 +62,19 @@ export class AutoSaveAction extends AbstractAction
         this.removeTimeout()
 
         this.timeoutId = window.setTimeout(async () => {
-            if (this.on) {
-                let success = await this.resourceInputManager.save(null, true);
+            if (!this.on) {
+                return;
+            }
 
-                if (success) {
-                    this.frameManager.dispatch(new InputChangedEvent(this.resourceInputManager.resource));
-                    this.flashMessenger.addMessage(new FlashMessage(this.translator.trans('enhavo_app.auto_save', {}, 'javascript'), FlashMessage.SUCCESS));
-                } else {
-                    this.flashMessenger.error(this.translator.trans('enhavo_app.save.message.not_valid', {}, 'javascript'));
-                }
+            const transport = await this.resourceInputManager.save(null, true);
+
+            if (transport.ok && transport.response.ok) {
+                this.frameManager.dispatch(new InputChangedEvent(this.resourceInputManager.resource));
+                this.flashMessenger.addMessage(new FlashMessage(this.translator.trans('enhavo_app.auto_save', {}, 'javascript'), FlashMessage.SUCCESS));
+            } else {
+                this.client.handleError(transport, {
+                    validation: true,
+                });
             }
         }, this.timeout * 1000);
     }

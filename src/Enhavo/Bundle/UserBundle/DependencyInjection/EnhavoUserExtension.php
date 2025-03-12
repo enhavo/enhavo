@@ -26,6 +26,7 @@ class EnhavoUserExtension extends Extension implements PrependExtensionInterface
 
         $configFiles = [
             'services/services.yaml',
+            'services/security.yaml',
             'services/subscriber.yaml',
             'services/command.yaml',
             'services/form.yaml',

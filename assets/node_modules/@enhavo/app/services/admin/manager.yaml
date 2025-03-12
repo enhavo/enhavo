@@ -24,6 +24,7 @@ services:
             - '@enhavo/app/batch/BatchManager'
             - '@enhavo/app/collection/CollectionFactory'
             - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/client/Client'
         tags:
             - { name: vue.service, service: 'resourceIndexManager', reactive: true }
 
@@ -36,6 +37,7 @@ services:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/vue/VueRouterFactory'
             - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/client/Client'
         tags:
             - { name: vue.service, service: 'resourceInputManager', reactive: true }
 

@@ -22,7 +22,6 @@ export class UserManager
     ) {
 
     }
-
     public loadLogin()
     {
         this.loginForm = null;
@@ -55,7 +54,13 @@ export class UserManager
     public login()
     {
         this.loading = true;
-        const url = this.router.generate('enhavo_user_admin_api_login_form');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirect = urlParams.get('redirect');
+
+        const url = this.router.generate('enhavo_user_admin_api_login_form', {
+            redirect: redirect,
+        });
         const data = FormUtil.serializeForm(this.loginForm);
 
         fetch(url, {
