@@ -44,6 +44,9 @@ class UrlGenerator implements UrlGeneratorInterface
     private function getFirewallName(): ?string
     {
         $request = $this->requestStack->getMainRequest();
+        if ($request === null) {
+            return null;
+        }
         $firewallConfig = $this->firewallMap->getFirewallConfig($request);
         return $firewallConfig?->getName();
     }
