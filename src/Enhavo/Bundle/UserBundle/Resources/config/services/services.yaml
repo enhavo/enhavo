@@ -36,33 +36,6 @@ services:
             - [addConfigKeyProvider, ['@Enhavo\Bundle\UserBundle\Configuration\RequestConfigKeyProvider', 5]]
             - [addConfigKeyProvider, ['@Enhavo\Bundle\UserBundle\Configuration\FirewallConfigKeyProvider' , 20]]
 
-    Enhavo\Bundle\UserBundle\Security\EntryPoint\FormAuthenticationEntryPoint:
-        arguments:
-            - '@router'
-            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
-
-    Enhavo\Bundle\UserBundle\Security\Authentication\Voter\GroupRoleVoter:
-        public: false
-        tags:
-            - { name: security.voter }
-
-    Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator:
-        arguments:
-            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
-            - '@router'
-            - '@event_dispatcher'
-            - '@form.factory'
-            - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
-            - '%enhavo_user.user.model.class%'
-
-    Enhavo\Bundle\UserBundle\Security\Authentication\ApiTokenAuthenticator:
-        arguments:
-            - '@enhavo_user.user.repository'
-
-    Enhavo\Bundle\UserBundle\Security\UserChecker:
-        arguments:
-            - '@event_dispatcher'
-
     Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider:
         arguments:
             - '%enhavo_user.config%'
@@ -109,41 +82,6 @@ services:
             - '@Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError'
         tags:
             - { name: twig.component, key: user_login,  template: 'theme/component/user/login.html.twig' }
-
-    Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError:
-        arguments:
-            - '@security.authentication_utils'
-            - '@translator'
-
-    Enhavo\Bundle\UserBundle\Security\Authentication\ErrorMessage\BadCredentialsError:
-        arguments:
-            - '@translator'
-        tags:
-            - { name: 'enhavo_user.error_message' }
-
-    Enhavo\Bundle\UserBundle\Security\Authentication\ErrorMessage\NotEnabledError:
-        arguments:
-            - '@translator'
-        tags:
-            - { name: 'enhavo_user.error_message' }
-
-    Enhavo\Bundle\UserBundle\Security\Authentication\ErrorMessage\PasswordExpiredError:
-        arguments:
-            - '@translator'
-        tags:
-            - { name: 'enhavo_user.error_message' }
-
-    Enhavo\Bundle\UserBundle\Security\Authentication\ErrorMessage\TooManyLoginAttemptsError:
-        arguments:
-            - '@translator'
-        tags:
-            - { name: 'enhavo_user.error_message' }
-
-    Enhavo\Bundle\UserBundle\Security\Authentication\ErrorMessage\VerificationRequiredError:
-        arguments:
-            - '@translator'
-        tags:
-            - { name: 'enhavo_user.error_message' }
 
     Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver:
         arguments:

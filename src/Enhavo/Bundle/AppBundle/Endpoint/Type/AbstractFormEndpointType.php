@@ -23,8 +23,8 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
 
         if ($request->isMethod(Request::METHOD_POST)) {
             $form->handleRequest($request);
-            $url = null;
             if ($form->isSubmitted() && $form->isValid()) {
+                $data->set('success', true);
                 $this->handleSuccess($options, $request, $data, $context, $form);
 
                 if ($context->getResponse() || $context->isStopped()) {
@@ -36,15 +36,15 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
                     if ($request->get('_format') === 'html') {
                         $context->setResponse($this->redirect($url));
                         return;
+                    } else {
+                        $data->set('redirect', $url);
                     }
-                    $data->set('redirect', $url);
                 }
 
                 $form =  $this->getForm($options, $request, $data, $context);
                 $context->set('form', $form);
-                $success = true;
             } else {
-                $success = false;
+                $data->set('success', false);
                 $this->handleFailed($options, $request, $data, $context, $form);
 
                 if ($context->getResponse() || $context->isStopped()) {
@@ -53,9 +53,6 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
 
                 $context->setStatusCode(400);
             }
-
-            $data->set('success', $success);
-            $data->set('redirect', $url);
         }
 
         $data->set('form', $this->normalize($form));

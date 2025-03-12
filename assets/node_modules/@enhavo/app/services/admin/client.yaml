@@ -1,0 +1,21 @@
+services:
+    '@enhavo/app/client/Client':
+        import: Client
+
+    '@enhavo/app/client/DefaultErrorHandler':
+        import: DefaultErrorHandler
+        arguments:
+            - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/translation/Translator'
+        tags:
+            - { name: enhavo_app.client_error_handler, priority: -10 }
+
+    '@enhavo/app/client/ValidationErrorHandler':
+        import: ValidationErrorHandler
+        arguments:
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/translation/Translator'
+        tags:
+            - { name: enhavo_app.client_error_handler, priority: 10 }

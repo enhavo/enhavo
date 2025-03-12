@@ -12,6 +12,7 @@ import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {VueRouterFactory} from "@enhavo/app/vue/VueRouterFactory";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
+import {ClientInterface, Transport} from "@enhavo/app/client/ClientInterface";
 
 export class ResourceInputManager
 {
@@ -26,7 +27,7 @@ export class ResourceInputManager
     private visitors: FormVisitorInterface[] = [];
     private loadedPromiseResolveCalls: Array<() => void> = [];
     private loaded: boolean = false;
-    private saveQueue: Promise<boolean>[] = [];
+    private saveQueue: Promise<Transport>[] = [];
 
     constructor(
         private actionManager: ActionManager,
@@ -35,21 +36,25 @@ export class ResourceInputManager
         private frameManager: FrameManager,
         private vueRouterFactory: VueRouterFactory,
         private uiManager: UiManager,
+        private client: ClientInterface,
     ) {
     }
 
     async load(url: string)
     {
-        const response = await fetch(url);
-        if (!response.ok) {
+        const transport = await this.client.fetch(url);
+
+        if (!transport.ok) {
             this.frameManager.loaded();
-            this.uiManager.alert({ message: 'Error occurred' }).then(() => {
-                this.frameManager.close(true);
-            });
+            await this.client
+                .handleError(transport, {
+                    terminate: true,
+                    confirm: true,
+                });
             return;
         }
 
-        const data = await response.json();
+        const data = await transport.response.json();
 
         this.url = data.url;
         this.resource = data.resource;
@@ -87,7 +92,7 @@ export class ResourceInputManager
      * @param url Use null to use the manager url. If save request is in queue, then the url will be resolved on its turn.
      * @param morph
      */
-    async save(url: string = null, morph: boolean  = false): Promise<boolean>
+    async save(url: string = null, morph: boolean  = false): Promise<Transport>
     {
         // to synchronize parallel saves, we execute them one by one, using a promise queue
 
@@ -96,20 +101,19 @@ export class ResourceInputManager
             localQueue.push(promise);
         }
 
-        let promise: Promise<boolean> = new Promise((resolve, reject) => {
+        let promise: Promise<Transport> = new Promise((resolve, reject) => {
             Promise.allSettled(localQueue).then(async () => {
                 let onUrl = url == null ? this.url : url;
-                let success = false;
+                let transport = null;
                 try {
-                    success = await this.doSave(onUrl, morph);
+                    transport = await this.doSave(onUrl, morph);
                 } catch (err) {
                     this.saveQueue.splice(this.saveQueue.indexOf(promise), 1);
                     reject(err);
                     return;
                 }
                 this.saveQueue.splice(this.saveQueue.indexOf(promise), 1);
-                resolve(success);
-
+                resolve(transport);
             })
         });
 
@@ -117,12 +121,17 @@ export class ResourceInputManager
         return promise;
     }
 
-    private async doSave(url: string, morph: boolean  = false): Promise<boolean>
+    private async doSave(url: string, morph: boolean  = false): Promise<Transport>
     {
         this.form.morphStart();
 
-        const response = await this.sendForm(url);
-        const data = await response.json();
+        const transport = await this.sendForm(url);
+
+        if (!transport.ok || !transport.response.ok && transport.response.status !== 400) {
+            return transport;
+        }
+
+        const data = await transport.response.json();
 
         this.url = data.url;
         this.resource = data.resource;
@@ -153,7 +162,7 @@ export class ResourceInputManager
             await this.redirect(data.redirect);
         }
 
-        return response.ok;
+        return transport;
     }
 
     public async redirect(url: string)
@@ -168,14 +177,16 @@ export class ResourceInputManager
         this.frameManager.save();
     }
 
-    async sendForm(url: string, signal: AbortSignal = null): Promise<Response>
+    async sendForm(url: string, signal: AbortSignal = null): Promise<Transport>
     {
         const formData = FormUtil.serializeForm(this.form);
-        return await fetch(url, {
+        const transport = await this.client.fetch(url, {
             method: 'POST',
             body: formData,
             signal: signal
         });
+
+        return transport;
     }
 
     public async selectTab(tabKey: string)

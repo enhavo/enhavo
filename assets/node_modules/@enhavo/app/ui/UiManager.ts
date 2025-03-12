@@ -76,10 +76,11 @@ export class Alert
 {
     public message: string;
     public acceptLabel: string;
+    public onAccept: () => Promise<void> =  async () => {};
 
     constructor(
         options: object,
-        private onAccept: () => void,
+        private close: () => void,
     )
     {
         Object.assign(this, options);
@@ -87,8 +88,8 @@ export class Alert
 
     public accept()
     {
-        if (this.onAccept) {
-            this.onAccept();
-        }
+        this.onAccept().then(() => {
+            this.close();
+        });
     }
 }

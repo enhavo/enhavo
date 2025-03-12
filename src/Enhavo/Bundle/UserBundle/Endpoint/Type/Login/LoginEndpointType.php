@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class LoginEndpointType extends AbstractFormEndpointType
@@ -23,23 +24,25 @@ class LoginEndpointType extends AbstractFormEndpointType
     public function __construct(
         private readonly ConfigurationProvider $provider,
         private readonly FirewallMap $firewallMap,
+        private readonly TokenStorageInterface $tokenStorage,
     )
     {
     }
 
     protected function init($options, Request $request, Data $data, Context $context): void
     {
-        $configuration = $this->provider->getLoginConfiguration();
+        if ($this->tokenStorage->getToken()) {
+            $redirect = $this->getSuccessRedirect($request);
 
-        $url = null;
-        if ($this->isGranted('ROLE_USER')) {
-            $url = $this->generateUrl($configuration->getRedirectRoute());
+            if ($request->get('_format') === 'html') {
+                $context->setResponse(new RedirectResponse($redirect));
+            } else {
+                $data->set('redirect', $redirect);
+            }
         }
 
-        $context->set('redirect', $url);
-        if ($request->get('_format') === 'html') {
-            $context->setResponse(new RedirectResponse($url));
-        }
+        $data->set('component', $options['component']);
+        $data->set('props', $options['props']);
     }
 
     protected function getForm($options, Request $request, Data $data, Context $context): FormInterface
@@ -55,18 +58,28 @@ class LoginEndpointType extends AbstractFormEndpointType
 
     protected function getRedirectUrl($options, Request $request, Data $data, Context $context, FormInterface $form): ?string
     {
+        return $this->getSuccessRedirect($request);
+    }
+
+    private function getSuccessRedirect(Request $request)
+    {
         $firewallName = $this->firewallMap->getFirewallConfig($request)->getName();
 
-        $targetPath = $request->get('_target_path') ?? $this->getTargetPath($request->getSession(), $firewallName);
+        $targetPath = $request->get('redirect') ?? $this->getTargetPath($request->getSession(), $firewallName);
         $this->removeTargetPath($request->getSession(), $firewallName);
         $request->getSession()->set('_security.credentials', null);
+
+        if ($targetPath === null) {
+            $configuration = $this->provider->getLoginConfiguration();
+            $targetPath = $this->generateUrl($configuration->getRedirectRoute());
+        }
 
         return $targetPath;
     }
 
     protected function handleFailed($options, Request $request, Data $data, Context $context, FormInterface $form): void
     {
-        $failurePath = $request->get('_failure_path');
+        $failurePath = $request->get('failureRedirect');
 
         if ($failurePath) {
             if ($request->get('_format') === 'html') {
@@ -74,15 +87,6 @@ class LoginEndpointType extends AbstractFormEndpointType
             } else {
                 $data->set('redirect', $failurePath);
             }
-        }
-    }
-
-    protected function final($options, Request $request, Data $data, Context $context, FormInterface $form): void
-    {
-        if ($context->has('redirect')) {
-            $data->set('redirect', $context->get('redirect'));
-        } else if ($data->has('redirect')) {
-            $data->set('redirect', null);
         }
     }
 
@@ -97,6 +101,13 @@ class LoginEndpointType extends AbstractFormEndpointType
 
         $resolver->setDefaults([
             'template' => $this->resolveTemplate($configuration->getTemplate()),
+            'component' => null,
+            'props' => [],
         ]);
+    }
+
+    public static function getName(): ?string
+    {
+        return 'user_login';
     }
 }

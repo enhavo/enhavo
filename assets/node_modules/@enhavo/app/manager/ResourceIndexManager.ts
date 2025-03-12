@@ -11,6 +11,7 @@ import {BatchInterface} from "@enhavo/app/batch/BatchInterface";
 import {RouteContainer} from "@enhavo/app/routing/RouteContainer";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {UiManager} from "@enhavo/app/ui/UiManager";
+import {ClientInterface} from "@enhavo/app/client/ClientInterface";
 
 export class ResourceIndexManager
 {
@@ -33,22 +34,24 @@ export class ResourceIndexManager
         private batchManager: BatchManager,
         private collectionFactory: CollectionFactory,
         private uiManager: UiManager,
+        private client: ClientInterface,
     ) {
     }
 
     async load(url: string)
     {
-        const response = await fetch(url);
+        const transport = await this.client.fetch(url);
 
-        if (!response.ok) {
+        if (!transport.ok) {
             this.frameManager.loaded();
-            this.uiManager.alert({ message: 'Error occurred' }).then(() => {
-                this.frameManager.close(true);
-            });
+            await this.client
+                .handleError(transport, {
+                    terminate: true,
+                });
             return;
         }
 
-        const data = await response.json();
+        const data = await transport.response.json();
 
         this.actions = this.actionManager.createActions(data.actions);
         this.actionsSecondary = this.actionManager.createActions(data.actionsSecondary);

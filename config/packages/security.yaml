@@ -19,7 +19,7 @@ security:
             pattern:  ^/admin/?.*
             context: user
             user_checker: Enhavo\Bundle\UserBundle\Security\UserChecker
-            entry_point: Enhavo\Bundle\UserBundle\Security\EntryPoint\FormAuthenticationEntryPoint
+            entry_point: Enhavo\Bundle\UserBundle\Security\EntryPoint\AdminAuthenticationEntryPoint
             custom_authenticators:
                 - Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator
                 - Enhavo\Bundle\UserBundle\Security\Authentication\ApiTokenAuthenticator
