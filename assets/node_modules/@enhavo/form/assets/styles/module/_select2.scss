@@ -2,12 +2,9 @@
 @use "@enhavo/app/assets/styles/import/variables";
 @use "@enhavo/app/assets/styles/import/mixins";
 
-
-.select2-base-select { width: 100%; }
-
 .form-select2-choice { width: 100%; }
 
-.select2-container {min-width:150px;max-width:100%;
+.select2-container {min-width:150px;max-width:100%; width: 100%;
 
   &--default {
     &.select2-container--open {

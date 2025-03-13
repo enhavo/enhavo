@@ -58,7 +58,7 @@ export class ChoiceForm extends Form
 
     public getFlattedChoices(): Choice[]
     {
-        return this.getFlattedChoicesRecursive(this.choices);
+        return this.getFlattedChoicesRecursive(this.choices).concat(this.getFlattedChoicesRecursive(this.preferredChoices));
     }
 
     private getFlattedChoicesRecursive(choices: Choice[]): Choice[]
