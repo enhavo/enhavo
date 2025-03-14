@@ -1,9 +1,12 @@
 enhavo_page:
-    special_pages:
+    specials:
         imprint:
             label: Imprint
         privacy:
             label: Privacy
+    types:
+        full:
+            label: Full
 
 enhavo_taxonomy:
     taxonomies:

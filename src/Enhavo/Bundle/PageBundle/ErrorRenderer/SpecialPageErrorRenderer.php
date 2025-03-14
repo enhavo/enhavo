@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\PageBundle\ErrorRenderer;
 
 use Enhavo\Bundle\PageBundle\Endpoint\PageEndpointType;
+use Enhavo\Bundle\PageBundle\Model\PageInterface;
 use Enhavo\Bundle\PageBundle\Repository\PageRepository;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Bridge\Twig\ErrorRenderer\TwigErrorRenderer;
@@ -15,18 +16,16 @@ class SpecialPageErrorRenderer implements ErrorRendererInterface
 {
     private ErrorRendererInterface $fallbackErrorRenderer;
     private \Closure $debug;
-    private RequestStack $requestStack;
     private FactoryInterface $endpointFactory;
 
     public function __construct(
         private PageRepository $pageRepository,
         ErrorRendererInterface $fallbackErrorRenderer,
-        RequestStack $requestStack,
+        private RequestStack $requestStack,
         bool $debug,
     ) {
         $this->fallbackErrorRenderer = $fallbackErrorRenderer ?? new HtmlErrorRenderer();
         $this->debug = TwigErrorRenderer::isDebug($requestStack, $debug);
-        $this->requestStack = $requestStack;
     }
 
     public function setEndpointFactory(FactoryInterface $factory): void
@@ -61,30 +60,21 @@ class SpecialPageErrorRenderer implements ErrorRendererInterface
                             ->getContent()
                     );
             }
-        } catch (\Throwable $innerException) {}
+        } catch (\Throwable $innerException) {
+        }
 
         return $this->fallbackErrorRenderer->render($exception);
     }
 
-    private function getSpecialPage(int $statusCode)
+    private function getSpecialPage(int $statusCode): ?PageInterface
     {
         $specialPageKey = sprintf('error_%s', $statusCode);
-        $page = $this->pageRepository->findOneBy([
-            'code' => $specialPageKey,
-            'public' => true,
-        ]);
+        $page = $this->pageRepository->findPublishedSpecial($specialPageKey);
+
         if ($page) {
             return $page;
         }
 
-        $page = $this->pageRepository->findOneBy([
-            'code' => 'error_default',
-            'public' => true,
-        ]);
-        if ($page) {
-            return $page;
-        }
-
-        return null;
+        return $this->pageRepository->findPublishedSpecial('error_default');
     }
 }

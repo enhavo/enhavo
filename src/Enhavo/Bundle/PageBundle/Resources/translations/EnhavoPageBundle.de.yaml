@@ -28,6 +28,7 @@ page:
     assigned: 'zugeordnet'
     parent: 'Elternseite'
     special_page: 'Spezialseite'
+    type: 'Typ'
     error_page_default: 'Fehlerseite Allgemein'
     error_page_403: 'Fehlerseite 403'
     error_page_404: 'Fehlerseite 404'

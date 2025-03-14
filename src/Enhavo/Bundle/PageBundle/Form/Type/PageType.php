@@ -16,7 +16,8 @@ class PageType extends AbstractType
 {
     public function __construct(
         private readonly string $dataClass,
-        private readonly array $specialPages,
+        private readonly array $specials,
+        private readonly array $types,
     )
     {
     }
@@ -47,32 +48,13 @@ class PageType extends AbstractType
                 }
             ));
 
-            if (count($this->specialPages)) {
-                $form->add('code', SpecialPageType::class, array(
-                    'label' => 'page.label.special_page',
-                    'translation_domain' => 'EnhavoPageBundle',
-                ));
+            if (count($this->specials)) {
+                $form->add('special', SpecialsType::class);
             }
-        });
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
-            $form = $event->getForm();
-            $data = $event->getData();
-
-            $form->add('parent', EntityType::class, array(
-                'label' => 'page.label.parent',
-                'translation_domain' => 'EnhavoPageBundle',
-                'class' => $this->dataClass,
-                'placeholder' => '---',
-                'query_builder' => function (EntityRepository $er) use ($data) {
-                    $query =  $er->createQueryBuilder('p');
-                    if ($data && $data->getId()) {
-                        $query->where('p.id != :id');
-                        $query->setParameter('id', $data->getId());
-                    }
-                    return $query;
-                }
-            ));
+            if (count($this->types)) {
+                $form->add('type', TypesType::class);
+            }
         });
     }
 

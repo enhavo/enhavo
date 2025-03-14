@@ -19,23 +19,23 @@ class PagePathExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('page_path', array($this, 'getPagePath')),
-            new TwigFunction('page_path_exists', array($this, 'existsPagePath')),
+            new TwigFunction('page_special_url', array($this, 'getPageSpecialUrl')),
+            new TwigFunction('page_special_exists', array($this, 'getPageSpecialExists')),
         ];
     }
 
-    public function getPagePath($code, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH)
+    public function getPageSpecialUrl($key, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string
     {
-        $path = sprintf('enhavo_page_page_code_%s', Slugifier::slugify($code));
+        $path = sprintf('enhavo_page_page_special_%s', Slugifier::slugify($key));
         if ($this->twigRouter->exists($path)) {
             return $this->twigRouter->generate($path, $parameters, $referenceType);
         }
         return '#';
     }
 
-    public function existsPagePath($code)
+    public function getPageSpecialExists($key): bool
     {
-        $path = sprintf('enhavo_page_page_code_%s', Slugifier::slugify($code));
+        $path = sprintf('enhavo_page_page_special_%s', Slugifier::slugify($key));
         return $this->twigRouter->exists($path);
     }
 }

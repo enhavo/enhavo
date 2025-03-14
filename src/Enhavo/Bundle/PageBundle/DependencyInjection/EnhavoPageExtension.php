@@ -20,23 +20,8 @@ class EnhavoPageExtension extends Extension implements PrependExtensionInterface
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $container->setParameter('enhavo_page.revision.enabled', $config['revision']['enabled']);
-        $container->setParameter('enhavo_page.special_pages', array_merge(
-            [
-                'error_default' => [
-                    'label' => 'page.label.error_page_default',
-                    'translation_domain' => 'EnhavoPageBundle',
-                ],
-                'error_403' => [
-                    'label' => 'page.label.error_page_403',
-                    'translation_domain' => 'EnhavoPageBundle',
-                ],
-                'error_404' => [
-                    'label' => 'page.label.error_page_404',
-                    'translation_domain' => 'EnhavoPageBundle',
-                ],
-            ],
-            $config['special_pages'])
-        );
+        $container->setParameter('enhavo_page.specials', $config['specials']);
+        $container->setParameter('enhavo_page.types', $config['types']);
 
         $configFiles = array(
             'services.yaml',
