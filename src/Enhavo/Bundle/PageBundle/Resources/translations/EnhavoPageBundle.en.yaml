@@ -28,6 +28,7 @@ page:
     assigned: 'assigned'
     parent: 'Parent'
     special_page: 'Special page'
+    type: 'Type'
     error_page_default: 'Error page default'
     error_page_403: 'Error page 403'
     error_page_404: 'Error page 404'

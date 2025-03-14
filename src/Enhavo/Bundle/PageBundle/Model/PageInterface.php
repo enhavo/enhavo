@@ -13,60 +13,25 @@ use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 
 interface PageInterface
 {
-    /**
-     * Set content
-     *
-     * @param NodeInterface $content
-     * @return PageInterface
-     */
-    public function setContent(NodeInterface $content = null);
+    public function setContent(NodeInterface $content = null): PageInterface;
 
-    /**
-     * Get content
-     *
-     * @return NodeInterface
-     */
-    public function getContent();
+    public function getContent(): ?NodeInterface;
 
-    /**
-     * Set code
-     *
-     * @param string $code
-     * @return PageInterface
-     */
-    public function setCode($code);
+    public function getParent(): ?PageInterface;
 
-    /**
-     * Get code
-     *
-     * @return string
-     */
-    public function getCode();
+    public function setParent(?PageInterface $parent): PageInterface;
 
-    /**
-     * @return PageInterface
-     */
-    public function getParent();
+    public function addChild(PageInterface $page): PageInterface;
 
-    /**
-     * @param PageInterface $parent
-     */
-    public function setParent($parent);
+    public function getChildren(): Collection;
 
-    /**
-     * @param PageInterface $page
-     * @return PageInterface
-     */
-    public function addChild(PageInterface $page);
+    public function removeChild(PageInterface $page): PageInterface;
 
-    /**
-     * @return Collection
-     */
-    public function getChildren();
+    public function getSpecial(): ?string;
 
-    /**
-     * @param PageInterface $page
-     * @return PageInterface
-     */
-    public function removeChild(PageInterface $page);
+    public function setSpecial(?string $special): void;
+
+    public function getType(): ?string;
+
+    public function setType(?string $type): void;
 }

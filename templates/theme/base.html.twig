@@ -3,8 +3,8 @@
 {% block header_inner %}
     {{ parent() }}
 
-    {% if page_path_exists('imprint') %}
-        <a href="{{ page_path('imprint') }}">Imprint</a>
+    {% if page_special_exists('imprint') %}
+        <a href="{{ page_special_url('imprint') }}">Imprint</a>
     {% endif %}
 
     {% if app.user %}

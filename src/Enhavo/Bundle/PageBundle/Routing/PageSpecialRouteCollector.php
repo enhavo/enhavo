@@ -10,7 +10,7 @@ use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
-class PageCodeRouteCollector implements RouteCollectorInterface
+class PageSpecialRouteCollector implements RouteCollectorInterface
 {
     use RouteCollectorTrait;
 
@@ -29,9 +29,9 @@ class PageCodeRouteCollector implements RouteCollectorInterface
             return $routeCollection;
         }
 
-        $pages = $this->pageRepository->findPublishedWithCode();
+        $pages = $this->pageRepository->findPublishedSpecials();
         foreach ($pages as $page) {
-            $name = sprintf('enhavo_page_page_code_%s', Slugifier::slugify($page->getCode()));
+            $name = sprintf('enhavo_page_page_special_%s', Slugifier::slugify($page->getSpecial()));
             $route = new Route($this->router->generate($page));
             $routeCollection->add($name, $route);
         }

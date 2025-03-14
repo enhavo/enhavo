@@ -16,29 +16,29 @@ class PageManager
     {
     }
 
-    public function getPagePath($code, $parameters, $referenceType)
+    public function getPagePath($special, $parameters, $referenceType)
     {
         $page = $this->pageRepository->findOneBy([
-            'code' => $code
+            'special' => $special
         ]);
 
         if(!$page instanceof Page) {
-            return $this->getDefaultLink($code);
+            return $this->getDefaultLink($special);
         }
 
         if($page->getRoute() === null) {
-            return $this->getDefaultLink($code);
+            return $this->getDefaultLink($special);
         }
 
         try {
             return $this->router->generate($page->getRoute(), $parameters, $referenceType);
         } catch (RouteNotFoundException $e) {
-            return $this->getDefaultLink($code);
+            return $this->getDefaultLink($special);
         }
     }
 
-    private function getDefaultLink($code)
+    private function getDefaultLink($special)
     {
-        return sprintf('#%s', $code);
+        return sprintf('#%s', $special);
     }
 }

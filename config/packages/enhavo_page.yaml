@@ -1,3 +1,15 @@
 imports:
     - { resource: '@EnhavoPageBundle/Resources/config/app/translation.yaml' }
     - { resource: '@EnhavoPageBundle/Resources/config/app/search.yaml' }
+
+enhavo_page:
+    specials:
+        error_default:
+            label: page.label.error_page_default
+            translation_domain: EnhavoPageBundle
+        error_403:
+            label: page.label.error_page_403
+            translation_domain: EnhavoPageBundle
+        error_404:
+            label: page.label.error_page_404
+            translation_domain: EnhavoPageBundle

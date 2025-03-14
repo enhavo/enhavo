@@ -2,7 +2,8 @@ services:
     Enhavo\Bundle\PageBundle\Form\Type\PageType:
         arguments:
             - '%enhavo_page.page.model.class%'
-            - '%enhavo_page.special_pages%'
+            - '%enhavo_page.specials%'
+            - '%enhavo_page.types%'
         tags:
             - { name: form.type }
 
@@ -38,9 +39,16 @@ services:
             - '@enhavo_page.page.repository'
             - '@router'
 
-    Enhavo\Bundle\PageBundle\Form\Type\SpecialPageType:
+    Enhavo\Bundle\PageBundle\Form\Type\SpecialsType:
         arguments:
-            - '%enhavo_page.special_pages%'
+            - '%enhavo_page.specials%'
+            - '@translator'
+        tags:
+            - { name: form.type }
+
+    Enhavo\Bundle\PageBundle\Form\Type\TypesType:
+        arguments:
+            - '%enhavo_page.types%'
             - '@translator'
         tags:
             - { name: form.type }
@@ -54,7 +62,19 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
-    Enhavo\Bundle\PageBundle\Routing\PageCodeRouteCollector:
+    Enhavo\Bundle\PageBundle\Endpoint\Extension\PageSpecialEndpointTypeExtension:
+        arguments:
+            - '%enhavo_page.specials%'
+            - '@Enhavo\Bundle\RoutingBundle\Router\Router'
+            - '@enhavo_page.page.repository'
+            - '@translator'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint_extension }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\PageBundle\Routing\PageSpecialRouteCollector:
         arguments:
             - '@enhavo_page.page.repository'
             - '@enhavo_routing.router'

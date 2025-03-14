@@ -13,18 +13,34 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_page');
         $rootNode = $treeBuilder->getRootNode();
 
-        $this->addSpecialPageConfiguration($rootNode);
+        $this->addSpecialsConfiguration($rootNode);
+        $this->addTypesPageConfiguration($rootNode);
         $this->addRevisionConfiguration($rootNode);
 
         return $treeBuilder;
     }
 
-    public function addSpecialPageConfiguration(NodeDefinition $node): void
+    public function addSpecialsConfiguration(NodeDefinition $node): void
     {
         $node
             ->children()
-                ->arrayNode('special_pages')
-                    ->useAttributeAsKey('code')
+                ->arrayNode('specials')
+                    ->prototype('array')
+                        ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('label')->isRequired()->end()
+                            ->scalarNode('translation_domain')->defaultValue(null)->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    public function addTypesPageConfiguration(NodeDefinition $node): void
+    {
+        $node
+            ->children()
+                ->arrayNode('types')
                     ->prototype('array')
                         ->addDefaultsIfNotSet()
                         ->children()

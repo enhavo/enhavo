@@ -79,6 +79,8 @@ enhavo_resource:
                     arrangement: |
                         title
                         parent
+                        special
+                        type
                         publication_date
                         published_until
                         public
@@ -107,7 +109,10 @@ enhavo_resource:
                 content:
                     type: model
                     groups: ['duplicate', 'revision', 'restore']
-                code:
+                special:
+                    type: property
+                    groups: ['revision', 'restore']
+                type:
                     type: property
                     groups: ['duplicate', 'revision', 'restore']
                 parent:

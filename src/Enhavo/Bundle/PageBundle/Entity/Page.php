@@ -10,35 +10,24 @@ use Enhavo\Bundle\PageBundle\Model\PageInterface;
 use Enhavo\Bundle\RevisionBundle\Model\RevisionInterface;
 use Enhavo\Bundle\RevisionBundle\Model\RevisionTrait;
 
-/**
- * Page
- */
 class Page extends Content implements PageInterface, RevisionInterface
 {
     use RevisionTrait;
 
     private ?NodeInterface $content = null;
-    private ?string $code = null;
+    private ?string $special = null;
+    private ?string $type = null;
     private ?PageInterface $parent = null;
     private Collection $children;
     private ?int $position = null;
 
-    /**
-     * Page constructor.
-     */
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->revisions = new ArrayCollection();
     }
 
-    /**
-     * Set content
-     *
-     * @param NodeInterface $content
-     * @return Content
-     */
-    public function setContent(NodeInterface $content = null)
+    public function setContent(NodeInterface $content = null): self
     {
         $this->content = $content;
         if ($content) {
@@ -49,51 +38,37 @@ class Page extends Content implements PageInterface, RevisionInterface
         return $this;
     }
 
-    /**
-     * Get content
-     *
-     * @return NodeInterface
-     */
-    public function getContent()
+    public function getContent(): ?NodeInterface
     {
         return $this->content;
     }
 
-    /**
-     * Set code
-     *
-     * @param string $code
-     * @return Page
-     */
-    public function setCode($code)
+    public function getSpecial(): ?string
     {
-        $this->code = $code;
-
-        return $this;
+        return $this->special;
     }
 
-    /**
-     * Get code
-     *
-     * @return string
-     */
-    public function getCode()
+    public function setSpecial(?string $special): void
     {
-        return $this->code;
+        $this->special = $special;
     }
 
-    /**
-     * @return PageInterface
-     */
-    public function getParent()
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): void
+    {
+        $this->type = $type;
+    }
+
+    public function getParent(): ?self
     {
         return $this->parent;
     }
 
-    /**
-     * @param PageInterface $parent
-     */
-    public function setParent($parent)
+    public function setParent(?PageInterface $parent): self
     {
         $this->parent = $parent;
         if($parent) {
@@ -101,32 +76,23 @@ class Page extends Content implements PageInterface, RevisionInterface
                 $parent->getChildren()->add($this);
             }
         }
+
+        return $this;
     }
 
-    /**
-     * @param PageInterface $page
-     * @return PageInterface
-     */
-    public function addChild(PageInterface $page)
+    public function addChild(PageInterface $page): self
     {
         $this->children[] = $page;
         $page->setParent($this);
         return $this;
     }
 
-    /**
-     * @return Collection
-     */
-    public function getChildren()
+    public function getChildren(): Collection
     {
         return $this->children;
     }
 
-    /**
-     * @param PageInterface $page
-     * @return PageInterface
-     */
-    public function removeChild(PageInterface $page)
+    public function removeChild(PageInterface $page): self
     {
         $page->setParent(null);
         $this->children->removeElement($page);
@@ -136,7 +102,7 @@ class Page extends Content implements PageInterface, RevisionInterface
     /**
      * @return Page[]
      */
-    public function getParents()
+    public function getParents(): array
     {
         $parents = [];
         $parent = $this->getParent();
@@ -153,7 +119,7 @@ class Page extends Content implements PageInterface, RevisionInterface
     /**
      * @return Page[]
      */
-    public function getDescendants()
+    public function getDescendants(): array
     {
         $descendants = [];
         $children = $this->getChildren();
@@ -166,17 +132,11 @@ class Page extends Content implements PageInterface, RevisionInterface
         return $descendants;
     }
 
-    /**
-     * @return int|null
-     */
     public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    /**
-     * @param int|null $position
-     */
     public function setPosition(?int $position): void
     {
         $this->position = $position;
