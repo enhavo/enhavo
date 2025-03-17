@@ -69,7 +69,7 @@ class ListCollection extends AbstractCollection
             $filterQuery = $this->createFilterQuery($context);
             $resources = $this->repository->filter($filterQuery);
         } else {
-            $resources = $this->repository->findBy($this->getCriteria($context), $this->options['sorting'], $this->options['limit']);
+            $resources = $this->repository->findBy($this->getCriteria($context), $this->options['sorting']);
         }
 
         $meta = new Data();
