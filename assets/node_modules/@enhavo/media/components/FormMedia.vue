@@ -21,7 +21,7 @@
                     :class="'media-items'"
                 >
                     <template #item="{ element }">
-                        <li>
+                        <li @dragstart="dragStart">
                             <component
                                 :is="form.itemComponent"
                                 :form="element"
@@ -64,5 +64,14 @@ const draggable = draggableComponent;
 const props = defineProps<{
     form: MediaForm
 }>()
+
+function dragStart(event: DragEvent)
+{
+    // For event.dataTransfer to work in time, this event must be on the original DragStart event, not the event fired by vuedraggable
+    const dragThumbElement = (event.target as HTMLElement).querySelectorAll('[data-drag-thumb]');
+    if (dragThumbElement.length > 0) {
+        event.dataTransfer.setDragImage(dragThumbElement[0], 10, 10);
+    }
+}
 
 </script>

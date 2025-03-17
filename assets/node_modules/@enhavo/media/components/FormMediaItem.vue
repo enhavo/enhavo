@@ -1,6 +1,6 @@
 <template>
-    <div class="form-media-item" :class="{ 'edit-show': form.editOpen }" :ref="(el) => form.setElement(el as HTMLElement)" v-click-outside="closeEdit">
-        <div class="thumb" :class="{ 'drag-button' : sortable }" @click="toggleEdit">
+    <div class="form-media-item" :class="{ 'edit-show': form.editOpen }" :ref="(el) => form.setElement(el as HTMLElement)">
+        <div class="thumb" :class="{ 'drag-button' : sortable }" @click="toggleEdit" data-drag-thumb>
             <img v-if="isImage(form.file)" :src="form.path('enhavoPreviewThumb')" draggable="false" />
             <div v-else><span class="icon" :class="'icon-'+getIcon(form.file)"></span></div>
         </div>
@@ -90,11 +90,6 @@ function toggleEdit()
     } else {
         props.form.editOpen = false;
     }
-}
-
-function closeEdit()
-{
-    props.form.editOpen = false;
 }
 
 </script>
