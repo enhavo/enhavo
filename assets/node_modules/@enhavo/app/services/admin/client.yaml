@@ -19,3 +19,18 @@ services:
             - '@enhavo/app/translation/Translator'
         tags:
             - { name: enhavo_app.client_error_handler, priority: 10 }
+
+    '@enhavo/app/client/NotFoundErrorHandler':
+        import: NotFoundErrorHandler
+        arguments:
+            - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/translation/Translator'
+        tags:
+            - { name: enhavo_app.client_error_handler, priority: 10 }
+
+    '@enhavo/app/client/AbortableErrorHandler':
+        import: AbortableErrorHandler
+        tags:
+            - { name: enhavo_app.client_error_handler, priority: 30 }

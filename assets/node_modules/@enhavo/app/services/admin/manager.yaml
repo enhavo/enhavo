@@ -47,5 +47,6 @@ services:
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/client/Client'
         tags:
             - { name: vue.service, service: 'resourcePreviewManager', reactive: true }

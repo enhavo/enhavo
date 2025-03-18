@@ -5,6 +5,7 @@ import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
 import {Frame} from "@enhavo/app/frame/Frame";
 import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
 import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
+import {ActionInterface} from "@enhavo/app/action/ActionInterface";
 
 export class PreviewAction extends AbstractAction
 {
@@ -41,6 +42,13 @@ export class PreviewAction extends AbstractAction
             await this.frameManager.request(new PreviewData(frame.id, this.getFormData(), this.apiUrl, this.selectors, this.forceReload))
             await this.subscribe();
         }
+    }
+
+    morph(source: ActionInterface): void
+    {
+        const self = source as PreviewAction;
+        this.url = self.url;
+        this.apiUrl = self.apiUrl;
     }
 
     getFormData(): string

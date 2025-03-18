@@ -6,6 +6,7 @@ enhavo_app:
     abort: 'Close'
     cancel: 'Cancel'
     error: 'Error occurred'
+    error_404: 'Not found'
     close: 'Close'
     input:
         message:

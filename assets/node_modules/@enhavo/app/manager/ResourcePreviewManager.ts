@@ -4,6 +4,7 @@ import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {PreviewData} from "@enhavo/app/action/model/PreviewAction";
 import morphdom from 'morphdom';
 import {UiManager} from "@enhavo/app/ui/UiManager";
+import {ClientInterface} from "@enhavo/app/client/ClientInterface";
 
 export class ResourcePreviewManager
 {
@@ -22,13 +23,24 @@ export class ResourcePreviewManager
         private readonly actionManager: ActionManager,
         private readonly frameManager: FrameManager,
         private readonly uiManager: UiManager,
+        private readonly client: ClientInterface,
     ) {
     }
 
     async load(url: string)
     {
-        const response = await fetch(url);
-        const data = await response.json();
+        const transport = await this.client.fetch(url);
+
+        if (!transport.ok || !transport.response.ok) {
+            this.frameManager.loaded();
+            await this.client
+                .handleError(transport, {
+                    terminate: true,
+                });
+            return;
+        }
+
+        const data = await transport.response.json();
 
         this.actions = this.actionManager.createActions(data.actions);
         this.actionsSecondary = this.actionManager.createActions(data.actionsSecondary);
@@ -173,21 +185,28 @@ export class ResourcePreviewManager
         }
 
         this.abortController = new AbortController();
-        try {
-            const response = await fetch(data.url, {
-                method: 'POST',
-                body: data.formData,
-                signal: this.abortController.signal,
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-            });
 
-            this.abortController = null;
-            return await response.text();
-        } catch (error) {
+        const transport = await this.client.fetch(data.url, {
+            method: 'POST',
+            body: data.formData,
+            signal: this.abortController.signal,
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+        });
+
+        this.abortController = null;
+
+        if (!transport.ok || !transport.response.ok) {
+            this.frameManager.loaded();
+            await this.client
+                .handleError(transport, {
+                    abortable: true,
+                });
             return null;
         }
+
+        return await transport.response.text();
     }
 
     private parseHTML(str: string)

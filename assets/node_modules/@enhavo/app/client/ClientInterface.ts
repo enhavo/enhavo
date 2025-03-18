@@ -25,6 +25,7 @@ export type Options = {
     repeatable?: boolean;
     confirm?: boolean;
     validation?: boolean;
+    abortable?: boolean;
 }
 
 export interface ErrorHandlerInterface

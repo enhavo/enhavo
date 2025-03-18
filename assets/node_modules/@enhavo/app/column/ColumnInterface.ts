@@ -10,6 +10,8 @@ export interface ColumnInterface extends ComponentAwareInterface, ModelAwareInte
     visible: boolean;
     width: number;
     label: string;
+    display: boolean;
+    condition: string;
 
     isVisible(): boolean;
     checkVisibility(): void
