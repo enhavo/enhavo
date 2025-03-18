@@ -12,8 +12,10 @@ import {Translator} from "@enhavo/app/translation/Translator";
 import {FlashMessage, FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 import jexl from "jexl";
 import axios from "axios";
+import {ClientInterface, Transport} from "@enhavo/app/client/ClientInterface";
+import {CollectionInterface} from "@enhavo/app/collection/CollectionInterface";
 
-export class ListCollection
+export class ListCollection implements CollectionInterface
 {
     private abortController: AbortController = null;
 
@@ -33,12 +35,13 @@ export class ListCollection
     filtered: boolean = false;
 
     constructor(
-        private router: Router,
-        private filterManager: FilterManager,
-        private columnManager: ColumnManager,
-        private frameManager: FrameManager,
-        private flashMessenger: FlashMessenger,
-        private translator: Translator,
+        protected router: Router,
+        protected filterManager: FilterManager,
+        protected columnManager: ColumnManager,
+        protected frameManager: FrameManager,
+        protected flashMessenger: FlashMessenger,
+        protected translator: Translator,
+        protected client: ClientInterface,
     ) {
     }
 
@@ -68,19 +71,29 @@ export class ListCollection
 
         let parameters = this.routes.getParameters('list');
 
-        let data = await this.fetch(parameters);
+        let transport = await this.fetch(parameters);
+
+        if (!transport.ok || !transport.response.ok) {
+            await this.client
+                .handleError(transport, {
+                    abortable: true,
+                });
+            return false;
+        }
+
+        const data = await transport.response.json();
 
         this.items = this.createRowData(data.items);
         this.filtered = data.meta.filtered;
         this.loading = false;
 
         this.checkSelectedItems();
-        this.checkActiveRow();
+        await this.checkActiveRow();
 
         return true;
     }
 
-    private async fetch(parameters: object): Promise<any>
+    private async fetch(parameters: object): Promise<Transport>
     {
         this.loading = true;
 
@@ -99,14 +112,14 @@ export class ListCollection
         }
 
         this.abortController = new AbortController();
-        const response = await fetch(this.router.generate(route, parameters), {
+        const transport = await this.client.fetch(this.router.generate(route, parameters), {
             method: 'POST',
             body: JSON.stringify(body),
             signal: this.abortController.signal,
         });
         this.abortController = null;
 
-        return await response.json();
+        return transport;
     }
 
     private createRowData(objects: object[]): CollectionResourceItem[]

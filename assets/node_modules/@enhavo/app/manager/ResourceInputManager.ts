@@ -44,7 +44,7 @@ export class ResourceInputManager
     {
         const transport = await this.client.fetch(url);
 
-        if (!transport.ok) {
+        if (!transport.ok || !transport.response.ok) {
             this.frameManager.loaded();
             await this.client
                 .handleError(transport, {

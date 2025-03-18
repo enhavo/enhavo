@@ -12,6 +12,7 @@ import {FrameManager} from "../../frame/FrameManager";
 import {Event} from "../../frame/FrameEventDispatcher";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 import {Translator} from "@enhavo/app/translation/Translator";
+import {ClientInterface, Transport} from "@enhavo/app/client/ClientInterface";
 
 
 export class TableCollection implements CollectionInterface
@@ -41,6 +42,7 @@ export class TableCollection implements CollectionInterface
         protected frameManager: FrameManager,
         protected flashMessenger: FlashMessenger,
         protected translator: Translator,
+        protected client: ClientInterface,
     ) {
     }
 
@@ -75,7 +77,18 @@ export class TableCollection implements CollectionInterface
             parameters['limit'] = this.paginationStep;
         }
 
-        let data = await this.fetch(parameters);
+        let transport = await this.fetch(parameters);
+
+        if (!transport.ok || !transport.response.ok) {
+            await this.client
+                .handleError(transport, {
+                    abortable: true,
+                });
+            return false;
+        }
+
+        const data = await transport.response.json();
+
         if (data === false) {
             this.loading = false;
             return;
@@ -91,12 +104,12 @@ export class TableCollection implements CollectionInterface
 
         this.trimPages();
         this.checkSelectedRows();
-        this.checkActiveRow();
+        await this.checkActiveRow();
 
         return true;
     }
 
-    private async fetch(parameters: object): Promise<any>
+    private async fetch(parameters: object): Promise<Transport>
     {
         this.loading = true;
 
@@ -115,19 +128,14 @@ export class TableCollection implements CollectionInterface
         }
 
         this.abortController = new AbortController();
-        const response = await fetch(this.router.generate(route, parameters), {
+        const transport = await this.client.fetch(this.router.generate(route, parameters), {
             method: 'POST',
             body: JSON.stringify(body),
             signal: this.abortController.signal,
         });
         this.abortController = null;
 
-        if (!response.ok) {
-            this.flashMessenger.error(this.translator.trans('enhavo_app.error', {}, 'javascript'));
-            return false;
-        }
-
-        return await response.json();
+        return transport;
     }
 
     private createRowData(objects: object[]): CollectionResourceItem[]
@@ -270,7 +278,17 @@ export class TableCollection implements CollectionInterface
             paginated: 0
         };
 
-        let data = await this.fetch(parameters);
+        let transport = await this.fetch(parameters);
+
+        if (!transport.ok || !transport.response.ok) {
+            await this.client.handleError(transport, {
+                abortable: true,
+            });
+            return;
+        }
+
+        const data = await transport.response.json();
+
         if (data === false) {
             this.loading = false;
             return;
