@@ -1,4 +1,6 @@
 ## Installation
 
-tbc. 
+```bash 
+$ composer require enhavo/type
+```
 

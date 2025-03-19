@@ -29,6 +29,7 @@ enhavo_resource:
                 'expr:resource.getId()'
             ]
             serialization_groups: endpoint
+            validation_groups: ['default']
 ```
 
 ### Routes
