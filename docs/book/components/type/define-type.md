@@ -1,6 +1,6 @@
 ## Define type system
 
-To define a new type system, we need a concrete class, that uses our types, and add type compiler that collects it. 
+To define a new type system, we need a concrete class, that uses our types, and add a type compiler that collects them. 
 Later we add types and use them.
 
 ### Concrete class and type interface
@@ -12,7 +12,9 @@ execute on the server. So we need to define a `getViewData` and an `execute` fun
 
 namespace App\Action;
 
-class Action extends AbstractTypeContainer
+use Enhavo\Component\Type\AbstractContainerType;
+
+class Action extends AbstractContainerType
 {
     public function getViewData(): array
     {
@@ -50,7 +52,7 @@ namespace App\Action;
 
 /** // [!code ++]
  * @property ActionTypeInterface $type // [!code ++]
- * @property ActionTypeInterface $parents // [!code ++]
+ * @property ActionTypeInterface $parent // [!code ++]
  */ // [!code ++]
 class Action extends AbstractTypeContainer
 {
@@ -83,8 +85,8 @@ You need to add the type compiler at the kernel or bundle `build` function.
 ```php [Kernel]
 namespace App;
 
-use App\Action\Action;
-use Enhavo\Component\Type\TypeCompilerPass;
+use App\Action\Action;  // [!code ++]
+use Enhavo\Component\Type\TypeCompilerPass;  // [!code ++]
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
 class Kernel extends BaseKernel

@@ -4,7 +4,7 @@ File formats are variants of media files. In order to keep the original
 file untouched, we use formats to change the content of files and save
 them separate.
 
-To create a format we use filters that we can apply on the original
+To create a format we apply filters on the original
 file. If we want to use a set of different filters, we chain them
 together.
 

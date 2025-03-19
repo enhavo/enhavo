@@ -4,7 +4,6 @@ The `File` entity or `FileInterface` represents a single file. As it is an entit
 a file to other entities. Just add a doctrine mapping.
 
 ```php
-
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -35,8 +34,6 @@ files you should use `ManyToMany` instead!
 If a file should be uploaded by a user, you can easily use the `Media` form type.
 
 ```php
-<?php
-
 namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -59,7 +56,6 @@ Or use the `FileFactory` to create a file and store it an entity. The Factory co
 from different sources. If you need the `FileFactory` in a service, you can just inject it.
 
 ```php
-
 use App\Entity\Book;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
