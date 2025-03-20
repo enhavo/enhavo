@@ -9,6 +9,7 @@ function createVueFactoryDefinition(builder)
     let definition = new Definition('@enhavo/app/vue/VueFactory');
     definition.setFrom('@enhavo/app/vue/VueFactory');
     definition.setImport('VueFactory');
+    definition.setChunkName('vue')
     definition.addTag(new Tag('vue.service', {
         service: 'vueFactory'
     }));

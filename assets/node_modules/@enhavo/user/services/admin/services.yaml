@@ -9,50 +9,50 @@ services:
             - { name: vue.service, service: userManager, reactive: true }
 
     '@enhavo/user/components/form/FormUserGroupPermission.vue':
-        chunk: 'user'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-user-group-permission' }
 
     '@enhavo/user/components/UserApp.vue':
-        chunk: 'user'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'user-app'}
 
     '@enhavo/user/components/UserLogin.vue':
-        chunk: 'user'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'user-login' }
 
     '@enhavo/user/components/reset-password/UserResetPasswordRequest.vue':
-        chunk: 'user'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'user-reset-password-request' }
 
     '@enhavo/user/components/reset-password/UserResetPasswordConfirm.vue':
-        chunk: 'user'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'user-reset-password-confirm' }
 
     '@enhavo/user/components/reset-password/UserResetPasswordCheck.vue':
-        chunk: 'user'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'user-reset-password-check' }
 
     '@enhavo/user/components/reset-password/UserResetPasswordFinish.vue':
-        chunk: 'user'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'user-reset-password-finish' }
 
     '@enhavo/user/components/UserUnauthenticated.vue':
-        chunk: 'user'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'user-unauthenticated' }
 
@@ -72,6 +72,7 @@ services:
 
     '@enhavo/user/client/UnauthorizedErrorHandler':
         import: UnauthorizedErrorHandler
+        chunk: 'util'
         arguments:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'
@@ -82,6 +83,7 @@ services:
 
     '@enhavo/user/client/UnauthenticatedErrorHandler':
         import: UnauthenticatedErrorHandler
+        chunk: 'util'
         arguments:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'

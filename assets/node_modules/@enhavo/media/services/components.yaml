@@ -1,24 +1,24 @@
 services:
     '@enhavo/media/components/FormMedia.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-media' }
 
     '@enhavo/media/components/FormMediaItem.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-media-item' }
 
     '@enhavo/media/components/ActionMediaForm.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'action-media-form' }
 
     '@enhavo/media/components/ActionMediaFormat.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'action-media-format' }

@@ -65,6 +65,8 @@ export default defineConfig({
     root: path.resolve(__dirname),
     base: '/build/admin/',
     build: {
+        minify: false,
+
         // output dir for production build
         outDir: '../../public/build/admin',
         emptyOutDir: true,
