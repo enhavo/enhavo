@@ -54,7 +54,7 @@ services:
 
     '@enhavo/media-library/collection/MediaLibraryCollection':
         import: MediaLibraryCollection
-        chunk: 'collection'
+        chunk: index
         arguments:
             - '@enhavo/app/routing/Router'
             - '@enhavo/app/filter/FilterManager'
@@ -65,7 +65,7 @@ services:
 
     '@enhavo/media-library/batch/MediaLibrarySelectBatch':
         import: MediaLibrarySelectBatch
-        chunk: 'batch'
+        chunk: index
         arguments:
             - '@enhavo/media-library/manager/MediaLibraryManager'
         tags:

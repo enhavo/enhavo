@@ -1,7 +1,7 @@
 services:
     '@enhavo/block/tab/BlockTab':
         import: BlockTab
-        chunk: 'tab'
+        chunk: input
         arguments:
             - '@enhavo/app/action/ActionManager'
         tags:
@@ -9,7 +9,7 @@ services:
 
     '@enhavo/block/action/BlockCollapseAction':
         import: BlockCollapseAction
-        chunk: 'tab'
+        chunk: action
         arguments:
             - '@enhavo/app/manager/ResourceInputManager'
         tags:

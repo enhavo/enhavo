@@ -1,6 +1,6 @@
 services:
     '@enhavo/app/translation/Translator':
-        chunk: 'view'
+        chunk: 'util'
         import: Translator
         calls:
             - [ setData, [ 'param:translations' ] ]
