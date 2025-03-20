@@ -1,6 +1,7 @@
 services:
     '@enhavo/app/toolbar/ToolbarWidgetFactory':
         import: ToolbarWidgetFactory
+        chunk: 'factory'
 
     '@enhavo/app/toolbar/ToolbarWidgetManager':
         import: ToolbarWidgetManager

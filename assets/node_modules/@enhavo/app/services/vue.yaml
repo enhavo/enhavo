@@ -6,6 +6,7 @@ services:
 
     '@enhavo/app/vue/VueRouterFactory':
         import: VueRouterFactory
+        chunk: 'vue'
         arguments:
             - '@enhavo/app/vue/VueFactory'
             - 'param:vue_routes'

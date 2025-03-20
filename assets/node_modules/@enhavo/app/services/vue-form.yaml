@@ -30,141 +30,141 @@ services:
             - { name: form.model }
 
     '@enhavo/vue-form/model/ChoiceForm':
-        chunk: 'form'
         from: '@enhavo/vue-form/model/ChoiceForm'
         import: ChoiceForm
+        chunk: 'form'
         tags:
             - { name: form.model }
 
     '@enhavo/vue-form/components/FormChoiceComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-choice' }
 
     '@enhavo/vue-form/components/FormChoiceExpandedComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-choice-expanded' }
 
     '@enhavo/vue-form/components/FormChoiceCollapsedComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-choice-collapsed' }
 
     '@enhavo/vue-form/components/FormChoiceOptionComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-choice-option' }
 
     '@enhavo/vue-form/components/FormChoiceOptgroupComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-choice-optgroup' }
 
     '@enhavo/vue-form/components/FormCompoundWidgetComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-compound-widget' }
 
     '@enhavo/vue-form/components/FormErrorsComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-errors' }
 
     '@enhavo/vue-form/components/FormRowComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-row' }
 
     '@enhavo/vue-form/components/FormRowsComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-rows' }
 
     '@enhavo/vue-form/components/FormFormComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-form' }
 
     '@enhavo/vue-form/components/FormHelpComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-help' }
 
     '@enhavo/vue-form/components/FormSimpleComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-simple' }
 
     '@enhavo/vue-form/components/FormLabelComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-label' }
 
     '@enhavo/vue-form/components/FormTextareaComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-textarea' }
 
     '@enhavo/vue-form/components/FormWidgetComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-widget' }
 
     '@enhavo/vue-form/components/FormRadioComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-radio' }
 
     '@enhavo/vue-form/components/FormCheckboxComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-checkbox' }
 
     '@enhavo/vue-form/components/FormButtonComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-button' }
 
     '@enhavo/vue-form/components/FormSubmitComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-submit' }
 
     '@enhavo/vue-form/components/FormButtonRowComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-button-row' }
 
     '@enhavo/vue-form/components/FormHiddenRowComponent.vue':
-        chunk: 'vue'
         static: true
+        chunk: component-form
         tags:
             - { name: vue.component, component: 'form-hidden-row' }
 
     '@enhavo/app/controllers/FormController':
-        chunk: main
         static: true
+        chunk: main
         tags:
             - { name: stimulus.controller, key: 'form' }
 

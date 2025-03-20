@@ -15,8 +15,8 @@ services:
             - { name: vue.service, service: 'imageCropperManager', reactive: true }
 
     '@enhavo/media/components/MediaImageCropper.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'media-image-cropper' }
 

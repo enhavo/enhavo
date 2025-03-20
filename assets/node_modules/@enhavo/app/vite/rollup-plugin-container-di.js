@@ -14,13 +14,14 @@ export default function (opts = {}) {
     const { extensions } = options;
     const filter = createFilter(options.include, options.exclude);
 
+    let builder = new ContainerBuilder;
+
     return {
         name: 'container-di',
         async transform(content, id) {
             if (!extensions.some((ext) => id.toLowerCase().endsWith(ext))) return null;
             if (!filter(id)) return null;
 
-            let builder = new ContainerBuilder;
             let loader = new Loader();
             loader.loadFile(id, builder)
 
@@ -39,5 +40,20 @@ export default function (opts = {}) {
                 map: null,
             };
         },
+        outputOptions(outputOptions) {
+            const chunks = {};
+            for (let definition of builder.getDefinitions()) {
+                let chunkName = definition.chunckName;
+                if (chunkName) {
+                    if (!chunks[chunkName]) {
+                        chunks[chunkName] = [];
+                    }
+                    chunks[chunkName].push(definition.from ? definition.from : definition.name);
+                }
+            }
+
+            outputOptions.manualChunks = chunks;
+            return outputOptions;
+        }
     };
 }

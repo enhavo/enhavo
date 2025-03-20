@@ -1,10 +1,11 @@
 services:
     '@enhavo/app/filter/FilterFactory':
         import: FilterFactory
+        chunk: 'factory'
 
     '@enhavo/app/filter/FilterManager':
         import: FilterManager
-        chunk: 'grid'
+        chunk: index
         arguments:
             - '@enhavo/app/filter/FilterFactory'
         tags:
@@ -12,43 +13,43 @@ services:
 
     '@enhavo/app/filter/model/BooleanFilter':
         import: BooleanFilter
-        chunk: 'grid'
+        chunk: index
         tags:
             - { name: enhavo_app.filter }
 
     '@enhavo/app/filter/model/TextFilter':
         import: TextFilter
-        chunk: 'grid'
+        chunk: index
         tags:
             - { name: enhavo_app.filter }
 
     '@enhavo/app/filter/model/AutoCompleteEntityFilter':
         import: AutoCompleteEntityFilter
-        chunk: 'grid'
+        chunk: index
         tags:
             - { name: enhavo_app.filter }
 
     '@enhavo/app/filter/model/EntityFilter':
         import: EntityFilter
-        chunk: 'grid'
+        chunk: index
         tags:
             - { name: enhavo_app.filter }
 
     '@enhavo/app/filter/model/OptionFilter':
         import: OptionFilter
-        chunk: 'grid'
+        chunk: index
         tags:
             - { name: enhavo_app.filter }
 
     '@enhavo/app/filter/model/BetweenFilter':
         import: BetweenFilter
-        chunk: 'grid'
+        chunk: index
         tags:
             - { name: enhavo_app.filter }
 
     '@enhavo/app/filter/model/DateBetweenFilter':
         import: DateBetweenFilter
-        chunk: 'grid'
+        chunk: index
         tags:
             - { name: enhavo_app.filter }
 

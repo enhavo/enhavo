@@ -1,5 +1,6 @@
 services:
     '@enhavo/app/ui/UiManager':
         import: UiManager
+        chunk: 'util'
         tags:
             - { name: vue.service, service: 'uiManager', reactive: true }

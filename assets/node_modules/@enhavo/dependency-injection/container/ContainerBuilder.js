@@ -5,6 +5,8 @@ import fs from "fs";
 
 export default class ContainerBuilder
 {
+    _prepared = false;
+
     constructor() {
         /** @type {Map<Definition>} */
         this.definitions = new Map();
@@ -94,6 +96,12 @@ export default class ContainerBuilder
     }
 
     async prepare() {
+        if (this._prepared) {
+            return;
+        }
+
+        this._prepared = true;
+
         let compilers = this.getCompilerPasses().sort((a, b) => {
             return b.priority - a.priority;
         });

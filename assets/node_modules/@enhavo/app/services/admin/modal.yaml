@@ -1,6 +1,7 @@
 services:
     '@enhavo/app/modal/ModalFactory':
         import: ModalFactory
+        chunk: 'factory'
 
     '@enhavo/app/modal/ModalManager':
         import: ModalManager

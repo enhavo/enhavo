@@ -10,6 +10,7 @@ services:
         static: true
 
     '@enhavo/newsletter/action/NewsletterSendAction':
+        chunk: 'action'
         import: NewsletterSendAction
         arguments:
             - '@enhavo/app/translation/Translator'
@@ -22,6 +23,7 @@ services:
             - { name: 'enhavo_app.action' }
 
     '@enhavo/newsletter/action/NewsletterSendTestAction':
+        chunk: 'action'
         import: NewsletterSendTestAction
         arguments:
             - '@enhavo/app/flash-message/FlashMessenger'

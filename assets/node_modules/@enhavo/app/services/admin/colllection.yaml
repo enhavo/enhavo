@@ -1,11 +1,11 @@
 services:
     '@enhavo/app/collection/CollectionFactory':
         import: CollectionFactory
-        chunk: 'collection'
+        chunk: factory
 
     '@enhavo/app/collection/model/TableCollection':
         import: TableCollection
-        chunk: 'collection'
+        chunk: index
         arguments:
             - '@enhavo/app/routing/Router'
             - '@enhavo/app/filter/FilterManager'
@@ -19,7 +19,7 @@ services:
 
     '@enhavo/app/collection/model/ListCollection':
         import: ListCollection
-        chunk: 'collection'
+        chunk: index
         arguments:
             - '@enhavo/app/routing/Router'
             - '@enhavo/app/filter/FilterManager'

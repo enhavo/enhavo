@@ -20,6 +20,7 @@ services:
     'manager/FrameTestManager':
         from: './manager/FrameTestManager'
         import: FrameTestManager
+        chunk: 'admin'
         arguments:
             - '@enhavo/app/frame/FrameManager'
         tags:

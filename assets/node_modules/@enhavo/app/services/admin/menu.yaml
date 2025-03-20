@@ -1,10 +1,11 @@
 services:
     '@enhavo/app/menu/MenuItemFactory':
         import: MenuItemFactory
+        chunk: 'factory'
 
     '@enhavo/app/menu/MenuManager':
         import: MenuManager
-        chunk: 'action'
+        chunk: 'main'
         arguments:
             - '@enhavo/app/menu/MenuItemFactory'
         tags:

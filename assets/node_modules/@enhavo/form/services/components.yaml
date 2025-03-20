@@ -1,168 +1,168 @@
 services:
     '@enhavo/form/components/FormList.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-list' }
 
     '@enhavo/form/components/FormDateTime.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component-jquery'
         tags:
             - { name: vue.component, component: 'form-date-time' }
 
     '@enhavo/form/components/FormListItem.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-list-item' }
 
     '@enhavo/form/components/FormPolyCollection.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-poly-collection' }
 
     '@enhavo/form/components/FormPolyCollectionItem.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-poly-collection-item' }
 
     '@enhavo/form/components/FormWysiwyg.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-wysiwyg' }
 
     '@enhavo/form/components/wysiwyg/FormWysiwygMenuGroup.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-wysiwyg-menu-group' }
 
     '@enhavo/form/components/wysiwyg/FormWysiwygMenuButton.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-wysiwyg-menu-button' }
 
     '@enhavo/form/components/wysiwyg/FormWysiwygMenuSubmenu.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-wysiwyg-menu-submenu' }
 
     '@enhavo/form/components/wysiwyg/FormWysiwygMenuSpacer.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-wysiwyg-menu-spacer' }
 
     '@enhavo/form/components/wysiwyg/FormWysiwygColorButton.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-wysiwyg-color-button' }
 
     '@enhavo/form/components/wysiwyg/FormWysiwygModalContainer.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-wysiwyg-modal-container' }
 
     '@enhavo/form/components/wysiwyg/FormWysiwygModalYesNo.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-wysiwyg-modal-yes-no' }
 
     '@enhavo/form/components/wysiwyg/FormWysiwygModalLink.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-wysiwyg-modal-link' }
 
     '@enhavo/form/components/wysiwyg/FormWysiwygModalSpecialCharacters.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-wysiwyg-modal-special-characters' }
 
     '@enhavo/form/components/wysiwyg/FormWysiwygModalSourceCode.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-wysiwyg-modal-source-code' }
 
     '@enhavo/form/components/wysiwyg/FormWysiwygSearchReplaceInlineForm.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-wysiwyg-search-replace-inline-form' }
 
     '@enhavo/form/components/wysiwyg/FormWysiwygTableInlineForm.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-wysiwyg-table-inline-form' }
 
     '@enhavo/form/components/FormConditional.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-conditional' }
 
     '@enhavo/form/components/FormSelect2ChoiceCollapsed.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-select2-choice-collapsed' }
 
     '@enhavo/form/components/FormAdminChoiceExpanded.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-admin-choice-expanded' }
 
     '@enhavo/form/components/FormAdminChoice.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-admin-choice' }
 
     '@enhavo/form/components/FormChoiceTree.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-choice-tree' }
 
     '@enhavo/form/components/FormChoiceTreeRow.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-choice-tree-row' }
 
     '@enhavo/form/components/FormICheckCheckbox.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component-jquery'
         tags:
             - { name: vue.component, component: 'form-icheck-checkbox' }
 
     '@enhavo/form/components/FormICheckRadio.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component-jquery'
         tags:
             - { name: vue.component, component: 'form-icheck-radio' }
 
     '@enhavo/form/components/FormAutoComplete.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-auto-complete' }
 
     '@enhavo/form/components/FormHtmlTag.vue':
-        chunk: 'vue'
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-html-tag' }

@@ -1,10 +1,11 @@
 services:
     '@enhavo/app/tab/TabFactory':
         import: TabFactory
+        chunk: factory
 
     '@enhavo/app/tab/TabManager':
         import: TabManager
-        chunk: 'tab'
+        chunk: input
         arguments:
             - '@enhavo/app/tab/TabFactory'
         tags:
@@ -12,19 +13,19 @@ services:
 
     '@enhavo/app/tab/model/BaseTab':
         import: BaseTab
-        chunk: 'tab'
+        chunk: input
         tags:
             - { name: 'enhavo_app.tab' }
 
     '@enhavo/app/tab/model/FormTab':
         import: FormTab
-        chunk: 'tab'
+        chunk: input
         tags:
             - { name: 'enhavo_app.tab' }
 
     '@enhavo/app/tab/model/RevisionTab':
         import: RevisionTab
-        chunk: 'tab'
+        chunk: input
         arguments:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'

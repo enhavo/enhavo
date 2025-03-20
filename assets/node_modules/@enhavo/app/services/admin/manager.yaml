@@ -16,6 +16,7 @@ services:
 
     '@enhavo/app/manager/ResourceIndexManager':
         import: ResourceIndexManager
+        chunk: index
         arguments:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/action/ActionManager'
@@ -30,6 +31,7 @@ services:
 
     '@enhavo/app/manager/ResourceInputManager':
         import: ResourceInputManager
+        chunk: 'input'
         arguments:
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/tab/TabManager'
@@ -43,6 +45,7 @@ services:
 
     '@enhavo/app/manager/ResourcePreviewManager':
         import: ResourcePreviewManager
+        chunk: 'preview'
         arguments:
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/frame/FrameManager'

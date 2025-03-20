@@ -7,6 +7,7 @@ compiler_pass:
 services:
     '@enhavo/dashboard/manager/DashboardManager':
         import: DashboardManager
+        chunk: 'dashboard'
         arguments:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/dashboard/dashboard/DashboardWidgetManager'
@@ -16,29 +17,34 @@ services:
 
     '@enhavo/dashboard/dashboard/DashboardWidgetFactory':
         import: DashboardWidgetFactory
-        chunk: 'column'
+        chunk: 'dashboard'
 
     '@enhavo/dashboard/dashboard/DashboardWidgetManager':
         import: DashboardWidgetManager
+        chunk: 'dashboard'
         arguments:
             - '@enhavo/dashboard/dashboard/DashboardWidgetFactory'
 
     '@enhavo/dashboard/dashboard/model/BaseDashboardWidget':
         import: BaseDashboardWidget
+        chunk: 'dashboard'
         tags:
             - 'enhavo_dashboard.widget'
 
     '@enhavo/dashboard/dashboard/model/NumberDashboardWidget':
         import: NumberDashboardWidget
+        chunk: 'dashboard'
         tags:
             - 'enhavo_dashboard.widget'
 
     '@enhavo/dashboard/components/DashboardIndex.vue':
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'dashboard-index' }
 
     '@enhavo/dashboard/components/DashboardWidgetNumber.vue':
         static: true
+        chunk: 'component'
         tags:
             - { name: vue.component, component: 'dashboard-widget-number' }

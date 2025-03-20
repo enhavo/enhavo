@@ -3,7 +3,7 @@ services:
         import: Router
         arguments:
             - 'param:routes'
-        chunk: 'app'
+        chunk: 'util'
         tags:
             - { name: vue.service, service: 'router', reactive: false }
 

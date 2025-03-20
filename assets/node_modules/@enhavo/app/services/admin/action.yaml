@@ -1,6 +1,7 @@
 services:
     '@enhavo/app/action/ActionFactory':
         import: ActionFactory
+        chunk: 'action'
 
     '@enhavo/app/action/ActionManager':
         import: ActionManager
