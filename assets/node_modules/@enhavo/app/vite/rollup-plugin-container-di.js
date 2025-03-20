@@ -6,7 +6,8 @@ import fs from 'fs';
 
 const defaults = {
     transform: null,
-    extensions: ['.di.yaml']
+    extensions: ['.di.yaml'],
+    enableChunks: true,
 };
 
 export default function (opts = {}) {
@@ -41,6 +42,9 @@ export default function (opts = {}) {
             };
         },
         outputOptions(outputOptions) {
+            if (!options.enableChunks) {
+                return outputOptions;
+            }
             const chunks = {};
             for (let definition of builder.getDefinitions()) {
                 let chunkName = definition.chunckName;
