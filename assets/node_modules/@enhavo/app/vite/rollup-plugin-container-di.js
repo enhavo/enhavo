@@ -45,6 +45,11 @@ export default function (opts = {}) {
             if (!options.enableChunks) {
                 return outputOptions;
             }
+
+            if (import.meta.env !== undefined && import.meta.env.DEV) {
+                return outputOptions;
+            }
+
             const chunks = {};
             for (let definition of builder.getDefinitions()) {
                 let chunkName = definition.chunckName;
