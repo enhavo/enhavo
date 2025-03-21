@@ -57,8 +57,10 @@ class DuplicateFactory
 
                     /** @var Duplicate $duplicate */
                     $duplicate = $this->duplicateFactory->create($config);
-                    $newValue = $duplicate->duplicate($sourceValue, $targetValue, $context);
-                    $reflectionProperty->setValue($target, $newValue);
+                    if ($duplicate->isApplicable($sourceValue, $targetValue, $context)) {
+                        $newValue = $duplicate->duplicate($sourceValue, $targetValue, $context);
+                        $reflectionProperty->setValue($target, $newValue);
+                    }
                 }
             }
         }

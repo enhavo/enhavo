@@ -101,4 +101,9 @@ class SimpleDuplicateType extends AbstractDuplicateType
     {
         $targetValue->setValue($sourceValue->getValue());
     }
+
+    public function isApplicable($options, SourceValue $sourceValue, TargetValue $targetValue, $context): bool
+    {
+        return true;
+    }
 }

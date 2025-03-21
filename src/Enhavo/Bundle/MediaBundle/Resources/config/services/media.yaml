@@ -173,6 +173,16 @@ services:
 
     Enhavo\Bundle\MediaBundle\Duplicate\Type\FileDuplicateType:
         arguments:
-            - '@enhavo_media.file.factory'
+            - '@Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory'
+        tags:
+            - { name: enhavo_resource.duplicate }
+
+    Enhavo\Bundle\MediaBundle\Duplicate\Type\ContentDuplicateType:
+        tags:
+            - { name: enhavo_resource.duplicate }
+
+    Enhavo\Bundle\MediaBundle\Duplicate\Type\FileTokenDuplicateType:
+        arguments:
+            - '@enhavo_app.util.secure_url_token_generator'
         tags:
             - { name: enhavo_resource.duplicate }

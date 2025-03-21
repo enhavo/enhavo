@@ -13,10 +13,6 @@ class BlockDuplicateType extends AbstractDuplicateType
 {
     public function finish($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void
     {
-        if (!$this->isGroupSelected($options, $context)) {
-            return;
-        }
-
         $parent = $targetValue->getParent();
         $block = $targetValue->getValue();
         if ($block instanceof BlockInterface && $parent instanceof NodeInterface) {

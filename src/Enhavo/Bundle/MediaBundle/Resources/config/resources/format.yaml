@@ -6,3 +6,26 @@ enhavo_resource:
                 model: Enhavo\Bundle\MediaBundle\Entity\Format
                 factory: Enhavo\Bundle\MediaBundle\Factory\FormatFactory
                 repository: Enhavo\Bundle\MediaBundle\Repository\FormatRepository
+
+    duplicate:
+        Enhavo\Bundle\MediaBundle\Entity\Format:
+            properties:
+                name:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                parameters:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                mimeType:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                content:
+                    -   type: Enhavo\Bundle\MediaBundle\Duplicate\Type\ContentDuplicateType
+                        groups: ['duplicate']
+                        copy_content: true
+                    -   type: Enhavo\Bundle\MediaBundle\Duplicate\Type\ContentDuplicateType
+                        groups: ['revision', 'restore']
+                        copy_content: false
+                checksum:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
