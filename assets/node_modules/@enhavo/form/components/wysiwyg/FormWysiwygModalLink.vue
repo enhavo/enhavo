@@ -46,7 +46,7 @@ const modalTargetInput = ref(null);
 
 onMounted(() => {
     select2($);
-    $(modalTargetInput.value).select2();
+    $(modalTargetInput.value).select2({ width: 'style' });
 });
 
 function submit()
