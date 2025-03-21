@@ -47,7 +47,7 @@ export class WysiwygConfig
                     openOnClick: false,
                     autolink: true,
                     defaultProtocol: 'https',
-                    protocols: ['http', 'https'],
+                    protocols: ['http', 'https', 'mailto'],
                     HTMLAttributes: {
                         rel: null,
                     },
@@ -62,7 +62,7 @@ export class WysiwygConfig
                             }
 
                             // disallowed protocols
-                            const disallowedProtocols = ['ftp', 'file', 'mailto'];
+                            const disallowedProtocols = ['ftp', 'file'];
                             const protocol = parsedUrl.protocol.replace(':', '');
 
                             if (disallowedProtocols.includes(protocol)) {
