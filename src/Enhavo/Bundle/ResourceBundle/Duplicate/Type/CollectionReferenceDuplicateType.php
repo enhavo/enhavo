@@ -12,10 +12,6 @@ class CollectionReferenceDuplicateType extends AbstractDuplicateType
 {
     public function duplicate($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void
     {
-        if (!$this->isGroupSelected($options, $context)) {
-            return;
-        }
-
         $originalValue = $targetValue->getOriginalValue();
 
         if ($sourceValue->getValue() === null) {
@@ -72,13 +68,6 @@ class CollectionReferenceDuplicateType extends AbstractDuplicateType
         } else {
             unset($collection[$key]);
         }
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'groups' => null,
-        ]);
     }
 
     public static function getName(): ?string

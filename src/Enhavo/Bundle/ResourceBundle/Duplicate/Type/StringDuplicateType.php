@@ -11,10 +11,6 @@ class StringDuplicateType extends AbstractDuplicateType
 {
     public function duplicate($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void
     {
-        if (!$this->isGroupSelected($options, $context)) {
-            return;
-        }
-
         if ($sourceValue->getValue() === null) {
             $targetValue->setValue(null);
             return;
@@ -27,7 +23,6 @@ class StringDuplicateType extends AbstractDuplicateType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'groups' => null,
             'prefix' => null,
             'postfix' => null,
         ]);

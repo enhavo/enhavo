@@ -30,6 +30,10 @@ services:
             - '@Enhavo\Component\Metadata\MetadataRepository[Duplicate]'
             - '@Enhavo\Component\Type\FactoryInterface[Duplicate]'
 
+    Enhavo\Bundle\ResourceBundle\Duplicate\Type\BaseDuplicateType:
+        tags:
+            - { name: enhavo_resource.duplicate }
+
     Enhavo\Bundle\ResourceBundle\Duplicate\Type\PropertyDuplicateType:
         tags:
             - { name: enhavo_resource.duplicate }

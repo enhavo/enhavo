@@ -11,10 +11,6 @@ class CloneDuplicateType extends AbstractDuplicateType
 {
     public function duplicate($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void
     {
-        if (!$this->isGroupSelected($options, $context)) {
-            return;
-        }
-
         if ($sourceValue->getValue() === null) {
             $targetValue->setValue(null);
             return;
@@ -22,13 +18,6 @@ class CloneDuplicateType extends AbstractDuplicateType
 
         $value = clone $sourceValue->getValue();
         $targetValue->setValue($value);
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'groups' => null
-        ]);
     }
 
     public static function getName(): ?string

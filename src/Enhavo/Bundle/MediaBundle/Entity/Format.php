@@ -15,12 +15,12 @@ use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 class Format implements FormatInterface
 {
     private ?int $id = null;
-    private string $name;
+    private ?string $name = null;
     private array $parameters = [];
-    private string $mimeType;
-    private ?string $extension;
-    private FileInterface $file;
-    private ContentInterface $content;
+    private ?string $mimeType = null;
+    private ?string $extension = null;
+    private ?FileInterface $file = null;
+    private ?ContentInterface $content = null;
     private ?\DateTime $lockAt = null;
     private ?string $checksum = null;
 

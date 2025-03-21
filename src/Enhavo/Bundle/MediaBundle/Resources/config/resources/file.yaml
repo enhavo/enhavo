@@ -6,3 +6,43 @@ enhavo_resource:
                 model: Enhavo\Bundle\MediaBundle\Entity\File
                 factory: Enhavo\Bundle\MediaBundle\Factory\FileFactory
                 repository: Enhavo\Bundle\MediaBundle\Repository\FileRepository
+
+    duplicate:
+        Enhavo\Bundle\MediaBundle\Entity\File:
+            properties:
+                mimeType:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                extension:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                order:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                filename:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                parameters:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                content:
+                    -   type: Enhavo\Bundle\MediaBundle\Duplicate\Type\ContentDuplicateType
+                        groups: ['duplicate']
+                        copy_content: true
+                    -   type: Enhavo\Bundle\MediaBundle\Duplicate\Type\ContentDuplicateType
+                        groups: ['revision', 'restore']
+                        copy_content: false
+                token:
+                    type: Enhavo\Bundle\MediaBundle\Duplicate\Type\FileTokenDuplicateType
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                checksum:
+                    type: property
+                    groups: [ 'duplicate', 'revision', 'restore' ]
+                createdAt:
+                    -   type: datetime
+                        groups: [ 'duplicate' ]
+                    -   type: clone
+                        groups: ['revision', 'restore' ]
+                formats:
+                    type: collection
+                    groups: [ 'duplicate', 'revision', 'restore' ]
