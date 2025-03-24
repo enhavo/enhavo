@@ -60,6 +60,9 @@ services:
             - '@enhavo/app/filter/FilterManager'
             - '@enhavo/app/column/ColumnManager'
             - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/translation/Translator'
+            - '@enhavo/app/client/Client'
         tags:
             - { name: enhavo_app.collection }
 
