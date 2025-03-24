@@ -5,11 +5,13 @@ import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {Translator} from "@enhavo/app/translation/Translator";
 import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
 import {ResourceInputManager} from "@enhavo/app/manager/ResourceInputManager";
+import {ClientInterface} from "@enhavo/app/client/ClientInterface";
 
 export class RevisionAwareRestoreAction extends AbstractAction
 {
     public url: string;
     public token: string;
+    public reload: boolean;
 
     public confirmMessage: string;
     public confirmLabelOk: string;
@@ -21,6 +23,7 @@ export class RevisionAwareRestoreAction extends AbstractAction
         private readonly frameManager: FrameManager,
         private readonly translator: Translator,
         private readonly resourceInputManager: ResourceInputManager,
+        private readonly client: ClientInterface,
     ) {
         super();
     }
@@ -42,7 +45,7 @@ export class RevisionAwareRestoreAction extends AbstractAction
     {
         this.uiManager.loading(true);
 
-        let response = await fetch(this.url, {
+        let transport = await this.client.fetch(this.url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -52,15 +55,21 @@ export class RevisionAwareRestoreAction extends AbstractAction
             }),
         });
 
-        if (response.ok) {
-            this.frameManager.dispatch(new Event('input_changed'));
-            this.flashMessenger.success(this.translator.trans('enhavo_app.revision.message.restored', {}, 'javascript'));
+        if (!transport.ok || !transport.response.ok) {
+            this.uiManager.loading(false);
+            await this.client.handleError(transport, {
+                confirm: true
+            });
+            return;
+        }
+
+        this.frameManager.dispatch(new Event('input_changed'));
+        this.flashMessenger.success(this.translator.trans('enhavo_app.revision.message.restored', {}, 'javascript'));
+        if (this.reload) {
             (await this.frameManager.getFrame()).loaded = false;
             this.uiManager.loading(false);
             window.location.reload();
-        } else {
-            this.uiManager.loading(false);
-            this.flashMessenger.error(this.translator.trans('enhavo_app.error', {}, 'javascript'));
         }
+        this.uiManager.loading(false);
     }
 }

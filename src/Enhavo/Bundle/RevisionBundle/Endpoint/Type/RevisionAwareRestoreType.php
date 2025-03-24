@@ -57,6 +57,7 @@ class RevisionAwareRestoreType extends AbstractEndpointType
             $this->revisionManager->dearchive($subject);
         }
 
+        $resource->setSubject(null);
         $this->em->remove($resource);
         $this->em->flush();
 
