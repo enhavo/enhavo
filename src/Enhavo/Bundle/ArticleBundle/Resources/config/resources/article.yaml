@@ -97,7 +97,7 @@ enhavo_resource:
                     permission: ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE
                     enabled: 'expr:resource && resource.getId()'
                 preview:
-                    type: preview
+                    type: preview_dropdown
                     enabled: 'expr:resource && resource.getId()'
                 comments:
                     type: comments

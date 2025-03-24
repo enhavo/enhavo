@@ -94,15 +94,18 @@ enhavo_resource:
             actions:
                 save:
                     type: save
+                link:
+                    type: link
+                    label: page.label.to_page
+                    translation_domain: EnhavoPageBundle
+                    enabled: 'expr:resource && resource.getId()'
                 duplicate:
                     type: duplicate
                     route: enhavo_page_admin_api_page_duplicate
                     permission: ROLE_ENHAVO_PAGE_PAGE_CREATE
                     enabled: 'expr:resource && resource.getId()'
                 preview:
-                    type: preview
-                    api_route: enhavo_page_admin_api_preview
-
+                    type: preview_dropdown
     duplicate:
         Enhavo\Bundle\PageBundle\Entity\Page:
             properties:

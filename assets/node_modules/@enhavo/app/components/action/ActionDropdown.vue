@@ -1,55 +1,45 @@
 <template>
-    <div class="action" :ref="(el) => element = el">
-        <div @click="toggleOpen()">
+    <div class="action" v-click-outside="() => data.close()">
+        <div @click="execute($event)">
             <div class="action-icon">
                 <i :class="['icon', 'icon-' + data.icon]"></i>
             </div>
             <div class="label">{{ data.label }}</div>
         </div>
-        <ul class="dropdown-action-list" v-if="open" @click="itemClick()">
+        <ul class="dropdown-action-list" v-show="data.isOpen" @click="() => data.closeAfter ? data.close() : false">
             <template v-for="action in data.items">
-                <component class="action-container" :is="action.component" :data="action"></component>
+                <li>
+                    <component class="action-container" :is="action.component" :data="action"></component>
+                </li>
             </template>
         </ul>
     </div>
 </template>
 
 <script setup lang="ts">
-import {onMounted, onUnmounted} from 'vue'
 import {DropdownAction} from "@enhavo/app/action/model/DropdownAction";
+import {onMounted} from "vue";
 
 const props = defineProps<{
-    data: DropdownAction
-}>()
+    data: DropdownAction,
+    clickStop?: boolean,
+}>();
 
-let open: boolean = false;
-let element: HTMLElement = null;
-
-function toggleOpen()
+function getIcon(): string
 {
-    open = !open;
+    return (props.data && props.data.icon) ? 'icon-' + props.data.icon : '';
 }
 
-function itemClick()
+function execute(event: Event)
 {
-    if (props.data.closeAfter) {
-        open = false;
+    if (props.clickStop) {
+        event.stopPropagation();
     }
-}
-
-// Close when clicked outside
-function close(e: Event)
-{
-    if (!element.contains(<Node>e.target)) {
-        open = false;
-    }
+    props.data.execute()
 }
 
 onMounted(() => {
-    document.addEventListener('click', close)
-});
+    props.data.mounted()
+})
 
-onUnmounted(() => {
-    document.removeEventListener('click', close)
-});
 </script>

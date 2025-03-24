@@ -51,7 +51,7 @@ enhavo_resource:
             form_options: {  }
             actions:
                 preview:
-                    type: preview
+                    type: preview_dropdown
                 send_test:
                     type: newsletter_send_test
                     enabled: expr:resource && resource.getId()

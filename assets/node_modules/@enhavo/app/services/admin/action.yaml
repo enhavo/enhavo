@@ -43,7 +43,7 @@ services:
         arguments:
             - '@enhavo/app/action/ActionManager'
         tags:
-            - { name: 'enhavo_app.action', class: 'dropdown' }
+            - { name: 'enhavo_app.action' }
 
     '@enhavo/app/action/model/DuplicateAction':
         import: DuplicateAction
@@ -165,5 +165,13 @@ services:
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/translation/Translator'
+        tags:
+            - { name: 'enhavo_app.action' }
+
+    '@enhavo/app/action/model/PreviewWindowAction':
+        import: PreviewWindowAction
+        chunk: 'action'
+        arguments:
+            - '@enhavo/app/manager/ResourceInputManager'
         tags:
             - { name: 'enhavo_app.action' }

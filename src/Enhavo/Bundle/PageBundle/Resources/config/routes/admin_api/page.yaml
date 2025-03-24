@@ -61,7 +61,7 @@ enhavo_page_admin_api_page_duplicate:
             type: resource_duplicate
             input: enhavo_page.page
 
-enhavo_page_admin_api_preview:
+enhavo_page_admin_api_page_preview:
     path: /page/preview
     methods: [GET, POST]
     defaults:

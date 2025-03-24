@@ -38,3 +38,9 @@ services:
             - '@Enhavo\Bundle\RoutingBundle\Router\Router'
         tags:
             - { name: enhavo_resource.column }
+
+    Enhavo\Bundle\RoutingBundle\Action\Type\LinkActionType:
+        arguments:
+            - '@Enhavo\Bundle\RoutingBundle\Router\Router'
+        tags:
+            - { name: enhavo_resource.action }

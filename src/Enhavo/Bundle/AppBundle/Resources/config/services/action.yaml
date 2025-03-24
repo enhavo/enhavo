@@ -7,6 +7,14 @@ services:
         tags:
             - { name: enhavo_resource.action }
 
+    Enhavo\Bundle\AppBundle\Action\Type\PreviewWindowActionType:
+        tags:
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\AppBundle\Action\Type\PreviewDropdownActionType:
+        tags:
+            - { name: enhavo_resource.action }
+
     Enhavo\Bundle\AppBundle\Action\Type\AutoSaveActionType:
         tags:
             - { name: enhavo_resource.action }
@@ -28,6 +36,12 @@ services:
             - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\CloseActionType:
+        tags:
+            - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\AppBundle\Action\Type\DropdownActionType:
+        calls:
+            - [setActionManager, ['@Enhavo\Bundle\ResourceBundle\Action\ActionManager']]
         tags:
             - { name: enhavo_resource.action }
 
@@ -72,12 +86,6 @@ services:
     Enhavo\Bundle\AppBundle\Action\Type\OutputStreamActionType:
         tags:
             - { name: enhavo_resource.action }
-
-#    Enhavo\Bundle\AppBundle\Action\Type\DropdownActionType:
-#        calls:
-#            - [setActionManager, ['@Enhavo\Bundle\ResourceBundle\Action\ActionManager']]
-#        tags:
-#            - { name: enhavo_resource.action }
 
     Enhavo\Bundle\AppBundle\Action\Type\FilterActionType:
         tags:
