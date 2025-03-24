@@ -153,6 +153,7 @@ services:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/translation/Translator'
             - '@enhavo/app/manager/ResourceInputManager'
+            - '@enhavo/app/client/Client'
         tags:
             - { name: 'enhavo_app.action' }
 

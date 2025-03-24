@@ -19,6 +19,7 @@ class RevisionAwareRestoreActionType extends AbstractActionType
 
     public function createViewData(array $options, Data $data, object $resource = null): void
     {
+        $data->set('reload', $options['reload']);
         $data->set('token', $this->tokenManager->getToken('resource_revision')->getValue());
         $data->set('url', $this->router->generate($options['route'], [
             'id' => $resource->getId()
@@ -29,6 +30,7 @@ class RevisionAwareRestoreActionType extends AbstractActionType
     {
         $resolver->setDefaults([
             'label' => 'restore.action.restore',
+            'reload' => false,
             'translation_domain' => 'EnhavoRevisionBundle',
             'icon' => 'replay',
             'model' => 'RevisionAwareRestoreAction',
