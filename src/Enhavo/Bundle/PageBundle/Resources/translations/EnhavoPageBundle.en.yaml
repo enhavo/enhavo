@@ -13,6 +13,7 @@ page:
       change_frequency: 'Change frequency'
   label:
     page: 'Page'
+    to_page: 'Open page'
     id: 'ID'
     public: 'public'
     title: 'Title'

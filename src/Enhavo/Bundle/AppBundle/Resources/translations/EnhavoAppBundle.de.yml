@@ -35,6 +35,8 @@ label:
   auto_save: 'Autosave'
   delete: 'Löschen'
   preview: 'Vorschau'
+  preview_frame: 'Vorschau'
+  preview_window: 'Vorschau (Neues Fenster)'
   create: 'Erstellen'
   duplicate: 'Duplizieren'
   download: 'Download'
