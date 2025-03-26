@@ -39,6 +39,8 @@ services:
         alias: Enhavo\Bundle\AppBundle\Controller\ModalController
 
     Enhavo\Bundle\AppBundle\Controller\ModalController:
+        arguments:
+            - '@form.factory'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
             - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
