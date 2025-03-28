@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import {inject, ref} from "vue";
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
-import {WysiwygColorButton} from "@enhavo/form/wysiwyg/WysiwygColorButton";
+import {WysiwygColorButton} from "@enhavo/form/wysiwyg/menu/WysiwygColorButton";
 import {Translator} from "@enhavo/app/translation/Translator";
 
 const translator = inject<Translator>('translator');

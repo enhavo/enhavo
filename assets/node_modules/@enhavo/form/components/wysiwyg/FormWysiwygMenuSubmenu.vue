@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import {inject, ref} from "vue";
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
-import {WysiwygMenuSubmenu} from "@enhavo/form/wysiwyg/WysiwygMenuSubmenu";
+import {WysiwygMenuSubmenu} from "@enhavo/form/wysiwyg/menu/WysiwygMenuSubmenu";
 import {Translator} from "@enhavo/app/translation/Translator";
 
 const translator = inject<Translator>('translator');

@@ -1,6 +1,7 @@
 import {Form} from "@enhavo/vue-form/model/Form";
-import {WysiwygConfig} from "@enhavo/form/wysiwyg/WysiwygConfig";
-import {WysiwygModalConfiguration} from "@enhavo/form/wysiwyg/WysiwygModalConfiguration";
+import {WysiwygConfigInterface} from "@enhavo/form/wysiwyg/menu/WysiwygConfigInterface";
+import {WysiwygModalConfiguration} from "@enhavo/form/wysiwyg/menu/WysiwygModalConfiguration";
+import WysiwygConfigRegistry from "@enhavo/form/wysiwyg/menu/WysiwygConfigRegistry";
 import {Editor} from '@tiptap/vue-3';
 
 export class WysiwygForm extends Form
@@ -9,13 +10,19 @@ export class WysiwygForm extends Form
     public additionalCssClasses: string[];
 
     public configName: string = 'default';
-    public config: WysiwygConfig;
+    public config: WysiwygConfigInterface;
 
     public modal: WysiwygModalConfiguration;
 
     public searchAndReplaceOpen: boolean;
     public searchAndReplaceSearchTerm: string;
     public searchAndReplaceReplaceTerm: string;
+
+    public constructor(
+        private readonly configRegistry: WysiwygConfigRegistry,
+    ) {
+        super();
+    }
 
     init()
     {
@@ -59,10 +66,10 @@ export class WysiwygForm extends Form
         this.initEditor();
     }
 
-    getConfig(): WysiwygConfig
+    getConfig(): WysiwygConfigInterface
     {
         if (this.config === null) {
-            this.config = WysiwygConfig.getConfig(this.configName);
+            this.config = this.configRegistry.getConfig(this.configName);
         }
         return this.config;
     }

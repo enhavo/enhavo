@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
-import {WysiwygMenuSpacer} from "@enhavo/form/wysiwyg/WysiwygMenuSpacer";
+import {WysiwygMenuSpacer} from "@enhavo/form/wysiwyg/menu/WysiwygMenuSpacer";
 
 const props = defineProps<{
     configuration: WysiwygMenuSpacer,
