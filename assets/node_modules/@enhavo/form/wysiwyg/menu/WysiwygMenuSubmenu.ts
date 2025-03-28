@@ -1,5 +1,5 @@
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
-import {WysiwygMenuItem} from "@enhavo/form/wysiwyg//WysiwygMenuItem";
+import {WysiwygMenuItem} from "@enhavo/form/wysiwyg/menu/WysiwygMenuItem";
 
 export class WysiwygMenuSubmenu extends WysiwygMenuItem
 {

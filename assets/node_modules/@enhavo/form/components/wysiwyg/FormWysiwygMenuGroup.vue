@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
-import {WysiwygMenuGroup} from "@enhavo/form/wysiwyg/WysiwygMenuGroup";
+import {WysiwygMenuGroup} from "@enhavo/form/wysiwyg/menu/WysiwygMenuGroup";
 
 const props = defineProps<{
     configuration: WysiwygMenuGroup,

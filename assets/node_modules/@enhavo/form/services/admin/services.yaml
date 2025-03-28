@@ -1,9 +1,23 @@
 imports:
     - path: '../*'
 
+compiler_pass:
+    wysiwyg:
+        path: '@enhavo/app/compiler-pass/registry.js'
+        service: '@enhavo/form/wysiwyg/WysiwygConfigRegistry'
+        tag: 'enhavo_form.wysiwyg_config'
+
 services:
     '@enhavo/form/controllers/FormStyleController':
         chunk: controller
         static: true
         tags:
             - { name: stimulus.controller, key: 'form-style' }
+
+    '@enhavo/form/wysiwyg/WysiwygConfigRegistry':
+        chunk: 'form'
+
+    '@enhavo/form/wysiwyg/WysiwygDefaultConfig':
+        chunk: 'form'
+        tags:
+            - { name: enhavo_form.wysiwyg_config }

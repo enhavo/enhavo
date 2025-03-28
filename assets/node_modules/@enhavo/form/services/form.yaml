@@ -18,6 +18,8 @@ services:
     '@enhavo/form/form/model/WysiwygForm':
         chunk: 'vue'
         import: WysiwygForm
+        arguments:
+            - '@enhavo/form/wysiwyg/WysiwygConfigRegistry'
         tags:
             - { name: form.model }
 
