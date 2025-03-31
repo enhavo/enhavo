@@ -16,8 +16,10 @@ services:
 
     '@enhavo/form/wysiwyg/WysiwygConfigRegistry':
         chunk: 'form'
+        import: WysiwygConfigRegistry
 
     '@enhavo/form/wysiwyg/WysiwygDefaultConfig':
         chunk: 'form'
+        import: WysiwygDefaultConfig
         tags:
             - { name: enhavo_form.wysiwyg_config }

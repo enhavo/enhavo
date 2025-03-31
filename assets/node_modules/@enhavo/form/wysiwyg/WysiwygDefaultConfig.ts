@@ -29,7 +29,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
 import * as _ from "lodash";
 
-export default class WysiwygDefaultConfig implements WysiwygConfigInterface
+export class WysiwygDefaultConfig implements WysiwygConfigInterface
 {
     name: string = 'default';
 
