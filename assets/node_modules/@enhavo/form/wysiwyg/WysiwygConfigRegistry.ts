@@ -1,22 +1,20 @@
 import {WysiwygConfigInterface} from "@enhavo/form/wysiwyg/WysiwygConfigInterface";
 
-export default class WysiwygConfigRegistry
+export class WysiwygConfigRegistry
 {
-    private configs: WysiwygConfigInterface[] = [];
+    private configs: Map<string, WysiwygConfigInterface> = new Map<string, WysiwygConfigInterface>();
 
     public register(config: WysiwygConfigInterface): WysiwygConfigRegistry
     {
-        this.configs.push(config);
+        this.configs.set(config.name, config);
 
         return this;
     }
 
     public getConfig(name: string): WysiwygConfigInterface
     {
-        for (let type of this.configs) {
-            if (name === type.name) {
-                return type;
-            }
+        if (this.configs.has(name)) {
+            return this.configs.get(name);
         }
         return null;
     }
