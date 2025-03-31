@@ -1,4 +1,4 @@
-import {WysiwygMenuButton} from "@enhavo/form/wysiwyg/WysiwygMenuButton";
+import {WysiwygMenuButton} from "@enhavo/form/wysiwyg/menu/WysiwygMenuButton";
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
 
 export class WysiwygColorButton extends WysiwygMenuButton

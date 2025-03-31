@@ -1,4 +1,4 @@
-import {WysiwygMenuItem} from "@enhavo/form/wysiwyg//WysiwygMenuItem";
+import {WysiwygMenuItem} from "@enhavo/form/wysiwyg/menu/WysiwygMenuItem";
 
 export class WysiwygMenuSpacer extends WysiwygMenuItem
 {

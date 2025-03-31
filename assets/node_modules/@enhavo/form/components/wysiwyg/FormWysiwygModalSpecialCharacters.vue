@@ -76,7 +76,7 @@
 <script setup lang="ts">
 import {inject, onMounted, ref} from "vue";
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
-import {WysiwygSpecialCharactersButton} from "@enhavo/form/wysiwyg/WysiwygSpecialCharactersButton";
+import {WysiwygSpecialCharactersButton} from "@enhavo/form/wysiwyg/menu/WysiwygSpecialCharactersButton";
 import {Translator} from "@enhavo/app/translation/Translator";
 
 const translator = inject<Translator>('translator');
