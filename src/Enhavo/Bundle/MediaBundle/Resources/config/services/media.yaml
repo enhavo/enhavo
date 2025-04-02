@@ -66,6 +66,7 @@ services:
             - '%kernel.project_dir%/var/media'
             - '@filesystem'
             - '@enhavo_media.file.repository'
+            - '@enhavo_media.format.repository'
 
     Enhavo\Bundle\MediaBundle\Twig\MediaTwigExtension:
         arguments:

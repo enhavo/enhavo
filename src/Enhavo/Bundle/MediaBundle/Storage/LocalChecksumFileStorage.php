@@ -10,6 +10,7 @@ namespace Enhavo\Bundle\MediaBundle\Storage;
 
 use Enhavo\Bundle\MediaBundle\Exception\FileNotFoundException;
 use Enhavo\Bundle\MediaBundle\Repository\FileRepository;
+use Enhavo\Bundle\MediaBundle\Repository\FormatRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
@@ -23,6 +24,7 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
         private readonly string $basePath,
         private readonly Filesystem $filesystem,
         private readonly FileRepository $fileRepository,
+        private readonly FormatRepository $formatRepository,
     )
     {
     }
@@ -31,7 +33,11 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
     {
         $this->checkFile($file);
 
-        $amount = $this->fileRepository->countByChecksum($file->getChecksum());
+        if ($file instanceof FileInterface) {
+            $amount = $this->fileRepository->countByChecksum($file->getChecksum());
+        } else if ($file instanceof FormatInterface) {
+            $amount = $this->formatRepository->countByChecksum($file->getChecksum());
+        }
 
         if ($amount === 0) {
             $path = $this->getFilePath($file);

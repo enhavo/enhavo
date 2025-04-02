@@ -14,6 +14,18 @@ use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class FormatRepository extends EntityRepository
 {
+    public function countByChecksum(string $checksum): int
+    {
+        $query = $this->createQueryBuilder('f')
+            ->select('count(f.id) as count')
+            ->where('f.checksum = :checksum')
+            ->setParameter('checksum', $checksum)
+            ->getQuery();
+
+        $result = $query->getSingleScalarResult();
+        return intval($result);
+    }
+
     public function findByFormatNameAndFile($formatName, FileInterface $file)
     {
         $queryBuilder = $this->createQueryBuilder('format');
