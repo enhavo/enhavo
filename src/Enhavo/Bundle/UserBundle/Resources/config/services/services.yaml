@@ -151,5 +151,5 @@ services:
     Enhavo\Bundle\UserBundle\UserIdentifier\EmailUserIdentifierProvider:
         public: true
 
-    Enhavo\Bundle\UserBundle\UserIdentifier\UsernamelUserIdentifieProvider:
+    Enhavo\Bundle\UserBundle\UserIdentifier\UsernameUserIdentifierProvider:
         public: true
