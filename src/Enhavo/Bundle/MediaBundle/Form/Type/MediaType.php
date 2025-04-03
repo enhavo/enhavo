@@ -119,6 +119,7 @@ class MediaType extends AbstractType
             'actions_file' => null,
             'upload' => null,
             'formats' => [],
+            'uuid_property' => 'id',
         ));
 
         $resolver->setAllowedValues('config', array_keys($this->formConfigurations));

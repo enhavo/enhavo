@@ -4,10 +4,10 @@ namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\FormBundle\Form\Type\PositionType;
+use Enhavo\Bundle\FormBundle\Form\Type\UuidType;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ResourceBundle\Action\ActionManager;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -73,9 +73,10 @@ class FileType extends AbstractType
             $form = $event->getForm();
             $data = $event->getData();
 
-            $form->add('id', HiddenType::class, [
+            $form->add('id', UuidType::class, [
                 'required' => true,
                 'mapped' => false,
+                'data' => $data === null ? null : $data->getId(),
             ]);
         });
 

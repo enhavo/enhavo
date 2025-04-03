@@ -27,7 +27,7 @@
                                 :form="element"
                                 :deletable="form.allowDelete"
                                 :sortable="form.multiple && form.sortable"
-                                @delete="event => { form.deleteFile(event) }"
+                                @delete="event => { form.closeEditForChildren(null); form.deleteFile(event); }"
                                 @up="event => { form.moveItemUp(event) }"
                                 @down="event => { form.moveItemDown(event) }"
                                 @editOpen="event => { form.closeEditForChildren(event) }"
