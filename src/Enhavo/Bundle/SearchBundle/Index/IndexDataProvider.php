@@ -15,8 +15,8 @@ use Enhavo\Component\Type\FactoryInterface;
 class IndexDataProvider
 {
     public function __construct(
-        private MetadataRepository $metadataRepository,
-        private FactoryInterface $factory,
+        private readonly MetadataRepository $metadataRepository,
+        private readonly FactoryInterface   $factory,
     )
     {
     }
@@ -33,13 +33,16 @@ class IndexDataProvider
 
         $data = [];
         foreach ($metadata->getIndex() as $config) {
-            /** @var Index $index */
-            $index = $this->factory->create($config->getConfig(), $config->getKey());
-            $indexData = $index->getIndexData($resource);
+            foreach ($config as $item) {
+                /** @var Index $index */
+                $index = $this->factory->create($item->getConfig(), $item->getKey());
+                $indexData = $index->getIndexData($resource);
 
-            foreach($indexData as $indexEntry) {
-                $data[] = $indexEntry;
+                foreach($indexData as $indexEntry) {
+                    $data[] = $indexEntry;
+                }
             }
+
         }
         return $data;
     }

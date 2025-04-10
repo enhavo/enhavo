@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\SearchBundle\Index\IndexDataProvider:
         arguments:
-            - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Index]'
             - '@Enhavo\Component\Type\FactoryInterface[SearchIndex]'
 
     Enhavo\Bundle\SearchBundle\Index\Type\ModelIndexType:
@@ -23,3 +23,29 @@ services:
     Enhavo\Bundle\SearchBundle\Index\Type\TextIndexType:
         tags:
             - { name: enhavo_search.index }
+
+    Enhavo\Component\Metadata\MetadataRepository[Index]:
+        class: Enhavo\Component\Metadata\MetadataRepository
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataFactory[Index]'
+            - false
+            - false
+
+    Enhavo\Component\Metadata\MetadataFactory[Index]:
+        class: Enhavo\Component\Metadata\MetadataFactory
+        arguments:
+            - 'Enhavo\Bundle\SearchBundle\Index\Metadata\Metadata'
+        calls:
+            - [addDriver, ['@Enhavo\Component\Metadata\Driver\ConfigurationDriver[Index]']]
+            - [addDriver, ['@Enhavo\Bundle\SearchBundle\Index\Metadata\IndexAttributeDriver']]
+            - [addProvider, ['@Enhavo\Bundle\SearchBundle\Index\Metadata\IndexProvider']]
+
+    Enhavo\Component\Metadata\Driver\ConfigurationDriver[Index]:
+        class: Enhavo\Component\Metadata\Driver\ConfigurationDriver
+        arguments:
+            - '%enhavo_search.metadata%'
+
+    Enhavo\Bundle\SearchBundle\Index\Metadata\IndexAttributeDriver:
+
+
+    Enhavo\Bundle\SearchBundle\Index\Metadata\IndexProvider:
