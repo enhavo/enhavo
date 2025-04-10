@@ -54,7 +54,7 @@ class ChangePasswordController extends AbstractUserController
             }
         }
 
-        $template = $this->getTemplate($configuration->getTemplate());
+        $template = $this->resolveTemplate($configuration->getTemplate());
 
         return $this->render($template, [
             'form' => $form->createView(),
