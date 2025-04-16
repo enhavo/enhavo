@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider:
         arguments:
-            - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Index]'
             - '@Enhavo\Component\Type\FactoryInterface[SearchFilter]'
 
     Enhavo\Bundle\SearchBundle\Filter\Type\ValueFilterType:

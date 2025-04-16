@@ -1,29 +1,31 @@
 services:
-    Enhavo\Component\Metadata\MetadataRepository[Search]:
+    Enhavo\Component\Metadata\MetadataRepository[Index]:
         class: Enhavo\Component\Metadata\MetadataRepository
         arguments:
-            - '@Enhavo\Component\Metadata\MetadataFactory[Search]'
+            - '@Enhavo\Component\Metadata\MetadataFactory[Index]'
+            - false
+            - false
 
-    Enhavo\Component\Metadata\MetadataFactory[Search]:
+    Enhavo\Component\Metadata\MetadataFactory[Index]:
         class: Enhavo\Component\Metadata\MetadataFactory
         arguments:
-            - 'Enhavo\Bundle\SearchBundle\Metadata\Metadata'
+            - 'Enhavo\Bundle\SearchBundle\Index\Metadata\Metadata'
         calls:
-            - [addDriver, ['@Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search]']]
-            - [addProvider, ['@Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Index]']]
-            - [addProvider, ['@Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Filters]']]
+            - [ addDriver, [ '@Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search][Index]' ] ]
+            - [ addDriver, [ '@Enhavo\Bundle\SearchBundle\Index\Metadata\IndexAttributeDriver' ] ]
+            - [ addProvider, [ '@Enhavo\Bundle\SearchBundle\Index\Metadata\IndexProvider' ] ]
+            - [ addProvider, [ '@Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Filters]' ] ]
 
-    Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search]:
+    Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search][Index]:
         class: Enhavo\Component\Metadata\Driver\ConfigurationDriver
         arguments:
             - '%enhavo_search.metadata%'
-
-    Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Index]:
-        class: Enhavo\Component\Metadata\Provider\ConfigProvider
-        arguments:
-            - 'index'
 
     Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Filters]:
         class: Enhavo\Component\Metadata\Provider\ConfigProvider
         arguments:
             - 'filter'
+
+    Enhavo\Bundle\SearchBundle\Index\Metadata\IndexAttributeDriver:
+
+    Enhavo\Bundle\SearchBundle\Index\Metadata\IndexProvider:

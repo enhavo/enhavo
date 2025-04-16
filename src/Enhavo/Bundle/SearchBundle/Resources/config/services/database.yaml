@@ -2,7 +2,7 @@ services:
     Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch\DatabaseSearchEngine:
         arguments:
             - '@Enhavo\Bundle\SearchBundle\Index\IndexDataProvider'
-            - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Index]'
             - '@doctrine.orm.entity_manager'
             - '@enhavo_search.util.text_to_word'
             - '@enhavo_search.util.text_simplify'
