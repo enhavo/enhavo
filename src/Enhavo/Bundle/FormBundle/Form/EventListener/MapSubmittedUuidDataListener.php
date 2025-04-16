@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\FormBundle\Form\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
@@ -32,6 +33,17 @@ class MapSubmittedUuidDataListener implements EventSubscriberInterface
 
         $data = $event->getForm()->getData();
         $submittedData = $event->getData() ?? [];
+
+        // Check for missing uuids
+        foreach ($submittedData as $item) {
+            if (!array_key_exists($this->uuidProperty, $item)) {
+                $event->getForm()->addError(new FormError('Uuid missing'));
+                break;
+            } else if (empty($item[$this->uuidProperty])) {
+                $event->getForm()->addError(new FormError('Uuid should not be blank'));
+                break;
+            }
+        }
 
         // Create map for submitted key to array index
         $map = [];
