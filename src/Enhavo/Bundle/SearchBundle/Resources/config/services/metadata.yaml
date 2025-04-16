@@ -3,8 +3,6 @@ services:
         class: Enhavo\Component\Metadata\MetadataRepository
         arguments:
             - '@Enhavo\Component\Metadata\MetadataFactory[Search]'
-            - false
-            - false
 
     Enhavo\Component\Metadata\MetadataFactory[Search]:
         class: Enhavo\Component\Metadata\MetadataFactory
@@ -26,9 +24,9 @@ services:
         arguments:
             - 'filter'
 
-    Enhavo\Bundle\SearchBundle\Index\Metadata\IndexAttributeDriver:
-
     Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Index]:
         class: Enhavo\Component\Metadata\Provider\ConfigProvider
         arguments:
             - 'index'
+
+    Enhavo\Bundle\SearchBundle\Index\Metadata\IndexAttributeDriver:
