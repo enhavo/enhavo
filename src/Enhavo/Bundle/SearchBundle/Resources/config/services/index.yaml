@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\SearchBundle\Index\IndexDataProvider:
         arguments:
-            - '@Enhavo\Component\Metadata\MetadataRepository[Index]'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
             - '@Enhavo\Component\Type\FactoryInterface[SearchIndex]'
 
     Enhavo\Bundle\SearchBundle\Index\Type\ModelIndexType:

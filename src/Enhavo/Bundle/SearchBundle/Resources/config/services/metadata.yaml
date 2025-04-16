@@ -1,12 +1,12 @@
 services:
-    Enhavo\Component\Metadata\MetadataRepository[Index]:
+    Enhavo\Component\Metadata\MetadataRepository[Search]:
         class: Enhavo\Component\Metadata\MetadataRepository
         arguments:
-            - '@Enhavo\Component\Metadata\MetadataFactory[Index]'
+            - '@Enhavo\Component\Metadata\MetadataFactory[Search]'
             - false
             - false
 
-    Enhavo\Component\Metadata\MetadataFactory[Index]:
+    Enhavo\Component\Metadata\MetadataFactory[Search]:
         class: Enhavo\Component\Metadata\MetadataFactory
         arguments:
             - 'Enhavo\Bundle\SearchBundle\Index\Metadata\Metadata'

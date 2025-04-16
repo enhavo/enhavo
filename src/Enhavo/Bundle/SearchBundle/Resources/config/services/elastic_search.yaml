@@ -2,7 +2,7 @@ services:
     Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ElasticSearchEngine:
         arguments:
             - '@Enhavo\Bundle\SearchBundle\Index\IndexDataProvider'
-            - '@Enhavo\Component\Metadata\MetadataRepository[Index]'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
             - '@doctrine.orm.entity_manager'
             - '@enhavo_search.engine.elastic_search_index_remover'
             - '@enhavo_search.engine.elastic_search_document_id_generator'
@@ -21,7 +21,7 @@ services:
     enhavo_search.engine.elastic_search_index_remover:
         class: Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ElasticSearchIndexRemover
         arguments:
-            - '@Enhavo\Component\Metadata\MetadataRepository[Index]'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Search]'
             - '@enhavo_search.engine.elastic_search_document_id_generator'
             - '@Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ClientFactory'
             - '%enhavo_search.search.dsn%'
