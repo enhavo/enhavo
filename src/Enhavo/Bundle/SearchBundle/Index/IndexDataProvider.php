@@ -8,8 +8,8 @@
 
 namespace Enhavo\Bundle\SearchBundle\Index;
 
+use Enhavo\Bundle\SearchBundle\Index\Metadata\Metadata;
 use Enhavo\Component\Metadata\MetadataRepository;
-use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
 use Enhavo\Component\Type\FactoryInterface;
 
 class IndexDataProvider
@@ -33,16 +33,13 @@ class IndexDataProvider
 
         $data = [];
         foreach ($metadata->getIndex() as $config) {
-            foreach ($config as $item) {
-                /** @var Index $index */
-                $index = $this->factory->create($item->getConfig(), $item->getKey());
-                $indexData = $index->getIndexData($resource);
+            /** @var Index $index */
+            $index = $this->factory->create($config->getConfig(), $config->getKey());
+            $indexData = $index->getIndexData($resource);
 
-                foreach($indexData as $indexEntry) {
-                    $data[] = $indexEntry;
-                }
+            foreach($indexData as $indexEntry) {
+                $data[] = $indexEntry;
             }
-
         }
         return $data;
     }

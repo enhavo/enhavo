@@ -6,10 +6,9 @@
  * Time: 20:12
  */
 
-namespace Enhavo\Bundle\SearchBundle\Test\Index\Type;
+namespace Enhavo\Bundle\SearchBundle\Index\Type;
 
 use Enhavo\Bundle\SearchBundle\Index\IndexDataBuilder;
-use Enhavo\Bundle\SearchBundle\Index\Type\HtmlIndexType;
 use Enhavo\Bundle\SearchBundle\Tests\Mock\ModelMock;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;

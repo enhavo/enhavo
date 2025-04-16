@@ -8,11 +8,14 @@
 
 namespace Enhavo\Bundle\SearchBundle\Tests\Mock;
 
-use PHPUnit\Framework\TestCase;
+use Enhavo\Bundle\SearchBundle\Attribute\Index;
 
+#[Index('text', ['name' => 'index1', 'property' => 'text2'])]
 class ModelMock
 {
-    private ?string $text;
+    #[Index('text')]
+    private ?string $text = null;
+    private ?string $text2 = null;
 
     public function getText(): ?string
     {
@@ -23,4 +26,15 @@ class ModelMock
     {
         $this->text = $text;
     }
+
+    public function getText2(): ?string
+    {
+        return $this->text2;
+    }
+
+    public function setText2(?string $text2): void
+    {
+        $this->text2 = $text2;
+    }
+
 }

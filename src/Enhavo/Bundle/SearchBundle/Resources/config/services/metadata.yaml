@@ -11,12 +11,12 @@ services:
         arguments:
             - 'Enhavo\Bundle\SearchBundle\Index\Metadata\Metadata'
         calls:
-            - [ addDriver, [ '@Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search][Index]' ] ]
+            - [ addDriver, [ '@Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search]' ] ]
             - [ addDriver, [ '@Enhavo\Bundle\SearchBundle\Index\Metadata\IndexAttributeDriver' ] ]
-            - [ addProvider, [ '@Enhavo\Bundle\SearchBundle\Index\Metadata\IndexProvider' ] ]
+            - [ addProvider, [ '@Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Index]' ] ]
             - [ addProvider, [ '@Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Filters]' ] ]
 
-    Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search][Index]:
+    Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search]:
         class: Enhavo\Component\Metadata\Driver\ConfigurationDriver
         arguments:
             - '%enhavo_search.metadata%'
@@ -28,4 +28,7 @@ services:
 
     Enhavo\Bundle\SearchBundle\Index\Metadata\IndexAttributeDriver:
 
-    Enhavo\Bundle\SearchBundle\Index\Metadata\IndexProvider:
+    Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Index]:
+        class: Enhavo\Component\Metadata\Provider\ConfigProvider
+        arguments:
+            - 'index'
