@@ -6,7 +6,7 @@ on:
 
 jobs:
     static-checks:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-24.04
         name: "Static checks"
         steps:
             -   name: Checkout
@@ -84,7 +84,7 @@ jobs:
                     yarn docs:build
 
     phpunit:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-24.04
         name: "PHPUnit on php ${{ matrix.php-versions }}"
         strategy:
             matrix:
@@ -121,7 +121,7 @@ jobs:
 
 
     phpunit-lowest:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-24.04
         name: "PHPUnit on lowest dependencies"
         strategy:
             fail-fast: false
@@ -155,7 +155,7 @@ jobs:
                 run: bin/phpunit
 
     behat:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-24.04
         name: "Behat"
         strategy:
             fail-fast: false
@@ -222,7 +222,7 @@ jobs:
 
 
     javascript-tests:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-24.04
         name: "Javascript tests"
         strategy:
             fail-fast: false
