@@ -3,6 +3,7 @@
 * [Action](action/index.md)
 * [Block](block/index.md)
 * [Column](column/index.md)
+* [Duplicate](duplicate/index.md)
 * [Filter](filter/index.md)
 * [Form](form/index.md)
 * [Icon](icon/index.md)

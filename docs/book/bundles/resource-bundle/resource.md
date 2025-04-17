@@ -125,7 +125,7 @@ class BookSubscriber implements EventSubscriberInterface
 ### Duplicate
 
 With duplicate, you can create deep clones of a resource. To know which properties need to be copied, 
-you have to mark up them. This is normally done by the Attribute `Duplicate` but you can also use
+you have to mark up them. This is normally done by the Attribute `Duplicate` but you can also use yaml
 configuration.
 
 
@@ -168,10 +168,18 @@ enhavo_resources:
 Use the manager to duplicate a resource. The returned resource is not saved yet. Use the `save` method to make it persistent.
 
 ```php
-
-$otherBook = $this->resourceManager->duplicate($book, ['group' => 'duplicate']);
+$otherBook = $this->resourceManager->duplicate($book, null, ['group' => 'duplicate']);
 $this->resourceManager->save($otherBook);
 ```
+
+It is also possible to duplicate a resource into a target resource. The reference of the target keeps the same,
+but the values will be changed to the one from the source resource.
+
+```php
+$target = $this->resourceManager->duplicate($source, $target, ['group' => 'duplicate']);
+````
+
+On the [duplicate reference section](/reference/duplicate/index), you can find the possible duplicate types.
 
 ### State Machine
 
