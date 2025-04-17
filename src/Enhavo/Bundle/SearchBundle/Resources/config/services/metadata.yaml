@@ -11,21 +11,21 @@ services:
         calls:
             - [ addDriver, [ '@Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search]' ] ]
             - [ addDriver, [ '@Enhavo\Bundle\SearchBundle\Index\Metadata\IndexAttributeDriver' ] ]
-            - [ addProvider, [ '@Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Index]' ] ]
-            - [ addProvider, [ '@Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Filters]' ] ]
+            - [ addProvider, [ '@Enhavo\Bundle\SearchBundle\Provider\ConfigProvider[Search][Index]' ] ]
+            - [ addProvider, [ '@Enhavo\Bundle\SearchBundle\Provider\ConfigProvider[Search][Filters]' ] ]
 
     Enhavo\Component\Metadata\Driver\ConfigurationDriver[Search]:
         class: Enhavo\Component\Metadata\Driver\ConfigurationDriver
         arguments:
             - '%enhavo_search.metadata%'
 
-    Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Filters]:
-        class: Enhavo\Component\Metadata\Provider\ConfigProvider
+    Enhavo\Bundle\SearchBundle\Provider\ConfigProvider[Search][Filters]:
+        class: Enhavo\Bundle\SearchBundle\Provider\ConfigProvider
         arguments:
             - 'filter'
 
-    Enhavo\Component\Metadata\Provider\ConfigProvider[Search][Index]:
-        class: Enhavo\Component\Metadata\Provider\ConfigProvider
+    Enhavo\Bundle\SearchBundle\Provider\ConfigProvider[Search][Index]:
+        class: Enhavo\Bundle\SearchBundle\Provider\ConfigProvider
         arguments:
             - 'index'
 
