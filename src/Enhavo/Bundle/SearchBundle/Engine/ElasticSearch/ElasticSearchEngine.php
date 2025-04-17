@@ -23,11 +23,11 @@ use Enhavo\Bundle\SearchBundle\Engine\Result\ResultSummary;
 use Enhavo\Bundle\SearchBundle\Exception\FilterQueryNotSupportedException;
 use Enhavo\Bundle\SearchBundle\Exception\IndexException;
 use Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider;
+use Enhavo\Bundle\SearchBundle\Index\Metadata\Metadata;
 use Pagerfanta\Pagerfanta;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
 use Enhavo\Bundle\SearchBundle\Index\IndexDataProvider;
-use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
 use Elastica\Document;
 use Elastica\Search;
 use Elastica\Query;
@@ -85,8 +85,6 @@ class ElasticSearchEngine implements SearchEngineInterface
 
         $filterData = [];
         foreach ($this->classes as $class) {
-            /** @var Metadata $metadata */
-
             $fields = $this->filterDataProvider->getFields($class);
 
             foreach ($fields as $field) {
@@ -372,7 +370,7 @@ class ElasticSearchEngine implements SearchEngineInterface
         return new ResultSummary($pagerfanta, $search->count());
     }
 
-    public function index($resource)
+    public function index($resource): void
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($resource);
@@ -384,20 +382,16 @@ class ElasticSearchEngine implements SearchEngineInterface
         }
     }
 
-    /**
-     * @return Index
-     */
-    private function getIndex()
+    private function getIndex(): Index
     {
-        $index = $this->client->getIndex($this->indexName);
-        return $index;
+        return $this->client->getIndex($this->indexName);
     }
 
     /**
      * @param $resource
      * @return Document
      */
-    private function createDocument($resource)
+    private function createDocument($resource): Document
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($resource);
@@ -429,23 +423,22 @@ class ElasticSearchEngine implements SearchEngineInterface
             'filterData' => $filterData
         ];
 
-        $document = new Document($documentId, $data);
-        return $document;
+        return new Document($documentId, $data);
     }
 
-    public function removeIndex($resource)
+    public function removeIndex($resource): void
     {
         $this->indexRemover->removeIndex($resource);
     }
 
-    public function reindex(bool $force = false, string $class = null, OutputLoggerInterface $logger = null)
+    public function reindex(bool $force = false, string $class = null, OutputLoggerInterface $logger = null): void
     {
         // only delete index if we are going to reindex all
         if ($class === null) {
             $this->getIndex()->delete();
             $this->initialize();
         }
-        
+
         if ($class !== null && !in_array($class, $this->classes)) {
             $logger?->error(sprintf('Class "%s" is not configured for indexing', $class));
             return;

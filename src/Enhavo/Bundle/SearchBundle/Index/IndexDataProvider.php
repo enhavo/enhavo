@@ -8,15 +8,15 @@
 
 namespace Enhavo\Bundle\SearchBundle\Index;
 
+use Enhavo\Bundle\SearchBundle\Index\Metadata\Metadata;
 use Enhavo\Component\Metadata\MetadataRepository;
-use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
 use Enhavo\Component\Type\FactoryInterface;
 
 class IndexDataProvider
 {
     public function __construct(
-        private MetadataRepository $metadataRepository,
-        private FactoryInterface $factory,
+        private readonly MetadataRepository $metadataRepository,
+        private readonly FactoryInterface   $factory,
     )
     {
     }
