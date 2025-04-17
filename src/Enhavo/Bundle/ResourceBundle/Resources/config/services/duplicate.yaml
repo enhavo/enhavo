@@ -43,6 +43,8 @@ services:
             - { name: enhavo_resource.duplicate }
 
     Enhavo\Bundle\ResourceBundle\Duplicate\Type\StringDuplicateType:
+        arguments:
+            - '@translator'
         tags:
             - { name: enhavo_resource.duplicate }
 

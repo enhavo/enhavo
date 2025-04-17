@@ -37,7 +37,7 @@ class Person implements RevisionInterface
     private ?DateTime $birthday = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    #[Duplicate('string', ['postfix' => ' Copy!!', 'group' => ['duplicate']])]
+    #[Duplicate('string', ['postfix' => ' Copy!!', 'groups' => ['duplicate']])]
     #[Duplicate('property', ['groups' => ['revision', 'restore']])]
     private ?string $name = null;
 
