@@ -8,7 +8,7 @@
 
     .formwidget-container {
         input[type="file"] {border:0;background:transparent;}
-        input:not([type]), input[type="text"],input[type="password"] {@extend %textfield;}
+        input:not([type]), input[type="text"],input[type="password"],input[type="number"] {@extend %textfield;}
         textarea {@extend %textarea;}
 
         .related-buttons-row {display:flex;gap:10px;

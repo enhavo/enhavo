@@ -41,6 +41,10 @@ services:
         tags:
             - { name: 'form.type_extension', priority: 110 }
 
+    Enhavo\Bundle\VueFormBundle\Form\Extension\NumberVueTypeExtension:
+        tags:
+            - { name: 'form.type_extension', priority: 110 }
+
     Enhavo\Bundle\VueFormBundle\Form\Extension\PasswordVueTypeExtension:
         tags:
             - { name: 'form.type_extension', priority: 110 }
