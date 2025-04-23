@@ -1,7 +1,6 @@
 imports:
     - path: '@enhavo/app/services/theme/*'
     - path: '@enhavo/app/services/vue-form.yaml'
-    - path: '@enhavo/shop/services/theme/*'
     - path: '@enhavo/form/services/theme/*'
     - path: '@enhavo/media/services/theme/*'
     - path: '@enhavo/api/services/*'
