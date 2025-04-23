@@ -111,7 +111,7 @@ services:
             - '@request_stack'
             - '@http_client'
         calls:
-            - [setUrlGenerator, ['@Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface']]
+            - [setUrlGenerator, ['@Enhavo\Bundle\MediaBundle\Routing\ThemeUrlGenerator']]
 
     Enhavo\Bundle\MediaBundle\Cache\NoCache:
 
