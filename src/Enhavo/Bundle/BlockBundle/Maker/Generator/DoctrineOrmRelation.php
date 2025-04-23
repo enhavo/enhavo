@@ -26,24 +26,24 @@ class DoctrineOrmRelation
         return $this->config['type'] ?? null;
     }
 
-    public function getInversedBy(): string
+    public function getInversedBy(): ?string
     {
-        return $this->config['inversed_by'] ?? 'null';
+        return $this->config['inversed_by'] ?? null;
     }
 
-    public function getMappedBy(): string
+    public function getMappedBy(): ?string
     {
-        return $this->config['mapped_by'] ?? 'null';
+        return $this->config['mapped_by'] ?? null;
     }
 
-    public function getOrderBy(): array
+    public function getOrderBy(): ?array
     {
-        return $this->config['order_by'] ?? [];
+        return $this->config['order_by'] ?? null;
     }
 
-    public function getTargetEntity(): string
+    public function getTargetEntity(): ?string
     {
-        return $this->config['target_entity'] ?? 'null';
+        return $this->config['target_entity'] ?? null;
     }
 
     public function getName(): string
