@@ -60,8 +60,13 @@ class DoctrineOrmYaml
             $result = [];
 
         } else {
-            $result = [
-                'type' => sprintf("Types::%s", strtoupper($field->getType())),
+            $typeOption = [];
+            if ($field->getOrmType()) {
+                $typeOption = [
+                    'type' => sprintf("Types::%s", strtoupper($field->getOrmType()))
+                ];
+            }
+            $result = $typeOption + [
                 'nullable' => $field->getNullableString(),
             ];
         }

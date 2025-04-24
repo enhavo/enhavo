@@ -2,23 +2,28 @@
 
 namespace <?= $class->getNamespace(); ?>;
 
+
 <?php foreach ($class->getUse() as $item) { ?>
 use <?= $item; ?>;
 <?php } ?>
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Enhavo\Bundle\ResourceBundle\Attribute\Duplicate;
 
 #[ORM\Entity]
 #[ORM\Table(name: '<?= $orm->getTableName() ?>')]
 class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements <?= $class->getImplements(); ?><?php endif; ?>
 
 {
+<?php foreach ($class->getTraits() as $value) { ?>
+    use <?= $value ?>;
+<?php } ?>
+
 <?php foreach ($class->getProperties() as $property) { ?>
 <?php $ormField = $orm->getField($property->getName()); ?>
-<?php if ($ormField->getOrmType()) { ?>
 <?php if ($ormField->isPrimaryKey()) { ?>
-    #[Orm\Id]
+    #[ORM\Id]
 <?php } ?>
 <?php if ($ormField->getGeneratedValueType()) { ?>
     #[ORM\GeneratedValue(strategy: '<?= $ormField->getGeneratedValueType(); ?>')]
@@ -69,9 +74,12 @@ class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements
 <?php if ($relation && $relation->getOrderBy()) { ?>
     #[ORM\OrderBy(<?= $relation->getOrderByString() ?>)]
 <?php } ?>
-<?php } ?>
+
 <?php if ($property->hasSerializationGroups()) { ?>
     #[Groups([<?= $property->getSerializationGroupsString(); ?>])]
+<?php } ?>
+<?php foreach ($property->getDuplicateRules() as $rule) { ?>
+    #[Duplicate('<?= $rule['type']; ?>', <?= $rule['options']; ?>)]
 <?php } ?>
 <?php if ($property->getNullable() || $property->getDefault() !== 'null') { ?>
     private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;

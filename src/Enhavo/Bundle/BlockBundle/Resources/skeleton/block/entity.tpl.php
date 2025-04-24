@@ -9,6 +9,7 @@ use <?= $item; ?>;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Enhavo\Bundle\ResourceBundle\Attribute\Duplicate;
 
 #[ORM\Entity]
 #[ORM\Table(name: '<?= $orm->getTableName() ?>')]
@@ -68,6 +69,9 @@ class <?= $class->getName(); ?> extends AbstractBlock<?php if ($class->getImplem
 <?php } ?>
 <?php if ($property->hasSerializationGroups()) { ?>
     #[Groups([<?= $property->getSerializationGroupsString(); ?>])]
+<?php } ?>
+<?php foreach ($property->getDuplicateRules() as $rule) { ?>
+    #[Duplicate('<?= $rule['type']; ?>', <?= $rule['options']; ?>)]
 <?php } ?>
 <?php if ($property->getNullable() || $property->getDefault() !== 'null') { ?>
     private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;

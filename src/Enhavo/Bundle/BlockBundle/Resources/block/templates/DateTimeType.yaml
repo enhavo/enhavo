@@ -5,5 +5,3 @@ form:
     use:
         - Enhavo\Bundle\FormBundle\Form\Type\DateTimeType
     class: DateTimeType
-    options:
-        label: 'Date'

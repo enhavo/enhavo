@@ -9,9 +9,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class <?= $definition->getCamelName(); ?>Type extends AbstractBlockType
 {
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $optionsResolver->setDefaults([
+        $resolver->setDefaults([
             'model' => <?= $definition->getCamelName(); ?>::class,
             'form' => <?= $definition->getCamelName(); ?>FormType::class,
             'template' => '<?= $definition->getTemplateFileName(); ?>',

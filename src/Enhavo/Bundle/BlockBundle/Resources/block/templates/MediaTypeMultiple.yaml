@@ -19,3 +19,7 @@ form:
         label: "'file.label.file'"
         translation_domain: "'EnhavoMediaBundle'"
         multiple: 'true'
+duplicate_rules:
+    -
+        type: 'file'
+        options: "['groups' => ['duplicate', 'revision', 'restore']]"

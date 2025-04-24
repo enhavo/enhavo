@@ -43,6 +43,16 @@ class PhpClassProperty
         return sprintf("'%s'", implode("', '", $this->getSerializationGroups()));
     }
 
+    public function getDuplicateRules(): array
+    {
+        $default = ($this->isTypeScalar() || $this->isTypeArray()) ? [[
+            'type' => 'property',
+            'options' => "['groups' => ['duplicate', 'revision', 'restore']]",
+        ]] : [];
+
+        return $this->config['duplicate_rules'] ?? $default;
+    }
+
     public function getNullable(): string
     {
         return (isset($this->config['nullable']) && $this->config['nullable'])
@@ -59,9 +69,6 @@ class PhpClassProperty
         return !isset($this->config['allow_setter']) || $this->config['allow_setter'];
     }
 
-    /**
-     * @return string
-     */
     public function getVisibility(): string
     {
         return $this->visibility;
@@ -110,6 +117,16 @@ class PhpClassProperty
     public function getTypeOption(string $key): ?array
     {
         return $this->config['type_options'][$key] ?? null;
+    }
+
+    public function isTypeScalar(): bool
+    {
+        return 1 === preg_match('/(string|int|float|bool)/', $this->getType());
+    }
+
+    public function isTypeArray(): bool
+    {
+        return 'array' === $this->getType();
     }
 
     public function getName(): string

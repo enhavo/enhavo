@@ -1,4 +1,4 @@
-type: string
+type: bool
 nullable: true
 form:
     use:
