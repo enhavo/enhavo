@@ -145,18 +145,6 @@ class BlockDefinition
         return sprintf('theme/block/%s.html.twig', str_replace('-block', '', $this->getKebabName()));
     }
 
-    public function getFactoryFilePath(): string
-    {
-        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories) . '/' : '';
-        $filename = sprintf('%s%sFactory.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
-
-        if ($this->bundle) {
-            return sprintf('src/%s/Factory/%s', $this->path, $filename);
-        } else {
-            return sprintf('%s/src/Factory/%s', $this->util->getProjectPath(), $filename);
-        }
-    }
-
     public function getTypeFilePath(): string
     {
         if ($this->bundle) {
@@ -164,12 +152,6 @@ class BlockDefinition
         } else {
             return sprintf('%s/src/Block/%sType.php', $this->util->getProjectPath(), $this->name);
         }
-    }
-
-    public function getFactoryNamespace(): string
-    {
-        $subDirectory = $this->subDirectories ? '\\' . implode('\\', $this->subDirectories) : '';
-        return sprintf('%s\\Factory%s', $this->getNamespace(), $subDirectory);
     }
 
     public function getFormNamespace(): string
@@ -201,11 +183,6 @@ class BlockDefinition
     public function getFormTypeName(): string
     {
         return sprintf('%s%s', $this->nameTransformer->camelCase($this->name), 'Type');
-    }
-
-    public function getFactoryName(): string
-    {
-        return sprintf('%s%s', $this->nameTransformer->camelCase($this->name), 'Factory');
     }
 
     public function getTranslationDomain(): ?string

@@ -5,6 +5,5 @@
             label: {{ definition.label }}
             form: {{ definition.formNamespace }}\{{ definition.formTypeName }}
             template: '{{ definition.templateFileName }}'
-            factory: {{ definition.factoryNamespace }}\{{ definition.factoryName }}
 {% if definition.groupsString %}            groups: {{ definition.groupsString|raw }}{% endif %}
 {% endif %}

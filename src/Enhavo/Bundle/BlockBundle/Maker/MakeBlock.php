@@ -67,7 +67,6 @@ class MakeBlock extends AbstractMaker
 
         $this->generateBlockItemFiles($generator, $blockDefinition);
         $this->generateBlockEntityFile($generator, $blockDefinition);
-        $this->generateBlockFactoryFile($generator, $blockDefinition);
         $this->generateBlockFormTypeFile($generator, $blockDefinition);
         $this->generateTemplateFile($generator, $blockDefinition);
 
@@ -164,7 +163,6 @@ class MakeBlock extends AbstractMaker
 
         $this->generateBlockEntityFile($generator, $block);
         $this->generateBlockFormTypeFile($generator, $block);
-        $this->generateBlockFactoryFile($generator, $block);
         $this->generateTemplateFile($generator, $block);
 
         if ($block->getBlockType()) {
@@ -227,19 +225,6 @@ class MakeBlock extends AbstractMaker
                 'form' => $blockDefinition->getFormType(),
                 'class' => $blockDefinition->createFormTypePhpClass(),
                 'entity' => $blockDefinition->createEntityPhpClass(),
-            ]
-        );
-    }
-
-    private function generateBlockFactoryFile(Generator $generator, BlockDefinition $blockDefinition)
-    {
-        $filePath = $blockDefinition->getFactoryFilePath();
-        $this->checkExists($filePath);
-
-        $generator->generateFile(
-            $filePath,
-            $this->getTemplatePath('block/factory.tpl.php'), [
-                'definition' => $blockDefinition,
             ]
         );
     }
