@@ -101,6 +101,6 @@ services:
     Enhavo\Bundle\RevisionBundle\EventListener\RevisionDoctrineFilterListener:
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '%enhavo_revision.doctrine_filter%'
+            - '%enhavo_revision.doctrine_filter.enabled%'
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

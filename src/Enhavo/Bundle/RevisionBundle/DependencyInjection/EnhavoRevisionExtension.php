@@ -19,7 +19,7 @@ class EnhavoRevisionExtension extends Extension implements PrependExtensionInter
 
         $config = $this->processConfiguration($configuration, $configs);
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $container->setParameter('enhavo_revision.doctrine_filter', $config['doctrine_filter']);
+        $container->setParameter('enhavo_revision.doctrine_filter.enabled', $config['doctrine_filter']['enabled']);
         $loader->load('services/services.yaml');
     }
 
