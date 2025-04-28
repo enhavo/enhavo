@@ -14,6 +14,16 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('enhavo_resource');
         $rootNode = $treeBuilder->getRootNode();
+        $rootNode
+            ->children()
+                ->arrayNode('doctrine_filter')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('enabled')->defaultTrue()->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

@@ -97,3 +97,10 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: enhavo_resource.batch }
+
+    Enhavo\Bundle\RevisionBundle\EventListener\RevisionDoctrineFilterListener:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%enhavo_revision.doctrine_filter%'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

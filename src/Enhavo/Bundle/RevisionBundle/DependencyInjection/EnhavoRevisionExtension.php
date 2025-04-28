@@ -2,10 +2,6 @@
 
 namespace Enhavo\Bundle\RevisionBundle\DependencyInjection;
 
-use Enhavo\Bundle\ResourceBundle\DependencyInjection\Configuration;
-use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\GridConfigurationMerger;
-use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\InputConfigurationMerger;
-use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\ResourceMerger;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\PrependExtensionTrait;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -23,7 +19,7 @@ class EnhavoRevisionExtension extends Extension implements PrependExtensionInter
 
         $config = $this->processConfiguration($configuration, $configs);
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-
+        $container->setParameter('enhavo_revision.doctrine_filter', $config['doctrine_filter']);
         $loader->load('services/services.yaml');
     }
 
