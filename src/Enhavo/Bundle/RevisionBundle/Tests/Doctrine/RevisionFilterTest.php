@@ -4,10 +4,8 @@ namespace Enhavo\Bundle\RevisionBundle\Tests\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\Persistence\Mapping\RuntimeReflectionService;
 use Enhavo\Bundle\RevisionBundle\Doctrine\RevisionFilter;
 use Enhavo\Bundle\RevisionBundle\Tests\Mock\NoRevisionMock;
-use Enhavo\Bundle\RevisionBundle\Tests\Mock\NoRevisionSubMock;
 use Enhavo\Bundle\RevisionBundle\Tests\Mock\RevisionMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -30,9 +28,8 @@ class RevisionFilterTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $filter = $this->createInstance($dependencies);
-        $reflectionService = new RuntimeReflectionService();
         $metadata = new ClassMetadata(RevisionMock::class);
-        $metadata->wakeupReflection($reflectionService);
+        $metadata->reflClass = new ReflectionClass(RevisionMock::class);
 
         $this->assertEquals(
             '(test.revisionState = "main" OR test.revisionState IS NULL)',
