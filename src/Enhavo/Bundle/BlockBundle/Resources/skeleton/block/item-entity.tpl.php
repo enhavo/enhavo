@@ -2,23 +2,28 @@
 
 namespace <?= $class->getNamespace(); ?>;
 
+
 <?php foreach ($class->getUse() as $item) { ?>
 use <?= $item; ?>;
 <?php } ?>
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Enhavo\Bundle\ResourceBundle\Attribute\Duplicate;
 
-#[ORM\Entity()]
+#[ORM\Entity]
 #[ORM\Table(name: '<?= $orm->getTableName() ?>')]
 class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements <?= $class->getImplements(); ?><?php endif; ?>
 
 {
+<?php foreach ($class->getTraits() as $value) { ?>
+    use <?= $value ?>;
+<?php } ?>
+
 <?php foreach ($class->getProperties() as $property) { ?>
 <?php $ormField = $orm->getField($property->getName()); ?>
-<?php if ($ormField->getOrmType()) { ?>
 <?php if ($ormField->isPrimaryKey()) { ?>
-    #[Orm\Id]
+    #[ORM\Id]
 <?php } ?>
 <?php if ($ormField->getGeneratedValueType()) { ?>
     #[ORM\GeneratedValue(strategy: '<?= $ormField->getGeneratedValueType(); ?>')]
@@ -30,18 +35,24 @@ class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements
 <?php } ?>
 <?php $relation = $orm->getRelation($property->getName()); ?>
 <?php if ($attributeType === 'OneToOne') { ?>
-        targetEntity: <?= $relation->getTargetEntity() ?>,
+        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?= $relation->getTargetEntity() ?>,
+<?php } ?>
         cascade: [ 'persist', 'refresh', 'remove' ],
 <?php } else if ($attributeType === 'OneToMany') { ?>
-        mappedBy: '<?= $relation->getMappedBy() ?>',
-        targetEntity: <?= $relation->getTargetEntity() ?>,
+        <?php if ($relation->getMappedBy()) { ?>mappedBy: '<?= $relation->getMappedBy() ?>',
+<?php } ?>
+        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?= $relation->getTargetEntity() ?>,
+<?php } ?>
         cascade: [ 'persist', 'refresh', 'remove' ],
         orphanRemoval: true,
 <?php } else if ($attributeType === 'ManyToOne') { ?>
-        targetEntity: <?= $relation->getTargetEntity() ?>,
-        inversedBy: '<?= $relation->getInversedBy() ?>',
+        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?= $relation->getTargetEntity() ?>,
+<?php } ?>
+        <?php if ($relation->getInversedBy()) { ?>inversedBy: '<?= $relation->getInversedBy() ?>',
+<?php } ?>
 <?php } else if ($attributeType === 'ManyToMany') { ?>
-        targetEntity: <?= $relation->getTargetEntity() ?>,
+        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?= $relation->getTargetEntity() ?>,
+<?php } ?>
         cascade: ['persist', 'refresh', 'remove'],
 <?php } ?>
     )]
@@ -60,19 +71,20 @@ class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements
         onDelete: 'cascade',
     )]
 <?php } ?>
-<?php if ($relation) { ?>
+<?php if ($relation && $relation->getOrderBy()) { ?>
     #[ORM\OrderBy(<?= $relation->getOrderByString() ?>)]
 <?php } ?>
-<?php } ?>
 <?php if ($property->hasSerializationGroups()) { ?>
-    #[Groups([<?= $property->getSerializationGroupsString(); ?>])]
+    #[Groups(<?= $property->getSerializationGroupsString(); ?>)]
+<?php } ?>
+<?php foreach ($property->getAttributes() as $rule) { ?>
+    #[<?= $rule['class'] ?>(<?= $rule['type']?("'".$rule['type']."'").(isset($rule['options'])?', ':''):''; ?><?= $rule['options']??''; ?>)]
 <?php } ?>
 <?php if ($property->getNullable() || $property->getDefault() !== 'null') { ?>
     private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;
 <?php } else { ?>
     private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?>;
 <?php } ?>
-
 
 <?php } ?>
 <?php foreach ($class->getFunctions() as $function) { ?>

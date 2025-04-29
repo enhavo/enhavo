@@ -28,19 +28,65 @@ class PhpClassProperty
 
     public function hasSerializationGroups(): bool
     {
-        $groups = $this->getSerializationGroups();
-
-         return count($groups) > 0;
+        return null !== $this->getSerializationGroups();
     }
 
-    public function getSerializationGroups(): array
+    public function getSerializationGroups(): ?array
     {
-        return $this->config['serialization_groups'] ?? ['endpoint.block'];
+        if (!isset($this->config['serialization_groups'])) {
+            return ['endpoint.block'];
+
+        } else if (is_array($this->config['serialization_groups'])) {
+            return $this->config['serialization_groups'];
+        }
+
+        return null;
     }
 
     public function getSerializationGroupsString(): string
     {
-        return sprintf("'%s'", implode("', '", $this->getSerializationGroups()));
+        $groups = $this->getSerializationGroups();
+
+        if (count($groups)) {
+            return sprintf("['%s']", implode("', '", $groups));
+        }
+
+        return '';
+    }
+
+    public function getAttributes(): array
+    {
+        $attributes = [];
+        if (isset($this->config['attributes'])) {
+            foreach (array_reverse($this->config['attributes']) as $attribute) {
+                if (!$this->hasAttribute($attribute, $attributes)) {
+                    $attributes[] = $attribute;
+                }
+            }
+        } else {
+            if (($this->isTypeScalar() || $this->isTypeArray())) {
+                $attributes[] = [
+                    'class' => 'Duplicate',
+                    'type' => 'property',
+                    'options' => "['groups' => ['duplicate', 'revision', 'restore']]",
+                ];
+            }
+        }
+
+        return array_reverse($attributes);
+    }
+
+    private function hasAttribute($attribute, $array): bool
+    {
+        foreach ($array as $item) {
+
+            $rString = str_replace(' ', '', implode(',', $item));
+            $aString = str_replace(' ', '', implode(',', $attribute));
+            if ($aString === $rString) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function getNullable(): string
@@ -59,9 +105,6 @@ class PhpClassProperty
         return !isset($this->config['allow_setter']) || $this->config['allow_setter'];
     }
 
-    /**
-     * @return string
-     */
     public function getVisibility(): string
     {
         return $this->visibility;
@@ -110,6 +153,16 @@ class PhpClassProperty
     public function getTypeOption(string $key): ?array
     {
         return $this->config['type_options'][$key] ?? null;
+    }
+
+    public function isTypeScalar(): bool
+    {
+        return 1 === preg_match('/(string|int|float|bool)/', $this->getType());
+    }
+
+    public function isTypeArray(): bool
+    {
+        return 'array' === $this->getType();
     }
 
     public function getName(): string

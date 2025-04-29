@@ -12,24 +12,21 @@ use <?= $item; ?>;
 
 class <?= $class->getName() ?> extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
 <?php foreach ($form->getFields() as $field): ?>
-            ->add('<?= $field->getName() ?>', <?= $field->getClass() ?>::class, <?= $field->getOptionsString() ?>)
-
+        $builder->add('<?= $field->getName() ?>', <?= $field->getClass() ?>::class, <?= $field->getOptionsString() ?>);
 <?php endforeach; ?>
-        ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(array(
             'data_class' => <?= $entity->getName() ?>::class
         ));
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return '<?= $form->getBlockPrefix() ?>';
     }

@@ -1,5 +1,4 @@
 type: int
-orm_type: integer
 nullable: true
 form:
     use:

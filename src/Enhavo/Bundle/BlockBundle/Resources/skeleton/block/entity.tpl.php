@@ -9,8 +9,9 @@ use <?= $item; ?>;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Enhavo\Bundle\ResourceBundle\Attribute\Duplicate;
 
-#[ORM\Entity()]
+#[ORM\Entity]
 #[ORM\Table(name: '<?= $orm->getTableName() ?>')]
 class <?= $class->getName(); ?> extends AbstractBlock<?php if ($class->getImplements()): ?> implements <?= $class->getImplements(); ?><?php endif; ?>
 
@@ -27,18 +28,24 @@ class <?= $class->getName(); ?> extends AbstractBlock<?php if ($class->getImplem
 <?php } ?>
 <?php $relation = $orm->getRelation($property->getName()); ?>
 <?php if ($attributeType === 'OneToOne') { ?>
-        targetEntity: <?= $relation->getTargetEntity() ?>,
+        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?= $relation->getTargetEntity() ?>,
+<?php } ?>
         cascade: [ 'persist', 'refresh', 'remove' ],
 <?php } else if ($attributeType === 'OneToMany') { ?>
-        mappedBy: '<?= $relation->getMappedBy() ?>',
-        targetEntity: <?= $relation->getTargetEntity() ?>,
+        <?php if ($relation->getMappedBy()) { ?>mappedBy: '<?= $relation->getMappedBy() ?>',
+<?php } ?>
+        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?= $relation->getTargetEntity() ?>,
+<?php } ?>
         cascade: [ 'persist', 'refresh', 'remove' ],
         orphanRemoval: true,
 <?php } else if ($attributeType === 'ManyToOne') { ?>
-        targetEntity: <?= $relation->getTargetEntity() ?>,
-        inversedBy: '<?= $relation->getInversedBy() ?>',
+        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?= $relation->getTargetEntity() ?>,
+<?php } ?>
+        <?php if ($relation->getInversedBy()) { ?>inversedBy: '<?= $relation->getInversedBy() ?>',
+<?php } ?>
 <?php } else if ($attributeType === 'ManyToMany') { ?>
-        targetEntity: <?= $relation->getTargetEntity() ?>,
+        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?= $relation->getTargetEntity() ?>,
+<?php } ?>
         cascade: ['persist', 'refresh', 'remove'],
 <?php } ?>
     )]
@@ -57,11 +64,14 @@ class <?= $class->getName(); ?> extends AbstractBlock<?php if ($class->getImplem
         onDelete: 'cascade',
     )]
 <?php } ?>
-<?php if ($relation) { ?>
+<?php if ($relation && $relation->getOrderBy()) { ?>
     #[ORM\OrderBy(<?= $relation->getOrderByString() ?>)]
 <?php } ?>
 <?php if ($property->hasSerializationGroups()) { ?>
-    #[Groups([<?= $property->getSerializationGroupsString(); ?>])]
+    #[Groups(<?= $property->getSerializationGroupsString(); ?>)]
+<?php } ?>
+<?php foreach ($property->getAttributes() as $rule) { ?>
+    #[<?= $rule['class'] ?>(<?= $rule['type']?("'".$rule['type']."'").(isset($rule['options'])?', ':''):''; ?><?= $rule['options']??''; ?>)]
 <?php } ?>
 <?php if ($property->getNullable() || $property->getDefault() !== 'null') { ?>
     private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;

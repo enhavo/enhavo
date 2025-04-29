@@ -1,16 +1,20 @@
 type: Collection
 type_options:
     constructor: ArrayCollection
+    use:
+        - Doctrine\Common\Collections\Collection
+        - Doctrine\Common\Collections\ArrayCollection
 relation:
     type: OneToMany
     order_by:
         position: asc
-use:
-    - Doctrine\Common\Collections\Collection
-    - Doctrine\Common\Collections\ArrayCollection
 form:
     use:
         - Enhavo\Bundle\FormBundle\Form\Type\ListType
     class: ListType
     options:
         sortable: 'true'
+attributes:
+    -   class: 'Duplicate'
+        type: 'collection'
+        options: "['by_reference' => true, 'groups' => ['duplicate', 'revision', 'restore']]"
