@@ -16,7 +16,7 @@ form:
     class: BlockNodeType
     options:
         item_groups: "['layout']"
-duplicate_rules:
-    -
+attributes:
+    -   class: 'Duplicate'
         type: 'model'
         options: "['groups' => ['duplicate', 'revision', 'restore']]"

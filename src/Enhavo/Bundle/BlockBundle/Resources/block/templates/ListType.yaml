@@ -14,7 +14,7 @@ form:
     class: ListType
     options:
         sortable: 'true'
-duplicate_rules:
-    -
+attributes:
+    -   class: 'Duplicate'
         type: 'collection'
         options: "['by_reference' => true, 'groups' => ['duplicate', 'revision', 'restore']]"

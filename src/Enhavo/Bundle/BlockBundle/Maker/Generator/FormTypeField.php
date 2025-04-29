@@ -56,6 +56,6 @@ class FormTypeField
 
         $lines[] = sprintf('%s]', str_repeat(' ', $indentation - 4));
 
-        return implode("\n", $lines);
+        return implode(count($lines)>2?"\n":'', $lines);
     }
 }

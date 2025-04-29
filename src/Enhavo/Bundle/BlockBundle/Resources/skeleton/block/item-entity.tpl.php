@@ -78,8 +78,8 @@ class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements
 <?php if ($property->hasSerializationGroups()) { ?>
     #[Groups([<?= $property->getSerializationGroupsString(); ?>])]
 <?php } ?>
-<?php foreach ($property->getDuplicateRules() as $rule) { ?>
-    #[Duplicate('<?= $rule['type']; ?>', <?= $rule['options']; ?>)]
+<?php foreach ($property->getAttributes() as $rule) { ?>
+    #[<?= $rule['class'] ?>(<?= $rule['type']?("'".$rule['type']."'").(isset($rule['options'])?', ':''):''; ?><?= $rule['options']??''; ?>)]
 <?php } ?>
 <?php if ($property->getNullable() || $property->getDefault() !== 'null') { ?>
     private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;

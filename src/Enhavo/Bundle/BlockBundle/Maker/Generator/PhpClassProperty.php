@@ -43,14 +43,39 @@ class PhpClassProperty
         return sprintf("'%s'", implode("', '", $this->getSerializationGroups()));
     }
 
-    public function getDuplicateRules(): array
+    public function getAttributes(): array
     {
-        $default = ($this->isTypeScalar() || $this->isTypeArray()) ? [[
-            'type' => 'property',
-            'options' => "['groups' => ['duplicate', 'revision', 'restore']]",
-        ]] : [];
+        $attributes = [];
+        if (isset($this->config['attributes'])) {
+            foreach (array_reverse($this->config['attributes']) as $attribute) {
+                if (!$this->hasAttribute($attribute, $attributes)) {
+                    $attributes[] = $attribute;
+                }
+            }
+        } else {
+            if (($this->isTypeScalar() || $this->isTypeArray())) {
+                $attributes[] = [
+                    'class' => 'Duplicate',
+                    'type' => 'property',
+                    'options' => "['groups' => ['duplicate', 'revision', 'restore']]",
+                ];
+            }
+        }
 
-        return $this->config['duplicate_rules'] ?? $default;
+        return array_reverse($attributes);
+    }
+
+    private function hasAttribute($attribute, $array): bool
+    {
+        foreach ($array as $item) {
+
+            $rString = str_replace(' ', '', implode(',', $item));
+            $aString = str_replace(' ', '', implode(',', $attribute));
+            if ($aString === $rString) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function getNullable(): string
