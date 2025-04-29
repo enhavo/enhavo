@@ -1,5 +1,10 @@
-{% extends 'theme/form/base.html.twig' %}
+{% extends 'theme/base.html.twig' %}
 
-{% block app %}
-    <form-form :form="form" novalidate></form-form>
+{% block main %}
+    <hr>
+    <div data-controller="form" data-form-form-value="{{ form|json_encode|e }}" data-form-component-value="form-form">
+        {% block form %}{% endblock %}
+    </div>
+    <hr>
+    <pre id="data">{{ data|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
 {% endblock %}

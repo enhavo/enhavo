@@ -6,14 +6,21 @@ import 'dotenv/config'
 import containerDIPlugin from '@enhavo/app/vite/rollup-plugin-container-di'
 
 export default defineConfig({
-
+    optimizeDeps: {
+        include: [
+            'vuedraggable',
+            'lodash',
+            'jquery',
+            'select2',
+            'axios',
+        ],
+    },
     plugins: [
         vue(),
         liveReload([
             __dirname + '/../../src/**/*.php',
             __dirname + '/../../templates/**/*.twig',
         ]),
-        splitVendorChunkPlugin(),
         containerDIPlugin(),
     ],
 

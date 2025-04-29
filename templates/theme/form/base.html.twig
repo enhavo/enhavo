@@ -3,17 +3,13 @@
     <head>
         {% block head %}{% endblock %}
         {% block stylesheets %}
-            {{ vite_css_tags('entrypoints/application.js', 'admin') }}
+            {{ vite_css_tags('entrypoints/main.js', 'theme') }}
         {% endblock %}
     </head>
     <body>
         {% block body %}
             {% block form %}{% endblock %}
-            <div data-controller="vue-form" data-vue-form-form-value="{{ vue|json_encode|e }}" data-vue-form-theme-value="{% if theme%}true{% else %}false{% endif %}">
-                {% block app %}
-                    <form-form :form="form"></form-form>
-                {% endblock %}
-            </div>
+            <div data-controller="form" data-form-form-value="{{ form|json_encode|e }}" data-form-component-value="form-form"></div>
             <hr>
             <pre id="data">{{ data|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
         {% endblock %}
@@ -39,8 +35,8 @@
         {% endblock %}
 
         {% block javascripts %}
-            {{ vite_js_tags('entrypoints/application.js', 'theme') }}
-            {{ vite_js_preload_tags('entrypoints/application.js', 'theme') }}
+            {{ vite_js_tags('entrypoints/main.js', 'theme') }}
+            {{ vite_js_preload_tags('entrypoints/main.js', 'theme') }}
         {% endblock %}
     </body>
 </html>

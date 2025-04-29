@@ -14,10 +14,6 @@ services:
         tags:
             - { name: stimulus.controller, key: 'form-style' }
 
-    '@enhavo/form/wysiwyg/WysiwygConfigRegistry':
-        chunk: 'form'
-        import: WysiwygConfigRegistry
-
     '@enhavo/form/wysiwyg/WysiwygDefaultConfig':
         chunk: 'form'
         import: WysiwygDefaultConfig
