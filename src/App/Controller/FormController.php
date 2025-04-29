@@ -128,23 +128,6 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    #[Route('/list', name: "app_form_list")]
-    public function listAction(Request $request)
-    {
-        $form = $this->createFormBuilder(null)
-            ->add('items', ListType::class, [
-                'entry_type' => ItemsType::class,
-                'sortable' => true,
-            ])
-            ->add('button', SubmitType::class, [
-                'label' => 'save'
-            ])
-            ->setMethod('POST')
-            ->getForm();
-
-        return $this->handleForm($form, $request);
-    }
-
     #[Route('/list-nested', name: "app_form_list_nested")]
     public function listNestedAction(Request $request)
     {

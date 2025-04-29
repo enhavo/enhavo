@@ -10,8 +10,8 @@ export default class extends AbstractController
         'component': String,
     }
 
-    private formValue: object;
-    private componentValue: string;
+    declare private formValue: object;
+    declare private componentValue: string;
 
     public connect() {
         this.init().then(() => {

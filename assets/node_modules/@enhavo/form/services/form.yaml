@@ -37,15 +37,6 @@ services:
         tags:
             - { name: form.model }
 
-    '@enhavo/form/form/model/AutoCompleteForm':
-        chunk: 'vue'
-        import: AutoCompleteForm
-        arguments:
-            - '@enhavo/app/routing/Router'
-            - '@enhavo/app/frame/FrameManager'
-        tags:
-            - { name: form.model }
-
     '@enhavo/form/form/model/DateTimeForm':
         chunk: 'vue'
         import: DateTimeForm
@@ -57,3 +48,7 @@ services:
         import: ChoiceTreeForm
         tags:
             - { name: form.model }
+
+    '@enhavo/form/wysiwyg/WysiwygConfigRegistry':
+        chunk: 'form'
+        import: WysiwygConfigRegistry
