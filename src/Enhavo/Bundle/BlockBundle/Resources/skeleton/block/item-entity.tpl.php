@@ -74,9 +74,8 @@ class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements
 <?php if ($relation && $relation->getOrderBy()) { ?>
     #[ORM\OrderBy(<?= $relation->getOrderByString() ?>)]
 <?php } ?>
-
 <?php if ($property->hasSerializationGroups()) { ?>
-    #[Groups([<?= $property->getSerializationGroupsString(); ?>])]
+    #[Groups(<?= $property->getSerializationGroupsString(); ?>)]
 <?php } ?>
 <?php foreach ($property->getAttributes() as $rule) { ?>
     #[<?= $rule['class'] ?>(<?= $rule['type']?("'".$rule['type']."'").(isset($rule['options'])?', ':''):''; ?><?= $rule['options']??''; ?>)]
@@ -86,7 +85,6 @@ class <?= $class->getName(); ?><?php if ($class->getImplements()): ?> implements
 <?php } else { ?>
     private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?>;
 <?php } ?>
-
 
 <?php } ?>
 <?php foreach ($class->getFunctions() as $function) { ?>

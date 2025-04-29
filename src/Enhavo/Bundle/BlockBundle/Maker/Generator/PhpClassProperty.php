@@ -28,19 +28,30 @@ class PhpClassProperty
 
     public function hasSerializationGroups(): bool
     {
-        $groups = $this->getSerializationGroups();
-
-         return count($groups) > 0;
+        return null !== $this->getSerializationGroups();
     }
 
-    public function getSerializationGroups(): array
+    public function getSerializationGroups(): ?array
     {
-        return $this->config['serialization_groups'] ?? ['endpoint.block'];
+        if (!isset($this->config['serialization_groups'])) {
+            return ['endpoint.block'];
+
+        } else if (is_array($this->config['serialization_groups'])) {
+            return $this->config['serialization_groups'];
+        }
+
+        return null;
     }
 
     public function getSerializationGroupsString(): string
     {
-        return sprintf("'%s'", implode("', '", $this->getSerializationGroups()));
+        $groups = $this->getSerializationGroups();
+
+        if (count($groups)) {
+            return sprintf("['%s']", implode("', '", $groups));
+        }
+
+        return '';
     }
 
     public function getAttributes(): array

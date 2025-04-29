@@ -68,7 +68,7 @@ class <?= $class->getName(); ?> extends AbstractBlock<?php if ($class->getImplem
     #[ORM\OrderBy(<?= $relation->getOrderByString() ?>)]
 <?php } ?>
 <?php if ($property->hasSerializationGroups()) { ?>
-    #[Groups([<?= $property->getSerializationGroupsString(); ?>])]
+    #[Groups(<?= $property->getSerializationGroupsString(); ?>)]
 <?php } ?>
 <?php foreach ($property->getAttributes() as $rule) { ?>
     #[<?= $rule['class'] ?>(<?= $rule['type']?("'".$rule['type']."'").(isset($rule['options'])?', ':''):''; ?><?= $rule['options']??''; ?>)]
