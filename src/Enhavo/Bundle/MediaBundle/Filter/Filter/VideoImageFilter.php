@@ -30,9 +30,14 @@ class VideoImageFilter extends AbstractFilter
 
         $video = $converter->open($content->getFilePath());
 
+        $temporaryFileName = tempnam('/tmp', 'videoImage');
+
         $video
             ->frame(TimeCode::fromSeconds(2))
-            ->save($content->getFilePath());
+            ->save($temporaryFileName);
+
+        copy($temporaryFileName, $content->getFilePath());
+        unlink($temporaryFileName);
 
         $this->setExtension($file, 'jpg');
         $this->setMimeType($file, 'image/jpeg');
