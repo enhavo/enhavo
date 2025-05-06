@@ -19,17 +19,14 @@ class FormatExtension extends AbstractExtension
 {
     use ContainerAwareTrait;
 
-    /** @var HtmlSanitizer */
-    private $sanitizer;
-
     /**
      * FormatExtension constructor.
      * @param HtmlSanitizer $sanitizer
      */
-    public function __construct(HtmlSanitizer $sanitizer)
-    {
-        $this->sanitizer = $sanitizer;
-    }
+    public function __construct(
+        private readonly HtmlSanitizer $sanitizer,
+        private readonly array $htmlSanitizerConfig,
+    ) {}
 
     public function getFunctions()
     {
@@ -90,6 +87,6 @@ class FormatExtension extends AbstractExtension
 
     public function sanitizeHtml($value, $options = [])
     {
-        return $this->sanitizer->sanitize($value, $options);
+        return $this->sanitizer->sanitize($value, array_merge($this->htmlSanitizerConfig, $options));
     }
 }

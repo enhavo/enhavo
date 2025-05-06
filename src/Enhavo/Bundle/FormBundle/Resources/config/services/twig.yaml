@@ -16,6 +16,7 @@ services:
     Enhavo\Bundle\FormBundle\Twig\FormatExtension:
         arguments:
             - '@Enhavo\Bundle\FormBundle\Formatter\HtmlSanitizer'
+            - '%enhavo_form.html_sanitizer.config%'
         calls:
             - [setContainer, ['@service_container']]
         tags:
