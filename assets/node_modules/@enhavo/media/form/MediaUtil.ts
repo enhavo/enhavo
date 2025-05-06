@@ -9,6 +9,7 @@ export class MediaUtil
             case 'image/jpg':
             case 'image/jpeg':
             case 'image/gif':
+            case 'image/webp':
                 return true;
         }
 
