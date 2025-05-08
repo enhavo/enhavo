@@ -3,12 +3,17 @@
 namespace Enhavo\Bundle\RevisionBundle\Revision;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\ResourceBundle\Event\ResourcePreDeleteEvent;
 use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\RevisionBundle\Entity\Archive;
 use Enhavo\Bundle\RevisionBundle\Entity\Bin;
+use Enhavo\Bundle\RevisionBundle\Event\ResourcePostUndeleteEvent;
+use Enhavo\Bundle\RevisionBundle\Event\ResourcePreSoftDeleteEvent;
+use Enhavo\Bundle\RevisionBundle\Event\ResourcePreUndeleteEvent;
 use Enhavo\Bundle\RevisionBundle\Model\RevisionInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class RevisionManager
 {
@@ -17,6 +22,7 @@ class RevisionManager
         private readonly EntityManagerInterface $em,
         private readonly FactoryInterface $binFactory,
         private readonly FactoryInterface $archiveFactory,
+        private readonly EventDispatcherInterface $eventDispatcher,
     )
     {
     }
@@ -89,14 +95,20 @@ class RevisionManager
         $bin->setResourceAlias($this->resourceManager->getMetadata($subject)?->getAlias());
         $this->em->persist($bin);
 
+        $this->eventDispatcher->dispatch(new ResourcePreSoftDeleteEvent($subject),'enhavo_resource.pre_soft_delete');
         $this->em->flush();
+        $this->eventDispatcher->dispatch(new ResourcePreSoftDeleteEvent($subject),'enhavo_resource.post_soft_delete');
     }
 
     public function undelete(RevisionInterface $subject): void
     {
         $subject->setRevisionState(RevisionInterface::STATE_MAIN);
         $subject->setRevisionDate(null);
+
+        $this->eventDispatcher->dispatch(new ResourcePreUndeleteEvent($subject),'enhavo_resource.pre_undelete');
         $this->em->flush();
+        $this->eventDispatcher->dispatch(new ResourcePostUndeleteEvent($subject),'enhavo_resource.post_undelete');
+
     }
 
     public function publish(RevisionInterface $subject): void

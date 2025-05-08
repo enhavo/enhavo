@@ -6,10 +6,15 @@ services:
             - '@enhavo_routing.route.factory'
             - '@doctrine.orm.entity_manager'
 
-    enhavo_routing.listener.routeable_listener:
-        class: Enhavo\Bundle\RoutingBundle\EventListener\RouteableListener
+    Enhavo\Bundle\RoutingBundle\EventListener\RouteableListener:
         arguments:
             - '@Enhavo\Bundle\RoutingBundle\Manager\RouteManager'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\RoutingBundle\EventListener\SoftDeleteListener:
+        arguments:
+            - '@enhavo_app.util.secure_url_token_generator'
         tags:
             - { name: kernel.event_subscriber }
 

@@ -8,10 +8,8 @@ use Enhavo\Bundle\ResourceBundle\Delete\DeleteHandlerInterface;
 use Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePreCreateEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePostCreateEvent;
-use Enhavo\Bundle\ResourceBundle\Event\ResourcePostDeleteEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePostTransitionEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePostUpdateEvent;
-use Enhavo\Bundle\ResourceBundle\Event\ResourcePreDeleteEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePreTransitionEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePreUpdateEvent;
 use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
@@ -90,11 +88,7 @@ class ResourceManager
 
     public function delete(object $resource): void
     {
-        $this->dispatch(new ResourcePreDeleteEvent($resource), 'pre_delete');
-
         $this->deleteHandler->delete($resource);
-
-        $this->dispatch(new ResourcePostDeleteEvent($resource), 'post_delete');
     }
 
     public function duplicate(object $resource, $target = null, array $context = []): object

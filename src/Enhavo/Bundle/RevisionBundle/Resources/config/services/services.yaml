@@ -5,10 +5,11 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@enhavo_revision.bin.factory'
             - '@enhavo_revision.archive.factory'
+            - '@event_dispatcher'
 
     Enhavo\Bundle\RevisionBundle\Delete\SoftDeleteHandler:
         arguments:
-            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\ResourceBundle\Delete\DoctrineDeleteHandler'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
