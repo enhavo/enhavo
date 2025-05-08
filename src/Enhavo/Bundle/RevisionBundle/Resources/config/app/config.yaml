@@ -2,6 +2,13 @@ enhavo_resource:
     delete:
         handler: Enhavo\Bundle\RevisionBundle\Delete\SoftDeleteHandler
 
+doctrine:
+    orm:
+        filters:
+            revision:
+                class: Enhavo\Bundle\RevisionBundle\Doctrine\RevisionFilter
+                enabled: true
+
 enhavo_doctrine_extension:
     metadata:
         Enhavo\Bundle\RevisionBundle\Entity\Bin:
