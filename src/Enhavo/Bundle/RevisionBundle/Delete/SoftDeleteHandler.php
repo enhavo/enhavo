@@ -14,7 +14,7 @@ class SoftDeleteHandler implements DeleteHandlerInterface, ServiceSubscriberInte
     private ContainerInterface $container;
 
     public function __construct(
-        private readonly EntityManagerInterface $em
+        private readonly DeleteHandlerInterface $deleteHandler,
     )
     {
     }
@@ -31,8 +31,7 @@ class SoftDeleteHandler implements DeleteHandlerInterface, ServiceSubscriberInte
         if ($resource instanceof RevisionInterface) {
             $this->container->get(RevisionManager::class)->softDelete($resource);
         } else {
-            $this->em->remove($resource);
-            $this->em->flush();
+            $this->deleteHandler->delete($resource);
         }
     }
 

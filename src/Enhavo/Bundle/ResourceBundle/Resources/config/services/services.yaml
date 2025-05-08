@@ -72,6 +72,7 @@ services:
     Enhavo\Bundle\ResourceBundle\Delete\DoctrineDeleteHandler:
         arguments:
             - '@doctrine.orm.entity_manager'
+            - '@event_dispatcher'
 
     Enhavo\Bundle\ResourceBundle\Doctrine\MetadataListener:
         arguments:
