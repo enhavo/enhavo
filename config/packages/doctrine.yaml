@@ -27,10 +27,6 @@ doctrine:
                 dir: '%kernel.project_dir%/src/App/Entity'
                 prefix: 'App\Entity'
                 alias: App
-        filters:
-            revision:
-                class: Enhavo\Bundle\RevisionBundle\Doctrine\RevisionFilter
-                enabled: true
 
 when@prod:
     doctrine:
