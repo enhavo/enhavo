@@ -104,3 +104,4 @@ services:
             - '%enhavo_revision.doctrine_filter.enabled%'
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: kernel.event_listener, event: console.command, method: onConsoleCommand }
