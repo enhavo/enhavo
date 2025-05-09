@@ -87,7 +87,8 @@
     "symfony/maker-bundle": "^1.0",
     "symfony/panther": "^2.0",
     "symfony/profiler-pack": "^1.0",
-    "symfony/test-pack": "^1.0"
+    "symfony/test-pack": "^1.0",
+    "symplify/easy-coding-standard": "^12.5"
   },
   "replace": {
     "enhavo/app-bundle": "self.version",
