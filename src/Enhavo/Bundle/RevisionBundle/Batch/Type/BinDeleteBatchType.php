@@ -23,15 +23,15 @@ class BinDeleteBatchType extends AbstractBatchType
 
     public function execute(array $options, array $ids, EntityRepository $repository, Data $data, Context $context): void
     {
+        $this->em->getFilters()->disable('revision');
         foreach ($ids as $id) {
-            $this->em->getFilters()->disable('revision');
             $resource = $repository->find($id);
-            $this->em->getFilters()->enable('revision');
 
             if ($resource instanceof Bin) {
                 $this->deleteHandler->delete($resource);
             }
         }
+        $this->em->getFilters()->enable('revision');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
