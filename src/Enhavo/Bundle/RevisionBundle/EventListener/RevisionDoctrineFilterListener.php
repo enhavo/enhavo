@@ -32,13 +32,8 @@ class RevisionDoctrineFilterListener
 
         $config = $this->entityManager->getConfiguration();
 
-        if (!$config->getFilterClassName('revision')) {
-            $config->addFilter('revision', RevisionFilter::class);
-        }
-
+        $config->addFilter('revision', RevisionFilter::class);
         $filters = $this->entityManager->getFilters();
-        if (!$filters->isEnabled('revision')) {
-            $filters->enable('revision');
-        }
+        $filters->enable('revision');
     }
 }
