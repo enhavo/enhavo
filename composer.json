@@ -80,9 +80,9 @@
   "require-dev": {
     "behat/behat": "^3.10",
     "overtrue/phplint": "^9.0",
-    "phpstan/phpstan": "^0.12.29",
     "phpunit/php-code-coverage": "^9.2",
     "phpunit/phpunit": "^9.6",
+    "rector/rector": "^2.0",
     "symfony/debug-pack": "^1.0",
     "symfony/maker-bundle": "^1.0",
     "symfony/panther": "^2.0",
