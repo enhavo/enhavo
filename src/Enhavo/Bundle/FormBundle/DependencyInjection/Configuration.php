@@ -40,6 +40,12 @@ class Configuration implements ConfigurationInterface
                         ->variableNode('config')->defaultValue(null)->end()
                     ->end()
                 ->end()
+                ->arrayNode('html_sanitizer')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->variableNode('config')->defaultValue([])->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

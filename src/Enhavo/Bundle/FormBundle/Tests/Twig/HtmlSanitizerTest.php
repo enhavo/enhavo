@@ -15,7 +15,7 @@ class HtmlSanitizerTest extends TestCase
             return $value;
         });
 
-        $extension = new FormatExtension($sanitizer);
+        $extension = new FormatExtension($sanitizer, []);
 
         $this->assertEquals(
             '<h1>Test</h1>',
