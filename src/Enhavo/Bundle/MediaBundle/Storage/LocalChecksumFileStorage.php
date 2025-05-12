@@ -41,12 +41,9 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
 
         if ($amount === 0) {
             $path = $this->getFilePath($file);
-            if (!$this->filesystem->exists($path)) {
-                throw new FileNotFoundException(sprintf(
-                    'File not found for name "%s". Expected on path "%s"', $file->getBasename(), $path
-                ));
+            if ($this->filesystem->exists($path)) {
+                $this->filesystem->remove($path);
             }
-            $this->filesystem->remove($path);
         }
     }
 
