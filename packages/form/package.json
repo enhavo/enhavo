@@ -1,0 +1,38 @@
+{
+  "name": "@enhavo/form",
+  "license": "MIT",
+  "types": "index.ts",
+  "version": "0.8.0",
+  "homepage": "https://www.enhavo.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enhavo/enhavo.git"
+  },
+  "dependencies": {
+    "@enhavo/app": "0.8.0",
+    "@sereneinserenade/tiptap-search-and-replace": "^0.1.1",
+    "@tiptap/extension-color": "^2.9.1",
+    "@tiptap/extension-image": "^2.9.1",
+    "@tiptap/extension-link": "^2.9.1",
+    "@tiptap/extension-subscript": "^2.9.1",
+    "@tiptap/extension-superscript": "^2.9.1",
+    "@tiptap/extension-table": "^2.9.1",
+    "@tiptap/extension-table-cell": "^2.9.1",
+    "@tiptap/extension-table-header": "^2.9.1",
+    "@tiptap/extension-table-row": "^2.9.1",
+    "@tiptap/extension-text-align": "^2.10.3",
+    "@tiptap/extension-text-style": "^2.9.1",
+    "@tiptap/extension-underline": "^2.9.1",
+    "@tiptap/pm": "^2.9.1",
+    "@tiptap/starter-kit": "^2.9.1",
+    "@tiptap/vue-3": "^2.9.1",
+    "icheck": "~1.0.2",
+    "jquery": "^3.4.1",
+    "jquery-datetimepicker": "^2.5.21",
+    "lodash": "^4.17.11",
+    "moment": "^2.18.1",
+    "select2": "^4.0.13",
+    "sortablejs": "^1.10.2",
+    "vuedraggable": "^4.1.0"
+  }
+}

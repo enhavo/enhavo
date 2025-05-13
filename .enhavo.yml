@@ -114,79 +114,79 @@ subtrees:
 
     api-assets:
         url: 'git@github.com:enhavo/api-assets'
-        prefix: 'assets/node_modules/@enhavo/api'
+        prefix: 'packages/api'
         package: '@enhavo/api'
     app-assets:
         url: 'git@github.com:enhavo/app-assets'
-        prefix: 'assets/node_modules/@enhavo/app'
+        prefix: 'packages/app'
         package: '@enhavo/app'
     article-assets:
         url: 'git@github.com:enhavo/article-assets'
-        prefix: 'assets/node_modules/@enhavo/article'
+        prefix: 'packages/article'
         package: '@enhavo/article'
     block-assets:
         url: 'git@github.com:enhavo/block-assets'
-        prefix: 'assets/node_modules/@enhavo/block'
+        prefix: 'packages/block'
         package: '@enhavo/block'
     calendar-assets:
         url: 'git@github.com:enhavo/calendar-assets'
-        prefix: 'assets/node_modules/@enhavo/calendar'
+        prefix: 'packages/calendar'
         package: '@enhavo/calendar'
     contact-assets:
         url: 'git@github.com:enhavo/contact-assets'
-        prefix: 'assets/node_modules/@enhavo/contact'
+        prefix: 'packages/contact'
         package: '@enhavo/contact'
     core-assets:
         url: 'git@github.com:enhavo/core-assets'
-        prefix: 'assets/node_modules/@enhavo/core'
+        prefix: 'packages/core'
         package: '@enhavo/core'
     dashboard-assets:
         url: 'git@github.com:enhavo/dashboard-assets'
-        prefix: 'assets/node_modules/@enhavo/dashboard'
+        prefix: 'packages/dashboard'
         package: '@enhavo/dashboard'
     dependency-injection-assets:
         url: 'git@github.com:enhavo/dependency-injection.git'
-        prefix: 'assets/node_modules/@enhavo/dependency-injection'
+        prefix: 'packages/dependency-injection'
         package: '@enhavo/dependency-injection'
     form-assets:
         url: 'git@github.com:enhavo/form-assets'
-        prefix: 'assets/node_modules/@enhavo/form'
+        prefix: 'packages/form'
         package: '@enhavo/form'
     media-assets:
         url: 'git@github.com:enhavo/media-assets'
-        prefix: 'assets/node_modules/@enhavo/media'
+        prefix: 'packages/media'
         package: '@enhavo/media'
     media-library-assets:
         url: 'git@github.com:enhavo/media-library-assets'
-        prefix: 'assets/node_modules/@enhavo/media-library'
+        prefix: 'packages/media-library'
         package: '@enhavo/media-library'
     newsletter-assets:
         url: 'git@github.com:enhavo/newsletter-assets'
-        prefix: 'assets/node_modules/@enhavo/newsletter'
+        prefix: 'packages/newsletter'
         package: '@enhavo/newsletter'
     search-assets:
         url: 'git@github.com:enhavo/search-assets'
-        prefix: 'assets/node_modules/@enhavo/search'
+        prefix: 'packages/search'
         package: '@enhavo/search'
     translation-assets:
         url: 'git@github.com:enhavo/translation-assets'
-        prefix: 'assets/node_modules/@enhavo/translation'
+        prefix: 'packages/translation'
         package: '@enhavo/translation'
     user-assets:
         url: 'git@github.com:enhavo/user-assets'
-        prefix: 'assets/node_modules/@enhavo/user'
+        prefix: 'packages/user'
         package: '@enhavo/user'
     content-assets:
         url: 'git@github.com:enhavo/content-assets'
-        prefix: 'assets/node_modules/@enhavo/content'
+        prefix: 'packages/content'
         package: '@enhavo/content'
     multi-tenancy-assets:
         url: 'git@github.com:enhavo/multi-tenancy-assets'
-        prefix: 'assets/node_modules/@enhavo/multi-tenancy'
+        prefix: 'packages/multi-tenancy'
         package: '@enhavo/multi-tenancy'
     vue-form-assets:
         url: 'git@github.com:enhavo/vue-form-assets'
-        prefix: 'assets/node_modules/@enhavo/vue-form'
+        prefix: 'packages/vue-form'
         package: '@enhavo/vue-form'
 
     CleverReach:
