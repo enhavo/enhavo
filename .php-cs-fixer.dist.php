@@ -31,6 +31,7 @@ return (new PhpCsFixer\Config())
         'phpdoc_add_missing_param_annotation' => [
             'only_untyped' => true,
         ],
+        'phpdoc_summary' => false,
         'phpdoc_order' => true,
         'semicolon_after_instruction' => true,
         'ternary_to_null_coalescing' => true,
