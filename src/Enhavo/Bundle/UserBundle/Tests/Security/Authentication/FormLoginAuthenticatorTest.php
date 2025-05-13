@@ -1,8 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2020-11-04
- */
 
 namespace Enhavo\Bundle\UserBundle\Tests\Security\Authentication;
 
@@ -33,6 +29,9 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 
+/**
+ * @author blutze
+ */
 class FormLoginAuthenticatorTest extends TestCase
 {
     private function createInstance(FormLoginAuthenticatorTestDependencies $dependencies, $className = null): FormLoginAuthenticator

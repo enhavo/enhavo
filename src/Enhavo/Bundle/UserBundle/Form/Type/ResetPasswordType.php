@@ -1,10 +1,4 @@
 <?php
-/**
- * ResetPasswordType.php
- *
- * @since 29/04/19
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
- */
 
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
@@ -13,6 +7,9 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @author gseidel
+ */
 class ResetPasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)

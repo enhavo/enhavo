@@ -6,9 +6,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * DefaultContext.php
- *
- * @since 27/01/16
  * @author gseidel
  */
 trait KernelAwareTrait

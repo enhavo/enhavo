@@ -1,10 +1,4 @@
 <?php
-/**
- * Template.php
- *
- * @since 29/05/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\AppBundle\Twig;
 
@@ -13,6 +7,9 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+/**
+ * @author gseidel
+ */
 class TemplateExtension extends AbstractExtension
 {
     use ContainerAwareTrait;

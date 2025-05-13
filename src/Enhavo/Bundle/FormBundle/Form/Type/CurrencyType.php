@@ -1,10 +1,4 @@
 <?php
-/**
- * CurrencyType.php
- *
- * @since 09/12/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
@@ -13,6 +7,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @author gseidel
+ */
 class CurrencyType extends AbstractType
 {
     /** @var  CurrencyTransformer */

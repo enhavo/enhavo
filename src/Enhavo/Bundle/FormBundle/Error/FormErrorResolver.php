@@ -1,10 +1,4 @@
 <?php
-/**
- * FormErrorResolver.php
- *
- * @since 29/11/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\FormBundle\Error;
 
@@ -12,6 +6,9 @@ use Symfony\Component\Form\FormError;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @author gseidel
+ */
 class FormErrorResolver
 {
     /**

@@ -1,10 +1,4 @@
 <?php
-/**
- * Template.php
- *
- * @since 29/05/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\AppBundle\Twig;
 
@@ -12,6 +6,9 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+/**
+ * @author gseidel
+ */
 class TwigExtension extends AbstractExtension
 {
     public function __construct(

@@ -1,13 +1,10 @@
 <?php
-/**
- * NoViewerFoundException.php
- *
- * @since 29/05/15
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\AppBundle\Exception;
 
+/**
+ * @author gseidel
+ */
 class PreviewException extends \Exception {
 
 }

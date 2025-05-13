@@ -1,10 +1,4 @@
 <?php
-/**
- * GroupType.php
- *
- * @since 21/10/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
- */
 
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
@@ -13,6 +7,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @author gseidel
+ */
 class GroupType extends AbstractType
 {
     public function __construct(

@@ -1,17 +1,12 @@
 <?php
 
-/**
- * StrategyResolver.php
- *
- * @since 18/11/15
- * @author gseidel
- */
-
-
 namespace Enhavo\Bundle\AppBundle\Preview;
 
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
+/**
+ * @author gseidel
+ */
 class StrategyResolver
 {
     use ContainerAwareTrait;

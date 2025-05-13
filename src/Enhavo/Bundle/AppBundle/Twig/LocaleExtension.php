@@ -1,10 +1,5 @@
 <?php
-/**
- * LocaleExtension.php
- *
- * @since 12/12/16
- * @author gseidel
- */
+
 
 namespace Enhavo\Bundle\AppBundle\Twig;
 
@@ -12,6 +7,9 @@ use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+/**
+ * @author gseidel
+ */
 class LocaleExtension extends AbstractExtension
 {
     /**

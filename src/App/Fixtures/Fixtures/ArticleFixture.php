@@ -1,12 +1,5 @@
 <?php
 
-/**
- * ArticleFixture.php
- *
- * @since 27/07/16
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
- */
-
 namespace App\Fixtures\Fixtures;
 
 use Enhavo\Bundle\ArticleBundle\Entity\Article;
@@ -15,6 +8,10 @@ use Enhavo\Bundle\CommentBundle\Entity\Thread;
 use App\Fixtures\AbstractFixture;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Term;
+
+/**
+ * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ */
 
 class ArticleFixture extends AbstractFixture
 {

@@ -1,8 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2020-11-02
- */
 
 namespace Enhavo\Bundle\UserBundle\Tests\User;
 
@@ -41,6 +37,9 @@ use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @author blutze
+ */
 class UserManagerTest extends TestCase
 {
     private function createInstance(UserManagerTestDependencies $dependencies, array $mapping = null)

@@ -1,10 +1,4 @@
 <?php
-/**
- * MakeRouting.php
- *
- * @since 28/06/15
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\AppBundle\Maker;
 
@@ -19,6 +13,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 
+/**
+ * @author gseidel
+ */
 class MakeRouting extends AbstractMaker
 {
     private NameTransformer $nameTransformer;

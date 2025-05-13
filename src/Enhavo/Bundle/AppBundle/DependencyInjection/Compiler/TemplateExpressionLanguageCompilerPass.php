@@ -1,10 +1,4 @@
 <?php
-/**
- * FilesystemCompilerPass.php
- *
- * @since 01/07/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\AppBundle\DependencyInjection\Compiler;
 
@@ -12,6 +6,9 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
+/**
+ * @author gseidel
+ */
 class TemplateExpressionLanguageCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)

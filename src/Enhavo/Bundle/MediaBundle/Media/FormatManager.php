@@ -1,10 +1,4 @@
 <?php
-/**
- * FormatManager.php
- *
- * @since 30/03/17
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\MediaBundle\Media;
 
@@ -22,6 +16,9 @@ use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Repository\FormatRepository;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 
+/**
+ * @author gseidel
+ */
 class FormatManager
 {
     const LOCK_TIMEOUT = 60; // seconds

@@ -1,8 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2022-07-13
- */
 
 namespace Enhavo\Bundle\UserBundle\EventListener;
 
@@ -11,6 +7,9 @@ use Enhavo\Bundle\UserBundle\Exception\NotEnabledException;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * @author blutze
+ */
 class NotEnabledSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array

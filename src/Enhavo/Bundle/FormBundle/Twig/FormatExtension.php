@@ -1,10 +1,4 @@
 <?php
-/**
- * FormatExtension.php
- *
- * @since 04/05/15
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\FormBundle\Twig;
 
@@ -15,6 +9,9 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Twig\TwigFilter;
 
+/**
+ * @author gseidel
+ */
 class FormatExtension extends AbstractExtension
 {
     use ContainerAwareTrait;

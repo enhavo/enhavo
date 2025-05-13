@@ -1,12 +1,5 @@
 <?php
 
-/**
- * EventAction.php
- *
- * @since 29/05/16
- * @author gseidel
- */
-
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -14,6 +7,9 @@ use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @author gseidel
+ */
 class EventActionType extends AbstractActionType implements ActionTypeInterface
 {
     public function createViewData(array $options, Data $data, object $resource = null): void

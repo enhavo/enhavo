@@ -1,11 +1,5 @@
 <?php
 
-/**
- * FormSerializer.php
- *
- * @since 12/06/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\FormBundle\Serializer;
 
@@ -15,6 +9,9 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @author gseidel
+ */
 class FormSerializer
 {
     /**

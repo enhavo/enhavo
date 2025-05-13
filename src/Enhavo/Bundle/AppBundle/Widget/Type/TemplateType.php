@@ -6,9 +6,6 @@ use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * TemplateWidget.php
- *
- * @since 05/05/19
  * @author gseidel
  */
 class TemplateType extends AbstractWidgetType

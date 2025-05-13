@@ -1,12 +1,5 @@
 <?php
 
-/**
- * DemoFixtures.php
- *
- * @since 27/07/16
- * @author gseidel
- */
-
 namespace App\Fixtures;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,6 +9,9 @@ use InvalidArgumentException;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader as DataFixturesLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * @author gseidel
+ */
 class DemoFixtures
 {
     /**

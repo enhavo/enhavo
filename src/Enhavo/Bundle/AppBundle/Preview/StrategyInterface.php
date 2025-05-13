@@ -1,13 +1,10 @@
 <?php
-/**
- * StrategyTypeInterface.php
- *
- * @since 18/11/15
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\AppBundle\Preview;
 
+/**
+ * @author gseidel
+ */
 interface StrategyInterface
 {
     /**

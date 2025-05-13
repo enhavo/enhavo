@@ -1,8 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2020-10-27
- */
 
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
@@ -12,6 +8,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @author blutze-media
+ */
 class ResetPasswordRequestType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)

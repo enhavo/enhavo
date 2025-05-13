@@ -1,12 +1,5 @@
 <?php
 
-/**
- * CreateAction.php
- *
- * @since 30/05/16
- * @author gseidel
- */
-
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -16,6 +9,10 @@ use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 
+
+/**
+ * @author gseidel
+ */
 class CreateActionType extends AbstractActionType
 {
     public function __construct(

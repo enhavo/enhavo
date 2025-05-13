@@ -1,10 +1,4 @@
 <?php
-/**
- * AbstractFixture.php
- *
- * @since 27/07/16
- * @author gseidel
- */
 
 namespace App\Fixtures;
 
@@ -25,6 +19,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * @author gseidel
+ */
 abstract class AbstractFixture implements FixtureInterface, OrderedFixtureInterface, ContainerAwareInterface
 {
     /**

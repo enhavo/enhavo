@@ -1,9 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @author gseidel
- * @since 2020-10-26
- */
 
 namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
@@ -31,6 +26,10 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
+/**
+ * @author gseidel
+ * @author blutze
+ */
 class FormLoginAuthenticator extends AbstractAuthenticator
 {
     private ?UserBadge $userBadge = null;

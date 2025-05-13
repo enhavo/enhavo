@@ -1,18 +1,14 @@
 <?php
 
-/**
- * UserInterface.php
- *
- * @since 22/05/16
- * @author gseidel
- */
-
 namespace Enhavo\Bundle\UserBundle\Model;
 
 use Enhavo\Bundle\AppBundle\Model\Timestampable;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
 
+/**
+ * @author gseidel
+ */
 interface UserInterface extends BaseUserInterface, GroupableInterface, PasswordAuthenticatedUserInterface, Timestampable
 {
     const ROLE_DEFAULT = 'ROLE_USER';

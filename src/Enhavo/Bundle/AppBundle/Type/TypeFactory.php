@@ -1,15 +1,12 @@
 <?php
-/**
- * TypeFactory.php
- *
- * @since 12/02/18
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\AppBundle\Type;
 
 use Enhavo\Bundle\AppBundle\Exception\TypeMissingException;
 
+/**
+ * @author gseidel
+ */
 class TypeFactory
 {
     /**

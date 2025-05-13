@@ -1,8 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2020-11-04
- */
 
 namespace Enhavo\Bundle\UserBundle\Tests\Security;
 
@@ -15,6 +11,9 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
+/**
+ * @author blutze
+ */
 class UserCheckerTest extends TestCase
 {
     private function createDependencies(): UserCheckerTestDependencies

@@ -1,13 +1,12 @@
 <?php
-/**
- * @author blutze-media
- * @since 2020-11-04
- */
 
 namespace Enhavo\Bundle\UserBundle\Tests\Mocks;
 
 use Enhavo\Bundle\UserBundle\Model\User;
 
+/**
+ * @author blutze
+ */
 class UserMock extends User
 {
     /** @var int|null */

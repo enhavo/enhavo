@@ -1,16 +1,13 @@
 <?php
-/**
- * PaginationWidgetType.php
- *
- * @since 04/10/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\AppBundle\Widget\Type;
 
 use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @author gseidel
+ */
 class PaginationWidgetType extends AbstractWidgetType
 {
     public function createViewData(array $options, $resource = null)

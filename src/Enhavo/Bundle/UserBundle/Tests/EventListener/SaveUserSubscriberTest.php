@@ -1,8 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2020-11-05
- */
 
 namespace Enhavo\Bundle\UserBundle\Tests\EventListener;
 
@@ -14,6 +10,9 @@ use Enhavo\Bundle\UserBundle\User\UserManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @author blutze
+ */
 class SaveUserSubscriberTest extends TestCase
 {
     private function createDependencies(): SaveUserSubscriberTestDependencies

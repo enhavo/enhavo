@@ -1,15 +1,12 @@
 <?php
-/**
- * AdminRolesProvider.php
- *
- * @since 24/10/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
- */
 
 namespace Enhavo\Bundle\AppBundle\Security\Roles;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @author gseidel
+ */
 class AdminRolesProvider implements RolesProvider
 {
     /**

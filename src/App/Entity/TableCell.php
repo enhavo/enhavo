@@ -1,8 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2024-11-06
- */
 
 namespace App\Entity;
 
@@ -12,6 +8,9 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 
+/**
+ * @author blutze-media
+ */
 #[Entity]
 #[ORM\Table(name: 'app_table_cell')]
 class TableCell

@@ -1,13 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2022-07-13
- */
-
-/**
- * @author blutze-media
- * @since 2022-07-07
- */
 
 namespace Enhavo\Bundle\UserBundle\EventListener;
 
@@ -18,6 +9,9 @@ use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * @author blutze
+ */
 class PasswordExpiredSubscriber implements EventSubscriberInterface
 {
     public function __construct(
