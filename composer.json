@@ -79,6 +79,7 @@
   },
   "require-dev": {
     "behat/behat": "^3.10",
+    "friendsofphp/php-cs-fixer": "^3.75",
     "overtrue/phplint": "^9.0",
     "phpunit/php-code-coverage": "^9.2",
     "phpunit/phpunit": "^9.6",
@@ -87,8 +88,7 @@
     "symfony/maker-bundle": "^1.0",
     "symfony/panther": "^2.0",
     "symfony/profiler-pack": "^1.0",
-    "symfony/test-pack": "^1.0",
-    "symplify/easy-coding-standard": "^12.5"
+    "symfony/test-pack": "^1.0"
   },
   "replace": {
     "enhavo/app-bundle": "self.version",

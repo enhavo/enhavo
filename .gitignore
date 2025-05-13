@@ -29,6 +29,7 @@
 /.web-server-pid
 .phpunit
 /phpunit.xml
+.php-cs-fixer.cache
 /npm-debug.log
 /yarn-error.log
 /assets/theme/custom.scss
