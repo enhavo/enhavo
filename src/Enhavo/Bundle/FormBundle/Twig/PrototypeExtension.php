@@ -1,10 +1,4 @@
 <?php
-/**
- * Form.php
- *
- * @since 05/12/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\FormBundle\Twig;
 
@@ -15,6 +9,9 @@ use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+/**
+ * @author gseidel
+ */
 class PrototypeExtension extends AbstractExtension
 {
     /** @var PrototypeManager */

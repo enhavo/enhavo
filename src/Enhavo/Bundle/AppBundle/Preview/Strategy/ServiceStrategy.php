@@ -1,12 +1,5 @@
 <?php
 
-/**
- * SlugStrategy.php
- *
- * @since 18/11/15
- * @author gseidel
- */
-
 namespace Enhavo\Bundle\AppBundle\Preview\Strategy;
 
 use Enhavo\Bundle\AppBundle\Exception\PreviewException;
@@ -18,6 +11,9 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 
+/**
+ * @author gseidel
+ */
 class ServiceStrategy implements StrategyInterface
 {
     use ContainerAwareTrait;

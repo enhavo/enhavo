@@ -8,9 +8,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
- * SortingManager.php
- *
- * @since 26/06/16
  * @author gseidel
  */
 class SortingManager

@@ -1,8 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2024-11-06
- */
 
 namespace App\Form\Type;
 
@@ -13,6 +9,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @author blutze-media
+ */
 class TableCellType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void

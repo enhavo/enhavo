@@ -1,13 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2022-07-13
- */
-
-/**
- * @author blutze-media
- * @since 2022-07-07
- */
 
 namespace Enhavo\Bundle\UserBundle\EventListener;
 
@@ -20,6 +11,9 @@ use Enhavo\Bundle\UserBundle\User\UserManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
+/**
+ * @author blutze
+ */
 class TooManyLoginAttemptsSubscriber implements EventSubscriberInterface
 {
     public function __construct(

@@ -1,15 +1,10 @@
 <?php
-/**
- * CollectorInterface.php
- *
- * @since 29/05/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\AppBundle\Type;
 
-
-
+/**
+ * @author gseidel
+ */
 interface CollectorInterface
 {
     public function add($alias, $id);

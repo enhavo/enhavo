@@ -1,8 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2020-11-05
- */
 
 namespace Enhavo\Bundle\UserBundle\Tests\Security\Authentication\Voter;
 
@@ -14,6 +10,9 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
+/**
+ * @author blutze
+ */
 class GroupRoleVoterTest extends TestCase
 {
     private function createInstance(): GroupRoleVoter

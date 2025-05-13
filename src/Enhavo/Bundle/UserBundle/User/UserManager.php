@@ -1,8 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2020-10-22
- */
 
 namespace Enhavo\Bundle\UserBundle\User;
 
@@ -33,6 +29,10 @@ use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @author blutze
+ * @author gseidel
+ */
 class UserManager
 {
     public function __construct(

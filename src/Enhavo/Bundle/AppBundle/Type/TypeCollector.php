@@ -1,18 +1,14 @@
 <?php
 
-/**
- * AbstractCollector.php
- *
- * @since 29/05/16
- * @author gseidel
- */
-
 namespace Enhavo\Bundle\AppBundle\Type;
 
 use Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException;
 use Enhavo\Bundle\AppBundle\Exception\TypeNotValidException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * @author gseidel
+ */
 class TypeCollector implements CollectorInterface
 {
     /**

@@ -1,13 +1,12 @@
 <?php
-/**
- * @author blutze-media
- * @since 2020-10-29
- */
 
 namespace Enhavo\Bundle\UserBundle\UserIdentifier;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * @author blutze
+ */
 interface UserIdentifierProviderInterface
 {
     public function getUserIdentifier(UserInterface $user): string;

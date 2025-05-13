@@ -1,18 +1,14 @@
 <?php
 
-/**
- * AbstractCollectorPass.php
- *
- * @since 29/05/16
- * @author gseidel
- */
-
 namespace Enhavo\Bundle\AppBundle\Type;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Enhavo\Bundle\AppBundle\Exception\AliasRequiredException;
 
+/**
+ * @author gseidel
+ */
 class TypeCompilerPass implements CompilerPassInterface
 {
     /**

@@ -1,10 +1,4 @@
 <?php
-/**
- * UserRepository.php
- *
- * @since 15/10/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
- */
 
 namespace Enhavo\Bundle\UserBundle\Repository;
 
@@ -14,8 +8,7 @@ use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
 /**
- * Class UserRepository
- * @package Enhavo\Bundle\UserBundle\Repository
+ * @author gseidel
  */
 class UserRepository extends EntityRepository implements UserLoaderInterface
 {

@@ -1,15 +1,12 @@
 <?php
-/**
- * Resource.php
- *
- * @since 12/06/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\FormBundle\Tests\Serializer\Mock;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * @author gseidel
+ */
 class Resource
 {
     /**

@@ -1,10 +1,5 @@
 <?php
-/**
- * AbstractMenuItem.php
- *
- * @since 20/09/16
- * @author gseidel
- */
+
 
 namespace Enhavo\Bundle\AppBundle\Menu;
 
@@ -12,6 +7,8 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Component\Type\AbstractContainerType;
 
 /**
+ * @author gseidel
+ *
  * @property MenuTypeInterface $type
  * @property MenuTypeInterface[] $parents
  */

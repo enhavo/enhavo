@@ -1,15 +1,12 @@
 <?php
-/**
- * Encoder.php
- *
- * @since 12/06/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\FormBundle\Serializer\Encoder;
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
+/**
+ * @author gseidel
+ */
 class Encoder
 {
     public function getEncoder($format)

@@ -1,12 +1,5 @@
 <?php
 
-/**
- * FormSerializerTest.php
- *
- * @since 12/06/16
- * @author gseidel
- */
-
 namespace Enhavo\Bundle\FormBundle\Serializer;
 
 use Enhavo\Bundle\FormBundle\Serializer\Encoder\Encoder;
@@ -14,6 +7,9 @@ use Enhavo\Bundle\FormBundle\Tests\Serializer\Mock\Resource;
 use Enhavo\Bundle\FormBundle\Tests\Serializer\Mock\ResourceType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
+/**
+ * @author gseidel
+ */
 class FormSerializerTest extends TypeTestCase
 {
     public function testSerializeScalarField()

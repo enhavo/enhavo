@@ -1,13 +1,10 @@
 <?php
-/**
- * EntityMock.php
- *
- * @since 26/06/15
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\AppBundle\Tests\Mock;
 
+/**
+ * @author gseidel
+ */
 class EntityMock
 {
     /**

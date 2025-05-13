@@ -1,17 +1,13 @@
 <?php
 
-/**
- * CancelButton.php
- *
- * @since 29/05/16
- * @author gseidel
- */
-
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @author gseidel
+ */
 class CloseActionType extends AbstractActionType
 {
     public function configureOptions(OptionsResolver $resolver): void

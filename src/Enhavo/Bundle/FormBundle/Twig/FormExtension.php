@@ -1,10 +1,4 @@
 <?php
-/**
- * Form.php
- *
- * @since 05/12/16
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\FormBundle\Twig;
 
@@ -16,6 +10,9 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
+/**
+ * @author gseidel
+ */
 class FormExtension extends AbstractExtension
 {
     /** @var FormErrorResolver */

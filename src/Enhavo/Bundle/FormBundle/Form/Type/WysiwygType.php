@@ -1,10 +1,4 @@
 <?php
-/**
- * WysiwygType.php
- *
- * @since 31/08/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
- */
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
@@ -14,6 +8,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ */
 class WysiwygType extends AbstractType
 {
     public function buildView(FormView $view, FormInterface $form, array $options)

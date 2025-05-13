@@ -1,17 +1,13 @@
 <?php
 
-/**
- * PageFixture.php
- *
- * @since 27/07/16
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
- */
-
 namespace App\Fixtures\Fixtures;
 
 use App\Fixtures\AbstractFixture;
 use Enhavo\Bundle\PageBundle\Entity\Page;
 
+/**
+ * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ */
 class PageFixture extends AbstractFixture
 {
     /**

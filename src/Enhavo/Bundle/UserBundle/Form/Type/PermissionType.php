@@ -1,8 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2022-05-12
- */
 
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
@@ -14,6 +10,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @author blutze-media
+ */
 class PermissionType extends AbstractType
 {
     public function __construct(

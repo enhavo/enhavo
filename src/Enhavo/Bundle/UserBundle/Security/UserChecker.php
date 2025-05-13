@@ -1,8 +1,4 @@
 <?php
-/**
- * @author blutze-media
- * @since 2020-10-28
- */
 
 namespace Enhavo\Bundle\UserBundle\Security;
 
@@ -12,6 +8,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * @author gseidel
+ */
 class UserChecker implements UserCheckerInterface
 {
     public function __construct(

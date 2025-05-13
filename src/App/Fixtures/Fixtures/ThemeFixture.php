@@ -1,16 +1,13 @@
 <?php
-/**
- * UserFixture.php
- *
- * @since 05/05/17
- * @author gseidel
- */
 
 namespace App\Fixtures\Fixtures;
 
 use App\Fixtures\AbstractFixture;
 use Enhavo\Bundle\UserBundle\Model\User;
 
+/**
+ * @author gseidel
+ */
 class ThemeFixture extends AbstractFixture
 {
     /**

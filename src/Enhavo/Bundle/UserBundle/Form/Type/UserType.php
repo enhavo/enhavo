@@ -1,10 +1,4 @@
 <?php
-/**
- * UserType.php
- *
- * @since 04/08/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
- */
 
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
@@ -18,6 +12,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
+/**
+ * @author gseidel
+ */
 class UserType extends AbstractType
 {
     public function __construct(

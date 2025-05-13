@@ -1,10 +1,4 @@
 <?php
-/**
- * MakeMenu.php
- *
- * @since 25/05/19
- * @author gseidel
- */
 
 namespace Enhavo\Bundle\AppBundle\Maker;
 
@@ -18,6 +12,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 
+/**
+ * @author gseidel
+ */
 class MakeMenu extends AbstractMaker
 {
     /**
