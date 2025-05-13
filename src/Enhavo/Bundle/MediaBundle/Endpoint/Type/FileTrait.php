@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Endpoint\Type;
 
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
@@ -20,7 +29,7 @@ trait FileTrait
         if (is_array($files)) {
             $data = [];
             /** @var FileInterface $file */
-            foreach($files as $file) {
+            foreach ($files as $file) {
                 $data[] = [
                     'id' => $file->getId(),
                     'token' => $file->getToken(),
@@ -58,7 +67,7 @@ trait FileTrait
             throw new BadRequestHttpException('File not in request');
         }
 
-        if ($uploadedFile->getError() != UPLOAD_ERR_OK) {
+        if (UPLOAD_ERR_OK != $uploadedFile->getError()) {
             throw new UploadException('Error in file upload');
         }
 

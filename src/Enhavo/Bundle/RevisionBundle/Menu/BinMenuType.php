@@ -1,9 +1,12 @@
 <?php
-/**
- * ArticleMenuBuilder.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 21/09/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RevisionBundle\Menu;
@@ -21,7 +24,7 @@ class BinMenuType extends AbstractMenuType
             'label' => 'bin.label.bin',
             'translation_domain' => 'EnhavoRevisionBundle',
             'route' => 'enhavo_revision_admin_bin_index',
-            'permission' => 'ROLE_ENHAVO_REVISION_BIN_INDEX'
+            'permission' => 'ROLE_ENHAVO_REVISION_BIN_INDEX',
         ]);
     }
 

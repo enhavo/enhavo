@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Fixtures\Fixtures;
 
 use App\Fixtures\AbstractFixture;
@@ -10,18 +19,15 @@ use Enhavo\Bundle\UserBundle\Model\User;
  */
 class UserFixture extends AbstractFixture
 {
-    /**
-     * @inheritdoc
-     */
-    function create($args)
+    public function create($args)
     {
         $user = new User(); // todo use factory
         $user->setEmail($args['email']);
         $user->setUsername($args['email']);
         $user->setPlainPassword($args['password']);
 
-        if(isset($args['roles']) && is_array($args['roles'])) {
-            foreach($args['roles'] as $role) {
+        if (isset($args['roles']) && is_array($args['roles'])) {
+            foreach ($args['roles'] as $role) {
                 $user->addRole($role);
             }
         }
@@ -31,18 +37,12 @@ class UserFixture extends AbstractFixture
         return $user;
     }
 
-    /**
-     * @inheritdoc
-     */
-    function getName()
+    public function getName()
     {
         return 'User';
     }
 
-    /**
-     * @inheritdoc
-     */
-    function getOrder()
+    public function getOrder()
     {
         return 1;
     }

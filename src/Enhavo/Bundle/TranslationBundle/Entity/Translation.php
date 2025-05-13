@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TranslationBundle\Entity;
 
 /**
@@ -18,7 +27,7 @@ class Translation
     private $class;
 
     /**
-     * @var integer
+     * @var int
      */
     private $refId;
 
@@ -37,15 +46,12 @@ class Translation
      */
     private $property;
 
-    /**
-     * @var mixed
-     */
     private $object;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -132,17 +138,11 @@ class Translation
         $this->property = $property;
     }
 
-    /**
-     * @return mixed
-     */
     public function getObject()
     {
         return $this->object;
     }
 
-    /**
-     * @param mixed $object
-     */
     public function setObject($object)
     {
         $this->object = $object;

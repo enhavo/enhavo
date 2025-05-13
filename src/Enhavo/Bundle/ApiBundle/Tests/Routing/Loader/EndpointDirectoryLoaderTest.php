@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\Tests\Routing\Loader;
 
 use Enhavo\Bundle\ApiBundle\Routing\Loader\EndpointDirectoryLoader;
@@ -38,16 +47,16 @@ class EndpointDirectoryLoaderTest extends TestCase
 
         $dependencies->loader->method('load')->willReturnCallback(function ($class, $type) {
             $routing = new RouteCollection();
-            if ($class === HelloEndpoint::class) {
+            if (HelloEndpoint::class === $class) {
                 $routing->add('test_route', new Route('/test'));
             }
+
             return $routing;
         });
 
-
         $instance = $this->createInstance($dependencies);
 
-        $dir = __DIR__ . '/../../Fixtures/Routing';
+        $dir = __DIR__.'/../../Fixtures/Routing';
 
         $routeCollection = $instance->load($dir);
 

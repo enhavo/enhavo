@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\Routing\Loader;
 
 use Symfony\Component\Config\Resource\FileResource;
@@ -9,7 +18,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 class AttributeRouteEndpointLoader extends AttributeClassLoader
 {
-    public function load($class, string $type = null): RouteCollection
+    public function load($class, ?string $type = null): RouteCollection
     {
         if (!class_exists($class)) {
             throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));
@@ -65,7 +74,7 @@ class AttributeRouteEndpointLoader extends AttributeClassLoader
     protected function configureRoute(Route $route, \ReflectionClass $class, \ReflectionMethod $method, object $annot): void
     {
         $route->setDefault('_endpoint', [
-            'type' => $class->getName()
+            'type' => $class->getName(),
         ]);
     }
 

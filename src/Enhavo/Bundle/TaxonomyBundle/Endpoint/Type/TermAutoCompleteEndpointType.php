@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TaxonomyBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
@@ -22,7 +31,7 @@ class TermAutoCompleteEndpointType extends AbstractEndpointType
             return [
                 'expr:request.get("q")',
                 $options['taxonomy'],
-                $options['limit']
+                $options['limit'],
             ];
         });
     }

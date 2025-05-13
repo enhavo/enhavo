@@ -1,10 +1,12 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 06.03.18
- * Time: 15:19
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver;
@@ -19,7 +21,6 @@ class ClassNameResolver implements EntityResolverInterface
 
     /**
      * ClassNameResolver constructor.
-     * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
     {
@@ -32,7 +33,7 @@ class ClassNameResolver implements EntityResolverInterface
             return $entity;
         }
         $className = get_class($entity);
-        if($entity instanceof Proxy) {
+        if ($entity instanceof Proxy) {
             $className = get_parent_class($entity);
         }
 
@@ -41,7 +42,7 @@ class ClassNameResolver implements EntityResolverInterface
 
     public function getEntity(int $id, string $name): ?object
     {
-        if(!class_exists($name)) {
+        if (!class_exists($name)) {
             return null;
         }
 

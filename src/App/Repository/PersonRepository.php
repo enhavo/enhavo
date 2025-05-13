@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-02
- * Time: 18:02
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Repository;
@@ -12,5 +15,4 @@ use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class PersonRepository extends EntityRepository
 {
-
 }

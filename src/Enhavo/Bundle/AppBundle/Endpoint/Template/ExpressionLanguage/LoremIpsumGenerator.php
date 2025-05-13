@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage;
 
 class LoremIpsumGenerator
@@ -20,10 +29,10 @@ class LoremIpsumGenerator
         'himenaeos', 'fermentum', 'turpis', 'donec', 'magna', 'porta', 'enim', 'curabitur', 'odio', 'rhoncus',
         'blandit', 'potenti', 'sodales', 'accumsan', 'congue', 'neque', 'duis', 'bibendum', 'laoreet', 'elementum',
         'suscipit', 'diam', 'vehicula', 'eros', 'nam', 'imperdiet', 'sem', 'ullamcorper', 'dignissim', 'risus',
-        'aliquet', 'habitant', 'morbi', 'tristique', 'senectus', 'netus', 'fames', 'nisl', 'iaculis', 'cras', 'aenean'
+        'aliquet', 'habitant', 'morbi', 'tristique', 'senectus', 'netus', 'fames', 'nisl', 'iaculis', 'cras', 'aenean',
     ];
 
-    public function generate(bool $html = false, int|array $paragraphs = 1, int|array $sentences = [3, 8], int|array $words = [3, 10], int|array $chars = [2,12], int $punctuationChance = 33): string
+    public function generate(bool $html = false, int|array $paragraphs = 1, int|array $sentences = [3, 8], int|array $words = [3, 10], int|array $chars = [2, 12], int $punctuationChance = 33): string
     {
         $wordsData = $this->getWords($chars);
         $paragraphData = [];
@@ -35,13 +44,13 @@ class LoremIpsumGenerator
                 $nWords = $this->getNumber($words, 'words');
                 $wordData = $this->getRandomWords($nWords, $wordsData);
                 $wordData = $this->generateComma($wordData, $punctuationChance);
-                $sentenceData[] = ucfirst(implode(' ', $wordData)) . ($punctuationChance == 0 ? '' : '.');
+                $sentenceData[] = ucfirst(implode(' ', $wordData)).(0 == $punctuationChance ? '' : '.');
             }
             $paragraphData[] = implode(' ', $sentenceData);
         }
 
         if ($html) {
-            $paragraphData = array_map(function($value) {
+            $paragraphData = array_map(function ($value) {
                 return '<p>'.$value.'</p>';
             }, $paragraphData);
         }
@@ -52,7 +61,7 @@ class LoremIpsumGenerator
     private function getNumber(int|array $value, $name)
     {
         if (is_array($value)) {
-            if (count($value) != 2 || !isset($value[0], $value[1]) || !is_int($value[0]) || !is_int($value[1]) || $value[0] < 0 || $value[1] < 0) {
+            if (2 != count($value) || !isset($value[0], $value[1]) || !is_int($value[0]) || !is_int($value[1]) || $value[0] < 0 || $value[1] < 0) {
                 throw new \Exception(sprintf('Number of %s must be an array with exact two positive integers. The min and max value, but "[%s]" given', $name, implode(',', $value)));
             }
 
@@ -67,7 +76,7 @@ class LoremIpsumGenerator
         $min = 2;
         $max = 12;
         if (is_array($chars)) {
-            if (count($chars) != 2 || !isset($chars[0], $chars[1]) || !is_int($chars[0]) || !is_int($chars[1]) || $chars[0] < $min || $chars[1] > $max) {
+            if (2 != count($chars) || !isset($chars[0], $chars[1]) || !is_int($chars[0]) || !is_int($chars[1]) || $chars[0] < $min || $chars[1] > $max) {
                 throw new \Exception(sprintf('Number of chars must be an array with two integers. The min not less then %s and max value not more than %s, but "[%s]" given', $min, $max, implode(',', $chars)));
             }
 
@@ -91,7 +100,7 @@ class LoremIpsumGenerator
     private function getRandomWords(int $count, array $words): array
     {
         $wordsData = [];
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $randomIndex = random_int(0, count($words) - 1);
             $wordsData[] = $words[$randomIndex];
         }
@@ -101,18 +110,18 @@ class LoremIpsumGenerator
 
     private function generateComma($wordData, $commaChance): array
     {
-        $value = random_int(1,100);
+        $value = random_int(1, 100);
         $space = 2;
 
         $nWords = count($wordData);
-        if ($nWords < ($space*2+1)) {
+        if ($nWords < ($space * 2 + 1)) {
             return $wordData;
-        } else if ($value > $commaChance) {
+        } elseif ($value > $commaChance) {
             return $wordData;
         }
 
         $index = random_int($space - 1, $nWords - $space - 1);
-        $wordData[$index] = $wordData[$index] . ',';
+        $wordData[$index] = $wordData[$index].',';
 
         return $wordData;
     }

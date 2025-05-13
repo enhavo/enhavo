@@ -1,9 +1,12 @@
 <?php
-/**
- * GeneratorInterface.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 11/12/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\AutoGenerator;
@@ -15,13 +18,13 @@ interface GeneratorInterface extends TypeInterface
 {
     /**
      * @param object $resource
-     * @param array $options
+     * @param array  $options
+     *
      * @return void
      */
     public function generate($resource, $options = []);
 
     /**
-     * @param OptionsResolver $resolver
      * @return void
      */
     public function configureOptions(OptionsResolver $resolver);

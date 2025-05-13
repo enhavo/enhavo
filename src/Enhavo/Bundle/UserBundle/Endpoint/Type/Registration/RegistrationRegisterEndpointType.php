@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Endpoint\Type\Registration;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -23,8 +32,7 @@ class RegistrationRegisterEndpointType extends AbstractFormEndpointType
         private readonly ConfigurationProvider $provider,
         private readonly UserManager $userManager,
         private readonly UserFactory $userFactory,
-    )
-    {
+    ) {
     }
 
     protected function getForm($options, Request $request, Data $data, Context $context): FormInterface
@@ -35,7 +43,7 @@ class RegistrationRegisterEndpointType extends AbstractFormEndpointType
         $user = $this->userFactory->createNew();
 
         return $this->createForm($configuration->getFormClass(), $user, $configuration->getFormOptions([
-            'validation_groups' => ['register']
+            'validation_groups' => ['register'],
         ]));
     }
 
@@ -54,6 +62,7 @@ class RegistrationRegisterEndpointType extends AbstractFormEndpointType
     protected function getRedirectUrl($options, Request $request, Data $data, Context $context, FormInterface $form): ?string
     {
         $configuration = $this->provider->getRegistrationRegisterConfiguration();
+
         return $this->generateUrl($configuration->getRedirectRoute());
     }
 

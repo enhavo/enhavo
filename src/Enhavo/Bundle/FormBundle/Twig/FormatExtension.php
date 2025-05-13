@@ -1,13 +1,22 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Twig;
 
 use Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter;
 use Enhavo\Bundle\FormBundle\Formatter\HtmlSanitizer;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * @author gseidel
@@ -18,32 +27,33 @@ class FormatExtension extends AbstractExtension
 
     /**
      * FormatExtension constructor.
-     * @param HtmlSanitizer $sanitizer
      */
     public function __construct(
         private readonly HtmlSanitizer $sanitizer,
         private readonly array $htmlSanitizerConfig,
-    ) {}
+    ) {
+    }
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('currency', array($this, 'formatCurrency'), array('is_safe' => array('html')))
-        );
+        return [
+            new TwigFunction('currency', [$this, 'formatCurrency'], ['is_safe' => ['html']]),
+        ];
     }
 
     public function getFilters()
     {
-        return array(
-            new TwigFilter('currency', array($this, 'formatCurrency'), array('is_safe' => array('html'))),
-            new TwigFilter('headline', array($this, 'formatHeadline'), array('is_safe' => array('html'))),
-            new TwigFilter('html_sanitize', array($this, 'sanitizeHtml'), array('is_safe' => array('html')))
-        );
+        return [
+            new TwigFilter('currency', [$this, 'formatCurrency'], ['is_safe' => ['html']]),
+            new TwigFilter('headline', [$this, 'formatHeadline'], ['is_safe' => ['html']]),
+            new TwigFilter('html_sanitize', [$this, 'sanitizeHtml'], ['is_safe' => ['html']]),
+        ];
     }
 
     public function formatCurrency($value, $currency = 'Euro', $position = 'right')
     {
         $currencyFormatter = $this->container->get(CurrencyFormatter::class);
+
         return $currencyFormatter->getCurrency($value, $currency, $position);
     }
 
@@ -51,28 +61,28 @@ class FormatExtension extends AbstractExtension
     {
         $attributeParts = [];
 
-        if($class) {
-            $attributeParts[] = sprintf('class="%s"',  $class);;
+        if ($class) {
+            $attributeParts[] = sprintf('class="%s"', $class);
         }
 
-        foreach($attributes as $key => $attrValue) {
-            if(is_string($attrValue)) {
+        foreach ($attributes as $key => $attrValue) {
+            if (is_string($attrValue)) {
                 $attributeParts[] = sprintf('%s="%s"', $key, $attrValue);
-            } elseif($attrValue) {
+            } elseif ($attrValue) {
                 $attributeParts[] = sprintf('%s="%s"', $key, htmlentities(json_encode($attrValue)));
             } else {
                 $attributeParts[] = $key;
             }
         }
 
-        $attribute = "";
-        if(count($attributeParts)) {
+        $attribute = '';
+        if (count($attributeParts)) {
             $attribute = sprintf(' %s', implode(' ', $attributeParts));
         }
 
         $pattern = '/^<([a-zA-Z0-9-]+)>/';
-        if(preg_match($pattern, $value)) {
-            $content = preg_replace_callback($pattern, function($matches) use ($attribute) {
+        if (preg_match($pattern, $value)) {
+            $content = preg_replace_callback($pattern, function ($matches) use ($attribute) {
                 return sprintf('<%s%s>', $matches[1], $attribute);
             }, $value);
         } else {

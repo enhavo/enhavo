@@ -1,18 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 09.05.18
- * Time: 15:56
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Engine\Filter;
 
-
 class Filter
 {
-    const DIRECTION_ASC = 'ASC';
-    const DIRECTION_DESC = 'DESC';
+    public const DIRECTION_ASC = 'ASC';
+    public const DIRECTION_DESC = 'DESC';
 
     private ?string $term = null;
     /** @var QueryInterface[] */
@@ -31,20 +33,23 @@ class Filter
     public function setTerm(?string $term): self
     {
         $this->term = $term;
+
         return $this;
     }
 
     public function addQuery(string $key, QueryInterface $query): self
     {
         $this->queries[$key] = $query;
+
         return $this;
     }
 
     public function removeQuery(string $key): self
     {
-        if(isset($this->queries[$key])) {
+        if (isset($this->queries[$key])) {
             unset($this->queries[$key]);
         }
+
         return $this;
     }
 
@@ -62,6 +67,7 @@ class Filter
     public function setClass(?string $class): self
     {
         $this->class = $class;
+
         return $this;
     }
 
@@ -70,10 +76,11 @@ class Filter
         return $this->orderBy;
     }
 
-    public function setOrderBy(string $orderBy, string $orderDirection = null): self
+    public function setOrderBy(string $orderBy, ?string $orderDirection = null): self
     {
         $this->orderDirection = $orderDirection;
         $this->orderBy = $orderBy;
+
         return $this;
     }
 
@@ -85,6 +92,7 @@ class Filter
     public function setOrderDirection(?string $orderDirection): self
     {
         $this->orderDirection = $orderDirection;
+
         return $this;
     }
 
@@ -96,6 +104,7 @@ class Filter
     public function setLimit(?int $limit): self
     {
         $this->limit = $limit;
+
         return $this;
     }
 

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
 use Enhavo\Bundle\ArticleBundle\Entity\ArticleTeaserBlock;
@@ -15,18 +24,18 @@ class ArticleTeaserBlockType extends AbstractType
     {
         $builder->add('article', ArticleChoiceType::class);
 
-        $builder->add('layout', ChoiceType::class, array(
+        $builder->add('layout', ChoiceType::class, [
             'label' => 'article.form.label.layout',
             'translation_domain' => 'EnhavoArticleBundle',
             'choice_translation_domain' => 'EnhavoArticleBundle',
             'choices' => [
                 '1:1' => ArticleTeaserBlock::LAYOUT_1_1,
                 '1:2' => ArticleTeaserBlock::LAYOUT_1_2,
-                '2:1' => ArticleTeaserBlock::LAYOUT_2_1
+                '2:1' => ArticleTeaserBlock::LAYOUT_2_1,
             ],
             'expanded' => true,
-            'multiple' => false
-        ));
+            'multiple' => false,
+        ]);
 
         $builder->add('textLeft', BooleanType::class, [
             'label' => 'article.form.label.text_left',
@@ -34,17 +43,17 @@ class ArticleTeaserBlockType extends AbstractType
             'choice_translation_domain' => 'EnhavoArticleBundle',
             'choices' => [
                 'article.form.label.text_left_left' => BooleanType::VALUE_FALSE,
-                'article.form.label.text_left_right' => BooleanType::VALUE_TRUE
+                'article.form.label.text_left_right' => BooleanType::VALUE_TRUE,
             ],
             'expanded' => true,
-            'multiple' => false
+            'multiple' => false,
         ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => ArticleTeaserBlock::class
-        ));
+        $resolver->setDefaults([
+            'data_class' => ArticleTeaserBlock::class,
+        ]);
     }
 }

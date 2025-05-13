@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-12
- * Time: 14:38
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Behat\Context;
-
 
 use Behat\Behat\Context\Context;
 use Symfony\Component\Filesystem\Filesystem;
@@ -43,23 +45,23 @@ class DebugContext implements ClientAwareContext, Context
     {
         $file = sprintf('%s/%s.log', $this->getLogDir(), getenv('APP_ENV'));
         $fs = new Filesystem();
-        if($fs->exists($file)) {
+        if ($fs->exists($file)) {
             $fs->remove($file);
         }
     }
 
     private function getDomDir()
     {
-        return __DIR__ . '/../../../../../../var/behat/dom';
+        return __DIR__.'/../../../../../../var/behat/dom';
     }
 
     private function getLogDir()
     {
-        return __DIR__ . '/../../../../../../var/logs';
+        return __DIR__.'/../../../../../../var/logs';
     }
 
     private function getScreenshotDir()
     {
-        return __DIR__ . '/../../../../../../var/behat/screenshot';
+        return __DIR__.'/../../../../../../var/behat/screenshot';
     }
 }

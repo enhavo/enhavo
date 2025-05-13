@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-02-20
- * Time: 09:06
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\Tests\Mock;
 
-
-use Closure;
 use Doctrine\Common\Proxy\Proxy;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
@@ -85,12 +86,10 @@ class RouteContentMock implements Proxy, Slugable
 
     public function __setInitialized($initialized)
     {
-
     }
 
-    public function __setInitializer(Closure $initializer = null)
+    public function __setInitializer(?\Closure $initializer = null)
     {
-
     }
 
     public function __getInitializer()
@@ -98,9 +97,8 @@ class RouteContentMock implements Proxy, Slugable
         return null;
     }
 
-    public function __setCloner(Closure $cloner = null)
+    public function __setCloner(?\Closure $cloner = null)
     {
-
     }
 
     public function __getCloner()
@@ -115,7 +113,6 @@ class RouteContentMock implements Proxy, Slugable
 
     public function __load()
     {
-
     }
 
     public function __isInitialized()

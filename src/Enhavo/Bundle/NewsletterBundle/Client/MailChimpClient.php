@@ -1,9 +1,19 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Client;
 
 use Enhavo\Bundle\NewsletterBundle\Event\StorageEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
+use GuzzleHttp\Exception\GuzzleException;
 use MailchimpMarketing\ApiClient;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
@@ -25,7 +35,7 @@ class MailChimpClient
     /** @var array */
     private $bodyParameters;
 
-    /** @var bool  */
+    /** @var bool */
     private $initialized = false;
 
     /**
@@ -35,7 +45,6 @@ class MailChimpClient
 
     /**
      * MailChimpClient constructor.
-     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {
@@ -60,9 +69,7 @@ class MailChimpClient
     }
 
     /**
-     * @param SubscriberInterface $subscriber
-     * @param string $groupId
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function saveSubscriber(SubscriberInterface $subscriber, string $groupId)
     {
@@ -72,16 +79,15 @@ class MailChimpClient
         $this->eventDispatcher->dispatch($event);
         $memberID = md5(strtolower($subscriber->getEmail()));
         $response = $this->mailchimpClient->lists->setListMember($groupId, $memberID, [
-            "email_address" => $subscriber->getEmail(),
-            "status_if_new" => "subscribed",
+            'email_address' => $subscriber->getEmail(),
+            'status_if_new' => 'subscribed',
         ]);
     }
 
     /**
-     * @param $email
-     * @param string $groupId
+     * @throws GuzzleException
+     *
      * @return bool
-     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function exists($email, string $groupId)
     {
@@ -95,7 +101,6 @@ class MailChimpClient
 
         return true;
     }
-
 
     private function createBodyParameters(SubscriberInterface $subscriber, array $bodyParameters)
     {

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ArticleBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
@@ -15,7 +24,7 @@ class CategoryMenuType extends AbstractMenuType
             'label' => 'article.label.category',
             'translation_domain' => 'EnhavoArticleBundle',
             'route' => 'enhavo_article_admin_category_index',
-            'permission' => 'ROLE_ENHAVO_ARTICLE_CATEGORY_INDEX'
+            'permission' => 'ROLE_ENHAVO_ARTICLE_CATEGORY_INDEX',
         ]);
     }
 

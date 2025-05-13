@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-13
- * Time: 10:48
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\Tests\Metadata\Provider;
@@ -24,16 +27,16 @@ class GeneratorProviderTest extends TestCase
                 'prefix' => [
                     'type' => 'prefix_type',
                     'option1' => 'value1',
-                    'option2' => 'value2'
-                ]
-            ]
+                    'option2' => 'value2',
+                ],
+            ],
         ]);
 
         $this->assertCount(1, $metadata->getGenerators());
         $this->assertEquals('prefix_type', $metadata->getGenerators()[0]->getType());
         $this->assertEquals([
             'option1' => 'value1',
-            'option2' => 'value2'
+            'option2' => 'value2',
         ], $metadata->getGenerators()[0]->getOptions());
     }
 

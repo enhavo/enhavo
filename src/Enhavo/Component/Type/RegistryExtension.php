@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-08
- * Time: 11:21
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Type;
@@ -17,21 +20,14 @@ class RegistryExtension
         private string $class,
         private array $extendedTypes,
         private int $priority,
-    )
-    {
+    ) {
     }
 
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getClass(): string
     {
         return $this->class;
@@ -42,17 +38,11 @@ class RegistryExtension
         return $this->extendedTypes;
     }
 
-    /**
-     * @return TypeExtensionInterface|null
-     */
     public function getService(): ?TypeExtensionInterface
     {
         return $this->service;
     }
 
-    /**
-     * @param TypeExtensionInterface|null $service
-     */
     public function setService(?TypeExtensionInterface $service): void
     {
         $this->service = $service;

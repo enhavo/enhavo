@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-09
- * Time: 14:20
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener;
@@ -20,6 +23,7 @@ class ExtendSubscriberTest extends SubscriberTest
     {
         $dependencies = new ExtendSubscriberDependencies();
         $dependencies->metadataRepository = $this->createMetadataRepository($configuration);
+
         return $dependencies;
     }
 
@@ -33,16 +37,16 @@ class ExtendSubscriberTest extends SubscriberTest
         $dependencies = $this->createDependencies([
             Entity::class => [
                 'extends' => Root::class,
-                'discrName' => 'entity'
+                'discrName' => 'entity',
             ],
             Child::class => [
                 'extends' => Entity::class,
-                'discrName' => 'child'
+                'discrName' => 'child',
             ],
         ]);
         $subscriber = $this->createInstance($dependencies);
 
-        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Extend");
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Extend');
         $this->em->getEventManager()->addEventSubscriber($subscriber);
         $this->updateSchema();
 
@@ -50,7 +54,7 @@ class ExtendSubscriberTest extends SubscriberTest
 
         $this->assertTrue(in_array('Root', $tableNames));
         $this->assertFalse(in_array('Entity', $tableNames));
-        $this->assertFalse(in_array( 'Child', $tableNames));
+        $this->assertFalse(in_array('Child', $tableNames));
 
         $root = new Root();
         $entity = new Entity();

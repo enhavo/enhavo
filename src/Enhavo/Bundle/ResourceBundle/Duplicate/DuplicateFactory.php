@@ -1,10 +1,19 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Duplicate;
 
 use Doctrine\Common\Proxy\Proxy;
-use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Metadata\Metadata;
+use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Component\Type\FactoryInterface;
 
 class DuplicateFactory
@@ -12,11 +21,10 @@ class DuplicateFactory
     public function __construct(
         private readonly MetadataRepository $metadataRepository,
         private readonly FactoryInterface $duplicateFactory,
-    )
-    {
+    ) {
     }
 
-    public function duplicate(object $source, object $target = null, $context = []): object
+    public function duplicate(object $source, ?object $target = null, $context = []): object
     {
         $classes = $this->getClasses($source);
 
@@ -30,6 +38,7 @@ class DuplicateFactory
             if ($metadata->getClass()) {
                 /** @var Duplicate $duplicate */
                 $duplicate = $this->duplicateFactory->create($metadata->getClass());
+
                 return $duplicate->duplicate(new SourceValue($source), new TargetValue($target), $context);
             }
         }
@@ -76,10 +85,10 @@ class DuplicateFactory
         $parentClass = get_class($source);
         do {
             $parentClass = get_parent_class($parentClass);
-            if ($parentClass !== false) {
+            if (false !== $parentClass) {
                 $classes[] = $parentClass;
             }
-        } while($parentClass !== false);
+        } while (false !== $parentClass);
 
         return $classes;
     }

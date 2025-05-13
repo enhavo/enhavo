@@ -1,6 +1,17 @@
 <?php
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\CalendarBundle\Validator\Constraints;
-/**
+
+/*
  * Created by PhpStorm.
  * User: jhelbing
  * Date: 20.05.16
@@ -8,8 +19,8 @@ namespace Enhavo\Bundle\CalendarBundle\Validator\Constraints;
  */
 use Symfony\Component\Validator\Constraint;
 
-class AppointmentDate extends Constraint{
-
+class AppointmentDate extends Constraint
+{
     public $datesDoNotMatch = 'appointment.validator.error.dates';
 
     public function validatedBy()

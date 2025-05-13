@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
 use Enhavo\Bundle\AppBundle\Security\Roles\RolesProvider;
@@ -17,7 +26,8 @@ class PermissionType extends AbstractType
 {
     public function __construct(
         private RolesProvider $rolesProvider,
-    ) {}
+    ) {
+    }
 
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -26,7 +36,7 @@ class PermissionType extends AbstractType
             'multiple' => true,
             'expanded' => true,
             'list' => true,
-            'component' => 'form-user-group-permission'
+            'component' => 'form-user-group-permission',
         ]);
     }
 

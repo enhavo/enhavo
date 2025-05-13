@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -21,7 +30,8 @@ class ResourceBatchEndpointType extends AbstractEndpointType
         private readonly GridFactory $gridFactory,
         private readonly CsrfTokenManagerInterface $csrfTokenManager,
         private readonly CsrfChecker $csrfChecker,
-    ) {}
+    ) {
+    }
 
     public static function getName(): ?string
     {
@@ -41,7 +51,7 @@ class ResourceBatchEndpointType extends AbstractEndpointType
         }
 
         $batch = $grid->getBatch($type);
-        if ($batch === null) {
+        if (null === $batch) {
             throw $this->createNotFoundException();
         }
 
@@ -49,6 +59,7 @@ class ResourceBatchEndpointType extends AbstractEndpointType
             $context->setStatusCode(400);
             $data['success'] = false;
             $data['message'] = 'Invalid token';
+
             return;
         }
 
@@ -57,6 +68,7 @@ class ResourceBatchEndpointType extends AbstractEndpointType
             $context->setStatusCode(400);
             $data['success'] = false;
             $data['message'] = 'No id\'s selected';
+
             return;
         }
 

@@ -1,24 +1,20 @@
 <?php
-/**
- * GroupAwareInterface.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since $date
- * @author $username-media
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Model;
 
-
 interface GroupAwareInterface
 {
-    /**
-     * @param GroupInterface $group
-     */
     public function addGroup(GroupInterface $group): void;
 
-    /**
-     * @param GroupInterface $group
-     */
     public function removeGroup(GroupInterface $group): void;
 
     /**

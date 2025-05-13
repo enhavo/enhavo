@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 10.05.18
- * Time: 19:25
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Index;
@@ -14,7 +17,7 @@ class IndexData
     private ?float $weight;
     private ?string $lang;
 
-    public function __construct(string $value = null, float $weight = null, string $lang = null)
+    public function __construct(?string $value = null, ?float $weight = null, ?string $lang = null)
     {
         $this->value = $value;
         $this->weight = $weight;

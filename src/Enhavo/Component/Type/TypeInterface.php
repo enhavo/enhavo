@@ -1,9 +1,12 @@
 <?php
-/**
- * TypeInterface.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 29/05/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Type;
@@ -14,15 +17,11 @@ interface TypeInterface
 {
     /**
      * Returns a unique name for this type
-     *
-     * @return string
      */
     public static function getName(): ?string;
 
     /**
      * Returns the parent type
-     *
-     * @return string
      */
     public static function getParentType(): ?string;
 
@@ -31,8 +30,5 @@ interface TypeInterface
      */
     public function setParent(TypeInterface $parent);
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver);
 }

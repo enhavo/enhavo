@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TaxonomyBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,7 +26,7 @@ class Term implements TermInterface
     private ?string $text = null;
     private ?Term $parent = null;
 
-    /**  @var Term[]|Collection */
+    /** @var Term[]|Collection */
     private $children;
 
     public function __construct()
@@ -33,6 +42,7 @@ class Term implements TermInterface
     public function setName(?string $name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -43,9 +53,10 @@ class Term implements TermInterface
 
     public function __toString()
     {
-        if($this->name) {
+        if ($this->name) {
             return $this->name;
         }
+
         return '';
     }
 
@@ -100,10 +111,11 @@ class Term implements TermInterface
     {
         $parents = [];
         $parent = $this->getParent();
-        while ($parent !== null) {
+        while (null !== $parent) {
             $parents[] = $parent;
             $parent = $parent->getParent();
         }
+
         return $parents;
     }
 
@@ -133,12 +145,13 @@ class Term implements TermInterface
     {
         $descendants = [];
         $children = $this->getChildren();
-        foreach($children as $child) {
+        foreach ($children as $child) {
             $descendants[] = $child;
-            foreach($child->getDescendants() as $descendant) {
+            foreach ($child->getDescendants() as $descendant) {
                 $descendants[] = $descendant;
             }
         }
+
         return new ArrayCollection($descendants);
     }
 }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Vue\RouteProvider;
 
 use Enhavo\Component\Type\AbstractType;
@@ -17,8 +26,7 @@ class FileVueRouteProviderType extends AbstractType implements VueRouteProviderT
 
     public function __construct(
         private string $basePath,
-    )
-    {
+    ) {
     }
 
     public function getRoutes($options, array|string|null $groups = null): array
@@ -39,14 +47,13 @@ class FileVueRouteProviderType extends AbstractType implements VueRouteProviderT
         }
 
         $this->load($options);
+
         return $this->search($path, $this->routes);
     }
 
-
-
     private function load($options): void
     {
-        if ($this->routes !== null) {
+        if (null !== $this->routes) {
             return;
         }
 
@@ -66,9 +73,9 @@ class FileVueRouteProviderType extends AbstractType implements VueRouteProviderT
     {
         $ext = pathinfo($resource->getResource(), PATHINFO_EXTENSION);
 
-        if ($ext === 'yaml') {
+        if ('yaml' === $ext) {
             return Yaml::parseFile($resource->getResource());
-        } elseif ($ext === 'json') {
+        } elseif ('json' === $ext) {
             return json_decode(file_get_contents($resource->getResource()), true);
         }
 

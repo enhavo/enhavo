@@ -1,9 +1,12 @@
 <?php
-/**
- * SubscriberManager.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 21/09/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Subscription;
@@ -16,7 +19,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 
 class SubscriptionManager
 {
-    const DEFAULT_PROVIDER = 'local';
+    public const DEFAULT_PROVIDER = 'local';
 
     /** @var FactoryInterface */
     private $storageFactory;
@@ -35,11 +38,6 @@ class SubscriptionManager
 
     /**
      * SubscriptionManager constructor.
-     * @param FactoryInterface $storageFactory
-     * @param FactoryInterface $strategyFactory
-     * @param FormFactoryInterface $formFactory
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param array $configuration
      */
     public function __construct(FactoryInterface $storageFactory, FactoryInterface $strategyFactory, FormFactoryInterface $formFactory, EventDispatcherInterface $eventDispatcher, array $configuration)
     {
@@ -49,7 +47,6 @@ class SubscriptionManager
         $this->eventDispatcher = $eventDispatcher;
         $this->configuration = $configuration;
     }
-
 
     public function getSubscription($name): Subscription
     {

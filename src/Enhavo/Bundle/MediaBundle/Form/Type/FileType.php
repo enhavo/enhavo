@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
@@ -8,6 +17,7 @@ use Enhavo\Bundle\FormBundle\Form\Type\UuidType;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ResourceBundle\Action\ActionManager;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -16,7 +26,6 @@ use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class FileType extends AbstractType
@@ -28,8 +37,7 @@ class FileType extends AbstractType
         private readonly array $formConfigurations,
         private readonly string $dataClass,
         private readonly ActionManager $actionManager,
-    )
-    {
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -43,7 +51,7 @@ class FileType extends AbstractType
                 return $originalDescription;
             },
             function ($submittedDescription) use (&$submitData, $options, $type) {
-                if($submittedDescription instanceof FileInterface && $submittedDescription->getId() === null) {
+                if ($submittedDescription instanceof FileInterface && null === $submittedDescription->getId()) {
                     $file = $this->repository->find($submitData['id']);
 
                     $form = $this->formFactory->create($type, $file, $options);
@@ -55,6 +63,7 @@ class FileType extends AbstractType
 
                     return $file;
                 }
+
                 return $submittedDescription;
             }
         );
@@ -62,21 +71,19 @@ class FileType extends AbstractType
         $builder->addModelTransformer($transformer);
         $builder->addViewTransformer($transformer);
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $event) use (&$submitData)
-        {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use (&$submitData): void {
             $data = $event->getData();
             $submitData = $data;
         });
 
-        $builder->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event)
-        {
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event): void {
             $form = $event->getForm();
             $data = $event->getData();
 
             $form->add('id', UuidType::class, [
                 'required' => true,
                 'mapped' => false,
-                'data' => $data === null ? null : $data->getId(),
+                'data' => null === $data ? null : $data->getId(),
             ]);
         });
 
@@ -86,7 +93,7 @@ class FileType extends AbstractType
         ]);
 
         $builder->add('order', PositionType::class, [
-            'required' => true
+            'required' => true,
         ]);
 
         $parameterType = $options['parameters_type'] ?? $this->formConfigurations[$options['config']]['parameters_type'];
@@ -103,7 +110,7 @@ class FileType extends AbstractType
             $vueData['file'] = $this->serializer->normalize($form->getData(), null, ['groups' => ['media', 'media_private']]);
             if (isset($options['component_model'])) {
                 $vueData['componentModel'] = $options['component_model'];
-            } else if (!isset($vueData['componentModel'])) {
+            } elseif (!isset($vueData['componentModel'])) {
                 $vueData['componentModel'] = 'MediaItemForm';
             }
 
@@ -121,6 +128,7 @@ class FileType extends AbstractType
         foreach ($actions as $action) {
             $viewData[] = $action->createViewData();
         }
+
         return $viewData;
     }
 

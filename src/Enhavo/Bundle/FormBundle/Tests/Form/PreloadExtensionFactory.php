@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-21
- * Time: 23:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Tests\Form;
@@ -18,12 +21,14 @@ class PreloadExtensionFactory
     public static function createWysiwygExtension()
     {
         $type = new WysiwygType('', '');
+
         return new PreloadedExtension([$type], []);
     }
 
     public static function createPolyCollectionTypeExtension($csrfProtection = false)
     {
-        $manager = new PrototypeManager(new TokenGeneratorMock, $csrfProtection);
+        $manager = new PrototypeManager(new TokenGeneratorMock(), $csrfProtection);
+
         return new PreloadedExtension([new PolyCollectionType($manager)], []);
     }
 }

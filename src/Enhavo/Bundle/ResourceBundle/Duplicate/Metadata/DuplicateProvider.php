@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Duplicate\Metadata;
 
 use Enhavo\Component\Metadata\Metadata as BaseMetadata;
@@ -9,7 +18,7 @@ class DuplicateProvider implements ProviderInterface
 {
     public function provide(BaseMetadata $metadata, $normalizedData)
     {
-        if (!$metadata instanceof \Enhavo\Bundle\ResourceBundle\Duplicate\Metadata\Metadata) {
+        if (!$metadata instanceof Metadata) {
             return;
         }
 
@@ -39,6 +48,7 @@ class DuplicateProvider implements ProviderInterface
                 return true;
             }
         }
+
         return false;
     }
 }

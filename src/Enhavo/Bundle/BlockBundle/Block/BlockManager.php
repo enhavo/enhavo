@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 23.08.18
- * Time: 21:56
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Block;
@@ -28,9 +31,8 @@ class BlockManager
         FactoryInterface $factory,
         private readonly AssociationFinder $associationFinder,
         private readonly Cleaner $cleaner,
-        $configurations
-    )
-    {
+        $configurations,
+    ) {
         foreach ($configurations as $name => $options) {
             $this->blocks[$name] = $factory->create($options);
         }
@@ -53,16 +55,16 @@ class BlockManager
 
     public function createViewData(NodeInterface $node, $resource = null): void
     {
-        $this->walk($node, function (NodeInterface $node) use ($resource) {
-            if ($node->getType() === NodeInterface::TYPE_BLOCK) {
+        $this->walk($node, function (NodeInterface $node) use ($resource): void {
+            if (NodeInterface::TYPE_BLOCK === $node->getType()) {
                 $node->setResource($resource);
                 $viewData = $node->getBlock() ? $this->getBlock($node->getName())->createViewData($node->getBlock(), $resource) : [];
                 $node->setViewData($viewData);
             }
         });
 
-        $this->walk($node, function (NodeInterface $node) use ($resource) {
-            if ($node->getType() === NodeInterface::TYPE_BLOCK) {
+        $this->walk($node, function (NodeInterface $node) use ($resource): void {
+            if (NodeInterface::TYPE_BLOCK === $node->getType()) {
                 $viewData = $node->getBlock() ? $this->getBlock($node->getName())->finishViewData($node->getBlock(), $node->getViewData(), $resource) : [];
                 $node->setViewData($viewData);
             }
@@ -84,17 +86,18 @@ class BlockManager
         if ($factoryClass) {
             if ($this->container->has($factoryClass)) {
                 $factory = $this->container->get($factoryClass);
+
                 return $factory;
-            } else {
             }
         }
+
         return new BlockFactory($block->getModel());
     }
 
     /**
      * Find the resource that references the block tree that contains the given block
      */
-    public function findRootResource(BlockInterface $block): object|null
+    public function findRootResource(BlockInterface $block): ?object
     {
         if (!$block->getNode()) {
             return null;
@@ -122,7 +125,7 @@ class BlockManager
     /**
      * Search database for orphaned or erroneous nodes and blocks and delete them.
      */
-    public function cleanUp(OutputLoggerInterface $outputLogger = null, bool $dryRun = false): void
+    public function cleanUp(?OutputLoggerInterface $outputLogger = null, bool $dryRun = false): void
     {
         $this->cleaner->clean($outputLogger, $dryRun);
     }

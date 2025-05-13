@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -18,11 +27,10 @@ class DuplicateActionType extends AbstractActionType implements ActionTypeInterf
         private readonly RouteResolverInterface $routeResolver,
         private readonly ResourceExpressionLanguage $expressionLanguage,
         private readonly CsrfTokenManagerInterface $tokenManager,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $data->set('token', $this->tokenManager->getToken('resource_duplicate')->getValue());
 
@@ -30,11 +38,11 @@ class DuplicateActionType extends AbstractActionType implements ActionTypeInterf
             'resource' => $resource,
         ]);
 
-        if ($route === null) {
+        if (null === $route) {
             $route = $this->routeResolver->getRoute('duplicate', ['api' => true]);
         }
 
-        if ($route === null) {
+        if (null === $route) {
             throw new \Exception('Can\'t find create route, please provide a route over the "route" option');
         }
 
@@ -44,7 +52,6 @@ class DuplicateActionType extends AbstractActionType implements ActionTypeInterf
 
         $data->set('url', $this->router->generate($route, $routeParameters));
     }
-
 
     public function configureOptions(OptionsResolver $resolver): void
     {

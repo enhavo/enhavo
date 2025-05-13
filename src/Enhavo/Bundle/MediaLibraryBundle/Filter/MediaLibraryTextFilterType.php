@@ -1,20 +1,25 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaLibraryBundle\Filter;
 
-use Enhavo\Bundle\ApiBundle\Data\Data;
-use Enhavo\Bundle\ResourceBundle\Exception\FilterException;
 use Enhavo\Bundle\ResourceBundle\Filter\AbstractFilterType;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
-
 
 class MediaLibraryTextFilterType extends AbstractFilterType
 {
     public function buildQuery($options, FilterQuery $query, mixed $value): void
     {
-        if ($value !== null && trim($value) !== '') {
+        if (null !== $value && '' !== trim($value)) {
             $parts = pathinfo($value);
 
             if (isset($parts['extension'])) {

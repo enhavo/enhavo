@@ -1,19 +1,24 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Fixtures\Fixtures;
 
 use App\Fixtures\AbstractFixture;
-use Enhavo\Bundle\UserBundle\Model\User;
 
 /**
  * @author gseidel
  */
 class ThemeFixture extends AbstractFixture
 {
-    /**
-     * @inheritdoc
-     */
-    function create($args)
+    public function create($args)
     {
         $theme = $this->container->get('enhavo_theme.factory.theme')->createNew();
         $theme->setKey($args['key']);
@@ -22,18 +27,12 @@ class ThemeFixture extends AbstractFixture
         return $theme;
     }
 
-    /**
-     * @inheritdoc
-     */
-    function getName()
+    public function getName()
     {
         return 'Theme';
     }
 
-    /**
-     * @inheritdoc
-     */
-    function getOrder()
+    public function getOrder()
     {
         return 2;
     }

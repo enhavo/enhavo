@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-12-13
- * Time: 18:44
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Provider;
@@ -20,19 +23,15 @@ class GroupProvider implements ProviderInterface
 
     /**
      * SubscriptionProvider constructor.
-     * @param array $testReceiver
      */
     public function __construct(array $testReceiver)
     {
         $this->testReceiver = $testReceiver;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getReceivers(NewsletterInterface $newsletter): array
     {
-        if(!$newsletter instanceof Newsletter) {
+        if (!$newsletter instanceof Newsletter) {
             throw new \InvalidArgumentException('Newsletter type is not supported by provider');
         }
 
@@ -43,6 +42,7 @@ class GroupProvider implements ProviderInterface
                 $receivers[] = $this->createReceiver($subscriber);
             }
         }
+
         return $receivers;
     }
 
@@ -51,20 +51,19 @@ class GroupProvider implements ProviderInterface
         $receiver = new Receiver();
         $receiver->setEmail($subscriber->getEmail());
         $receiver->setParameters([
-            'token' => $subscriber->getToken()
+            'token' => $subscriber->getToken(),
         ]);
+
         return $receiver;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTestReceivers(NewsletterInterface $newsletter): array
     {
         $receiver = new Receiver();
         $receiver->setToken($this->testReceiver['token']);
         $receiver->setNewsletter($newsletter);
         $receiver->setParameters($this->testReceiver['parameters']);
+
         return [$receiver];
     }
 }

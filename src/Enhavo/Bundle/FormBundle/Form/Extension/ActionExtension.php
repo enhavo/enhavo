@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Form\Extension;
 
 use Enhavo\Bundle\ResourceBundle\Action\ActionManager;
@@ -16,27 +25,23 @@ class ActionExtension extends AbstractTypeExtension
 
     /**
      * ActionExtension constructor.
-     * @param ActionManager $actionManager
      */
     public function __construct(ActionManager $actionManager)
     {
         $this->actionManager = $actionManager;
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'actions' => []
+            'actions' => [],
         ]);
     }
 
-    public function buildView(FormView $view, FormInterface$form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $actions = $options['actions'];
-        if(!empty($actions)){
+        if (!empty($actions)) {
             $data = $form->getParent() && $form->getParent()->getData() ? $form->getParent()->getData() : null;
             $actions = $this->createActionsViewData($actions, $data);
         }
@@ -51,6 +56,7 @@ class ActionExtension extends AbstractTypeExtension
         foreach ($actions as $key => $action) {
             $data[$key] = $action->createViewData($resource);
         }
+
         return $data;
     }
 

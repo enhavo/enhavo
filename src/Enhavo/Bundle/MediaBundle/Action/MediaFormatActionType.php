@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Action;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -9,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MediaFormatActionType extends AbstractActionType
 {
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $formats = [];
         if ($resource instanceof FormInterface) {
@@ -29,7 +38,7 @@ class MediaFormatActionType extends AbstractActionType
             'translation_domain' => 'EnhavoMediaBundle',
             'icon' => 'crop',
             'component' => 'action-media-format',
-            'model' => 'MediaFormatAction'
+            'model' => 'MediaFormatAction',
         ]);
     }
 

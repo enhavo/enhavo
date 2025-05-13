@@ -1,13 +1,22 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 $path = $_SERVER['REQUEST_URI'];
 
-if ($path === '/ready') {
+if ('/ready' === $path) {
     return;
 }
 
-if ($path === '/importer') {
-    echo "BEGIN:VCALENDAR
+if ('/importer' === $path) {
+    echo 'BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//ical.marudot.com//iCal Event Maker
 CALSCALE:GREGORIAN
@@ -40,7 +49,7 @@ SUMMARY:Test
 DESCRIPTION:Test
 LOCATION:test
 END:VEVENT
-END:VCALENDAR";
+END:VCALENDAR';
 } else {
-    header("HTTP/1.1 404 Not Found");
+    header('HTTP/1.1 404 Not Found');
 }

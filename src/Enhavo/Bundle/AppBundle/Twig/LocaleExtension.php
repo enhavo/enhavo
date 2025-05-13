@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\AppBundle\Twig;
 
@@ -19,7 +27,6 @@ class LocaleExtension extends AbstractExtension
 
     /**
      * LocaleExtension constructor.
-     * @param LocaleResolverInterface $localResolver
      */
     public function __construct(LocaleResolverInterface $localResolver)
     {
@@ -28,9 +35,9 @@ class LocaleExtension extends AbstractExtension
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('get_locale', array($this, 'getLocale')),
-        );
+        return [
+            new TwigFunction('get_locale', [$this, 'getLocale']),
+        ];
     }
 
     public function getLocale()

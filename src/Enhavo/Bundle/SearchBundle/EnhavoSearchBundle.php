@@ -1,19 +1,28 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle;
 
+use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Doctrine\ORM\Mapping\Driver\XmlDriver;
+use Doctrine\Persistence\Mapping\Driver\DefaultFileLocator;
 use Enhavo\Bundle\SearchBundle\DependencyInjection\Compiler\SearchEngineCompilerPass;
 use Enhavo\Bundle\SearchBundle\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Filter\FilterTypeInterface;
+use Enhavo\Bundle\SearchBundle\Index\Index;
 use Enhavo\Bundle\SearchBundle\Index\IndexTypeInterface;
 use Enhavo\Component\Type\TypeCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\Definition;
-use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
-use Doctrine\Persistence\Mapping\Driver\DefaultFileLocator;
-use Enhavo\Bundle\SearchBundle\Index\Index;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EnhavoSearchBundle extends Bundle
 {
@@ -30,9 +39,9 @@ class EnhavoSearchBundle extends Bundle
 
     private function buildDoctrineItemCompilerPass(): DoctrineOrmMappingsPass
     {
-        $arguments = array(array(realpath(sprintf('%s/Resources/config/doctrine-database', __DIR__))), '.orm.xml');
+        $arguments = [[realpath(sprintf('%s/Resources/config/doctrine-database', __DIR__))], '.orm.xml'];
         $locator = new Definition(DefaultFileLocator::class, $arguments);
-        $driver = new Definition(XmlDriver::class, array($locator));
+        $driver = new Definition(XmlDriver::class, [$locator]);
 
         return new DoctrineOrmMappingsPass(
             $driver,

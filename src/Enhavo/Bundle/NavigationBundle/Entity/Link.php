@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 18.05.18
- * Time: 16:36
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Entity;
@@ -13,7 +16,7 @@ use Enhavo\Bundle\NavigationBundle\Model\SubjectInterface;
 
 class Link implements SubjectInterface
 {
-    /** @var integer */
+    /** @var int */
     private $id;
 
     /** @var string */
@@ -49,33 +52,21 @@ class Link implements SubjectInterface
         $this->link = $link;
     }
 
-    /**
-     * @return string|null
-     */
     public function getTarget(): ?string
     {
         return $this->target;
     }
 
-    /**
-     * @param string|null $target
-     */
     public function setTarget(?string $target): void
     {
         $this->target = $target;
     }
 
-    /**
-     * @return NodeInterface|null
-     */
     public function getNode(): ?NodeInterface
     {
         return $this->node;
     }
 
-    /**
-     * @param NodeInterface|null $node
-     */
     public function setNode(?NodeInterface $node): void
     {
         $this->node = $node;

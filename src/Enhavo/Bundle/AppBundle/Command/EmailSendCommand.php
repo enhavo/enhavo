@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -14,13 +23,13 @@ class EmailSendCommand extends Command
 {
     public function __construct(
         private MailerInterface $mailer,
-        private array $mailConfig
-    )
-    {
+        private array $mailConfig,
+    ) {
         parent::__construct();
     }
 
-    protected function configure() {
+    protected function configure()
+    {
         $this
             ->setName('enhavo:email:send')
             ->setDescription('Debug command for testing email dispatch')
@@ -41,10 +50,10 @@ class EmailSendCommand extends Command
         $body = $input->getArgument('body');
 
         if (!$from) {
-            $from = $helper->ask($input, $output, new Question('From [' . $this->mailConfig['from'] . ']: ', $this->mailConfig['from']));
+            $from = $helper->ask($input, $output, new Question('From ['.$this->mailConfig['from'].']: ', $this->mailConfig['from']));
         }
         if (!$to) {
-            $to = $helper->ask($input, $output, new Question('To [' . $this->mailConfig['to'] . ']: ', $this->mailConfig['to']));
+            $to = $helper->ask($input, $output, new Question('To ['.$this->mailConfig['to'].']: ', $this->mailConfig['to']));
         }
         if (!$subject) {
             $subject = $helper->ask($input, $output, new Question('Subject [Testmail]: ', 'Testmail'));

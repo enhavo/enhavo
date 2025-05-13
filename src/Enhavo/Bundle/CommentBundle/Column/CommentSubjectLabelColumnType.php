@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 02.02.16
- * Time: 11:18
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Column;
@@ -19,8 +22,7 @@ class CommentSubjectLabelColumnType extends AbstractColumnType
 {
     public function __construct(
         private readonly CommentManager $commentManager,
-    )
-    {
+    ) {
     }
 
     public function createResourceViewData(array $options, object $resource, Data $data): void

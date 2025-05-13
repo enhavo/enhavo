@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-10-21
- * Time: 19:28
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Widget;
@@ -37,7 +40,7 @@ class CommentsWidgetType extends AbstractWidgetType
     public function __construct(
         CommentRepository $repository,
         RequestStack $requestStack,
-        CommentManager $commentManager
+        CommentManager $commentManager,
     ) {
         $this->repository = $repository;
         $this->requestStack = $requestStack;
@@ -47,16 +50,16 @@ class CommentsWidgetType extends AbstractWidgetType
     public function createViewData(array $options, $resource = null)
     {
         $subject = $this->getSubject($options);
-        $form = $options['form'] !== null ? $options['form'] : $this->commentManager->createSubmitForm();
-        $action = $options['action'] !== null ? $options['action'] : $this->requestStack->getCurrentRequest()->getUri();
+        $form = null !== $options['form'] ? $options['form'] : $this->commentManager->createSubmitForm();
+        $action = null !== $options['action'] ? $options['action'] : $this->requestStack->getCurrentRequest()->getUri();
 
         $comments = $this->repository->findPublicByThread($subject->getThread());
-        if($comments instanceof Pagerfanta) {
+        if ($comments instanceof Pagerfanta) {
             $page = $options['page'];
-            if($page === null) {
+            if (null === $page) {
                 $page = $this->requestStack->getCurrentRequest()->get($options['page_parameter']);
             }
-            $comments->setCurrentPage($page ?  $page : 1);
+            $comments->setCurrentPage($page ? $page : 1);
             $comments->setMaxPerPage($options['limit']);
         }
 
@@ -64,15 +67,15 @@ class CommentsWidgetType extends AbstractWidgetType
             'resources' => $comments,
             'form' => $form->createView(),
             'action' => $action,
-            'pageParameter' => $options['page_parameter']
+            'pageParameter' => $options['page_parameter'],
         ];
     }
 
     private function getSubject($options): CommentSubjectInterface
     {
-        if(!$options['subject'] instanceof CommentSubjectInterface) {
+        if (!$options['subject'] instanceof CommentSubjectInterface) {
             throw CommentSubjectException::createTypeException($options['subject']);
-        } elseif($options['subject']->getThread() === null) {
+        } elseif (null === $options['subject']->getThread()) {
             throw CommentSubjectException::createNoThreadException($options['subject']);
         }
 
@@ -88,7 +91,7 @@ class CommentsWidgetType extends AbstractWidgetType
             'page_parameter' => 'comment-page',
             'limit' => 10,
             'form' => null,
-            'action' => null
+            'action' => null,
         ]);
 
         $optionsResolver->setRequired('subject');

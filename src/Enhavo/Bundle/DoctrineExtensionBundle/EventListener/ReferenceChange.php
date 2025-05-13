@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\DoctrineExtensionBundle\EventListener;
 
 class ReferenceChange
@@ -10,14 +19,10 @@ class ReferenceChange
     /** @var string */
     private $property;
 
-    /** @var mixed */
     private $value;
 
     /**
      * ReferenceChange constructor.
-     * @param object $entity
-     * @param string $property
-     * @param mixed $value
      */
     public function __construct(object $entity, string $property, $value)
     {
@@ -26,25 +31,16 @@ class ReferenceChange
         $this->value = $value;
     }
 
-    /**
-     * @return string
-     */
     public function getProperty(): string
     {
         return $this->property;
     }
 
-    /**
-     * @return object
-     */
     public function getEntity(): object
     {
         return $this->entity;
     }
 
-    /**
-     * @return mixed
-     */
     public function getValue()
     {
         return $this->value;

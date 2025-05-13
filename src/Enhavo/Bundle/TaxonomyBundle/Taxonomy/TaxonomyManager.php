@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TaxonomyBundle\Taxonomy;
 
 use Doctrine\ORM\EntityRepository;
@@ -10,13 +19,12 @@ class TaxonomyManager
 {
     public function __construct(
         private EntityRepository $taxonomyRepository,
-    )
-    {
+    ) {
     }
 
     public function updateTerm(Term $term)
     {
-        if ($term->getSlug() === null) {
+        if (null === $term->getSlug()) {
             $term->setSlug(Slugifier::slugify($term->getName()));
         }
     }

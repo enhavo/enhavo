@@ -1,7 +1,15 @@
 <?php
 
-namespace Enhavo\Bundle\ResourceBundle\Tests\Duplicate;
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
+namespace Enhavo\Bundle\ResourceBundle\Tests\Duplicate;
 
 use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateType;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Duplicate;
@@ -39,27 +47,29 @@ class DuplicateFactoryTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $dependencies->metadataRepository->method('getMetadata')->willReturnCallback(function ($source) {
-            if ($source == EnhavoEntity::class) {
-                $metadata =  new Metadata(EnhavoEntity::class);
+            if (EnhavoEntity::class == $source) {
+                $metadata = new Metadata(EnhavoEntity::class);
                 $metadata->setProperties([
                     'label' => [
-                        ['type' => 'simple']
+                        ['type' => 'simple'],
                     ],
                 ]);
+
                 return $metadata;
             }
-            if ($source == AppEntity::class) {
-                $metadata =  new Metadata(AppEntity::class);
+            if (AppEntity::class == $source) {
+                $metadata = new Metadata(AppEntity::class);
                 $metadata->setProperties([
                     'content' => [
-                        ['type' => 'simple']
+                        ['type' => 'simple'],
                     ],
                 ]);
+
                 return $metadata;
             }
         });
         $dependencies->duplicateFactory->method('create')->willReturnCallback(function ($config) {
-            if ($config['type'] === 'simple') {
+            if ('simple' === $config['type']) {
                 return new Duplicate(new SimpleDuplicateType(), [], []);
             }
             throw new \InvalidArgumentException();
@@ -75,7 +85,7 @@ class DuplicateFactoryTest extends TestCase
 
         $this->assertFalse($newSource === $source);
         $this->assertEquals('MyContent', $newSource->content);
-        $this->assertEquals('MyLabel',  $newSource->label);
+        $this->assertEquals('MyLabel', $newSource->label);
     }
 }
 

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-04
- * Time: 09:31
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Action;
@@ -22,6 +25,7 @@ class ActionManagerTest extends TestCase
         $dependencies = new ActionManagerDependencies();
         $dependencies->factory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $dependencies->checker = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
+
         return $dependencies;
     }
 
@@ -38,11 +42,12 @@ class ActionManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(true);
         $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
-            if ($options['type'] === 'test') {
+            if ('test' === $options['type']) {
                 $action = $this->getMockBuilder(Action::class)->disableOriginalConstructor()->getMock();
                 $action->method('isEnabled')->willReturn(true);
                 $action->method('getPermission')->willReturn(true);
                 $action->method('createViewData')->willReturn(['name' => 'test']);
+
                 return $action;
             }
         });
@@ -51,7 +56,7 @@ class ActionManagerTest extends TestCase
         $actions = $manager->getActions([
             'create' => [
                 'type' => 'test',
-            ]
+            ],
         ]);
 
         $this->assertCount(1, $actions);
@@ -63,10 +68,11 @@ class ActionManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(true);
         $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
-            if ($options['type'] === 'test') {
+            if ('test' === $options['type']) {
                 $action = $this->getMockBuilder(Action::class)->disableOriginalConstructor()->getMock();
                 $action->method('isEnabled')->willReturn(false);
                 $action->method('getPermission')->willReturn(true);
+
                 return $action;
             }
         });
@@ -75,7 +81,7 @@ class ActionManagerTest extends TestCase
         $actions = $manager->getActions([
             'create' => [
                 'type' => 'test',
-            ]
+            ],
         ]);
 
         $this->assertCount(0, $actions);
@@ -86,10 +92,11 @@ class ActionManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(false);
         $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
-            if ($options['type'] === 'test') {
+            if ('test' === $options['type']) {
                 $action = $this->getMockBuilder(Action::class)->disableOriginalConstructor()->getMock();
                 $action->method('isEnabled')->willReturn(true);
                 $action->method('getPermission')->willReturn(true);
+
                 return $action;
             }
         });
@@ -98,7 +105,7 @@ class ActionManagerTest extends TestCase
         $actions = $manager->getActions([
             'create' => [
                 'type' => 'test',
-            ]
+            ],
         ]);
 
         $this->assertCount(0, $actions);
@@ -109,10 +116,11 @@ class ActionManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(false);
         $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
-            if ($options['type'] === 'test') {
+            if ('test' === $options['type']) {
                 $action = $this->getMockBuilder(Action::class)->disableOriginalConstructor()->getMock();
                 $action->method('isEnabled')->willReturn(true);
                 $action->method('getPermission')->willReturn(null);
+
                 return $action;
             }
         });
@@ -121,12 +129,11 @@ class ActionManagerTest extends TestCase
         $actions = $manager->getActions([
             'create' => [
                 'type' => 'test',
-            ]
+            ],
         ]);
 
         $this->assertCount(1, $actions);
     }
-
 }
 
 class ActionManagerDependencies

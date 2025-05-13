@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Widget\Type;
 
 use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
@@ -13,17 +22,17 @@ class PaginationWidgetType extends AbstractWidgetType
     public function createViewData(array $options, $resource = null)
     {
         $pageParameter = $options['page_parameter'];
-        if($options['route'] === null) {
+        if (null === $options['route']) {
             $request = $this->container->get('request_stack')->getCurrentRequest();
             $route = $request->get('_route');
             $routeParameters = $options['routeParameters'];
-            foreach($request->query as $key => $value) {
-                if($key != $pageParameter) {
+            foreach ($request->query as $key => $value) {
+                if ($key != $pageParameter) {
                     $routeParameters[$key] = $value;
                 }
             }
-            foreach($request->attributes as $key => $value) {
-                if($key != $pageParameter && substr($key, 0, 1) != '_') {
+            foreach ($request->attributes as $key => $value) {
+                if ($key != $pageParameter && '_' != substr($key, 0, 1)) {
                     $routeParameters[$key] = $value;
                 }
             }
@@ -36,7 +45,7 @@ class PaginationWidgetType extends AbstractWidgetType
             'resources' => $options['resources'],
             'route' => $route,
             'routeParameters' => $routeParameters,
-            'pageParameter' => $pageParameter
+            'pageParameter' => $pageParameter,
         ];
     }
 

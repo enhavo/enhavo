@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Component\CleverReach\Tests;
 
 use Enhavo\Component\CleverReach\ApiManager;
@@ -13,6 +22,7 @@ class ApiManagerTest extends TestCase
     {
         $dependencies = new ApiManagerTestDependencies();
         $dependencies->adapter = $this->getMockBuilder(AdapterInterface::class)->getMock();
+
         return $dependencies;
     }
 
@@ -26,7 +36,7 @@ class ApiManagerTest extends TestCase
         $dependencies = $this->createDependencies();
 
         $dependencies->adapter->method('action')->willReturn([
-            'email' => 'john.doe@example.org'
+            'email' => 'john.doe@example.org',
         ]);
 
         $manager = $this->createInstance($dependencies);
@@ -52,12 +62,12 @@ class ApiManagerTest extends TestCase
         $dependencies->adapter
             ->method('action')
             ->with('post',
-                '/v3/groups.json/' . $groupId .'/receivers',
+                '/v3/groups.json/'.$groupId.'/receivers',
                 [
                     'email' => $email,
                     'registered' => time(),
                     'activated' => false,
-                    'attributes' => ['salutation' => 'Mr.', 'firstname' => 'John', 'lastname' => 'Doe',],
+                    'attributes' => ['salutation' => 'Mr.', 'firstname' => 'John', 'lastname' => 'Doe'],
                     'global_attributes' => [],
                     'tags' => $tags,
                 ])
@@ -83,7 +93,7 @@ class ApiManagerTest extends TestCase
             'error' => [
                 'code' => 404,
                 'message' => 'Not Found: invalid receiver',
-            ]
+            ],
         ]);
 
         $manager = $this->createInstance($dependencies);

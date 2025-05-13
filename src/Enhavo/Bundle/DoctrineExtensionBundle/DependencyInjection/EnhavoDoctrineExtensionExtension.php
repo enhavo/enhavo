@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\DoctrineExtensionBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -14,7 +23,7 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class EnhavoDoctrineExtensionExtension extends Extension
 {
-    const CONFIG_DIR = __DIR__.'/../Resources/config';
+    public const CONFIG_DIR = __DIR__.'/../Resources/config';
 
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -23,7 +32,7 @@ class EnhavoDoctrineExtensionExtension extends Extension
 
         $container->setParameter('enhavo_doctrine_extension.metadata', $config['metadata']);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(self::CONFIG_DIR));
+        $loader = new YamlFileLoader($container, new FileLocator(self::CONFIG_DIR));
         $loader->load('services/resolver.yaml');
         $loader->load('services/command.yaml');
         $loader->load('services/metadata.yaml');

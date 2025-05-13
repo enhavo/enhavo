@@ -1,9 +1,12 @@
 <?php
+
 /*
- * Subscription.php
+ * This file is part of the enhavo package.
  *
- * @since 04.09.20, 12:44
- * @author blutze
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Subscription;
@@ -26,10 +29,6 @@ class Subscription
 
     /**
      * Subscription constructor.
-     * @param string $name
-     * @param Strategy $strategy
-     * @param string $model
-     * @param array $formConfig
      */
     public function __construct(string $name, Strategy $strategy, string $model, array $formConfig)
     {
@@ -39,34 +38,21 @@ class Subscription
         $this->formConfig = $formConfig;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-
-    /**
-     * @return Strategy
-     */
     public function getStrategy(): Strategy
     {
         return $this->strategy;
     }
 
-    /**
-     * @return string
-     */
     public function getModel(): string
     {
         return $this->model;
     }
 
-    /**
-     * @return array
-     */
     public function getFormConfig(): array
     {
         return $this->formConfig;
@@ -76,6 +62,4 @@ class Subscription
     {
         return [];
     }
-
-
 }

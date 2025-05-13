@@ -1,18 +1,28 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ContentBundle\Sitemap\Collector;
 
-use Enhavo\Bundle\RoutingBundle\Router\Router;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Enhavo\Bundle\ContentBundle\Model\SitemapUrl;
 use Enhavo\Bundle\ContentBundle\Sitemap\CollectorInterface;
 use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
+use Enhavo\Bundle\RoutingBundle\Router\Router;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * PublishCollector.php
  *
  * @since 05/07/16
+ *
  * @author gseidel
  */
 class RepositoryCollector extends AbstractType implements CollectorInterface
@@ -34,19 +44,19 @@ class RepositoryCollector extends AbstractType implements CollectorInterface
 
     public function setOptions($options)
     {
-        if(!isset($options['repository'])) {
+        if (!isset($options['repository'])) {
             throw new \InvalidArgumentException(sprintf('repository not set for SitemapCollector type "%s"', $this->getType()));
         }
 
         $this->options = [
             'repository' => $options['repository'],
-            'method' => isset($options['method']) ? $options['method']: 'findAll'
+            'method' => $options['method'] ?? 'findAll',
         ];
     }
 
     protected function getResources()
     {
-        if(strpos(':', $this->options['repository']) === false) {
+        if (false === strpos(':', $this->options['repository'])) {
             $repository = $this->container->get($this->options['repository']);
         } else {
             $repository = $this->container->get('doctrine.orm.entity_manager')->getRepository($this->options['repository']);
@@ -69,18 +79,16 @@ class RepositoryCollector extends AbstractType implements CollectorInterface
     {
         $resources = $this->getResources();
         $urls = [];
-        foreach($resources as $resource) {
+        foreach ($resources as $resource) {
             if ($resource instanceof SitemapInterface && $resource->isNoIndex()) {
                 continue;
             }
             $urls[] = $this->convertToUrl($resource);
         }
+
         return $urls;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getType()
     {
         return 'repository';

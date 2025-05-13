@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaLibraryBundle\Media;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
@@ -28,6 +37,5 @@ class MediaLibraryExtension extends AbstractType implements ExtensionInterface
 
     public function buildForm(FormBuilderInterface $builder, $options)
     {
-
     }
 }

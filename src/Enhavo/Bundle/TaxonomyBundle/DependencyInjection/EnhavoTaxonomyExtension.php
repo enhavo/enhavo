@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TaxonomyBundle\DependencyInjection;
 
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\PrependExtensionTrait;
@@ -20,9 +29,9 @@ class EnhavoTaxonomyExtension extends Extension implements PrependExtensionInter
 
         $container->setParameter('enhavo_taxonomy.taxonomies', $config['taxonomies'] ?? []);
 
-        $configFiles = array(
+        $configFiles = [
             'services.yaml',
-        );
+        ];
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
         }

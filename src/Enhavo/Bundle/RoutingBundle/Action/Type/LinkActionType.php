@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RoutingBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -11,11 +20,10 @@ class LinkActionType extends AbstractActionType
 {
     public function __construct(
         private Router $router,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $url = null;
         if ($resource) {

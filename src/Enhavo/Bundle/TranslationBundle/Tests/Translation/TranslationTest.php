@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation;
 
@@ -50,13 +58,13 @@ class TranslationTest extends TestCase
         $typeMock->expects($this->once())->method('translate');
         $typeMock->expects($this->once())->method('detach');
         $typeMock->expects($this->once())->method('delete');
-        $typeMock->method('translate')->willReturnCallback(function ($data, $property, $locale) {
-            $data->setName($property . '-' . $locale);
+        $typeMock->method('translate')->willReturnCallback(function ($data, $property, $locale): void {
+            $data->setName($property.'-'.$locale);
         });
-        $typeMock->method('detach')->willReturnCallback(function ($data, $property, $locale) {
-            $data->setName($property . '-' . $locale . '.old');
+        $typeMock->method('detach')->willReturnCallback(function ($data, $property, $locale): void {
+            $data->setName($property.'-'.$locale.'.old');
         });
-        $typeMock->method('delete')->willReturnCallback(function ($data, $property) {
+        $typeMock->method('delete')->willReturnCallback(function ($data, $property): void {
             $data->setName(null);
         });
         $type = new Translation($typeMock, [], []);

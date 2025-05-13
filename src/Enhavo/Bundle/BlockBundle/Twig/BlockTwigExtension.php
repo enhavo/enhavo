@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Twig;
 
 use Twig\Environment;
@@ -11,13 +20,15 @@ class BlockTwigExtension extends AbstractExtension
     private ?Environment $twig = null;
 
     public function __construct(
-        private readonly array $renderSets
-    ) {}
+        private readonly array $renderSets,
+    ) {
+    }
+
     public function getFunctions(): array
     {
-        return array(
+        return [
             new TwigFunction('block_render', [$this, 'render'], ['is_safe' => ['html']]),
-        );
+        ];
     }
 
     public function setTwig(Environment $twig): void
@@ -27,19 +38,20 @@ class BlockTwigExtension extends AbstractExtension
 
     public function render(array $node, string|array|null $renderSet = [], array $onlyRenderTypes = []): string
     {
-        if (!$node || $node == []) {
+        if (!$node || [] == $node) {
             return '';
         }
 
-        if ($node['type'] === 'block' && (empty($onlyRenderTypes) || in_array($node['name'], $onlyRenderTypes))) {
+        if ('block' === $node['type'] && (empty($onlyRenderTypes) || in_array($node['name'], $onlyRenderTypes))) {
             return $this->twig->render($this->getTemplate($node, $renderSet), $node['data']);
         }
 
         if (count($node['children'])) {
             $result = [];
-            foreach($node['children'] as $child) {
+            foreach ($node['children'] as $child) {
                 $result[] = $this->render($child, $renderSet, $onlyRenderTypes);
             }
+
             return join('', $result);
         }
 
@@ -52,7 +64,7 @@ class BlockTwigExtension extends AbstractExtension
             if (array_key_exists($renderSet, $this->renderSets) && isset($this->renderSets[$renderSet][$node['name']])) {
                 return $this->renderSets[$renderSet][$node['name']];
             }
-        } else if (is_array($renderSet)) {
+        } elseif (is_array($renderSet)) {
             if (isset($renderSet[$node['name']])) {
                 return $renderSet[$node['name']];
             }

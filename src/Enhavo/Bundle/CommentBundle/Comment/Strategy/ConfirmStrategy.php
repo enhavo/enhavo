@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-10-25
- * Time: 11:55
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Comment\Strategy;
@@ -28,11 +31,11 @@ class ConfirmStrategy implements PublishStrategyInterface
         private TranslatorInterface $translator,
         private CommentRepository $commentRepository,
         private array $mailerConfig,
-    ) {}
+    ) {
+    }
 
     public function preCreate(CommentInterface $comment, array $options): void
     {
-
     }
 
     protected function getMailerTo($options)
@@ -42,17 +45,19 @@ class ConfirmStrategy implements PublishStrategyInterface
 
     protected function getMailerFrom($options)
     {
-        if ($options['mailer_from'] !== null) {
+        if (null !== $options['mailer_from']) {
             return $options['mailer_from'];
         }
+
         return $this->mailerConfig['from'];
     }
 
     protected function getMailerSenderName($options)
     {
-        if ($options['mailer_sender_name'] !== null) {
+        if (null !== $options['mailer_sender_name']) {
             return $options['mailer_sender_name'];
         }
+
         return $this->mailerConfig['name'];
     }
 
@@ -68,7 +73,7 @@ class ConfirmStrategy implements PublishStrategyInterface
 
         $content = $this->twig->render($template, [
             'comment' => $comment,
-            'pendingComments' => $pendingComments
+            'pendingComments' => $pendingComments,
         ]);
 
         $message = new Email();
@@ -83,15 +88,16 @@ class ConfirmStrategy implements PublishStrategyInterface
     private function getPendingComments(CommentInterface $newComment): array
     {
         $pendingComments = $this->commentRepository->findBy([
-            'state' => CommentInterface::STATE_PENDING
+            'state' => CommentInterface::STATE_PENDING,
         ]);
 
         $comments = [];
-        foreach($pendingComments as $comment) {
-            if($newComment !== $pendingComments) {
+        foreach ($pendingComments as $comment) {
+            if ($newComment !== $pendingComments) {
                 $comments[] = $comment;
             }
         }
+
         return $comments;
     }
 

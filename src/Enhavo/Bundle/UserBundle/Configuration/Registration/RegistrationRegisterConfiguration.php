@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Configuration\Registration;
 
 use Enhavo\Bundle\UserBundle\Configuration\Attribute\AutoLoginTrait;
@@ -21,23 +30,17 @@ class RegistrationRegisterConfiguration implements MailConfigurationInterface
     use AutoLoginTrait;
     use TranslationDomainTrait;
 
-    /** @var ?boolean */
+    /** @var ?bool */
     private $autoEnabled;
 
-    /** @var ?boolean */
+    /** @var ?bool */
     private $autoVerified;
 
-    /**
-     * @return bool
-     */
     public function isAutoEnabled(): bool
     {
-        return (bool)$this->autoEnabled;
+        return (bool) $this->autoEnabled;
     }
 
-    /**
-     * @param bool|null $autoEnabled
-     */
     public function setAutoEnabled(?bool $autoEnabled): void
     {
         $this->autoEnabled = $autoEnabled;
@@ -48,12 +51,9 @@ class RegistrationRegisterConfiguration implements MailConfigurationInterface
      */
     public function isAutoVerified(): bool
     {
-        return (bool)$this->autoVerified;
+        return (bool) $this->autoVerified;
     }
 
-    /**
-     * @param bool|null $autoVerified
-     */
     public function setAutoVerified(?bool $autoVerified): void
     {
         $this->autoVerified = $autoVerified;

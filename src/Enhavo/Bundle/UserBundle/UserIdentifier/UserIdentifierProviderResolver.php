@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\UserIdentifier;
 
 use Enhavo\Bundle\UserBundle\Exception\UserIdentifierException;
@@ -11,9 +20,8 @@ class UserIdentifierProviderResolver
     use ContainerAwareTrait;
 
     public function __construct(
-        private array $userIdentifiers
-    )
-    {
+        private array $userIdentifiers,
+    ) {
     }
 
     public function getProvider(UserInterface $user): UserIdentifierProviderInterface
@@ -46,6 +54,7 @@ class UserIdentifierProviderResolver
         foreach ($this->userIdentifiers as $class => $provider) {
             $providers[] = $this->container->get($provider);
         }
+
         return $providers;
     }
 }

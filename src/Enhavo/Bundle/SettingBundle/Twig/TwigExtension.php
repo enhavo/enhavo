@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SettingBundle\Twig;
 
 use Enhavo\Bundle\SettingBundle\Setting\SettingManager;
@@ -13,7 +22,6 @@ class TwigExtension extends AbstractExtension
 
     /**
      * LocaleExtension constructor.
-     * @param SettingManager $settingManager
      */
     public function __construct(SettingManager $settingManager)
     {
@@ -22,9 +30,9 @@ class TwigExtension extends AbstractExtension
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('setting', array($this, 'getSetting')),
-        );
+        return [
+            new TwigFunction('setting', [$this, 'getSetting']),
+        ];
     }
 
     public function getSetting($key)

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -12,44 +21,41 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ChangePasswordType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $constraintsOptions = array(
+        $constraintsOptions = [
             'message' => 'enhavo_user.current_password.invalid',
-        );
+        ];
 
         if (!empty($options['validation_groups'])) {
-            $constraintsOptions['groups'] = array(reset($options['validation_groups']));
+            $constraintsOptions['groups'] = [reset($options['validation_groups'])];
         }
 
-        $builder->add('currentPassword', PasswordType::class, array(
+        $builder->add('currentPassword', PasswordType::class, [
             'label' => 'form.current_password',
             'translation_domain' => 'EnhavoUserBundle',
             'mapped' => false,
-            'constraints' => array(
+            'constraints' => [
                 new NotBlank(),
                 new UserPassword($constraintsOptions),
-            ),
-            'attr' => array(
+            ],
+            'attr' => [
                 'autocomplete' => 'current-password',
-            ),
-        ));
+            ],
+        ]);
 
-        $builder->add('plainPassword', RepeatedType::class, array(
+        $builder->add('plainPassword', RepeatedType::class, [
             'type' => PasswordType::class,
-            'options' => array(
+            'options' => [
                 'translation_domain' => 'EnhavoUserBundle',
-                'attr' => array(
+                'attr' => [
                     'autocomplete' => 'new-password',
-                ),
-            ),
-            'first_options' => array('label' => 'form.new_password'),
-            'second_options' => array('label' => 'form.new_password_confirmation'),
+                ],
+            ],
+            'first_options' => ['label' => 'form.new_password'],
+            'second_options' => ['label' => 'form.new_password_confirmation'],
             'invalid_message' => 'enhavo_user.password.mismatch',
-        ));
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -59,9 +65,6 @@ class ChangePasswordType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'enhavo_user_change_password';

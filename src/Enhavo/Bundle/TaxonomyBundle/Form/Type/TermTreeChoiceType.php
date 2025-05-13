@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TaxonomyBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\EntityTreeType;
@@ -19,7 +28,6 @@ class TermTreeChoiceType extends AbstractType
      */
     private $repository;
 
-
     public function __construct($dataClass, TermRepository $repository)
     {
         $this->dataClass = $dataClass;
@@ -36,12 +44,13 @@ class TermTreeChoiceType extends AbstractType
         $resolver->setRequired(['taxonomy']);
 
         $repository = $this->repository;
-        $resolver->setNormalizer('query_builder', function($options) use($repository) {
+        $resolver->setNormalizer('query_builder', function ($options) use ($repository) {
             $taxonomy = $options['taxonomy'];
             $query = $repository->createQueryBuilder('t');
             $query->join('t.taxonomy', 'ta');
             $query->andWhere('ta.name = :name');
             $query->setParameter('name', $taxonomy);
+
             return $query;
         });
     }

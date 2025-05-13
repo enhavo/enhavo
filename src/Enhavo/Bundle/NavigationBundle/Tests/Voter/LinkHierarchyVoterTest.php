@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-07-02
- * Time: 18:26
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Tests\Voter;
@@ -22,6 +25,7 @@ class LinkHierarchyVoterTest extends TestCase
     {
         $dependencies = new LinkHierarchyVoterDependencies();
         $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->disableOriginalConstructor()->getMock();
+
         return $dependencies;
     }
 
@@ -36,6 +40,7 @@ class LinkHierarchyVoterTest extends TestCase
         $link = new Link();
         $link->setLink($url);
         $node->setSubject($link);
+
         return $node;
     }
 

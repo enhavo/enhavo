@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Twig;
 
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -13,8 +22,7 @@ class TwigExtension extends AbstractExtension
 {
     public function __construct(
         private NormalizerInterface $normalizer,
-    )
-    {
+    ) {
     }
 
     public function getFilters(): array
@@ -31,7 +39,7 @@ class TwigExtension extends AbstractExtension
         ];
     }
 
-    public function normalize($object, string $format = null, array $context = [])
+    public function normalize($object, ?string $format = null, array $context = [])
     {
         return $this->normalizer->normalize($object, $format, $context);
     }

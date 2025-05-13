@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Action;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -14,11 +23,10 @@ class SendTestActionType extends AbstractActionType
     public function __construct(
         private readonly FormFactoryInterface $formFactory,
         private readonly VueForm $vueForm,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $form = $this->formFactory->create(NewsletterEmailType::class);
         $data->set('form', $this->vueForm->createData($form->createView()));

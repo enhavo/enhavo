@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Normalizer;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -13,30 +22,29 @@ class NodeDataNormalizer extends AbstractDataNormalizer
     public function __construct(
         private readonly BlockManager $blockManager,
         private readonly TemplateResolver $templateResolver,
-    )
-    {
+    ) {
     }
 
-    public function buildData(Data $data, $object, string $format = null, array $context = [])
+    public function buildData(Data $data, $object, ?string $format = null, array $context = [])
     {
         if (!$this->hasSerializationGroup(['endpoint', 'endpoint.block'], $context)) {
             return;
         }
 
-        /** @var NodeInterface $object */
+        /* @var NodeInterface $object */
         $data->set('template', $this->getTemplate($object));
         $data->set('component', $this->getComponent($object));
 
         $children = [];
         foreach ($object->getChildren() as $child) {
-            if ($child->getType() === NodeInterface::TYPE_BLOCK) {
+            if (NodeInterface::TYPE_BLOCK === $child->getType()) {
                 $children[] = $this->normalizer->normalize($child, null, ['groups' => 'endpoint']);
             }
         }
         $data->set('children', $children);
 
         $nodeData = [];
-        if ($object->getType() === NodeInterface::TYPE_BLOCK) {
+        if (NodeInterface::TYPE_BLOCK === $object->getType()) {
             if (empty($object->getViewData())) {
                 $this->blockManager->createViewData($object, $object->getBlock() ? $this->blockManager->findRootResource($object->getBlock()) : null);
             }
@@ -66,9 +74,10 @@ class NodeDataNormalizer extends AbstractDataNormalizer
 
     private function getTemplate(NodeInterface $node): ?string
     {
-        if ($node->getType() === NodeInterface::TYPE_BLOCK && $node->getName()) {
+        if (NodeInterface::TYPE_BLOCK === $node->getType() && $node->getName()) {
             $block = $this->blockManager->getBlock($node->getName());
             $template = $block->getTemplate();
+
             return $this->templateResolver->resolve($template);
         }
 
@@ -77,8 +86,9 @@ class NodeDataNormalizer extends AbstractDataNormalizer
 
     private function getComponent(NodeInterface $node): ?string
     {
-        if ($node->getType() === NodeInterface::TYPE_BLOCK && $node->getName()) {
+        if (NodeInterface::TYPE_BLOCK === $node->getType() && $node->getName()) {
             $block = $this->blockManager->getBlock($node->getName());
+
             return $block->getComponent();
         }
 

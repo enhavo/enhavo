@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Endpoint\Type\ChangeEmail;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -22,14 +31,14 @@ class ChangeEmailRequestEndpointType extends AbstractFormEndpointType
         private readonly ConfigurationProvider $provider,
         private readonly UserManager $userManager,
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     protected function getForm($options, Request $request, Data $data, Context $context): FormInterface
     {
         $configuration = $this->provider->getChangeEmailRequestConfiguration();
         $user = $this->getUser();
+
         return $this->createForm($configuration->getFormClass(), $user, $configuration->getFormOptions());
     }
 
@@ -49,6 +58,7 @@ class ChangeEmailRequestEndpointType extends AbstractFormEndpointType
     {
         $configuration = $this->provider->getChangeEmailRequestConfiguration();
         $route = $configuration->getRedirectRoute();
+
         return $route ?? $this->generateUrl($route);
     }
 

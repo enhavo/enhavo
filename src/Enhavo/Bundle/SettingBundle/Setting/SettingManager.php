@@ -1,9 +1,12 @@
 <?php
-/**
- * SettingManager.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 06/09/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SettingBundle\Setting;
@@ -55,6 +58,7 @@ class SettingManager
 
         $setting = $this->factory->create($this->settingConfig[$key], $key);
         $this->settings[$key] = $setting;
+
         return $setting;
     }
 

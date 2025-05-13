@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\PageBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -27,7 +36,7 @@ class Page extends Content implements PageInterface, RevisionInterface
         $this->revisions = new ArrayCollection();
     }
 
-    public function setContent(NodeInterface $content = null): self
+    public function setContent(?NodeInterface $content = null): self
     {
         $this->content = $content;
         if ($content) {
@@ -35,6 +44,7 @@ class Page extends Content implements PageInterface, RevisionInterface
             $content->setProperty('content');
             $content->setResource($this);
         }
+
         return $this;
     }
 
@@ -71,8 +81,8 @@ class Page extends Content implements PageInterface, RevisionInterface
     public function setParent(?PageInterface $parent): self
     {
         $this->parent = $parent;
-        if($parent) {
-            if(!$parent->getChildren()->contains($this)) {
+        if ($parent) {
+            if (!$parent->getChildren()->contains($this)) {
                 $parent->getChildren()->add($this);
             }
         }
@@ -84,6 +94,7 @@ class Page extends Content implements PageInterface, RevisionInterface
     {
         $this->children[] = $page;
         $page->setParent($this);
+
         return $this;
     }
 
@@ -96,6 +107,7 @@ class Page extends Content implements PageInterface, RevisionInterface
     {
         $page->setParent(null);
         $this->children->removeElement($page);
+
         return $this;
     }
 
@@ -107,12 +119,13 @@ class Page extends Content implements PageInterface, RevisionInterface
         $parents = [];
         $parent = $this->getParent();
         do {
-            if($parent) {
+            if ($parent) {
                 $parents[] = $parent;
             } else {
                 break;
             }
-        } while($parent = $parent->getParent());
+        } while ($parent = $parent->getParent());
+
         return $parents;
     }
 
@@ -123,12 +136,13 @@ class Page extends Content implements PageInterface, RevisionInterface
     {
         $descendants = [];
         $children = $this->getChildren();
-        foreach($children as $child) {
+        foreach ($children as $child) {
             $descendants[] = $child;
-            foreach($child->getDescendants() as $descendant) {
+            foreach ($child->getDescendants() as $descendant) {
                 $descendants[] = $descendant;
             }
         }
+
         return $descendants;
     }
 

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Vue\RouteProvider;
 
 use Enhavo\Component\Type\FactoryInterface;
@@ -12,8 +21,7 @@ class ChainVueRouteProvider implements VueRouteProviderInterface
     public function __construct(
         private array $config,
         private FactoryInterface $factory,
-    )
-    {
+    ) {
     }
 
     public function getRoutes(array|string|null $groups = null): array
@@ -37,7 +45,7 @@ class ChainVueRouteProvider implements VueRouteProviderInterface
 
         foreach ($this->providers as $provider) {
             $route = $provider->getRoute($path, $groups);
-            if ($route !== null) {
+            if (null !== $route) {
                 return $route;
             }
         }
@@ -47,7 +55,7 @@ class ChainVueRouteProvider implements VueRouteProviderInterface
 
     private function init(): void
     {
-        if ($this->providers !== null) {
+        if (null !== $this->providers) {
             return;
         }
 

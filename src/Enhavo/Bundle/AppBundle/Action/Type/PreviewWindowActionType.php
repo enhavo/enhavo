@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: schaetzle
- * Date: 26.20.19
- * Time: 14:45
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
@@ -15,7 +18,7 @@ use Symfony\Component\Uid\Uuid;
 
 class PreviewWindowActionType extends AbstractActionType
 {
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $data->set('target', $options['target']);
     }
@@ -28,7 +31,7 @@ class PreviewWindowActionType extends AbstractActionType
             'translation_domain' => 'EnhavoAppBundle',
             'icon' => 'remove_red_eye',
             'component' => 'action-preview',
-            'target' => '_blank_' . Uuid::v4(),
+            'target' => '_blank_'.Uuid::v4(),
         ]);
     }
 

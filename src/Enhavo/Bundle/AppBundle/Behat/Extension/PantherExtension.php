@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-03
- * Time: 00:58
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Behat\Extension;
@@ -29,7 +32,6 @@ class PantherExtension implements ExtensionInterface
 
     public function initialize(ExtensionManager $extensionManager)
     {
-
     }
 
     public function configure(ArrayNodeDefinition $builder)
@@ -54,8 +56,8 @@ class PantherExtension implements ExtensionInterface
         $env = is_array($config['env']) ? $config['env'] : [];
         $container->setParameter('panther.env', $env);
 
-        foreach($env as $name => $value) {
-            if(!isset($_SERVER[$name])) {
+        foreach ($env as $name => $value) {
+            if (!isset($_SERVER[$name])) {
                 $_SERVER[$name] = $value;
             }
         }
@@ -63,7 +65,6 @@ class PantherExtension implements ExtensionInterface
 
     public function process(ContainerBuilder $container)
     {
-
     }
 
     private function loadClientManager(ContainerBuilder $container)
@@ -75,18 +76,18 @@ class PantherExtension implements ExtensionInterface
     private function loadContextInitializer(ContainerBuilder $container)
     {
         $definition = new Definition(ClientAwareInitializer::class, [
-            new Reference(ClientManager::class)
+            new Reference(ClientManager::class),
         ]);
-        $definition->addTag(ContextExtension::INITIALIZER_TAG, array('priority' => 0));
+        $definition->addTag(ContextExtension::INITIALIZER_TAG, ['priority' => 0]);
         $container->setDefinition(ClientAwareInitializer::class, $definition);
     }
 
     private function loadSubscriber(ContainerBuilder $container)
     {
         $definition = new Definition(Subscriber::class, [
-            new Reference(ClientManager::class)
+            new Reference(ClientManager::class),
         ]);
-        $definition->addTag(EventDispatcherExtension::SUBSCRIBER_TAG, array('priority' => 0));
+        $definition->addTag(EventDispatcherExtension::SUBSCRIBER_TAG, ['priority' => 0]);
         $container->setDefinition(Subscriber::class, $definition);
     }
 }

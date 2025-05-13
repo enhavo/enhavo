@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\CurrencyType;
@@ -14,7 +23,6 @@ class CurrencySettingType extends AbstractSettingType
 
     /**
      * CurrencySettingType constructor.
-     * @param CurrencyFormatter $formatter
      */
     public function __construct(CurrencyFormatter $formatter)
     {
@@ -28,7 +36,7 @@ class CurrencySettingType extends AbstractSettingType
 
     public function getViewValue(array $options, $value, $key = null)
     {
-        return $this->formatter->getCurrency((int)$value->getValue(), $options['currency'], $options['view_position']);
+        return $this->formatter->getCurrency((int) $value->getValue(), $options['currency'], $options['view_position']);
     }
 
     public static function getParentType(): ?string
@@ -41,7 +49,7 @@ class CurrencySettingType extends AbstractSettingType
         $resolver->setDefaults([
             'currency' => 'Euro',
             'view_position' => 'right',
-            'form_type' => CurrencyType::class
+            'form_type' => CurrencyType::class,
         ]);
     }
 }

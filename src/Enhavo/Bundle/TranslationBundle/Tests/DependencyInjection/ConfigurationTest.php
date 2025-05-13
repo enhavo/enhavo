@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-12
- * Time: 23:21
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\DependencyInjection;
@@ -17,6 +20,7 @@ class ConfigurationTest extends TestCase
     private function process(Configuration $configuration, array $configs)
     {
         $processor = new Processor();
+
         return $processor->processConfiguration($configuration, $configs);
     }
 
@@ -27,19 +31,19 @@ class ConfigurationTest extends TestCase
                 'MyClass' => [
                     'properties' => [
                         'some' => 'thing',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
 
-        $b  = [
+        $b = [
             'metadata' => [
                 'MyOtherClass' => [
                     'properties' => [
                         'any' => 'thing',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
 
         $configuration = new Configuration();
@@ -49,13 +53,13 @@ class ConfigurationTest extends TestCase
             'MyClass' => [
                 'properties' => [
                     'some' => 'thing',
-                ]
+                ],
             ],
             'MyOtherClass' => [
                 'properties' => [
                     'any' => 'thing',
-                ]
-            ]
+                ],
+            ],
         ], $config['metadata']);
     }
 
@@ -65,5 +69,4 @@ class ConfigurationTest extends TestCase
         $config = $this->process($configuration, []);
         $this->assertCount(0, $config['metadata']);
     }
-
 }

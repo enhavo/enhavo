@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RevisionBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -13,16 +22,15 @@ class RevisionAwareRestoreActionType extends AbstractActionType
     public function __construct(
         private readonly RouterInterface $router,
         private readonly CsrfTokenManagerInterface $tokenManager,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $data->set('reload', $options['reload']);
         $data->set('token', $this->tokenManager->getToken('resource_revision')->getValue());
         $data->set('url', $this->router->generate($options['route'], [
-            'id' => $resource->getId()
+            'id' => $resource->getId(),
         ]));
     }
 

@@ -1,17 +1,19 @@
 <?php
-/**
- * PublishableTrait.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 15/10/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ContentBundle\Content;
 
-
 trait PublishableTrait
 {
-    /** @var boolean */
+    /** @var bool */
     protected $public = false;
 
     /** @var \DateTime */
@@ -20,70 +22,51 @@ trait PublishableTrait
     /** @var \DateTime */
     protected $publishedUntil;
 
-    /**
-     * {@inheritdoc}
-     */
     public function setPublic($public)
     {
         $this->public = $public;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isPublic()
     {
-        return (boolean)$this->public;
+        return (bool) $this->public;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setPublicationDate(\DateTime $date = null)
+    public function setPublicationDate(?\DateTime $date = null)
     {
         $this->publicationDate = $date;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPublicationDate()
     {
         return $this->publicationDate;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function setPublishedUntil(\DateTime $date = null)
+    public function setPublishedUntil(?\DateTime $date = null)
     {
         $this->publishedUntil = $date;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getPublishedUntil()
     {
         return $this->publishedUntil;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isPublished()
     {
-        if($this->isPublic() === false) {
+        if (false === $this->isPublic()) {
             return false;
         }
 
         $now = new \DateTime();
-        if($now > $this->publicationDate) {
-            if($this->publishedUntil !== null && $now > $this->publishedUntil) {
+        if ($now > $this->publicationDate) {
+            if (null !== $this->publishedUntil && $now > $this->publishedUntil) {
                 return false;
             }
+
             return true;
         }
+
         return false;
     }
 }

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 03.02.18
- * Time: 00:06
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Entity;
@@ -30,7 +33,7 @@ class Node implements NodeInterface
     /** @var SubjectInterface|null */
     private $subject;
 
-    /** @var integer|null */
+    /** @var int|null */
     private $subjectId;
 
     /** @var string|null */
@@ -39,7 +42,7 @@ class Node implements NodeInterface
     /** @var Navigation|null */
     private $navigation;
 
-    /** @var integer|null */
+    /** @var int|null */
     private $position;
 
     /** @var string|null */
@@ -56,7 +59,7 @@ class Node implements NodeInterface
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -66,7 +69,6 @@ class Node implements NodeInterface
     /**
      * Add children
      *
-     * @param NodeInterface $children
      * @return Node
      */
     public function addChild(NodeInterface $children)
@@ -79,8 +81,6 @@ class Node implements NodeInterface
 
     /**
      * Remove children
-     *
-     * @param NodeInterface $children
      */
     public function removeChild(NodeInterface $children)
     {
@@ -91,7 +91,7 @@ class Node implements NodeInterface
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getChildren()
     {
@@ -107,33 +107,34 @@ class Node implements NodeInterface
     {
         $descendants = [];
         $children = $this->getChildren();
-        foreach($children as $child) {
+        foreach ($children as $child) {
             $descendants[] = $child;
-            foreach($child->getDescendants() as $descendant) {
+            foreach ($child->getDescendants() as $descendant) {
                 $descendants[] = $descendant;
             }
         }
+
         return $descendants;
     }
 
     /**
      * Set parent
      *
-     * @param NodeInterface $parent
      * @return Node
      */
-    public function setParent(NodeInterface $parent = null)
+    public function setParent(?NodeInterface $parent = null)
     {
-        if ($parent === null && $this->parent !== null && $this->parent->getChildren()->contains($this)) {
+        if (null === $parent && null !== $this->parent && $this->parent->getChildren()->contains($this)) {
             $parent = $this->parent;
             $this->parent = null;
             $parent->removeChild($this);
+
             return $this;
         }
 
         $this->parent = $parent;
 
-        if ($parent !== null && !$parent->getChildren()->contains($this)) {
+        if (null !== $parent && !$parent->getChildren()->contains($this)) {
             $parent->addChild($this);
         }
 
@@ -158,10 +159,7 @@ class Node implements NodeInterface
         return $this->navigation;
     }
 
-    /**
-     * @param Navigation $navigation
-     */
-    public function setNavigation(Navigation $navigation = null)
+    public function setNavigation(?Navigation $navigation = null)
     {
         $this->navigation = $navigation;
     }
@@ -198,17 +196,11 @@ class Node implements NodeInterface
         $this->label = $label;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string|null $name
-     */
     public function setName(?string $name): void
     {
         $this->name = $name;
@@ -222,45 +214,30 @@ class Node implements NodeInterface
         return $this->subject;
     }
 
-    /**
-     * @param SubjectInterface|null $subject
-     */
     public function setSubject(?SubjectInterface $subject): void
     {
-        if ($subject === null && $this->subject !== null) {
+        if (null === $subject && null !== $this->subject) {
             $this->subject->setNode(null);
         }
         $this->subject = $subject;
         $this->subject->setNode($this);
     }
 
-    /**
-     * @return int|null
-     */
     public function getSubjectId(): ?int
     {
         return $this->subjectId;
     }
 
-    /**
-     * @param int|null $subjectId
-     */
     public function setSubjectId(?int $subjectId): void
     {
         $this->subjectId = $subjectId;
     }
 
-    /**
-     * @return string|null
-     */
     public function getSubjectClass(): ?string
     {
         return $this->subjectClass;
     }
 
-    /**
-     * @param string|null $subjectClass
-     */
     public function setSubjectClass(?string $subjectClass): void
     {
         $this->subjectClass = $subjectClass;

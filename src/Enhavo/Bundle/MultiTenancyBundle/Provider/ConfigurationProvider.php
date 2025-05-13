@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\MultiTenancyBundle\Provider;
 
@@ -17,7 +25,7 @@ class ConfigurationProvider implements ProviderInterface
 
     /**
      * ConfigurationProvider constructor.
-     * @param array $config
+     *
      * @param string $class
      */
     public function __construct(array $config, $class = Tenant::class)
@@ -35,8 +43,8 @@ class ConfigurationProvider implements ProviderInterface
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
         foreach ($this->config as $key => $tenantConfig) {
-            $tenant = new $this->class;
-            foreach($tenantConfig as $property => $value) {
+            $tenant = new $this->class();
+            foreach ($tenantConfig as $property => $value) {
                 $propertyAccessor->setValue($tenant, $property, $value);
             }
             $propertyAccessor->setValue($tenant, 'key', $key);

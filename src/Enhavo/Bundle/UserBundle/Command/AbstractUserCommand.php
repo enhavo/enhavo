@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Command;
 
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
@@ -20,8 +29,7 @@ abstract class AbstractUserCommand extends Command
         protected UserRepository $userRepository,
         protected UserIdentifierProviderResolver $resolver,
         protected string $userClass,
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -66,6 +74,7 @@ abstract class AbstractUserCommand extends Command
     {
         $values = $this->getPropertyValues($input);
         $identifier = $this->getProvider($input)->getUserIdentifierByPropertyValues($values);
+
         return $this->userRepository->loadUserByIdentifier($identifier);
     }
 
@@ -87,7 +96,8 @@ abstract class AbstractUserCommand extends Command
     protected function getProvider(InputInterface $input): UserIdentifierProviderInterface
     {
         $userClass = $input->getOption('user_class');
-        $userClass = isset($userClass) ? $userClass : $this->userClass;
+        $userClass = $userClass ?? $this->userClass;
+
         return $this->resolver->getProviderByClass($userClass);
     }
 
@@ -101,6 +111,7 @@ abstract class AbstractUserCommand extends Command
                 }
             }
         }
+
         return $properties;
     }
 
@@ -113,7 +124,7 @@ abstract class AbstractUserCommand extends Command
             $input->setOption($name, $answer);
         }
 
-        if ($input->getArgument('user_identifier') === null) {
+        if (null === $input->getArgument('user_identifier')) {
             $userIdentifier = $this->getProvider($input)->getUserIdentifierByPropertyValues($this->getPropertyValues($input));
             $input->setArgument('user_identifier', $userIdentifier);
         }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\Profiler;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -12,9 +21,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EndpointDataCollector extends AbstractDataCollector
 {
-    public function collect(Request $request, Response $response, \Throwable $exception = null): void
+    public function collect(Request $request, Response $response, ?\Throwable $exception = null): void
     {
-
     }
 
     private function initNodes(): void
@@ -55,11 +63,12 @@ class EndpointDataCollector extends AbstractDataCollector
 
     public function getType(): ?string
     {
-        if ($this->getLastNode() === null) {
+        if (null === $this->getLastNode()) {
             return null;
         }
 
         $parts = explode('\\', $this->getLastNode()->getType());
+
         return array_pop($parts);
     }
 
@@ -103,6 +112,7 @@ class EndpointDataCollector extends AbstractDataCollector
     public function getNodes()
     {
         $this->initNodes();
+
         return $this->data['nodes'];
     }
 

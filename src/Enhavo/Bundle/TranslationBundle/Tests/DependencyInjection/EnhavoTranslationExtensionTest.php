@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-12
- * Time: 23:32
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\DependencyInjection;
@@ -26,14 +29,14 @@ class EnhavoTranslationExtensionTest extends TestCase
                 'className1' => [
                     'properties' => [
                         'name' => [
-                            'type' => 'text'
-                        ]
-                    ]
-                ]
-            ]
+                            'type' => 'text',
+                        ],
+                    ],
+                ],
+            ],
         ]);
         $extension->load([
-            'enhavo_translation' => $config
+            'enhavo_translation' => $config,
         ], $container);
 
         $param = $container->getParameter('enhavo_translation.metadata');
@@ -42,15 +45,15 @@ class EnhavoTranslationExtensionTest extends TestCase
             'className1' => [
                 'properties' => [
                     'name' => [
-                        'type' => 'text'
-                    ]
-                ]
-            ]
+                        'type' => 'text',
+                    ],
+                ],
+            ],
         ], $param);
     }
 }
 
 class EnhavoTranslationExtensionChild extends EnhavoTranslationExtension
 {
-    const CONFIG_DIR = __DIR__.'/../../Resources/config/app';
+    public const CONFIG_DIR = __DIR__.'/../../Resources/config/app';
 }

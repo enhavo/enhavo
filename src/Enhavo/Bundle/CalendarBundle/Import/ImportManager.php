@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m
- * Date: 15.04.17
- * Time: 17:39
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CalendarBundle\Import;
@@ -35,7 +38,7 @@ class ImportManager
     public function __construct($importerConfig, $container)
     {
         $this->importerInstances = [];
-        if($importerConfig) {
+        if ($importerConfig) {
             $this->importerConfig = $importerConfig;
         } else {
             $this->importerConfig = [];
@@ -60,20 +63,19 @@ class ImportManager
             $createImports = [];
 
             /** @var Appointment $appointmentToImport */
-            foreach ($appointmentsToImport as $appointmentToImport){
+            foreach ($appointmentsToImport as $appointmentToImport) {
                 /** @var Appointment $appointmentFromDb */
                 $appointmentFromDb = $this->container->get('doctrine.orm.entity_manager')
                     ->getRepository(Appointment::class)->findOneBy([
-                        'externalId' => $appointmentToImport->getExternalId()
+                        'externalId' => $appointmentToImport->getExternalId(),
                     ]);
 
                 $externalIdsHandled[] = $appointmentToImport->getExternalId();
 
-                if(!$appointmentFromDb) {
+                if (!$appointmentFromDb) {
                     $this->container->get('doctrine.orm.entity_manager')->persist($appointmentToImport);
                     $eventDispatcher = $this->container->get('event_dispatcher');
                     $eventDispatcher->dispatch(ImportEvents::PRE_CREATE, new CreateImportEvent($appointmentToImport, $importerInstance));
-
                 } else {
                     $this->updateAppointment($appointmentFromDb, $appointmentToImport);
                 }
@@ -91,19 +93,19 @@ class ImportManager
         $obsoleteImporters = [];
         $appointments = $this->container->get('doctrine.orm.entity_manager')->getRepository(Appointment::class)->findAll();
         /** @var Appointment $appointment */
-        foreach ($appointments as $appointment){
-            if(!in_array($appointment->getImporterName(), $validImporters)){
-                if(!in_array($appointment->getImporterName(), $obsoleteImporters)){
+        foreach ($appointments as $appointment) {
+            if (!in_array($appointment->getImporterName(), $validImporters)) {
+                if (!in_array($appointment->getImporterName(), $obsoleteImporters)) {
                     $obsoleteImporters[] = $appointment->getImporterName();
                 }
             }
         }
 
-        foreach ($obsoleteImporters as $obsoleteImporter){
+        foreach ($obsoleteImporters as $obsoleteImporter) {
             $appointments = $this->container->get('doctrine.orm.entity_manager')
                 ->getRepository(Appointment::class)->findBy(['importerName' => $obsoleteImporter]);
-            foreach ($appointments as $appointment){
-                if($appointment->getNotImporterHandled()){
+            foreach ($appointments as $appointment) {
+                if ($appointment->getNotImporterHandled()) {
                     continue;
                 }
                 $this->container->get('doctrine.orm.entity_manager')->remove($appointment);
@@ -118,7 +120,7 @@ class ImportManager
 
         $appointments = $this->container->get('doctrine.orm.entity_manager')
             ->getRepository(Appointment::class)->findBy([
-                'importerName' => $importerName
+                'importerName' => $importerName,
             ]);
         /** @var Appointment $appointment */
         foreach ($appointments as $appointment) {
@@ -127,10 +129,10 @@ class ImportManager
             }
         }
 
-        foreach ($externalIdsToDelete as $externalIdToDelete){
+        foreach ($externalIdsToDelete as $externalIdToDelete) {
             $appointmentToDelete = $this->container->get('doctrine.orm.entity_manager')
                 ->getRepository(Appointment::class)->findOneBy([
-                    'externalId' => $externalIdToDelete
+                    'externalId' => $externalIdToDelete,
                 ]);
             $this->container->get('doctrine.orm.entity_manager')->remove($appointmentToDelete);
         }
@@ -153,11 +155,11 @@ class ImportManager
 
     protected function createImporterInstances()
     {
-        foreach ($this->importerConfig as $name => $config){
-            if(!$this->isInstanceAlreadyCreated($name)){
+        foreach ($this->importerConfig as $name => $config) {
+            if (!$this->isInstanceAlreadyCreated($name)) {
                 /** @var ImporterInterface $newInstance */
                 $newInstance = new $config['class']($name, $config);
-                if($newInstance instanceof ContainerAwareInterface) {
+                if ($newInstance instanceof ContainerAwareInterface) {
                     $newInstance->setContainer($this->container);
                 }
                 $this->importerInstances[] = $newInstance;
@@ -168,17 +170,18 @@ class ImportManager
     protected function isInstanceAlreadyCreated($name)
     {
         /** @var ImporterInterface $instance */
-        foreach ($this->importerInstances as $instance){
-            if($instance->getName() === $name){
+        foreach ($this->importerInstances as $instance) {
+            if ($instance->getName() === $name) {
                 return true;
             }
         }
+
         return false;
     }
 
     public function addImporterInstance(ImporterInterface $instance)
     {
-        if(!$this->isInstanceAlreadyCreated($instance->getName())) {
+        if (!$this->isInstanceAlreadyCreated($instance->getName())) {
             $this->importerInstances[] = $instance;
         }
     }

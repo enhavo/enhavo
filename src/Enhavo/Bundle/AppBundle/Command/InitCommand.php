@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-05-24
- * Time: 18:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Command;
-
 
 use Enhavo\Bundle\AppBundle\Init\InitManager;
 use Enhavo\Bundle\CalendarBundle\Import\ImportManager;
@@ -24,7 +26,6 @@ class InitCommand extends Command
 
     /**
      * InitCommand constructor.
-     * @param InitManager $manager
      */
     public function __construct(InitManager $manager)
     {
@@ -42,6 +43,7 @@ class InitCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->manager->init($output);
+
         return Command::SUCCESS;
     }
 }

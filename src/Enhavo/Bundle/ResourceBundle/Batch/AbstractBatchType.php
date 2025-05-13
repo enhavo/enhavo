@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Batch;
 
 use Doctrine\ORM\EntityRepository;
@@ -20,7 +29,6 @@ abstract class AbstractBatchType extends AbstractType implements BatchTypeInterf
 
     public function createViewData(array $options, Data $data): void
     {
-
     }
 
     public static function getParentType(): ?string

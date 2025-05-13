@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaLibraryBundle\Filter;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -9,14 +18,12 @@ use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-
 class MediaLibraryContentTypeFilterType extends AbstractFilterType
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly array $contentTypes,
-    )
-    {
+    ) {
     }
 
     public function createViewData($options, Data $data): void
@@ -25,7 +32,7 @@ class MediaLibraryContentTypeFilterType extends AbstractFilterType
         $this->validateInitialValue($options['initial_value'], $choices);
 
         $data->add([
-            'choices' => $choices
+            'choices' => $choices,
         ]);
     }
 
@@ -39,13 +46,13 @@ class MediaLibraryContentTypeFilterType extends AbstractFilterType
                 'code' => $key,
             ];
         }
+
         return $data;
     }
 
-
     private function validateInitialValue($value, $choices): void
     {
-        if ($value === null) {
+        if (null === $value) {
             return;
         }
         foreach ($choices as $choice) {
@@ -59,7 +66,7 @@ class MediaLibraryContentTypeFilterType extends AbstractFilterType
 
     public function buildQuery($options, FilterQuery $query, mixed $value): void
     {
-        if ($value === null || trim($value) === '') {
+        if (null === $value || '' === trim($value)) {
             return;
         }
 

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 24.05.16
- * Time: 18:42
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Twig;
@@ -19,9 +22,9 @@ class UpdateRoute extends AbstractExtension
 {
     public function getFilters()
     {
-        return array(
-            new TwigFilter('updateRoute', array($this, 'getUpdateRoute')),
-        );
+        return [
+            new TwigFilter('updateRoute', [$this, 'getUpdateRoute']),
+        ];
     }
 
     public function getUpdateRoute($resource)
@@ -29,6 +32,7 @@ class UpdateRoute extends AbstractExtension
         $roleUtil = new RoleUtil();
         $roleName = $roleUtil->getRoleName($resource, 'update');
         $updateRoute = str_replace('ROLE_', '', $roleName);
+
         return strtolower($updateRoute);
     }
 

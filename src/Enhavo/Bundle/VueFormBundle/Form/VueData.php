@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\VueFormBundle\Form;
 
 use Symfony\Component\Form\FormView;
@@ -13,9 +22,8 @@ final class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
     private array $children = [];
 
     public function __construct(
-        private FormView $formView
-    )
-    {
+        private FormView $formView,
+    ) {
     }
 
     public function keys()
@@ -53,7 +61,7 @@ final class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
         unset($this->data[$key]);
     }
 
-    public function getIterator():\Traversable
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->data);
     }
@@ -84,22 +92,23 @@ final class VueData implements \IteratorAggregate, \Countable, \ArrayAccess
 
     public function offsetGet($offset): mixed
     {
-        return isset($this->data[$offset]) ? $this->data[$offset] : null;
+        return $this->data[$offset] ?? null;
     }
 
     public function toArray()
     {
         $array = [];
-        foreach($this->data as $key => $value) {
+        foreach ($this->data as $key => $value) {
             $array[$key] = $value;
         }
 
         $array['children'] = [];
         foreach ($this->getChildren() as $key => $child) {
             $childArray = $child->toArray();
-            $childArray['name'] = (string)$key;
+            $childArray['name'] = (string) $key;
             $array['children'][] = $childArray;
         }
+
         return $array;
     }
 

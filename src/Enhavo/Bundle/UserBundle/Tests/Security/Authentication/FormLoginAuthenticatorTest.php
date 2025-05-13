@@ -1,17 +1,24 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Tests\Security\Authentication;
 
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Configuration\Login\LoginConfiguration;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Model\Credentials;
-use Enhavo\Bundle\UserBundle\UserIdentifier\UserMapper;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator;
 use Enhavo\Bundle\UserBundle\Tests\Mocks\UserMock;
-use Enhavo\Bundle\UserBundle\User\UserManager;
 use Enhavo\Component\Type\FactoryInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -55,7 +62,7 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies->configurationProvider = $this->getMockBuilder(ConfigurationProvider::class)->disableOriginalConstructor()->getMock();
         $dependencies->urlGenerator = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
         $dependencies->urlGenerator->method('generate')->willReturnCallback(function ($route) {
-            return $route .'.generated';
+            return $route.'.generated';
         });
         $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $dependencies->userRepository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
@@ -78,16 +85,17 @@ class FormLoginAuthenticatorTest extends TestCase
     public function testSupports()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->request->method('isMethod')->willReturnCallback(function($method) {
-            return $method === 'POST';
+        $dependencies->request->method('isMethod')->willReturnCallback(function ($method) {
+            return 'POST' === $method;
         });
         $dependencies->request->attributes->set('_route', 'config.login.route');
 
-        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function() {
-           $configuration = new LoginConfiguration();
-           $configuration->setRoute('config.login.route');
-           $configuration->setCheckRoute('config.login.route');
-           return $configuration;
+        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function () {
+            $configuration = new LoginConfiguration();
+            $configuration->setRoute('config.login.route');
+            $configuration->setCheckRoute('config.login.route');
+
+            return $configuration;
         });
 
         $instance = $this->createInstance($dependencies);
@@ -101,8 +109,8 @@ class FormLoginAuthenticatorTest extends TestCase
     public function testSupportsGet()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->request->method('isMethod')->willReturnCallback(function($method) {
-            return $method === 'GET';
+        $dependencies->request->method('isMethod')->willReturnCallback(function ($method) {
+            return 'GET' === $method;
         });
 
         $dependencies->request->attributes->set('_route', 'config.login.route');
@@ -118,11 +126,12 @@ class FormLoginAuthenticatorTest extends TestCase
     {
         $dependencies = $this->createDependencies();
 
-        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function() {
+        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function () {
             $configuration = new LoginConfiguration();
             $configuration->setRoute('config.login.route');
             $configuration->setFormClass('formClass');
             $configuration->setFormOptions([]);
+
             return $configuration;
         });
 
@@ -161,6 +170,7 @@ class FormLoginAuthenticatorTest extends TestCase
             $this->assertEquals($user, $event->getUser());
             $this->assertEquals(UserEvent::LOGIN_SUCCESS, $name);
             $event->setResponse(new RedirectResponse('_security.user.target_path.session'));
+
             return $event;
         });
 
@@ -180,12 +190,14 @@ class FormLoginAuthenticatorTest extends TestCase
     {
         $dependencies = $this->createDependencies();
 
-        $dependencies->userRepository->method('loadUserByIdentifier')->willReturnCallback(function($name) {
-            if ($name === '1337.user@enhavo.com') {
+        $dependencies->userRepository->method('loadUserByIdentifier')->willReturnCallback(function ($name) {
+            if ('1337.user@enhavo.com' === $name) {
                 $user = new UserMock();
                 $user->setUserIdentifier($name);
+
                 return $user;
             }
+
             return null;
         });
 
@@ -193,14 +205,16 @@ class FormLoginAuthenticatorTest extends TestCase
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(UserEvent::LOGIN_FAILURE, $name);
             $this->assertEquals('1337.user@enhavo.com', $event->getUser()->getUserIdentifier());
+
             return $event;
         });
 
-        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function($name) {
+        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function ($name) {
             $loginConfiguration = new LoginConfiguration();
             $loginConfiguration->setRoute('login_route');
             $loginConfiguration->setFormClass('formClass');
             $loginConfiguration->setFormOptions([]);
+
             return $loginConfiguration;
         });
 
@@ -213,7 +227,6 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies->form->method('getData')->willReturn($credentials);
 
         $instance = $this->createInstance($dependencies);
-
 
         $dependencies->formFactory->method('create')->willReturn($dependencies->form);
 

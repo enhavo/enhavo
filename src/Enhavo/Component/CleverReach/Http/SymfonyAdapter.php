@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Component\CleverReach\Http;
 
 use Enhavo\Component\CleverReach\Exception\AuthorizeException;
@@ -19,24 +28,20 @@ class SymfonyAdapter implements AdapterInterface, LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    const API_ENDPOINT = 'https://rest.cleverreach.com';
-    const API_ENDPOINT_CONFIG_KEY = 'api_endpoint';
+    public const API_ENDPOINT = 'https://rest.cleverreach.com';
+    public const API_ENDPOINT_CONFIG_KEY = 'api_endpoint';
 
     /** @var string */
     private $accessToken;
 
-    /** @var string */
     private string $endpoint;
 
     /**
      * Client constructor.
-     *
-     * @param array $config
-     * @param LoggerInterface|null $logger
      */
-    public function __construct(private array $config = [], LoggerInterface $logger = null, private ?HttpClientInterface $client = null)
+    public function __construct(private array $config = [], ?LoggerInterface $logger = null, private ?HttpClientInterface $client = null)
     {
-        $endpoint = isset($config[self::API_ENDPOINT_CONFIG_KEY]) ? $config[self::API_ENDPOINT_CONFIG_KEY] : self::API_ENDPOINT;
+        $endpoint = $config[self::API_ENDPOINT_CONFIG_KEY] ?? self::API_ENDPOINT;
 
         $this->endpoint = $endpoint;
 
@@ -44,15 +49,11 @@ class SymfonyAdapter implements AdapterInterface, LoggerAwareInterface
             $this->logger = $logger;
         }
 
-        if ($this->client == null) {
+        if (null == $this->client) {
             $this->client = HttpClient::create();
         }
-
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function authorize(string $clientId, string $clientSecret)
     {
         try {
@@ -78,34 +79,29 @@ class SymfonyAdapter implements AdapterInterface, LoggerAwareInterface
             $this->accessToken = $data['access_token'];
 
             return true;
-        } catch (TransportExceptionInterface | ClientExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface $e) {
+        } catch (TransportExceptionInterface|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface $e) {
             $this->log(LogLevel::ERROR, $e->getMessage());
             throw new AuthorizeException($e->getMessage());
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function action(string $method, string $path, array $data = [])
     {
-        $this->log(LogLevel::INFO,"Request via \"{$method}\" on \"{$path}\"");
+        $this->log(LogLevel::INFO, "Request via \"{$method}\" on \"{$path}\"");
 
         if (!empty($data)) {
             $this->log(LogLevel::INFO, 'Request data.', ['request' => $data]);
         }
 
         try {
-            $response = $this->client->request(strtoupper($method), $path, ['base_uri' => $this->endpoint, 'headers' => ['Authorization' => "Bearer {$this->getAccessToken()}", 'Accept' => 'application/json',], 'json' => $data,]);
+            $response = $this->client->request(strtoupper($method), $path, ['base_uri' => $this->endpoint, 'headers' => ['Authorization' => "Bearer {$this->getAccessToken()}", 'Accept' => 'application/json'], 'json' => $data]);
             $data = json_decode($response->getContent(), true);
             $this->log(LogLevel::INFO, 'Response data.', ['response' => $data]);
-
-        } catch (TransportExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface $e) {
+        } catch (TransportExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface $e) {
             $this->log(LogLevel::ERROR, $e->getMessage());
             throw new RequestException($e->getMessage());
-
         } catch (ClientExceptionInterface $e) {
-            if ($e->getCode() !== 404) {
+            if (404 !== $e->getCode()) {
                 $this->log(LogLevel::ERROR, $e->getMessage());
                 throw new RequestException($e->getMessage());
             }
@@ -116,9 +112,6 @@ class SymfonyAdapter implements AdapterInterface, LoggerAwareInterface
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getAccessToken()
     {
         return $this->accessToken;
@@ -126,10 +119,6 @@ class SymfonyAdapter implements AdapterInterface, LoggerAwareInterface
 
     /**
      * Log message.
-     *
-     * @param string $level
-     * @param string $message
-     * @param array  $data
      */
     private function log(string $level, string $message, array $data = [])
     {

@@ -1,7 +1,15 @@
 <?php
 
-namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
+namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Type\UrlActionType;
 use Enhavo\Bundle\ResourceBundle\Action\Action;
@@ -28,7 +36,7 @@ class UrlActionTypeTest extends TestCase
         $type = $this->createInstance($dependencies);
 
         $action = new Action($type, [], [
-            'route' => 'url_route'
+            'route' => 'url_route',
         ]);
 
         $viewData = $action->createViewData();
@@ -44,7 +52,7 @@ class UrlActionTypeTest extends TestCase
         $action = new Action($type, [], [
             'route' => 'url_route',
             'route_parameters' => [
-                'key' => 'value'
+                'key' => 'value',
             ],
         ]);
 
@@ -61,7 +69,7 @@ class UrlActionTypeTest extends TestCase
         $action = new Action($type, [], [
             'route' => 'url_route',
             'route_parameters' => [
-                'id' => 'expr:resource.getId()'
+                'id' => 'expr:resource.getId()',
             ],
         ]);
 

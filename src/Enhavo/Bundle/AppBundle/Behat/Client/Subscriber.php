@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-10
- * Time: 10:27
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Behat\Client;
@@ -20,7 +23,6 @@ class Subscriber implements EventSubscriberInterface
 
     /**
      * Subscriber constructor.
-     * @param ClientManager $clientManager
      */
     public function __construct(ClientManager $clientManager)
     {
@@ -29,9 +31,9 @@ class Subscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return array(
-            SuiteTested::AFTER => 'shutdown'
-        );
+        return [
+            SuiteTested::AFTER => 'shutdown',
+        ];
     }
 
     public function shutdown()

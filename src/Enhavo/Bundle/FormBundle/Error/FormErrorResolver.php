@@ -1,10 +1,19 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Error;
 
 use Symfony\Component\Form\FormError;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @author gseidel
@@ -22,7 +31,6 @@ class FormErrorResolver
     }
 
     /**
-     * @param FormInterface $form
      * @return FormError[]
      */
     public function getErrors(FormInterface $form)
@@ -31,12 +39,11 @@ class FormErrorResolver
     }
 
     /**
-     * @param FormInterface $form
      * @return array
      */
     protected function getFormErrors(FormInterface $form)
     {
-        $errors = array();
+        $errors = [];
 
         foreach ($form->getErrors() as $key => $error) {
             $errors[] = $error;
@@ -45,7 +52,7 @@ class FormErrorResolver
         foreach ($form->all() as $child) {
             if ($child->isSubmitted() && !$child->isValid()) {
                 $childErrors = $this->getFormErrors($child);
-                foreach($childErrors as $childError) {
+                foreach ($childErrors as $childError) {
                     $errors[] = $childError;
                 }
             }
@@ -73,34 +80,33 @@ class FormErrorResolver
 
         $errorFields = [];
         if (count($errors) > 0) {
-            foreach($errors as $error) {
+            foreach ($errors as $error) {
                 $errorFields[] = $this->getSubFormName($error->getOrigin());
             }
         }
+
         return $errorFields;
     }
 
     protected function getSubFormName(FormInterface $form)
     {
-        if ($form->getParent() == null) {
+        if (null == $form->getParent()) {
             return $form->getName();
-        } else {
-            return $this->getSubFormName($form->getParent()) . '[' . $form->getName() . ']';
         }
+
+        return $this->getSubFormName($form->getParent()).'['.$form->getName().']';
     }
 
     /**
-     * @param FormInterface $form
-     * @return boolean
+     * @return bool
      */
     public function hasErrors(FormInterface $form)
     {
-        return (boolean)count($this->getFormErrors($form));
+        return (bool) count($this->getFormErrors($form));
     }
 
     /**
-     * @param FormInterface $form
-     * @return boolean
+     * @return bool
      */
     public function isSubmitted(FormInterface $form)
     {
@@ -108,8 +114,7 @@ class FormErrorResolver
     }
 
     /**
-     * @param FormInterface $form
-     * @return boolean
+     * @return bool
      */
     public function isSuccessful(FormInterface $form)
     {

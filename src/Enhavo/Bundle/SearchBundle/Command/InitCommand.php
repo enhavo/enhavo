@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Command;
 
 use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
@@ -13,8 +23,7 @@ class InitCommand extends Command
 {
     public function __construct(
         private SearchEngineInterface $searchEngine,
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -39,6 +48,7 @@ class InitCommand extends Command
 
         $this->searchEngine->initialize($force);
         $output->writeln('Init finish');
+
         return Command::SUCCESS;
     }
 }

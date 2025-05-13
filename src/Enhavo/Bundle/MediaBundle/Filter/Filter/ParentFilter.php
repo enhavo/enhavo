@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 11.11.17
- * Time: 12:09
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Filter\Filter;
@@ -21,7 +24,6 @@ class ParentFilter extends AbstractFilter
 
     /**
      * ParentFilter constructor.
-     * @param FormatManager $formatManager
      */
     public function __construct(FormatManager $formatManager)
     {
@@ -34,8 +36,8 @@ class ParentFilter extends AbstractFilter
         $parent = $setting->getSetting('parent');
         $exclude = $setting->getSetting('exclude', []);
         $settings = $this->formatManager->getFormatSettings($parent);
-        foreach($settings as $setting) {
-            if(in_array($setting->getType(), $exclude)) {
+        foreach ($settings as $setting) {
+            if (in_array($setting->getType(), $exclude)) {
                 continue;
             }
             $filter = $this->formatManager->getFilter($setting->getType());

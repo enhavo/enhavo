@@ -1,24 +1,25 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-10-22
- * Time: 23:47
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Comment;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\CommentBundle\Event\PostCreateCommentEvent;
 use Enhavo\Bundle\CommentBundle\Event\PostPublishCommentEvent;
-use Enhavo\Bundle\CommentBundle\Event\PreCreateCommentEvent;
 use Enhavo\Bundle\CommentBundle\Event\PrePublishCommentEvent;
 use Enhavo\Bundle\CommentBundle\Exception\CommentSubjectException;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
-use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
+use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
@@ -26,7 +27,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class CommentManager
- * @package Enhavo\Bundle\CommentBundle\Comment
  */
 class CommentManager
 {
@@ -38,19 +38,19 @@ class CommentManager
         private FactoryInterface $commentFactory,
         private EventDispatcherInterface $eventDispatcher,
         private ResourceManager $resourceManager,
-    ) {}
+    ) {
+    }
 
     /**
-     * @param CommentSubjectInterface $subject
      * @param bool $flush
      */
     public function updateSubject(CommentSubjectInterface $subject, $flush = true)
     {
-        if($subject->getThread() === null) {
+        if (null === $subject->getThread()) {
             /** @var ThreadInterface $thread */
             $thread = $this->threadFactory->createNew();
             $subject->setThread($thread);
-            if($flush) {
+            if ($flush) {
                 $this->em->flush();
             }
         }
@@ -61,6 +61,7 @@ class CommentManager
         $form = $this->formFactory->create($this->submitForm);
         $comment = $this->commentFactory->createNew();
         $form->setData($comment);
+
         return $form;
     }
 
@@ -70,9 +71,7 @@ class CommentManager
     }
 
     /**
-     * @param Request $request
      * @param $subject CommentSubjectInterface
-     * @return SubmitContext
      */
     public function handleSubmitForm(Request $request, CommentSubjectInterface $subject): SubmitContext
     {
@@ -80,7 +79,7 @@ class CommentManager
         $form = $this->createSubmitForm();
         $form->handleRequest($request);
         $insert = false;
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             /** @var CommentInterface $comment */
             $comment = $form->getData();
             $comment->setThread($subject->getThread());
@@ -88,13 +87,14 @@ class CommentManager
             $form = $this->createSubmitForm();
             $insert = true;
         }
+
         return new SubmitContext($form, $insert);
     }
 
     private function checkThread(CommentSubjectInterface $subject)
     {
         $thread = $subject->getThread();
-        if($thread === null) {
+        if (null === $thread) {
             throw CommentSubjectException::createNoThreadException($subject);
         }
     }

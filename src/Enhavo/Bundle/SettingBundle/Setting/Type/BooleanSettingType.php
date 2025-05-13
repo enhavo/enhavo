@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
@@ -10,7 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class BooleanSettingType
- * @package Enhavo\Bundle\SettingBundle\Setting\Type
+ *
  * @property ValueAccessSettingType $parent
  */
 class BooleanSettingType extends AbstractSettingType
@@ -20,7 +29,6 @@ class BooleanSettingType extends AbstractSettingType
 
     /**
      * BooleanSettingType constructor.
-     * @param TranslatorInterface $translator
      */
     public function __construct(TranslatorInterface $translator)
     {
@@ -31,9 +39,10 @@ class BooleanSettingType extends AbstractSettingType
     {
         $settingEntity = $this->parent->getSettingEntity($options, $key);
 
-        if ($settingEntity->getValue() === null) {
+        if (null === $settingEntity->getValue()) {
             $settingEntity->setValue(new BasicValue(BasicValue::TYPE_BOOLEAN, $settingEntity));
             $settingEntity->getValue()->setValue($options['default']);
+
             return;
         }
     }
@@ -43,13 +52,14 @@ class BooleanSettingType extends AbstractSettingType
         if ($value && $value->getValue()) {
             return $this->translator->trans('label.yes', [], 'EnhavoAppBundle');
         }
+
         return $this->translator->trans('label.no', [], 'EnhavoAppBundle');
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-           'form_type' => BooleanType::class
+            'form_type' => BooleanType::class,
         ]);
     }
 

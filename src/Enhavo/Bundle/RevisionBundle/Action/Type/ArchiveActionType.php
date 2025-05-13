@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RevisionBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -17,11 +26,10 @@ class ArchiveActionType extends AbstractActionType
         private readonly CsrfTokenManagerInterface $tokenManager,
         private readonly ResourceExpressionLanguage $expressionLanguage,
         private readonly RouteResolverInterface $routeResolver,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $data->set('token', $this->tokenManager->getToken('resource_revision')->getValue());
 
@@ -29,7 +37,7 @@ class ArchiveActionType extends AbstractActionType
             'resource' => $resource,
         ]) ?? $this->routeResolver->getRoute('revision_archive', ['api' => true]);
 
-        if ($route === null) {
+        if (null === $route) {
             throw new \Exception('Can\'t find an api route for archive action, please provide a route over the "route" option');
         }
 
@@ -52,7 +60,7 @@ class ArchiveActionType extends AbstractActionType
             'confirm_message' => 'archive.message.archive',
             'route' => null,
             'route_parameters' => [
-                'id' => 'expr:resource.getId()'
+                'id' => 'expr:resource.getId()',
             ],
         ]);
     }

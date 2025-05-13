@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\VueFormBundle\Test\Form\Extension;
 
 use Enhavo\Bundle\ResourceBundle\Tests\Mock\TranslatorMock;
@@ -16,6 +25,7 @@ class ChoiceVueTypeExtensionTest extends TypeTestCase
     protected function getTypeExtensions()
     {
         $normalizer = $this->getMockBuilder(NormalizerInterface::class)->getMock();
+
         return [
             new VueTypeExtension(),
             new FormVueTypeExtension(new TranslatorMock('_translated'), $normalizer),

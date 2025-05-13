@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 10.10.18
- * Time: 15:21
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
@@ -24,7 +27,7 @@ class WidthType extends AbstractType
             'choices' => [
                 'column.label.width.container' => Column::WIDTH_CONTAINER,
                 'column.label.width.full' => Column::WIDTH_FULL,
-            ]
+            ],
         ]);
     }
 

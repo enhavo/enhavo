@@ -1,17 +1,20 @@
 <?php
-/**
- * BlockquoteTextConfiguration.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 17/10/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
-use Enhavo\Bundle\BlockBundle\Model\Block\BlockquoteBlock;
+use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Enhavo\Bundle\BlockBundle\Factory\BlockquoteBlockFactory;
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockquoteBlockType as BlockquoteBlockFormType;
-use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
+use Enhavo\Bundle\BlockBundle\Model\Block\BlockquoteBlock;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BlockquoteBlockType extends AbstractBlockType
@@ -21,11 +24,11 @@ class BlockquoteBlockType extends AbstractBlockType
         $resolver->setDefaults([
             'model' => BlockquoteBlock::class,
             'form' => BlockquoteBlockFormType::class,
-            'factory' =>  BlockquoteBlockFactory::class,
+            'factory' => BlockquoteBlockFactory::class,
             'template' => 'theme/block/blockquote.html.twig',
-            'label' =>  'blockquoteText.label.blockquoteText',
+            'label' => 'blockquoteText.label.blockquoteText',
             'translation_domain' => 'EnhavoBlockBundle',
-            'groups' => ['default', 'content', 'simple']
+            'groups' => ['default', 'content', 'simple'],
         ]);
     }
 

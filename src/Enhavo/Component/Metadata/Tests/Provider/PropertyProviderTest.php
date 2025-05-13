@@ -1,18 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-11
- * Time: 21:43
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Metadata\Tests\Provider;
 
 use Enhavo\Component\Metadata\Exception\ProviderException;
-use Enhavo\Component\Metadata\Provider\PropertyProvider;
 use Enhavo\Component\Metadata\Extension\PropertyInterface;
 use Enhavo\Component\Metadata\Extension\PropertyTrait;
 use Enhavo\Component\Metadata\Metadata;
+use Enhavo\Component\Metadata\Provider\PropertyProvider;
 use PHPUnit\Framework\TestCase;
 
 class PropertyProviderTest extends TestCase
@@ -25,15 +28,15 @@ class PropertyProviderTest extends TestCase
             'properties' => [
                 'name' => [
                     'type' => 'property',
-                    'options' => 'value'
-                ]
-            ]
+                    'options' => 'value',
+                ],
+            ],
         ]);
 
         $this->assertCount(1, $metadata->getProperties());
         $this->assertEquals([
             'type' => 'property',
-            'options' => 'value'
+            'options' => 'value',
         ], $metadata->getProperty('name')->getOptions());
     }
 
@@ -54,5 +57,4 @@ class PropertyProviderMetadata extends Metadata implements PropertyInterface
 
 class PropertyProviderInvalidMetadata extends Metadata
 {
-
 }

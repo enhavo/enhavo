@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,13 +38,13 @@ class SortingManager
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
         $content = json_decode($request->getContent(), true);
-        $parent = $content['parent'] === null ? null: $repository->find($content['parent']);
-        foreach($content['items'] as $position => $id) {
+        $parent = null === $content['parent'] ? null : $repository->find($content['parent']);
+        foreach ($content['items'] as $position => $id) {
             $item = $repository->find($id);
-            if($parentProperty) {
+            if ($parentProperty) {
                 $propertyAccessor->setValue($item, $parentProperty, $parent);
             }
-            if($positionProperty) {
+            if ($positionProperty) {
                 $propertyAccessor->setValue($item, $positionProperty, $position);
             }
         }
@@ -46,18 +55,20 @@ class SortingManager
     private function getParentProperty(RequestConfiguration $configuration)
     {
         $options = $configuration->getViewerOptions();
-        if(isset($options['parent_property'])) {
+        if (isset($options['parent_property'])) {
             return $options['parent_property'];
         }
+
         return null;
     }
 
     private function getPositionProperty(RequestConfiguration $configuration)
     {
         $options = $configuration->getViewerOptions();
-        if(isset($options['position_property'])) {
+        if (isset($options['position_property'])) {
             return $options['position_property'];
         }
+
         return null;
     }
 }

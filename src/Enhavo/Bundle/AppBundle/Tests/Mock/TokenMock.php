@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Tests\Mock;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -9,8 +18,7 @@ class TokenMock implements TokenInterface
 {
     public function __construct(
         private readonly ?UserInterface $user = null,
-    )
-    {
+    ) {
     }
 
     public function __toString(): string
@@ -35,12 +43,10 @@ class TokenMock implements TokenInterface
 
     public function setUser(UserInterface $user): void
     {
-
     }
 
     public function eraseCredentials(): void
     {
-
     }
 
     public function getAttributes(): array
@@ -50,7 +56,6 @@ class TokenMock implements TokenInterface
 
     public function setAttributes(array $attributes): void
     {
-
     }
 
     public function hasAttribute(string $name): bool
@@ -65,7 +70,6 @@ class TokenMock implements TokenInterface
 
     public function setAttribute(string $name, mixed $value): void
     {
-
     }
 
     public function __serialize(): array
@@ -75,6 +79,5 @@ class TokenMock implements TokenInterface
 
     public function __unserialize(array $data): void
     {
-
     }
 }

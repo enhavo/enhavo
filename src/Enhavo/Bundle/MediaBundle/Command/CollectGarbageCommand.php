@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Command;
 
 use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollectorInterface;
@@ -13,8 +22,7 @@ class CollectGarbageCommand extends Command
 {
     public function __construct(
         private GarbageCollectorInterface $garbageCollector,
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -44,15 +52,15 @@ class CollectGarbageCommand extends Command
         }
 
         $limitFlagText = '';
-        if ($limit !== null) {
+        if (null !== $limit) {
             $limit = intval($limit);
             if ($limit <= 0) {
                 $limitFlagText = ' without limit';
             } else {
-                $limitFlagText = ' with limit set to ' . $limit;
+                $limitFlagText = ' with limit set to '.$limit;
             }
         }
-        $output->writeln('Starting garbage collection' . $limitFlagText . $dryRunText . '...');
+        $output->writeln('Starting garbage collection'.$limitFlagText.$dryRunText.'...');
 
         if (method_exists($this->garbageCollector, 'setLogOutput')) {
             $this->garbageCollector->setLogOutput($output);
@@ -69,7 +77,7 @@ class CollectGarbageCommand extends Command
 
         $stopWatchEvent = $stopWatch->stop('mediaGarbageCollect');
 
-        $output->writeln('finished, took ' . $this->formatTimeReadable($stopWatchEvent->getDuration()) . ', memory usage ' . $this->formatMemoryReadable($stopWatchEvent->getMemory()));
+        $output->writeln('finished, took '.$this->formatTimeReadable($stopWatchEvent->getDuration()).', memory usage '.$this->formatMemoryReadable($stopWatchEvent->getMemory()));
 
         return Command::SUCCESS;
     }
@@ -77,22 +85,23 @@ class CollectGarbageCommand extends Command
     private function formatTimeReadable(float $time)
     {
         $time = round($time / 1000);
-        $timeMinutes = (int)floor($time / 60);
-        $timeSeconds = (int)($time % 60);
+        $timeMinutes = (int) floor($time / 60);
+        $timeSeconds = (int) ($time % 60);
         if ($timeMinutes > 0) {
             return sprintf('%sm%ss', $timeMinutes, $timeSeconds);
         }
-        return $timeSeconds . 's';
+
+        return $timeSeconds.'s';
     }
 
     private function formatMemoryReadable(int $memory)
     {
         if ($memory < 1024) {
-            return $memory . 'b';
+            return $memory.'b';
         } elseif ($memory < 1048576) {
-            return round($memory / 1024) . 'kb';
-        } else {
-            return round($memory / 1048576) . 'mb';
+            return round($memory / 1024).'kb';
         }
+
+        return round($memory / 1048576).'mb';
     }
 }

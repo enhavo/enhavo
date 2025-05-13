@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation;
 
@@ -7,7 +15,6 @@ use Enhavo\Bundle\TranslationBundle\Tests\Mocks\TranslatableMock;
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationTypeInterface;
 use Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType;
-use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -41,7 +48,6 @@ class AbstractTranslationTypeTest extends TestCase
         $type->getTranslation([], null, 'field', 'en');
     }
 
-
     public function testGetDefaultValue()
     {
         $dependencies = $this->createDependencies();
@@ -57,7 +63,6 @@ class AbstractTranslationTypeTest extends TestCase
         $this->assertEquals(TranslationType::class, ConcreteTranslationType::getParentType());
     }
 
-
     public function testEntityUpdates()
     {
         $entity = new TranslatableMock();
@@ -65,13 +70,13 @@ class AbstractTranslationTypeTest extends TestCase
         $dependencies->parent->expects($this->once())->method('translate');
         $dependencies->parent->expects($this->once())->method('detach');
         $dependencies->parent->expects($this->once())->method('delete');
-        $dependencies->parent->method('translate')->willReturnCallback(function ($data, $property, $locale) {
-            $data->setName($property . '-' . $locale);
+        $dependencies->parent->method('translate')->willReturnCallback(function ($data, $property, $locale): void {
+            $data->setName($property.'-'.$locale);
         });
-        $dependencies->parent->method('detach')->willReturnCallback(function ($data, $property, $locale) {
-            $data->setName($property . '-' . $locale . '.old');
+        $dependencies->parent->method('detach')->willReturnCallback(function ($data, $property, $locale): void {
+            $data->setName($property.'-'.$locale.'.old');
         });
-        $dependencies->parent->method('delete')->willReturnCallback(function ($data, $property) {
+        $dependencies->parent->method('delete')->willReturnCallback(function ($data, $property): void {
             $data->setName(null);
         });
 
@@ -95,5 +100,4 @@ class AbstractTranslationTypeTestDependencies
 
 class ConcreteTranslationType extends AbstractTranslationType
 {
-
 }

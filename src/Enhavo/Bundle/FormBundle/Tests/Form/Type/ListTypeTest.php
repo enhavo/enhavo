@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Tests\Form\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -19,12 +28,12 @@ class ListTypeTest extends TypeTestCase
 
         $form->setData([
             0 => 'A',
-            1 => 'B'
+            1 => 'B',
         ]);
 
         $form->submit([
             '0' => 'A',
-            '1' => 'B'
+            '1' => 'B',
         ]);
 
         $form->createView();
@@ -32,7 +41,7 @@ class ListTypeTest extends TypeTestCase
         $this->assertTrue($form->isSynchronized());
         $this->assertSame([
             0 => 'A',
-            1 => 'B'
+            1 => 'B',
         ], $form->getData());
     }
 
@@ -42,7 +51,7 @@ class ListTypeTest extends TypeTestCase
 
         $form->setData([
             0 => 'A',
-            1 => 'B'
+            1 => 'B',
         ]);
 
         $form->submit([
@@ -55,7 +64,7 @@ class ListTypeTest extends TypeTestCase
         $this->assertTrue($form->isSynchronized());
         $this->assertSame([
             0 => 'B',
-            1 => 'A'
+            1 => 'A',
         ], $form->getData());
     }
 
@@ -75,7 +84,6 @@ class ListTypeTest extends TypeTestCase
             '1' => ['name' => 'one_1'],
             '2' => ['name' => 'two_2'],
         ]);
-
 
         $this->assertTrue($form->isSubmitted(), 'is submitted');
         $this->assertTrue($form->isValid(), 'is valid');
@@ -103,7 +111,7 @@ class ListTypeTest extends TypeTestCase
                 '0' => ['name' => 'zero_0'],
                 '1' => ['name' => 'one_1'],
                 '2' => ['name' => 'two_2'],
-            ]
+            ],
         ]);
 
         $this->assertTrue($form->isSubmitted(), 'is submitted');
@@ -136,8 +144,8 @@ class ListTypeTest extends TypeTestCase
             'nodes' => [
                 '0' => ['name' => 'zero_0', 'uuid' => $formView['nodes'][0]['uuid']->vars['value']],
                 '1' => ['name' => 'one_1', 'uuid' => $formView['nodes'][1]['uuid']->vars['value']],
-                '3' => ['name' => 'two_2', 'uuid' => $nodeTwoUuid]
-            ]
+                '3' => ['name' => 'two_2', 'uuid' => $nodeTwoUuid],
+            ],
         ]);
 
         $this->assertTrue($form->isSubmitted(), 'is submitted');
@@ -164,8 +172,8 @@ class ListTypeTest extends TypeTestCase
             'nodes' => [
                 '0' => ['name' => 'zero_0', 'uuid' => $formView['nodes'][0]['uuid']->vars['value']],
                 '1' => ['name' => 'one_1', 'uuid' => $formView['nodes'][1]['uuid']->vars['value']],
-                '3' => ['name' => 'two_2', 'uuid' => $nodeTwoUuid]
-            ]
+                '3' => ['name' => 'two_2', 'uuid' => $nodeTwoUuid],
+            ],
         ]);
 
         $this->assertTrue($form->isSubmitted(), 'is submitted');
@@ -173,7 +181,6 @@ class ListTypeTest extends TypeTestCase
         $this->assertTrue($form->getData()->getNodes()->get(2) === $thirdElement, 'same reference');
     }
 }
-
 
 class Container
 {
@@ -206,9 +213,8 @@ class Node
         public ?string $name = null,
         public ?string $id = null,
         public ?string $uuid = null,
-    )
-    {
-        if ($this->uuid === null) {
+    ) {
+        if (null === $this->uuid) {
             $this->uuid = generateUuid();
         }
     }
@@ -232,11 +238,11 @@ class NodeType extends AbstractType
 
 function generateUuid(): ?string
 {
-    return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
-        mt_rand( 0, 0xffff ),
-        mt_rand( 0, 0x0fff ) | 0x4000,
-        mt_rand( 0, 0x3fff ) | 0x8000,
-        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+    return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+        mt_rand(0, 0xFFFF), mt_rand(0, 0xFFFF),
+        mt_rand(0, 0xFFFF),
+        mt_rand(0, 0x0FFF) | 0x4000,
+        mt_rand(0, 0x3FFF) | 0x8000,
+        mt_rand(0, 0xFFFF), mt_rand(0, 0xFFFF), mt_rand(0, 0xFFFF)
     );
 }

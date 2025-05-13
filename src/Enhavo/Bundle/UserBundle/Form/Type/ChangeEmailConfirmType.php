@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
 use Enhavo\Bundle\UserBundle\Form\Data\ChangeEmail;
@@ -34,14 +43,14 @@ class ChangeEmailConfirmType extends AbstractType
             ],
         ]);
 
-        $builder->add('email', RepeatedType::class, array(
+        $builder->add('email', RepeatedType::class, [
             'type' => TextType::class,
-            'options' => array(
+            'options' => [
                 'translation_domain' => 'EnhavoUserBundle',
-                'attr' => array(
+                'attr' => [
                     'autocomplete' => 'new-password',
-                ),
-            ),
+                ],
+            ],
             'required' => false,
             'first_options' => [
                 'label' => 'change_email.form.new_email',
@@ -49,7 +58,7 @@ class ChangeEmailConfirmType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Email(),
-                    new EmailNotExists()
+                    new EmailNotExists(),
                 ],
             ],
             'second_options' => [
@@ -61,7 +70,7 @@ class ChangeEmailConfirmType extends AbstractType
                 ],
             ],
             'invalid_message' => 'enhavo_user.change_email.mismatch',
-        ));
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

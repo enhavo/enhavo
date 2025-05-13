@@ -1,10 +1,19 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Model\Block;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
-use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
@@ -73,12 +82,11 @@ class GalleryBlock extends AbstractBlock
     /**
      * Add files
      *
-     * @param FileInterface $file
      * @return GalleryBlock
      */
     public function addFiles(FileInterface $file)
     {
-        if ($this->files === null) {
+        if (null === $this->files) {
             $this->files = new ArrayCollection();
         }
 
@@ -89,8 +97,6 @@ class GalleryBlock extends AbstractBlock
 
     /**
      * Remove files
-     *
-     * @param FileInterface $file
      */
     public function removeFiles(FileInterface $file)
     {
@@ -100,7 +106,7 @@ class GalleryBlock extends AbstractBlock
     /**
      * Get files
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getFiles()
     {
@@ -109,8 +115,6 @@ class GalleryBlock extends AbstractBlock
 
     /**
      * Add file
-     *
-     * @param FileInterface $file
      *
      * @return GalleryBlock
      */
@@ -123,8 +127,6 @@ class GalleryBlock extends AbstractBlock
 
     /**
      * Remove file
-     *
-     * @param FileInterface $file
      */
     public function removeFile(FileInterface $file)
     {

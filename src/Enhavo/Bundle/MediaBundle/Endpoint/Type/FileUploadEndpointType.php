@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -22,8 +31,7 @@ class FileUploadEndpointType extends AbstractEndpointType
         private readonly FileFactory $fileFactory,
         private readonly ResourceManager $resourceManager,
         private readonly ValidatorInterface $validator,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -41,7 +49,6 @@ class FileUploadEndpointType extends AbstractEndpointType
                             'errors' => $errors,
                         ]);
                         $context->setResponse($response);
-
                     }
                     $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
 
@@ -49,9 +56,8 @@ class FileUploadEndpointType extends AbstractEndpointType
 
                     $this->resourceManager->save($file);
                     $storedFiles[] = $file;
-
-                } catch(StorageException $exception) {
-                    foreach($storedFiles as $file) {
+                } catch (StorageException $exception) {
+                    foreach ($storedFiles as $file) {
                         $this->resourceManager->delete($file);
                     }
                 }
@@ -61,13 +67,11 @@ class FileUploadEndpointType extends AbstractEndpointType
         $context->setResponse($this->createFileResponse($storedFiles));
     }
 
-
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'garbage' => true,
-            'validation_groups' => ['media_upload']
+            'validation_groups' => ['media_upload'],
         ]);
     }
 

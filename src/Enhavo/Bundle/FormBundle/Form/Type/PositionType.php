@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 08/06/14
- * Time: 16:32
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
@@ -14,9 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PositionType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'enhavo_position';
@@ -30,18 +30,18 @@ class PositionType extends AbstractType
     /**
      * Configures the options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver the resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'property' => 'position'
-        ));
+        $resolver->setDefaults([
+            'property' => 'position',
+        ]);
 
         $resolver->setNormalizer('attr', function ($options) {
             return [
-                'data-position' => $options['property']
+                'data-position' => $options['property'],
             ];
         });
     }
-} 
+}

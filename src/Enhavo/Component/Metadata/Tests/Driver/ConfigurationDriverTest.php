@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-11
- * Time: 21:36
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Metadata\Tests\Driver;
@@ -17,11 +20,11 @@ class ConfigurationDriverTest extends TestCase
     {
         $config = [
             'TestClass' => [
-                'name' => 'test'
+                'name' => 'test',
             ],
             'ParentClass' => [
-                'name' => 'parent'
-            ]
+                'name' => 'parent',
+            ],
         ];
 
         $driver = new ConfigurationDriver($config);
@@ -32,20 +35,20 @@ class ConfigurationDriverTest extends TestCase
     {
         $config = [
             'TestClass' => [
-                'name' => 'test'
+                'name' => 'test',
             ],
             'ParentClass' => [
-                'name' => 'parent'
-            ]
+                'name' => 'parent',
+            ],
         ];
 
         $driver = new ConfigurationDriver($config);
         $this->assertEquals([
-            'name' => 'test'
+            'name' => 'test',
         ], $driver->loadClass('TestClass'));
 
         $this->assertEquals([
-            'name' => 'parent'
+            'name' => 'parent',
         ], $driver->loadClass('ParentClass'));
     }
 }

@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translator\Media;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
@@ -63,7 +70,6 @@ class FileTranslatorTest extends TestCase
         $entity->id = 1;
 
         $this->assertEquals($file, $translator->getTranslation($entity, 'file', 'fr'));
-
     }
 
     public function testResetTranslation()
@@ -90,7 +96,6 @@ class FileTranslatorTest extends TestCase
         $translator->setTranslation($entity, 'file', 'fr', $file2);
 
         $this->assertEquals($file2, $translator->getTranslation($entity, 'file', 'fr'));
-
     }
 
     public function testGetSetTranslationDefaultLocale()
@@ -150,8 +155,6 @@ class FileTranslatorTest extends TestCase
         $entity = new TranslatableMock();
 
         $translator->delete($entity, 'file');
-
-
     }
 
     public function testTranslate()
@@ -173,7 +176,6 @@ class FileTranslatorTest extends TestCase
         $translator->translate($entity, 'file', 'en', []);
         $this->assertNotEquals($file, $entity->getFile());
     }
-
 
     public function testDetach()
     {
@@ -201,7 +203,6 @@ class FileTranslatorTest extends TestCase
         $translator->translate($entity, 'file', 'es', []);
         $this->assertEquals($file, $entity->getFile());
     }
-
 }
 
 class FileTranslatorTestDependencies

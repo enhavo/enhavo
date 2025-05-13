@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
-
 
 use Enhavo\Bundle\NewsletterBundle\Model\GroupInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
@@ -24,7 +31,6 @@ class StorageType extends AbstractType implements StorageTypeInterface
 
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
-
     }
 
     public function exists(SubscriberInterface $subscriber, array $options): bool
@@ -34,7 +40,6 @@ class StorageType extends AbstractType implements StorageTypeInterface
 
     public function removeSubscriber(SubscriberInterface $subscriber, array $options)
     {
-
     }
 
     public function getSubscriber(SubscriberInterface $subscriber, array $options): ?SubscriberInterface
@@ -42,11 +47,8 @@ class StorageType extends AbstractType implements StorageTypeInterface
         return null;
     }
 
-
     public function getGroup($groupId, array $options): ?GroupInterface
     {
         return null;
     }
-
-
 }

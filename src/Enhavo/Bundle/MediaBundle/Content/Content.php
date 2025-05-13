@@ -1,22 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 27.08.17
- * Time: 10:29
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Content;
 
-
 class Content extends AbstractContent
 {
-    /**
-     * @var
-     */
     private $path;
 
-    public function __construct(string $content = null)
+    public function __construct(?string $content = null)
     {
         $tempPath = tempnam(sys_get_temp_dir(), 'Content');
         file_put_contents($tempPath, $content ?? '');
@@ -35,7 +34,7 @@ class Content extends AbstractContent
 
     public function __destruct()
     {
-        if(file_exists($this->path)) {
+        if (file_exists($this->path)) {
             unlink($this->path);
         }
     }

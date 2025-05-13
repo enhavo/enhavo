@@ -1,10 +1,19 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Vue\RouteProvider;
 
 class VueRoute
 {
-    /** @var VueRoute[]  */
+    /** @var VueRoute[] */
     private array $children = [];
     private ?string $name;
     private ?string $path;
@@ -21,12 +30,7 @@ class VueRoute
         if (isset($data['children'])) {
             foreach ($data['children'] as $child) {
                 if (!is_array($child)) {
-                    throw new \Exception(sprintf(
-                        'Can\'t create child component for "%s" with path "%s". Must be array, but got "%s"',
-                        $this->name,
-                        $this->path,
-                        gettype($child)
-                    ));
+                    throw new \Exception(sprintf('Can\'t create child component for "%s" with path "%s". Must be array, but got "%s"', $this->name, $this->path, gettype($child)));
                 }
                 $this->children[] = new self($child);
             }

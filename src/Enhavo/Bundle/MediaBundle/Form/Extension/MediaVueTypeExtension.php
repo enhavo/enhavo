@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Form\Extension;
 
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
@@ -17,9 +26,9 @@ class MediaVueTypeExtension extends AbstractVueTypeExtension
         private readonly MediaManager $mediaManager,
         private readonly RouterInterface $router,
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
+
     public function buildVueData(FormView $view, VueData $data, array $options): void
     {
         $data['multiple'] = $view->vars['multiple'];

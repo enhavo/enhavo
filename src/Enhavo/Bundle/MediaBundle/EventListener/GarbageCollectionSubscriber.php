@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\EventListener;
 
 use Doctrine\ORM\Event\PreRemoveEventArgs;
@@ -20,7 +29,8 @@ class GarbageCollectionSubscriber
         private AssociationFinder $associationFinder,
         private EntityRepository $fileRepository,
         protected bool $enableGarbageCollectionListener,
-    ) {}
+    ) {
+    }
 
     public function preRemove(PreRemoveEventArgs $event): void
     {
@@ -46,11 +56,11 @@ class GarbageCollectionSubscriber
         // But then this line caused another error when using batch delete
         // And the original error couldn't be reproduced, so we just removed the line
         // Keeping this line commented in case the original error happens again, though it should probably be fixed in another way
-//        $this->entityManager->clear();
+        //        $this->entityManager->clear();
 
         foreach ($this->filesToScan as $file) {
             // Fix error where files had id = null, might be related to the error commented about above
-            if ($file->getId() === null) {
+            if (null === $file->getId()) {
                 continue;
             }
             $file = $this->refreshFile($file);
@@ -63,18 +73,18 @@ class GarbageCollectionSubscriber
     {
         $associations = $this->associationFinder->getOutgoingAssociationMap(get_class($entity));
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
-        foreach($associations as $association) {
+        foreach ($associations as $association) {
             if (is_a($association->getClass(), FileInterface::class, true)) {
-                    $fieldValue = $propertyAccessor->getValue($entity, $association->getField());
-                    if ($fieldValue !== null) {
-                        if ($association->isSingleValued()) {
-                            $this->filesToScan []= $fieldValue;
-                        } else {
-                            foreach($fieldValue as $item) {
-                                $this->filesToScan []= $item;
-                            }
+                $fieldValue = $propertyAccessor->getValue($entity, $association->getField());
+                if (null !== $fieldValue) {
+                    if ($association->isSingleValued()) {
+                        $this->filesToScan[] = $fieldValue;
+                    } else {
+                        foreach ($fieldValue as $item) {
+                            $this->filesToScan[] = $item;
                         }
                     }
+                }
             }
         }
     }

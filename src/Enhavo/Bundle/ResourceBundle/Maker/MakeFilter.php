@@ -1,15 +1,16 @@
 <?php
-/**
- * MakeFilter.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 25/05/19
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Maker;
 
-use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
-use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -37,7 +38,6 @@ class MakeFilter extends AbstractMaker
 
     public function configureDependencies(DependencyBuilder $dependencies)
     {
-
     }
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
@@ -46,7 +46,7 @@ class MakeFilter extends AbstractMaker
         $name = $input->getArgument('name');
         $namespace = sprintf('%s\\Filter', $this->util->getBundleNamespace($bundleName));
         $className = sprintf('%sFilterType', $name);
-        $class = sprintf("%s\\%s", $namespace, $className);
+        $class = sprintf('%s\\%s', $namespace, $className);
 
         $generator->generateClass(
             $class,
@@ -54,7 +54,7 @@ class MakeFilter extends AbstractMaker
             [
                 'namespace' => $namespace,
                 'class_name' => $className,
-                'name' => $this->nameTransformer->snakeCase($name)
+                'name' => $this->nameTransformer->snakeCase($name),
             ]
         );
         $generator->writeChanges();

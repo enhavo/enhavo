@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\EventListener;
 
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
@@ -10,8 +19,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class LastLoginSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private UserManager $userManager
-    ) {}
+        private UserManager $userManager,
+    ) {
+    }
 
     public static function getSubscribedEvents(): array
     {

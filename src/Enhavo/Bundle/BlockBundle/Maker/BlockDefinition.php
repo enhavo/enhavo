@@ -1,7 +1,12 @@
 <?php
-/**
- * @author blutze-media
- * @since 2021-09-23
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Maker;
@@ -11,7 +16,6 @@ use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\DoctrineOrmYaml;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\FormType;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\PhpClass;
-use Exception;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -27,15 +31,14 @@ class BlockDefinition
     private string $path;
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function __construct(
-        private MakerUtil       $util,
+        private MakerUtil $util,
         private KernelInterface $kernel,
-        private Filesystem      $filesystem,
-        private array           $config,
-    )
-    {
+        private Filesystem $filesystem,
+        private array $config,
+    ) {
         foreach ($config as $key => $value) {
             $this->name = $key;
             $this->config = $value;
@@ -55,7 +58,6 @@ class BlockDefinition
         $this->path = str_replace('\\', '/', $this->getNamespace());
 
         $this->loadTemplates();
-
     }
 
     private function loadTemplates(): void
@@ -63,8 +65,8 @@ class BlockDefinition
         foreach ($this->getProperties() as $key => $property) {
             if (isset($property['template'])) {
                 $path = $this->getTemplatePath($property['template']);
-                if ($path === null) {
-                    throw new Exception(sprintf('Cant find template "%s"', $property['template']));
+                if (null === $path) {
+                    throw new \Exception(sprintf('Cant find template "%s"', $property['template']));
                 }
                 $config = Yaml::parseFile($path);
                 $this->config['properties'][$key] = $this->deepMerge($config, $this->config['properties'][$key]);
@@ -91,53 +93,54 @@ class BlockDefinition
 
     public function getDoctrineORMFilePath(): string
     {
-        $subDirectory = $this->subDirectories ? implode('.', $this->subDirectories) . '.' : '';
+        $subDirectory = $this->subDirectories ? implode('.', $this->subDirectories).'.' : '';
         $filename = sprintf('%s%s.orm.yml', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
         if ($this->bundle) {
             return sprintf('src/%s/Resources/config/doctrine/%s', $this->path, $filename);
-        } else {
-            return sprintf('%s/config/doctrine/%s', $this->util->getProjectPath(), $filename);
         }
+
+        return sprintf('%s/config/doctrine/%s', $this->util->getProjectPath(), $filename);
     }
 
     public function getEntityFilePath(): string
     {
-        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories) . '/' : '';
+        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
         $filename = sprintf('%s%s.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
         if ($this->bundle) {
             return sprintf('src/%s/Entity/%s', $this->path, $filename);
-        } else {
-            return sprintf('%s/src/Entity/%s', $this->util->getProjectPath(), $filename);
         }
+
+        return sprintf('%s/src/Entity/%s', $this->util->getProjectPath(), $filename);
     }
 
     public function getEntityNamespace(): string
     {
-        $subDirectory = $this->subDirectories ? '\\' . implode('\\', $this->subDirectories) : '';
+        $subDirectory = $this->subDirectories ? '\\'.implode('\\', $this->subDirectories) : '';
+
         return sprintf('%s\\Entity%s', $this->getNamespace(), $subDirectory);
     }
 
     public function getFormTypeFilePath(): string
     {
-        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories) . '/' : '';
+        $subDirectory = $this->subDirectories ? implode('/', $this->subDirectories).'/' : '';
         $filename = sprintf('%s%sType.php', $subDirectory, $this->nameTransformer->camelCase($this->name));
 
         if ($this->bundle) {
             return sprintf('src/%s/Form/Type/%s', $this->path, $filename);
-        } else {
-            return sprintf('%s/src/Form/Type/%s', $this->util->getProjectPath(), $filename);
         }
+
+        return sprintf('%s/src/Form/Type/%s', $this->util->getProjectPath(), $filename);
     }
 
     public function getTemplateFilePath(): string
     {
         if ($this->bundle) {
             return sprintf('src/%s/Resources/views/%s', $this->path, $this->getTemplateFileName());
-        } else {
-            return sprintf('%s/templates/%s', $this->util->getProjectPath(), $this->getTemplateFileName());
         }
+
+        return sprintf('%s/templates/%s', $this->util->getProjectPath(), $this->getTemplateFileName());
     }
 
     public function getTemplateFileName(): string
@@ -149,14 +152,15 @@ class BlockDefinition
     {
         if ($this->bundle) {
             return sprintf('src/%s/Block/%sType.php', $this->path, $this->name);
-        } else {
-            return sprintf('%s/src/Block/%sType.php', $this->util->getProjectPath(), $this->name);
         }
+
+        return sprintf('%s/src/Block/%sType.php', $this->util->getProjectPath(), $this->name);
     }
 
     public function getFormNamespace(): string
     {
-        $subDirectory = $this->subDirectories ? '\\' . implode('\\', $this->subDirectories) : '';
+        $subDirectory = $this->subDirectories ? '\\'.implode('\\', $this->subDirectories) : '';
+
         return sprintf('%s\\Form\\Type%s', $this->getNamespace(), $subDirectory);
     }
 
@@ -194,10 +198,11 @@ class BlockDefinition
     {
         if ($this->bundle) {
             $bundleName = $this->util->getBundleNameWithoutPostfix($this->bundle->getName());
+
             return $this->nameTransformer->snakeCase($bundleName);
-        } else {
-            return $this->nameTransformer->snakeCase(explode('\\', $this->getNamespace()));
         }
+
+        return $this->nameTransformer->snakeCase(explode('\\', $this->getNamespace()));
     }
 
     public function createEntityPhpClass(): PhpClass
@@ -211,7 +216,7 @@ class BlockDefinition
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function getClasses(): array
     {
@@ -219,7 +224,7 @@ class BlockDefinition
         $classes = $this->getConfig('classes', []);
         foreach ($classes as $key => $config) {
             $definition = new BlockDefinition($this->util, $this->kernel, $this->filesystem, [
-                $key => $config
+                $key => $config,
             ]);
             $definition->addUse(sprintf('%s\%s', $this->getEntityNamespace(), $this->getName()));
             $this->addUse(sprintf('%s\%s', $definition->getEntityNamespace(), $definition->getName()));
@@ -296,9 +301,6 @@ class BlockDefinition
         return $this->config['block_type'] ?? false;
     }
 
-    /**
-     * @param mixed $use
-     */
     public function addUse(mixed $use): void
     {
         if (!isset($this->config['use'])) {
@@ -313,9 +315,6 @@ class BlockDefinition
         }
     }
 
-    /**
-     * @param mixed $use
-     */
     public function addFormUse(mixed $use): void
     {
         if (!isset($this->config['form']['use'])) {
@@ -330,12 +329,12 @@ class BlockDefinition
         }
     }
 
-
     private function getUse(): array
     {
         if (isset($this->config['use'])) {
             return array_unique($this->config['use']) ?? [];
         }
+
         return [];
     }
 
@@ -349,7 +348,6 @@ class BlockDefinition
         foreach ($array2 as $key => $value) {
             if (is_array($value)) {
                 $array1[$key] = $this->deepMerge($array1[$key] ?? [], $array2[$key]);
-
             } else {
                 $array1[$key] = $value;
             }

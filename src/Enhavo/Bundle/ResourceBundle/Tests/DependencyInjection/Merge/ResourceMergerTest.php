@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Tests\DependencyInjection\Merge;
 
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\ResourceMerger;
@@ -36,7 +45,7 @@ class ResourceMergerTest extends TestCase
                 'enhavo_one.hello' => [
                     'priority' => 10,
                     'classes' => [
-                        'model' => 'OneHello10'
+                        'model' => 'OneHello10',
                     ],
                 ],
             ],
@@ -47,7 +56,7 @@ class ResourceMergerTest extends TestCase
                 'enhavo_one.hello' => [
                     'priority' => 0,
                     'classes' => [
-                        'model' => 'OneHello0'
+                        'model' => 'OneHello0',
                     ],
                 ],
             ],
@@ -58,7 +67,7 @@ class ResourceMergerTest extends TestCase
                 'enhavo_two.hello' => [
                     'priority' => 0,
                     'classes' => [
-                        'model' => 'TwoHello0'
+                        'model' => 'TwoHello0',
                     ],
                 ],
             ],

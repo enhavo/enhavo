@@ -1,8 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 29/05/16
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
@@ -51,11 +55,11 @@ class DateType extends AbstractType
     /**
      * Configures the options for this type.
      *
-     * @param OptionsResolver $resolver The resolver for the options.
+     * @param OptionsResolver $resolver the resolver for the options
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'widget' => 'single_text',
             'format' => 'dd.MM.yyyy',
             'html5' => false,
@@ -65,8 +69,8 @@ class DateType extends AbstractType
             'locale' => 'de',
             'attr' => [
                 'data-date-picker' => null,
-                'autocomplete' => 'off'
-            ]
-        ));
+                'autocomplete' => 'off',
+            ],
+        ]);
     }
 }

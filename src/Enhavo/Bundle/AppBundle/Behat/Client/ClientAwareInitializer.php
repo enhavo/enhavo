@@ -1,16 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-10
- * Time: 10:08
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Behat\Client;
 
 use Behat\Behat\Context\Context;
-use Enhavo\Bundle\AppBundle\Behat\Context\ClientAwareContext;
 use Behat\Behat\Context\Initializer\ContextInitializer;
+use Enhavo\Bundle\AppBundle\Behat\Context\ClientAwareContext;
 
 class ClientAwareInitializer implements ContextInitializer
 {
@@ -21,17 +24,12 @@ class ClientAwareInitializer implements ContextInitializer
 
     /**
      * Initializes initializer.
-     *
-     * @param ClientManager $clientManager
      */
     public function __construct(ClientManager $clientManager)
     {
         $this->clientManager = $clientManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function initializeContext(Context $context)
     {
         if (!$context instanceof ClientAwareContext) {

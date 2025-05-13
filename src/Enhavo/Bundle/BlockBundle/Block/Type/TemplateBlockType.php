@@ -1,18 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-06-25
- * Time: 13:12
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Enhavo\Bundle\BlockBundle\Factory\TemplateBlockFactory;
+use Enhavo\Bundle\BlockBundle\Form\Type\TemplateBlockType as TemplateBlockFormType;
 use Enhavo\Bundle\BlockBundle\Model\Block\TemplateBlock;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Enhavo\Bundle\BlockBundle\Form\Type\TemplateBlockType as TemplateBlockFormType;
 
 class TemplateBlockType extends AbstractBlockType
 {
@@ -25,7 +28,7 @@ class TemplateBlockType extends AbstractBlockType
             'template' => 'theme/block/template.html.twig',
             'label' => 'template.label.template',
             'translation_domain' => 'EnhavoBlockBundle',
-            'groups' => ['default', 'content']
+            'groups' => ['default', 'content'],
         ]);
     }
 

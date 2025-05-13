@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MultiTenancyBundle\AutoGenerator\Generator;
 
 use Enhavo\Bundle\MultiTenancyBundle\Resolver\ResolverInterface;
@@ -30,7 +39,7 @@ class TenantPrefixGenerator extends PrefixGenerator
         $tenant = $this->resolver->getTenant();
         $results = $this->routeRepository->findBy([
             'staticPrefix' => $prefix,
-            'tenant' => $tenant
+            'tenant' => $tenant,
         ]);
 
         return count($results);

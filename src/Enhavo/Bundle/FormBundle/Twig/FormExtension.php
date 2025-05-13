@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Twig;
 
 use Enhavo\Bundle\FormBundle\Error\FormErrorResolver;
+use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -35,63 +44,68 @@ class FormExtension extends AbstractExtension
             new TwigFunction('form_is_submitted', [$this, 'isSubmitted']),
             new TwigFunction('form_is_successful', [$this, 'isSuccessful']),
             new TwigFunction('form_custom_name', [$this, 'getCustomName']),
-            new TwigFunction('form_attr', [$this, 'getAttributes'], ['is_safe' => array('html')]),
+            new TwigFunction('form_attr', [$this, 'getAttributes'], ['is_safe' => ['html']]),
         ];
     }
 
     public function getErrorRecursive(FormView $formView)
     {
         $form = $this->convertFormViewToForm($formView);
-        if($form) {
+        if ($form) {
             $errors = $this->formErrorResolver->getErrors($form);
+
             return $errors;
         }
+
         return [];
     }
 
     public function hasErrors(FormView $formView)
     {
         $form = $this->convertFormViewToForm($formView);
-        if($form) {
+        if ($form) {
             return $this->formErrorResolver->hasErrors($form);
         }
+
         return false;
     }
 
     public function isSubmitted(FormView $formView)
     {
         $form = $this->convertFormViewToForm($formView);
-        if($form) {
+        if ($form) {
             return $this->formErrorResolver->isSubmitted($form);
         }
+
         return false;
     }
 
     public function isSuccessful(FormView $formView)
     {
         $form = $this->convertFormViewToForm($formView);
-        if($form) {
+        if ($form) {
             return $this->formErrorResolver->isSuccessful($form);
         }
+
         return false;
     }
 
     /**
-     * @param FormView $formView
-     * @return null|FormInterface
+     * @return FormInterface|null
      */
     private function convertFormViewToForm(FormView $formView)
     {
         $vars = $formView->vars;
-        if(isset($vars['errors'])) {
+        if (isset($vars['errors'])) {
             $errors = $formView->vars['errors'];
-            if($errors instanceof FormErrorIterator) {
+            if ($errors instanceof FormErrorIterator) {
                 $form = $errors->getForm();
-                if($form instanceof FormInterface) {
+                if ($form instanceof FormInterface) {
                     return $form;
                 }
             }
         }
+
         return null;
     }
 
@@ -102,6 +116,7 @@ class FormExtension extends AbstractExtension
         } elseif (is_callable($customNameProperty)) {
             return call_user_func($customNameProperty, $data);
         }
+
         return null;
     }
 
@@ -109,8 +124,9 @@ class FormExtension extends AbstractExtension
     {
         $return = '';
         foreach ($data->vars['attr'] as $key => $value) {
-            $return .= htmlentities($key) . '="' . htmlentities($value) . '" ';
+            $return .= htmlentities($key).'="'.htmlentities($value).'" ';
         }
+
         return trim($return);
     }
 }

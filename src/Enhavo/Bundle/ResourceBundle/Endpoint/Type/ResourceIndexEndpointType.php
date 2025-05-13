@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -15,8 +24,7 @@ class ResourceIndexEndpointType extends AbstractEndpointType
 {
     public function __construct(
         private readonly GridFactory $gridFactory,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -33,7 +41,7 @@ class ResourceIndexEndpointType extends AbstractEndpointType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'permission' => Permission::INDEX
+            'permission' => Permission::INDEX,
         ]);
 
         $resolver->setRequired('grid');

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-05
- * Time: 15:54
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Column;
@@ -23,6 +26,7 @@ class ColumnManagerTest extends TestCase
         $dependencies = new ColumnManagerTestDependencies();
         $dependencies->factory = $this->getMockBuilder(FactoryInterface::class)->disableOriginalConstructor()->getMock();
         $dependencies->checker = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
+
         return $dependencies;
     }
 
@@ -36,11 +40,12 @@ class ColumnManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(true);
         $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
-            if ($options['type'] === 'test') {
+            if ('test' === $options['type']) {
                 $column = $this->getMockBuilder(Column::class)->disableOriginalConstructor()->getMock();
                 $column->method('isEnabled')->willReturn(true);
                 $column->method('getPermission')->willReturn(true);
                 $column->method('createResourceViewData')->willReturn(['name' => 'test']);
+
                 return $column;
             }
         });
@@ -49,7 +54,7 @@ class ColumnManagerTest extends TestCase
         $columns = $manager->getColumns([
             'create' => [
                 'type' => 'test',
-            ]
+            ],
         ]);
 
         $this->assertCount(1, $columns);
@@ -61,10 +66,11 @@ class ColumnManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(true);
         $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
-            if ($options['type'] === 'test') {
+            if ('test' === $options['type']) {
                 $column = $this->getMockBuilder(Column::class)->disableOriginalConstructor()->getMock();
                 $column->method('isEnabled')->willReturn(false);
                 $column->method('getPermission')->willReturn(true);
+
                 return $column;
             }
         });
@@ -73,7 +79,7 @@ class ColumnManagerTest extends TestCase
         $columns = $manager->getColumns([
             'create' => [
                 'type' => 'test',
-            ]
+            ],
         ]);
 
         $this->assertCount(0, $columns);
@@ -84,10 +90,11 @@ class ColumnManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(false);
         $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
-            if ($options['type'] === 'test') {
+            if ('test' === $options['type']) {
                 $column = $this->getMockBuilder(Column::class)->disableOriginalConstructor()->getMock();
                 $column->method('isEnabled')->willReturn(true);
                 $column->method('getPermission')->willReturn(true);
+
                 return $column;
             }
         });
@@ -96,7 +103,7 @@ class ColumnManagerTest extends TestCase
         $columns = $manager->getColumns([
             'create' => [
                 'type' => 'test',
-            ]
+            ],
         ]);
 
         $this->assertCount(0, $columns);
@@ -107,10 +114,11 @@ class ColumnManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(false);
         $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
-            if ($options['type'] === 'test') {
+            if ('test' === $options['type']) {
                 $column = $this->getMockBuilder(Column::class)->disableOriginalConstructor()->getMock();
                 $column->method('isEnabled')->willReturn(true);
                 $column->method('getPermission')->willReturn(null);
+
                 return $column;
             }
         });
@@ -119,7 +127,7 @@ class ColumnManagerTest extends TestCase
         $columns = $manager->getColumns([
             'create' => [
                 'type' => 'test',
-            ]
+            ],
         ]);
 
         $this->assertCount(1, $columns);

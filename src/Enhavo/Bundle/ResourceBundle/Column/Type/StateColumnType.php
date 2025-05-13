@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 02.02.16
- * Time: 11:10
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Column\Type;
@@ -18,8 +21,7 @@ class StateColumnType extends AbstractColumnType
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     public function createResourceViewData(array $options, object $resource, Data $data): void
@@ -34,7 +36,6 @@ class StateColumnType extends AbstractColumnType
             $color = $stateMap[$value]['color'] ?? '';
             $label = $stateMap[$value]['label'] ?? '';
             $translationDomain = $stateMap[$value]['translation_domain'] ?? $options['translation_domain'];
-
 
             $data->set('value', $this->translator->trans($label, [], $translationDomain));
             $data->set('color', $color);

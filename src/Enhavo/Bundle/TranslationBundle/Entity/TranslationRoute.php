@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TranslationBundle\Entity;
 
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
@@ -32,7 +41,7 @@ class TranslationRoute
     /**
      * Get id
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -43,6 +52,7 @@ class TranslationRoute
      * Set locale
      *
      * @param string $locale
+     *
      * @return TranslationRoute
      */
     public function setLocale($locale)
@@ -55,7 +65,7 @@ class TranslationRoute
     /**
      * Get locale
      *
-     * @return string 
+     * @return string
      */
     public function getLocale()
     {
@@ -70,25 +80,16 @@ class TranslationRoute
         return $this->route;
     }
 
-    /**
-     * @param RouteInterface $route
-     */
-    public function setRoute(RouteInterface $route = null)
+    public function setRoute(?RouteInterface $route = null)
     {
         $this->route = $route;
     }
 
-    /**
-     * @return string
-     */
     public function getProperty(): string
     {
         return $this->property;
     }
 
-    /**
-     * @param string $property
-     */
     public function setProperty(string $property): void
     {
         $this->property = $property;

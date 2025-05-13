@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-12
- * Time: 12:34
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\Metadata;
@@ -23,9 +26,9 @@ class ReferenceProviderTest extends TestCase
             'reference' => [
                 'name' => [
                     'idField' => 'entityId',
-                    'nameField' => 'entityName'
-                ]
-            ]
+                    'nameField' => 'entityName',
+                ],
+            ],
         ]);
 
         $this->assertCount(1, $metadata->getReferences());
@@ -42,9 +45,9 @@ class ReferenceProviderTest extends TestCase
         $provider->provide($metadata, [
             'reference' => [
                 'name' => [
-                    'nameField' => 'entityName'
-                ]
-            ]
+                    'nameField' => 'entityName',
+                ],
+            ],
         ]);
     }
 
@@ -57,8 +60,8 @@ class ReferenceProviderTest extends TestCase
             'reference' => [
                 'name' => [
                     'idField' => 'entityId',
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
@@ -69,8 +72,8 @@ class ReferenceProviderTest extends TestCase
         $provider = new ReferenceProvider();
         $provider->provide($metadata, [
             'reference' => [
-                'name' => 'something'
-            ]
+                'name' => 'something',
+            ],
         ]);
     }
 }

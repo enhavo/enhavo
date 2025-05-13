@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ContactBundle\Entity;
 
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
@@ -11,17 +20,11 @@ class ContactBlock extends AbstractBlock
      */
     private $key;
 
-    /**
-     * @return string|null
-     */
     public function getKey(): ?string
     {
         return $this->key;
     }
 
-    /**
-     * @param string|null $key
-     */
     public function setKey(?string $key): void
     {
         $this->key = $key;

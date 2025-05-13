@@ -1,9 +1,12 @@
 <?php
-/**
- * MediaContext.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 30/03/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Behat\Context;
@@ -14,8 +17,8 @@ use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Enhavo\Bundle\MediaBundle\Filter\FilterInterface;
 use Enhavo\Bundle\MediaBundle\Model\FilterSetting;
 use Imagine\Gd\Imagine;
-use Imagine\Image\Palette\RGB;
 use Imagine\Image\Box;
+use Imagine\Image\Palette\RGB;
 
 class MediaContext extends KernelContext
 {
@@ -45,7 +48,7 @@ class MediaContext extends KernelContext
         $imagine = new Imagine();
 
         $palette = new RGB();
-        $size  = new Box($width, $height);
+        $size = new Box($width, $height);
         $color = $palette->color('#000', 100);
         $image = $imagine->create($size, $color);
 
@@ -83,12 +86,8 @@ class MediaContext extends KernelContext
 
         $box = $image->getSize();
 
-        if($height != $box->getHeight() || $width != $box->getWidth()) {
-            throw new \Exception(sprintf(
-                'size is %spx width and %spx height and does not fit',
-                $box->getWidth(),
-                $box->getHeight()));
+        if ($height != $box->getHeight() || $width != $box->getWidth()) {
+            throw new \Exception(sprintf('size is %spx width and %spx height and does not fit', $box->getWidth(), $box->getHeight()));
         }
     }
-
 }

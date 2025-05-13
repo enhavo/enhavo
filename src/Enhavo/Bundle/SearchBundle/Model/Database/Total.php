@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Model\Database;
 
 /**
@@ -8,7 +17,7 @@ namespace Enhavo\Bundle\SearchBundle\Model\Database;
 class Total
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -25,7 +34,7 @@ class Total
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

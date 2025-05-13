@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge;
 
 use Enhavo\Bundle\ResourceBundle\Factory\Factory;
@@ -80,12 +89,7 @@ class ResourceMerger
         foreach ($resources as $name => $resourceConfig) {
             $model = $resourceConfig['classes']['model'];
             if (array_key_exists($model, $models)) {
-                throw new \InvalidArgumentException(sprintf(
-                    'A model class can have only one resource alias. Trying to apply model "%s on "%s", but alias "%s" already use it.',
-                    $model,
-                    $name,
-                    $models[$model],
-                ));
+                throw new \InvalidArgumentException(sprintf('A model class can have only one resource alias. Trying to apply model "%s on "%s", but alias "%s" already use it.', $model, $name, $models[$model]));
             }
             $models[$model] = $name;
         }

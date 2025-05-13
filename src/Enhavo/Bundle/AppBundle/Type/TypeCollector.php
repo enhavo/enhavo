@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Type;
 
 use Enhavo\Bundle\AppBundle\Exception\TypeNotFoundException;
@@ -33,7 +42,7 @@ class TypeCollector implements CollectorInterface
 
     public function __construct(ContainerInterface $container, $typeName = 'Type')
     {
-        $this->collection = array();
+        $this->collection = [];
         $this->container = $container;
         $this->typeName = $typeName;
     }
@@ -45,42 +54,37 @@ class TypeCollector implements CollectorInterface
 
     public function getType($alias)
     {
-        if(isset($this->collection[$alias])) {
+        if (isset($this->collection[$alias])) {
             $serviceId = $this->collection[$alias];
             $type = $this->container->get($serviceId);
-            if($this->isTypeValid($type, $alias)){
+            if ($this->isTypeValid($type, $alias)) {
                 return $type;
             }
         }
 
-        throw new TypeNotFoundException(sprintf(
-            '%s type "%s" not found. Did you mean one of them "%s".',
-            $this->typeName,
-            $alias,
-            implode(', ', $this->getNames())
-        ));
+        throw new TypeNotFoundException(sprintf('%s type "%s" not found. Did you mean one of them "%s".', $this->typeName, $alias, implode(', ', $this->getNames())));
     }
 
     public function getTypes()
     {
-        if($this->types === null) {
+        if (null === $this->types) {
             $this->types = [];
             $names = $this->getNames();
-            foreach($names as $name) {
+            foreach ($names as $name) {
                 $this->types[] = $this->getType($name);
             }
         }
+
         return $this->types;
     }
 
     protected function isTypeValid($type, $alias)
     {
-        if($type instanceof TypeInterface) {
-            if($type->getType() == $alias) {
+        if ($type instanceof TypeInterface) {
+            if ($type->getType() == $alias) {
                 return true;
-            } else {
-                throw new TypeNotValidException(sprintf('%s does not match alias %s', $type->getType(), $alias));
             }
+            throw new TypeNotValidException(sprintf('%s does not match alias %s', $type->getType(), $alias));
         } else {
             throw new TypeNotValidException(sprintf('%s does not implement TypeInterface', get_class($type)));
         }

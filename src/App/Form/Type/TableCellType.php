@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Form\Type;
 
 use App\Entity\TableCell;
@@ -21,7 +30,7 @@ class TableCellType extends AbstractType
         $builder->add('position', PositionType::class, [
             'attr' => [
                 'data-position' => 'data-position',
-            ]
+            ],
         ]);
     }
 

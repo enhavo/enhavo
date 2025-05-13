@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Security\EntryPoint;
 
 use Enhavo\Bundle\ApiBundle\Endpoint\Endpoint;
@@ -17,8 +26,7 @@ class AdminAuthenticationEntryPoint implements AuthenticationEntryPointInterface
         private readonly FactoryInterface $factory,
         private readonly string $apiAuthenticationRegex,
         private readonly string $formAuthenticationRegex,
-    )
-    {
+    ) {
     }
 
     public function start(Request $request, ?AuthenticationException $authException = null): Response
@@ -26,7 +34,7 @@ class AdminAuthenticationEntryPoint implements AuthenticationEntryPointInterface
         $path = $request->getPathInfo();
         if (preg_match($this->apiAuthenticationRegex, $path)) {
             return new JsonResponse('Not Authenticated', 401);
-        } else if (preg_match($this->formAuthenticationRegex, $path)) {
+        } elseif (preg_match($this->formAuthenticationRegex, $path)) {
             return $this->formAuthenticationEntryPoint->start($request, $authException);
         }
 
@@ -38,6 +46,7 @@ class AdminAuthenticationEntryPoint implements AuthenticationEntryPointInterface
 
         $response = $endpoint->getResponse($request);
         $response->setStatusCode(401);
+
         return $response;
     }
 }

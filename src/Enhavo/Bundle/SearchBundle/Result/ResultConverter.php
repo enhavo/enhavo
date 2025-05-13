@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 14.05.18
- * Time: 10:47
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Result;
@@ -19,14 +22,13 @@ class ResultConverter
     public function __construct(
         private Highlighter $highlighter,
         private IndexDataProvider $indexDataProvider,
-    )
-    {
+    ) {
     }
 
     /** @return Result[] */
-    public function convert(ResultSummary $summary, $searchTerm, ResultConfiguration $configuration = null): array
+    public function convert(ResultSummary $summary, $searchTerm, ?ResultConfiguration $configuration = null): array
     {
-        if ($configuration === null) {
+        if (null === $configuration) {
             $configuration = new ResultConfiguration();
         }
 
@@ -52,6 +54,7 @@ class ResultConverter
 
             $data[] = $resultData;
         }
+
         return $data;
     }
 
@@ -59,6 +62,7 @@ class ResultConverter
     {
         $text = $this->indexDataProvider->getRawData($resultItem);
         $text = implode($configuration->getConcat(), $text);
+
         return $text;
     }
 
@@ -66,16 +70,17 @@ class ResultConverter
     {
         $properties = ['title', 'name', 'headline', 'header'];
         $accessor = PropertyAccess::createPropertyAccessor();
-        foreach($properties as $property) {
+        foreach ($properties as $property) {
             try {
-                $value =  $accessor->getValue($resultItem, $property);
-                if($value) {
+                $value = $accessor->getValue($resultItem, $property);
+                if ($value) {
                     return $value;
                 }
             } catch (AccessException $e) {
                 continue;
             }
         }
+
         return '';
     }
 }

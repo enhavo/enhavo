@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 19.07.18
- * Time: 18:10
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Navigation;
@@ -18,8 +21,8 @@ class NavigationManager
     private $voters = [];
 
     /**
-     * @param NodeInterface $node
      * @param array $options
+     *
      * @return bool
      */
     public function isActive(NodeInterface $node, $options = [])
@@ -27,7 +30,7 @@ class NavigationManager
         $optionsResolver = new OptionsResolver();
         $optionsResolver->setDefaults([
             'voters' => null,
-            'exclude' => []
+            'exclude' => [],
         ]);
 
         $optionsResolver->setAllowedTypes('exclude', 'array');
@@ -36,46 +39,48 @@ class NavigationManager
 
         $voters = $this->getVoters($options['voters'], $options['exclude']);
         $in = false;
-        foreach($voters as $voter) {
+        foreach ($voters as $voter) {
             $result = $voter->vote($node);
-            if($result === VoterInterface::VOTE_IN) {
+            if (VoterInterface::VOTE_IN === $result) {
                 $in = true;
             }
-            if($result === VoterInterface::VOTE_OUT) {
+            if (VoterInterface::VOTE_OUT === $result) {
                 return false;
             }
         }
+
         return $in;
     }
 
     /**
-     * @param null|string[] $voters
-     * @param array $exclude
+     * @param string[]|null $voters
+     * @param array         $exclude
+     *
      * @return VoterInterface[]
      */
     private function getVoters($voters = null, $exclude = [])
     {
         $usedVoters = $this->voters;
 
-        if(is_array($voters)) {
+        if (is_array($voters)) {
             $usedVoters = [];
-            foreach($voters as $includeVoter) {
+            foreach ($voters as $includeVoter) {
                 foreach ($this->voters as $voter) {
                     if (is_string($includeVoter) && get_class($voter) === $includeVoter) {
                         $usedVoters[] = $voter;
-                    } elseif(is_object($includeVoter) && $voter === $includeVoter) {
+                    } elseif (is_object($includeVoter) && $voter === $includeVoter) {
                         $usedVoters[] = $voter;
                     }
                 }
             }
         }
 
-        if(count($exclude) > 0) {
-            foreach($exclude as $excludeVoter) {
+        if (count($exclude) > 0) {
+            foreach ($exclude as $excludeVoter) {
                 foreach ($usedVoters as $index => $voter) {
                     if (is_string($excludeVoter) && get_class($voter) === $excludeVoter) {
                         unset($usedVoters[$index]);
-                    } elseif(is_object($excludeVoter) && $voter === $excludeVoter) {
+                    } elseif (is_object($excludeVoter) && $voter === $excludeVoter) {
                         unset($usedVoters[$index]);
                     }
                 }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Strategy;
 
 use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
@@ -78,7 +87,7 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
 
     protected function preAddSubscriber(SubscriberInterface $subscriber)
     {
-        if ($this->eventDispatcher !== null) {
+        if (null !== $this->eventDispatcher) {
             $this->eventDispatcher->dispatch(new SubscriberEvent(SubscriberEvent::EVENT_PRE_ADD_SUBSCRIBER, $subscriber), SubscriberEvent::EVENT_PRE_ADD_SUBSCRIBER);
         } else {
             $this->parent->preAddSubscriber($subscriber);
@@ -87,7 +96,7 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
 
     protected function postAddSubscriber(SubscriberInterface $subscriber)
     {
-        if ($this->eventDispatcher !== null) {
+        if (null !== $this->eventDispatcher) {
             $this->eventDispatcher->dispatch(new SubscriberEvent(SubscriberEvent::EVENT_POST_ADD_SUBSCRIBER, $subscriber), SubscriberEvent::EVENT_POST_ADD_SUBSCRIBER);
         } else {
             $this->parent->postAddSubscriber($subscriber);
@@ -96,7 +105,7 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
 
     protected function preActivateSubscriber(SubscriberInterface $subscriber)
     {
-        if ($this->eventDispatcher !== null) {
+        if (null !== $this->eventDispatcher) {
             $this->eventDispatcher->dispatch(new SubscriberEvent(SubscriberEvent::EVENT_PRE_ACTIVATE_SUBSCRIBER, $subscriber), SubscriberEvent::EVENT_PRE_ACTIVATE_SUBSCRIBER);
         } else {
             $this->parent->preActivateSubscriber($subscriber);
@@ -105,7 +114,7 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
 
     protected function postActivateSubscriber(SubscriberInterface $subscriber)
     {
-        if ($this->eventDispatcher !== null) {
+        if (null !== $this->eventDispatcher) {
             $this->eventDispatcher->dispatch(new SubscriberEvent(SubscriberEvent::EVENT_POST_ACTIVATE_SUBSCRIBER, $subscriber), SubscriberEvent::EVENT_POST_ACTIVATE_SUBSCRIBER);
         } else {
             $this->parent->postActivateSubscriber($subscriber);
@@ -114,9 +123,10 @@ abstract class AbstractStrategyType extends AbstractType implements StrategyType
 
     protected function trans($id, array $parameters = [], $domain = null, $locale = null)
     {
-        if ($this->translator !== null) {
+        if (null !== $this->translator) {
             return $this->translator->trans($id, $parameters, $domain, $locale);
         }
+
         return $this->parent->trans($id, $parameters, $domain, $locale);
     }
 }

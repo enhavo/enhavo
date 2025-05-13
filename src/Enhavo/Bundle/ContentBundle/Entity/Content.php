@@ -1,22 +1,25 @@
 <?php
-/**
- * Content.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 16/05/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ContentBundle\Entity;
 
 use Enhavo\Bundle\AppBundle\Model\Timestampable;
 use Enhavo\Bundle\AppBundle\Model\TimestampableTrait;
-use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
-use Enhavo\Bundle\RoutingBundle\Model\Routeable;
-use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
 use Enhavo\Bundle\ContentBundle\Content\PublishableTrait;
 use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\RoutingBundle\Model\Routeable;
+use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
+use Enhavo\Bundle\RoutingBundle\Model\Slugable;
 
 abstract class Content implements Publishable, Routeable, Slugable, SitemapInterface, Timestampable
 {
@@ -44,6 +47,7 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
     public function setTitle(?string $title)
     {
         $this->title = $title;
+
         return $this;
     }
 
@@ -151,7 +155,7 @@ abstract class Content implements Publishable, Routeable, Slugable, SitemapInter
 
     public function __toString()
     {
-        return (string)$this->getTitle();
+        return (string) $this->getTitle();
     }
 
     public function getCanonicalUrl(): ?string

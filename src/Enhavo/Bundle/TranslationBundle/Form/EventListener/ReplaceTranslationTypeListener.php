@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Form\EventListener;
 
@@ -17,7 +25,6 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
 
     /**
      * ResizeTranslationListener constructor.
-     * @param TranslationManager $translationManager
      */
     public function __construct(TranslationManager $translationManager)
     {
@@ -37,7 +44,7 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
         $data = $event->getData();
         $dataClass = $form->getConfig()->getDataClass();
 
-        if (is_array($data) || is_scalar($data) || ($data === null && $dataClass === null)) {
+        if (is_array($data) || is_scalar($data) || (null === $data && null === $dataClass)) {
             return;
         }
 
@@ -46,9 +53,9 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
         // To wait until the form create the data is too late,
         // we need the data already in the TranslationType children.
         $setData = false;
-        if ($data === null) {
+        if (null === $data) {
             $setData = true;
-            $data = new $dataClass;
+            $data = new $dataClass();
         }
 
         if (!$this->translationManager->isTranslatable($data)) {
@@ -62,7 +69,7 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
 
         foreach ($form->all() as $property => $child) {
             // prevent reapply
-            if (get_class($child->getConfig()->getType()->getInnerType()) === TranslationType::class) {
+            if (TranslationType::class === get_class($child->getConfig()->getType()->getInnerType())) {
                 continue;
             }
 
@@ -83,7 +90,7 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
             'form_options' => $options,
             'form_type' => get_class($child->getConfig()->getType()->getInnerType()),
             'label' => $options['label'],
-            'translation_domain' => $options['translation_domain']
+            'translation_domain' => $options['translation_domain'],
         ]);
     }
 }

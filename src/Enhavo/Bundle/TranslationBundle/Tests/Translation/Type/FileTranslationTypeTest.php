@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation\Type;
 
@@ -8,7 +16,6 @@ use Enhavo\Bundle\TranslationBundle\Translation\Type\FileTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translator\Media\FileTranslator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FileTranslationTypeTest extends TestCase
 {
@@ -16,6 +23,7 @@ class FileTranslationTypeTest extends TestCase
     {
         /** @var FileTranslator|MockObject $fileTranslator */
         $fileTranslator = $this->getMockBuilder(FileTranslator::class)->disableOriginalConstructor()->getMock();
+
         return $fileTranslator;
     }
 
@@ -32,7 +40,7 @@ class FileTranslationTypeTest extends TestCase
     public function testSetTranslation()
     {
         $fileTranslator = $this->createDependencies();
-        $fileTranslator->expects($this->once())->method('setTranslation')->willReturnCallback(function($data, $property, $locale, $value) {
+        $fileTranslator->expects($this->once())->method('setTranslation')->willReturnCallback(function ($data, $property, $locale, $value): void {
             $this->assertTrue(is_object($data));
             $this->assertEquals('name', $property);
             $this->assertEquals('en', $locale);
@@ -52,7 +60,6 @@ class FileTranslationTypeTest extends TestCase
         $type = $this->createInstance($fileTranslator);
         $this->assertEquals($file, $type->getTranslation([], new \stdClass(), 'file', 'de'));
     }
-
 
     public function testGetDefaultValue()
     {
@@ -99,5 +106,4 @@ class FileTranslationTypeTest extends TestCase
 
         $type->delete($data, 'field');
     }
-
 }

@@ -1,2 +1,2 @@
-{# Template for container block <?= $name ?> #}
+{# Template for container block <?php echo $name; ?> #}
 {{ dump(block) }}

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-15
- * Time: 06:56
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
@@ -26,14 +29,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class PolyCollectionType extends AbstractType
 {
     public function __construct(
-        private PrototypeManager $prototypeManager
-    )
-    {
+        private PrototypeManager $prototypeManager,
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($options['prototype']) {
@@ -60,9 +59,6 @@ class PolyCollectionType extends AbstractType
 
     /**
      * Builds prototypes for each of the form types used for the collection.
-     *
-     * @param FormBuilderInterface $builder
-     * @param array $options
      */
     private function buildPrototypes(FormBuilderInterface $builder, array $options)
     {
@@ -71,16 +67,13 @@ class PolyCollectionType extends AbstractType
                 $builder,
                 $options['prototype_storage'],
                 $type,
-                isset($options['entry_types_options'][$key]) ? $options['entry_types_options'][$key] : [],
+                $options['entry_types_options'][$key] ?? [],
                 ['key' => $key],
-                isset($options['entry_types_prototype_data'][$key]) ? $options['entry_types_prototype_data'][$key] : null
+                $options['entry_types_prototype_data'][$key] ?? null
             );
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['allow_add'] = $options['allow_add'];
@@ -89,7 +82,7 @@ class PolyCollectionType extends AbstractType
         $view->vars['entry_labels'] = $this->buildEntryLabels($options);
         $view->vars['draggable_group'] = $options['draggable_group'];
         $view->vars['draggable_handle'] = $options['draggable_handle'];
-        $view->vars['uuid_check'] = !!$options['uuid_property'];
+        $view->vars['uuid_check'] = (bool) $options['uuid_property'];
 
         $view->vars['poly_collection_config'] = [
             'entryKeys' => $this->buildEntryKeys($options),
@@ -108,9 +101,10 @@ class PolyCollectionType extends AbstractType
             $keys[] = $prototype->getParameters()['key'];
         }
 
-        if ($options['entry_type_filter'] !== null) {
+        if (null !== $options['entry_type_filter']) {
             return call_user_func($options['entry_type_filter'], $keys, $this);
         }
+
         return $keys;
     }
 
@@ -120,32 +114,23 @@ class PolyCollectionType extends AbstractType
         foreach ($options['entry_types_options'] as $key => $entryTypeOption) {
             $choices[] = [
                 'key' => $key,
-                'label' => $entryTypeOption['label']
+                'label' => $entryTypeOption['label'],
             ];
         }
+
         return $choices;
     }
 
-
-    /**
-     * {@inheritdoc}
-     */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $this->prototypeManager->buildView($view, $form, $options);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'enhavo_poly_collection';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -169,9 +154,9 @@ class PolyCollectionType extends AbstractType
             'draggable_handle' => '[data-draggable-handle]',
         ]);
 
-        $resolver->setRequired(array(
+        $resolver->setRequired([
             'entry_types',
-        ));
+        ]);
 
         $resolver->setAllowedTypes('entry_types', 'array');
 

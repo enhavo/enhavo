@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 13.01.18
- * Time: 16:04
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Media;
@@ -13,22 +16,22 @@ use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 class ImageCropperManager
 {
     public function __construct(
-        private readonly array $formats
-    )
-    {
+        private readonly array $formats,
+    ) {
     }
 
-    public function getFormatRatio(string|FormatInterface $format): float|null
+    public function getFormatRatio(string|FormatInterface $format): ?float
     {
         if ($format instanceof FormatInterface) {
             $name = $format->getName();
         } else {
             $name = $format;
         }
+
         return $this->findFormatRatio($name);
     }
 
-    private function findFormatRatio(string $formatName): float|null
+    private function findFormatRatio(string $formatName): ?float
     {
         $width = null;
         $height = null;
@@ -54,9 +57,10 @@ class ImageCropperManager
             }
         }
 
-        if ($width !== null && $height !== null) {
+        if (null !== $width && null !== $height) {
             return $width / $height;
         }
+
         return null;
     }
 }

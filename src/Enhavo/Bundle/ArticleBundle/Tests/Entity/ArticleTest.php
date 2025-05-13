@@ -1,15 +1,16 @@
 <?php
 
-/**
- * ArticleTest.php
+/*
+ * This file is part of the enhavo package.
  *
- * @since 15/05/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ArticleBundle\Entity;
 
-use Enhavo\Bundle\ArticleBundle\Entity\Article;
 use PHPUnit\Framework\TestCase;
 
 class ArticleTest extends TestCase

@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Strategy;
 
@@ -37,6 +45,7 @@ class StrategyNotifyTypeTest extends TestCase
     {
         $strategy = new Strategy($type, $parents, $options);
         $type->setParent($parents[0]);
+
         return $strategy;
     }
 
@@ -48,7 +57,7 @@ class StrategyNotifyTypeTest extends TestCase
             $this->assertEquals('enhavo', $senderName);
             $this->assertMatchesRegularExpression('/(admin|to)@enhavo.com/', $to);
 
-            if ($to === 'admin@enhavo.com') {
+            if ('admin@enhavo.com' === $to) {
                 $this->assertEquals('subscriber.mail.admin.subject.trans', $subject);
                 $this->assertEquals('__ATPL__', $template);
             } else {
@@ -63,14 +72,14 @@ class StrategyNotifyTypeTest extends TestCase
         $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event, $key) {
             $this->assertInstanceOf(SubscriberEvent::class, $event);
             $this->assertInstanceOf(SubscriberInterface::class, $event->getSubscriber());
+
             return $event;
         });
 
         /** @var SubscriberInterface|MockObject $subscriber */
         $subscriber = $this->getMockBuilder(SubscriberInterface::class)->getMock();
         $subscriber->method('getEmail')->willReturn('to@enhavo.com');
-        $subscriber->method('setCreatedAt')->willReturnCallback(function (\DateTime $date) {
-
+        $subscriber->method('setCreatedAt')->willReturnCallback(function (\DateTime $date): void {
         });
 
         $strategyType = new NotifyStrategyType($dependencies->newsletterManager);
@@ -82,7 +91,6 @@ class StrategyNotifyTypeTest extends TestCase
             'from' => 'from@enhavo.com',
             'sender_name' => 'enhavo',
             'admin_email' => 'admin@enhavo.com',
-
         ]);
         $strategy->setStorage($dependencies->storage);
         $this->assertEquals('subscriber.form.message.notify', $strategy->addSubscriber($subscriber));
@@ -114,7 +122,6 @@ class StrategyNotifyTypeTest extends TestCase
             'admin_subject' => '__SUBJECT__',
             'translation_domain' => '',
             'check_exists' => false,
-
         ]);
         $strategy->setStorage($dependencies->storage);
         $this->assertEquals(false, $strategy->exists($subscriber));

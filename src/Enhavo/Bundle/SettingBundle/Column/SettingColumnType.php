@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jungch
- * Date: 05/09/16
- * Time: 12:41
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SettingBundle\Column;
@@ -18,9 +21,8 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 class SettingColumnType extends AbstractColumnType
 {
     public function __construct(
-        private readonly SettingManager $settingManager
-    )
-    {
+        private readonly SettingManager $settingManager,
+    ) {
     }
 
     public function createResourceViewData(array $options, object $resource, Data $data): void
@@ -37,7 +39,7 @@ class SettingColumnType extends AbstractColumnType
         $resolver->setDefaults([
             'component' => 'column-text',
             'property' => 'value',
-            'model' => 'TextColumn'
+            'model' => 'TextColumn',
         ]);
         $resolver->setRequired(['property']);
     }

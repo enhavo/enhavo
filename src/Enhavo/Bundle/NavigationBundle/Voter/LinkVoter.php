@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 19.07.18
- * Time: 18:05
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Voter;
@@ -25,12 +28,13 @@ class LinkVoter implements VoterInterface
     public function vote(NodeInterface $node)
     {
         $subject = $node->getSubject();
-        if($subject instanceof Link) {
+        if ($subject instanceof Link) {
             $link = $subject->getLink();
-            if($this->match($link)) {
+            if ($this->match($link)) {
                 return VoterInterface::VOTE_IN;
             }
         }
+
         return VoterInterface::VOTE_ABSTAIN;
     }
 
@@ -41,11 +45,11 @@ class LinkVoter implements VoterInterface
 
         $linkInfo = parse_url($url);
 
-        if(isset($linkInfo['host']) && ($linkInfo['host'] != $request->getHost())) {
+        if (isset($linkInfo['host']) && ($linkInfo['host'] != $request->getHost())) {
             return false;
         }
 
-        if(isset($linkInfo['path']) && ($linkInfo['path'] == $requestInfo['path'])) {
+        if (isset($linkInfo['path']) && ($linkInfo['path'] == $requestInfo['path'])) {
             return true;
         }
 

@@ -1,21 +1,23 @@
 <?php
-/**
- * Routing.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 16/05/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\Model;
 
-
 interface Routing
 {
-    const STRATEGY_ROUTE = 'route';
+    public const STRATEGY_ROUTE = 'route';
 
-    const STRATEGY_SLUG = 'slug';
+    public const STRATEGY_SLUG = 'slug';
 
-    const STRATEGY_SLUG_ID = 'slug_id';
+    public const STRATEGY_SLUG_ID = 'slug_id';
 
-    const STRATEGY_ID = 'id';
+    public const STRATEGY_ID = 'id';
 }

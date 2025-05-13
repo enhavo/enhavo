@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Maker;
 
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
@@ -49,7 +58,6 @@ class MakeMenu extends AbstractMaker
 
     public function configureDependencies(DependencyBuilder $dependencies)
     {
-
     }
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
@@ -58,7 +66,7 @@ class MakeMenu extends AbstractMaker
         $name = $input->getArgument('name');
         $namespace = sprintf('%s\\Menu', $this->util->getBundleNamespace($bundleName));
         $className = sprintf('%sMenuType', $name);
-        $class = sprintf("%s\\%s", $namespace, $className);
+        $class = sprintf('%s\\%s', $namespace, $className);
 
         $generator->generateClass(
             $class,
@@ -66,7 +74,7 @@ class MakeMenu extends AbstractMaker
             [
                 'namespace' => $namespace,
                 'class_name' => $className,
-                'name' => $this->nameTransformer->snakeCase($name)
+                'name' => $this->nameTransformer->snakeCase($name),
             ]
         );
         $generator->writeChanges();

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Filter;
 
 use Enhavo\Component\Type\FactoryInterface;
@@ -10,8 +19,7 @@ class FilterManager
     public function __construct(
         private readonly AuthorizationCheckerInterface $checker,
         private readonly FactoryInterface $factory,
-    )
-    {
+    ) {
     }
 
     public function getFilters(array $configuration): array
@@ -25,7 +33,7 @@ class FilterManager
                 continue;
             }
 
-            if ($filter->getPermission() !== null && !$this->checker->isGranted($filter->getPermission())) {
+            if (null !== $filter->getPermission() && !$this->checker->isGranted($filter->getPermission())) {
                 continue;
             }
 

@@ -1,21 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-09-06
- * Time: 12:58
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Model;
 
 interface CommentInterface
 {
-    const STATE_PENDING = 'pending';
-    const STATE_PUBLISH = 'publish';
-    const STATE_DENY = 'deny';
+    public const STATE_PENDING = 'pending';
+    public const STATE_PUBLISH = 'publish';
+    public const STATE_DENY = 'deny';
 
     /**
-     * @param ThreadInterface $thread
      * @return self
      */
     public function setThread(?ThreadInterface $thread);
@@ -25,33 +27,15 @@ interface CommentInterface
      */
     public function getThread(): ?ThreadInterface;
 
-    /**
-     * @return self
-     */
     public function publish(): self;
 
-    /**
-     * @return self
-     */
     public function deny(): self;
 
-    /**
-     * @return CommentSubjectInterface
-     */
     public function getSubject(): CommentSubjectInterface;
 
-    /**
-     * @return bool
-     */
     public function isStateChanged(): bool;
 
-    /**
-     * @return string
-     */
     public function getState(): string;
 
-    /**
-     * @param string $state
-     */
     public function setState(string $state): void;
 }

@@ -1,18 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 29.08.18
- * Time: 18:49
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Engine\Filter;
 
-
 class BetweenQuery implements QueryInterface
 {
-    const OPERATOR_THAN = '<>';
-    const OPERATOR_EQUAL_THAN = '=';
+    public const OPERATOR_THAN = '<>';
+    public const OPERATOR_EQUAL_THAN = '=';
 
     /**
      * @var string
@@ -24,21 +26,15 @@ class BetweenQuery implements QueryInterface
      */
     private $operatorTo;
 
-    /**
-     * @var mixed
-     */
     private $from;
 
-    /**
-     * @var mixed
-     */
     private $to;
 
     /**
      * BetweenQuery constructor.
      *
-     * @param null $from
-     * @param null $to
+     * @param null   $from
+     * @param null   $to
      * @param string $operatorFrom
      * @param string $operatorTo
      */
@@ -50,16 +46,12 @@ class BetweenQuery implements QueryInterface
         $this->operatorTo = $operatorTo;
     }
 
-    /**
-     * @return mixed
-     */
     public function getFrom()
     {
         return $this->from;
     }
 
     /**
-     * @param mixed $from
      * @param string $operatorFrom
      */
     public function setFrom($from, $operatorFrom = self::OPERATOR_EQUAL_THAN)
@@ -68,16 +60,12 @@ class BetweenQuery implements QueryInterface
         $this->from = $from;
     }
 
-    /**
-     * @return mixed
-     */
     public function getTo()
     {
         return $this->to;
     }
 
     /**
-     * @param mixed $to
      * @param string $operatorTo
      */
     public function setTo($to, $operatorTo = self::OPERATOR_EQUAL_THAN)

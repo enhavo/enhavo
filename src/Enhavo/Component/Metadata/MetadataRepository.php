@@ -1,9 +1,12 @@
 <?php
-/**
- * MetadataCollector.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 10/05/18
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Metadata;
@@ -19,8 +22,7 @@ class MetadataRepository
         private readonly MetadataFactory $factory,
         private readonly bool $includeExtend = true,
         private readonly bool $onlyExists = true,
-    )
-    {
+    ) {
     }
 
     public function getAllMetadata(): array
@@ -29,6 +31,7 @@ class MetadataRepository
         foreach ($classes as $class) {
             $this->getMetadata($class);
         }
+
         return $this->metadata;
     }
 
@@ -51,7 +54,7 @@ class MetadataRepository
             foreach ($parents as $parent) {
                 $loaded[] = $this->factory->loadMetadata($parent, $metadata);
             }
-        } elseif ($metadata === null) {
+        } elseif (null === $metadata) {
             return null;
         }
 
@@ -62,6 +65,7 @@ class MetadataRepository
         }
 
         $this->metadata[$className] = $metadata;
+
         return $metadata;
     }
 
@@ -72,7 +76,7 @@ class MetadataRepository
         }
 
         $parentClass = get_parent_class($className);
-        if ($parentClass !== false) {
+        if (false !== $parentClass) {
             $parents[] = $parentClass;
             $this->getParents($parentClass, $parents);
         }
@@ -81,14 +85,15 @@ class MetadataRepository
     public function hasMetadata($class): bool
     {
         $metadata = $this->getMetadata($class);
-        return $metadata !== null;
+
+        return null !== $metadata;
     }
 
     private function getClassName($class): false|string
     {
         if (is_string($class)) {
             $className = $class;
-        } else if (is_object($class)) {
+        } elseif (is_object($class)) {
             if ($class instanceof Proxy) {
                 $className = get_parent_class($class);
             } else {

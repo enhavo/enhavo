@@ -1,12 +1,21 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SettingBundle\Setting;
 
 use Enhavo\Component\Type\AbstractType;
 
 /**
  * Class AbstractSettingType
- * @package Enhavo\Bundle\SettingBundle\Setting
+ *
  * @property SettingTypeInterface $parent
  */
 abstract class AbstractSettingType extends AbstractType implements SettingTypeInterface
@@ -16,6 +25,7 @@ abstract class AbstractSettingType extends AbstractType implements SettingTypeIn
         if ($this->parent) {
             return $this->parent->init($options, $key);
         }
+
         return null;
     }
 
@@ -24,6 +34,7 @@ abstract class AbstractSettingType extends AbstractType implements SettingTypeIn
         if ($this->parent) {
             return $this->parent->getValue($options, $key);
         }
+
         return null;
     }
 
@@ -32,6 +43,7 @@ abstract class AbstractSettingType extends AbstractType implements SettingTypeIn
         if ($this->parent) {
             return $this->parent->getFormType($options, $key);
         }
+
         return null;
     }
 
@@ -40,6 +52,7 @@ abstract class AbstractSettingType extends AbstractType implements SettingTypeIn
         if ($this->parent) {
             return $this->parent->getFormTypeOptions($options, $key);
         }
+
         return [];
     }
 
@@ -48,6 +61,7 @@ abstract class AbstractSettingType extends AbstractType implements SettingTypeIn
         if ($this->parent) {
             return $this->parent->getViewValue($options, $value, $key);
         }
+
         return (string) $value->getValue();
     }
 
@@ -56,6 +70,7 @@ abstract class AbstractSettingType extends AbstractType implements SettingTypeIn
         if ($this->parent) {
             return $this->parent->getGroup($options, $key);
         }
+
         return null;
     }
 

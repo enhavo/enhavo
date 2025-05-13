@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-09-06
- * Time: 12:58
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Model;
@@ -12,25 +15,12 @@ use Doctrine\Common\Collections\Collection;
 
 interface ThreadInterface
 {
-    /**
-     * @param CommentSubjectInterface|null $subject
-     * @return mixed
-     */
     public function setSubject(?CommentSubjectInterface $subject);
 
-    /**
-     * @return CommentSubjectInterface|null
-     */
     public function getSubject(): ?CommentSubjectInterface;
 
-    /**
-     * @param CommentInterface $comment
-     */
     public function addComment(CommentInterface $comment);
 
-    /**
-     * @param CommentInterface $comment
-     */
     public function removeComment(CommentInterface $comment);
 
     /**
@@ -38,13 +28,7 @@ interface ThreadInterface
      */
     public function getComments(): Collection;
 
-    /**
-     * @return bool
-     */
     public function isEnable(): bool;
 
-    /**
-     * @param bool $enable
-     */
     public function setEnable(bool $enable): void;
 }

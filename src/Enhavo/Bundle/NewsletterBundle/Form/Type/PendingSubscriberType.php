@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
@@ -18,22 +27,21 @@ class PendingSubscriberType extends AbstractType
 {
     public function __construct(
         private readonly SubscriptionManager $subscriptionManager,
-        private readonly EntityRepository $groupRepository
-    )
-    {
+        private readonly EntityRepository $groupRepository,
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', TextType::class, array(
+        $builder->add('email', TextType::class, [
             'label' => 'subscriber.form.label.email',
-            'translation_domain' => 'EnhavoNewsletterBundle'
-        ));
+            'translation_domain' => 'EnhavoNewsletterBundle',
+        ]);
 
         $builder->add('subscription', SubscriptionType::class, [
         ]);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             $form = $event->getForm();
             /** @var PendingSubscriber $pendingSubscriber */
             $pendingSubscriber = $event->getData();
@@ -56,16 +64,15 @@ class PendingSubscriberType extends AbstractType
                 'data_class' => $subscription->getModel(),
                 'label' => 'subscriber.form.label.data',
                 'translation_domain' => 'EnhavoNewsletterBundle',
-                'constraints' => []
+                'constraints' => [],
             ]);
         });
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => PendingSubscriber::class,
-        ));
+        ]);
     }
 }

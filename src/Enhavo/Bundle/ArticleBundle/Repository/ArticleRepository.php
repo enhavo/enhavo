@@ -1,9 +1,12 @@
 <?php
-/**
- * ArticleRepository.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 27/09/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ArticleBundle\Repository;
@@ -28,16 +31,15 @@ class ArticleRepository extends ContentRepository
         $pagination = true,
         $limit = 10,
         $includeCategoryDescendants = false,
-    )
-    {
+    ) {
         $query = $this->createQueryBuilder('a');
         $query->distinct(true);
 
         $this->addDefaultConditions($query);
 
         if ($includeCategoryDescendants) {
-            foreach($categories as $category) {
-                foreach($category->getDescendants() as $descendant) {
+            foreach ($categories as $category) {
+                foreach ($category->getDescendants() as $descendant) {
                     if (in_array($descendant, $categories)) {
                         $categories[] = $descendant;
                     }
@@ -60,12 +62,12 @@ class ArticleRepository extends ContentRepository
         if ($pagination) {
             $paginator = $this->getPaginator($query);
             $paginator->setMaxPerPage($limit);
-            return $paginator;
 
-        } else {
-            $query->setMaxResults($limit);
-            return $query->getQuery()->getResult();
+            return $paginator;
         }
+        $query->setMaxResults($limit);
+
+        return $query->getQuery()->getResult();
     }
 
     public function findByTerm($term, $limit)
@@ -77,6 +79,7 @@ class ArticleRepository extends ContentRepository
 
         $paginator = $this->getPaginator($query);
         $paginator->setMaxPerPage($limit);
+
         return $paginator;
     }
 }

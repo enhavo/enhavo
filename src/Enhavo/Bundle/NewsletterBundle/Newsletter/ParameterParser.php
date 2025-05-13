@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-12-15
- * Time: 22:29
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
-
 
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 
@@ -30,6 +32,7 @@ class ParameterParser implements ParameterParserInterface
             if (array_key_exists($matches[1], $values)) {
                 return $values[$matches[1]];
             }
+
             return '';
         }, $content);
 

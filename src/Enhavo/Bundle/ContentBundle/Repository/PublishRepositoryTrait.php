@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 10.11.16
- * Time: 14:37
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ContentBundle\Repository;
@@ -21,13 +24,13 @@ trait PublishRepositoryTrait
         $query = $this->createQueryBuilder('n');
         $query->andWhere('n.public = true');
 
-        if($year >= 1970 && $month > 0 && $month < 13) {
+        if ($year >= 1970 && $month > 0 && $month < 13) {
             $monthEnd = new \DateTime(sprintf('%s-%s-01 23:59:59', $year, $month));
             $query->where('n.publicationDate >= :monthStart');
             $query->andWhere('n.publicationDate <= :monthEnd');
             $query->setParameter('monthStart', new \DateTime(sprintf('%s-%s-01 00:00:00', $year, $month)));
             $query->setParameter('monthEnd', $monthEnd->modify('last day of this month'));
-        } elseif($year >= 1970) {
+        } elseif ($year >= 1970) {
             $query->where('n.publicationDate >= :yearStart');
             $query->andWhere('n.publicationDate <= :yearEnd');
             $query->andWhere('n.publicationDate <= :yearEnd');
@@ -37,11 +40,12 @@ trait PublishRepositoryTrait
 
         $query->andWhere('n.publicationDate <= :currentDate');
         $query->setParameter('currentDate', new \DateTime());
-        if($limit > 0) {
+        if ($limit > 0) {
             $query->setMaxResults($limit);
         }
 
-        $query->orderBy('n.publicationDate','desc');
+        $query->orderBy('n.publicationDate', 'desc');
+
         return $this->getPaginator($query);
     }
 
@@ -52,20 +56,20 @@ trait PublishRepositoryTrait
         $query->andWhere('n.publicationDate <= :currentDate');
         $query->andWhere('n.publishedUntil >= :currentDate OR n.publishedUntil IS NULL');
         $query->setParameter('currentDate', new \DateTime());
-        $query->orderBy('n.publicationDate','desc');
+        $query->orderBy('n.publicationDate', 'desc');
         $content = $query->getQuery()->getResult();
 
-        $tmpDates = array();
+        $tmpDates = [];
 
         /** @var $item Content */
-        foreach($content as $item) {
-            if($item->getPublicationDate()) {
+        foreach ($content as $item) {
+            if ($item->getPublicationDate()) {
                 $tmpDates[] = $item->getPublicationDate()->format('Y-m');
             }
         }
         $tmpDates = array_unique($tmpDates);
-        $dates = array();
-        foreach($tmpDates as $date) {
+        $dates = [];
+        foreach ($tmpDates as $date) {
             $dates[] = new \DateTime(sprintf('%s-01', $date));
         }
 
@@ -80,10 +84,10 @@ trait PublishRepositoryTrait
         $query->andWhere('n.publishedUntil >= :currentDate OR n.publishedUntil IS NULL');
         $query->setParameter('currentDate', new \DateTime());
 
-        if($orderBy === null) {
-            $query->orderBy('n.publicationDate','desc');
-        } elseif(is_array($orderBy)) {
-            foreach($orderBy as $field => $direction) {
+        if (null === $orderBy) {
+            $query->orderBy('n.publicationDate', 'desc');
+        } elseif (is_array($orderBy)) {
+            foreach ($orderBy as $field => $direction) {
                 $query->addOrderBy(sprintf('n.%s', $field), $direction);
             }
         }
@@ -96,11 +100,12 @@ trait PublishRepositoryTrait
      * Only returns contents that are published and whose publication date does not lie in the future.
      * The order used is the same as in findPublished().
      *
-     * @param Content $currentContent The current content
-     * @param \DateTime $currentDate The date used to determine if a publication date lies in the future. If null or omitted, today is used.
-     * @return null|Content The next content after $currentContent, or null if $currentContent is the last one.
+     * @param Content   $currentContent The current content
+     * @param \DateTime $currentDate    The date used to determine if a publication date lies in the future. If null or omitted, today is used.
+     *
+     * @return Content|null the next content after $currentContent, or null if $currentContent is the last one
      */
-    public function findNextInDateOrder(Content $currentContent, \DateTime $currentDate = null)
+    public function findNextInDateOrder(Content $currentContent, ?\DateTime $currentDate = null)
     {
         if (null === $currentDate) {
             $currentDate = new \DateTime();
@@ -117,7 +122,7 @@ trait PublishRepositoryTrait
         $contentsSameDate = $query->getQuery()->getResult();
         if (!empty($contentsSameDate) && !($contentsSameDate[0]->getId() == $currentContent->getId())) {
             // Return previous in list
-            for($i = 0; $i < count($contentsSameDate); $i++) {
+            for ($i = 0; $i < count($contentsSameDate); ++$i) {
                 if ($contentsSameDate[$i]->getId() == $currentContent->getId()) {
                     return $contentsSameDate[$i - 1];
                 }
@@ -132,16 +137,16 @@ trait PublishRepositoryTrait
         $query->andWhere('n.publishedUntil >= :currentDate OR n.publishedUntil IS NULL');
         $query->setParameter('currentDate', $currentDate);
         $query->setParameter('contentDate', $currentContent->getPublicationDate());
-        $query->addOrderBy('n.publicationDate','asc');
-        $query->addOrderBy('n.id','desc');
+        $query->addOrderBy('n.publicationDate', 'asc');
+        $query->addOrderBy('n.id', 'desc');
         $query->setMaxResults(1);
         $nextContent = $query->getQuery()->getResult();
         if (empty($nextContent)) {
             // No newer contents
             return null;
-        } else {
-            return $nextContent[0];
         }
+
+        return $nextContent[0];
     }
 
     /**
@@ -149,11 +154,12 @@ trait PublishRepositoryTrait
      * Only returns contents that are published and whose publication date does not lie in the future.
      * The order used is the same as in findPublished().
      *
-     * @param Content $currentContent The current content
-     * @param \DateTime $currentDate The date used to determine if a publication date lies in the future. If null or omitted, today is used.
-     * @return null|Content The previous content before $currentContent, or null if $currentContent is the first one.
+     * @param Content   $currentContent The current content
+     * @param \DateTime $currentDate    The date used to determine if a publication date lies in the future. If null or omitted, today is used.
+     *
+     * @return Content|null the previous content before $currentContent, or null if $currentContent is the first one
      */
-    public function findPreviousInDateOrder(Content $currentContent, \DateTime $currentDate = null)
+    public function findPreviousInDateOrder(Content $currentContent, ?\DateTime $currentDate = null)
     {
         if (null === $currentDate) {
             $currentDate = new \DateTime();
@@ -170,7 +176,7 @@ trait PublishRepositoryTrait
         $contentsSameDate = $query->getQuery()->getResult();
         if (!empty($contentsSameDate) && !($contentsSameDate[count($contentsSameDate) - 1]->getId() == $currentContent->getId())) {
             // Return next in list
-            for($i = 0; $i < count($contentsSameDate); $i++) {
+            for ($i = 0; $i < count($contentsSameDate); ++$i) {
                 if ($contentsSameDate[$i]->getId() == $currentContent->getId()) {
                     return $contentsSameDate[$i + 1];
                 }
@@ -185,15 +191,15 @@ trait PublishRepositoryTrait
         $query->andWhere('n.publishedUntil >= :currentDate OR n.publishedUntil IS NULL');
         $query->setParameter('currentDate', $currentDate);
         $query->setParameter('contentDate', $currentContent->getPublicationDate());
-        $query->addOrderBy('n.publicationDate','desc');
-        $query->addOrderBy('n.id','asc');
+        $query->addOrderBy('n.publicationDate', 'desc');
+        $query->addOrderBy('n.id', 'asc');
         $query->setMaxResults(1);
         $nextContent = $query->getQuery()->getResult();
         if (empty($nextContent)) {
             // No older contents
             return null;
-        } else {
-            return $nextContent[0];
         }
+
+        return $nextContent[0];
     }
 }

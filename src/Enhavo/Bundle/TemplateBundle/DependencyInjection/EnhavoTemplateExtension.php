@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: philippsester
- * Date: 27.05.19
- * Time: 11:07
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TemplateBundle\DependencyInjection;
@@ -22,13 +25,13 @@ class EnhavoTemplateExtension extends Extension implements PrependExtensionInter
     public function load(array $configs, ContainerBuilder $container)
     {
         $config = $this->processConfiguration(new Configuration(), $configs);
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $container->setParameter('enhavo_template.template', $config['template']);
 
-        $configFiles = array(
+        $configFiles = [
             'services.yaml',
-        );
+        ];
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
         }

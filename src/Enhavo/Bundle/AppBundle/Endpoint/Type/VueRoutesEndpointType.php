@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -13,8 +22,7 @@ class VueRoutesEndpointType extends AbstractEndpointType
 {
     public function __construct(
         private readonly VueRouteProviderInterface $provider,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -22,7 +30,7 @@ class VueRoutesEndpointType extends AbstractEndpointType
         if ($request->query->has('path')) {
             $path = $request->get('path');
             $route = $this->provider->getRoute($path, $options['groups']);
-            if ($route === null) {
+            if (null === $route) {
                 $data->set('vue_routes', []);
             } else {
                 $data->set('vue_routes', $this->normalize([$route]));

@@ -1,18 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 15.08.18
- * Time: 18:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Engine\ElasticSearch;
 
+use Elastica\Search;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Result\EntitySubjectLoader;
 use Enhavo\Bundle\SearchBundle\Engine\Result\ResultEntry;
 use Pagerfanta\Adapter\AdapterInterface;
-use Elastica\Search;
 
 class ElasticaORMAdapter implements AdapterInterface
 {
@@ -23,27 +26,22 @@ class ElasticaORMAdapter implements AdapterInterface
 
     public function __construct(
         private readonly Search $search,
-        private readonly EntityResolverInterface $entityResolver
-    ) {}
+        private readonly EntityResolverInterface $entityResolver,
+    ) {
+    }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNbResults(): int
     {
-        if ($this->countCache === null) {
+        if (null === $this->countCache) {
             $this->countCache = $this->search->count();
         }
+
         return $this->countCache;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSlice(int $offset, int $length): iterable
     {
-        if (!
-        (
+        if (!(
             $this->resultCache
             && $this->resultCacheOffset === $offset
             && $this->resultCacheLength === $length
@@ -61,7 +59,7 @@ class ElasticaORMAdapter implements AdapterInterface
                 $id = $data['id'];
                 $className = $data['className'];
                 $score = $document->getScore();
-                $entries[] = new ResultEntry(new EntitySubjectLoader($this->entityResolver, $className, $id), $data['filterData'], $score === [] ? null : $score);
+                $entries[] = new ResultEntry(new EntitySubjectLoader($this->entityResolver, $className, $id), $data['filterData'], [] === $score ? null : $score);
             }
 
             $this->resultCache = $entries;

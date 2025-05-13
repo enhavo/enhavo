@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -23,52 +32,40 @@ class RegistrationType extends AbstractType
         $this->class = $class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class, array('label' => 'registration.form.email', 'translation_domain' => 'EnhavoUserBundle'))
-            ->add('username', TextType::class, array('label' => 'registration.form.username', 'translation_domain' => 'EnhavoUserBundle'))
-            ->add('plainPassword', RepeatedType::class, array(
+            ->add('email', EmailType::class, ['label' => 'registration.form.email', 'translation_domain' => 'EnhavoUserBundle'])
+            ->add('username', TextType::class, ['label' => 'registration.form.username', 'translation_domain' => 'EnhavoUserBundle'])
+            ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'options' => array(
+                'options' => [
                     'translation_domain' => 'EnhavoUserBundle',
-                    'attr' => array(
+                    'attr' => [
                         'autocomplete' => 'new-password',
-                    ),
-                ),
-                'first_options' => array('label' => 'registration.form.password'),
-                'second_options' => array('label' => 'registration.form.password_confirmation'),
+                    ],
+                ],
+                'first_options' => ['label' => 'registration.form.password'],
+                'second_options' => ['label' => 'registration.form.password_confirmation'],
                 'invalid_message' => 'enhavo_user.password.mismatch',
-            ));
+            ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => $this->class,
             'csrf_token_id' => 'registration',
-        ));
+        ]);
     }
 
     // BC for SF < 3.0
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return $this->getBlockPrefix();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'enhavo_user_registration';

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\Tests\Documentation;
 
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Documentation;
@@ -54,17 +63,17 @@ class DocumentationTest extends TestCase
                 'type' => 'object',
                 'properties' => [
                     'test' => [
-                        'type' => 'string'
+                        'type' => 'string',
                     ],
                     'children' => [
                         'type' => 'object',
                         'properties' => [
                             'size' => [
-                                'type' => 'integer'
-                            ]
-                        ]
-                    ]
-                ]
+                                'type' => 'integer',
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ], $output['paths']['/test/url']['post']['responses'][200]['content']['application/json']);
     }

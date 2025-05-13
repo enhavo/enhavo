@@ -1,20 +1,18 @@
 <?php
 
-/**
- * PreviewButton.php
+/*
+ * This file is part of the enhavo package.
  *
- * @since 29/05/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
-use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
-use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
-use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\RouterInterface;
 
 class PreviewDropdownActionType extends AbstractActionType
 {
@@ -31,7 +29,7 @@ class PreviewDropdownActionType extends AbstractActionType
                 'preview_window' => [
                     'type' => 'preview_window',
                 ],
-            ]
+            ],
         ]);
     }
 

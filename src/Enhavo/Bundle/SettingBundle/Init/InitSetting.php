@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-07-11
- * Time: 11:50
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SettingBundle\Init;
@@ -24,8 +27,6 @@ class InitSetting implements InitInterface
 
     /**
      * InitSetting constructor.
-     * @param EntityManagerInterface $em
-     * @param SettingManager $manager
      */
     public function __construct(EntityManagerInterface $em, SettingManager $manager)
     {
@@ -35,7 +36,7 @@ class InitSetting implements InitInterface
 
     public function init(Output $io)
     {
-        foreach($this->manager->getKeys() as $key) {
+        foreach ($this->manager->getKeys() as $key) {
             /** @var Setting $setting */
             $change = $this->manager->getSetting($key)->init();
             if ($change) {

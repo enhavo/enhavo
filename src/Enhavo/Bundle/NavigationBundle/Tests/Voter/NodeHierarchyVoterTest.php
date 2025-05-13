@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-07-02
- * Time: 19:15
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Tests\Voter;
@@ -20,6 +23,7 @@ class NodeHierarchyVoterTest extends TestCase
     {
         $dependencies = new NodeHierarchyVoterDependencies();
         $dependencies->navigationManager = $this->getMockBuilder(NavigationManager::class)->disableOriginalConstructor()->getMock();
+
         return $dependencies;
     }
 

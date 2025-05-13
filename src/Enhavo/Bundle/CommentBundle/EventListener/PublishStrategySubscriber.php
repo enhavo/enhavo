@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-10-25
- * Time: 18:41
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\EventListener;
@@ -18,8 +21,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
-class PublishStrategySubscriber  implements EventSubscriberInterface
+class PublishStrategySubscriber implements EventSubscriberInterface
 {
     /**
      * @var PublishStrategyInterface
@@ -38,7 +40,6 @@ class PublishStrategySubscriber  implements EventSubscriberInterface
 
     /**
      * PublishStrategySubscriber constructor.
-     * @param PublishStrategyInterface $publishStrategy
      */
     public function __construct(PublishStrategyInterface $publishStrategy, array $options, EventDispatcherInterface $eventDispatcher)
     {
@@ -92,7 +93,7 @@ class PublishStrategySubscriber  implements EventSubscriberInterface
     public function onPreSave(ResourceEvent $event)
     {
         $comment = $event->getSubject();
-        if($comment instanceof CommentInterface && $comment->isStateChanged() && $comment->getState() == CommentInterface::STATE_PUBLISH) {
+        if ($comment instanceof CommentInterface && $comment->isStateChanged() && CommentInterface::STATE_PUBLISH == $comment->getState()) {
             $this->eventDispatcher->dispatch(new PrePublishCommentEvent($comment));
         }
     }
@@ -100,7 +101,7 @@ class PublishStrategySubscriber  implements EventSubscriberInterface
     public function onPostSave(ResourceEvent $event)
     {
         $comment = $event->getSubject();
-        if($comment instanceof CommentInterface && $comment->isStateChanged() && $comment->getState() == CommentInterface::STATE_PUBLISH) {
+        if ($comment instanceof CommentInterface && $comment->isStateChanged() && CommentInterface::STATE_PUBLISH == $comment->getState()) {
             $this->eventDispatcher->dispatch(new PostPublishCommentEvent($comment));
         }
     }

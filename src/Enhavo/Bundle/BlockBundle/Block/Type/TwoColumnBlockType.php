@@ -1,17 +1,20 @@
 <?php
-/**
- * TwoColumnConfiguration.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 08/08/18
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
-use Enhavo\Bundle\BlockBundle\Model\Column\TwoColumnBlock;
+use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Enhavo\Bundle\BlockBundle\Factory\TwoColumnBlockFactory;
 use Enhavo\Bundle\BlockBundle\Form\Type\TwoColumnBlockType as TwoColumnBlockFormType;
-use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
+use Enhavo\Bundle\BlockBundle\Model\Column\TwoColumnBlock;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TwoColumnBlockType extends AbstractBlockType
@@ -26,7 +29,7 @@ class TwoColumnBlockType extends AbstractBlockType
             'form_template' => '@EnhavoBlock/admin/form/block/block_fields.html.twig',
             'label' => 'two_column.label.two_column',
             'translation_domain' => 'EnhavoBlockBundle',
-            'groups' => ['default', 'layout']
+            'groups' => ['default', 'layout'],
         ]);
     }
 

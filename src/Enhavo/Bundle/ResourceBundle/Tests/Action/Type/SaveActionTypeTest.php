@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-04
- * Time: 10:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Action\Type;
@@ -22,6 +25,7 @@ class SaveActionTypeTest extends TestCase
         $dependencies = new SaveActionTypeDependencies();
         $dependencies->routeResolver = $this->getMockBuilder(RouteResolverInterface::class)->getMock();
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
+
         return $dependencies;
     }
 
@@ -37,10 +41,11 @@ class SaveActionTypeTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $dependencies->routeResolver->method('getRoute')->willReturn('save_route');
-        $dependencies->router->method('generate')->willReturnCallback(function($name) {
-            if ($name === 'save_route') {
+        $dependencies->router->method('generate')->willReturnCallback(function ($name) {
+            if ('save_route' === $name) {
                 return '/save?id=1';
             }
+
             return null;
         });
 

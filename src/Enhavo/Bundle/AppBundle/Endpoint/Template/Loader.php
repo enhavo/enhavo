@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Endpoint\Template;
 
 use Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator;
@@ -12,14 +21,13 @@ class Loader
     public function __construct(
         private readonly string $dataPath,
         private readonly TemplateExpressionLanguageEvaluator $templateExpressionLanguageEvaluator,
-    )
-    {
+    ) {
     }
 
     public function merge(&$target, $source, bool $recursive = false, ?int $depth = null)
     {
         foreach ($source as $key => $value) {
-            if ($recursive && ($depth === null || $depth > 0 ) && isset($target[$key]) && $this->isArrayLike($target[$key]) && $this->isArrayLike($value)) {
+            if ($recursive && (null === $depth || $depth > 0) && isset($target[$key]) && $this->isArrayLike($target[$key]) && $this->isArrayLike($value)) {
                 $depth = is_numeric($depth) ? $depth - 1 : null;
                 // if we have array like data, we can't pass it directly as a reference parameter, so lets save it
                 // temporarily in a variable and write the values back later
@@ -50,7 +58,7 @@ class Loader
             foreach ($files as $file) {
                 $this->merge($data, $this->loadFile($file), $recursive, $depth);
             }
-        } else if (is_string($files)) {
+        } elseif (is_string($files)) {
             $this->merge($data, $this->loadFile($files), $recursive, $depth);
         }
 
@@ -59,7 +67,7 @@ class Loader
 
     private function loadFile($file): mixed
     {
-        $path = realpath($this->dataPath) . '/' . $file;
+        $path = realpath($this->dataPath).'/'.$file;
 
         if (isset($this->cache[$path])) {
             return $this->cache[$path];
@@ -74,7 +82,7 @@ class Loader
             'yml', 'yaml' => $this->loadYamlFile($path),
             'json' => $this->loadJsonFile($path),
             'php' => $this->loadPHPFile($path),
-            default => throw new \Exception(sprintf('Extension "%s" not supported', $ext))
+            default => throw new \Exception(sprintf('Extension "%s" not supported', $ext)),
         };
 
         $fileData = $this->templateExpressionLanguageEvaluator->evaluate($fileData);

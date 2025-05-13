@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 12.08.18
- * Time: 19:50
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
@@ -23,7 +26,6 @@ class SlugGenerator extends AbstractGenerator
 
     /**
      * SlugGenerator constructor.
-     * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -33,8 +35,8 @@ class SlugGenerator extends AbstractGenerator
     public function generate($resource, $options = [])
     {
         $value = $this->getProperty($resource, $options['property']);
-        if($value !== null) {
-            if(!$options['overwrite'] && $this->getProperty($resource, $options['slug_property'])) {
+        if (null !== $value) {
+            if (!$options['overwrite'] && $this->getProperty($resource, $options['slug_property'])) {
                 return;
             }
             $accessor = PropertyAccess::createPropertyAccessor();
@@ -42,11 +44,13 @@ class SlugGenerator extends AbstractGenerator
         }
     }
 
-    protected function createSlug($value, $resource, $options) {
+    protected function createSlug($value, $resource, $options)
+    {
         return $options['unique'] ? $this->createUniqueSlug($value, $resource, $options) : Slugifier::slugify($value);
     }
 
-    protected function createUniqueSlug($value, $resource, $options) {
+    protected function createUniqueSlug($value, $resource, $options)
+    {
         $baseSlug = Slugifier::slugify($value);
 
         if (!$this->slugExists($baseSlug, $resource, $options)) {
@@ -54,10 +58,11 @@ class SlugGenerator extends AbstractGenerator
         }
 
         $postfixCount = 1;
-        while ($this->slugExists($baseSlug . '-' . $postfixCount, $resource, $options)) {
-            $postfixCount++;
+        while ($this->slugExists($baseSlug.'-'.$postfixCount, $resource, $options)) {
+            ++$postfixCount;
         }
-        return $baseSlug . '-' . $postfixCount;
+
+        return $baseSlug.'-'.$postfixCount;
     }
 
     protected function slugExists($slug, $resource, $options)
@@ -68,7 +73,7 @@ class SlugGenerator extends AbstractGenerator
             ->andWhere(sprintf('r.%s = :slug', $options['slug_property']))
             ->setParameter('slug', $slug);
 
-        if ($resource->getId() !== null) {
+        if (null !== $resource->getId()) {
             $queryBuilder->andWhere('r.id != :id')
                 ->setParameter('id', $resource->getId());
         }
@@ -82,10 +87,10 @@ class SlugGenerator extends AbstractGenerator
         $resolver->setDefaults([
             'slug_property' => 'slug',
             'unique' => true,
-            'overwrite' => false
+            'overwrite' => false,
         ]);
         $resolver->setRequired([
-            'property'
+            'property',
         ]);
     }
 

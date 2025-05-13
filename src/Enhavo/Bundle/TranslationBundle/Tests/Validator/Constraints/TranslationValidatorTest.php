@@ -1,21 +1,28 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Validator\Constraints;
-
 
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Bundle\TranslationBundle\Validator\Constraints\Translation;
 use Enhavo\Bundle\TranslationBundle\Validator\Constraints\TranslationValidator;
-use Symfony\Component\Validator\Constraint;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Exception\RuntimeException;
 use Symfony\Component\Validator\Mapping\MetadataInterface;
 use Symfony\Component\Validator\Mapping\PropertyMetadataInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class TranslationValidatorTest extends TestCase
 {
@@ -40,7 +47,6 @@ class TranslationValidatorTest extends TestCase
 
     public function testWrongMetadata()
     {
-
         $dependencies = $this->createDependencies();
         $dependencies->context->method('getMetadata')->willReturn($this->getMockBuilder(MetadataInterface::class)->getMock());
 
@@ -60,11 +66,12 @@ class TranslationValidatorTest extends TestCase
         $dependencies->metadata->method('getPropertyName')->willReturn('field');
         $dependencies->translationManager->method('getTranslations')->willReturn([
             'am' => 'Htzlprmpf',
-            'af' => 'Null'
+            'af' => 'Null',
         ]);
 
         $dependencies->validator->expects($this->exactly(2))->method('validate')->willReturnCallback(function ($value, $constraintArgument) use ($constraint) {
             $this->assertTrue($constraint === $constraintArgument);
+
             return $this->getMockBuilder(ConstraintViolationListInterface::class)->getMock();
         });
 
@@ -75,8 +82,8 @@ class TranslationValidatorTest extends TestCase
         $constraint = new Translation([
             'validateDefaultValue' => false,
             'constraints' => [
-                $constraint
-            ]
+                $constraint,
+            ],
         ]);
 
         $validator->validate(null, $constraint);
@@ -85,7 +92,7 @@ class TranslationValidatorTest extends TestCase
 
 class TranslationValidatorTestDependencies
 {
-    /** @var TranslationManager|MockObject*/
+    /** @var TranslationManager|MockObject */
     public $translationManager;
 
     /** @var ValidatorInterface|MockObject */

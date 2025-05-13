@@ -1,10 +1,12 @@
 <?php
 
-/**
- * DoctrineExtendListener.php
+/*
+ * This file is part of the enhavo package.
  *
- * @since 06/03/18
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\EventListener;
@@ -17,13 +19,13 @@ use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\Events;
+use Doctrine\ORM\UnitOfWork;
 use Doctrine\Persistence\Proxy;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Metadata;
 use Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Reference;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Symfony\Component\PropertyAccess\PropertyAccess;
-use Doctrine\ORM\UnitOfWork;
 
 /**
  * Class ReferenceSubscriber
@@ -37,21 +39,17 @@ class ReferenceSubscriber implements EventSubscriber
     public function __construct(
         private readonly MetadataRepository $metadataRepository,
         private readonly EntityResolverInterface $entityResolver,
-    )
-    {
+    ) {
     }
 
-    /**
-     * @param $object
-     * @return Metadata|null
-     */
     private function getMetadata($object): ?Metadata
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($object);
-        if ($metadata === null) {
+        if (null === $metadata) {
             return null;
         }
+
         return $metadata;
     }
 
@@ -67,12 +65,10 @@ class ReferenceSubscriber implements EventSubscriber
                 $data[] = $metadata;
             }
         }
+
         return $data;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getSubscribedEvents(): array
     {
         return [
@@ -91,7 +87,7 @@ class ReferenceSubscriber implements EventSubscriber
         $object = $args->getObject();
 
         $metadata = $this->getMetadata($object);
-        if ($metadata === null) {
+        if (null === $metadata) {
             return;
         }
 
@@ -104,18 +100,17 @@ class ReferenceSubscriber implements EventSubscriber
 
     public function prePersist(PrePersistEventArgs $args): void
     {
-
     }
 
     public function preRemove(PreRemoveEventArgs $args): void
     {
         $metadata = $this->getMetadata($args->getObject());
-        if ($metadata !== null) {
+        if (null !== $metadata) {
             foreach ($metadata->getReferences() as $reference) {
                 if ($reference->hasCascade(Reference::CASCADE_REMOVE)) {
                     $propertyAccessor = PropertyAccess::createPropertyAccessor();
                     $targetEntity = $propertyAccessor->getValue($args->getObject(), $reference->getProperty());
-                    if ($targetEntity !== null) {
+                    if (null !== $targetEntity) {
                         $args->getObjectManager()->remove($targetEntity);
                     }
                 }
@@ -126,13 +121,13 @@ class ReferenceSubscriber implements EventSubscriber
     private function isParentClass($object, $class): bool
     {
         $parentClass = get_parent_class($object);
-        if ($parentClass === false) {
+        if (false === $parentClass) {
             return false;
         } elseif ($parentClass === $class) {
             return true;
-        } else {
-            return $this->isParentClass($parentClass, $class);
         }
+
+        return $this->isParentClass($parentClass, $class);
     }
 
     private function loadEntity(Reference $reference, $entity): void
@@ -143,7 +138,7 @@ class ReferenceSubscriber implements EventSubscriber
 
         if ($id && $class) {
             $targetEntity = $this->entityResolver->getEntity($id, $class);
-            if ($targetEntity !== null) {
+            if (null !== $targetEntity) {
                 $propertyAccessor->setValue($entity, $reference->getProperty(), $targetEntity);
             }
         }
@@ -151,8 +146,6 @@ class ReferenceSubscriber implements EventSubscriber
 
     /**
      * Update entity before flush to prevent possible changes after flush
-     *
-     * @param PreFlushEventArgs $args
      */
     public function preFlush(PreFlushEventArgs $args): void
     {
@@ -193,7 +186,7 @@ class ReferenceSubscriber implements EventSubscriber
                         if ($reference->hasCascade(Reference::CASCADE_REMOVE)) {
                             $propertyAccessor = PropertyAccess::createPropertyAccessor();
                             $targetEntity = $propertyAccessor->getValue($entity, $reference->getProperty());
-                            if ($targetEntity !== null && !in_array($targetEntity, $this->scheduleDeleted)) {
+                            if (null !== $targetEntity && !in_array($targetEntity, $this->scheduleDeleted)) {
                                 $em->remove($targetEntity);
                             }
                         }
@@ -209,7 +202,7 @@ class ReferenceSubscriber implements EventSubscriber
         $targetProperty = $propertyAccessor->getValue($entity, $reference->getProperty());
 
         if ($targetProperty
-            && $em->getUnitOfWork()->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED // is not managed yet
+            && UnitOfWork::STATE_MANAGED !== $em->getUnitOfWork()->getEntityState($targetProperty) // is not managed yet
             && !in_array($targetProperty, $this->scheduleDeleted) // should not be deleted
             && $reference->hasCascade(Reference::CASCADE_PERSIST)
         ) {
@@ -241,7 +234,7 @@ class ReferenceSubscriber implements EventSubscriber
                         $targetProperty = $propertyAccessor->getValue($entity, $reference->getProperty());
 
                         if ($targetProperty
-                            && $uow->getEntityState($targetProperty) !== UnitOfWork::STATE_MANAGED // is not managed yet
+                            && UnitOfWork::STATE_MANAGED !== $uow->getEntityState($targetProperty) // is not managed yet
                             && !in_array($targetProperty, $this->scheduleDeleted) // should not be deleted
                             && $reference->hasCascade(Reference::CASCADE_PERSIST) // should persist
                         ) {
@@ -275,7 +268,7 @@ class ReferenceSubscriber implements EventSubscriber
         $targetProperty = $propertyAccessor->getValue($entity, $reference->getProperty());
 
         // if entity state is still proxy, we try to load its entity to make sure that target property is correct
-        if ($entity instanceof Proxy && $targetProperty === null) {
+        if ($entity instanceof Proxy && null === $targetProperty) {
             $this->loadEntity($reference, $entity);
             $targetProperty = $propertyAccessor->getValue($entity, $reference->getProperty());
         }

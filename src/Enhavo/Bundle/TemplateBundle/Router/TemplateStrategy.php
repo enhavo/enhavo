@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-07-11
- * Time: 01:47
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TemplateBundle\Router;
@@ -27,18 +30,19 @@ class TemplateStrategy extends AbstractStrategy
         $this->repository = $repository;
     }
 
-    public function generate($resource , $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $options = [])
+    public function generate($resource, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $options = [])
     {
         $template = $this->repository->findOneBy([
-            'code' => $options['template']
+            'code' => $options['template'],
         ]);
 
-        if(!$template instanceof Template) {
+        if (!$template instanceof Template) {
             throw new UrlResolverException(sprintf('The template to generate url for class "%s" does not exist. Maybe you forgot to run enhavo:init or didn\'t add the template "%s" to config', get_class($resource), $options['template']));
         }
 
         $slug = $this->getProperty($resource, 'slug');
         $parameters = array_merge($parameters, ['slug' => $slug]);
+
         return $this->getRouter()->generate($template->getRoute()->getName(), $parameters, $referenceType);
     }
 
@@ -51,7 +55,7 @@ class TemplateStrategy extends AbstractStrategy
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setRequired([
-            'template'
+            'template',
         ]);
     }
 }

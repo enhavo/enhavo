@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\PageBundle\Endpoint\Extension;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -17,13 +26,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PageSpecialEndpointTypeExtension extends AbstractEndpointTypeExtension
 {
     public function __construct(
-        private readonly array               $specials,
-        private readonly Router              $router,
-        private readonly PageRepository      $pageRepository,
+        private readonly array $specials,
+        private readonly Router $router,
+        private readonly PageRepository $pageRepository,
         private readonly TranslatorInterface $translator,
-
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context)
@@ -38,7 +45,7 @@ class PageSpecialEndpointTypeExtension extends AbstractEndpointTypeExtension
         foreach ($this->specials as $key => $special) {
             $page = $this->getPage($key, $pages);
             $pagesSpecials[$key] = [
-                'url' => $page !== null ? $this->router->generate($page) : null,
+                'url' => null !== $page ? $this->router->generate($page) : null,
                 'label' => $this->translator->trans($special['label'], [], $special['translation_domain']),
             ];
         }
@@ -56,6 +63,7 @@ class PageSpecialEndpointTypeExtension extends AbstractEndpointTypeExtension
                 return $page;
             }
         }
+
         return null;
     }
 

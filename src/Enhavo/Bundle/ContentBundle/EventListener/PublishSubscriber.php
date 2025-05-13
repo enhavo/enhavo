@@ -1,9 +1,12 @@
 <?php
-/**
- * PublishSubscriber.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 15/10/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ContentBundle\EventListener;
@@ -17,10 +20,10 @@ class PublishSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             ResourceEvents::PRE_CREATE => 'preSave',
-            ResourceEvents::PRE_UPDATE => 'preSave'
-        );
+            ResourceEvents::PRE_UPDATE => 'preSave',
+        ];
     }
 
     public function preSave(ResourceEvent $event)
@@ -28,7 +31,7 @@ class PublishSubscriber implements EventSubscriberInterface
         $resource = $event->getSubject();
 
         if ($resource instanceof Publishable) {
-            if ($resource->isPublic() && $resource->getPublicationDate() === null) {
+            if ($resource->isPublic() && null === $resource->getPublicationDate()) {
                 $resource->setPublicationDate(new \DateTime());
             }
         }

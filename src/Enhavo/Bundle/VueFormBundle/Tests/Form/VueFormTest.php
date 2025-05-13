@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\VueFormBundle\Tests\Form;
 
 use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;
@@ -19,19 +28,21 @@ class VueFormTest extends TypeTestCase
     protected function getTypeExtensions()
     {
         return [
-            new VueTypeExtension()
+            new VueTypeExtension(),
         ];
     }
 
     public function createInstance(VueFormDependencies $dependencies)
     {
         $instance = new VueForm();
+
         return $instance;
     }
 
     public function createDependencies()
     {
-        $dependencies = new VueFormDependencies;
+        $dependencies = new VueFormDependencies();
+
         return $dependencies;
     }
 
@@ -56,7 +67,7 @@ class VueFormTest extends TypeTestCase
         $form = $this->factory->create(TestType::class);
         $viewData = $form->createView();
 
-        $this->getVueData($viewData)->addNormalizer(function (FormView $formView, VueData $vueData) {
+        $this->getVueData($viewData)->addNormalizer(function (FormView $formView, VueData $vueData): void {
             $this->assertCount(2, $vueData->getChildren());
             $vueData['newKey'] = 'newValue';
         });
@@ -67,10 +78,8 @@ class VueFormTest extends TypeTestCase
     }
 }
 
-
 class VueFormDependencies
 {
-
 }
 
 class TestType extends AbstractType
@@ -79,7 +88,6 @@ class TestType extends AbstractType
     {
         $builder->add('property_one', TextType::class);
         $builder->add('property_two', SubTestType::class);
-
     }
 }
 

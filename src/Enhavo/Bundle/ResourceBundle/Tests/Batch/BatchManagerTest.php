@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-05
- * Time: 15:54
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Batch;
@@ -24,6 +27,7 @@ class BatchManagerTest extends TestCase
         $dependencies->factory = $this->getMockBuilder(FactoryInterface::class)->disableOriginalConstructor()->getMock();
         $dependencies->checker = $this->getMockBuilder(AuthorizationCheckerInterface::class)->getMock();
         $dependencies->repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
+
         return $dependencies;
     }
 
@@ -37,11 +41,12 @@ class BatchManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(true);
         $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
-            if ($options['type'] === 'test') {
+            if ('test' === $options['type']) {
                 $batch = $this->getMockBuilder(Batch::class)->disableOriginalConstructor()->getMock();
                 $batch->method('isEnabled')->willReturn(true);
                 $batch->method('getPermission')->willReturn(true);
                 $batch->method('createViewData')->willReturn(['name' => 'test']);
+
                 return $batch;
             }
         });
@@ -50,7 +55,7 @@ class BatchManagerTest extends TestCase
         $batches = $manager->getBatches([
             'create' => [
                 'type' => 'test',
-            ]
+            ],
         ], $dependencies->repository);
 
         $this->assertCount(1, $batches);
@@ -62,10 +67,11 @@ class BatchManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(true);
         $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
-            if ($options['type'] === 'test') {
+            if ('test' === $options['type']) {
                 $batch = $this->getMockBuilder(Batch::class)->disableOriginalConstructor()->getMock();
                 $batch->method('isEnabled')->willReturn(false);
                 $batch->method('getPermission')->willReturn(true);
+
                 return $batch;
             }
         });
@@ -74,7 +80,7 @@ class BatchManagerTest extends TestCase
         $batches = $manager->getBatches([
             'create' => [
                 'type' => 'test',
-            ]
+            ],
         ], $dependencies->repository);
 
         $this->assertCount(0, $batches);
@@ -85,10 +91,11 @@ class BatchManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(false);
         $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
-            if ($options['type'] === 'test') {
+            if ('test' === $options['type']) {
                 $batch = $this->getMockBuilder(Batch::class)->disableOriginalConstructor()->getMock();
                 $batch->method('isEnabled')->willReturn(true);
                 $batch->method('getPermission')->willReturn(true);
+
                 return $batch;
             }
         });
@@ -97,7 +104,7 @@ class BatchManagerTest extends TestCase
         $batches = $manager->getBatches([
             'create' => [
                 'type' => 'test',
-            ]
+            ],
         ], $dependencies->repository);
 
         $this->assertCount(0, $batches);
@@ -108,10 +115,11 @@ class BatchManagerTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->checker->method('isGranted')->willReturn(false);
         $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
-            if ($options['type'] === 'test') {
+            if ('test' === $options['type']) {
                 $batch = $this->getMockBuilder(Batch::class)->disableOriginalConstructor()->getMock();
                 $batch->method('isEnabled')->willReturn(true);
                 $batch->method('getPermission')->willReturn(null);
+
                 return $batch;
             }
         });
@@ -120,7 +128,7 @@ class BatchManagerTest extends TestCase
         $batches = $manager->getBatches([
             'create' => [
                 'type' => 'test',
-            ]
+            ],
         ], $dependencies->repository);
 
         $this->assertCount(1, $batches);

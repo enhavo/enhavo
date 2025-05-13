@@ -1,9 +1,12 @@
 <?php
-/**
- * ListDataViewer.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 22/04/19
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
@@ -24,7 +27,8 @@ class ResourceListEndpointType extends AbstractEndpointType
 
     public function __construct(
         private readonly GridFactory $gridFactory,
-    ) {}
+    ) {
+    }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
@@ -53,8 +57,9 @@ class ResourceListEndpointType extends AbstractEndpointType
     {
         try {
             $payload = $request->getPayload();
+
             return $payload->has('action');
-        } catch(JsonException $exception) {
+        } catch (JsonException $exception) {
             return false;
         }
     }
@@ -62,7 +67,7 @@ class ResourceListEndpointType extends AbstractEndpointType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'permission' => Permission::INDEX
+            'permission' => Permission::INDEX,
         ]);
 
         $resolver->setRequired('grid');

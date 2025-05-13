@@ -1,9 +1,12 @@
 <?php
-/**
- * MediaBundle.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 03/09/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\DependencyInjection\Compiler;
@@ -67,7 +70,7 @@ class MediaCompilerPass implements CompilerPassInterface
                 }
             }
             $tagServiceDefinition = $container->getDefinition($id);
-            $voters []= [
+            $voters[] = [
                 'priority' => $priority,
                 'tagServiceDefinition' => $tagServiceDefinition,
             ];
@@ -75,10 +78,10 @@ class MediaCompilerPass implements CompilerPassInterface
         usort($voters, function ($voter1, $voter2) {
             return $voter2['priority'] - $voter1['priority'];
         });
-        foreach($voters as $voter) {
+        foreach ($voters as $voter) {
             $garbageCollectorService->addMethodCall(
                 'addVoter',
-                array($voter['tagServiceDefinition'])
+                [$voter['tagServiceDefinition']]
             );
         }
     }

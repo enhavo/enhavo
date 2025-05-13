@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Mocks;
 
@@ -23,41 +31,26 @@ class TranslatableMock implements Slugable
     /** @var FileInterface */
     private $file;
 
-    /**
-     * @return mixed
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @param mixed $name
-     */
     public function setName($name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return FileInterface
-     */
     public function getFile(): FileInterface
     {
         return $this->file;
     }
 
-    /**
-     * @param FileInterface $file
-     */
     public function setFile(FileInterface $file): void
     {
         $this->file = $file;
     }
 
-    /**
-     * @return string|null
-     */
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -70,6 +63,4 @@ class TranslatableMock implements Slugable
     {
         $this->slug = $slug;
     }
-
-
 }

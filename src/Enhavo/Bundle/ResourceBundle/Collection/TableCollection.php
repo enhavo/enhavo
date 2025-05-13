@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Collection;
 
 use Doctrine\ORM\EntityRepository;
@@ -23,8 +32,8 @@ class TableCollection extends AbstractCollection
         private readonly FilterQueryFactory $filterQueryFactory,
         private readonly RequestStack $requestStack,
         private readonly RouterInterface $router,
-    )
-    {}
+    ) {
+    }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -63,21 +72,21 @@ class TableCollection extends AbstractCollection
 
     public function getItems(array $context = []): ResourceItems
     {
-        if (count($this->options['filters']) && $this->options['repository_method'] === null && !($this->repository instanceof FilterRepositoryInterface)) {
+        if (count($this->options['filters']) && null === $this->options['repository_method'] && !($this->repository instanceof FilterRepositoryInterface)) {
             throw new \Exception();
-        } else if ($this->options['repository_arguments'] !== null && $this->options['repository_method'] === null) {
+        } elseif (null !== $this->options['repository_arguments'] && null === $this->options['repository_method']) {
             throw new \Exception();
         }
 
-        if ($this->options['repository_method'] !== null) {
+        if (null !== $this->options['repository_method']) {
             $callable = [$this->repository, $this->options['repository_method']];
             $request = $this->requestStack->getMainRequest();
             $filterQuery = $this->createFilterQuery($context);
             $resources = call_user_func_array($callable, $this->getRepositoryArguments($this->options, $filterQuery, $request));
-        } else if ($this->repository instanceof FilterRepositoryInterface) {
+        } elseif ($this->repository instanceof FilterRepositoryInterface) {
             $filterQuery = $this->createFilterQuery($context);
             $resources = $this->repository->filter($filterQuery);
-        } else if ($this->isPaginated($context)) {
+        } elseif ($this->isPaginated($context)) {
             $resources = $this->createPaginator($this->repository, $this->getCriteria(), $this->options['sorting']);
         } else {
             $resources = $this->repository->findBy($this->getCriteria(), $this->options['sorting'], $this->options['limit']);
@@ -91,6 +100,7 @@ class TableCollection extends AbstractCollection
             $result->getMeta()->set('page', $resources->getCurrentPage());
             $result->getMeta()->set('count', $resources->getNbResults());
             $result->getMeta()->set('limit', $resources->getMaxPerPage());
+
             return $result;
         }
 
@@ -110,7 +120,7 @@ class TableCollection extends AbstractCollection
             $this->isPaginated($context),
         );
 
-        if (isset($context['hydrate']) && $context['hydrate'] === 'id') {
+        if (isset($context['hydrate']) && 'id' === $context['hydrate']) {
             $filterQuery->setHydrate('id');
         }
 
@@ -128,6 +138,7 @@ class TableCollection extends AbstractCollection
         foreach ($resources as $resource) {
             $items[] = $this->createItem($resource, $context);
         }
+
         return $items;
     }
 
@@ -136,7 +147,7 @@ class TableCollection extends AbstractCollection
         $data = [];
 
         if ($this->isHydrate('data', $context)) {
-            foreach($this->columns as $column) {
+            foreach ($this->columns as $column) {
                 $data[] = $column->createResourceViewData($resource);
             }
         }
@@ -156,7 +167,7 @@ class TableCollection extends AbstractCollection
 
     private function getRepositoryArguments(array $options, FilterQuery $filterQuery, ?Request $request): array
     {
-        if ($options['repository_arguments'] === null) {
+        if (null === $options['repository_arguments']) {
             return [];
         }
 
@@ -168,6 +179,7 @@ class TableCollection extends AbstractCollection
                 'options' => $options,
             ]);
         }
+
         return $arguments;
     }
 
@@ -184,7 +196,7 @@ class TableCollection extends AbstractCollection
     private function isPaginated(array $context)
     {
         if (isset($context['paginated'])) {
-            return !!$context['paginated'];
+            return (bool) $context['paginated'];
         }
 
         return $this->options['paginated'];
@@ -207,7 +219,7 @@ class TableCollection extends AbstractCollection
     {
         $route = $this->routes['open'] ?? null;
 
-        if ($route === null) {
+        if (null === $route) {
             return null;
         }
 
@@ -223,11 +235,11 @@ class TableCollection extends AbstractCollection
         foreach ($array as $key => $item) {
             $newArray[$key] = $this->expressionLanguage->evaluate($item, $parameters);
         }
+
         return $newArray;
     }
 
     public function handleAction(string $action, array $payload): void
     {
-
     }
 }

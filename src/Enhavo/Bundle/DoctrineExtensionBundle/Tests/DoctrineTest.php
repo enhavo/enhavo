@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-07-03
- * Time: 16:41
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests;
@@ -39,17 +42,17 @@ abstract class DoctrineTest extends TestCase
 
     protected function bootstrap()
     {
-        if($this->proxyDir) {
+        if ($this->proxyDir) {
             $finder = new Finder();
             $finder->files()->in($this->proxyDir);
             foreach ($finder as $file) {
-                if($file->getExtension() === 'php') {
+                if ('php' === $file->getExtension()) {
                     unlink($file->getRealPath());
                 }
             }
         }
 
-        $config = ORMSetup::createAttributeMetadataConfiguration(array($this->entityDir), true, $this->proxyDir ?? $this->proxyDir);
+        $config = ORMSetup::createAttributeMetadataConfiguration([$this->entityDir], true, $this->proxyDir ?? $this->proxyDir);
         $conn = ['url' => 'sqlite:///:memory:'];
         $this->em = EntityManager::create($conn, $config);
     }
@@ -59,7 +62,7 @@ abstract class DoctrineTest extends TestCase
         $schema = new SchemaTool($this->em);
         $metadata = [];
         $classNames = $this->em->getConfiguration()->getMetadataDriverImpl()->getAllClassNames();
-        foreach($classNames as $class) {
+        foreach ($classNames as $class) {
             $metadata[] = $this->em->getClassMetadata($class);
         }
         $schema->createSchema($metadata);

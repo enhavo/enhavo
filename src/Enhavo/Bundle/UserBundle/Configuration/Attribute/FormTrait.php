@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Configuration\Attribute;
 
 trait FormTrait
@@ -17,7 +26,7 @@ trait FormTrait
         $this->formClass = $formClass;
     }
 
-    public function getFormOptions(array $options = null): ?array
+    public function getFormOptions(?array $options = null): ?array
     {
         if (is_array($options)) {
             return array_merge($options, $this->formOptions);

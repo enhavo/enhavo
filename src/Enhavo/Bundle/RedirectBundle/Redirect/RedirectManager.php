@@ -1,16 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 02.02.18
- * Time: 16:17
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RedirectBundle\Redirect;
 
+use Enhavo\Bundle\RedirectBundle\Model\RedirectInterface;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Manager\RouteManager;
-use Enhavo\Bundle\RedirectBundle\Model\RedirectInterface;
 use League\Uri\Http;
 
 class RedirectManager
@@ -22,7 +25,6 @@ class RedirectManager
 
     /**
      * RedirectManager constructor.
-     * @param RouteManager $routeManager
      */
     public function __construct(RouteManager $routeManager)
     {
@@ -33,13 +35,13 @@ class RedirectManager
     {
         $this->checkFrom($redirect);
         $route = $redirect->getRoute();
-        if($route === null) {
+        if (null === $route) {
             $route = new Route();
             $redirect->setRoute($route);
         }
         $route->setStaticPrefix($redirect->getFrom());
 
-        if ($route->getName() === null) {
+        if (null === $route->getName()) {
             $route->setName($this->getRandomName());
         }
 
@@ -58,6 +60,6 @@ class RedirectManager
 
     protected function getRandomName()
     {
-        return 'r' . uniqid();
+        return 'r'.uniqid();
     }
 }

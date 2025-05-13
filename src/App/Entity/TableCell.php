@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -21,7 +30,7 @@ class TableCell
     private string $name;
     #[Column(nullable: true)]
     private string $value;
-    #[ORM\Column(nullable: true)]
+    #[Column(nullable: true)]
     private ?int $position = 0;
     #[ORM\ManyToOne(targetEntity: TableRow::class, inversedBy: 'children')]
     private ?TableRow $row = null;
@@ -70,5 +79,4 @@ class TableCell
     {
         $this->position = $position;
     }
-
 }

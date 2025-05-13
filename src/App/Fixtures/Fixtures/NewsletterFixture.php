@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Fixtures\Fixtures;
 
 use App\Fixtures\AbstractFixture;
@@ -8,10 +17,7 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 
 class NewsletterFixture extends AbstractFixture
 {
-    /**
-     * @inheritdoc
-     */
-    function create($args)
+    public function create($args)
     {
         /** @var Newsletter $newsletter */
         $newsletter = $this->container->get('enhavo_newsletter.factory.newsletter')->createNew();
@@ -21,10 +27,11 @@ class NewsletterFixture extends AbstractFixture
         $newsletter->setContent($this->createContent($args['content']));
 
         $this->translate($newsletter);
+
         return $newsletter;
     }
 
-    function createGroup($args)
+    public function createGroup($args)
     {
         /** @var Group $group */
         $group = $this->container->get('enhavo_newsletter.factory.group')->createNew();
@@ -34,18 +41,12 @@ class NewsletterFixture extends AbstractFixture
         return $group;
     }
 
-    /**
-     * @inheritdoc
-     */
-    function getName()
+    public function getName()
     {
         return 'Newsletter';
     }
 
-    /**
-     * @inheritdoc
-     */
-    function getOrder()
+    public function getOrder()
     {
         return 20;
     }

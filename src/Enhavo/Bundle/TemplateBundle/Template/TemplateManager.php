@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-06-25
- * Time: 22:43
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TemplateBundle\Template;
@@ -33,7 +36,7 @@ class TemplateManager
     {
         $this->em = $em;
 
-        foreach($configuration as $key => $value) {
+        foreach ($configuration as $key => $value) {
             $template = new Template();
             $this->templates[$key] = $template;
 
@@ -48,7 +51,6 @@ class TemplateManager
     }
 
     /**
-     * @param $key
      * @return Template
      */
     public function getTemplate($key)
@@ -61,27 +63,28 @@ class TemplateManager
         $parameters = $request->attributes->get('_route_params');
         $repository = $this->getRepository($template->getRepository());
         $content = $repository->findOneBy($parameters);
+
         return $content;
     }
 
     /**
-     * @param $name
      * @return EntityRepository
      */
     private function getRepository($name)
     {
-        if($this->container->has($name)) {
+        if ($this->container->has($name)) {
             return $this->container->get($name);
         }
+
         return $this->em->getRepository($name);
     }
 
     public function injectTemplate(\Enhavo\Bundle\TemplateBundle\Entity\Template $templateEntity, $template)
     {
         $nodes = $templateEntity->getContent();
-        foreach($nodes->getDescendants() as $node) {
+        foreach ($nodes->getDescendants() as $node) {
             $block = $node->getBlock();
-            if($block instanceof ResourceBlock) {
+            if ($block instanceof ResourceBlock) {
                 $block->setTemplate($template);
             }
         }

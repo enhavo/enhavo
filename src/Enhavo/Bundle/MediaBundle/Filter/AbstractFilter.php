@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 11.11.17
- * Time: 13:48
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Filter;
@@ -17,17 +20,17 @@ use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 abstract class AbstractFilter extends AbstractType implements FilterInterface
 {
     /**
-     * @param $file
-     * @return ContentInterface
      * @throws FilterException
+     *
+     * @return ContentInterface
      */
     protected function getContent($file)
     {
-        if($file instanceof FileInterface) {
+        if ($file instanceof FileInterface) {
             return $file->getContent();
-        } elseif($file instanceof FormatInterface) {
+        } elseif ($file instanceof FormatInterface) {
             return $file->getContent();
-        } elseif($file instanceof ContentInterface) {
+        } elseif ($file instanceof ContentInterface) {
             return $file;
         }
 
@@ -36,18 +39,18 @@ abstract class AbstractFilter extends AbstractType implements FilterInterface
 
     protected function setMimeType($file, $mimeType)
     {
-        if($file instanceof FileInterface) {
+        if ($file instanceof FileInterface) {
             $file->setMimeType($mimeType);
-        } elseif($file instanceof FormatInterface) {
+        } elseif ($file instanceof FormatInterface) {
             $file->setMimeType($mimeType);
         }
     }
 
     protected function setExtension($file, $extension)
     {
-        if($file instanceof FileInterface) {
+        if ($file instanceof FileInterface) {
             $file->setExtension($extension);
-        } elseif($file instanceof FormatInterface) {
+        } elseif ($file instanceof FormatInterface) {
             $file->setExtension($extension);
         }
     }
@@ -56,34 +59,36 @@ abstract class AbstractFilter extends AbstractType implements FilterInterface
     {
         $type = exif_imagetype($content->getFilePath());
         switch ($type) {
-            case(IMAGETYPE_GIF):
+            case IMAGETYPE_GIF:
                 return 'gif';
-            case(IMAGETYPE_JPEG):
+            case IMAGETYPE_JPEG:
                 return 'jpg';
-            case(IMAGETYPE_PNG):
+            case IMAGETYPE_PNG:
                 return 'png';
-            case(IMAGETYPE_BMP):
+            case IMAGETYPE_BMP:
                 return 'bmp';
-            case(IMAGETYPE_WEBP):
+            case IMAGETYPE_WEBP:
                 return 'webp';
         }
+
         return null;
     }
 
     protected function getMimeTypeFromImageFormat($imageFormat)
     {
         switch ($imageFormat) {
-            case('gif'):
+            case 'gif':
                 return 'image/gif';
-            case('jpg'):
+            case 'jpg':
                 return 'image/jpeg';
-            case('png'):
+            case 'png':
                 return 'image/png';
-            case('bmp'):
+            case 'bmp':
                 return 'image/bmp';
-            case('webp'):
+            case 'webp':
                 return 'image/webp';
         }
+
         return null;
     }
 }

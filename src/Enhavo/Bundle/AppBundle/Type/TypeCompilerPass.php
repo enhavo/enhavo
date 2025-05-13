@@ -1,10 +1,19 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Type;
 
+use Enhavo\Bundle\AppBundle\Exception\AliasRequiredException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Enhavo\Bundle\AppBundle\Exception\AliasRequiredException;
 
 /**
  * @author gseidel
@@ -31,9 +40,6 @@ class TypeCompilerPass implements CompilerPassInterface
         $this->tagName = $tagName;
     }
 
-    /**
-     * @inheritdoc
-     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->hasDefinition($this->collectorServiceId)) {
@@ -50,14 +56,14 @@ class TypeCompilerPass implements CompilerPassInterface
 
         foreach ($taggedServices as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
-                if(isset($attributes['alias'])) {
+                if (isset($attributes['alias'])) {
                     $definition->addMethodCall(
                         'add',
-                        array($attributes['alias'], $id)
+                        [$attributes['alias'], $id]
                     );
                 } else {
                     $definition = $container->findDefinition($id);
-                    if(!$definition->isAbstract()) {
+                    if (!$definition->isAbstract()) {
                         throw new AliasRequiredException(sprintf('alias required for %s', $id));
                     }
                 }

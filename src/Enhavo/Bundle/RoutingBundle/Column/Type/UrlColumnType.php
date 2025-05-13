@@ -1,8 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 19.11.17
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\Column\Type;
@@ -17,8 +21,7 @@ class UrlColumnType extends AbstractColumnType
 {
     public function __construct(
         private readonly Router $router,
-    )
-    {
+    ) {
     }
 
     public function createResourceViewData(array $options, object $resource, Data $data): void
@@ -35,7 +38,7 @@ class UrlColumnType extends AbstractColumnType
             'model' => 'ActionColumn',
             'icon' => 'link',
             'target' => '_blank',
-            'resolver_type' => 'default'
+            'resolver_type' => 'default',
         ]);
     }
 

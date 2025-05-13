@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-03
- * Time: 18:07
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Newsletter;
@@ -19,7 +22,7 @@ class ParameterParserTest extends TestCase
         $content = 'I say ${PARAM_ONE} ${PARAM_TWO}!';
         $content = $parameterParser->parse($content, [
             'paramOne' => 'Hello',
-            'param_two' => 'World'
+            'param_two' => 'World',
         ]);
         $this->assertEquals('I say Hello World!', $content);
     }
@@ -32,9 +35,9 @@ class ParameterParserTest extends TestCase
             'levelOne' => [
                 'levelTwo' => 'bar',
                 'more' => [
-                    'level3' => '!'
-                ]
-            ]
+                    'level3' => '!',
+                ],
+            ],
         ]);
         $this->assertEquals('Foobar !', $content);
     }

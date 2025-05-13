@@ -1,10 +1,22 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Twig;
 
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -20,15 +32,12 @@ class SubscribeFormRenderer extends AbstractExtension
 
     /**
      * SubscribeFormRenderer constructor.
-     * @param SubscriptionManager $subscriptionManager
-     * @param Environment $twig
      */
     public function __construct(SubscriptionManager $subscriptionManager, Environment $twig)
     {
         $this->subscriptionManager = $subscriptionManager;
         $this->twig = $twig;
     }
-
 
     public function getFunctions()
     {
@@ -40,10 +49,12 @@ class SubscribeFormRenderer extends AbstractExtension
     /**
      * @param null $subscriptionName
      * @param null $template
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     *
      * @return string
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
      */
     public function render($subscriptionName = null, $template = null)
     {

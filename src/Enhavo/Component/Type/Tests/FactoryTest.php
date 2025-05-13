@@ -1,15 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-08
- * Time: 15:54
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Type\Tests;
 
-use Enhavo\Component\Type\AbstractTypeExtension;
 use Enhavo\Component\Type\AbstractType;
+use Enhavo\Component\Type\AbstractTypeExtension;
 use Enhavo\Component\Type\Exception\TypeCreateException;
 use Enhavo\Component\Type\Factory;
 use Enhavo\Component\Type\Tests\Mock\RegistryMock;
@@ -20,9 +23,10 @@ class FactoryTest extends TestCase
 {
     private function createDependencies()
     {
-        $dependencies = new FactoryDependencies;
+        $dependencies = new FactoryDependencies();
         $dependencies->registry = new RegistryMock();
         $dependencies->class = ConcreteTest::class;
+
         return $dependencies;
     }
 
@@ -50,7 +54,7 @@ class FactoryTest extends TestCase
         /** @var ConcreteTest $typeContainer */
         $typeContainer = $factory->create([
             'type' => 'test',
-            'option' => 'value'
+            'option' => 'value',
         ]);
 
         $this->assertTrue($testType === $typeContainer->type);
@@ -63,11 +67,11 @@ class FactoryTest extends TestCase
     {
         $this->expectException(TypeCreateException::class);
 
-        $dependencies =$this->createDependencies();
+        $dependencies = $this->createDependencies();
         $factory = $this->createInstance($dependencies);
 
         $factory->create([
-            'option' => 'value'
+            'option' => 'value',
         ]);
     }
 }
@@ -97,9 +101,9 @@ class ConcreteTest
 
     /**
      * ConcreteTest constructor.
-     * @param TypeInterface $type
+     *
      * @param TypeInterface[] $parents
-     * @param array $options
+     * @param mixed|null      $key
      */
     public function __construct(TypeInterface $type, array $parents, array $options, $key = null, $extensions = [])
     {
@@ -136,7 +140,6 @@ class FactoryParentExtensionType extends AbstractTypeExtension
 
 class FactoryRootType extends AbstractType
 {
-
 }
 
 class FactoryRootExtensionType extends AbstractTypeExtension
@@ -146,5 +149,3 @@ class FactoryRootExtensionType extends AbstractTypeExtension
         return [FactoryRootType::class];
     }
 }
-
-

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Tests\Column\Type;
 
 use Enhavo\Bundle\ResourceBundle\Column\Column;
@@ -24,7 +33,7 @@ class MultiplePropertyColumnTypeTest extends TestCase
         return $instance;
     }
 
-    function testName()
+    public function testName()
     {
         $this->assertEquals('multiple_property', MultiplePropertyColumnType::getName());
     }
@@ -37,11 +46,10 @@ class MultiplePropertyColumnTypeTest extends TestCase
         $column = new Column($instance, [], [
             'properties' => [
                 'name',
-                'id'
+                'id',
             ],
-            'separator' => '/'
+            'separator' => '/',
         ]);
-
 
         $resource = new ResourceMock(42);
         $resource->name = 'peter';

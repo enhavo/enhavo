@@ -1,13 +1,22 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TranslationBundle\DependencyInjection;
 
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\PrependExtensionTrait;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class EnhavoTranslationExtension extends Extension implements PrependExtensionInterface
 {
@@ -28,7 +37,7 @@ class EnhavoTranslationExtension extends Extension implements PrependExtensionIn
         $container->setParameter('enhavo_translation.form.default_access', $config['form']['default_access']);
         $container->setParameter('enhavo_translation.provider', $config['provider']);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/translator.yaml');
         $loader->load('services/translation.yaml');
         $loader->load('services/generator.yaml');
@@ -39,7 +48,7 @@ class EnhavoTranslationExtension extends Extension implements PrependExtensionIn
     protected function prependFiles(): array
     {
         return [
-            __DIR__.'/../Resources/config/app/config.yaml'
+            __DIR__.'/../Resources/config/app/config.yaml',
         ];
     }
 }

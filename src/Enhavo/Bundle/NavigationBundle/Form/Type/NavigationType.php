@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 03.02.18
- * Time: 00:10
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
@@ -17,8 +20,7 @@ class NavigationType extends AbstractType
 {
     public function __construct(
         private readonly string $dataClass,
-    )
-    {
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -41,7 +43,7 @@ class NavigationType extends AbstractType
         $resolver->setDefaults([
             'items' => [],
             'item_groups' => [],
-            'data_class' => $this->dataClass
+            'data_class' => $this->dataClass,
         ]);
     }
 }

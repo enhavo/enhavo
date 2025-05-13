@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Subscription;
-
 
 use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
@@ -13,7 +20,6 @@ use Enhavo\Component\Type\FactoryInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -26,6 +32,7 @@ class SubscriptionManagerTest extends TestCase
         $dependencies->strategyFactory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $dependencies->formFactory = $this->getMockBuilder(FormFactoryInterface::class)->getMock();
         $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
+
         return $dependencies;
     }
 
@@ -35,16 +42,16 @@ class SubscriptionManagerTest extends TestCase
             $config = [
                 'default' => [
                     'storage' => [
-                        'type' => '__STORAGE__'
+                        'type' => '__STORAGE__',
                     ],
                     'strategy' => [
-                        'type' => '__STRATEGY__'
+                        'type' => '__STRATEGY__',
                     ],
                     'model' => '__MODEL__',
                     'form' => [
                         'class' => '__FORM_CLASS__',
-                    ]
-                ]
+                    ],
+                ],
             ];
         }
 
@@ -99,40 +106,40 @@ class SubscriptionManagerTest extends TestCase
         $manager = $this->createInstance($dep, [
             'default' => [
                 'storage' => [
-                    'type' => '__STORAGE0__'
+                    'type' => '__STORAGE0__',
                 ],
                 'strategy' => [
-                    'type' => '__STRATEGY0__'
+                    'type' => '__STRATEGY0__',
                 ],
                 'model' => '__MODEL0__',
                 'form' => [
-                    'class' => '__FORM_CLASS0__'
-                ]
+                    'class' => '__FORM_CLASS0__',
+                ],
             ],
             'another' => [
                 'storage' => [
-                    'type' => '__STORAGE1__'
+                    'type' => '__STORAGE1__',
                 ],
                 'strategy' => [
-                    'type' => '__STRATEGY1__'
+                    'type' => '__STRATEGY1__',
                 ],
                 'model' => '__MODEL1__',
                 'form' => [
-                    'class' => '__FORM_CLASS1__'
-                ]
+                    'class' => '__FORM_CLASS1__',
+                ],
             ],
             'yetanother' => [
                 'storage' => [
-                    'type' => '__STORAGE2__'
+                    'type' => '__STORAGE2__',
                 ],
                 'strategy' => [
-                    'type' => '__STRATEGY2__'
+                    'type' => '__STRATEGY2__',
                 ],
                 'model' => '__MODEL2__',
                 'form' => [
-                    'class' => '__FORM_CLASS2__'
-                ]
-            ]
+                    'class' => '__FORM_CLASS2__',
+                ],
+            ],
         ]);
 
         $subscriptions = $manager->getSubscriptions();
@@ -143,7 +150,7 @@ class SubscriptionManagerTest extends TestCase
             $this->assertEquals(sprintf('__MODEL%d__', $i), $subscription->getModel());
             $this->assertInstanceOf(Subscription::class, $subscription);
 
-            $i++;
+            ++$i;
         }
     }
 
@@ -154,7 +161,6 @@ class SubscriptionManagerTest extends TestCase
         $model = $manager->createModel(Subscriber::class);
 
         $this->assertInstanceOf(Subscriber::class, $model);
-
     }
 
     public function testCreateForm()
@@ -186,19 +192,19 @@ class SubscriptionManagerTest extends TestCase
         $manager = $this->createInstance($dep, [
             'default' => [
                 'storage' => [
-                    'type' => '__STORAGE__'
+                    'type' => '__STORAGE__',
                 ],
                 'strategy' => [
-                    'type' => '__STRATEGY__'
+                    'type' => '__STRATEGY__',
                 ],
                 'model' => '__MODEL__',
                 'form' => [
                     'class' => '__FORM_CLASS__',
                     'options' => [
                         'label' => '__OLD_LABEL__',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ]);
 
         $subscription = $manager->getSubscription('default');
@@ -206,7 +212,6 @@ class SubscriptionManagerTest extends TestCase
 
         $manager->createForm($subscription, $model, ['label' => '__NEW_LABEL__', 'action' => '/action/']);
     }
-
 }
 
 class SubscriptionManagerTestDependencies

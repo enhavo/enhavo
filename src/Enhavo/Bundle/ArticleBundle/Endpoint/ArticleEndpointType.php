@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ArticleBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -20,8 +29,7 @@ class ArticleEndpointType extends AbstractEndpointType
     public function __construct(
         private readonly ArticleRepository $repository,
         private readonly CommentManager $commentManager,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -29,14 +37,14 @@ class ArticleEndpointType extends AbstractEndpointType
         /** @var ArticleInterface $resource */
         $resource = $options['resource'];
 
-        if ($resource === null) {
+        if (null === $resource) {
             $findValue = $request->get($options['find_by']);
             $resource = $this->repository->findOneBy([
                 $options['find_by'] => $findValue,
             ]);
         }
 
-        if ($resource === null) {
+        if (null === $resource) {
             throw $this->createNotFoundException();
         }
 
@@ -80,7 +88,7 @@ class ArticleEndpointType extends AbstractEndpointType
             'preview' => false,
             'template' => '{{ area }}/resource/article/show.html.twig',
             'resource' => null,
-            'find_by' => 'id'
+            'find_by' => 'id',
         ]);
     }
 }

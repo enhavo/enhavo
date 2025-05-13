@@ -1,17 +1,26 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle;
 
+use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
 use Doctrine\ORM\Mapping\Driver\XmlDriver;
+use Doctrine\Persistence\Mapping\Driver\DefaultFileLocator;
 use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\DependencyInjection\CompilerPass\BlockManagerCompilerPass;
 use Enhavo\Bundle\BlockBundle\Factory\BlockFactoryInterface;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Enhavo\Component\Type\TypeCompilerPass;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
-use Doctrine\Persistence\Mapping\Driver\DefaultFileLocator;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EnhavoBlockBundle extends Bundle
 {
@@ -42,9 +51,9 @@ class EnhavoBlockBundle extends Bundle
 
     private function buildDoctrineBlockCompilerPass($configDir, $namespace, $enableParameter): DoctrineOrmMappingsPass
     {
-        $arguments = array(array(realpath(sprintf('%s/Resources/config/%s', __DIR__, $configDir))), '.orm.xml');
+        $arguments = [[realpath(sprintf('%s/Resources/config/%s', __DIR__, $configDir))], '.orm.xml'];
         $locator = new Definition(DefaultFileLocator::class, $arguments);
-        $driver = new Definition(XmlDriver::class, array($locator));
+        $driver = new Definition(XmlDriver::class, [$locator]);
 
         return new DoctrineOrmMappingsPass(
             $driver,

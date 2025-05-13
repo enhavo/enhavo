@@ -1,7 +1,15 @@
 <?php
 
-namespace Enhavo\Bundle\DashboardBundle\Dashboard\Type;
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
+namespace Enhavo\Bundle\DashboardBundle\Dashboard\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\DashboardBundle\Dashboard\AbstractDashboardWidgetType;
@@ -17,8 +25,7 @@ class NumberDashboardWidgetType extends AbstractDashboardWidgetType
     public function __construct(
         private TranslatorInterface $translator,
         private ResourceManager $resourceManager,
-    )
-    {
+    ) {
     }
 
     public function setContainer(ContainerInterface $container): void
@@ -63,7 +70,7 @@ class NumberDashboardWidgetType extends AbstractDashboardWidgetType
         $resolver->setRequired([
             'label',
             'repository',
-            'repository_method'
+            'repository_method',
         ]);
     }
 

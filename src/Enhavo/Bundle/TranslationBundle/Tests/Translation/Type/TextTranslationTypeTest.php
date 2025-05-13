@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation\Type;
 
@@ -15,6 +23,7 @@ class TextTranslationTypeTest extends TestCase
     {
         /** @var TextTranslator|MockObject $textTranslator */
         $textTranslator = $this->getMockBuilder(TextTranslator::class)->disableOriginalConstructor()->getMock();
+
         return $textTranslator;
     }
 
@@ -31,7 +40,7 @@ class TextTranslationTypeTest extends TestCase
     public function testSetTranslation()
     {
         $textTranslator = $this->createDependencies();
-        $textTranslator->expects($this->once())->method('setTranslation')->willReturnCallback(function($data, $property, $locale, $value) {
+        $textTranslator->expects($this->once())->method('setTranslation')->willReturnCallback(function ($data, $property, $locale, $value): void {
             $this->assertTrue(is_object($data));
             $this->assertEquals('name', $property);
             $this->assertEquals('en', $locale);
@@ -107,5 +116,4 @@ class TextTranslationTypeTest extends TestCase
 
         $this->assertEquals(['allow_fallback'], $resolver->getDefinedOptions());
     }
-
 }

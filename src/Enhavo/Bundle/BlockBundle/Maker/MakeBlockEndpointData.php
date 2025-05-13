@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Maker;
 
 use Enhavo\Bundle\BlockBundle\Block\Block;
@@ -7,9 +16,6 @@ use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
-use Exception;
-use ReflectionClass;
-use ReflectionException;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -23,21 +29,18 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Yaml\Yaml;
-use Throwable;
 
 class MakeBlockEndpointData extends AbstractMaker
 {
     private bool $overwriteExisting = false;
 
     public function __construct(
-        private readonly BlockManager        $blockManager,
-        private readonly KernelInterface     $kernel,
-        private readonly Filesystem          $fileSystem,
+        private readonly BlockManager $blockManager,
+        private readonly KernelInterface $kernel,
+        private readonly Filesystem $fileSystem,
         private readonly NormalizerInterface $normalizer,
-        private readonly FactoryInterface    $nodeFactory,
-    )
-    {
-
+        private readonly FactoryInterface $nodeFactory,
+    ) {
     }
 
     public static function getCommandName(): string
@@ -61,11 +64,10 @@ class MakeBlockEndpointData extends AbstractMaker
         $name = $input->getOption('blockName');
         $groups = explode(',', strtolower($input->getOption('groups')));
         $format = strtolower($input->getOption('format'));
-        $this->overwriteExisting = (bool)$input->getOption('overwrite');
+        $this->overwriteExisting = (bool) $input->getOption('overwrite');
 
         if ($name) {
             $blockTypes = [$name => $this->blockManager->getBlock($name)];
-
         } else {
             $blockTypes = $this->blockManager->getBlocks();
         }
@@ -86,8 +88,7 @@ class MakeBlockEndpointData extends AbstractMaker
                 $generator->generateFile($outputPath, $this->getTemplatePath('block.tpl.php'), ['content' => $dataAsString]);
 
                 $io->writeln("\033[32mOK\033[0m");
-
-            } catch (Throwable $exception) {
+            } catch (\Throwable $exception) {
                 $io->writeln("\033[31mFAILED\033[0m");
                 $io->writeln(sprintf("Reason: %s (%s#%d)\n", $exception->getMessage(), $exception->getFile(), $exception->getLine()));
             }
@@ -98,7 +99,7 @@ class MakeBlockEndpointData extends AbstractMaker
 
     /**
      * @throws ExceptionInterface
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
     private function generateDataArray(string $blockName, Block $blockType): array
     {
@@ -109,7 +110,7 @@ class MakeBlockEndpointData extends AbstractMaker
 
     private function toFormatString(array $dataArray, $format): string
     {
-        if ($format === 'json') {
+        if ('json' === $format) {
             return json_encode($dataArray, JSON_PRETTY_PRINT);
         }
 
@@ -118,7 +119,7 @@ class MakeBlockEndpointData extends AbstractMaker
 
     /**
      * @throws ExceptionInterface
-     * @throws ReflectionException
+     * @throws \ReflectionException
      */
     private function hydrateBlockNode(string $blockName, Block $blockType, BlockInterface $blockInstance): array
     {
@@ -137,7 +138,7 @@ class MakeBlockEndpointData extends AbstractMaker
 
     /**
      * @throws ExceptionInterface
-     * @throws Exception
+     * @throws \Exception
      */
     private function normalize($object): array
     {
@@ -148,41 +149,41 @@ class MakeBlockEndpointData extends AbstractMaker
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     private function generateDummyValues(array &$normalized, mixed $objectOrClass): void
     {
         try {
-            $reflection = new ReflectionClass($objectOrClass);
+            $reflection = new \ReflectionClass($objectOrClass);
             foreach ($normalized as $key => $value) {
-                $normalized[$key] = $value === null ? $this->generateDummyValue($reflection, $key) : $value;
+                $normalized[$key] = null === $value ? $this->generateDummyValue($reflection, $key) : $value;
             }
-        } catch (ReflectionException $exception) {
-
+        } catch (\ReflectionException $exception) {
         }
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
-    private function generateDummyValue(ReflectionClass $reflectionClass, string $propertyName)
+    private function generateDummyValue(\ReflectionClass $reflectionClass, string $propertyName)
     {
         $defaults = $reflectionClass->getDefaultProperties();
         $parent = $reflectionClass->getParentClass();
-        $parentDefaults = $parent !== false ? $parent->getDefaultProperties() : [];
+        $parentDefaults = false !== $parent ? $parent->getDefaultProperties() : [];
 
         $default = $defaults[$propertyName] ?? $parentDefaults[$propertyName] ?? null;
 
-        if ($default !== null) {
+        if (null !== $default) {
             return $default;
         }
 
         $typeName = $this->getTypeName($reflectionClass, $propertyName);
+
         return $this->createDummyValueByTypeName($typeName);
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     private function createDummyValueByTypeName(?string $typeName)
     {
@@ -198,7 +199,7 @@ class MakeBlockEndpointData extends AbstractMaker
         }
     }
 
-    private function getTypeName(ReflectionClass $reflectionClass, string $propertyName): ?string
+    private function getTypeName(\ReflectionClass $reflectionClass, string $propertyName): ?string
     {
         $property = $this->getProperty($reflectionClass, $propertyName);
         if ($property) {
@@ -206,11 +207,12 @@ class MakeBlockEndpointData extends AbstractMaker
 
             if ($type) {
                 return $type->getName();
-            } else if ($comment = $property->getDocComment()) {
+            } elseif ($comment = $property->getDocComment()) {
                 if (str_contains($comment, '@var')) {
                     $found = preg_filter('/.+@var ([\w\d]+)/', '$1', preg_split('/\\n/', $comment));
                     if (count($found)) {
                         $type = array_pop($found);
+
                         return $type;
                     }
                 }
@@ -220,18 +222,17 @@ class MakeBlockEndpointData extends AbstractMaker
         return null;
     }
 
-    private function getProperty(ReflectionClass $reflectionClass, string $propertyName): ?\ReflectionProperty
+    private function getProperty(\ReflectionClass $reflectionClass, string $propertyName): ?\ReflectionProperty
     {
         try {
             return $reflectionClass->getProperty($propertyName);
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             try {
                 $parent = $reflectionClass->getParentClass();
                 if ($parent) {
                     return $parent->getProperty($propertyName);
                 }
-            } catch (Exception $exception) {
-
+            } catch (\Exception $exception) {
             }
         }
 
@@ -249,6 +250,7 @@ class MakeBlockEndpointData extends AbstractMaker
         if (!$this->fileSystem->exists($dataPath)) {
             $this->fileSystem->mkdir($dataPath);
         }
+
         return $dataPath;
     }
 
@@ -257,8 +259,10 @@ class MakeBlockEndpointData extends AbstractMaker
         if ($this->fileSystem->exists($filePath)) {
             if (!$noOverwrite && $this->overwriteExisting) {
                 $this->fileSystem->remove($filePath);
+
                 return true;
             }
+
             return false;
         }
 
@@ -271,6 +275,7 @@ class MakeBlockEndpointData extends AbstractMaker
         if (!$this->fileSystem->exists($blockDataPath)) {
             $this->fileSystem->mkdir($blockDataPath);
         }
+
         return $blockDataPath;
     }
 

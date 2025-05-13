@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Endpoint\Type;
 
 use Doctrine\ORM\EntityRepository;
@@ -8,9 +17,9 @@ use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class FileEndpointType extends AbstractEndpointType
 {
@@ -23,8 +32,7 @@ class FileEndpointType extends AbstractEndpointType
         private readonly EntityRepository $fileRepository,
         private readonly AuthorizationCheckerInterface $authorizationChecker,
         private readonly ResourceExpressionLanguage $expressionLanguage,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -43,7 +51,7 @@ class FileEndpointType extends AbstractEndpointType
         $arguments = $this->expressionLanguage->evaluateArray($options['repository_arguments'], [], true);
         $file = call_user_func_array([$this->fileRepository, $options['repository_method']], $arguments);
 
-        if ($file === null) {
+        if (null === $file) {
             throw $this->createNotFoundException();
         }
 

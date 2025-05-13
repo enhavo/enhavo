@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Vite;
 
 use Symfony\Component\Asset\PackageInterface;
@@ -9,8 +18,7 @@ class ViteAssetPackage implements PackageInterface
     public function __construct(
         private readonly ViteManager $viteManager,
         private array $builds,
-    )
-    {
+    ) {
     }
 
     public function getVersion(string $path): string
@@ -21,7 +29,7 @@ class ViteAssetPackage implements PackageInterface
     public function getUrl(string $path): string
     {
         if (!str_starts_with($path, '/')) {
-            $path = '/' . $path;
+            $path = '/'.$path;
         }
 
         foreach ($this->builds as $build => $config) {

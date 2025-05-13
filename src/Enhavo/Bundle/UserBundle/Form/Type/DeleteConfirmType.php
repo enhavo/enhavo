@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
 use Enhavo\Bundle\UserBundle\Form\Data\DeleteConfirm;
@@ -21,24 +30,24 @@ class DeleteConfirmType extends AbstractType
             'translation_domain' => 'EnhavoUserBundle',
             'label' => 'form.email',
             'constraints' => [
-                new UserEmail()
-            ]
+                new UserEmail(),
+            ],
         ]);
 
         $builder->add('password', PasswordType::class, [
             'translation_domain' => 'EnhavoUserBundle',
             'label' => 'form.password',
             'constraints' => [
-                new UserPassword()
-            ]
+                new UserPassword(),
+            ],
         ]);
 
         $builder->add('confirm', CheckboxType::class, [
             'translation_domain' => 'EnhavoUserBundle',
             'label' => 'delete_confirm',
             'constraints' => [
-                new IsTrue()
-            ]
+                new IsTrue(),
+            ],
         ]);
     }
 
@@ -46,7 +55,7 @@ class DeleteConfirmType extends AbstractType
     {
         $resolver->setDefaults([
             'csrf_token_id' => 'delete_confirm',
-            'data_class' => DeleteConfirm::class
+            'data_class' => DeleteConfirm::class,
         ]);
     }
 }

@@ -1,10 +1,12 @@
 <?php
 
-/**
- * AbstractCollectorPass.php
+/*
+ * This file is part of the enhavo package.
  *
- * @since 29/05/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Type;
@@ -20,13 +22,9 @@ class TypeCompilerPass implements CompilerPassInterface
         private readonly string $namespace,
         private readonly string $tagName,
         private readonly string $class,
-    )
-    {
+    ) {
     }
 
-    /**
-     * @inheritdoc
-     */
     public function process(ContainerBuilder $container)
     {
         $registryDefinition = $this->createRegistryDefinition();
@@ -47,7 +45,7 @@ class TypeCompilerPass implements CompilerPassInterface
             $tagServiceDefinition->setPublic(true);
             $registryDefinition->addMethodCall(
                 'register',
-                array($tagServiceDefinition->getClass() ? $tagServiceDefinition->getClass(): $id, $id)
+                [$tagServiceDefinition->getClass() ? $tagServiceDefinition->getClass() : $id, $id]
             );
         }
     }
@@ -58,6 +56,7 @@ class TypeCompilerPass implements CompilerPassInterface
         $definition->setClass(Registry::class);
         $definition->setArguments([$this->namespace]);
         $definition->addMethodCall('setContainer', [new Reference('service_container')]);
+
         return $definition;
     }
 
@@ -66,6 +65,7 @@ class TypeCompilerPass implements CompilerPassInterface
         $definition = new Definition();
         $definition->setClass(Factory::class);
         $definition->setArguments([$class, $registryDefinition]);
+
         return $definition;
     }
 }

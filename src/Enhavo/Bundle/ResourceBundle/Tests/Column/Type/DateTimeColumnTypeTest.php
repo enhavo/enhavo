@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Tests\Column\Type;
 
 use Enhavo\Bundle\ResourceBundle\Column\Column;
@@ -13,12 +22,14 @@ class DateTimeColumnTypeTest extends TestCase
     public function createDependencies(): DateTimeColumnTypeDependencies
     {
         $dependencies = new DateTimeColumnTypeDependencies();
+
         return $dependencies;
     }
 
     public function createInstance(DateTimeColumnTypeDependencies $dependencies): DateTimeColumnType
     {
         $instance = new DateTimeColumnType();
+
         return $instance;
     }
 
@@ -28,7 +39,7 @@ class DateTimeColumnTypeTest extends TestCase
         $instance = $this->createInstance($dependencies);
 
         $column = new Column($instance, [
-            new DateColumnType()
+            new DateColumnType(),
         ], [
             'property' => 'data',
             'format' => 'd.m.Y H:i',

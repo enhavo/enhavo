@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-10-26
- * Time: 08:00
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Exception;
@@ -25,7 +28,7 @@ class CommentSubjectException extends \InvalidArgumentException implements Comme
     public static function createTypeException($subject)
     {
         return new CommentSubjectException(sprintf('The subject needs to be type of "%s" but "%s" given',
-        CommentSubjectInterface::class,
+            CommentSubjectInterface::class,
             get_class($subject)
         ));
     }

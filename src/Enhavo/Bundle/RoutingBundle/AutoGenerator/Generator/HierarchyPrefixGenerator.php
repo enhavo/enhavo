@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 12.08.18
- * Time: 19:50
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
@@ -17,21 +20,21 @@ class HierarchyPrefixGenerator extends AbstractGenerator
     public function generate($resource, $options = [])
     {
         $route = $this->getProperty($resource, $options['route_property']);
-        if(!$options['overwrite'] && $route->getStaticPrefix()) {
+        if (!$options['overwrite'] && $route->getStaticPrefix()) {
             return;
         }
 
         $parents = [];
         $parent = $this->getProperty($resource, $options['parent_property']);
-        if($parent) {
-            while($parent !== null) {
+        if ($parent) {
+            while (null !== $parent) {
                 $parents[] = $parent;
                 $parent = $this->getProperty($parent, $options['parent_property']);
             }
         }
 
         $slugs = [];
-        foreach(array_reverse($parents) as $parent) {
+        foreach (array_reverse($parents) as $parent) {
             $slugs[] = Slugifier::slugify($this->getProperty($parent, $options['prefix_property']));
         }
         $slugs[] = Slugifier::slugify($this->getProperty($resource, $options['prefix_property']));
@@ -44,7 +47,7 @@ class HierarchyPrefixGenerator extends AbstractGenerator
         $resolver->setDefaults([
             'route_property' => 'route',
             'overwrite' => false,
-            'parent_property' => 'parent'
+            'parent_property' => 'parent',
         ]);
         $resolver->setRequired([
             'prefix_property',

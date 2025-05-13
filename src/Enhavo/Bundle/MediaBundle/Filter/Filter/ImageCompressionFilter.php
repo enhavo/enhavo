@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 11.11.17
- * Time: 16:39
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Filter\Filter;
@@ -34,6 +37,7 @@ class ImageCompressionFilter extends AbstractFilter
         $optimizer->addOptimizer($this->createSvgo($setting));
         $optimizer->addOptimizer($this->createGifsicle($setting));
         $optimizer->addOptimizer($this->createPngquant($setting));
+
         return $optimizer;
     }
 
@@ -45,6 +49,7 @@ class ImageCompressionFilter extends AbstractFilter
             '--all-progressive',
         ]));
         $optimizer->binaryName = $this->container->getParameter('enhavo_media.filter.image_compression')['jpegoptim_path'];
+
         return $optimizer;
     }
 
@@ -56,6 +61,7 @@ class ImageCompressionFilter extends AbstractFilter
             '-quiet',
         ]));
         $optimizer->binaryName = $this->container->getParameter('enhavo_media.filter.image_compression')['optipng_path'];
+
         return $optimizer;
     }
 
@@ -65,6 +71,7 @@ class ImageCompressionFilter extends AbstractFilter
             '--disable=cleanupIDs',
         ]));
         $optimizer->binaryName = $this->container->getParameter('enhavo_media.filter.image_compression')['svgo_path'];
+
         return $optimizer;
     }
 
@@ -75,15 +82,17 @@ class ImageCompressionFilter extends AbstractFilter
             '-O3',
         ]));
         $optimizer->binaryName = $this->container->getParameter('enhavo_media.filter.image_compression')['gifsicle_path'];
+
         return $optimizer;
     }
 
     private function createPngquant(FilterSetting $setting)
     {
         $optimizer = new Pngquant($setting->getSetting('arguments', [
-            '--force'
+            '--force',
         ]));
         $optimizer->binaryName = $this->container->getParameter('enhavo_media.filter.image_compression')['pngquant_path'];
+
         return $optimizer;
     }
 

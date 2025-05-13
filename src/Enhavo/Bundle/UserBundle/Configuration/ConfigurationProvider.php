@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Configuration;
 
 use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailCheckConfiguration;
@@ -43,7 +52,7 @@ class ConfigurationProvider
             $key = $this->configKeyProvider->getConfigKey();
         }
 
-        if ($key === null) {
+        if (null === $key) {
             throw ConfigurationException::configKeyNotFound();
         }
 
@@ -74,153 +83,172 @@ class ConfigurationProvider
 
     public function getRegistrationRegisterConfiguration(?string $key = null): RegistrationRegisterConfiguration
     {
-        $configuration = new RegistrationRegisterConfiguration;
+        $configuration = new RegistrationRegisterConfiguration();
         $config = $this->getConfig($key, 'registration_register');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getRegistrationCheckConfiguration(?string $key = null): RegistrationCheckConfiguration
     {
-        $configuration = new RegistrationCheckConfiguration;
+        $configuration = new RegistrationCheckConfiguration();
         $config = $this->getConfig($key, 'registration_check');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getRegistrationConfirmConfiguration(?string $key = null): RegistrationConfirmConfiguration
     {
-        $configuration = new RegistrationConfirmConfiguration;
+        $configuration = new RegistrationConfirmConfiguration();
         $config = $this->getConfig($key, 'registration_confirm');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getRegistrationFinishConfiguration(?string $key = null): RegistrationFinishConfiguration
     {
-        $configuration = new RegistrationFinishConfiguration;
+        $configuration = new RegistrationFinishConfiguration();
         $config = $this->getConfig($key, 'registration_finish');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getProfileConfiguration(?string $key = null): ProfileConfiguration
     {
-        $configuration = new ProfileConfiguration;
+        $configuration = new ProfileConfiguration();
         $config = $this->getConfig($key, 'profile');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getResetPasswordRequestConfiguration(?string $key = null): ResetPasswordRequestConfiguration
     {
-        $configuration = new ResetPasswordRequestConfiguration;
+        $configuration = new ResetPasswordRequestConfiguration();
         $config = $this->getConfig($key, 'reset_password_request');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getResetPasswordCheckConfiguration(?string $key = null): ResetPasswordCheckConfiguration
     {
-        $configuration = new ResetPasswordCheckConfiguration;
+        $configuration = new ResetPasswordCheckConfiguration();
         $config = $this->getConfig($key, 'reset_password_check');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getResetPasswordConfirmConfiguration(?string $key = null): ResetPasswordConfirmConfiguration
     {
-        $configuration = new ResetPasswordConfirmConfiguration;
+        $configuration = new ResetPasswordConfirmConfiguration();
         $config = $this->getConfig($key, 'reset_password_confirm');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getResetPasswordFinishConfiguration(?string $key = null): ResetPasswordFinishConfiguration
     {
-        $configuration = new ResetPasswordFinishConfiguration;
+        $configuration = new ResetPasswordFinishConfiguration();
         $config = $this->getConfig($key, 'reset_password_finish');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getChangeEmailRequestConfiguration(?string $key = null): ChangeEmailRequestConfiguration
     {
-        $configuration = new ChangeEmailRequestConfiguration;
+        $configuration = new ChangeEmailRequestConfiguration();
         $config = $this->getConfig($key, 'change_email_request');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getChangeEmailCheckConfiguration(?string $key = null): ChangeEmailCheckConfiguration
     {
-        $configuration = new ChangeEmailCheckConfiguration;
+        $configuration = new ChangeEmailCheckConfiguration();
         $config = $this->getConfig($key, 'change_email_check');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getChangeEmailConfirmConfiguration(?string $key = null): ChangeEmailConfirmConfiguration
     {
-        $configuration = new ChangeEmailConfirmConfiguration;
+        $configuration = new ChangeEmailConfirmConfiguration();
         $config = $this->getConfig($key, 'change_email_confirm');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getChangeEmailFinishConfiguration(?string $key = null): ChangeEmailFinishConfiguration
     {
-        $configuration = new ChangeEmailFinishConfiguration;
+        $configuration = new ChangeEmailFinishConfiguration();
         $config = $this->getConfig($key, 'change_email_finish');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getLoginConfiguration(?string $key = null): LoginConfiguration
     {
-        $configuration = new LoginConfiguration;
+        $configuration = new LoginConfiguration();
         $config = $this->getConfig($key, 'login');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getChangePasswordConfiguration(?string $key = null): ChangePasswordConfiguration
     {
-        $configuration = new ChangePasswordConfiguration;
+        $configuration = new ChangePasswordConfiguration();
         $config = $this->getConfig($key, 'change_password');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getDeleteConfirmConfiguration(?string $key = null): DeleteConfirmConfiguration
     {
-        $configuration = new DeleteConfirmConfiguration;
+        $configuration = new DeleteConfirmConfiguration();
         $config = $this->getConfig($key, 'delete_confirm');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getDeleteFinishConfiguration(?string $key = null): DeleteFinishConfiguration
     {
-        $configuration = new DeleteFinishConfiguration;
+        $configuration = new DeleteFinishConfiguration();
         $config = $this->getConfig($key, 'delete_finish');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getVerificationRequestConfiguration(?string $key = null): VerificationRequestConfiguration
     {
-        $configuration = new VerificationRequestConfiguration;
+        $configuration = new VerificationRequestConfiguration();
         $config = $this->getConfig($key, 'verification_request');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 
     public function getVerificationConfirmConfiguration(?string $key = null): VerificationConfirmConfiguration
     {
-        $configuration = new VerificationConfirmConfiguration;
+        $configuration = new VerificationConfirmConfiguration();
         $config = $this->getConfig($key, 'verification_confirm');
         $this->autoApply($configuration, $config);
+
         return $configuration;
     }
 }

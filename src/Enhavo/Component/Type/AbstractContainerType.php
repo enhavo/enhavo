@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-08
- * Time: 19:51
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Type;
@@ -26,12 +29,10 @@ abstract class AbstractContainerType
 
     /**
      * AbstractContainerType constructor.
-     * @param TypeInterface $type
+     *
      * @param TypeInterface[] $parents
-     * @param array $options
-     * @param string|null $key
      */
-    public function __construct(TypeInterface $type, array $parents, array $options, string $key = null, array $extensions = [])
+    public function __construct(TypeInterface $type, array $parents, array $options, ?string $key = null, array $extensions = [])
     {
         $this->type = $type;
         $this->parents = $parents;
@@ -72,6 +73,7 @@ abstract class AbstractContainerType
                 return true;
             }
         }
+
         return false;
     }
 }

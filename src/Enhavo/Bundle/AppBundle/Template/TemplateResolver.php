@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-07-08
- * Time: 15:58
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Template;
@@ -13,8 +16,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class TemplateResolver implements TemplateResolverInterface
 {
-    const PRIORITY_LOW = 10;
-    const PRIORITY_HIGH = 100;
+    public const PRIORITY_LOW = 10;
+    public const PRIORITY_HIGH = 100;
 
     private KernelInterface $kernel;
     private Filesystem $fs;
@@ -29,18 +32,13 @@ class TemplateResolver implements TemplateResolverInterface
 
     /**
      * TemplateResolver constructor.
-     * @param KernelInterface $kernel
-     * @param Filesystem $fs
-     * @param array $templatePaths
-     * @param string $defaultPath
-     * @param string $themePath
      */
     public function __construct(
         KernelInterface $kernel,
         Filesystem $fs,
         array $templatePaths = [],
-        string $defaultPath = null,
-        string $themePath = null
+        ?string $defaultPath = null,
+        ?string $themePath = null,
     ) {
         $this->fs = $fs;
         $this->kernel = $kernel;
@@ -48,13 +46,12 @@ class TemplateResolver implements TemplateResolverInterface
         $this->themePath = $themePath;
 
         $this->registerPath($this->defaultPath, '', 150);
-        foreach($templatePaths as $path) {
+        foreach ($templatePaths as $path) {
             $this->registerPath($path['path'], $path['alias'], $path['priority']);
         }
     }
 
     /**
-     * @param $path
      * @param int $priority
      */
     public function registerPath($path, $alias, $priority = self::PRIORITY_LOW)
@@ -71,29 +68,27 @@ class TemplateResolver implements TemplateResolverInterface
         });
     }
 
-    /**
-     * @param $template
-     * @return string
-     */
     public function resolve($template): string
     {
         if (isset($this->cache[$template])) {
             return $this->cache[$template];
         }
 
-        foreach($this->paths as $templatePath) {
+        foreach ($this->paths as $templatePath) {
             $templateFile = $this->rewritePath($templatePath, $template);
 
-            if($templateFile === null) {
+            if (null === $templateFile) {
                 continue;
             }
 
             $this->cache[$template] = $templateFile;
+
             return $templateFile;
         }
 
         // if nothing found we return input template
         $this->cache[$template] = $template;
+
         return $template;
     }
 
@@ -103,20 +98,21 @@ class TemplateResolver implements TemplateResolverInterface
             $templateFile = sprintf('%s/%s', $templatePath->getPath(), $template);
             try {
                 $this->kernel->locateResource($templateFile);
-            } catch(\InvalidArgumentException $e) {
+            } catch (\InvalidArgumentException $e) {
                 return null;
             }
 
             $template = ltrim($template, '/');
+
             return sprintf('@%s/%s', $templatePath->getAlias(), $template);
-        } else {
-            $templateFile = sprintf('%s/%s', $templatePath->getPath(), $template);
-            if ($this->fs->exists($templateFile)) {
-                if ($templatePath->getPath() === $this->defaultPath) {
-                    return $template;
-                }
-                return sprintf('@%s/%s', $templatePath->getAlias(), $template);
+        }
+        $templateFile = sprintf('%s/%s', $templatePath->getPath(), $template);
+        if ($this->fs->exists($templateFile)) {
+            if ($templatePath->getPath() === $this->defaultPath) {
+                return $template;
             }
+
+            return sprintf('@%s/%s', $templatePath->getAlias(), $template);
         }
 
         return null;
@@ -127,14 +123,14 @@ class TemplateResolver implements TemplateResolverInterface
         $dir = realpath($dir);
         $subDir = realpath($subDir);
 
-        if($dir === null || $subDir === null) {
+        if (null === $dir || null === $subDir) {
             return false;
         }
 
         $dir = explode('/', $dir);
         $subDir = explode('/', $subDir);
 
-        for ($i = 0; $i < count($dir); $i++) {
+        for ($i = 0; $i < count($dir); ++$i) {
             if (!isset($subDir[$i]) || $dir[$i] !== $subDir[$i]) {
                 return false;
             }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Tests\Serializer\Mock;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,24 +33,18 @@ class Resource
         $this->resources = new ArrayCollection();
     }
 
-    /**
-     * @return mixed
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @param mixed $name
-     */
     public function setName($name)
     {
         $this->name = $name;
     }
 
     /**
-     * @return \Resource[]
+     * @return resource[]
      */
     public function getResources()
     {
@@ -49,16 +52,13 @@ class Resource
     }
 
     /**
-     * @param \Resource[] $resources
+     * @param resource[] $resources
      */
     public function addResource($resources)
     {
         $this->resources->add($resources);
     }
 
-    /**
-     * @param $resources
-     */
     public function removeResource($resources)
     {
         $this->resources->removeElement($resources);

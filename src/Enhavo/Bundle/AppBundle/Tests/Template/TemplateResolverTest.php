@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Tests\Template;
 
-use Symfony\Component\Filesystem\Filesystem;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class TemplateResolverTest extends TestCase
@@ -16,6 +25,7 @@ class TemplateResolverTest extends TestCase
         $dependencies->kernel = $this->getMockBuilder(KernelInterface::class)->getMock();
         $dependencies->fs = new Filesystem();
         $dependencies->themePath = __DIR__.'/../Fixtures/template/theme';
+
         return $dependencies;
     }
 

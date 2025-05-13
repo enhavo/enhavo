@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -24,8 +33,7 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
         private readonly CsrfTokenManagerInterface $csrfTokenManager,
         private readonly RouteResolverInterface $routeResolver,
         private readonly CsrfChecker $csrfChecker,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -35,7 +43,7 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
 
         $resource = $input->getResource();
 
-        if ($resource === null) {
+        if (null === $resource) {
             throw $this->createNotFoundException();
         }
 
@@ -45,6 +53,7 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
             $context->setStatusCode(400);
             $data['success'] = false;
             $data['message'] = 'Invalid token';
+
             return;
         }
 
@@ -52,7 +61,7 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
         $this->resourceManager->save($duplicateResource);
 
         $redirectRoute = $this->routeResolver->getRoute('update', ['api' => false]) ?? $options['update_route'];
-        $apiRoute = $this->routeResolver->getRoute('update', ['api' => true])  ?? $options['update_api_route'];
+        $apiRoute = $this->routeResolver->getRoute('update', ['api' => true]) ?? $options['update_api_route'];
 
         $data->set('url', $this->generateUrl($apiRoute, ['id' => $duplicateResource->getId()]));
         if ($redirectRoute) {
@@ -66,7 +75,7 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
             'update_route' => null,
             'update_api_route' => null,
             'permission' => Permission::UPDATE,
-            'groups' => 'duplicate'
+            'groups' => 'duplicate',
         ]);
 
         $resolver->setRequired('input');

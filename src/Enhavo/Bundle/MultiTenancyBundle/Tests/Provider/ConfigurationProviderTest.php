@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\MultiTenancyBundle\Tests\Provider;
 
@@ -14,16 +22,16 @@ class ConfigurationProviderTest extends TestCase
             'test_key' => [
                 'base_url' => 'http://localhost.com',
                 'domains' => [
-                    'localhost.com', 'something.com'
+                    'localhost.com', 'something.com',
                 ],
                 'name' => 'Test',
-                'role' => 'ROLE_TENANT_TEST'
+                'role' => 'ROLE_TENANT_TEST',
             ],
             'other_key' => [
                 'base_url' => 'http://other.com',
                 'domains' => [
-                    'other.com'
-                ]
+                    'other.com',
+                ],
             ],
         ]);
 

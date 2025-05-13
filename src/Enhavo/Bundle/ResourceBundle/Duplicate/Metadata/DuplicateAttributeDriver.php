@@ -1,9 +1,12 @@
 <?php
-/**
- * MetadataCollector.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 10/05/18
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Duplicate\Metadata;
@@ -13,7 +16,7 @@ use Enhavo\Component\Metadata\DriverInterface;
 
 class DuplicateAttributeDriver implements DriverInterface
 {
-    public function loadClass($className): array|null|false
+    public function loadClass($className): array|false|null
     {
         $reflection = new \ReflectionClass($className);
 

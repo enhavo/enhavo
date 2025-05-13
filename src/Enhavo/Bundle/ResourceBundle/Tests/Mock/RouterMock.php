@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-04
- * Time: 11:59
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Mock;
@@ -36,6 +39,7 @@ class RouterMock implements RouterInterface
         if ($query) {
             return sprintf('/%s?%s', $name, $query);
         }
+
         return sprintf('/%s', $name);
     }
 

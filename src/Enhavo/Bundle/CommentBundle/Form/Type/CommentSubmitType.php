@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-09-16
- * Time: 15:20
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Form\Type;
@@ -35,7 +38,7 @@ class CommentSubmitType extends AbstractType
     {
         $builder->add('comment', TextareaType::class, [
             'label' => 'comment.label.comment',
-            'translation_domain' => 'EnhavoCommentBundle'
+            'translation_domain' => 'EnhavoCommentBundle',
         ]);
     }
 
@@ -43,7 +46,7 @@ class CommentSubmitType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => $this->dataClass,
-            'validation_groups' => $this->validationGroups
+            'validation_groups' => $this->validationGroups,
         ]);
     }
 }

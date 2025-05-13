@@ -1,11 +1,11 @@
-<?= "<?php\n"; ?>
+<?php echo "<?php\n"; ?>
 
-namespace <?= $namespace; ?>;
+namespace <?php echo $namespace; ?>;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class <?= $class_name; ?> extends AbstractMenuType
+class <?php echo $class_name; ?> extends AbstractMenuType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -20,6 +20,6 @@ class <?= $class_name; ?> extends AbstractMenuType
 
     public static function getName(): ?string
     {
-        return '<?= $name; ?>';
+        return '<?php echo $name; ?>';
     }
 }

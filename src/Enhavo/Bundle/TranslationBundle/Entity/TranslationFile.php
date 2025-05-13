@@ -1,12 +1,20 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TranslationBundle\Entity;
 
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 
 /**
  * Class TranslationFile
- * @package Enhavo\Bundle\TranslationBundle\Entity
  */
 class TranslationFile
 {
@@ -21,7 +29,7 @@ class TranslationFile
     private $class;
 
     /**
-     * @var integer
+     * @var int
      */
     private $refId;
 
@@ -40,15 +48,12 @@ class TranslationFile
      */
     private $property;
 
-    /**
-     * @var mixed
-     */
     private $object;
 
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -103,17 +108,11 @@ class TranslationFile
         $this->locale = $locale;
     }
 
-    /**
-     * @return FileInterface|null
-     */
     public function getFile(): ?FileInterface
     {
         return $this->file;
     }
 
-    /**
-     * @param FileInterface|null $file
-     */
     public function setFile(?FileInterface $file): void
     {
         $this->file = $file;
@@ -135,17 +134,11 @@ class TranslationFile
         $this->property = $property;
     }
 
-    /**
-     * @return mixed
-     */
     public function getObject()
     {
         return $this->object;
     }
 
-    /**
-     * @param mixed $object
-     */
     public function setObject($object)
     {
         $this->object = $object;

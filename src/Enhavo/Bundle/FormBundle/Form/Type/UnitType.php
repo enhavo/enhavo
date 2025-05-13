@@ -1,17 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jenny
- * Date: 10.01.17
- * Time: 14:41
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\CallbackTransformer;
 
 class UnitType extends AbstractType
 {
@@ -20,15 +23,17 @@ class UnitType extends AbstractType
         $builder
             ->addModelTransformer(new CallbackTransformer(
                 function ($currencyAsInt) {
-                    //int -> text
-                    $string = (string)$currencyAsInt;
+                    // int -> text
+                    $string = (string) $currencyAsInt;
                     $string = str_replace('.', ',', $string);
+
                     return $string;
                 },
                 function ($currencyAsString) {
-                    //text -> int
+                    // text -> int
                     $string = $currencyAsString;
                     $string = str_replace(',', '.', $string);
+
                     return $string;
                 }
             ));

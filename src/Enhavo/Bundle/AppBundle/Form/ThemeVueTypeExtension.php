@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Form;
 
 use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
@@ -13,8 +22,7 @@ class ThemeVueTypeExtension extends AbstractVueTypeExtension
 {
     public function __construct(
         private readonly array $mappings,
-    )
-    {
+    ) {
     }
 
     public function finishVueData(FormView $view, VueData $data, array $options)

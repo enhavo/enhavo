@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\ResourceBundle\Action\AbstractActionType;
@@ -10,8 +19,7 @@ class UpdateActionType extends AbstractActionType
 {
     public function __construct(
         private readonly RouteResolverInterface $routeResolver,
-    )
-    {
+    ) {
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -23,12 +31,11 @@ class UpdateActionType extends AbstractActionType
             'frame_key' => 'edit-view',
             'target' => '_frame',
             'route_parameters' => [
-                'id' => 'expr:resource?.getId()'
-            ]
+                'id' => 'expr:resource?.getId()',
+            ],
         ]);
 
-
-        $resolver->setNormalizer('route', function($options, $value) {
+        $resolver->setNormalizer('route', function ($options, $value) {
             if (empty($value)) {
                 $route = $this->routeResolver->getRoute('update', ['api' => false]);
                 if ($route) {

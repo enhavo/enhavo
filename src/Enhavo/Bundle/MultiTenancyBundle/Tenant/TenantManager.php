@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 11.07.18
- * Time: 23:06
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MultiTenancyBundle\Tenant;
@@ -25,9 +28,6 @@ class TenantManager
 
     /**
      * TenantManager constructor.
-     * @param ResolverInterface $resolver
-     * @param ProviderInterface $provider
-     * @param EntityManagerInterface $entityManager
      */
     public function __construct(ResolverInterface $resolver, ProviderInterface $provider, EntityManagerInterface $entityManager)
     {
@@ -39,13 +39,15 @@ class TenantManager
     public function getTenant($key = null)
     {
         if ($key) {
-            foreach($this->provider->getTenants() as $tenant) {
+            foreach ($this->provider->getTenants() as $tenant) {
                 if ($tenant->getKey() == $key) {
                     return $tenant;
                 }
             }
+
             return null;
         }
+
         return $this->resolver->getTenant();
     }
 

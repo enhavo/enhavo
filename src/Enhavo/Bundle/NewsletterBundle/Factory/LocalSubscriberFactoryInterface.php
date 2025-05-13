@@ -1,13 +1,15 @@
 <?php
-/**
- * LocalSubscriberFactoryInterface.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since $date
- * @author $username-media
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Factory;
-
 
 use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;

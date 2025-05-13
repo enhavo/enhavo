@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Provider;
 
 use Enhavo\Component\Metadata\Extension\Config;
@@ -21,7 +30,6 @@ class ConfigProvider implements ProviderInterface
     public function provide(Metadata $metadata, $normalizedData): void
     {
         if (array_key_exists($this->name, $normalizedData) && is_array($normalizedData[$this->name])) {
-
             $configs = [];
 
             $values = $this->propertyAccessor->getValue($metadata, $this->name);

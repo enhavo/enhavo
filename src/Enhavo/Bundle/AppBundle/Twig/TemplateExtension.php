@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Twig;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
@@ -26,8 +35,6 @@ class TemplateExtension extends AbstractExtension
 
     /**
      * TemplateExtension constructor.
-     * @param array $formThemes
-     * @param TemplateResolver $templateResolver
      */
     public function __construct(array $formThemes, TemplateResolver $templateResolver)
     {
@@ -37,11 +44,11 @@ class TemplateExtension extends AbstractExtension
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('template', array($this, 'getTemplate')),
-            new TwigFunction('form_themes', array($this, 'getFormThemes')),
-            new TwigFunction('create_array', array($this, 'createArray')),
-        );
+        return [
+            new TwigFunction('template', [$this, 'getTemplate']),
+            new TwigFunction('form_themes', [$this, 'getFormThemes']),
+            new TwigFunction('create_array', [$this, 'createArray']),
+        ];
     }
 
     public function getFormThemes()
@@ -50,7 +57,6 @@ class TemplateExtension extends AbstractExtension
     }
 
     /**
-     * @param $template
      * @return mixed
      */
     public function getTemplate(string $template): string

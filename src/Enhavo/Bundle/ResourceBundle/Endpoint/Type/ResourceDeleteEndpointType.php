@@ -1,9 +1,12 @@
 <?php
-/**
- * TableViewer.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 29/05/15
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
@@ -28,8 +31,7 @@ class ResourceDeleteEndpointType extends AbstractEndpointType
         private readonly ResourceManager $resourceManager,
         private readonly CsrfTokenManagerInterface $csrfTokenManager,
         private readonly CsrfChecker $csrfChecker,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -40,7 +42,7 @@ class ResourceDeleteEndpointType extends AbstractEndpointType
 
         $this->denyAccessUnlessGranted(new Permission($input->getResourceName(), $options['permission']), $resource);
 
-        if ($resource === null) {
+        if (null === $resource) {
             throw $this->createNotFoundException();
         }
 
@@ -48,6 +50,7 @@ class ResourceDeleteEndpointType extends AbstractEndpointType
             $context->setStatusCode(400);
             $data['success'] = false;
             $data['message'] = 'Invalid token';
+
             return;
         }
 
@@ -57,7 +60,7 @@ class ResourceDeleteEndpointType extends AbstractEndpointType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'permission' => Permission::DELETE
+            'permission' => Permission::DELETE,
         ]);
 
         $resolver->setRequired('input');

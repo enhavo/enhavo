@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Form\Type\Form\ItemsNestedType;
@@ -29,8 +38,7 @@ class FormController extends AbstractController
 {
     public function __construct(
         private VueForm $vueForm,
-    )
-    {
+    ) {
     }
 
     private function handleForm(FormInterface $form, Request $request, $template = 'form', $theme = false)
@@ -55,19 +63,19 @@ class FormController extends AbstractController
             'form' => $formView,
             'vue' => $this->vueForm->createData($formView),
             'data' => $form->getData(),
-            'theme' => $theme
+            'theme' => $theme,
         ]);
     }
 
-    #[Route('/media', name: "app_form_media")]
+    #[Route('/media', name: 'app_form_media')]
     public function mediaAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
             ->add('media', MediaType::class, [
-                'multiple' => false
+                'multiple' => false,
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -75,15 +83,15 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    #[Route('/media-multiple', name: "app_form_media_multiple")]
+    #[Route('/media-multiple', name: 'app_form_media_multiple')]
     public function mediaMultipleAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
             ->add('media', MediaType::class, [
-                'multiple' => true
+                'multiple' => true,
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -91,21 +99,23 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    #[Route('/ajax', name: "app_form_ajax")]
+    #[Route('/ajax', name: 'app_form_ajax')]
     public function ajaxAction(Request $request)
     {
         $form = $this->createForm(TextType::class);
+
         return $this->handleForm($form, $request, 'ajax');
     }
 
-    #[Route('/submit', name: "app_form_submit")]
+    #[Route('/submit', name: 'app_form_submit')]
     public function submitAction(Request $request)
     {
         $form = $this->createForm(TextType::class);
+
         return $this->handleForm($form, $request, 'submit');
     }
 
-    #[Route('/compound', name: "app_demo_form")]
+    #[Route('/compound', name: 'app_demo_form')]
     public function compoundFormAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
@@ -117,10 +127,10 @@ class FormController extends AbstractController
                 'choices' => [
                     'foo' => 'foo',
                     'bar' => 'bar',
-                ]
+                ],
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -128,7 +138,7 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    #[Route('/list-nested', name: "app_form_list_nested")]
+    #[Route('/list-nested', name: 'app_form_list_nested')]
     public function listNestedAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
@@ -137,7 +147,7 @@ class FormController extends AbstractController
                 'sortable' => true,
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -145,22 +155,22 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    #[Route('/list-connected', name: "app_form_list_connected")]
+    #[Route('/list-connected', name: 'app_form_list_connected')]
     public function listConnectedAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
             ->add('items', ListType::class, [
                 'entry_type' => ItemsType::class,
                 'sortable' => true,
-                'draggable_group' => 'item'
+                'draggable_group' => 'item',
             ])
             ->add('items2', ListType::class, [
                 'entry_type' => ItemsType::class,
                 'sortable' => true,
-                'draggable_group' => 'item'
+                'draggable_group' => 'item',
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -168,7 +178,7 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    #[Route('/list-custom', name: "app_form_list_custom")]
+    #[Route('/list-custom', name: 'app_form_list_custom')]
     public function listCustomAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
@@ -177,7 +187,7 @@ class FormController extends AbstractController
                 'sortable' => true,
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -185,12 +195,12 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request, theme: true);
     }
 
-    #[Route('/diff', name: "app_form_diff")]
+    #[Route('/diff', name: 'app_form_diff')]
     public function diffAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
             ->add('text', TextType::class, [
-                'label' => 'My text'
+                'label' => 'My text',
             ])
 //            ->add('button', SubmitType::class, [
 //                'label' => 'save'
@@ -201,7 +211,7 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request, 'diff');
     }
 
-    #[Route('/checkbox', name: "app_form_checkbox")]
+    #[Route('/checkbox', name: 'app_form_checkbox')]
     public function checkboxAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
@@ -210,7 +220,7 @@ class FormController extends AbstractController
                 'required' => false,
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -218,7 +228,7 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    #[Route('/text', name: "app_form_text")]
+    #[Route('/text', name: 'app_form_text')]
     public function textAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
@@ -226,7 +236,7 @@ class FormController extends AbstractController
                 'label' => 'Text',
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -234,7 +244,7 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    #[Route('/radio', name: "app_form_radio")]
+    #[Route('/radio', name: 'app_form_radio')]
     public function radioAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
@@ -245,10 +255,10 @@ class FormController extends AbstractController
                 'choices' => [
                     'Male' => 'male',
                     'Female' => 'female',
-                ]
+                ],
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -256,7 +266,7 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    #[Route('/select', name: "app_form_select")]
+    #[Route('/select', name: 'app_form_select')]
     public function selectAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
@@ -267,10 +277,10 @@ class FormController extends AbstractController
                 'choices' => [
                     'Male' => 'male',
                     'Female' => 'female',
-                ]
+                ],
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -278,7 +288,7 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    #[Route('/wysiwyg', name: "app_form_wysiwyg")]
+    #[Route('/wysiwyg', name: 'app_form_wysiwyg')]
     public function wysiwygAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
@@ -286,7 +296,7 @@ class FormController extends AbstractController
                 'label' => 'Text',
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -294,7 +304,7 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    #[Route('/wysiwyg-list', name: "app_form_wysiwyg_list")]
+    #[Route('/wysiwyg-list', name: 'app_form_wysiwyg_list')]
     public function wysiwygListAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
@@ -303,7 +313,7 @@ class FormController extends AbstractController
                 'sortable' => true,
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -311,7 +321,7 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request, theme: true);
     }
 
-    #[Route('/poly-collection', name: "app_form_poly_collection")]
+    #[Route('/poly-collection', name: 'app_form_poly_collection')]
     public function polyCollectionAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
@@ -324,12 +334,12 @@ class FormController extends AbstractController
                     'text' => ['label' => 'I am a label'],
                     'date' => ['label' => 'Type in the date'],
                 ],
-                'entry_type_resolver' => function($data) {
+                'entry_type_resolver' => function ($data) {
                     return $data instanceof DateType ? 'date' : 'text';
                 },
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -337,7 +347,7 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request);
     }
 
-    #[Route('/conditional', name: "app_form_conditional")]
+    #[Route('/conditional', name: 'app_form_conditional')]
     public function conditionalAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
@@ -357,12 +367,12 @@ class FormController extends AbstractController
                     'text' => ['label' => 'I am a label'],
                     'date' => ['label' => 'Type in the date'],
                 ],
-                'entry_type_resolver' => function($data, Form $form) {
+                'entry_type_resolver' => function ($data, Form $form) {
                     return $form->getParent()?->get('type')?->getData();
                 },
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();
@@ -370,7 +380,7 @@ class FormController extends AbstractController
         return $this->handleForm($form, $request, theme: true);
     }
 
-    #[Route('/controller', name: "app_form_controller")]
+    #[Route('/controller', name: 'app_form_controller')]
     public function controllerAction(Request $request)
     {
         $form = $this->createFormBuilder(null)
@@ -382,7 +392,7 @@ class FormController extends AbstractController
                 'component_visitors' => ['type_conditional'],
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
             ])
             ->setMethod('POST')
             ->getForm();

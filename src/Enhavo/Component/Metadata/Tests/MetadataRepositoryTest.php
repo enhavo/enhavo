@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-10
- * Time: 17:16
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Metadata\Tests;
@@ -20,6 +23,7 @@ class MetadataRepositoryTest extends TestCase
     {
         $dependencies = new MetadataRepositoryDependencies();
         $dependencies->factory = $this->getFactoryMock();
+
         return $dependencies;
     }
 
@@ -32,7 +36,7 @@ class MetadataRepositoryTest extends TestCase
     {
         $factory = $this->getMockBuilder(MetadataFactory::class)->disableOriginalConstructor()->getMock();
 
-        if(!$method) {
+        if (!$method) {
             return $factory;
         }
 
@@ -40,18 +44,21 @@ class MetadataRepositoryTest extends TestCase
 
         $factory->method('getAllClasses')->willReturn($configuration);
 
-        $factory->method('loadMetadata')->willReturnCallback(function($className, MetadataRepositoryMetadata $metadata) use ($configuration) {
-            if(in_array($className, $configuration)) {
+        $factory->method('loadMetadata')->willReturnCallback(function ($className, MetadataRepositoryMetadata $metadata) use ($configuration) {
+            if (in_array($className, $configuration)) {
                 $metadata->names[] = $className;
+
                 return true;
             }
+
             return false;
         });
 
-        $factory->method('createMetadata')->willReturnCallback(function($className, $force = false) use ($configuration) {
-            if($force || in_array($className, $configuration)) {
+        $factory->method('createMetadata')->willReturnCallback(function ($className, $force = false) use ($configuration) {
+            if ($force || in_array($className, $configuration)) {
                 return new MetadataRepositoryMetadata($className);
             }
+
             return null;
         });
 
@@ -70,7 +77,7 @@ class MetadataRepositoryTest extends TestCase
         $this->assertEquals([
             MetadataRepositoryRoot::class,
             MetadataRepositoryParent::class,
-            MetadataRepositoryResource::class
+            MetadataRepositoryResource::class,
         ], $metadata->names);
     }
 
@@ -109,7 +116,7 @@ class MetadataRepositoryTest extends TestCase
         $this->assertEquals([
             MetadataRepositoryRoot::class,
             MetadataRepositoryParent::class,
-            MetadataRepositoryResource::class
+            MetadataRepositoryResource::class,
         ], $metadata->names);
     }
 
@@ -162,7 +169,7 @@ class MetadataRepositoryTest extends TestCase
 
         $dependencies = $this->createDependencies();
         $repository = $this->createInstance($dependencies);
-        $repository->getMetadata("1234");
+        $repository->getMetadata('1234');
     }
 }
 
@@ -181,20 +188,16 @@ class MetadataRepositoryMetadata extends Metadata
 
 class MetadataRepositoryRoot
 {
-
 }
 
 class MetadataRepositoryParent extends MetadataRepositoryRoot
 {
-
 }
 
 class MetadataRepositoryResource extends MetadataRepositoryParent
 {
-
 }
 
 class MetadataRepositoryChild extends MetadataRepositoryResource
 {
-
 }

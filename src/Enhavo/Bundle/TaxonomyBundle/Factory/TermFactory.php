@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-05-26
- * Time: 23:41
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TaxonomyBundle\Factory;
@@ -32,22 +35,23 @@ class TermFactory extends Factory
         /** @var TermInterface $term */
         $term = $this->createNew();
         $term->setTaxonomy($this->getTaxonomyByName($taxonomy));
+
         return $term;
     }
 
     /**
-     * @param $name
-     * @return TaxonomyInterface|null
      * @throws TaxonomyNotFoundException
+     *
+     * @return TaxonomyInterface|null
      */
     private function getTaxonomyByName($name): TaxonomyInterface
     {
         /** @var TaxonomyInterface $taxonomy */
         $taxonomy = $this->repository->findOneBy([
-            'name' => $name
+            'name' => $name,
         ]);
 
-        if($taxonomy === null) {
+        if (null === $taxonomy) {
             throw new TaxonomyNotFoundException($name);
         }
 

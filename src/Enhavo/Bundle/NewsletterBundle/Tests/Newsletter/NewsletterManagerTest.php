@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-03
- * Time: 10:24
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Newsletter;
@@ -21,9 +24,6 @@ use Enhavo\Bundle\NewsletterBundle\Exception\SendException;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser;
 use Enhavo\Bundle\NewsletterBundle\Provider\ProviderInterface;
-use Enhavo\Bundle\NewsletterBundle\Storage\Storage;
-use Enhavo\Bundle\NewsletterBundle\Strategy\Strategy;
-use Enhavo\Bundle\NewsletterBundle\Subscription\Subscription;
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -51,16 +51,16 @@ class NewsletterManagerTest extends TestCase
         $dependency->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
         $dependency->parameterParser = $this->getMockBuilder(ParameterParser::class)->disableOriginalConstructor()->getMock();
         $dependency->parameterParser->method('parse')->willReturnCallback(function ($content) {
-            return $content .'.parsed';
+            return $content.'.parsed';
         });
         $dependency->templateResolver = $this->getMockBuilder(TemplateResolver::class)->disableOriginalConstructor()->getMock();
         $dependency->templateResolver->method('resolve')->willReturnCallback(function ($key) {
-            return $key .'.managed';
+            return $key.'.managed';
         });
 
         $providerMock = $this->getMockBuilder(ProviderInterface::class)->getMock();
         $providerMock->method('getTestReceivers')->willReturn([
-            $this->createTestReceiver()
+            $this->createTestReceiver(),
         ]);
         $dependency->provider = $providerMock;
         $classMetadataFactory = new ClassMetadataFactory(new YamlFileLoader(__DIR__.'/../../Resources/config/serialization.yaml'));
@@ -94,11 +94,11 @@ class NewsletterManagerTest extends TestCase
         $receiver->setParameters([
             'firstname' => 'Harry',
             'lastname' => 'Hirsch',
-            'token' =>  '__ID_TOKEN__'
+            'token' => '__ID_TOKEN__',
         ]);
+
         return $receiver;
     }
-
 
     private function createDummyNewsletter(): Newsletter
     {
@@ -106,7 +106,7 @@ class NewsletterManagerTest extends TestCase
         $newsletter->setTemplate('default');
         $newsletter->setSubject('subject');
 
-        return$newsletter;
+        return $newsletter;
     }
 
     /**
@@ -133,10 +133,9 @@ class NewsletterManagerTest extends TestCase
 
         $providerMock = $this->getMockBuilder(ProviderInterface::class)->getMock();
         $providerMock->method('getReceivers')->willReturn([
-            $receiverOne, $receiverTwo
+            $receiverOne, $receiverTwo,
         ]);
         $dependency->provider = $providerMock;
-
 
         $dependency->tokenGenerator->method('generateToken')->willReturn('aGeneratedToken');
         $dependency->em->expects($this->once())->method('flush');
@@ -187,7 +186,7 @@ class NewsletterManagerTest extends TestCase
 
         $dependency = $this->createDependencies();
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
-        $dependency->mailerManager->method('sendMessage')->willReturnCallback(function($message) use ($messageContainer) {
+        $dependency->mailerManager->method('sendMessage')->willReturnCallback(function ($message) use ($messageContainer): void {
             $messageContainer->message = $message;
         });
         $newsletterManager = $this->createInstance($dependency, ['other' => [
@@ -241,7 +240,6 @@ class NewsletterManagerTest extends TestCase
         $this->assertTrue($receiverTwo->isSent());
     }
 
-
     public function testSendNewsletterPrepared()
     {
         $dependency = $this->createDependencies();
@@ -252,7 +250,6 @@ class NewsletterManagerTest extends TestCase
         $newsletter->setState(Newsletter::STATE_CREATED);
         $this->expectException(SendException::class);
         $newsletterManager->send($newsletter);
-
     }
 
     public function testSendNewsletterAlreadySent()
@@ -265,7 +262,6 @@ class NewsletterManagerTest extends TestCase
         $newsletter->setState(Newsletter::STATE_SENT);
         $this->expectException(SendException::class);
         $newsletterManager->send($newsletter);
-
     }
 
     public function testRender()
@@ -292,7 +288,7 @@ class NewsletterManagerTest extends TestCase
         $dependencies->templateResolver->method('resolve')->willReturnCallback(function ($template) { return $template; });
         $newsletterRenderer = $this->createInstance($dependencies, ['other' => [
             'template' => 'pathToOtherTemplate.twig',
-            'label' => 'Other Template'
+            'label' => 'Other Template',
         ]]);
 
         $newsletter = new Newsletter();
@@ -340,8 +336,9 @@ class NewsletterManagerTest extends TestCase
 
         $dependency = $this->createDependencies();
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
-        $dependency->mailerManager->method('sendMessage')->willReturnCallback(function($message) use ($messageContainer) {
+        $dependency->mailerManager->method('sendMessage')->willReturnCallback(function ($message) use ($messageContainer) {
             $messageContainer->message = $message;
+
             return 1;
         });
         $newsletterManager = $this->createInstance($dependency, ['default' => [
@@ -360,7 +357,6 @@ class NewsletterManagerTest extends TestCase
         $this->assertInstanceOf(Newsletter::class, $messageContainer->message->getContext()['resource']);
     }
 
-
     public function testSendTestNotSent()
     {
         $messageContainer = new MessageContainer();
@@ -371,8 +367,9 @@ class NewsletterManagerTest extends TestCase
 
         $dependency = $this->createDependencies();
         $dependency->mailerManager->method('createMessage')->willReturn(new Message());
-        $dependency->mailerManager->method('sendMessage')->willReturnCallback(function($message) use ($messageContainer) {
+        $dependency->mailerManager->method('sendMessage')->willReturnCallback(function ($message) use ($messageContainer) {
             $messageContainer->message = $message;
+
             return 0;
         });
         $newsletterManager = $this->createInstance($dependency, ['default' => [
@@ -398,7 +395,7 @@ class DependencyProvider
     public MailerManager|MockObject $mailerManager;
     public string $from;
     public TokenGeneratorInterface|MockObject $tokenGenerator;
-    public  LoggerInterface|MockObject $logger;
+    public LoggerInterface|MockObject $logger;
     public SubscriptionManager|MockObject $twig;
     public TemplateResolver|MockObject $templateResolver;
     public ParameterParser|MockObject $parameterParser;

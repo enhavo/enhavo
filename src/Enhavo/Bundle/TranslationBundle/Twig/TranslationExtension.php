@@ -1,9 +1,12 @@
 <?php
-/**
- * LocaleExtension.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 12/12/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Twig;
@@ -21,7 +24,6 @@ class TranslationExtension extends AbstractExtension
 
     /**
      * TranslationExtension constructor.
-     * @param TranslationManager $translationManager
      */
     public function __construct(TranslationManager $translationManager)
     {
@@ -31,9 +33,9 @@ class TranslationExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('translation_default_locale', array($this, 'getDefaultLocale')),
-            new TwigFunction('translation_locales', array($this, 'getLocales')),
-            new TwigFunction('translation_property', array($this, 'getProperty')),
+            new TwigFunction('translation_default_locale', [$this, 'getDefaultLocale']),
+            new TwigFunction('translation_locales', [$this, 'getLocales']),
+            new TwigFunction('translation_property', [$this, 'getProperty']),
         ];
     }
 

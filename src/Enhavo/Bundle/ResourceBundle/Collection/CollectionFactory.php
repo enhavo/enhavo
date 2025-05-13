@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Collection;
 
 use Doctrine\ORM\EntityRepository;
@@ -14,6 +23,7 @@ class CollectionFactory
     {
         $this->container = $container;
     }
+
     public function create(EntityRepository $repository, array $filters, array $columns, array $routes, array $configuration, string $resourceName): CollectionInterface
     {
         if (isset($configuration['class'])) {
@@ -38,7 +48,6 @@ class CollectionFactory
         $collection->setRepository($repository);
         $collection->setRoutes($routes);
         $collection->setResourceName($resourceName);
-
 
         $resolver = new OptionsResolver();
         $collection->configureOptions($resolver);

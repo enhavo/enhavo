@@ -1,8 +1,16 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\EventListener;
 
-use DateTime;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\TooManyLoginAttemptsException;
@@ -19,8 +27,7 @@ class TooManyLoginAttemptsSubscriber implements EventSubscriberInterface
     public function __construct(
         private UserManager $userManager,
         private ConfigurationProvider $configurationProvider,
-    )
-    {
+    ) {
     }
 
     public static function getSubscribedEvents(): array
@@ -38,7 +45,7 @@ class TooManyLoginAttemptsSubscriber implements EventSubscriberInterface
         $exception = $event->getException();
 
         if ($user instanceof UserInterface && $exception instanceof BadCredentialsException) {
-            $user->setLastFailedLoginAttempt(new DateTime());
+            $user->setLastFailedLoginAttempt(new \DateTime());
             $user->setFailedLoginAttempts(1 + $user->getFailedLoginAttempts());
             $this->userManager->update($user);
         }
@@ -72,8 +79,8 @@ class TooManyLoginAttemptsSubscriber implements EventSubscriberInterface
         $loginConfiguration = $this->configurationProvider->getLoginConfiguration();
 
         return
-            $loginConfiguration->getMaxFailedLoginAttempts() &&
-            $user->getFailedLoginAttempts() >= $loginConfiguration->getMaxFailedLoginAttempts()
+            $loginConfiguration->getMaxFailedLoginAttempts()
+            && $user->getFailedLoginAttempts() >= $loginConfiguration->getMaxFailedLoginAttempts()
         ;
     }
 }

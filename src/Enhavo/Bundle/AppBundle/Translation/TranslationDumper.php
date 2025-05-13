@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-04-04
- * Time: 16:30
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Translation;
@@ -13,7 +16,7 @@ use Symfony\Component\Translation\Loader\LoaderInterface;
 class TranslationDumper
 {
     /** @var LoaderInterface[] */
-    private $loaders = array();
+    private $loaders = [];
 
     /** @var array */
     private $translationFilesByLocale;
@@ -29,8 +32,8 @@ class TranslationDumper
     /**
      * Add a translation loader if it does not exist.
      *
-     * @param string $id The loader id.
-     * @param LoaderInterface $loader A translation loader.
+     * @param string          $id     the loader id
+     * @param LoaderInterface $loader a translation loader
      */
     public function addLoader($id, $loader)
     {
@@ -43,12 +46,13 @@ class TranslationDumper
     {
         $messages = [];
         $files = $this->getFiles($translationDomain, $locale);
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $messages = array_replace_recursive(
                 $messages,
                 $this->load($file, $locale, $translationDomain)
             );
         }
+
         return $messages;
     }
 
@@ -56,26 +60,27 @@ class TranslationDumper
     {
         $files = [];
         if (isset($this->translationFilesByLocale[$locale])) {
-            foreach($this->translationFilesByLocale[$locale] as $file) {
+            foreach ($this->translationFilesByLocale[$locale] as $file) {
                 $info = pathinfo($file);
                 $parts = explode('.', $info['filename']);
                 $domain = array_shift($parts);
-                if($domain == $translationDomain) {
+                if ($domain == $translationDomain) {
                     $files[] = $file;
                 }
             }
-
         }
+
         return $files;
     }
 
     private function load($file, $locale, $domain)
     {
         $extension = pathinfo($file)['extension'];
-        if($extension == 'yml') {
+        if ('yml' == $extension) {
             $extension = 'yaml';
         }
         $catalogue = $this->loaders[$extension]->load($file, $locale, $domain);
+
         return $catalogue->all($domain);
     }
 }

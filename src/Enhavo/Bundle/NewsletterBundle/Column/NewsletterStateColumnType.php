@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Column;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -12,21 +21,20 @@ class NewsletterStateColumnType extends AbstractColumnType
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     public function createResourceViewData(array $options, object $resource, Data $data): void
     {
-        if(!$resource instanceof NewsletterInterface) {
-            throw new \InvalidArgumentException;
+        if (!$resource instanceof NewsletterInterface) {
+            throw new \InvalidArgumentException();
         }
 
         $stateMap = [
             NewsletterInterface::STATE_CREATED => 'black',
             NewsletterInterface::STATE_PREPARED => 'orange',
-            NewsletterInterface::STATE_SENDING  => 'orange',
-            NewsletterInterface::STATE_SENT  => 'green'
+            NewsletterInterface::STATE_SENDING => 'orange',
+            NewsletterInterface::STATE_SENT => 'green',
         ];
 
         $data->set('value', $this->translator->trans(sprintf('newsletter.label.%s', $resource->getState()), [], 'EnhavoNewsletterBundle'));

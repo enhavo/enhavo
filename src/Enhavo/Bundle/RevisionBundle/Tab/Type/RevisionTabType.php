@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RevisionBundle\Tab\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -25,22 +34,19 @@ class RevisionTabType extends AbstractTabType
         private readonly RouteResolverInterface $routeResolver,
         private readonly ResourceExpressionLanguage $expressionLanguage,
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, InputInterface $input = null): void
+    public function createViewData(array $options, Data $data, ?InputInterface $input = null): void
     {
         $resource = $input->getResource();
         $route = $this->getRoute($options);
 
         $revisions = [];
         if ($resource instanceof RevisionInterface) {
-
             $revisionData = $this->revisionManager->getRevisions($resource);
 
             foreach ($revisionData as $revision) {
-
                 $routeParameters = $this->expressionLanguage->evaluateArray($options['route_parameters'], [
                     'resource' => $resource,
                     'revision' => $revision,
@@ -67,14 +73,12 @@ class RevisionTabType extends AbstractTabType
     {
         $route = $this->expressionLanguage->evaluate($options['route']);
 
-        if ($route === null) {
+        if (null === $route) {
             $route = $this->routeResolver->getRoute('revision_restore', ['api' => true]);
         }
 
-        if ($route === null) {
-            throw new \Exception(
-                'Can\'t find a route for revision restore, please provide a route to the revision tab over the "route" option'
-            );
+        if (null === $route) {
+            throw new \Exception('Can\'t find a route for revision restore, please provide a route to the revision tab over the "route" option');
         }
 
         return $route;

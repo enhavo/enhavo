@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translator\Text;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
@@ -68,7 +75,6 @@ class RouteTranslatorTest extends TestCase
         $entity->id = 1;
 
         $this->assertEquals($route, $translator->getTranslation($entity, 'route', 'fr'));
-
     }
 
     public function testResetTranslation()
@@ -95,7 +101,6 @@ class RouteTranslatorTest extends TestCase
         $translator->setTranslation($entity, 'route', 'fr', $route2);
 
         $this->assertEquals($route2, $translator->getTranslation($entity, 'route', 'fr'));
-
     }
 
     public function testGetSetTranslationDefaultLocale()
@@ -155,8 +160,6 @@ class RouteTranslatorTest extends TestCase
         $entity = new TranslatableMock();
 
         $translator->delete($entity, 'route');
-
-
     }
 
     public function testTranslate()
@@ -173,7 +176,6 @@ class RouteTranslatorTest extends TestCase
         $translator->translate($entity, 'route', 'en', ['allow_null' => true]);
         $this->assertNotEquals($route, $entity->getRoute());
     }
-
 
     public function testDetach()
     {
@@ -201,7 +203,6 @@ class RouteTranslatorTest extends TestCase
         $translator->translate($entity, 'route', 'es', ['allow_null' => false]);
         $this->assertEquals($route, $entity->getRoute());
     }
-
 }
 
 class RouteTranslatorTestDependencies

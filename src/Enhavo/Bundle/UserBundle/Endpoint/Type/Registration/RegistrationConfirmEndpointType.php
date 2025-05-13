@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Endpoint\Type\Registration;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -15,7 +24,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
 class RegistrationConfirmEndpointType extends AbstractEndpointType
 {
     use TemplateResolverTrait;
@@ -24,8 +32,7 @@ class RegistrationConfirmEndpointType extends AbstractEndpointType
         private readonly ConfigurationProvider $provider,
         private readonly UserManager $userManager,
         private readonly UserRepository $userRepository,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -46,7 +53,7 @@ class RegistrationConfirmEndpointType extends AbstractEndpointType
 
         $url = $this->generateUrl($configuration->getRedirectRoute());
 
-        if ($context->get('_format') === 'html') {
+        if ('html' === $context->get('_format')) {
             $context->setResponse(new RedirectResponse($url));
         } else {
             $data->set('redirect', $url);

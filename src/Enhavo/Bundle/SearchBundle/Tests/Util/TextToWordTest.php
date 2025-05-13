@@ -1,12 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 24.08.18
- * Time: 02:11
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Util;
+
 use PHPUnit\Framework\TestCase;
 
 class TextToWordTest extends TestCase
@@ -18,7 +22,7 @@ class TextToWordTest extends TestCase
         $this->assertSame([
             'Lorem',
             'ipsum',
-            'Dolor'
+            'Dolor',
         ], $textToWord->split('Lorem ipsum! Dolor'));
 
         $this->assertSame([
@@ -29,13 +33,13 @@ class TextToWordTest extends TestCase
         $this->assertSame([
             'Lorem',
             'ipsum',
-            'Dolor'
+            'Dolor',
         ], $textToWord->split('Lorem ipsum   Dolor'));
 
         $this->assertSame([
             'Lorem',
             'ipsum',
-            'Dolor'
+            'Dolor',
         ], $textToWord->split('Lorem ipsum   Dolor'));
     }
 }

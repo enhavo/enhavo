@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Action;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -12,12 +21,11 @@ use Symfony\Component\Routing\RouterInterface;
 class ActivateActionType extends AbstractActionType
 {
     public function __construct(
-        private readonly RouterInterface $router
-    )
-    {
+        private readonly RouterInterface $router,
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $data->set('url', $this->getUrl($options, $resource));
     }
@@ -42,7 +50,7 @@ class ActivateActionType extends AbstractActionType
             'icon' => 'check',
             'label' => 'subscriber.label.activate',
             'translation_domain' => 'EnhavoNewsletterBundle',
-            'route' => 'enhavo_newsletter_pending_subscriber_activate'
+            'route' => 'enhavo_newsletter_pending_subscriber_activate',
         ]);
     }
 
@@ -50,7 +58,6 @@ class ActivateActionType extends AbstractActionType
     {
         return UpdateActionType::class;
     }
-
 
     public static function getName(): ?string
     {

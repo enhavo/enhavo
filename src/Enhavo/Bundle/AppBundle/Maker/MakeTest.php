@@ -1,9 +1,12 @@
 <?php
-/**
- * MakeMenu.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 25/05/19
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Maker;
@@ -24,8 +27,7 @@ class MakeTest extends AbstractMaker
     public function __construct(
         private MakerUtil $util,
         private TestClassResolverInterface $testClassResolver,
-    )
-    {
+    ) {
     }
 
     public function configureCommand(Command $command, InputConfiguration $inputConfig)
@@ -43,7 +45,6 @@ class MakeTest extends AbstractMaker
 
     public function configureDependencies(DependencyBuilder $dependencies)
     {
-
     }
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)

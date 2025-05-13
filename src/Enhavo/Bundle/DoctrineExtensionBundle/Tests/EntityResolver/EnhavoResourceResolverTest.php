@@ -1,14 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-12
- * Time: 10:13
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EntityResolver;
 
-use Closure;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Proxy\Proxy;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EnhavoResourceResolver;
@@ -25,6 +27,7 @@ class EnhavoResourceResolverTest extends TestCase
         $dependencies->repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->resourceManager = $this->getMockBuilder(ResourceManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->resources = [];
+
         return $dependencies;
     }
 
@@ -34,6 +37,7 @@ class EnhavoResourceResolverTest extends TestCase
             $dependencies->resources,
             $dependencies->resourceManager
         );
+
         return $instance;
     }
 
@@ -44,15 +48,15 @@ class EnhavoResourceResolverTest extends TestCase
         $dependencies->resources = [
             'app.entity' => [
                 'classes' => [
-                    'model' => EnhavoResourceResolverEntityDummy::class
-                ]
-            ]
+                    'model' => EnhavoResourceResolverEntityDummy::class,
+                ],
+            ],
         ];
 
         $resolver = $this->createInstance($dependencies);
 
-        $this->assertEquals('app.entity', $resolver->getName(new EnhavoResourceResolverEntityDummy));
-        $this->assertEquals('app.entity', $resolver->getName(new EnhavoResourceResolverEntityProxyDummy));
+        $this->assertEquals('app.entity', $resolver->getName(new EnhavoResourceResolverEntityDummy()));
+        $this->assertEquals('app.entity', $resolver->getName(new EnhavoResourceResolverEntityProxyDummy()));
         $this->assertEquals('app.entity', $resolver->getName(EnhavoResourceResolverEntityDummy::class));
     }
 
@@ -62,7 +66,7 @@ class EnhavoResourceResolverTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->resources = [];
         $resolver = $this->createInstance($dependencies);
-        $resolver->getName(new EnhavoResourceResolverEntityDummy);
+        $resolver->getName(new EnhavoResourceResolverEntityDummy());
     }
 
     public function testGetEntity()
@@ -71,19 +75,20 @@ class EnhavoResourceResolverTest extends TestCase
 
         $dependencies = $this->createDependencies();
         $dependencies->repository->method('find')->willReturn($entity);
-        $dependencies->resourceManager->method('getRepository')->willReturnCallback(function($service) use ($dependencies) {
-            if ($service == 'app.entity') {
+        $dependencies->resourceManager->method('getRepository')->willReturnCallback(function ($service) use ($dependencies) {
+            if ('app.entity' == $service) {
                 return $dependencies->repository;
             }
+
             return null;
         });
 
         $dependencies->resources = [
             'app.entity' => [
                 'classes' => [
-                    'model' => EnhavoResourceResolverEntityDummy::class
-                ]
-            ]
+                    'model' => EnhavoResourceResolverEntityDummy::class,
+                ],
+            ],
         ];
 
         $resolver = $this->createInstance($dependencies);
@@ -106,50 +111,41 @@ class EnhavoResourceResolverDependencies
     public $resources;
 }
 
-class  EnhavoResourceResolverEntityDummy
+class EnhavoResourceResolverEntityDummy
 {
-
 }
 
 class EnhavoResourceResolverEntityProxyDummy extends EnhavoResourceResolverEntityDummy implements Proxy
 {
     public function __setInitialized($initialized)
     {
-
     }
 
-    public function __setInitializer(Closure $initializer = null)
+    public function __setInitializer(?\Closure $initializer = null)
     {
-
     }
 
     public function __getInitializer()
     {
-
     }
 
-    public function __setCloner(Closure $cloner = null)
+    public function __setCloner(?\Closure $cloner = null)
     {
-
     }
 
     public function __getCloner()
     {
-
     }
 
     public function __getLazyProperties()
     {
-
     }
 
     public function __load()
     {
-
     }
 
     public function __isInitialized()
     {
-
     }
 }

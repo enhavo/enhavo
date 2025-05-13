@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Form\Transformer;
 
@@ -19,9 +27,6 @@ class TranslationValueTransformer implements DataTransformerInterface
 
     /**
      * TranslationValueTransformer constructor.
-     * @param TranslationManager $translationManager
-     * @param object $data
-     * @param string $property
      */
     public function __construct(TranslationManager $translationManager, object $data, string $property)
     {
@@ -45,11 +50,12 @@ class TranslationValueTransformer implements DataTransformerInterface
     public function reverseTransform($value)
     {
         $data = $value;
-        foreach($data as $locale => $value) {
-            if($locale !== $this->translationManager->getDefaultLocale()) {
+        foreach ($data as $locale => $value) {
+            if ($locale !== $this->translationManager->getDefaultLocale()) {
                 $this->translationManager->setTranslation($this->data, $this->property, $locale, $value);
             }
         }
+
         return $data[$this->translationManager->getDefaultLocale()];
     }
 }

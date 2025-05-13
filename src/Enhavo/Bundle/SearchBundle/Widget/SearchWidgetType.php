@@ -1,9 +1,12 @@
 <?php
-/**
- * SearchWidgetType.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 10/10/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Widget;
@@ -13,9 +16,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SearchWidgetType extends AbstractWidgetType
 {
-    /**
-     * @inheritDoc
-     */
     public function getType()
     {
         return 'search';
@@ -31,7 +31,7 @@ class SearchWidgetType extends AbstractWidgetType
         parent::configureOptions($optionsResolver);
 
         $optionsResolver->setDefaults([
-            'template' => 'theme/widget/search.html.twig'
+            'template' => 'theme/widget/search.html.twig',
         ]);
     }
 }

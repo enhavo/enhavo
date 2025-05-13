@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\Endpoint;
 
 use Psr\Container\ContainerInterface;
@@ -113,6 +122,8 @@ trait EndpointTrait
     /**
      * Checks if the attribute is granted against the current authentication token and optionally supplied subject.
      *
+     * @param mixed|null $subject
+     *
      * @throws \LogicException
      */
     protected function isGranted($attribute, $subject = null): bool
@@ -127,6 +138,8 @@ trait EndpointTrait
     /**
      * Throws an exception unless the attribute is granted against the current authentication token and optionally
      * supplied subject.
+     *
+     * @param mixed|null $subject
      *
      * @throws AccessDeniedException
      */
@@ -148,7 +161,7 @@ trait EndpointTrait
      *
      *     throw $this->createNotFoundException('Page not found!');
      */
-    protected function createNotFoundException(string $message = 'Not Found', \Throwable $previous = null): NotFoundHttpException
+    protected function createNotFoundException(string $message = 'Not Found', ?\Throwable $previous = null): NotFoundHttpException
     {
         return new NotFoundHttpException($message, $previous);
     }
@@ -162,7 +175,7 @@ trait EndpointTrait
      *
      * @throws \LogicException If the Security component is not available
      */
-    protected function createAccessDeniedException(string $message = 'Access Denied.', \Throwable $previous = null): AccessDeniedException
+    protected function createAccessDeniedException(string $message = 'Access Denied.', ?\Throwable $previous = null): AccessDeniedException
     {
         if (!class_exists(AccessDeniedException::class)) {
             throw new \LogicException('You cannot use the "createAccessDeniedException" method if the Security component is not available. Try running "composer require symfony/security-bundle".');
@@ -173,6 +186,8 @@ trait EndpointTrait
 
     /**
      * Creates and returns a Form instance from the type of the form.
+     *
+     * @param mixed|null $data
      */
     protected function createForm(string $type, $data = null, array $options = []): FormInterface
     {
@@ -181,6 +196,8 @@ trait EndpointTrait
 
     /**
      * Creates and returns a form builder instance.
+     *
+     * @param mixed|null $data
      */
     protected function createFormBuilder($data = null, array $options = []): FormBuilderInterface
     {
@@ -190,9 +207,9 @@ trait EndpointTrait
     /**
      * Get a user from the Security Token Storage.
      *
-     * @return UserInterface|null
-     *
      * @throws \LogicException If SecurityBundle is not available
+     *
+     * @return UserInterface|null
      *
      * @see TokenInterface::getUser()
      */
@@ -250,7 +267,7 @@ trait EndpointTrait
         $request->attributes->set('_links', $linkProvider->withLink($link));
     }
 
-    protected function normalize(mixed $object, string $format = null, array $context = [])
+    protected function normalize(mixed $object, ?string $format = null, array $context = [])
     {
         return $this->container->get('serializer')->normalize($object, $format, $context);
     }

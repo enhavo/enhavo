@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Input;
 
 use Doctrine\ORM\EntityRepository;
@@ -13,7 +22,6 @@ use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Enhavo\Bundle\ResourceBundle\Tab\TabManager;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -51,10 +59,11 @@ abstract class AbstractInput implements InputInterface, ServiceSubscriberInterfa
     }
 
     /**
-     * @return Action[]
      * @throws InputException
+     *
+     * @return Action[]
      */
-    protected function createActions($configuration, object $resource = null): array
+    protected function createActions($configuration, ?object $resource = null): array
     {
         if (!$this->container->has(ActionManager::class)) {
             throw InputException::missingService(ActionManager::class);
@@ -67,8 +76,9 @@ abstract class AbstractInput implements InputInterface, ServiceSubscriberInterfa
     }
 
     /**
-     * @return Action[]
      * @throws InputException
+     *
+     * @return Action[]
      */
     protected function createTabs($configuration): array
     {
@@ -114,6 +124,7 @@ abstract class AbstractInput implements InputInterface, ServiceSubscriberInterfa
 
         /** @var ResourceExpressionLanguage $expressionLanguage */
         $expressionLanguage = $this->container->get(ResourceExpressionLanguage::class);
+
         return $expressionLanguage->evaluate($expression, $parameters);
     }
 
@@ -123,6 +134,7 @@ abstract class AbstractInput implements InputInterface, ServiceSubscriberInterfa
         foreach ($array as $key => $item) {
             $newArray[$key] = $this->evaluate($item, $parameters);
         }
+
         return $newArray;
     }
 
@@ -134,6 +146,7 @@ abstract class AbstractInput implements InputInterface, ServiceSubscriberInterfa
 
         /** @var RouteResolverInterface $routeResolver */
         $routeResolver = $this->container->get(RouteResolverInterface::class);
+
         return $routeResolver->getRoute($name);
     }
 
@@ -150,6 +163,7 @@ abstract class AbstractInput implements InputInterface, ServiceSubscriberInterfa
 
         /** @var RequestStack $requestStack */
         $requestStack = $this->container->get(RequestStack::class);
+
         return $requestStack->getMainRequest();
     }
 

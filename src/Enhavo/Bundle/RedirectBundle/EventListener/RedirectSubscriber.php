@@ -1,9 +1,12 @@
 <?php
-/**
- * RedirectSubscriber.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 02/02/18
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RedirectBundle\EventListener;
@@ -28,16 +31,16 @@ class RedirectSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             ResourceEvents::PRE_CREATE => 'preSave',
-            ResourceEvents::PRE_UPDATE => 'preSave'
-        );
+            ResourceEvents::PRE_UPDATE => 'preSave',
+        ];
     }
 
     public function preSave(ResourceEvent $event)
     {
         $resource = $event->getSubject();
-        if($resource instanceof RedirectInterface) {
+        if ($resource instanceof RedirectInterface) {
             $this->redirectManager->update($resource);
         }
     }

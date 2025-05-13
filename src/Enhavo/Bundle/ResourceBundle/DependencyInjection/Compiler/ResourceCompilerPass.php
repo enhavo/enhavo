@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -14,8 +23,7 @@ class ResourceCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         $resources = $container->getParameter('enhavo_resource.resources');
-        foreach ($resources as $key => $resource)
-        {
+        foreach ($resources as $key => $resource) {
             $container->setParameter(sprintf('%s.model.class', $key), $resource['classes']['model']);
             $container->setParameter(sprintf('%s.repository.class', $key), $resource['classes']['repository']);
             $container->setParameter(sprintf('%s.factory.class', $key), $resource['classes']['factory']);
@@ -42,7 +50,7 @@ class ResourceCompilerPass implements CompilerPassInterface
         if ($this->instanceOf($repositoryClass, ServiceEntityRepository::class, true)) {
             $definition->setArguments([new Reference('doctrine')]);
             $container->setDefinition($serviceId, $definition);
-        } else if ($this->instanceOf($repositoryClass, EntityRepository::class)) {
+        } elseif ($this->instanceOf($repositoryClass, EntityRepository::class)) {
             $managerReference = new Reference('doctrine');
             $definition->setFactory([$managerReference, 'getRepository']);
             $definition->setArguments([$modelClass]);

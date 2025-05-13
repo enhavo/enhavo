@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,7 +29,6 @@ class AutoSuggestEntityType extends AbstractType
 
     /**
      * AutoSuggestEntityType constructor.
-     * @param EntityManagerInterface $em
      */
     public function __construct(EntityManagerInterface $em)
     {

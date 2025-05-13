@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -48,7 +57,6 @@ class SubscriptionActivateEndpointTypeTest extends TestCase
         $strategy->method('getStorage')->willReturn($storage);
 
         $formConfig = [
-
         ];
 
         return new Subscription($key, $strategy, Subscriber::class, $formConfig);
@@ -60,7 +68,7 @@ class SubscriptionActivateEndpointTypeTest extends TestCase
         $instance = $this->createInstance($dependencies);
         $request = new Request([
             'type' => 'default',
-            'token' => '__TOKEN__'
+            'token' => '__TOKEN__',
         ]);
 
         $this->expectException(NotFoundHttpException::class);
@@ -69,7 +77,6 @@ class SubscriptionActivateEndpointTypeTest extends TestCase
         $context = new Context($request);
         $this->enhanceEndpoint($instance);
         $instance->handleRequest([], $request, $data, $context);
-
     }
 
     public function testActivateAction()
@@ -89,7 +96,7 @@ class SubscriptionActivateEndpointTypeTest extends TestCase
 
         $request = new Request([
             'type' => 'default',
-            'token' => '__TOKEN__'
+            'token' => '__TOKEN__',
         ]);
 
         $data = new Data();

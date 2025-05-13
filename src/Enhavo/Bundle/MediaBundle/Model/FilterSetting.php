@@ -1,9 +1,12 @@
 <?php
-/**
- * Setting.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 30/03/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Model;
@@ -54,13 +57,14 @@ class FilterSetting
 
     public function getSetting($name, $default = null)
     {
-        if(isset($this->settings[$name])) {
+        if (isset($this->settings[$name])) {
             return $this->settings[$name];
         }
+
         return $default;
     }
 
-    public function setSetting($name, $value) 
+    public function setSetting($name, $value)
     {
         $this->settings[$name] = $value;
     }

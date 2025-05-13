@@ -1,12 +1,21 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\DashboardBundle\Dashboard;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Component\Type\AbstractContainerType;
 
 /**
- * @property DashboardWidgetTypeInterface $type
+ * @property DashboardWidgetTypeInterface   $type
  * @property DashboardWidgetTypeInterface[] $parents
  */
 class DashboardWidget extends AbstractContainerType
@@ -15,10 +24,11 @@ class DashboardWidget extends AbstractContainerType
     {
         $data = new Data();
         $data->set('key', $this->key);
-        foreach($this->parents as $parent) {
+        foreach ($this->parents as $parent) {
             $parent->createViewData($this->options, $data);
         }
         $this->type->createViewData($this->options, $data);
+
         return $data->normalize();
     }
 

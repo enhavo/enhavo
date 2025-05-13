@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 23.06.16
- * Time: 10:30
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Index\Type;
@@ -34,7 +37,7 @@ class ModelIndexType extends AbstractIndexType implements IndexTypeInterface
     {
         $value = $this->propertyAccessor->getValue($model, $options['property']);
 
-        if ($value !== null) {
+        if (null !== $value) {
             foreach ($this->indexDataProvider->getIndexData($value) as $index) {
                 $builder->addIndex($index);
             }

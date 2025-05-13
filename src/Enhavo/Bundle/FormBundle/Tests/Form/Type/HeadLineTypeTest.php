@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Tests\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\HeadLineType;
@@ -13,7 +22,7 @@ class HeadLineTypeTest extends TypeTestCase
 
         $form->submit([
             'text' => 'Hello World',
-            'tag' => ''
+            'tag' => '',
         ]);
 
         $this->assertEquals('Hello World', $form->getData());
@@ -25,7 +34,7 @@ class HeadLineTypeTest extends TypeTestCase
 
         $form->submit([
             'text' => 'Hello World',
-            'tag' => 'h1'
+            'tag' => 'h1',
         ]);
 
         $this->assertEquals('<h1>Hello World</h1>', $form->getData());

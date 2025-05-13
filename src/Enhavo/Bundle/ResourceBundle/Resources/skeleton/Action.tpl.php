@@ -1,12 +1,12 @@
-<?= "<?php\n"; ?>
+<?php echo "<?php\n"; ?>
 
-namespace <?= $namespace; ?>;
+namespace <?php echo $namespace; ?>;
 
 use Enhavo\Bundle\AppBundle\Action\AbstractActionType;
 use Enhavo\Bundle\ResourceBundle\Action\ActionTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class <?= $class_name; ?> extends AbstractActionType implements ActionTypeInterface
+class <?php echo $class_name; ?> extends AbstractActionType implements ActionTypeInterface
 {
     public function createViewData(array $options, $resource = null)
     {
@@ -23,13 +23,13 @@ class <?= $class_name; ?> extends AbstractActionType implements ActionTypeInterf
 
         $resolver->setDefaults([
             'component' => '',
-            'label' => '<?= $name; ?>',
+            'label' => '<?php echo $name; ?>',
             'icon' => '',
         ]);
     }
 
     public function getType()
     {
-        return '<?= $name; ?>';
+        return '<?php echo $name; ?>';
     }
 }

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 12.08.18
- * Time: 19:50
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator;
@@ -24,9 +27,6 @@ class TranslationSlugGenerator extends SlugGenerator
 
     /**
      * TranslationSlugGenerator constructor.
-     * @param TranslationManager $translationManager
-     * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $entityManager
      */
     public function __construct(TranslationManager $translationManager, TranslatorInterface $translator, EntityManagerInterface $entityManager)
     {
@@ -48,7 +48,7 @@ class TranslationSlugGenerator extends SlugGenerator
 
             $value = $this->translator->getTranslation($resource, $options['property'], $locale);
 
-            if ($value !== null) {
+            if (null !== $value) {
                 if (!$options['overwrite'] && $this->translator->getTranslation($resource, $options['slug_property'], $locale)) {
                     return;
                 }

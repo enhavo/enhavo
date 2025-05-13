@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Input;
 
 use Enhavo\Bundle\ResourceBundle\Action\Action;
@@ -10,9 +19,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Input extends AbstractInput implements ConfigMergeInterface
 {
-    /** @var Action[]|null  */
+    /** @var Action[]|null */
     private ?array $actions = null;
-    /** @var Tab[]|null  */
+    /** @var Tab[]|null */
     private ?array $tabs = null;
     private ?array $actionsSecondary = null;
     private ?object $resource = null;
@@ -29,7 +38,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
             'factory_arguments' => [],
             'repository_method' => 'find',
             'repository_arguments' => [
-                'expr:request.get("id", 0)'
+                'expr:request.get("id", 0)',
             ],
             'serialization_groups' => ['endpoint', 'endpoint.admin'],
             'validation_groups' => ['default'],
@@ -62,7 +71,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
 
     protected function getActions($resource = null): array
     {
-        if ($this->actions !== null) {
+        if (null !== $this->actions) {
             return $this->actions;
         }
 
@@ -74,7 +83,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
     /** @return Tab[] */
     protected function getTabs(): array
     {
-        if ($this->tabs !== null) {
+        if (null !== $this->tabs) {
             return $this->tabs;
         }
 
@@ -85,7 +94,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
 
     protected function getActionsSecondary($resource = null): array
     {
-        if ($this->actionsSecondary !== null) {
+        if (null !== $this->actionsSecondary) {
             return $this->actionsSecondary;
         }
 
@@ -94,21 +103,23 @@ class Input extends AbstractInput implements ConfigMergeInterface
         return $this->actionsSecondary;
     }
 
-    protected function getActionViewData(object $resource = null): array
+    protected function getActionViewData(?object $resource = null): array
     {
         $data = [];
         foreach ($this->getActions($resource) as $action) {
             $data[] = $action->createViewData($resource);
         }
+
         return $data;
     }
 
-    protected function getActionsSecondaryViewData(object $resource = null): array
+    protected function getActionsSecondaryViewData(?object $resource = null): array
     {
         $data = [];
         foreach ($this->getActionsSecondary($resource) as $action) {
             $data[] = $action->createViewData($resource);
         }
+
         return $data;
     }
 
@@ -119,7 +130,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
 
     public function getResource(array $context = []): ?object
     {
-        if ($this->resource !== null) {
+        if (null !== $this->resource) {
             return $this->resource;
         }
         $callable = [$this->getRepository($this->getResourceName()), $this->options['repository_method']];
@@ -128,6 +139,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
             'context' => $context,
         ]);
         $this->resource = call_user_func_array($callable, $arguments);
+
         return $this->resource;
     }
 
@@ -143,6 +155,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
             'request' => $this->getRequest(),
             'context' => $context,
         ]);
+
         return call_user_func_array($callable, $arguments);
     }
 
@@ -152,10 +165,11 @@ class Input extends AbstractInput implements ConfigMergeInterface
         foreach ($this->getTabs() as $key => $tab) {
             $data[$key] = $tab->createViewData($this);
         }
+
         return $data;
     }
 
-    public function getViewData(object $resource = null, array $context = []): array
+    public function getViewData(?object $resource = null, array $context = []): array
     {
         return [
             'actions' => $this->getActionViewData($resource),

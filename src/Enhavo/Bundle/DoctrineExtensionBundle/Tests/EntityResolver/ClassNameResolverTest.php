@@ -1,14 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-11
- * Time: 23:04
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EntityResolver;
 
-use Closure;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Proxy\Proxy;
@@ -21,6 +23,7 @@ class ClassNameResolverTest extends TestCase
     {
         $dependencies = new ClassNameResolverDependencies();
         $dependencies->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
+
         return $dependencies;
     }
 
@@ -52,7 +55,6 @@ class ClassNameResolverTest extends TestCase
 
         $this->assertEquals(1, $entity->id);
         $this->assertNull($resolver->getEntity(1, 'anything'));
-
     }
 }
 
@@ -76,41 +78,33 @@ class ClassNameResolverEntityProxyDummy extends ClassNameResolverEntityDummy imp
 {
     public function __load()
     {
-
     }
 
     public function __isInitialized()
     {
-
     }
 
     public function __setInitialized($initialized)
     {
-
     }
 
-    public function __setInitializer(Closure $initializer = null)
+    public function __setInitializer(?\Closure $initializer = null)
     {
-
     }
 
     public function __getInitializer()
     {
-
     }
 
-    public function __setCloner(Closure $cloner = null)
+    public function __setCloner(?\Closure $cloner = null)
     {
-
     }
 
     public function __getCloner()
     {
-
     }
 
     public function __getLazyProperties()
     {
-
     }
 }

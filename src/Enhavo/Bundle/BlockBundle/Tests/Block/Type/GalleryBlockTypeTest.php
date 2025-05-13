@@ -1,16 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-22
- * Time: 14:30
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Tests\Block\Type;
 
+use Enhavo\Bundle\BlockBundle\Block\BlockTypeInterface;
 use Enhavo\Bundle\BlockBundle\Block\Type\GalleryBlockType;
 use PHPUnit\Framework\TestCase;
-use Enhavo\Bundle\BlockBundle\Block\BlockTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GalleryBlockTypeTest extends TestCase
@@ -31,6 +34,7 @@ class GalleryBlockTypeTest extends TestCase
     {
         $resolver = new OptionsResolver();
         $type->configureOptions($resolver);
+
         return $resolver->resolve($options);
     }
 }

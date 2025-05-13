@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-10-26
- * Time: 17:52
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Twig;
@@ -22,7 +25,6 @@ class CommentTwigExtension extends AbstractExtension
 
     /**
      * CommentTwigExtension constructor.
-     * @param ConfirmUrlGeneratorInterface $commentUrlGenerator
      */
     public function __construct(ConfirmUrlGeneratorInterface $commentUrlGenerator)
     {
@@ -32,7 +34,7 @@ class CommentTwigExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('comment_confirm_url', [$this, 'getCommentConfirmUrl'])
+            new TwigFunction('comment_confirm_url', [$this, 'getCommentConfirmUrl']),
         ];
     }
 

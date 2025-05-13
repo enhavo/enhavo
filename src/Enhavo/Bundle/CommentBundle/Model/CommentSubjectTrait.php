@@ -1,16 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-10-22
- * Time: 23:15
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Model;
 
 /**
  * Trait CommentSubjectTrait
- * @package Enhavo\Bundle\CommentBundle\Model
  */
 trait CommentSubjectTrait
 {
@@ -19,16 +21,12 @@ trait CommentSubjectTrait
      */
     private $thread;
 
-    /**
-     * @return ThreadInterface
-     */
     public function getThread(): ?ThreadInterface
     {
         return $this->thread;
     }
 
     /**
-     * @param ThreadInterface|null $thread
      * @return self
      */
     public function setThread(?ThreadInterface $thread)

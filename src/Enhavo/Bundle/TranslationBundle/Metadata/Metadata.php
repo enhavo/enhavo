@@ -1,9 +1,12 @@
 <?php
-/**
- * Metadata.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 05/11/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Metadata;
@@ -37,7 +40,6 @@ class Metadata extends \Enhavo\Component\Metadata\Metadata
     }
 
     /**
-     * @param string $property
      * @return PropertyNode|null
      */
     public function getProperty(string $property)
@@ -46,6 +48,7 @@ class Metadata extends \Enhavo\Component\Metadata\Metadata
         if (isset($this->properties[$name])) {
             return $this->properties[$name];
         }
+
         return null;
     }
 

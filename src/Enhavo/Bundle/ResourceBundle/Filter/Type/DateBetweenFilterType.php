@@ -1,9 +1,12 @@
 <?php
-/**
- * DateBetweenFilter.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 16/01/20
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Filter\Type;
@@ -31,9 +34,9 @@ class DateBetweenFilterType extends AbstractFilterType
 
         if (!empty($fromValue) && empty($toValue)) {
             $this->buildFromQuery($query, $options, $fromValue);
-        } elseif(empty($fromValue) && !empty($toValue)) {
+        } elseif (empty($fromValue) && !empty($toValue)) {
             $this->buildToQuery($query, $options, $toValue);
-        } elseif(!empty($fromValue) && !empty($toValue)) {
+        } elseif (!empty($fromValue) && !empty($toValue)) {
             $this->buildFromQuery($query, $options, $fromValue);
             $this->buildToQuery($query, $options, $toValue);
         }
@@ -56,6 +59,7 @@ class DateBetweenFilterType extends AbstractFilterType
                 $initialValue['to'] = (new \DateTime($initialValue['to']))->format('c');
             }
         }
+
         return $initialValue;
     }
 
@@ -89,7 +93,7 @@ class DateBetweenFilterType extends AbstractFilterType
             'label_from' => 'filter.date_between.label.from',
             'label_to' => 'filter.date_between.label.to',
             'locale' => 'de',
-            'format' => 'dd.MM.yyyy'
+            'format' => 'dd.MM.yyyy',
         ]);
     }
 

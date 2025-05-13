@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NavigationBundle\Twig;
 
 use Twig\Environment;
@@ -11,8 +20,9 @@ class NavigationExtension extends AbstractExtension
     private ?Environment $twig = null;
 
     public function __construct(
-        private readonly array $renderSets
-    ) {}
+        private readonly array $renderSets,
+    ) {
+    }
 
     public function getFunctions(): array
     {
@@ -28,20 +38,20 @@ class NavigationExtension extends AbstractExtension
 
     public function render(?array $node, string|array|null $renderSet = null): string
     {
-        if ($node === null) {
+        if (null === $node) {
             return '';
         }
 
         $template = null;
         if (is_array($renderSet) && isset($renderSet[$node['name']])) {
             $template = $renderSet[$node['name']];
-        } else if (is_string($renderSet) && isset($this->renderSets[$renderSet][$node['name']])) {
+        } elseif (is_string($renderSet) && isset($this->renderSets[$renderSet][$node['name']])) {
             $template = $this->renderSets[$renderSet][$node['name']];
-        } else if (isset($node['template'])) {
+        } elseif (isset($node['template'])) {
             $template = $node['template'];
         }
 
-        if ($template === null) {
+        if (null === $template) {
             throw new \Exception('Unable to determine navigation template');
         }
 

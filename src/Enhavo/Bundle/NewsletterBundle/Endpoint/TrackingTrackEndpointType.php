@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Endpoint;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,8 +25,7 @@ class TrackingTrackEndpointType extends AbstractEndpointType
     public function __construct(
         private readonly ReceiverRepository $receiverRepository,
         private readonly EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -26,12 +34,12 @@ class TrackingTrackEndpointType extends AbstractEndpointType
 
         /** @var Receiver $receiver */
         $receiver = $this->receiverRepository->findOneBy([
-            'token' => $token
+            'token' => $token,
         ]);
 
         $response = new BinaryFileResponse(sprintf('%s/../Resources/image/pixel.png', __DIR__));
 
-        if ($receiver !== null) {
+        if (null !== $receiver) {
             $receiver->trackOpen();
             $this->entityManager->flush();
         }

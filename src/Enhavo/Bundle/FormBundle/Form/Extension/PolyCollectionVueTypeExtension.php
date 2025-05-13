@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Form\Extension;
 
 use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
@@ -15,8 +24,7 @@ class PolyCollectionVueTypeExtension extends AbstractVueTypeExtension
     public function __construct(
         private VueForm $vueForm,
         private PrototypeManager $prototypeManager,
-    )
-    {
+    ) {
     }
 
     public function buildVueData(FormView $view, VueData $data, array $options)
@@ -38,8 +46,7 @@ class PolyCollectionVueTypeExtension extends AbstractVueTypeExtension
         $data['itemComponent'] = $options['item_component'];
 
         if ($options['prototype']) {
-            $data->addNormalizer(function(FormView $view, VueData $data)
-            {
+            $data->addNormalizer(function (FormView $view, VueData $data): void {
                 $storage = $view->vars['poly_collection_config']['prototypeStorage'];
                 $prototypes = $this->prototypeManager->getPrototypes($storage);
 
@@ -68,8 +75,7 @@ class PolyCollectionVueTypeExtension extends AbstractVueTypeExtension
     private function getRoot(VueData $data): VueData
     {
         $parent = $data;
-        while ($parent != null)
-        {
+        while (null != $parent) {
             $data = $parent;
             $parent = $data->getParent();
         }

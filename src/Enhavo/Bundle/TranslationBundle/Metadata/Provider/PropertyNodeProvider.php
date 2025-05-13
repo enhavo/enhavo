@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-13
- * Time: 10:56
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Metadata\Provider;
-
 
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
@@ -30,12 +32,12 @@ class PropertyNodeProvider implements ProviderInterface
 
     public function provide(BaseMetadata $metadata, $normalizedData)
     {
-        if(!$metadata instanceof Metadata) {
+        if (!$metadata instanceof Metadata) {
             throw ProviderException::invalidType($metadata, Metadata::class);
         }
 
-        if(array_key_exists('properties', $normalizedData) && is_array($normalizedData['properties'])) {
-            foreach($normalizedData['properties'] as $property => $config) {
+        if (array_key_exists('properties', $normalizedData) && is_array($normalizedData['properties'])) {
+            foreach ($normalizedData['properties'] as $property => $config) {
                 $propertyNode = new PropertyNode();
 
                 $propertyNode->setType($config['type']);

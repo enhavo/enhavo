@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Command;
 
 use Enhavo\Bundle\AppBundle\Output\CliOutputLogger;
@@ -19,7 +28,6 @@ class CleanUpCommand extends Command
 
     /**
      * CleanUpCommand constructor.
-     * @param BlockManager $blockManager
      */
     public function __construct(BlockManager $blockManager)
     {
@@ -37,10 +45,9 @@ class CleanUpCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
      * @throws \Exception
+     *
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -48,7 +55,9 @@ class CleanUpCommand extends Command
 
         $this->blockManager->cleanUp(new CliOutputLogger(new SymfonyStyle($input, $output)), $isDryRun);
 
-        if ($isDryRun) $output->writeln('This was a dry run, no actual changes were made.');
+        if ($isDryRun) {
+            $output->writeln('This was a dry run, no actual changes were made.');
+        }
 
         return Command::SUCCESS;
     }

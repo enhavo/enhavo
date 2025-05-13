@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 02.02.16
- * Time: 11:10
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Column\Type;
@@ -17,7 +20,7 @@ class DateColumnType extends AbstractColumnType
 {
     public function createResourceViewData(array $options, object $resource, Data $data): void
     {
-        $propertyAccessor = new PropertyAccessor;
+        $propertyAccessor = new PropertyAccessor();
         $value = $propertyAccessor->getValue($resource, $options['property']);
 
         if ($value instanceof \DateTime) {
@@ -27,7 +30,6 @@ class DateColumnType extends AbstractColumnType
 
     public function createColumnViewData(array $options, Data $data): void
     {
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void

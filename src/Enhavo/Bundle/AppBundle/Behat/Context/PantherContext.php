@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-03
- * Time: 01:05
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Behat\Context;
@@ -34,6 +37,7 @@ class PantherContext implements Context, ClientAwareContext
      * Example: And I go to "/"
      *
      * @Given /^(?:|I )am on (?:|the )homepage$/
+     *
      * @When /^(?:|I )go to (?:|the )homepage$/
      */
     public function iAmOnHomepage()
@@ -67,15 +71,17 @@ class PantherContext implements Context, ClientAwareContext
     public function assertPageContainsText($text)
     {
         $found = false;
-        $this->getClient()->getCrawler()->filter('*')->each(function($element) use ($text, &$found) {
-            if(strpos($element->text(), $text) !== false) {
+        $this->getClient()->getCrawler()->filter('*')->each(function ($element) use ($text, &$found) {
+            if (false !== strpos($element->text(), $text)) {
                 $found = true;
+
                 return false;
             }
+
             return true;
         });
 
-        if(!$found) {
+        if (!$found) {
             throw new AssertionFailedError(sprintf('%s not found in any node', $text));
         }
     }
@@ -91,19 +97,21 @@ class PantherContext implements Context, ClientAwareContext
     {
         $found = false;
         $elements = $this->getClient()->getCrawler()->filter($selector);
-        if($elements->count() === 0) {
+        if (0 === $elements->count()) {
             throw new AssertionFailedError(sprintf('No element found with selector %s', $selector));
         }
 
-        $elements->each(function($element) use ($text, &$found) {
-            if(strpos($element->text(), $text) !== false) {
+        $elements->each(function ($element) use ($text, &$found) {
+            if (false !== strpos($element->text(), $text)) {
                 $found = true;
+
                 return false;
             }
+
             return true;
         });
 
-        if(!$found) {
+        if (!$found) {
             throw new AssertionFailedError(sprintf('Text %s not found in elements %s', $text, $selector));
         }
     }
@@ -115,6 +123,7 @@ class PantherContext implements Context, ClientAwareContext
      * Example: When I go to "/articles/isBatmanBruceWayne"
      *
      * @Given /^(?:|I )am on "(?P<page>[^"]+)"$/
+     *
      * @When /^(?:|I )go to "(?P<page>[^"]+)"$/
      */
     public function visit($page)
@@ -207,7 +216,7 @@ class PantherContext implements Context, ClientAwareContext
      */
     public function submitForm()
     {
-//        $this->getClient()->getCrawler()->filter('form')->form()-;
+        //        $this->getClient()->getCrawler()->filter('form')->form()-;
     }
 
     /**

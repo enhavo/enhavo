@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-21
- * Time: 22:27
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Prototype;
@@ -25,7 +28,7 @@ class PrototypeView
 
     private function load()
     {
-        if($this->formView === null) {
+        if (null === $this->formView) {
             $this->formView = $this->prototype->getForm()->createView();
         }
     }
@@ -48,12 +51,14 @@ class PrototypeView
     public function getVars()
     {
         $this->load();
+
         return $this->formView->vars;
     }
 
     public function getFormView()
     {
         $this->load();
+
         return $this->formView;
     }
 }

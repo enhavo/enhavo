@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Media;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,7 +30,7 @@ use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
  */
 class FormatManager
 {
-    const LOCK_TIMEOUT = 60; // seconds
+    public const LOCK_TIMEOUT = 60; // seconds
 
     public function __construct(
         private readonly array $formats,
@@ -32,14 +41,14 @@ class FormatManager
         private readonly EntityManagerInterface $em,
         private readonly CacheInterface $cache,
         private readonly ChecksumGeneratorInterface $checksumGenerator,
-    )
-    {
+    ) {
     }
 
     private function createFormat(FileInterface $file, string $name, $parameters = []): FormatInterface
     {
         $format = $this->formatFactory->createFromMediaFile($name, $file);
         $format->setParameters($parameters);
+
         return $format;
     }
 
@@ -52,7 +61,7 @@ class FormatManager
         /** @var FormatInterface|null $fileFormat */
         $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file);
 
-        if ($fileFormat === null) {
+        if (null === $fileFormat) {
             $fileFormat = $this->createFormat($file, $format, $parameters);
             $this->lockFormat($fileFormat); // will flush entity
             try {
@@ -66,6 +75,7 @@ class FormatManager
             }
             $this->unlockFormat($fileFormat);
             $this->cache->refresh($fileFormat->getFile(), $fileFormat->getName());
+
             return $fileFormat;
         }
 
@@ -90,7 +100,7 @@ class FormatManager
         $fileFormat = $this->formatRepository->findByFormatNameAndFile($format, $file);
 
         $new = false;
-        if ($fileFormat === null) {
+        if (null === $fileFormat) {
             $new = true;
             $fileFormat = $this->createFormat($file, $format, $parameters);
         }
@@ -117,19 +127,19 @@ class FormatManager
     {
         /** @var Format[] $fileFormats */
         $fileFormats = $this->formatRepository->findBy([
-            'file' => $file
+            'file' => $file,
         ]);
 
-        foreach($fileFormats as $fileFormat) {
+        foreach ($fileFormats as $fileFormat) {
             $this->applyFormat($file, $fileFormat->getName());
         }
     }
-
 
     public function getFilter(string $type): FilterInterface
     {
         /** @var FilterInterface $filter */
         $filter = $this->filterCollector->getType($type);
+
         return $filter;
     }
 
@@ -160,16 +170,13 @@ class FormatManager
 
     /**
      * Return true if waiting was finish successfully, otherwise the lock timeout was exceeded
-     *
-     * @param FormatInterface|null $fileFormat
-     * @return bool
      */
     private function waitForLock(?FormatInterface $fileFormat): bool
     {
-        $timeoutThreshold = new \DateTime(self::LOCK_TIMEOUT . ' seconds ago');
+        $timeoutThreshold = new \DateTime(self::LOCK_TIMEOUT.' seconds ago');
 
         // No lock, just return format
-        if ($fileFormat->getLockAt() === null) {
+        if (null === $fileFormat->getLockAt()) {
             return true;
         }
 
@@ -179,11 +186,11 @@ class FormatManager
         }
 
         // Wait for operation to finish
-        while ($fileFormat->getLockAt() !== null && ($fileFormat->getLockAt() >= $timeoutThreshold)) {
+        while (null !== $fileFormat->getLockAt() && ($fileFormat->getLockAt() >= $timeoutThreshold)) {
             sleep(1);
             $this->em->refresh($fileFormat);
 
-            $timeoutThreshold = new \DateTime(self::LOCK_TIMEOUT . ' seconds ago');
+            $timeoutThreshold = new \DateTime(self::LOCK_TIMEOUT.' seconds ago');
             // Lock is timed out, assume error on build
             if ($fileFormat->getLockAt() < $timeoutThreshold) {
                 return false;
@@ -191,7 +198,7 @@ class FormatManager
         }
 
         // Operation finished, return format
-        if ($fileFormat->getLockAt() === null) {
+        if (null === $fileFormat->getLockAt()) {
             return true;
         }
 
@@ -228,7 +235,7 @@ class FormatManager
     /** @return FilterSetting[] */
     public function getFormatSettings(string $format, array $parameters = []): array
     {
-        if(!is_array($this->formats) || !isset($this->formats[$format])) {
+        if (!is_array($this->formats) || !isset($this->formats[$format])) {
             throw new \Exception(sprintf('format "%s" not available', $format));
         }
 
@@ -237,7 +244,7 @@ class FormatManager
 
         // look for chain
         if (isset($formatSettings[0]) && is_array($formatSettings[0])) {
-            foreach($formatSettings as $index => $chainSettings) {
+            foreach ($formatSettings as $index => $chainSettings) {
                 if (!isset($chainSettings['type'])) {
                     throw new FormatException(sprintf('No filter type was set for format "%s" in chain with index "%s"', $format, $index));
                 }

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 03.09.17
- * Time: 23:26
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Routing;
@@ -18,8 +21,7 @@ class ThemeUrlGenerator implements UrlGeneratorInterface
     public function __construct(
         private readonly RouterInterface $router,
         private readonly FormatManager $formatManager,
-    )
-    {
+    ) {
     }
 
     public function generate(FileInterface $file, $referenceType = SymfonyUrlGenerator::ABSOLUTE_PATH): string

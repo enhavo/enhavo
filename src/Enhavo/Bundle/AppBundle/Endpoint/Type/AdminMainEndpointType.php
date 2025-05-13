@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -7,7 +16,6 @@ use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\AppBundle\Menu\MenuManager;
 use Enhavo\Bundle\AppBundle\Toolbar\ToolbarManager;
-use Enhavo\Bundle\AppBundle\Util\StateEncoder;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdminMainEndpointType extends AbstractEndpointType
@@ -19,8 +27,7 @@ class AdminMainEndpointType extends AbstractEndpointType
         private readonly array $brandingConfiguration,
         private readonly array $menuConfiguration,
         private readonly MenuManager $menuManager,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -38,6 +45,7 @@ class AdminMainEndpointType extends AbstractEndpointType
         foreach ($widgets as $widget) {
             $data[] = $widget->createViewData();
         }
+
         return $data;
     }
 
@@ -50,7 +58,7 @@ class AdminMainEndpointType extends AbstractEndpointType
             'enableCreatedBy' => $this->brandingConfiguration['enable_created_by'],
             'text' => $this->brandingConfiguration['text'],
             'version' => $this->brandingConfiguration['version'],
-            'backgroundImage' => $this->brandingConfiguration['background_image']
+            'backgroundImage' => $this->brandingConfiguration['background_image'],
         ];
     }
 
@@ -61,6 +69,7 @@ class AdminMainEndpointType extends AbstractEndpointType
         foreach ($items as $item) {
             $data[] = $item->createViewData();
         }
+
         return $data;
     }
 }

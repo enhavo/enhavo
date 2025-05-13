@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Locale;
-
 
 use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;
 use Enhavo\Bundle\TranslationBundle\Locale\LocaleResolver;
@@ -44,8 +51,8 @@ class LocaleResolverTest extends TestCase
         $resolver = $this->createInstance($dependencies);
 
         $dependencies->requestStack->method('getMainRequest')->willReturn($dependencies->request);
-        $dependencies->request->attributes->method('get')->willReturnCallback(function($property) {
-            if ($property === '_locale') {
+        $dependencies->request->attributes->method('get')->willReturnCallback(function ($property) {
+            if ('_locale' === $property) {
                 return 'es';
             }
         });
@@ -59,24 +66,22 @@ class LocaleResolverTest extends TestCase
         $resolver = $this->createInstance($dependencies);
 
         $dependencies->requestStack->method('getMainRequest')->willReturn($dependencies->request);
-        $dependencies->request->attributes->method('get')->willReturnCallback(function($property) {
-            if ($property === '_locale') {
+        $dependencies->request->attributes->method('get')->willReturnCallback(function ($property) {
+            if ('_locale' === $property) {
                 return 'es';
             }
         });
 
-
         $this->assertEquals('es', $resolver->resolve());
 
         // test if it will not be resolved again
-        $dependencies->request->attributes->method('get')->willReturnCallback(function($property) {
-            if ($property === '_locale') {
+        $dependencies->request->attributes->method('get')->willReturnCallback(function ($property) {
+            if ('_locale' === $property) {
                 return 'fr';
             }
         });
         $this->assertEquals('es', $resolver->resolve());
     }
-
 }
 
 class LocaleResolverTestDependencies

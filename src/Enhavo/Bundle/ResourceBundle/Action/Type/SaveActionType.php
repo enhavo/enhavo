@@ -1,10 +1,12 @@
 <?php
 
-/**
- * CancelButton.php
+/*
+ * This file is part of the enhavo package.
  *
- * @since 29/05/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Action\Type;
@@ -20,22 +22,21 @@ class SaveActionType extends AbstractActionType
     public function __construct(
         private readonly RouterInterface $router,
         private readonly RouteResolverInterface $routeResolver,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         if ($options['route']) {
             $url = $this->getUrl($options['route'], $options['route_parameters'], $resource);
         } else {
-            if ($resource === null || $resource->getId() === null) {
+            if (null === $resource || null === $resource->getId()) {
                 $route = $this->routeResolver->getRoute('create', ['api' => true]);
             } else {
                 $route = $this->routeResolver->getRoute('update', ['api' => true]);
             }
 
-            if ($route === null) {
+            if (null === $route) {
                 throw new \Exception(sprintf('Can\'t resolve route for resource "%s". You have to explicit define the route.', get_class($resource)));
             }
 
@@ -45,13 +46,14 @@ class SaveActionType extends AbstractActionType
         $data->set('url', $url);
     }
 
-    private function getUrl(string $route, array $routeParameters = [], object $resource = null): string
+    private function getUrl(string $route, array $routeParameters = [], ?object $resource = null): string
     {
         $parameters = [];
-        if ($resource !== null && $resource->getId() !== null) {
+        if (null !== $resource && null !== $resource->getId()) {
             $parameters['id'] = $resource->getId();
         }
         $parameters = array_merge($parameters, $routeParameters);
+
         return $this->router->generate($route, $parameters);
     }
 
@@ -64,7 +66,7 @@ class SaveActionType extends AbstractActionType
             'route' => null,
             'route_parameters' => [],
             'model' => 'SaveAction',
-            'permission' => 'expr:permission(resource, "create")'
+            'permission' => 'expr:permission(resource, "create")',
         ]);
     }
 

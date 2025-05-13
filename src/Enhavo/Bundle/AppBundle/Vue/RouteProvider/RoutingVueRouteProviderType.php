@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Vue\RouteProvider;
 
 use Enhavo\Component\Type\AbstractType;
@@ -14,13 +23,13 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
 
     public function __construct(
         private RouterInterface $router,
-    )
-    {
+    ) {
     }
 
     public function getRoutes($options, array|string|null $groups = null): array
     {
         $this->load($options, $groups);
+
         return $this->routes;
     }
 
@@ -31,12 +40,13 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
         }
 
         $this->load($options, $groups);
+
         return $this->search($path, $this->routes);
     }
 
     private function load($options, array|string|null $groups = null): void
     {
-        if ($this->routes !== null) {
+        if (null !== $this->routes) {
             return;
         }
 
@@ -50,11 +60,11 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
                 if ($this->isGroupSelected($options, $vueGroups) && $this->inGroup($vueGroups, $groups)) {
                     $vueRoute = new VueRoute($defaults['_vue']);
 
-                    if ($vueRoute->getName() === null) {
+                    if (null === $vueRoute->getName()) {
                         $vueRoute->setName($key);
                     }
 
-                    if ($vueRoute->getPath() === null) {
+                    if (null === $vueRoute->getPath()) {
                         $vueRoute->setPath($this->convertPath($route->getPath()));
                     }
 
@@ -66,11 +76,11 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
 
     private function inGroup($vueGroups, $groups): bool
     {
-        if ($vueGroups === null && $groups === null) {
+        if (null === $vueGroups && null === $groups) {
             return true;
         }
 
-        if ($groups === true) {
+        if (true === $groups) {
             return true;
         }
 

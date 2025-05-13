@@ -1,9 +1,12 @@
 <?php
-/**
- * UpdateViewer.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 29/05/15
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
@@ -25,8 +28,7 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
         private readonly InputFactory $inputFactory,
         private readonly ResourceManager $resourceManager,
         private readonly VueForm $vueForm,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -36,7 +38,7 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
 
         $resource = $input->getResource();
 
-        if ($resource === null) {
+        if (null === $resource) {
             throw $this->createNotFoundException();
         }
 
@@ -71,7 +73,7 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'permission' => Permission::UPDATE
+            'permission' => Permission::UPDATE,
         ]);
 
         $resolver->setRequired('input');

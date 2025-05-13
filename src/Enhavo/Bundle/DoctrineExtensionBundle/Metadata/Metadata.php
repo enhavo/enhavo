@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-10
- * Time: 13:10
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Metadata;
-
 
 class Metadata extends \Enhavo\Component\Metadata\Metadata
 {
@@ -20,46 +22,30 @@ class Metadata extends \Enhavo\Component\Metadata\Metadata
     /** @var Reference[] */
     private $references = [];
 
-    /**
-     * @return string
-     */
     public function getExtends(): ?string
     {
         return $this->extends;
     }
 
-    /**
-     * @param string $extends
-     */
     public function setExtends(?string $extends): void
     {
         $this->extends = $extends;
     }
 
-    /**
-     * @return string
-     */
     public function getDiscrName(): ?string
     {
         return $this->discrName;
     }
 
-    /**
-     * @param string $discrName
-     */
     public function setDiscrName(?string $discrName): void
     {
         $this->discrName = $discrName;
     }
 
-    /**
-     * @param Reference $reference
-     */
     public function addReference(Reference $reference)
     {
         $this->references[] = $reference;
     }
-
 
     /**
      * @return Reference[]

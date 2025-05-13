@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 19.08.18
- * Time: 18:23
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MultiTenancyBundle\Resolver;
@@ -30,14 +33,14 @@ class HostResolver implements ResolverInterface
     {
         $request = $this->requestStack->getCurrentRequest();
 
-        if($request === null) {
+        if (null === $request) {
             return null;
         }
 
         $host = $request->getHost();
         foreach ($this->provider->getTenants() as $tenant) {
-            foreach($tenant->getDomains() as $domain) {
-                if($domain === $host) {
+            foreach ($tenant->getDomains() as $domain) {
+                if ($domain === $host) {
                     return $tenant;
                 }
             }

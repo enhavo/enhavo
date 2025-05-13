@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 08.08.16
- * Time: 14:08
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\Twig;
@@ -15,14 +18,15 @@ class UrlBeautifierExtension extends AbstractExtension
 {
     public function getFilters()
     {
-        return array(
-            new TwigFilter('url_beautifier',function ($url) {
+        return [
+            new TwigFilter('url_beautifier', function ($url) {
                 $parsedUrl = parse_url($url);
-                if(!array_key_exists('scheme', $parsedUrl)){
+                if (!array_key_exists('scheme', $parsedUrl)) {
                     $url = 'http://'.$url;
                 }
+
                 return $url;
-            })
-        );
+            }),
+        ];
     }
 }

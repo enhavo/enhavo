@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Validator\Constraints;
 
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
@@ -14,26 +23,21 @@ class UserEmailValidator extends ConstraintValidator
 
     /**
      * UserEmailValidator constructor.
-     * @param TokenStorageInterface $tokenStorage
      */
     public function __construct(TokenStorageInterface $tokenStorage)
     {
         $this->tokenStorage = $tokenStorage;
     }
 
-    /**
-     * @param mixed $value
-     * @param Constraint $constraint
-     */
     public function validate($value, Constraint $constraint)
     {
         $token = $this->tokenStorage->getToken();
-        if ($token === null) {
+        if (null === $token) {
             throw new \InvalidArgumentException('UserEmailValidator is used, but no user is logged in');
         }
 
         $user = $token->getUser();
-        if ($user === null) {
+        if (null === $user) {
             throw new \InvalidArgumentException('UserEmailValidator is used, but no user is logged in');
         }
 

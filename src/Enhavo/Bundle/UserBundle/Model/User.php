@@ -1,8 +1,16 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Model;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\AppBundle\Model\TimestampableTrait;
 
@@ -20,13 +28,13 @@ class User implements UserInterface, ApiTokenAwareInterface
     private ?string $email = null;
     private ?string $password = null;
     private ?string $plainPassword = null;
-    private ?DateTime $lastLogin = null;
+    private ?\DateTime $lastLogin = null;
     private ?string $confirmationToken = null;
-    private ?DateTime $passwordRequestedAt = null;
-    private ?DateTime $lastFailedLoginAttempt = null;
+    private ?\DateTime $passwordRequestedAt = null;
+    private ?\DateTime $lastFailedLoginAttempt = null;
     private bool $apiAccess = false;
     private ?string $apiToken = null;
-    private ?DateTime $apiTokenCreatedAt = null;
+    private ?\DateTime $apiTokenCreatedAt = null;
 
     /** @var GroupInterface[] */
     private $groups;
@@ -35,7 +43,7 @@ class User implements UserInterface, ApiTokenAwareInterface
     private array $roles = [];
 
     private ?int $failedLoginAttempts = null;
-    private ?DateTime $passwordUpdatedAt = null;
+    private ?\DateTime $passwordUpdatedAt = null;
 
     /**
      * Constructor
@@ -90,7 +98,7 @@ class User implements UserInterface, ApiTokenAwareInterface
 
     public function getGroupNames(): array
     {
-        $names = array();
+        $names = [];
         foreach ($this->groups->getValues() as $group) {
             $names[] = $group->getName();
         }
@@ -147,7 +155,7 @@ class User implements UserInterface, ApiTokenAwareInterface
 
     public function isEnabled(): bool
     {
-        return $this->enabled === true;
+        return true === $this->enabled;
     }
 
     public function removeRole($role)
@@ -163,7 +171,7 @@ class User implements UserInterface, ApiTokenAwareInterface
         $this->plainPassword = $password;
     }
 
-    public function setLastLogin(DateTime $time = null)
+    public function setLastLogin(?\DateTime $time = null)
     {
         $this->lastLogin = $time;
     }
@@ -173,25 +181,25 @@ class User implements UserInterface, ApiTokenAwareInterface
         $this->confirmationToken = $confirmationToken;
     }
 
-    public function setPasswordRequestedAt(DateTime $date = null)
+    public function setPasswordRequestedAt(?\DateTime $date = null)
     {
         $this->passwordRequestedAt = $date;
     }
 
-    public function getPasswordRequestedAt(): ?DateTime
+    public function getPasswordRequestedAt(): ?\DateTime
     {
         return $this->passwordRequestedAt;
     }
 
     public function isPasswordRequestNonExpired($ttl): bool
     {
-        return $this->getPasswordRequestedAt() instanceof DateTime &&
-               $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
+        return $this->getPasswordRequestedAt() instanceof \DateTime
+               && $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
     }
 
     public function setRoles(array $roles)
     {
-        $this->roles = array();
+        $this->roles = [];
 
         foreach ($roles as $role) {
             $this->addRole($role);
@@ -273,7 +281,7 @@ class User implements UserInterface, ApiTokenAwareInterface
         return $this->plainPassword;
     }
 
-    public function getLastLogin(): ?DateTime
+    public function getLastLogin(): ?\DateTime
     {
         return $this->lastLogin;
     }
@@ -303,22 +311,22 @@ class User implements UserInterface, ApiTokenAwareInterface
         $this->failedLoginAttempts = $failedLoginAttempts;
     }
 
-    public function getPasswordUpdatedAt(): ?DateTime
+    public function getPasswordUpdatedAt(): ?\DateTime
     {
         return $this->passwordUpdatedAt;
     }
 
-    public function setPasswordUpdatedAt(?DateTime $passwordUpdatedAt): void
+    public function setPasswordUpdatedAt(?\DateTime $passwordUpdatedAt): void
     {
         $this->passwordUpdatedAt = $passwordUpdatedAt;
     }
 
-    public function getLastFailedLoginAttempt(): ?DateTime
+    public function getLastFailedLoginAttempt(): ?\DateTime
     {
         return $this->lastFailedLoginAttempt;
     }
 
-    public function setLastFailedLoginAttempt(?DateTime $lastFailedLoginAttempt): void
+    public function setLastFailedLoginAttempt(?\DateTime $lastFailedLoginAttempt): void
     {
         $this->lastFailedLoginAttempt = $lastFailedLoginAttempt;
     }
@@ -343,12 +351,12 @@ class User implements UserInterface, ApiTokenAwareInterface
         $this->apiAccess = $apiAccess;
     }
 
-    public function getApiTokenCreatedAt(): ?DateTime
+    public function getApiTokenCreatedAt(): ?\DateTime
     {
         return $this->apiTokenCreatedAt;
     }
 
-    public function setApiTokenCreatedAt(?DateTime $apiTokenCreatedAt): void
+    public function setApiTokenCreatedAt(?\DateTime $apiTokenCreatedAt): void
     {
         $this->apiTokenCreatedAt = $apiTokenCreatedAt;
     }

@@ -1,16 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-08-23
- * Time: 01:35
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Form\Type;
 
 use Enhavo\Bundle\TranslationBundle\Form\Transformer\TranslationValueTransformer;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
-use Enhavo\Bundle\TranslationBundle\Validator\Constraints\Translation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
@@ -26,7 +28,6 @@ class TranslationType extends AbstractType
 
     /**
      * TranslationType constructor.
-     * @param TranslationManager $translationManager
      */
     public function __construct(TranslationManager $translationManager)
     {
@@ -37,7 +38,7 @@ class TranslationType extends AbstractType
     {
         $builder->addModelTransformer(new TranslationValueTransformer($this->translationManager, $options['translation_data'], $options['translation_property']));
 
-        foreach($this->translationManager->getLocales() as $locale) {
+        foreach ($this->translationManager->getLocales() as $locale) {
             $builder->add($locale, $options['form_type'], $options['form_options']);
         }
     }
@@ -49,8 +50,8 @@ class TranslationType extends AbstractType
 
         $newErrors = [];
         /** @var FormError $error */
-        foreach($errors as $error) {
-            if(!preg_match('/^\(.+\) /', $error->getMessage())) {
+        foreach ($errors as $error) {
+            if (!preg_match('/^\(.+\) /', $error->getMessage())) {
                 $newErrors[] = new FormError(
                     sprintf('(%s) %s', $this->translationManager->getDefaultLocale(), $error->getMessage()),
                     $error->getMessageTemplate(),
@@ -75,14 +76,14 @@ class TranslationType extends AbstractType
         $resolver->setDefaults([
             'error_bubbling' => false,
             'constraints' => [
-            ]
+            ],
         ]);
 
         $resolver->setRequired([
             'translation_data',
             'translation_property',
             'form_options',
-            'form_type'
+            'form_type',
         ]);
     }
 

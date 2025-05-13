@@ -1,9 +1,12 @@
 <?php
-/**
- * TextFilter.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 19/01/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Filter\Type;
@@ -21,9 +24,9 @@ class AgeFilterType extends AbstractFilterType
 
         if (!empty($fromValue) && empty($toValue)) {
             $this->buildFromQuery($query, $options, $fromValue);
-        } elseif(empty($fromValue) && !empty($toValue)) {
+        } elseif (empty($fromValue) && !empty($toValue)) {
             $this->buildToQuery($query, $options, $toValue);
-        } elseif(!empty($fromValue) && !empty($toValue)) {
+        } elseif (!empty($fromValue) && !empty($toValue)) {
             $this->buildFromQuery($query, $options, $fromValue);
             $this->buildToQuery($query, $options, $toValue);
         }
@@ -35,7 +38,7 @@ class AgeFilterType extends AbstractFilterType
         $property = array_pop($propertyPath);
 
         $date = new \DateTime();
-        $date->modify(sprintf('-%s year', intval(($fromValue))));
+        $date->modify(sprintf('-%s year', intval($fromValue)));
 
         $query->addWhere($property, FilterQuery::OPERATOR_LESS_EQUAL, $date->format('Y-m-d'), $propertyPath);
     }
@@ -46,7 +49,7 @@ class AgeFilterType extends AbstractFilterType
         $property = array_pop($propertyPath);
 
         $date = new \DateTime();
-        $date->modify(sprintf('-%s year', intval($fromTo+1)));
+        $date->modify(sprintf('-%s year', intval($fromTo + 1)));
 
         $query->addWhere($property, FilterQuery::OPERATOR_GREATER_EQUAL, $date->format('Y-m-d'), $propertyPath);
     }

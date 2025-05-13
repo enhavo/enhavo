@@ -1,34 +1,26 @@
 <?php
-/**
- * SubscriberInterface.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 21/09/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Model;
 
 interface SubscriberInterface
 {
-    /**
-     * @param string|null $email
-     */
     public function setEmail(?string $email): void;
 
-    /**
-     * @return string|null
-     */
     public function getEmail(): ?string;
 
-    /**
-     * @param string|null $token
-     */
     public function setConfirmationToken(?string $token): void;
 
     /**
      * Get token
-     *
-     * @return string
      */
     public function getConfirmationToken(): ?string;
 
@@ -42,13 +34,7 @@ interface SubscriberInterface
      */
     public function setCreatedAt($createdAt);
 
-    /**
-     * @param string|null $subscription
-     */
     public function setSubscription(?string $subscription): void;
 
-    /**
-     * @return string|null
-     */
     public function getSubscription(): ?string;
 }

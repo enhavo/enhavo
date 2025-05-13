@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Tests\Mock;
 
 /**
@@ -13,7 +22,7 @@ class EntityMock
     private $name;
 
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -27,9 +36,6 @@ class EntityMock
      */
     private $route;
 
-    /**
-     * @var mixed
-     */
     private $data;
 
     /**
@@ -48,17 +54,11 @@ class EntityMock
         $this->id = $id;
     }
 
-    /**
-     * @return mixed
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @param mixed $name
-     */
     public function setName($name)
     {
         $this->name = $name;
@@ -90,17 +90,11 @@ class EntityMock
         $this->route = $route;
     }
 
-    /**
-     * @return mixed
-     */
     public function getData()
     {
         return $this->data;
     }
 
-    /**
-     * @param mixed $data
-     */
     public function setData($data): void
     {
         $this->data = $data;

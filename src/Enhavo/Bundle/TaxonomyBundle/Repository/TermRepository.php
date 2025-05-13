@@ -1,9 +1,12 @@
 <?php
-/**
- * TaxonomyRepository.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 02/09/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TaxonomyBundle\Repository;
@@ -29,6 +32,7 @@ class TermRepository extends EntityRepository
         if ($pagination) {
             return $this->getPaginator($query);
         }
+
         return $query->getQuery()->getResult();
     }
 
@@ -49,9 +53,9 @@ class TermRepository extends EntityRepository
         if ($pagination) {
             return $this->getPaginator($query);
         }
+
         return $query->getQuery()->getResult();
     }
-
 
     public function findByTaxonomy($name)
     {
@@ -59,6 +63,7 @@ class TermRepository extends EntityRepository
         $query->join('t.taxonomy', 'ta');
         $query->andWhere('ta.name = :name');
         $query->setParameter('name', $name);
+
         return $query->getQuery()->getResult();
     }
 
@@ -71,7 +76,7 @@ class TermRepository extends EntityRepository
         $query->andWhere('t.name LIKE :term');
         $query->setParameter('term', sprintf('%%%s%%', $term));
 
-        if($limit) {
+        if ($limit) {
             $query->setMaxResults($limit);
         }
 
@@ -91,6 +96,7 @@ class TermRepository extends EntityRepository
         if ($result && count($result)) {
             return $result[0];
         }
+
         return null;
     }
 
@@ -107,6 +113,7 @@ class TermRepository extends EntityRepository
         if ($result && count($result)) {
             return $result[0];
         }
+
         return null;
     }
 }

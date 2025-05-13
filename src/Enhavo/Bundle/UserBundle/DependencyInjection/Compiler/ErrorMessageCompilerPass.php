@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\DependencyInjection\Compiler;
 
 use Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError;
@@ -8,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ErrorMessageCompilerPass implements CompilerPassInterface
 {
-    const TAG = 'enhavo_user.error_message';
+    public const TAG = 'enhavo_user.error_message';
 
     public function process(ContainerBuilder $container)
     {

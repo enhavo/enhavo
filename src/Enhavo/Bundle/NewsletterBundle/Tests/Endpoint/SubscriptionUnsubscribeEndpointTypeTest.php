@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -48,7 +57,6 @@ class SubscriptionUnsubscribeEndpointTypeTest extends TestCase
         $strategy->method('getStorage')->willReturn($storage);
 
         $formConfig = [
-
         ];
 
         return new Subscription($key, $strategy, Subscriber::class, $formConfig);
@@ -59,14 +67,13 @@ class SubscriptionUnsubscribeEndpointTypeTest extends TestCase
         $dependencies = $this->createDependencies();
         $subscriberMock = $this->getMockBuilder(SubscriberInterface::class)->getMock();
 
-
         $subscription = $this->createSubscription('default');
         $subscription->getStrategy()->expects($this->once())->method('removeSubscriber')->willReturn('removed');
         $subscription->getStrategy()->expects($this->once())->method('getUnsubscribeTemplate')->willReturn('tpl.html.twig');
         $subscription->getStrategy()->getStorage()->expects($this->once())->method('getSubscriber')->willReturn($subscriberMock);
 
         $dependencies->translator->expects($this->once())->method('trans')->willReturnCallback(function ($message) {
-            return $message .'.trans';
+            return $message.'.trans';
         });
         $dependencies->subscriptionManager->method('getSubscription')->willReturn($subscription);
 
@@ -75,13 +82,11 @@ class SubscriptionUnsubscribeEndpointTypeTest extends TestCase
             'type' => 'default',
         ]);
 
-
         $this->expectException(NotFoundHttpException::class);
         $data = new Data();
         $context = new Context($request);
         $this->enhanceEndpoint($instance);
         $instance->handleRequest([], $request, $data, $context);
-
 
         $dependencies = $this->createDependencies();
         $instance = $this->createInstance($dependencies);

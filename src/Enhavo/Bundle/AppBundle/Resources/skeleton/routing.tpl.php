@@ -1,38 +1,38 @@
-<?= $route_prefix ?>_index:
-    path: <?= $path_prefix ?>/index
+<?php echo $route_prefix; ?>_index:
+    path: <?php echo $path_prefix; ?>/index
     methods: [GET]
     defaults:
-        _expose: <?= $area."\n" ?>
+        _expose: <?php echo $area."\n"; ?>
         _vue:
             component: resource-index
-            groups: <?= $area."\n" ?>
+            groups: <?php echo $area."\n"; ?>
             meta:
-                api: <?= $route_api_prefix ?>_index
+                api: <?php echo $route_api_prefix; ?>_index
         _endpoint:
             type: admin
 
-<?= $route_prefix; ?>_create:
-    path: <?= $path_prefix ?>/create
+<?php echo $route_prefix; ?>_create:
+    path: <?php echo $path_prefix; ?>/create
     methods: [GET]
     defaults:
-        _expose: <?= $area."\n" ?>
+        _expose: <?php echo $area."\n"; ?>
         _vue:
             component: resource-input
-            groups: <?= $area."\n" ?>
+            groups: <?php echo $area."\n"; ?>
             meta:
-                api: <?= $route_api_prefix ?>_create
+                api: <?php echo $route_api_prefix; ?>_create
         _endpoint:
             type: admin
 
-<?= $route_prefix; ?>_update:
-    path: <?= $path_prefix ?>/update/{id}
+<?php echo $route_prefix; ?>_update:
+    path: <?php echo $path_prefix; ?>/update/{id}
     methods: [GET]
     defaults:
-        _expose: <?= $area."\n" ?>
+        _expose: <?php echo $area."\n"; ?>
         _vue:
             component: resource-input
-            groups: <?= $area."\n" ?>
+            groups: <?php echo $area."\n"; ?>
             meta:
-                api: <?= $route_api_prefix ?>_update
+                api: <?php echo $route_api_prefix; ?>_update
         _endpoint:
             type: admin

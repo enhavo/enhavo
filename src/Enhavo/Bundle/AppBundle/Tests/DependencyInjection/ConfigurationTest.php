@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\AppBundle\Tests\DependencyInjection;
 
@@ -12,6 +20,7 @@ class ConfigurationTest extends TestCase
     private function process(Configuration $configuration, array $configs)
     {
         $processor = new Processor();
+
         return $processor->processConfiguration($configuration, $configs);
     }
 
@@ -22,9 +31,9 @@ class ConfigurationTest extends TestCase
                 'secondary' => [
                     'user_menu' => [
                         'type' => 'menu',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
 
         $b = [
@@ -32,9 +41,9 @@ class ConfigurationTest extends TestCase
                 'secondary' => [
                     'user_menu' => [
                         'type' => 'link',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
 
         $configuration = new Configuration();
@@ -44,9 +53,9 @@ class ConfigurationTest extends TestCase
             'secondary' => [
                 'user_menu' => [
                     'type' => 'link',
-                ]
+                ],
             ],
-            'primary' => []
+            'primary' => [],
         ], $config['toolbar_widget']);
     }
 
@@ -62,9 +71,9 @@ class ConfigurationTest extends TestCase
                         'subject' => 'default_subject',
                         'template' => 'default_template',
                         'translation_domain' => null,
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
 
         $b = [
@@ -77,9 +86,9 @@ class ConfigurationTest extends TestCase
                         'subject' => 'other_subject',
                         'template' => 'other_template',
                         'translation_domain' => 'other_domain',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
 
         $configuration = new Configuration();
@@ -107,7 +116,7 @@ class ConfigurationTest extends TestCase
                 'template' => 'other_template',
                 'content_type' => 'text/plain',
                 'translation_domain' => 'other_domain',
-            ]
+            ],
         ], $config['mailer']['mails']);
     }
 
@@ -119,10 +128,10 @@ class ConfigurationTest extends TestCase
                     'firewall' => 'main',
                     'options' => [
                         'navigation' => ['main'],
-                        'routes' => ['theme']
-                    ]
-                ]
-            ]
+                        'routes' => ['theme'],
+                    ],
+                ],
+            ],
         ];
 
         $b = [
@@ -130,10 +139,10 @@ class ConfigurationTest extends TestCase
                 'theme' => [
                     'firewall' => 'main',
                     'options' => [
-                        'navigation' => ['footer']
-                    ]
-                ]
-            ]
+                        'navigation' => ['footer'],
+                    ],
+                ],
+            ],
         ];
 
         $configuration = new Configuration();
@@ -146,8 +155,8 @@ class ConfigurationTest extends TestCase
                 'options' => [
                     'navigation' => ['footer'],
                     'routes' => ['theme'],
-                ]
-            ]
+                ],
+            ],
         ], $config['area']);
     }
 }

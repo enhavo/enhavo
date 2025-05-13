@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-05-24
- * Time: 18:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Command;
-
 
 use Enhavo\Bundle\AppBundle\Endpoint\Template\TemplateEndpointCollector;
 use Enhavo\Bundle\AppBundle\Endpoint\Template\TemplateEndpointFilter;
@@ -21,9 +23,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DebugEndpointTemplateCommand extends Command
 {
     public function __construct(
-        private TemplateEndpointCollector $collector
-    )
-    {
+        private TemplateEndpointCollector $collector,
+    ) {
         parent::__construct();
     }
 
@@ -34,7 +35,7 @@ class DebugEndpointTemplateCommand extends Command
             ->setDescription('Show all template endpoints')
             ->addArgument('search', InputArgument::OPTIONAL, 'Fulltext search')
             ->addOption('template', null, InputOption::VALUE_REQUIRED, 'Template name')
-            ->addOption('path', null, InputOption::VALUE_REQUIRED,  'Route path')
+            ->addOption('path', null, InputOption::VALUE_REQUIRED, 'Route path')
             ->addOption('route', null, InputOption::VALUE_REQUIRED, 'Route name')
             ->addOption('description', null, InputOption::VALUE_REQUIRED, 'Description')
             ->addOption('list', null, InputOption::VALUE_NONE, 'Show as list')
@@ -78,7 +79,6 @@ class DebugEndpointTemplateCommand extends Command
 
     private function showList(OutputInterface $output, TemplateEndpointFilter $filter): void
     {
-
         $entries = $this->collector->collect($filter);
 
         foreach ($entries as $entry) {
@@ -101,11 +101,12 @@ class DebugEndpointTemplateCommand extends Command
         $variantDescription = [];
         foreach ($variants as $condition => $description) {
             if ($description) {
-                $variantDescription[] = sprintf("%s (%s)", $condition, $description);
+                $variantDescription[] = sprintf('%s (%s)', $condition, $description);
             } else {
-                $variantDescription[] = sprintf("%s", $condition);
+                $variantDescription[] = sprintf('%s', $condition);
             }
         }
+
         return implode("\n", $variantDescription);
     }
 }

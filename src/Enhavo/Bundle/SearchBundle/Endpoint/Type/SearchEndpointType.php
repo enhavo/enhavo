@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -19,8 +28,7 @@ class SearchEndpointType extends AbstractEndpointType
         private readonly ResultConverter $resultConverter,
         private readonly SearchEngineInterface $searchEngine,
         private readonly ResourceExpressionLanguage $expressionLanguage,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -50,7 +58,7 @@ class SearchEndpointType extends AbstractEndpointType
         foreach ($options['filters'] as $filterConfiguration) {
             $resolver = new OptionsResolver();
             $resolver->setDefaults([
-                'arguments' => []
+                'arguments' => [],
             ]);
             $resolver->setRequired(['key', 'class']);
             $options = $resolver->resolve($filterConfiguration);

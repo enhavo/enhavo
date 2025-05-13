@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-06
- * Time: 21:58
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Tests\Util;
@@ -20,7 +23,7 @@ class ArrayUtilTest extends TestCase
             'level1' => [
                 'a' => true,
                 'b' => true,
-            ]
+            ],
         ];
 
         $b = [
@@ -28,7 +31,7 @@ class ArrayUtilTest extends TestCase
             'level1' => [
                 'a' => false,
                 'c' => true,
-            ]
+            ],
         ];
 
         $result = ArrayUtil::merge($a, $b);
@@ -39,7 +42,7 @@ class ArrayUtilTest extends TestCase
                 'a' => false,
                 'b' => true,
                 'c' => true,
-            ]
+            ],
         ], $result);
     }
 }

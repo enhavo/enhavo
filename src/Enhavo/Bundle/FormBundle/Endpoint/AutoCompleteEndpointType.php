@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -17,8 +26,7 @@ class AutoCompleteEndpointType extends AbstractEndpointType
     public function __construct(
         private readonly ResourceExpressionLanguage $resourceExpressionLanguage,
         private readonly ResourceManager $resourceManager,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -49,7 +57,7 @@ class AutoCompleteEndpointType extends AbstractEndpointType
             $arguments = $options['repository_arguments'];
             foreach ($arguments as $key => $argument) {
                 $arguments[$key] = $this->resourceExpressionLanguage->evaluate($argument, [
-                    'options' => $options
+                    'options' => $options,
                 ]);
             }
         } else {
@@ -58,6 +66,7 @@ class AutoCompleteEndpointType extends AbstractEndpointType
         }
 
         $repository = $this->resourceManager->getRepository($options['resource']);
+
         return call_user_func_array([$repository, $options['repository_method']], $arguments);
     }
 
@@ -65,7 +74,7 @@ class AutoCompleteEndpointType extends AbstractEndpointType
     {
         $results = [];
         $accessor = PropertyAccess::createPropertyAccessor();
-        foreach($entities as $entity) {
+        foreach ($entities as $entity) {
             if ($options['id_property']) {
                 $id = $accessor->getValue($entity, $options['id_property']);
             } else {
@@ -74,14 +83,15 @@ class AutoCompleteEndpointType extends AbstractEndpointType
             if ($options['choice_label']) {
                 $text = $accessor->getValue($entity, $options['choice_label']);
             } else {
-                $text = (string)$entity;
+                $text = (string) $entity;
             }
 
             $results[] = [
                 'id' => $id,
-                'text' => $text
+                'text' => $text,
             ];
         }
+
         return $results;
     }
 

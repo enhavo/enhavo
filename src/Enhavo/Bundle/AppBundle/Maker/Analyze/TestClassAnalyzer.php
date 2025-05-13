@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Maker\Analyze;
 
 use PhpParser\NodeTraverser;
@@ -24,7 +33,7 @@ class TestClassAnalyzer
         $parser = (new ParserFactory())->createForNewestSupportedVersion();
 
         $reflector = new \ReflectionClass($this->fqcn);
-        $this->path =  $reflector->getFileName();
+        $this->path = $reflector->getFileName();
         $this->ast = $parser->parse(file_get_contents($this->path));
 
         $constructArgumentFinder = new ConstructArgumentFinder();
@@ -53,6 +62,7 @@ class TestClassAnalyzer
     public function getShortName()
     {
         $reflector = new \ReflectionClass($this->fqcn);
+
         return $reflector->getShortName();
     }
 }

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jungch
- * Date: 17/10/16
- * Time: 18:32
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Client;
@@ -41,15 +44,12 @@ class CleverReachClient
 
     /**
      * CleverReachClient constructor.
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param string $adapterClass
      */
     public function __construct(EventDispatcherInterface $eventDispatcher, string $adapterClass)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->adapterClass = $adapterClass;
     }
-
 
     public function init(string $clientId, string $clientSecret, array $attributes, array $globalAttributes)
     {
@@ -65,8 +65,6 @@ class CleverReachClient
     }
 
     /**
-     * @param SubscriberInterface $subscriber
-     * @param $groupId
      * @throws InsertException
      */
     public function saveSubscriber(SubscriberInterface $subscriber, $groupId)
@@ -76,7 +74,7 @@ class CleverReachClient
 
         $event = new StorageEvent(StorageEvent::EVENT_CLEVERREACH_PRE_STORE, $subscriber, [
             'attributes' => $attributes,
-            'global_attributes' => $globalAttributes
+            'global_attributes' => $globalAttributes,
         ]);
         $this->eventDispatcher->dispatch($event);
 
@@ -93,15 +91,11 @@ class CleverReachClient
         );
 
         if (!isset($response['id'])) {
-            throw new InsertException(
-                sprintf('Insertion into group "%s" failed.', $groupId)
-            );
+            throw new InsertException(sprintf('Insertion into group "%s" failed.', $groupId));
         }
     }
 
     /**
-     * @param SubscriberInterface $subscriber
-     * @param $groupId
      * @throws UpdateException
      */
     public function updateSubscriber(SubscriberInterface $subscriber, $groupId)
@@ -111,7 +105,7 @@ class CleverReachClient
 
         $event = new StorageEvent(StorageEvent::EVENT_CLEVERREACH_PRE_STORE, $subscriber, [
             'attributes' => $attributes,
-            'global_attributes' => $globalAttributes
+            'global_attributes' => $globalAttributes,
         ]);
         $this->eventDispatcher->dispatch($event);
 
@@ -127,16 +121,11 @@ class CleverReachClient
         );
 
         if (!isset($response['id'])) {
-            throw new UpdateException(
-                sprintf('Update within group "%s" failed.', $groupId)
-            );
+            throw new UpdateException(sprintf('Update within group "%s" failed.', $groupId));
         }
     }
 
-
     /**
-     * @param SubscriberInterface $subscriber
-     * @param $groupId
      * @throws ActivateException
      */
     public function activateSubscriber(SubscriberInterface $subscriber, $groupId)
@@ -144,15 +133,11 @@ class CleverReachClient
         $response = $this->getApiManager()->activateSubscriber($subscriber->getEmail(), intval($groupId));
 
         if (true !== $response) {
-            throw new ActivateException(
-                sprintf('Activation in group "%s" failed.', $groupId)
-            );
+            throw new ActivateException(sprintf('Activation in group "%s" failed.', $groupId));
         }
     }
 
     /**
-     * @param SubscriberInterface $subscriber
-     * @param $groupId
      * @throws RemoveException
      */
     public function removeSubscriber(SubscriberInterface $subscriber, $groupId)
@@ -163,9 +148,7 @@ class CleverReachClient
         );
 
         if (true !== $response) {
-            throw new RemoveException(
-                sprintf('Removal from group "%s" failed.', $groupId)
-            );
+            throw new RemoveException(sprintf('Removal from group "%s" failed.', $groupId));
         }
     }
 
@@ -181,8 +164,6 @@ class CleverReachClient
     }
 
     /**
-     * @param $eMail
-     * @param $groupId
      * @return bool
      */
     public function exists($eMail, $groupId)

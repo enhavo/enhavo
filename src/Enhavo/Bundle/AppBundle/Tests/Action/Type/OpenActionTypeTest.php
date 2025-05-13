@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-04
- * Time: 10:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
@@ -17,6 +20,7 @@ class OpenActionTypeTest extends TestCase
     private function createDependencies(): OpenActionTypeDependencies
     {
         $dependencies = new OpenActionTypeDependencies();
+
         return $dependencies;
     }
 
@@ -34,7 +38,7 @@ class OpenActionTypeTest extends TestCase
         $action = new Action($type, [], [
             'route' => 'open_route',
             'target' => '_blank',
-            'frame_key' => 'edit'
+            'frame_key' => 'edit',
         ]);
 
         $viewData = $action->createViewData();

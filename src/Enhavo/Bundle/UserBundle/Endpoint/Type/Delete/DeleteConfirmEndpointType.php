@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Endpoint\Type\Delete;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -24,15 +33,14 @@ class DeleteConfirmEndpointType extends AbstractFormEndpointType
         private readonly ConfigurationProvider $provider,
         private readonly UserManager $userManager,
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     protected function init($options, Request $request, Data $data, Context $context): void
     {
         $user = $this->getUser();
 
-        if ($user === null) {
+        if (null === $user) {
             throw $this->createAccessDeniedException();
         }
     }
@@ -41,6 +49,7 @@ class DeleteConfirmEndpointType extends AbstractFormEndpointType
     {
         $configuration = $this->provider->getDeleteConfirmConfiguration();
         $deleteConfirm = new DeleteConfirm();
+
         return $this->createForm($configuration->getFormClass(), $deleteConfirm, $configuration->getFormOptions());
     }
 
@@ -63,6 +72,7 @@ class DeleteConfirmEndpointType extends AbstractFormEndpointType
     protected function getRedirectUrl($options, Request $request, Data $data, Context $context, FormInterface $form): ?string
     {
         $configuration = $this->provider->getDeleteConfirmConfiguration();
+
         return $this->generateUrl($configuration->getRedirectRoute());
     }
 

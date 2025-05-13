@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Twig;
 
 use Symfony\Component\DependencyInjection\Container;
@@ -19,9 +28,6 @@ class SearchForm extends AbstractExtension
      */
     protected $templateEngine;
 
-    /**
-     * @param Container $container
-     */
     public function __construct(Container $container)
     {
         $this->container = $container;
@@ -29,24 +35,24 @@ class SearchForm extends AbstractExtension
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('search_form', array($this, 'render'), array('is_safe' => array('html'))),
-        );
+        return [
+            new TwigFunction('search_form', [$this, 'render'], ['is_safe' => ['html']]),
+        ];
     }
 
     public function render($type = 'search', $entities = null, $fields = null)
     {
-        if($this->templateEngine === null) {
+        if (null === $this->templateEngine) {
             $this->templateEngine = $this->container->get('twig');
         }
 
-        $template =  $this->container->getParameter('enhavo_search.'.$type.'.template');
+        $template = $this->container->getParameter('enhavo_search.'.$type.'.template');
 
-        return $this->templateEngine->render($template, array(
+        return $this->templateEngine->render($template, [
             'type' => $type,
             'entities' => $entities,
-            'fields' => $fields
-        ));
+            'fields' => $fields,
+        ]);
     }
 
     public function getName()

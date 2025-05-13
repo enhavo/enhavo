@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 08.08.18
- * Time: 22:26
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Entity;
@@ -14,7 +17,7 @@ use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 class AbstractBlock implements BlockInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -26,7 +29,7 @@ class AbstractBlock implements BlockInterface
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -41,10 +44,7 @@ class AbstractBlock implements BlockInterface
         return $this->node;
     }
 
-    /**
-     * @param NodeInterface $node
-     */
-    public function setNode(NodeInterface $node = null)
+    public function setNode(?NodeInterface $node = null)
     {
         $this->node = $node;
     }

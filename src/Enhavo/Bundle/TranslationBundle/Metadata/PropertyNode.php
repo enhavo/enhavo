@@ -1,9 +1,12 @@
 <?php
-/**
- * PropertyNode.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 05/11/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Metadata;
@@ -25,33 +28,21 @@ class PropertyNode
      */
     private $options = [];
 
-    /**
-     * @return string
-     */
     public function getProperty(): string
     {
         return $this->property;
     }
 
-    /**
-     * @param string $property
-     */
     public function setProperty(string $property): void
     {
         $this->property = $property;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     */
     public function setType(string $type): void
     {
         $this->type = $type;

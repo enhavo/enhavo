@@ -1,9 +1,12 @@
 <?php
-/**
- * CleanUpCommand.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 13/11/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Command;
@@ -14,10 +17,10 @@ use Enhavo\Bundle\MediaBundle\Exception\FormatException;
 use Enhavo\Bundle\MediaBundle\Media\FormatManager;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Helper\ProgressBar;
 
 class RefreshFormatCommand extends Command
 {
@@ -25,7 +28,7 @@ class RefreshFormatCommand extends Command
         private EntityRepository $formatRepository,
         private EntityRepository $fileRepository,
         private MediaManager $mediaManager,
-        private FormatManager $formatManager
+        private FormatManager $formatManager,
     ) {
         parent::__construct();
     }
@@ -47,12 +50,12 @@ class RefreshFormatCommand extends Command
         $options = [];
 
         $format = $input->getOption('format');
-        if(!empty($format)) {
+        if (!empty($format)) {
             $options['name'] = $format;
         }
 
         $id = $input->getOption('id');
-        if(!empty($id)) {
+        if (!empty($id)) {
             $id = $input->getOption('id');
             $options['file'] = $this->fileRepository->find($id);
         }
@@ -65,7 +68,7 @@ class RefreshFormatCommand extends Command
 
         $notExistingFormats = [];
         $errors = [];
-        foreach($formats as $format) {
+        foreach ($formats as $format) {
             if ($this->formatManager->existsFormat($format->getName())) {
                 try {
                     $this->formatManager->applyFormat($format->getFile(), $format->getName());
@@ -73,7 +76,7 @@ class RefreshFormatCommand extends Command
                     $errors[] = [
                         'message' => $e->getMessage(),
                         'format' => $format->getName(),
-                        'id' => $format->getId()
+                        'id' => $format->getId(),
                     ];
                 }
             } else {

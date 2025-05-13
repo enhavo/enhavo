@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Storage;
-
 
 use Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
@@ -94,7 +101,7 @@ class CleverReachTypeStorageTest extends TestCase
             $this->assertEquals(['email' => 'to@enhavo.com'], $attributes);
             $this->assertEquals(['subscription' => 'default'], $globalAttributes);
 
-            return ['id'=>1];
+            return ['id' => 1];
         });
         $dependencies->subscriber->method('getEmail')->willReturn('to@enhavo.com');
         $dependencies->subscriber->method('getSubscription')->willReturn('default');
@@ -123,7 +130,7 @@ class CleverReachTypeStorageTest extends TestCase
             $this->assertEquals(['email' => 'to@enhavo.com'], $attributes);
             $this->assertEquals(['subscription' => 'default'], $globalAttributes);
 
-            return ['id'=>1];
+            return ['id' => 1];
         });
         $dependencies->subscriber->setEmail('to@enhavo.com');
         $dependencies->subscriber->setSubscription('default');
@@ -212,14 +219,13 @@ class CleverReachTypeStorageTest extends TestCase
         ]);
         $dependencies->apiManager->expects($this->exactly(1))->method('getSubscriber')->willReturnCallback(function ($email) {
             return [
-                'error' => 404
+                'error' => 404,
             ];
         });
         $dependencies->subscriber->method('getEmail')->willReturn('to@enhavo.com');
         $dependencies->subscriber->method('getSubscription')->willReturn('default');
         $this->expectException(NotFoundException::class);
         $instance->getSubscriber($dependencies->subscriber);
-
     }
 
     public function testRemoveSubscriberFail()
@@ -259,7 +265,7 @@ class CleverReachTypeStorageTest extends TestCase
             ],
         ]);
         $dependencies->apiManager->expects($this->exactly(2))->method('getSubscriber')->willReturnCallback(function ($email, $group) {
-            if ($group !== 11) {
+            if (11 !== $group) {
                 return [];
             }
 
@@ -285,12 +291,12 @@ class CleverReachTypeStorageTest extends TestCase
             ],
         ]);
         $dependencies->apiManager->expects($this->exactly(2))->method('getGroup')->willReturnCallback(function ($groupId) {
-            if ($groupId === 123456) {
+            if (123456 === $groupId) {
                 return [
                     'id' => 123456,
                     'name' => 'group_name',
                     'last_changed' => 123456789,
-                    'last_mailing' => 987654321
+                    'last_mailing' => 987654321,
                 ];
             }
 
@@ -325,7 +331,7 @@ class CleverReachTypeStorageTest extends TestCase
                 'id' => 123456,
                 'name' => 'group_name',
                 'last_changed' => 123456789,
-                'last_mailing' => 987654321
+                'last_mailing' => 987654321,
             ]]
         );
 
@@ -335,7 +341,6 @@ class CleverReachTypeStorageTest extends TestCase
         $this->assertEquals(123456, $groups[0]->getCode());
         $this->assertEquals('group_name', $groups[0]->getName());
     }
-
 }
 
 class CleverReachTypeStorageTestDependencies

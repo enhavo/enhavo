@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-09-16
- * Time: 15:18
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Form\Type;
@@ -22,7 +25,6 @@ class ThreadType extends AbstractType
 
     /**
      * ThreadType constructor.
-     * @param $dataClass
      */
     public function __construct($dataClass)
     {
@@ -33,7 +35,7 @@ class ThreadType extends AbstractType
     {
         $builder->add('comments', ListType::class, [
             'entry_type' => CommentType::class,
-            'border' => true
+            'border' => true,
         ]);
     }
 

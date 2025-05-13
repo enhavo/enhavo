@@ -1,10 +1,19 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,8 +32,7 @@ class AutoCompleteEntityType extends AbstractType
         private readonly EntityManagerInterface $entityManager,
         private readonly PropertyAccessorInterface $propertyAccessor,
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -32,7 +40,7 @@ class AutoCompleteEntityType extends AbstractType
         $repository = $this->entityManager->getRepository($options['class']);
         $propertyAccessor = $this->propertyAccessor;
 
-        if ($options['multiple'] === true) {
+        if (true === $options['multiple']) {
             $builder->addViewTransformer(new CallbackTransformer(
                 function ($originalDescription) use ($options, $propertyAccessor) {
                     $collection = new ArrayCollection();
@@ -40,7 +48,7 @@ class AutoCompleteEntityType extends AbstractType
                         $collection = $originalDescription;
                     }
                     $data = [];
-                    foreach($collection as $entry) {
+                    foreach ($collection as $entry) {
                         if (!method_exists($entry, 'getId')) {
                             throw new \Exception('class need to be an entity with getId function');
                         }
@@ -50,13 +58,14 @@ class AutoCompleteEntityType extends AbstractType
                         } elseif (is_string($options['choice_label'])) {
                             $label = $propertyAccessor->getValue($entry, $options['choice_label']);
                         } else {
-                            $label = (string)$entry;
+                            $label = (string) $entry;
                         }
                         $data[] = [
                             'id' => $id,
-                            'text' => $label
+                            'text' => $label,
                         ];
                     }
+
                     return $data;
                 },
                 function ($submittedDescription) use ($repository, $options, $propertyAccessor) {
@@ -67,20 +76,21 @@ class AutoCompleteEntityType extends AbstractType
                     $ids = $submittedDescription;
                     $i = 0;
                     foreach ($ids as $id) {
-                        $i++;
+                        ++$i;
                         $entity = $repository->find($id);
-                        if($options['sortable']) {
+                        if ($options['sortable']) {
                             $propertyAccessor->setValue($entity, $options['sort_property'], $i);
                         }
                         $collection->add($entity);
                     }
+
                     return $collection;
                 }
             ));
         } else {
             $builder->addViewTransformer(new CallbackTransformer(
                 function ($originalDescription) use ($options, $propertyAccessor) {
-                    if ($originalDescription !== null) {
+                    if (null !== $originalDescription) {
                         if (!method_exists($originalDescription, 'getId')) {
                             throw new \Exception('class need to be an entity with getId function');
                         }
@@ -90,28 +100,28 @@ class AutoCompleteEntityType extends AbstractType
                         } elseif (is_string($options['choice_label'])) {
                             $label = $propertyAccessor->getValue($originalDescription, $options['choice_label']);
                         } else {
-                            $label = (string)$originalDescription;
+                            $label = (string) $originalDescription;
                         }
+
                         return [
                             'id' => $id,
-                            'text' => $label
+                            'text' => $label,
                         ];
                     }
+
                     return null;
                 },
                 function ($submittedDescription) use ($repository) {
                     if (empty($submittedDescription)) {
                         return null;
                     }
+
                     return $repository->find($submittedDescription);
                 }
             ));
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['auto_complete_data'] = [
@@ -143,19 +153,16 @@ class AutoCompleteEntityType extends AbstractType
                 $view->vars['value'] = $value['id'];
             }
         } else {
-            $view->vars['full_name'] = $view->vars['full_name'] . '[]';
+            $view->vars['full_name'] = $view->vars['full_name'].'[]';
             $view->vars['vue_data']->set('fullName', $view->vars['full_name']);
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'choice_label' => function ($object) {
-                return (string)$object;
+                return (string) $object;
             },
             'route_parameters' => [],
             'compound' => false,
@@ -177,17 +184,18 @@ class AutoCompleteEntityType extends AbstractType
             'frame_key' => uniqid(),
         ]);
 
-        $resolver->setNormalizer('actions', function(Options $options, $value) {
+        $resolver->setNormalizer('actions', function (Options $options, $value) {
             if ($options['create_route']) {
                 return array_merge([
                     'create' => [
                         'type' => 'create',
                         'route' => $options['create_route'],
                         'route_parameters' => $options['create_route_parameters'],
-                        'frame_key' => $options['frame_key']
-                    ]
+                        'frame_key' => $options['frame_key'],
+                    ],
                 ], $value);
             }
+
             return $value;
         });
 
@@ -197,9 +205,6 @@ class AutoCompleteEntityType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
         return 'enhavo_auto_complete_entity';

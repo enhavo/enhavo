@@ -1,9 +1,12 @@
 <?php
-/**
- * Route.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 17/05/15
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\Entity;
@@ -43,14 +46,13 @@ class Route extends BaseRouteModel implements RouteInterface
 
         $position = strpos($pattern, '/{');
 
-        if ($position !== false) {
+        if (false !== $position) {
             $prefix = substr($pattern, 0, $position);
             $variablePattern = substr($pattern, $position);
         }
 
         if ($prefix) {
             $this->setStaticPrefix($prefix);
-
         } else {
             $this->setStaticPrefix('');
         }
@@ -64,6 +66,6 @@ class Route extends BaseRouteModel implements RouteInterface
 
     public function generateRouteName()
     {
-        $this->setName('r' . uniqid());
+        $this->setName('r'.uniqid());
     }
 }

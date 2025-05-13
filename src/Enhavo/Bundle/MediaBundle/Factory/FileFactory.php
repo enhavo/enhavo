@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Factory;
 
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
@@ -20,8 +30,7 @@ class FileFactory extends Factory
         private readonly TokenGeneratorInterface $tokenGenerator,
         private readonly ChecksumGeneratorInterface $checksumGenerator,
         private readonly HttpClientInterface $client,
-    )
-    {
+    ) {
         parent::__construct($className);
     }
 
@@ -45,6 +54,7 @@ class FileFactory extends Factory
         $file->setBasename(basename($content->getFilePath()));
 
         $this->updateFile($file);
+
         return $file;
     }
 
@@ -57,6 +67,7 @@ class FileFactory extends Factory
         $file->setContent(new PathContent($uploadedFile->getRealPath()));
 
         $this->updateFile($file);
+
         return $file;
     }
 
@@ -75,6 +86,7 @@ class FileFactory extends Factory
         $file->setContent(new PathContent($path));
 
         $this->updateFile($file);
+
         return $file;
     }
 
@@ -89,6 +101,7 @@ class FileFactory extends Factory
         $file->setContent($content);
 
         $this->updateFile($file);
+
         return $file;
     }
 
@@ -103,13 +116,14 @@ class FileFactory extends Factory
         $newFile->setOrder($file->getOrder());
 
         $this->updateFile($newFile);
+
         return $newFile;
     }
 
-    public function createFromUri(string $uri, string $filename = null): FileInterface
+    public function createFromUri(string $uri, ?string $filename = null): FileInterface
     {
         $response = $this->client->request('GET', $uri);
-        if ($response->getStatusCode() != 200) {
+        if (200 != $response->getStatusCode()) {
             throw new FileException(sprintf('File could not be download from uri "%s".', $uri));
         }
 
@@ -119,38 +133,39 @@ class FileFactory extends Factory
         $headers = $response->getHeaders();
         $contentType = $headers['content-type'];
         if (!empty($contentType)) {
-            $parsedHeader = $this->parseHeader($contentType[count($contentType)-1]);
-            if(!empty($parsedHeader) && isset($parsedHeader[0]) && isset($parsedHeader[0][0])) {
+            $parsedHeader = $this->parseHeader($contentType[count($contentType) - 1]);
+            if (!empty($parsedHeader) && isset($parsedHeader[0]) && isset($parsedHeader[0][0])) {
                 $file->setMimeType($parsedHeader[0][0]);
             }
         }
 
-        if ($filename === null) {
+        if (null === $filename) {
             $contentDisposition = $headers['content-disposition'];
-            if(!empty($contentDisposition)) {
+            if (!empty($contentDisposition)) {
                 if (preg_match('/.*?filename="(.+?)"/', $contentDisposition[0], $matches)) {
                     $filename = $matches[1];
                 }
             } else {
                 $path = parse_url($uri, PHP_URL_PATH);
-                if($path !== null) {
+                if (null !== $path) {
                     $basename = pathinfo($path, PATHINFO_BASENAME);
-                    if($basename !== null) {
+                    if (null !== $basename) {
                         $filename = $basename;
                     }
                 }
             }
         }
 
-        if ($filename === null) {
+        if (null === $filename) {
             throw new FileException(sprintf('Can\'t resolve filename from uri "%s".', $uri));
         }
 
         $file->setBasename($filename);
         $file->setGarbage(true);
-        $file->setContent(new Content((string)$response->getContent()));
+        $file->setContent(new Content((string) $response->getContent()));
 
         $this->updateFile($file);
+
         return $file;
     }
 
@@ -188,7 +203,7 @@ class FileFactory extends Factory
         $result = [];
         foreach ($header as $value) {
             foreach ((array) $value as $v) {
-                if (strpos($v, ',') === false) {
+                if (false === strpos($v, ',')) {
                     $result[] = $v;
                     continue;
                 }

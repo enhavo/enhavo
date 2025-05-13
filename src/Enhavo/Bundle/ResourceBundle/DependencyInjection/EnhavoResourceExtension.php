@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\DependencyInjection;
 
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\GridConfigurationMerger;
@@ -8,7 +17,7 @@ use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\ResourceMerger;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class EnhavoResourceExtension extends Extension implements PrependExtensionInterface
@@ -36,7 +45,7 @@ class EnhavoResourceExtension extends Extension implements PrependExtensionInter
         $container->setParameter('enhavo_resource.resources', $config['resources']);
         $container->setParameter('enhavo_resource.delete.handler', $config['delete']['handler']);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $loader->load('services/action.yaml');
         $loader->load('services/batch.yaml');
@@ -54,7 +63,7 @@ class EnhavoResourceExtension extends Extension implements PrependExtensionInter
     protected function prependFiles(): array
     {
         return [
-            __DIR__.'/../Resources/config/app/config.yaml'
+            __DIR__.'/../Resources/config/app/config.yaml',
         ];
     }
 }

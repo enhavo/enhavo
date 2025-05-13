@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Repository;
 
 use Doctrine\ORM\QueryBuilder;
@@ -30,7 +39,7 @@ trait EntityRepositoryTrait
             } elseif ('' !== $value) {
                 $parameter = str_replace('.', '_', $property);
                 $queryBuilder
-                    ->andWhere($queryBuilder->expr()->eq($name, ':' . $parameter))
+                    ->andWhere($queryBuilder->expr()->eq($name, ':'.$parameter))
                     ->setParameter($parameter, $value)
                 ;
             }
@@ -49,7 +58,7 @@ trait EntityRepositoryTrait
     private function getPropertyName(string $name): string
     {
         if (!str_contains($name, '.')) {
-            return 'o' . '.' . $name;
+            return 'o.'.$name;
         }
 
         return $name;

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-09-06
- * Time: 12:17
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Entity;
@@ -17,7 +20,7 @@ use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
 class Thread implements ThreadInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -27,7 +30,7 @@ class Thread implements ThreadInterface
     private $comments;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $enable = true;
 
@@ -48,9 +51,8 @@ class Thread implements ThreadInterface
 
     /**
      * Thread constructor.
-     * @param CommentSubjectInterface|null $subject
      */
-    public function __construct(CommentSubjectInterface $subject = null)
+    public function __construct(?CommentSubjectInterface $subject = null)
     {
         $this->subject = $subject;
         $this->comments = new ArrayCollection();
@@ -64,18 +66,12 @@ class Thread implements ThreadInterface
         return $this->id;
     }
 
-    /**
-     * @param CommentInterface $comment
-     */
     public function addComment(CommentInterface $comment)
     {
         $comment->setThread($this);
         $this->comments[] = $comment;
     }
 
-    /**
-     * @param CommentInterface $comment
-     */
     public function removeComment(CommentInterface $comment)
     {
         $comment->setThread(null);
@@ -90,65 +86,41 @@ class Thread implements ThreadInterface
         return $this->comments;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnable(): bool
     {
         return $this->enable;
     }
 
-    /**
-     * @param bool $enable
-     */
     public function setEnable(bool $enable): void
     {
         $this->enable = $enable;
     }
 
-    /**
-     * @return CommentSubjectInterface
-     */
     public function getSubject(): ?CommentSubjectInterface
     {
         return $this->subject;
     }
 
-    /**
-     * @param CommentSubjectInterface $subject
-     */
     public function setSubject(?CommentSubjectInterface $subject): void
     {
         $this->subject = $subject;
     }
 
-    /**
-     * @return string|null
-     */
     public function getSubjectClass(): ?string
     {
         return $this->subjectClass;
     }
 
-    /**
-     * @param string|null $subjectClass
-     */
     public function setSubjectClass(?string $subjectClass): void
     {
         $this->subjectClass = $subjectClass;
     }
 
-    /**
-     * @return int|null
-     */
     public function getSubjectId(): ?int
     {
         return $this->subjectId;
     }
 
-    /**
-     * @param int|null $subjectId
-     */
     public function setSubjectId(?int $subjectId): void
     {
         $this->subjectId = $subjectId;

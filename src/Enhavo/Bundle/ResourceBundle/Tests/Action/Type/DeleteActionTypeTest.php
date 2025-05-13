@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-04
- * Time: 10:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Action\Type;
@@ -15,6 +18,7 @@ use Enhavo\Bundle\ResourceBundle\Tests\Mock\ResourceMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 
 class DeleteActionTypeTest extends TestCase
@@ -25,6 +29,7 @@ class DeleteActionTypeTest extends TestCase
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         $dependencies->tokenManager = $this->getMockBuilder(CsrfTokenManager::class)->getMock();
         $dependencies->routeResolver = $this->getMockBuilder(RouteResolverInterface::class)->getMock();
+
         return $dependencies;
     }
 
@@ -42,10 +47,11 @@ class DeleteActionTypeTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->tokenManager->method('getToken')->willReturn(new TestCsrfToken());
         $dependencies->routeResolver->method('getRoute')->willReturn('delete_route');
-        $dependencies->router->method('generate')->willReturnCallback(function($name) {
-            if ($name === 'delete_route') {
+        $dependencies->router->method('generate')->willReturnCallback(function ($name) {
+            if ('delete_route' === $name) {
                 return '/delete_route?id=1';
             }
+
             return null;
         });
         $instance = $this->createInstance($dependencies);
@@ -75,7 +81,7 @@ class DeleteActionTypeDependencies
     public RouteResolverInterface|MockObject $routeResolver;
 }
 
-class TestCsrfToken extends \Symfony\Component\Security\Csrf\CsrfToken
+class TestCsrfToken extends CsrfToken
 {
     public function __construct()
     {

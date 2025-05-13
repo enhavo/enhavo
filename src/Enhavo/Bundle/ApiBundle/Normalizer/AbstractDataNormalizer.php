@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\Normalizer;
 
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
@@ -24,7 +33,7 @@ abstract class AbstractDataNormalizer implements DataNormalizerInterface, Normal
                     return true;
                 }
             }
-        } else if (is_string($group)) {
+        } elseif (is_string($group)) {
             return in_array($group, $groups);
         }
 
@@ -34,10 +43,11 @@ abstract class AbstractDataNormalizer implements DataNormalizerInterface, Normal
     private function getSerializationGroupsFromContext(array $context): array
     {
         if (is_array($context['groups'])) {
-           return $context['groups'];
-        } else if (is_string($context['groups'])) {
+            return $context['groups'];
+        } elseif (is_string($context['groups'])) {
             return [$context['groups']];
         }
+
         return [];
     }
 

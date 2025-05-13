@@ -1,9 +1,17 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Form\Type;
 
 use App\Entity\Person;
-use Enhavo\Bundle\FormBundle\Form\Helper\EntityTreeChoice;
 use Enhavo\Bundle\FormBundle\Form\Type\DateType;
 use Enhavo\Bundle\MediaBundle\Form\Type\MediaType;
 use Enhavo\Bundle\TaxonomyBundle\Form\Type\TermAutoSuggestionEntityType;
@@ -22,13 +30,13 @@ class PersonType extends AbstractType
         $builder->add('birthday', DateType::class);
         $builder->add('occupation', TermAutoSuggestionEntityType::class, [
             'taxonomy' => 'occupation',
-            'route' => 'app_term_occupation_auto_complete'
+            'route' => 'app_term_occupation_auto_complete',
         ]);
         $builder->add('picture', MediaType::class, [
             'multiple' => false,
             'formats' => [
                 'person_image' => 'Person Image',
-            ]
+            ],
         ]);
         $builder->add('category', TermTreeChoiceType::class, [
             'taxonomy' => 'app_category',

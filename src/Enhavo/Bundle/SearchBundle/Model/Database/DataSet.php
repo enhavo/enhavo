@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Model\Database;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,7 +19,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class DataSet
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -25,7 +34,7 @@ class DataSet
     private $content;
 
     /**
-     * @var integer
+     * @var int
      */
     private $contentId;
 
@@ -48,7 +57,7 @@ class DataSet
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -103,9 +112,6 @@ class DataSet
         $this->contentId = $contentId;
     }
 
-    /**
-     * @param mixed $index
-     */
     public function addIndex($index)
     {
         $index->setDataset($this);
@@ -132,15 +138,12 @@ class DataSet
     public function resetIndex()
     {
         /** @var Index $index */
-        foreach($this->indexes as $index) {
+        foreach ($this->indexes as $index) {
             $index->setDataSet(null);
         }
         $this->indexes->clear();
     }
 
-    /**
-     * @param Filter $filter
-     */
     public function addFilter(Filter $filter)
     {
         $filter->setDataSet($this);
@@ -167,7 +170,7 @@ class DataSet
     public function resetFilter()
     {
         /** @var Filter $filter */
-        foreach($this->filters as $filter) {
+        foreach ($this->filters as $filter) {
             $filter->setDataSet(null);
         }
         $this->filters->clear();

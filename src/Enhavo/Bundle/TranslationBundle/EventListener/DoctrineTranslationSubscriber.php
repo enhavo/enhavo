@@ -1,7 +1,12 @@
 <?php
-/**
- * DoctrineSubscriber.php
+
+/*
+ * This file is part of the enhavo package.
  *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\EventListener;
@@ -12,6 +17,7 @@ use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Doctrine\Persistence\Proxy;
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
+use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
@@ -22,8 +28,8 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
  * This subscriber is listing to doctrine events to call the translator actions
  *
  * @since 03/10/16
+ *
  * @author gseidel
- * @package Enhavo\Bundle\TranslationBundle\EventListener
  */
 class DoctrineTranslationSubscriber implements EventSubscriber
 {
@@ -33,28 +39,23 @@ class DoctrineTranslationSubscriber implements EventSubscriber
         private AccessControl $accessControl,
         private MetadataRepository $metadataRepository,
         private LocaleResolverInterface $localeResolver,
-    )
-    {
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSubscribedEvents()
     {
         return [
             'preRemove',
             'postLoad',
             'preFlush',
-            'postFlush'
+            'postFlush',
         ];
     }
 
     /**
      * Before flushing the data, we have to check if some translation data was stored for an object.
      *
-     * @param PreFlushEventArgs $event
-     * @throws \Enhavo\Bundle\TranslationBundle\Exception\TranslationException
+     * @throws TranslationException
      */
     public function preFlush(PreFlushEventArgs $event)
     {
@@ -83,8 +84,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
     /**
      * Check if entity is not up to date an trigger flush again if needed
      *
-     * @param PostFlushEventArgs $args
-     * @throws \Enhavo\Bundle\TranslationBundle\Exception\TranslationException
+     * @throws TranslationException
      */
     public function postFlush(PostFlushEventArgs $args)
     {
@@ -106,8 +106,6 @@ class DoctrineTranslationSubscriber implements EventSubscriber
 
     /**
      * If entity will be deleted, we need to delete all its translation data as well
-     *
-     * @param LifecycleEventArgs $args
      */
     public function preRemove(LifecycleEventArgs $args)
     {
@@ -120,8 +118,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
     /**
      * Load TranslationData into to entity if it's fetched from the database
      *
-     * @param LifecycleEventArgs $args
-     * @throws \Enhavo\Bundle\TranslationBundle\Exception\TranslationException
+     * @throws TranslationException
      */
     public function postLoad(LifecycleEventArgs $args)
     {

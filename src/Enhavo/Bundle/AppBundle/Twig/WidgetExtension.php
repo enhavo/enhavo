@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Twig;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
@@ -31,7 +40,7 @@ class WidgetExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('widget', [$this, 'renderWidget'], ['is_safe' => ['html']])
+            new TwigFunction('widget', [$this, 'renderWidget'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -41,6 +50,7 @@ class WidgetExtension extends AbstractExtension
         $data = $widget->createViewData($resource);
         $template = $this->templateResolver->resolve($widget->getTemplate());
         $content = $this->container->get('twig')->render($template, $data);
+
         return $content;
     }
 }

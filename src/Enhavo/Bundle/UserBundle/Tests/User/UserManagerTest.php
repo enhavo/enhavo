@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Tests\User;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,27 +21,23 @@ use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationConfirmConfi
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationRegisterConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ResetPassword\ResetPasswordRequestConfiguration;
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
-use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderInterface;
-use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver;
-use Enhavo\Bundle\UserBundle\UserIdentifier\UserMapper;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\Tests\Mocks\UserMock;
 use Enhavo\Bundle\UserBundle\User\UserManager;
+use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderInterface;
+use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
-use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -42,7 +47,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class UserManagerTest extends TestCase
 {
-    private function createInstance(UserManagerTestDependencies $dependencies, array $mapping = null)
+    private function createInstance(UserManagerTestDependencies $dependencies, ?array $mapping = null)
     {
         return new UserManager(
             $dependencies->entityManager,
@@ -71,13 +76,13 @@ class UserManagerTest extends TestCase
         $dependencies->tokenGenerator = $this->getMockBuilder(TokenGeneratorInterface::class)->getMock();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dependencies->translator->method('trans')->willReturnCallback(function ($message) {
-            return $message .'.translated';
+            return $message.'.translated';
         });
         $dependencies->userChecker = $this->getMockBuilder(UserCheckerInterface::class)->getMock();
         $dependencies->form = $this->getMockBuilder(FormInterface::class)->getMock();
         $dependencies->userPasswordHasher = $this->getMockBuilder(UserPasswordHasherInterface::class)->getMock();
         $dependencies->userPasswordHasher->method('hashPassword')->willReturnCallback(function ($user, $password) {
-            return $password .'.hashed';
+            return $password.'.hashed';
         });
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
@@ -102,31 +107,32 @@ class UserManagerTest extends TestCase
 
         $dependencies = $this->createDependencies();
         $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) use ($user) {
-            /** @var UserEvent $event */
+            /* @var UserEvent $event */
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(UserEvent::CREATED, $name);
             $this->assertEquals($user, $event->getUser());
+
             return $user;
         });
         $dependencies->tokenGenerator->expects($this->once())->method('generateToken')->willReturn('__TOKEN__');
         $dependencies->mailerManager->expects($this->once())->method('createMessage')->willReturn($dependencies->message);
         $dependencies->mailerManager->expects($this->once())->method('sendMessage');
-        $dependencies->message->method('setSubject')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setSubject')->willReturnCallback(function ($subject): void {
             $this->assertEquals('mail.subject.translated', $subject);
         });
-        $dependencies->message->method('setTemplate')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setTemplate')->willReturnCallback(function ($subject): void {
             $this->assertEquals('mail.html.twig', $subject);
         });
-        $dependencies->message->method('setTo')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setTo')->willReturnCallback(function ($subject): void {
             $this->assertEquals('user@enhavo.com', $subject);
         });
-        $dependencies->message->method('setFrom')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setFrom')->willReturnCallback(function ($subject): void {
             $this->assertEquals('admin@enhavo.com', $subject);
         });
-        $dependencies->message->method('setSenderName')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setSenderName')->willReturnCallback(function ($subject): void {
             $this->assertEquals('Enhavo.translated', $subject);
         });
-        $dependencies->message->method('setContentType')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setContentType')->willReturnCallback(function ($subject): void {
             $this->assertEquals('content/type', $subject);
         });
 
@@ -139,7 +145,7 @@ class UserManagerTest extends TestCase
         $configuration->setMailSenderName('Enhavo');
         $configuration->setMailContentType('content/type');
 
-        $manager= $this->createInstance($dependencies);
+        $manager = $this->createInstance($dependencies);
         $manager->register($user, $configuration);
 
         $this->assertEquals('1337.user@enhavo.com', $user->getUserIdentifier());
@@ -160,30 +166,31 @@ class UserManagerTest extends TestCase
 
         $dependencies = $this->createDependencies();
         $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) use ($user) {
-            /** @var UserEvent $event */
+            /* @var UserEvent $event */
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(UserEvent::REGISTRATION_CONFIRMED, $name);
             $this->assertEquals($user, $event->getUser());
+
             return $event;
         });
         $dependencies->mailerManager->expects($this->once())->method('createMessage')->willReturn($dependencies->message);
         $dependencies->mailerManager->expects($this->once())->method('sendMessage');
-        $dependencies->message->method('setSubject')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setSubject')->willReturnCallback(function ($subject): void {
             $this->assertEquals('mail.subject.translated', $subject);
         });
-        $dependencies->message->method('setTemplate')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setTemplate')->willReturnCallback(function ($subject): void {
             $this->assertEquals('mail.html.twig', $subject);
         });
-        $dependencies->message->method('setTo')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setTo')->willReturnCallback(function ($subject): void {
             $this->assertEquals('user@enhavo.com', $subject);
         });
-        $dependencies->message->method('setFrom')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setFrom')->willReturnCallback(function ($subject): void {
             $this->assertEquals('from@enhavo.com', $subject);
         });
-        $dependencies->message->method('setSenderName')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setSenderName')->willReturnCallback(function ($subject): void {
             $this->assertEquals('enhavo.translated', $subject);
         });
-        $dependencies->message->method('setContentType')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setContentType')->willReturnCallback(function ($subject): void {
             $this->assertEquals('content/type', $subject);
         });
 
@@ -213,31 +220,32 @@ class UserManagerTest extends TestCase
 
         $dependencies = $this->createDependencies();
         $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) use ($user) {
-            /** @var UserEvent $event */
+            /* @var UserEvent $event */
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(UserEvent::PASSWORD_RESET_REQUESTED, $name);
             $this->assertEquals($user, $event->getUser());
+
             return $user;
         });
         $dependencies->tokenGenerator->expects($this->once())->method('generateToken')->willReturn('__TOKEN__');
         $dependencies->mailerManager->expects($this->once())->method('createMessage')->willReturn($dependencies->message);
         $dependencies->mailerManager->expects($this->once())->method('sendMessage');
-        $dependencies->message->method('setSubject')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setSubject')->willReturnCallback(function ($subject): void {
             $this->assertEquals('mail.subject.translated', $subject);
         });
-        $dependencies->message->method('setTemplate')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setTemplate')->willReturnCallback(function ($subject): void {
             $this->assertEquals('mail.html.twig', $subject);
         });
-        $dependencies->message->method('setTo')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setTo')->willReturnCallback(function ($subject): void {
             $this->assertEquals('user@enhavo.com', $subject);
         });
-        $dependencies->message->method('setFrom')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setFrom')->willReturnCallback(function ($subject): void {
             $this->assertEquals('admin@enhavo.com', $subject);
         });
-        $dependencies->message->method('setSenderName')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setSenderName')->willReturnCallback(function ($subject): void {
             $this->assertEquals('Enhavo.translated', $subject);
         });
-        $dependencies->message->method('setContentType')->willReturnCallback(function ($subject) {
+        $dependencies->message->method('setContentType')->willReturnCallback(function ($subject): void {
             $this->assertEquals('content/type', $subject);
         });
 
@@ -269,10 +277,11 @@ class UserManagerTest extends TestCase
 
         $dependencies = $this->createDependencies();
         $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) use ($user) {
-            /** @var UserEvent $event */
+            /* @var UserEvent $event */
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(UserEvent::PASSWORD_CHANGED, $name);
             $this->assertEquals($user, $event->getUser());
+
             return $event;
         });
 
@@ -298,6 +307,7 @@ class UserManagerTest extends TestCase
             $this->assertEquals('admin@enhavo.com', $message->getFrom());
             $this->assertEquals('change-email.subject.translated', $message->getSubject());
             $this->assertEquals('change-email.html.twig', $message->getTemplate());
+
             return 1;
         });
         $dependencies->entityManager->expects($this->never())->method('persist');
@@ -330,10 +340,11 @@ class UserManagerTest extends TestCase
 
         $dependencies = $this->createDependencies();
         $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) use ($user) {
-            /** @var UserEvent $event */
+            /* @var UserEvent $event */
             $this->assertInstanceOf(UserEvent::class, $event);
             $this->assertEquals(UserEvent::ACTIVATED, $name);
             $this->assertEquals($user, $event->getUser());
+
             return $event;
         });
         $dependencies->entityManager->expects($this->never())->method('persist');
@@ -358,7 +369,7 @@ class UserManagerTest extends TestCase
         $request = new Request();
 
         $dependencies = $this->createDependencies();
-        $dependencies->tokenStorage->expects($this->once())->method('setToken')->willReturnCallback(function ($token) {
+        $dependencies->tokenStorage->expects($this->once())->method('setToken')->willReturnCallback(function ($token): void {
             $this->assertInstanceOf(UsernamePasswordToken::class, $token);
         });
         $dependencies->sessionStrategy->expects($this->once())->method('onAuthentication');
@@ -367,7 +378,6 @@ class UserManagerTest extends TestCase
 
         $manager->login($user);
     }
-
 
     public function testUpdatePassword()
     {
@@ -389,12 +399,12 @@ class CustomerIdUserIdentifierProvider implements UserIdentifierProviderInterfac
 {
     public function getUserIdentifier(\Symfony\Component\Security\Core\User\UserInterface $user): string
     {
-        return $user->getCustomerId() . '.' . $user->getEmail();
+        return $user->getCustomerId().'.'.$user->getEmail();
     }
 
     public function getUserIdentifierByPropertyValues(array $values): string
     {
-        return $values['customerId'] . '.' . $values['email'];
+        return $values['customerId'].'.'.$values['email'];
     }
 
     public function getUserIdentifierProperties(): array
@@ -456,4 +466,3 @@ class UserManagerTestDependencies
     /** @var UserIdentifierProviderResolver|MockObject */
     public $resolver;
 }
-

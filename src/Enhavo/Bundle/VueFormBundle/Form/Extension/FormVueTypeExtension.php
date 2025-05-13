@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\VueFormBundle\Form\Extension;
 
 use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
@@ -15,13 +24,12 @@ class FormVueTypeExtension extends AbstractVueTypeExtension
     public function __construct(
         private TranslatorInterface $translator,
         private NormalizerInterface $normalizer,
-    )
-    {
+    ) {
     }
 
     public function buildVueData(FormView $view, VueData $data, array $options)
     {
-        $data['name'] = (string)$view->vars['name'];
+        $data['name'] = (string) $view->vars['name'];
         $data['value'] = $this->normalizer->normalize($view->vars['value'], null, ['groups' => ['vue-form']]);
         $data['compound'] = $view->vars['compound'];
         $data['id'] = $view->vars['id'];
@@ -34,7 +42,7 @@ class FormVueTypeExtension extends AbstractVueTypeExtension
         $errors = [];
         foreach ($view->vars['errors'] as $error) {
             $errors[] = [
-                'message' => $error->getMessage()
+                'message' => $error->getMessage(),
             ];
         }
         $data['errors'] = $errors;

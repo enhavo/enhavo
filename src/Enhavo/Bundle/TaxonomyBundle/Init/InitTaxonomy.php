@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-05-26
- * Time: 22:06
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TaxonomyBundle\Init;
@@ -12,8 +15,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\AppBundle\Init\InitInterface;
 use Enhavo\Bundle\AppBundle\Init\Output;
-use Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy;
 use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
+use Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy;
 
 class InitTaxonomy implements InitInterface
 {
@@ -39,9 +42,6 @@ class InitTaxonomy implements InitInterface
 
     /**
      * InitTaxonomy constructor.
-     * @param EntityManagerInterface $em
-     * @param EntityRepository $repository
-     * @param $configuration
      */
     public function __construct(EntityManagerInterface $em, EntityRepository $repository, FactoryInterface $factory, $configuration)
     {
@@ -53,11 +53,11 @@ class InitTaxonomy implements InitInterface
 
     public function init(Output $io)
     {
-        foreach($this->configuration as $key => $configuration) {
+        foreach ($this->configuration as $key => $configuration) {
             $taxonomy = $this->repository->findOneBy([
                 'name' => $key,
             ]);
-            if($taxonomy === null) {
+            if (null === $taxonomy) {
                 $io->writeln(sprintf('Create "%s" taxonomy', $key));
                 /** @var Taxonomy $taxonomy */
                 $taxonomy = $this->factory->createNew();
@@ -70,6 +70,6 @@ class InitTaxonomy implements InitInterface
 
     public function getType()
     {
-       return 'taxonomy';
+        return 'taxonomy';
     }
 }

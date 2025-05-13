@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 10.10.18
- * Time: 15:16
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Model\Column;
@@ -12,8 +15,8 @@ use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
 
 abstract class Column extends AbstractBlock
 {
-    const WIDTH_FULL = 'full';
-    const WIDTH_CONTAINER = 'container';
+    public const WIDTH_FULL = 'full';
+    public const WIDTH_CONTAINER = 'container';
 
     /**
      * @var string

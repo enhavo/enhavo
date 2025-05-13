@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 09.05.18
- * Time: 15:55
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Engine;
-
 
 use Enhavo\Bundle\AppBundle\Output\OutputLoggerInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
@@ -37,22 +39,18 @@ class NullEngine implements SearchEngineInterface
 
     public function index($resource)
     {
-
     }
 
     public function removeIndex($resource)
     {
-
     }
 
-    public function reindex(bool $force = false, string $class = null, OutputLoggerInterface $logger = null)
+    public function reindex(bool $force = false, ?string $class = null, ?OutputLoggerInterface $logger = null)
     {
-
     }
 
     public function initialize($force = false)
     {
-
     }
 
     public static function supports($dsn): bool

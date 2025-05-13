@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MultiTenancyBundle\Resolver;
 
 use Enhavo\Bundle\MultiTenancyBundle\Model\TenantInterface;
@@ -13,12 +22,11 @@ class AssignResolver implements ResolverInterface
     /**
      * @var string|null
      */
-    private $assignedKey = null;
+    private $assignedKey;
 
     /**
      * AssignResolver constructor.
      *
-     * @param ProviderInterface $provider
      * @param string|null $initialAssigned
      */
     public function __construct(ProviderInterface $provider, $initialAssigned = null)
@@ -27,9 +35,6 @@ class AssignResolver implements ResolverInterface
         $this->assignedKey = $initialAssigned;
     }
 
-    /**
-     * @param string|null $key
-     */
     public function assign(?string $key)
     {
         $this->assignedKey = $key;
@@ -37,7 +42,7 @@ class AssignResolver implements ResolverInterface
 
     public function getTenant(): ?TenantInterface
     {
-        if ($this->assignedKey === null) {
+        if (null === $this->assignedKey) {
             return null;
         }
         foreach ($this->provider->getTenants() as $tenant) {
@@ -45,6 +50,7 @@ class AssignResolver implements ResolverInterface
                 return $tenant;
             }
         }
+
         return null;
     }
 }

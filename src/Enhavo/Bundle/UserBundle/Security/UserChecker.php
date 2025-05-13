@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Security;
 
 use Enhavo\Bundle\UserBundle\Event\UserEvent;
@@ -15,13 +24,13 @@ class UserChecker implements UserCheckerInterface
 {
     public function __construct(
         private EventDispatcherInterface $eventDispatcher,
-    )
-    {}
+    ) {
+    }
 
     public function checkPreAuth(UserInterface $user): void
     {
         if (!$user instanceof EnhavoUserInterface) {
-           return;
+            return;
         }
 
         $event = new UserEvent($user);

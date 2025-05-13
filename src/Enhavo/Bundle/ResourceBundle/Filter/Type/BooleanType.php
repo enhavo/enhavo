@@ -1,9 +1,12 @@
 <?php
-/**
- * TextFilter.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 19/01/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Filter\Type;
@@ -17,19 +20,18 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BooleanType extends AbstractFilterType
 {
-    const VALUE_TRUE = 1;
-    const VALUE_FALSE = 2;
+    public const VALUE_TRUE = 1;
+    public const VALUE_FALSE = 2;
 
     public function __construct(
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     public function createViewData($options, Data $data): void
     {
         if (!$options['checkbox']) {
-            if ($data['component'] === 'filter-boolean') {
+            if ('filter-boolean' === $data['component']) {
                 $data['component'] = 'filter-option';
             }
             $data['choices'] = $this->getChoices($options);
@@ -41,9 +43,9 @@ class BooleanType extends AbstractFilterType
     {
         if ($options['checkbox']) {
             return $options['initial_value'];
-        } else {
-            return $options['initial_value'] === null ? null : ($options['initial_value'] ? self::VALUE_TRUE : self::VALUE_FALSE);
         }
+
+        return null === $options['initial_value'] ? null : ($options['initial_value'] ? self::VALUE_TRUE : self::VALUE_FALSE);
     }
 
     private function getChoices($options): array
@@ -51,36 +53,36 @@ class BooleanType extends AbstractFilterType
         return [
             [
                 'label' => $this->translator->trans($options['label_true'], [], $options['translation_domain']),
-                'code' => self::VALUE_TRUE
+                'code' => self::VALUE_TRUE,
             ],
             [
                 'label' => $this->translator->trans($options['label_false'], [], $options['translation_domain']),
-                'code' => self::VALUE_FALSE
-            ]
+                'code' => self::VALUE_FALSE,
+            ],
         ];
     }
 
     public function buildQuery($options, FilterQuery $query, mixed $value): void
     {
-        if($value === null) {
+        if (null === $value) {
             return;
         }
         $propertyPath = explode('.', $options['property']);
         $property = array_pop($propertyPath);
 
         if ($options['checkbox']) {
-            $boolValue = (boolean)$value;
-            if($boolValue) {
+            $boolValue = (bool) $value;
+            if ($boolValue) {
                 $equals = $options['equals'];
                 $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $equals, $propertyPath);
             }
         } else {
-            if ($value == self::VALUE_TRUE) {
+            if (self::VALUE_TRUE == $value) {
                 $boolValue = true;
-            } elseif ($value == self::VALUE_FALSE) {
+            } elseif (self::VALUE_FALSE == $value) {
                 $boolValue = false;
             } else {
-                throw new FilterException('Value invalid, must be one of ' . implode(',', [self::VALUE_TRUE, self::VALUE_FALSE]));
+                throw new FilterException('Value invalid, must be one of '.implode(',', [self::VALUE_TRUE, self::VALUE_FALSE]));
             }
 
             $query->addWhere($property, FilterQuery::OPERATOR_EQUALS, $boolValue, $propertyPath);

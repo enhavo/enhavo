@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Command;
 
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
@@ -16,8 +26,7 @@ class SearchCommand extends Command
     public function __construct(
         private SearchEngineInterface $searchEngine,
         private ResultConverter $resultConverter,
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -44,14 +53,14 @@ class SearchCommand extends Command
         $results = $this->resultConverter->convert($summary, $term);
 
         $output->writeln(sprintf('Search: %s', $term));
-        foreach ($results as $result)  {
+        foreach ($results as $result) {
             $output->writeln('----------------');
             $output->writeln(sprintf('Title: %s', $result->getTitle()));
             $output->writeln(sprintf('Text: %s', $result->getText()));
             $output->writeln(sprintf('Class: %s', get_class($result->getSubject())));
         }
 
-        if (count($results) === 0) {
+        if (0 === count($results)) {
             $output->writeln('----------------');
             $output->writeln('No result.');
         }

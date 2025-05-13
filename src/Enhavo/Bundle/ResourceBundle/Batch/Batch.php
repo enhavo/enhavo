@@ -1,14 +1,23 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Batch;
 
 use Doctrine\ORM\EntityRepository;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Component\Type\AbstractContainerType;
-use Enhavo\Bundle\ApiBundle\Data\Data;
 
 /**
- * @property BatchTypeInterface $type
+ * @property BatchTypeInterface   $type
  * @property BatchTypeInterface[] $parents
  */
 class Batch extends AbstractContainerType
@@ -26,6 +35,7 @@ class Batch extends AbstractContainerType
             $parent->createViewData($this->options, $data);
         }
         $this->type->createViewData($this->options, $data);
+
         return $data->normalize();
     }
 

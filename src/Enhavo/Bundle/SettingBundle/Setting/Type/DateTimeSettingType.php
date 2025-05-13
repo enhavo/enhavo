@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\DateTimeType;
@@ -9,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class DateTimeSettingType
- * @package Enhavo\Bundle\SettingBundle\Setting\Type
+ *
  * @property ValueAccessSettingType $parent
  */
 class DateTimeSettingType extends AbstractSettingType
@@ -28,12 +37,13 @@ class DateTimeSettingType extends AbstractSettingType
             throw new \InvalidArgumentException();
         }
 
-        if ($settingEntity->getValue() === null) {
+        if (null === $settingEntity->getValue()) {
             $settingEntity->setValue(new DateValue($type, $settingEntity));
 
             if ($options['default']) {
                 $settingEntity->getValue()->setValue(new \DateTime($options['default']));
             }
+
             return;
         }
     }
@@ -42,7 +52,7 @@ class DateTimeSettingType extends AbstractSettingType
     {
         /** @var \DateTime $date */
         $date = $value->getValue();
-        if ($date === null) {
+        if (null === $date) {
             return '';
         }
 
@@ -67,7 +77,7 @@ class DateTimeSettingType extends AbstractSettingType
         $resolver->setDefaults([
             'time' => true,
             'date' => true,
-            'form_type' => DateTimeType::class
+            'form_type' => DateTimeType::class,
         ]);
     }
 

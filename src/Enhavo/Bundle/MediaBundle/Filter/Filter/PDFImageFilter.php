@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 11.11.17
- * Time: 16:39
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Filter\Filter;
@@ -18,34 +21,34 @@ use Symfony\Component\Process\Process;
 
 class PDFImageFilter extends AbstractFilter
 {
-    const FILTER_SETTING_GHOSTSCRIPT = 'ghostscript';
-    const FILTER_SETTING_IMAGICK = 'imagick';
+    public const FILTER_SETTING_GHOSTSCRIPT = 'ghostscript';
+    public const FILTER_SETTING_IMAGICK = 'imagick';
 
     /**
      * @param ContentInterface|FileInterface|FormatInterface $file
-     * @param FilterSetting $setting
+     *
      * @throws FilterException
      */
     public function apply($file, FilterSetting $setting)
     {
         $content = $this->getContent($file);
 
-        if ($setting->getSetting('method') === self::FILTER_SETTING_GHOSTSCRIPT) {
+        if (self::FILTER_SETTING_GHOSTSCRIPT === $setting->getSetting('method')) {
             $temporaryFileName = tempnam('/tmp', 'pdfImage');
 
-            $command = explode(' ', 'gs -dSAFER -dBATCH -sDEVICE=jpeg -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -r72 -sOutputFile=' . $temporaryFileName . ' ' . $content->getFilePath());
+            $command = explode(' ', 'gs -dSAFER -dBATCH -sDEVICE=jpeg -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -r72 -sOutputFile='.$temporaryFileName.' '.$content->getFilePath());
             $process = new Process($command);
             $process->run();
 
             if (!$process->isSuccessful()) {
-                throw new FilterException('PDFImageFilter with method "' . self::FILTER_SETTING_GHOSTSCRIPT . '" failed. Possible reasons could be broken pdf format or missing Ghostscript executable.');
+                throw new FilterException('PDFImageFilter with method "'.self::FILTER_SETTING_GHOSTSCRIPT.'" failed. Possible reasons could be broken pdf format or missing Ghostscript executable.');
             }
 
             copy($temporaryFileName, $content->getFilePath());
             unlink($temporaryFileName);
         } else {
-            if(!class_exists("\Imagick")) {
-                throw new FilterException('To use the PDFImageFilter with method "' . self::FILTER_SETTING_IMAGICK . '" (default) you need to install Imagick extension for php.');
+            if (!class_exists("\Imagick")) {
+                throw new FilterException('To use the PDFImageFilter with method "'.self::FILTER_SETTING_IMAGICK.'" (default) you need to install Imagick extension for php.');
             }
 
             $imagick = new \Imagick($content->getFilePath().'[0]');

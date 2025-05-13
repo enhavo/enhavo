@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Profiler;
 
 use Enhavo\Bundle\ApiBundle\Profiler\EndpointDataCollector;
@@ -14,11 +23,10 @@ class TemplateEndpointDataCollector extends AbstractDataCollector
     public function __construct(
         private readonly EndpointDataCollector $endpointDataCollector,
         private readonly RouterInterface $router,
-    )
-    {
+    ) {
     }
 
-    public function collect(Request $request, Response $response, \Throwable $exception = null): void
+    public function collect(Request $request, Response $response, ?\Throwable $exception = null): void
     {
         $this->data['variants'] = [];
         if ($this->hasTemplateEndpoint()) {
@@ -71,14 +79,14 @@ class TemplateEndpointDataCollector extends AbstractDataCollector
         } catch (\Exception $e) {
         }
 
-        return $request->getPathInfo() . '?' . $condition;
+        return $request->getPathInfo().'?'.$condition;
     }
 
     private function hasTemplateEndpoint(): bool
     {
         $nodes = $this->endpointDataCollector->getNodes();
         foreach ($nodes as $node) {
-            if ($node->getType() === TemplateEndpointType::class) {
+            if (TemplateEndpointType::class === $node->getType()) {
                 return true;
             }
         }

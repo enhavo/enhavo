@@ -1,21 +1,30 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BooleanType extends AbstractType
 {
-    const VALUE_TRUE = '1';
-    const VALUE_FALSE = '0';
-    const VALUE_NULL = 'null';
+    public const VALUE_TRUE = '1';
+    public const VALUE_FALSE = '0';
+    public const VALUE_NULL = 'null';
 
     /**
      * @var TranslatorInterface
@@ -27,9 +36,6 @@ class BooleanType extends AbstractType
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->addModelTransformer(new CallbackTransformer(
@@ -44,19 +50,21 @@ class BooleanType extends AbstractType
                     if (true === $options['default'] || self::VALUE_TRUE === $options['default']) {
                         return self::VALUE_TRUE;
                     }
-                    if (false === $options['default']|| self::VALUE_FALSE === $options['default']) {
+                    if (false === $options['default'] || self::VALUE_FALSE === $options['default']) {
                         return self::VALUE_FALSE;
                     }
+
                     return self::VALUE_NULL;
                 }
+
                 return $originalDescription;
             },
             function ($submittedDescription) use ($options) {
                 if (self::VALUE_TRUE === $submittedDescription) {
                     return true;
-                } else if (self::VALUE_FALSE === $submittedDescription) {
+                } elseif (self::VALUE_FALSE === $submittedDescription) {
                     return false;
-                } else if (self::VALUE_NULL === $submittedDescription) {
+                } elseif (self::VALUE_NULL === $submittedDescription) {
                     return null;
                 }
 
@@ -65,29 +73,26 @@ class BooleanType extends AbstractType
         ));
     }
 
-    /**
-     * @inheritdoc
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if ($view->vars['value'] === '') {
+        if ('' === $view->vars['value']) {
             $view->vars['value'] = self::VALUE_NULL;
         }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'choices' => array(
+        $resolver->setDefaults([
+            'choices' => [
                 $this->translator->trans('label.yes', [], 'EnhavoAppBundle') => self::VALUE_TRUE,
-                $this->translator->trans('label.no', [], 'EnhavoAppBundle') => self::VALUE_FALSE
-            ),
+                $this->translator->trans('label.no', [], 'EnhavoAppBundle') => self::VALUE_FALSE,
+            ],
             'choice_translation_domain' => 'EnhavoAppBundle',
             'translation_domain' => 'EnhavoAppBundle',
             'expanded' => true,
             'multiple' => false,
-            'default' => false
-        ));
+            'default' => false,
+        ]);
     }
 
     public function getBlockPrefix()

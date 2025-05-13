@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Configuration\Verification;
 
 use Enhavo\Bundle\UserBundle\Configuration\Attribute\ConfirmationRouteTrait;
@@ -18,17 +27,11 @@ class VerificationRequestConfiguration implements MailConfigurationInterface
     /** @var ?string */
     private $route;
 
-    /**
-     * @return string|null
-     */
     public function getRoute(): ?string
     {
         return $this->route;
     }
 
-    /**
-     * @param string|null $route
-     */
     public function setRoute(?string $route): void
     {
         $this->route = $route;

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-15
- * Time: 15:06
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Tests\Form\Type;
@@ -16,8 +19,8 @@ use Enhavo\Bundle\BlockBundle\Tests\Mock\Form\ColumnBlockMockType;
 use Enhavo\Bundle\BlockBundle\Tests\Mock\Form\TextBlockMockType;
 use Enhavo\Bundle\BlockBundle\Tests\Mock\Model\Column;
 use Enhavo\Bundle\BlockBundle\Tests\Mock\Model\Text;
-use Symfony\Component\Form\Test\TypeTestCase;
 use Enhavo\Bundle\FormBundle\Tests\Form\PreloadExtensionFactory as FormPreloadExtensionFactory;
+use Symfony\Component\Form\Test\TypeTestCase;
 
 class BlockCollectionTypeTest extends TypeTestCase
 {
@@ -39,17 +42,17 @@ class BlockCollectionTypeTest extends TypeTestCase
                 'block' => [
                     'text' => 'Foobar',
                     'column' => [
-                        'children' => []
-                    ]
-                ]
+                        'children' => [],
+                    ],
+                ],
             ],
             1 => [
                 'uuid' => 'f4ce058f-7097-4644-9d4e-3dacf8e99538',
                 'name' => 'text',
                 'block' => [
-                    'text' => 'Hello World!'
-                ]
-            ]
+                    'text' => 'Hello World!',
+                ],
+            ],
         ]);
 
         $data = $form->getData();
@@ -61,7 +64,7 @@ class BlockCollectionTypeTest extends TypeTestCase
     public function testGroupOption()
     {
         $form = $this->factory->create(BlockCollectionType::class, null, [
-            'item_groups' => ['content']
+            'item_groups' => ['content'],
         ]);
 
         $view = $form->createView();
@@ -72,7 +75,7 @@ class BlockCollectionTypeTest extends TypeTestCase
     public function testItemOption()
     {
         $form = $this->factory->create(BlockCollectionType::class, null, [
-            'items' => ['text']
+            'items' => ['text'],
         ]);
 
         $view = $form->createView();
@@ -95,9 +98,9 @@ class BlockCollectionTypeTest extends TypeTestCase
         return [
             PreloadExtensionFactory::createBlockCollectionTypeExtension($this, [
                 'column' => $columnBlock,
-                'text' => $textBlock
+                'text' => $textBlock,
             ]),
-            FormPreloadExtensionFactory::createPolyCollectionTypeExtension()
+            FormPreloadExtensionFactory::createPolyCollectionTypeExtension(),
         ];
     }
 }

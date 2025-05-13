@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Form\EventListener;
 
 use Doctrine\Common\Util\ClassUtils;
@@ -11,6 +20,7 @@ use Symfony\Component\Form\Extension\Core\EventListener\ResizeFormListener;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  * ResizePolyFormListener
@@ -22,15 +32,15 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 class ResizePolyFormListener extends ResizeFormListener
 {
     /** @var array Stores an array of Types with the Type name as the key. */
-    private $typeMap = array();
+    private $typeMap = [];
 
     /** @var array Stores an array of types with the Data Class as the key. */
-    private $classMap = array();
+    private $classMap = [];
 
     /** @var string Name of the hidden field identifying the type. */
     private $typeFieldName;
 
-    /** @var \Symfony\Component\PropertyAccess\PropertyAccessor */
+    /** @var PropertyAccessor */
     private $propertyAccessor;
 
     /** @var \Closure|null */
@@ -49,13 +59,11 @@ class ResizePolyFormListener extends ResizeFormListener
     private $loaded = false;
 
     /**
-     * @param PrototypeManager $prototypeManager
-     * @param string $storageName
+     * @param string   $storageName
      * @param string[] $entryKeys
-     * @param array $options
-     * @param bool $allowAdd
-     * @param bool $allowDelete
-     * @param string $typeFieldName
+     * @param bool     $allowAdd
+     * @param bool     $allowDelete
+     * @param string   $typeFieldName
      * @param \Closure $entryTypeResolver
      */
     public function __construct(
@@ -66,7 +74,7 @@ class ResizePolyFormListener extends ResizeFormListener
         $allowAdd = false,
         $allowDelete = false,
         $typeFieldName = '_key',
-        $entryTypeResolver = null
+        $entryTypeResolver = null,
     ) {
         $this->prototypeManager = $prototypeManager;
         $this->storageName = $storageName;
@@ -80,7 +88,7 @@ class ResizePolyFormListener extends ResizeFormListener
 
     private function loadMap()
     {
-        if($this->loaded) {
+        if ($this->loaded) {
             return;
         }
 
@@ -90,7 +98,7 @@ class ResizePolyFormListener extends ResizeFormListener
 
             $this->typeMap[$prototype->getParameters()['key']] = get_class($type);
 
-            if($modelClass !== null) {
+            if (null !== $modelClass) {
                 $this->classMap[$modelClass] = $prototype->getParameters()['key'];
             }
         }
@@ -100,13 +108,14 @@ class ResizePolyFormListener extends ResizeFormListener
 
     /**
      * @param object $entryData
+     *
      * @return string
      */
     private function resolveEntryKey($entryData)
     {
-        if($this->entryTypeResolver !== null) {
+        if (null !== $this->entryTypeResolver) {
             return call_user_func($this->entryTypeResolver, $entryData);
-        } elseif(is_object($entryData)) {
+        } elseif (is_object($entryData)) {
             $class = get_class($entryData);
             $class = ClassUtils::getRealClass($class);
 
@@ -124,11 +133,9 @@ class ResizePolyFormListener extends ResizeFormListener
      * Checks the form data for a hidden _type field that indicates
      * the form type to use to process the data.
      *
-     * @param array $data
+     * @throws InvalidArgumentException when _type is not present or is invalid
      *
      * @return string|FormTypeInterface
-     *
-     * @throws InvalidArgumentException when _type is not present or is invalid
      */
     private function getKeyForData(array $data)
     {
@@ -147,7 +154,7 @@ class ResizePolyFormListener extends ResizeFormListener
         $this->loadMap();
 
         if (null === $data) {
-            $data = array();
+            $data = [];
         }
 
         if (!is_array($data) && !($data instanceof \Traversable && $data instanceof \ArrayAccess)) {
@@ -163,9 +170,9 @@ class ResizePolyFormListener extends ResizeFormListener
         foreach ($data as $name => $value) {
             $key = $this->resolveEntryKey($value);
 
-            $form->add($name, $this->typeMap[$key], array_replace(array(
+            $form->add($name, $this->typeMap[$key], array_replace([
                 'property_path' => '['.$name.']',
-            ), isset($this->options[$key]) ? $this->options[$key] : []));
+            ], $this->options[$key] ?? []));
         }
     }
 
@@ -177,13 +184,12 @@ class ResizePolyFormListener extends ResizeFormListener
         $this->loadMap();
 
         if (null === $data || '' === $data) {
-            $data = array();
+            $data = [];
         }
 
         if (!is_array($data) && !($data instanceof \Traversable && $data instanceof \ArrayAccess)) {
             throw new UnexpectedTypeException($data, 'array or (\Traversable and \ArrayAccess)');
         }
-
 
         // Remove all empty rows
         if ($this->allowDelete) {
@@ -199,9 +205,9 @@ class ResizePolyFormListener extends ResizeFormListener
             foreach ($data as $name => $value) {
                 if (!$form->has($name)) {
                     $key = $this->getKeyForData($value);
-                    $form->add($name, $this->typeMap[$key], array_replace(array(
+                    $form->add($name, $this->typeMap[$key], array_replace([
                         'property_path' => '['.$name.']',
-                    ), isset($this->options[$key]) ? $this->options[$key] : []));
+                    ], $this->options[$key] ?? []));
                 }
             }
         }

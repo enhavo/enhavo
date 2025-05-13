@@ -1,9 +1,12 @@
 <?php
-/**
- * PictureType.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 23/08/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
@@ -20,32 +23,32 @@ class PictureBlockType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', HeadLineType::class, array(
+        $builder->add('title', HeadLineType::class, [
             'label' => 'form.label.title',
-            'translation_domain' => 'EnhavoAppBundle'
-        ));
+            'translation_domain' => 'EnhavoAppBundle',
+        ]);
 
-        $builder->add('file', MediaType::class, array(
+        $builder->add('file', MediaType::class, [
             'label' => 'form.label.picture',
             'translation_domain' => 'EnhavoAppBundle',
-            'multiple' => false
-        ));
+            'multiple' => false,
+        ]);
 
-        $builder->add('caption', TextType::class, array(
+        $builder->add('caption', TextType::class, [
             'label' => 'picture.form.label.caption',
             'translation_domain' => 'EnhavoBlockBundle',
-        ));
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => PictureBlock::class
-        ));
+        $resolver->setDefaults([
+            'data_class' => PictureBlock::class,
+        ]);
     }
 
     public function getBlockPrefix()
     {
         return 'enhavo_block_block_picture';
     }
-} 
+}

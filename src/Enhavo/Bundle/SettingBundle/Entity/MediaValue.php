@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SettingBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,7 +21,7 @@ class MediaValue implements ValueAccessInterface
     /** @var int|null */
     private $id;
 
-    /** @var boolean */
+    /** @var bool */
     private $multiple;
 
     /** @var FileInterface|null */
@@ -24,16 +33,13 @@ class MediaValue implements ValueAccessInterface
     /** @var Setting|null */
     private $setting;
 
-    public function __construct($multiple = false, Setting $setting = null)
+    public function __construct($multiple = false, ?Setting $setting = null)
     {
         $this->multiple = $multiple;
         $this->setting = $setting;
         $this->files = new ArrayCollection();
     }
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
@@ -53,17 +59,11 @@ class MediaValue implements ValueAccessInterface
         return $this->multiple ? $this->files : $this->file;
     }
 
-    /**
-     * @return Setting|null
-     */
     public function getSetting(): ?Setting
     {
         return $this->setting;
     }
 
-    /**
-     * @param Setting|null $setting
-     */
     public function setSetting(?Setting $setting): void
     {
         $this->setting = $setting;

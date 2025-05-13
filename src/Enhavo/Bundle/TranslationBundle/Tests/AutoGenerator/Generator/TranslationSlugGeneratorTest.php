@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace AutoGenerator\Generator;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\TranslationSlugGenerator;
@@ -45,7 +52,7 @@ class TranslationSlugGeneratorTest extends TestCase
             'property',
             'overwrite',
             'slug_property',
-            'unique'
+            'unique',
         ];
         sort($options);
         sort($assert);
@@ -57,16 +64,17 @@ class TranslationSlugGeneratorTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $dependencies->translationManager->method('getLocales')->willReturn([
-            'pl', 'en', 'fr'
+            'pl', 'en', 'fr',
         ]);
         $dependencies->translationManager->method('getDefaultLocale')->willReturn('pl');
-        $dependencies->translator->method('getTranslation')->willReturnCallback(function($resource, $property, $locale) {
-            if ($property === 'slug') {
+        $dependencies->translator->method('getTranslation')->willReturnCallback(function ($resource, $property, $locale) {
+            if ('slug' === $property) {
                 return null;
             }
+
             return $property.'-'.$locale;
         });
-        $dependencies->translator->expects($this->exactly(2))->method('setTranslation')->willReturnCallback(function ($resource, $property, $locale, $value) {
+        $dependencies->translator->expects($this->exactly(2))->method('setTranslation')->willReturnCallback(function ($resource, $property, $locale, $value): void {
             $this->assertEquals('name-'.$locale, $value);
         });
         $instance = $this->createInstance($dependencies);
@@ -88,13 +96,13 @@ class TranslationSlugGeneratorTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $dependencies->translationManager->method('getLocales')->willReturn([
-            'pl', 'en', 'fr'
+            'pl', 'en', 'fr',
         ]);
         $dependencies->translationManager->method('getDefaultLocale')->willReturn('pl');
-        $dependencies->translator->method('getTranslation')->willReturnCallback(function($resource, $property, $locale) {
+        $dependencies->translator->method('getTranslation')->willReturnCallback(function ($resource, $property, $locale) {
             return $property.'-'.$locale;
         });
-        $dependencies->translator->expects($this->never())->method('setTranslation')->willReturnCallback(function ($resource, $property, $locale, $value) {
+        $dependencies->translator->expects($this->never())->method('setTranslation')->willReturnCallback(function ($resource, $property, $locale, $value): void {
             $this->assertEquals('name-'.$locale, $value);
         });
         $instance = $this->createInstance($dependencies);
@@ -120,7 +128,6 @@ class TranslationSlugGeneratorTest extends TestCase
         $this->assertEquals('translation_slug', $instance->getType());
     }
 }
-
 
 class TranslationSlugGeneratorTestDependencies
 {

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Model\Block;
 
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
@@ -18,6 +27,7 @@ class PictureBlock extends AbstractBlock
      * Set title
      *
      * @param string $title
+     *
      * @return PictureBlock
      */
     public function setTitle($title)
@@ -37,17 +47,11 @@ class PictureBlock extends AbstractBlock
         return $this->title;
     }
 
-    /**
-     * @return mixed
-     */
     public function getCaption()
     {
         return $this->caption;
     }
 
-    /**
-     * @param mixed $caption
-     */
     public function setCaption($caption)
     {
         $this->caption = $caption;
@@ -56,12 +60,12 @@ class PictureBlock extends AbstractBlock
     /**
      * Set file
      *
-     * @param FileInterface|null $file
      * @return PictureBlock
      */
     public function setFile(?FileInterface $file = null)
     {
         $this->file = $file;
+
         return $this;
     }
 

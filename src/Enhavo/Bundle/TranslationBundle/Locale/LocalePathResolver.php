@@ -1,16 +1,19 @@
 <?php
-/**
- * LocalResolver.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 27/11/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Locale;
 
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use League\Uri\Components\HierarchicalPath;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class LocalePathResolver implements LocaleResolverInterface
 {
@@ -36,6 +39,7 @@ class LocalePathResolver implements LocaleResolverInterface
         }
 
         $this->resolveLocale();
+
         return $this->locale;
     }
 
@@ -44,7 +48,7 @@ class LocalePathResolver implements LocaleResolverInterface
         $locales = $this->localeProvider->getLocales();
         $this->locale = $this->localeProvider->getDefaultLocale();
         $request = $this->requestStack->getMainRequest();
-        if ($request !== null) {
+        if (null !== $request) {
             $path = new HierarchicalPath($request->getPathInfo());
             $segment = $path->segments()[0];
             if (!empty($segment) && in_array($segment, $locales)) {

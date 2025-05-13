@@ -1,15 +1,24 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
+use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
 use Enhavo\Bundle\MediaBundle\Factory\FormatFactory;
+use Enhavo\Bundle\MediaBundle\Http\FileResponse;
 use Enhavo\Bundle\MediaBundle\Media\FormatManager;
 use Symfony\Component\Filesystem\Filesystem;
-use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
-use Enhavo\Bundle\MediaBundle\Http\FileResponse;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,8 +32,7 @@ class TemplateFileEndpointType extends AbstractEndpointType
         private readonly FormatFactory $formatFactory,
         private readonly FormatManager $formatManager,
         private readonly Filesystem $fs,
-    )
-    {
+    ) {
     }
 
     public function getResponse($options, Request $request, Data $data, Context $context): Response
@@ -37,24 +45,25 @@ class TemplateFileEndpointType extends AbstractEndpointType
         $path = null;
         $formatName = $request->get('format');
         if ($formatName) {
-            $path = $this->searchFile($this->dataPath . '/format/' . $formatName, $checksum);
+            $path = $this->searchFile($this->dataPath.'/format/'.$formatName, $checksum);
         }
 
-        if ($path === null) {
-            $path = $this->searchFile($this->dataPath . '/file', $checksum);
+        if (null === $path) {
+            $path = $this->searchFile($this->dataPath.'/file', $checksum);
 
             if ($path && $formatName) {
                 $path = $this->generateFormat($path, $formatName, $checksum, $request->get('extension'));
             }
         }
 
-        if ($path === null) {
+        if (null === $path) {
             throw new NotFoundHttpException();
         }
 
         $file = $this->fileFactory->createFromPath($path);
 
         $response = new FileResponse($file);
+
         return $response;
     }
 
@@ -90,7 +99,7 @@ class TemplateFileEndpointType extends AbstractEndpointType
 
         $targetPath = sprintf('%s/format/%s/%s', $this->dataPath, $formatName, $checksum);
         if ($extension) {
-            $targetPath .= '.' . $extension;
+            $targetPath .= '.'.$extension;
         }
 
         $this->fs->dumpFile($targetPath, $format->getContent()->getContent());

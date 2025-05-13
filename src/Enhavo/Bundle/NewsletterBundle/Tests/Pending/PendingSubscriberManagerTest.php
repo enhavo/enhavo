@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Pending;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
@@ -24,6 +31,7 @@ class PendingSubscriberManagerTest extends TestCase
         $dependencies->tokenGenerator = $this->getMockBuilder(TokenGeneratorInterface::class)->getMock();
         $dependencies->pendingRepository = $this->getMockBuilder(PendingSubscriberRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->entityManager->method('getRepository')->willReturn($dependencies->pendingRepository);
+
         return $dependencies;
     }
 
@@ -44,7 +52,6 @@ class PendingSubscriberManagerTest extends TestCase
         $manager->save($subscriber, false);
 
         $this->assertEquals('__TOKEN__', $subscriber->getConfirmationToken());
-
     }
 
     public function testRemove()
@@ -62,21 +69,20 @@ class PendingSubscriberManagerTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $manager = $this->createInstance($dependencies);
-        $dependencies->pendingRepository->expects($this->exactly(2))->method('removeBy')->willReturnCallback(function ($criteria) {
+        $dependencies->pendingRepository->expects($this->exactly(2))->method('removeBy')->willReturnCallback(function ($criteria): void {
             $this->assertEquals('remove@enhavo.com', $criteria['email']);
             $this->assertEquals('default', $criteria['subscription']);
         });
         $dependencies->entityManager->expects($this->once())->method('flush');
         $manager->removeBy('remove@enhavo.com', 'default');
         $manager->removeBy('remove@enhavo.com', 'default', false);
-
     }
 
     public function testFind()
     {
         $dependencies = $this->createDependencies();
         $manager = $this->createInstance($dependencies);
-        $dependencies->pendingRepository->expects($this->once())->method('find')->willReturnCallback(function ($id) {
+        $dependencies->pendingRepository->expects($this->once())->method('find')->willReturnCallback(function ($id): void {
             $this->assertEquals(1, $id);
         });
 
@@ -87,7 +93,7 @@ class PendingSubscriberManagerTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $manager = $this->createInstance($dependencies);
-        $dependencies->pendingRepository->expects($this->once())->method('findOneBy')->willReturnCallback(function ($criteria) {
+        $dependencies->pendingRepository->expects($this->once())->method('findOneBy')->willReturnCallback(function ($criteria): void {
             $this->assertEquals('find@enhavo.com', $criteria['email']);
             $this->assertEquals('default', $criteria['subscription']);
         });
@@ -99,7 +105,7 @@ class PendingSubscriberManagerTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $manager = $this->createInstance($dependencies);
-        $dependencies->pendingRepository->expects($this->once())->method('findOneBy')->willReturnCallback(function ($criteria) {
+        $dependencies->pendingRepository->expects($this->once())->method('findOneBy')->willReturnCallback(function ($criteria): void {
             $this->assertEquals('__TOKEN__', $criteria['confirmationToken']);
         });
 
@@ -125,7 +131,7 @@ class PendingSubscriberManagerTest extends TestCase
         $this->assertEquals($subscriber, $pendingSubscriber->getData());
         $this->assertEquals($date, $pendingSubscriber->getCreatedAt());
         $this->assertEquals($subscriber->getCreatedAt(), $pendingSubscriber->getCreatedAt());
-        $this->assertEquals('create@enhavo.com', (string)$pendingSubscriber);
+        $this->assertEquals('create@enhavo.com', (string) $pendingSubscriber);
     }
 }
 

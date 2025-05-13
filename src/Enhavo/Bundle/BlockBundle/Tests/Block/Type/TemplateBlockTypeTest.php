@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-20
- * Time: 17:01
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Tests\Block\Type;
@@ -31,6 +34,7 @@ class TemplateBlockTypeTest extends TestCase
     {
         $resolver = new OptionsResolver();
         $type->configureOptions($resolver);
+
         return $resolver->resolve($options);
     }
 }

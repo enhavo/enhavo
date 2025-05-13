@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: philippsester
- * Date: 26.08.19
- * Time: 18:25
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Command;
@@ -26,12 +29,10 @@ class SendNewsletterCommand extends Command
     public function __construct(
         private readonly NewsletterManager $manager,
         private readonly EntityManager $em,
-        private readonly LoggerInterface $logger
-    )
-    {
+        private readonly LoggerInterface $logger,
+    ) {
         parent::__construct();
     }
-
 
     protected function configure()
     {
@@ -45,6 +46,7 @@ class SendNewsletterCommand extends Command
     {
         if (!$this->lock()) {
             $output->writeln('Skip sending.. Command is already running in another process.');
+
             return Command::SUCCESS;
         }
 
@@ -67,6 +69,7 @@ class SendNewsletterCommand extends Command
         $output->writeln('Delivery finished');
 
         $this->release();
+
         return Command::SUCCESS;
     }
 }

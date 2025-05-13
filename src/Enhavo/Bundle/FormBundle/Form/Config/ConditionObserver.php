@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 13.02.18
- * Time: 01:02
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Form\Config;
@@ -46,25 +49,16 @@ class ConditionObserver
         return $this->subject;
     }
 
-    /**
-     * @param Condition $subject
-     */
     public function setSubject(Condition $subject)
     {
         $this->subject = $subject;
     }
 
-    /**
-     * @return array
-     */
     public function getValues(): array
     {
         return $this->values;
     }
 
-    /**
-     * @param array $values
-     */
     public function setValues(array $values)
     {
         $this->values = $values;
@@ -78,25 +72,16 @@ class ConditionObserver
         return $this->operator;
     }
 
-    /**
-     * @param string $operator
-     */
     public function setOperator(string $operator)
     {
         $this->operator = $operator;
     }
 
-    /**
-     * @return string|null
-     */
     public function getScope(): ?string
     {
         return $this->scope;
     }
 
-    /**
-     * @param string|null $scope
-     */
     public function setScope(?string $scope): void
     {
         $this->scope = $scope;

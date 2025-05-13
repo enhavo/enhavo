@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Component\CleverReach\Tests\Http;
 
 use Enhavo\Component\CleverReach\Exception\AuthorizeException;
@@ -16,7 +25,7 @@ class SymfonyAdapterTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        if (self::$server === null) {
+        if (null === self::$server) {
             self::$server = new WebServerManager(__DIR__.'/../fixtures/server', '127.0.0.1', 1234, 'index.php', '/ready');
             self::$server->start();
         }

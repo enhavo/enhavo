@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: fliebl
- * Date: 10.09.20
- * Time: 09:40
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MultiTenancyBundle\DependencyInjection\Compiler;
@@ -18,7 +21,7 @@ class ProviderCompilerPass implements CompilerPassInterface
     {
         $container->addAliases([
             'enhavo_multi_tenancy.provider' => $container->getParameter('enhavo_multi_tenancy.provider'),
-            ProviderInterface::class => $container->getParameter('enhavo_multi_tenancy.provider')
+            ProviderInterface::class => $container->getParameter('enhavo_multi_tenancy.provider'),
         ]);
     }
 }

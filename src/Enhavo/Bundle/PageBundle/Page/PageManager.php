@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\PageBundle\Page;
 
 use Enhavo\Bundle\PageBundle\Entity\Page;
@@ -11,22 +20,21 @@ class PageManager
 {
     public function __construct(
         private readonly PageRepository $pageRepository,
-        private readonly RouterInterface $router
-    )
-    {
+        private readonly RouterInterface $router,
+    ) {
     }
 
     public function getPagePath($special, $parameters, $referenceType)
     {
         $page = $this->pageRepository->findOneBy([
-            'special' => $special
+            'special' => $special,
         ]);
 
-        if(!$page instanceof Page) {
+        if (!$page instanceof Page) {
             return $this->getDefaultLink($special);
         }
 
-        if($page->getRoute() === null) {
+        if (null === $page->getRoute()) {
             return $this->getDefaultLink($special);
         }
 

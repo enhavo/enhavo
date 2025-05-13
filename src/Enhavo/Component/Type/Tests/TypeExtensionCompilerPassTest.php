@@ -1,17 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-08
- * Time: 14:49
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Type\Tests;
 
+use Enhavo\Component\Type\TypeExtensionCompilerPass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Enhavo\Component\Type\TypeExtensionCompilerPass;
 
 class TypeExtensionCompilerPassTest extends TestCase
 {
@@ -21,7 +24,7 @@ class TypeExtensionCompilerPassTest extends TestCase
         $container->addDefinitions([
             'Enhavo\Component\Type\RegistryInterface[Test]' => $this->createTypeDefinition('Enhavo\Component\Type\Registry'),
             'extensionTypeOne' => $this->createTypeDefinition('ExtensionClassTypeOne', 'test.tag'),
-            'extensionTypeTwo' => $this->createTypeDefinition('ExtensionClassTypeTwo', 'test.tag')
+            'extensionTypeTwo' => $this->createTypeDefinition('ExtensionClassTypeTwo', 'test.tag'),
         ]);
 
         $pass = new TypeExtensionCompilerPass('Test', 'test.tag', 'ConcreteTypeClass');
@@ -43,6 +46,7 @@ class TypeExtensionCompilerPassTest extends TestCase
         if ($tag) {
             $definition->addTag($tag);
         }
+
         return $definition;
     }
 }

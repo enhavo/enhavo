@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Twig;
 
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
@@ -21,9 +30,6 @@ class TwigExtension extends AbstractExtension
 
     /**
      * TwigExtension constructor.
-     * @param CsrfTokenManagerInterface $tokenManager
-     * @param ConfigurationProvider $configurationProvider
-     * @param RouterInterface $router
      */
     public function __construct(CsrfTokenManagerInterface $tokenManager, ConfigurationProvider $configurationProvider, RouterInterface $router)
     {
@@ -45,7 +51,7 @@ class TwigExtension extends AbstractExtension
         $route = $this->configurationProvider->getVerificationRequestConfiguration($key)->getRoute();
 
         return $this->router->generate($route, [
-            'csrfToken' => $token
+            'csrfToken' => $token,
         ]);
     }
 }

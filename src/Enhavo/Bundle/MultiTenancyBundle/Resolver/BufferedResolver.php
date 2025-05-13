@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MultiTenancyBundle\Resolver;
 
 use Enhavo\Bundle\MultiTenancyBundle\Model\Tenant;
@@ -11,14 +20,13 @@ class BufferedResolver implements ResolverInterface
     private $decoratedResolver;
 
     /** @var Tenant|null */
-    private $bufferedResult = null;
+    private $bufferedResult;
 
     /** @var bool */
     private $resolved = false;
 
     /**
      * BufferedResolver constructor.
-     * @param ResolverInterface $decoratedResolver
      */
     public function __construct(ResolverInterface $decoratedResolver)
     {

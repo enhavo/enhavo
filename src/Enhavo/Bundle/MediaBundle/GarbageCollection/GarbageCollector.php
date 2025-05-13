@@ -1,8 +1,16 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\GarbageCollection;
 
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\MediaBundle\GarbageCollection\Voter\GarbageCollectionVoterInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
@@ -14,7 +22,7 @@ class GarbageCollector implements GarbageCollectorInterface
     /** @var GarbageCollectionVoterInterface[] */
     private array $voters = [];
 
-    private ?DateTime $garbageCheckTimestamp = null;
+    private ?\DateTime $garbageCheckTimestamp = null;
 
     private ?OutputInterface $logOutput = null;
 
@@ -25,11 +33,9 @@ class GarbageCollector implements GarbageCollectorInterface
         private EntityRepository $fileRepository,
         protected bool $enabled,
         protected int $maxItemsPerRun,
-    ) {}
+    ) {
+    }
 
-    /**
-     * @inheritDoc
-     */
     public function run(?int $maxItems = null, bool $andFlush = true): void
     {
         $this->dryRun = false;
@@ -48,12 +54,12 @@ class GarbageCollector implements GarbageCollectorInterface
             return;
         }
 
-        $this->garbageCheckTimestamp = new DateTime();
+        $this->garbageCheckTimestamp = new \DateTime();
 
-        $limit = $maxItems === null ? $this->maxItemsPerRun : $maxItems;
+        $limit = null === $maxItems ? $this->maxItemsPerRun : $maxItems;
         $mediaFiles = $this->getMediaFiles($limit);
 
-        foreach($mediaFiles as $file) {
+        foreach ($mediaFiles as $file) {
             $this->processFile($file);
         }
 
@@ -62,16 +68,13 @@ class GarbageCollector implements GarbageCollectorInterface
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     public function runOnFile(FileInterface $file, bool $andFlush = true): void
     {
         if (!$this->enabled) {
             return;
         }
 
-        $this->garbageCheckTimestamp = new DateTime();
+        $this->garbageCheckTimestamp = new \DateTime();
 
         $this->processFile($file);
 
@@ -104,19 +107,20 @@ class GarbageCollector implements GarbageCollectorInterface
             $file->setGarbageCheckedAt($this->garbageCheckTimestamp);
         }
 
-        foreach($this->voters as $voter) {
+        foreach ($this->voters as $voter) {
             $result = $voter->vote($file);
 
-            if ($result === GarbageCollectionVoterInterface::VOTE_DELETE) {
+            if (GarbageCollectionVoterInterface::VOTE_DELETE === $result) {
                 if ($this->dryRun) {
-                    $this->log('Dry Run: ' . $file->getId() . ' to be deleted, voted by ' . get_class($voter));
+                    $this->log('Dry Run: '.$file->getId().' to be deleted, voted by '.get_class($voter));
                 } else {
                     $this->deleteFile($file);
                 }
+
                 return true;
             }
 
-            if ($result === GarbageCollectionVoterInterface::VOTE_KEEP) {
+            if (GarbageCollectionVoterInterface::VOTE_KEEP === $result) {
                 return false;
             }
         }

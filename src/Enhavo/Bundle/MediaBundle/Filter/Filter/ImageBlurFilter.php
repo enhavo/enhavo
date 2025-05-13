@@ -1,16 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 11.11.17
- * Time: 12:09
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Filter\Filter;
 
 use Enhavo\Bundle\MediaBundle\Filter\AbstractFilter;
 use Enhavo\Bundle\MediaBundle\Model\FilterSetting;
-use Imagine\Exception\RuntimeException;
 use Imagine\Gd\Imagine;
 
 class ImageBlurFilter extends AbstractFilter
@@ -19,7 +21,7 @@ class ImageBlurFilter extends AbstractFilter
     {
         $content = $this->getContent($file);
 
-        if(class_exists('\\Imagick')) {
+        if (class_exists('\\Imagick')) {
             $image = new \Imagick($content->getFilePath());
             $image->blurImage($setting->getSetting('radius', 5), $setting->getSetting('sigma', 3));
             file_put_contents($content->getFilePath(), $image);
@@ -28,7 +30,7 @@ class ImageBlurFilter extends AbstractFilter
             $imagine = $imagine->load($content->getContent());
             $imagine->effects()->blur($setting->getSetting('sigma', 3));
             $imagine->save($content->getFilePath(), [
-                'format' => $this->getImageFormat($content)
+                'format' => $this->getImageFormat($content),
             ]);
         }
     }

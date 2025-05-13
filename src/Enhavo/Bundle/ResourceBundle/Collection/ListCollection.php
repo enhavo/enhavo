@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Collection;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,8 +39,8 @@ class ListCollection extends AbstractCollection
         private readonly CsrfTokenManager $tokenManager,
         private readonly EntityManagerInterface $em,
         private readonly AuthorizationCheckerInterface $authorizationChecker,
-    )
-    {}
+    ) {
+    }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -54,18 +63,18 @@ class ListCollection extends AbstractCollection
 
     public function getItems(array $context = []): ResourceItems
     {
-        if (count($this->options['filters']) && $this->options['repository_method'] === null && !($this->repository instanceof FilterRepositoryInterface)) {
+        if (count($this->options['filters']) && null === $this->options['repository_method'] && !($this->repository instanceof FilterRepositoryInterface)) {
             throw new \Exception();
-        } else if ($this->options['repository_arguments'] !== null && $this->options['repository_method'] === null) {
+        } elseif (null !== $this->options['repository_arguments'] && null === $this->options['repository_method']) {
             throw new \Exception();
         }
 
-        if ($this->options['repository_method'] !== null) {
+        if (null !== $this->options['repository_method']) {
             $callable = [$this->repository, $this->options['repository_method']];
             $request = $this->requestStack->getMainRequest();
             $filterQuery = $this->createFilterQuery($context);
             $resources = call_user_func_array($callable, $this->getRepositoryArguments($this->options, $filterQuery, $request));
-        } else if ($this->repository instanceof FilterRepositoryInterface) {
+        } elseif ($this->repository instanceof FilterRepositoryInterface) {
             $filterQuery = $this->createFilterQuery($context);
             $resources = $this->repository->filter($filterQuery);
         } else {
@@ -75,6 +84,7 @@ class ListCollection extends AbstractCollection
         $meta = new Data();
         $meta->set('filtered', $this->isFiltered($context));
         $items = new ResourceItems($this->createItems($resources, $context), $meta);
+
         return $items;
     }
 
@@ -90,7 +100,7 @@ class ListCollection extends AbstractCollection
             $this->options['sorting'],
         );
 
-        if (isset($context['hydrate']) && $context['hydrate'] === 'id') {
+        if (isset($context['hydrate']) && 'id' === $context['hydrate']) {
             $filterQuery->setHydrate('id');
         }
 
@@ -109,6 +119,7 @@ class ListCollection extends AbstractCollection
         }
 
         $criteria = $this->expressionLanguage->evaluateArray($criteria);
+
         return $criteria;
     }
 
@@ -119,7 +130,7 @@ class ListCollection extends AbstractCollection
 
     private function getRepositoryArguments(array $options, FilterQuery $filterQuery, ?Request $request): array
     {
-        if ($options['repository_arguments'] === null) {
+        if (null === $options['repository_arguments']) {
             return [];
         }
 
@@ -131,6 +142,7 @@ class ListCollection extends AbstractCollection
                 'options' => $options,
             ]);
         }
+
         return $arguments;
     }
 
@@ -143,7 +155,7 @@ class ListCollection extends AbstractCollection
             $data = [];
 
             if ($this->isHydrate('data', $context)) {
-                foreach($this->columns as $column) {
+                foreach ($this->columns as $column) {
                     $data[] = $column->createResourceViewData($resource);
                 }
             }
@@ -168,6 +180,7 @@ class ListCollection extends AbstractCollection
 
             $items[] = $item;
         }
+
         return $items;
     }
 
@@ -188,7 +201,7 @@ class ListCollection extends AbstractCollection
     {
         $route = $this->routes['open'] ?? null;
 
-        if ($route === null) {
+        if (null === $route) {
             return null;
         }
 
@@ -204,16 +217,17 @@ class ListCollection extends AbstractCollection
         foreach ($array as $key => $item) {
             $newArray[$key] = $this->expressionLanguage->evaluate($item, $parameters);
         }
+
         return $newArray;
     }
 
     public function getViewData(array $context = []): array
     {
-        $viewData =  [
+        $viewData = [
             'component' => $this->options['component'],
             'model' => $this->options['model'],
             'sortable' => $this->options['sortable'],
-            'treeable' => $this->options['parent_property'] !== null && $this->options['children_property'],
+            'treeable' => null !== $this->options['parent_property'] && $this->options['children_property'],
         ];
 
         if ($this->options['csrf_protection']) {
@@ -229,15 +243,15 @@ class ListCollection extends AbstractCollection
             throw new HttpException(Response::HTTP_FORBIDDEN);
         }
 
-        if ($this->options['csrf_protection'] &&
-            (!isset($payload['csrfToken']) ||
-            !$this->tokenManager->isTokenValid(new CsrfToken('list_data', $payload['csrfToken']))))
-        {
+        if ($this->options['csrf_protection']
+            && (!isset($payload['csrfToken'])
+            || !$this->tokenManager->isTokenValid(new CsrfToken('list_data', $payload['csrfToken'])))) {
             throw new HttpException(Response::HTTP_BAD_REQUEST, 'Invalid csrf token');
         }
 
-        if ($action === 'sort') {
+        if ('sort' === $action) {
             $this->handleSort($payload);
+
             return;
         }
 
@@ -250,7 +264,7 @@ class ListCollection extends AbstractCollection
         $positionProperty = $this->options['position_property'];
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
-        $parent = $payload['parent'] === null ? null : $this->repository->find($payload['parent']);
+        $parent = null === $payload['parent'] ? null : $this->repository->find($payload['parent']);
         foreach ($payload['items'] as $position => $id) {
             $item = $this->repository->find($id);
             if ($parentProperty) {

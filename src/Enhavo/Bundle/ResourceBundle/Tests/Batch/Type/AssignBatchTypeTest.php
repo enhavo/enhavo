@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-08
- * Time: 22:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Batch\Type;
@@ -32,6 +35,7 @@ class AssignBatchTypeTest extends TestCase
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dependencies->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
         $dependencies->repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
+
         return $dependencies;
     }
 
@@ -42,6 +46,7 @@ class AssignBatchTypeTest extends TestCase
             $dependencies->translator,
             $dependencies->em,
         );
+
         return $instance;
     }
 
@@ -70,7 +75,7 @@ class AssignBatchTypeTest extends TestCase
         $batch = new Batch($type, [], [
             'data_property' => '[newName]',
             'property' => 'name',
-            'form' => 'AnyForm'
+            'form' => 'AnyForm',
         ]);
 
         $data = new Data();
@@ -105,7 +110,7 @@ class AssignBatchTypeTest extends TestCase
 
         $batch = new Batch($type, [], [
             'property' => 'name',
-            'form' => 'AnyForm'
+            'form' => 'AnyForm',
         ]);
 
         $data = new Data();
@@ -137,7 +142,7 @@ class AssignBatchTypeTest extends TestCase
 
         $batch = new Batch($type, [], [
             'property' => 'name',
-            'form' => 'AnyForm'
+            'form' => 'AnyForm',
         ]);
 
         $data = new Data();

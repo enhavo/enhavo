@@ -1,10 +1,10 @@
-<?= "<?php\n" ?>
+<?php echo "<?php\n"; ?>
 
-namespace <?= $class->getNamespace(); ?>;
+namespace <?php echo $class->getNamespace(); ?>;
 
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
 <?php foreach ($class->getUse() as $item) { ?>
-use <?= $item; ?>;
+use <?php echo $item; ?>;
 <?php } ?>
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,47 +12,47 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Enhavo\Bundle\ResourceBundle\Attribute\Duplicate;
 
 #[ORM\Entity]
-#[ORM\Table(name: '<?= $orm->getTableName() ?>')]
-class <?= $class->getName(); ?> extends AbstractBlock<?php if ($class->getImplements()): ?> implements <?= $class->getImplements(); ?><?php endif; ?>
+#[ORM\Table(name: '<?php echo $orm->getTableName(); ?>')]
+class <?php echo $class->getName(); ?> extends AbstractBlock<?php if ($class->getImplements()) { ?> implements <?php echo $class->getImplements(); ?><?php } ?>
 
 {
 <?php foreach ($class->getTraits() as $value) { ?>
-    use <?= $value ?>;
+    use <?php echo $value; ?>;
 <?php } ?>
 
 <?php foreach ($class->getProperties() as $property) { ?>
 <?php $attributeType = $orm->getAttributeType($property->getName()); ?>
-    #[ORM\<?= $attributeType ?>(
+    #[ORM\<?php echo $attributeType; ?>(
 <?php foreach ($orm->getAttributeOptions($property->getName()) as $key => $value) { ?>
-        <?= $key ?>: <?= $value ?>,
+        <?php echo $key; ?>: <?php echo $value; ?>,
 <?php } ?>
 <?php $relation = $orm->getRelation($property->getName()); ?>
-<?php if ($attributeType === 'OneToOne') { ?>
-        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?= $relation->getTargetEntity() ?>,
+<?php if ('OneToOne' === $attributeType) { ?>
+        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?php echo $relation->getTargetEntity(); ?>,
 <?php } ?>
         cascade: [ 'persist', 'refresh', 'remove' ],
-<?php } else if ($attributeType === 'OneToMany') { ?>
-        <?php if ($relation->getMappedBy()) { ?>mappedBy: '<?= $relation->getMappedBy() ?>',
+<?php } elseif ('OneToMany' === $attributeType) { ?>
+        <?php if ($relation->getMappedBy()) { ?>mappedBy: '<?php echo $relation->getMappedBy(); ?>',
 <?php } ?>
-        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?= $relation->getTargetEntity() ?>,
+        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?php echo $relation->getTargetEntity(); ?>,
 <?php } ?>
         cascade: [ 'persist', 'refresh', 'remove' ],
         orphanRemoval: true,
-<?php } else if ($attributeType === 'ManyToOne') { ?>
-        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?= $relation->getTargetEntity() ?>,
+<?php } elseif ('ManyToOne' === $attributeType) { ?>
+        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?php echo $relation->getTargetEntity(); ?>,
 <?php } ?>
-        <?php if ($relation->getInversedBy()) { ?>inversedBy: '<?= $relation->getInversedBy() ?>',
+        <?php if ($relation->getInversedBy()) { ?>inversedBy: '<?php echo $relation->getInversedBy(); ?>',
 <?php } ?>
-<?php } else if ($attributeType === 'ManyToMany') { ?>
-        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?= $relation->getTargetEntity() ?>,
+<?php } elseif ('ManyToMany' === $attributeType) { ?>
+        <?php if ($relation->getTargetEntity()) { ?>targetEntity: <?php echo $relation->getTargetEntity(); ?>,
 <?php } ?>
         cascade: ['persist', 'refresh', 'remove'],
 <?php } ?>
     )]
-<?php if ($attributeType === 'ManyToOne') { ?>
+<?php if ('ManyToOne' === $attributeType) { ?>
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
-<?php } else if ($attributeType === 'ManyToMany') { ?>
-    #[ORM\JoinTable(name: '<?= $orm->getTableName() ?>_<?= $relation->getName() ?>')]
+<?php } elseif ('ManyToMany' === $attributeType) { ?>
+    #[ORM\JoinTable(name: '<?php echo $orm->getTableName(); ?>_<?php echo $relation->getName(); ?>')]
     #[ORM\JoinColumn(
         name: 'entity_id',
         referencedColumnName: 'id',
@@ -65,27 +65,27 @@ class <?= $class->getName(); ?> extends AbstractBlock<?php if ($class->getImplem
     )]
 <?php } ?>
 <?php if ($relation && $relation->getOrderBy()) { ?>
-    #[ORM\OrderBy(<?= $relation->getOrderByString() ?>)]
+    #[ORM\OrderBy(<?php echo $relation->getOrderByString(); ?>)]
 <?php } ?>
 <?php if ($property->hasSerializationGroups()) { ?>
-    #[Groups(<?= $property->getSerializationGroupsString(); ?>)]
+    #[Groups(<?php echo $property->getSerializationGroupsString(); ?>)]
 <?php } ?>
 <?php foreach ($property->getAttributes() as $rule) { ?>
-    #[<?= $rule['class'] ?>(<?= $rule['type']?("'".$rule['type']."'").(isset($rule['options'])?', ':''):''; ?><?= $rule['options']??''; ?>)]
+    #[<?php echo $rule['class']; ?>(<?php echo $rule['type'] ? ("'".$rule['type']."'").(isset($rule['options']) ? ', ' : '') : ''; ?><?php echo $rule['options'] ?? ''; ?>)]
 <?php } ?>
-<?php if ($property->getNullable() || $property->getDefault() !== 'null') { ?>
-    private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?> = <?= $property->getDefault(); ?>;
+<?php if ($property->getNullable() || 'null' !== $property->getDefault()) { ?>
+    private <?php echo $property->getNullable().$property->getType(); ?> $<?php echo $property->getName(); ?> = <?php echo $property->getDefault(); ?>;
 <?php } else { ?>
-    private <?= $property->getNullable() .$property->getType() ; ?> $<?= $property->getName(); ?>;
+    private <?php echo $property->getNullable().$property->getType(); ?> $<?php echo $property->getName(); ?>;
 <?php } ?>
 
 <?php } ?>
 <?php foreach ($class->getFunctions() as $function) { ?>
 
-    <?= $function->getVisibility(); ?> function <?= $function->getName(); ?>(<?= $function->getArgumentString(); ?>)<?= $function->getReturnsString(); ?>
+    <?php echo $function->getVisibility(); ?> function <?php echo $function->getName(); ?>(<?php echo $function->getArgumentString(); ?>)<?php echo $function->getReturnsString(); ?>
 
     {
-        <?= $function->getBodyString(8); ?>
+        <?php echo $function->getBodyString(8); ?>
 
     }
 <?php } ?>

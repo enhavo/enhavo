@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Strategy\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
@@ -13,22 +22,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class StrategyType extends AbstractType implements StrategyTypeInterface
 {
-
     /** @var TranslatorInterface */
     private $translator;
 
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
-
-
     /** @var Storage */
     private $storage;
 
     /**
      * StrategyType constructor.
-     * @param TranslatorInterface $translator
-     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(TranslatorInterface $translator, EventDispatcherInterface $eventDispatcher)
     {
@@ -43,7 +47,6 @@ class StrategyType extends AbstractType implements StrategyTypeInterface
 
     public function activateSubscriber(SubscriberInterface $subscriber, array $options)
     {
-
     }
 
     public function removeSubscriber(SubscriberInterface $subscriber, array $options)
@@ -121,7 +124,7 @@ class StrategyType extends AbstractType implements StrategyTypeInterface
         $resolver->setRequired([
             'from',
             'admin_email',
-            'sender_name'
+            'sender_name',
         ]);
     }
 }

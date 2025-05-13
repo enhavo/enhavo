@@ -1,26 +1,27 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-10
- * Time: 13:31
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Metadata;
 
-
 class Reference
 {
-    const CASCADE_REMOVE = 'remove';
-    const CASCADE_PERSIST = 'persist';
+    public const CASCADE_REMOVE = 'remove';
+    public const CASCADE_PERSIST = 'persist';
 
     public function __construct(
         private readonly string $property,
         private readonly string $nameField,
         private readonly string $idField,
         private readonly array $cascade = [],
-    )
-    {
+    ) {
     }
 
     public function getProperty(): string

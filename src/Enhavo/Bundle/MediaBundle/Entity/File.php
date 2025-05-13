@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -56,10 +65,10 @@ class File implements FileInterface
 
     public function __toString()
     {
-        return (string)$this->id;
+        return (string) $this->id;
     }
 
-    public function setOrder(?int$order): void
+    public function setOrder(?int $order): void
     {
         $this->order = $order;
     }
@@ -89,13 +98,13 @@ class File implements FileInterface
 
     public function getBasename(): string
     {
-        return $this->extension ? $this->filename . '.' . $this->extension : $this->filename;
+        return $this->extension ? $this->filename.'.'.$this->extension : $this->filename;
     }
 
     public function setParameter(string $key, mixed $value): void
     {
         if (!$this->parameters) {
-            $this->parameters = array();
+            $this->parameters = [];
         }
 
         $this->parameters[$key] = $value;
@@ -104,7 +113,7 @@ class File implements FileInterface
     public function getParameter(string $key): mixed
     {
         if (!$this->parameters) {
-            $this->parameters = array();
+            $this->parameters = [];
         }
 
         return $this->parameters[$key] ?? null;
@@ -113,7 +122,7 @@ class File implements FileInterface
     public function getParameters(): array
     {
         if (!$this->parameters) {
-            $this->parameters = array();
+            $this->parameters = [];
         }
 
         return $this->parameters;
@@ -129,12 +138,11 @@ class File implements FileInterface
         return $this->garbage;
     }
 
-    public function setGarbage(bool $garbage, \DateTime $garbageTimestamp = null): void
+    public function setGarbage(bool $garbage, ?\DateTime $garbageTimestamp = null): void
     {
         $this->garbage = $garbage;
 
-        if ($garbageTimestamp == null)
-        {
+        if (null == $garbageTimestamp) {
             $garbageTimestamp = new \DateTime();
         }
         $this->setGarbageTimestamp($garbageTimestamp);
@@ -152,7 +160,7 @@ class File implements FileInterface
 
     public function isImage(): bool
     {
-        return strtolower(substr($this->getMimeType(), 0, 5)) == 'image';
+        return 'image' == strtolower(substr($this->getMimeType(), 0, 5));
     }
 
     public function getContent(): ContentInterface

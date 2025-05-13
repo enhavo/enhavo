@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Command;
 
 use Enhavo\Bundle\SearchBundle\Elastic\ElasticManager;
@@ -19,7 +29,6 @@ class ElasticInstallCommand extends Command
 
     /**
      * ElasticInstallCommand constructor.
-     * @param ElasticManager $elasticManager
      */
     public function __construct(ElasticManager $elasticManager, $version)
     {
@@ -45,35 +54,37 @@ class ElasticInstallCommand extends Command
                 $question = new Question('elasticsearch directory exists, overwrite? [y/n]', 'n');
                 $option = $questionHelper->ask($input, $output, $question);
 
-                if (strtolower($option) === 'n') {
+                if ('n' === strtolower($option)) {
                     return Command::SUCCESS;
-                } elseif (strtolower($option) === 'y') {
+                } elseif ('y' === strtolower($option)) {
                     $this->download($input, $output);
+
                     return Command::SUCCESS;
                 }
             }
         }
 
         $this->download($input, $output);
+
         return Command::SUCCESS;
     }
 
     private function download(InputInterface $input, OutputInterface $output)
     {
         $version = $input->getArgument('version');
-        if ($version === null) {
+        if (null === $version) {
             $version = $this->version;
         }
         $output->writeln(sprintf('Download file version %s', $version));
         $progress = new ProgressBar($output, 100);
-        $resource = stream_context_create(array(), array('notification' => function ($notificationCode, $severity, $message, $messageCode, $bytesTransferred, $bytesMax) use ($output, $progress) {
+        $resource = stream_context_create([], ['notification' => function ($notificationCode, $severity, $message, $messageCode, $bytesTransferred, $bytesMax) use ($progress): void {
             switch ($notificationCode) {
                 case STREAM_NOTIFY_PROGRESS:
-                    $percent = intval(ceil(($bytesTransferred/$bytesMax)*100));
+                    $percent = intval(ceil(($bytesTransferred / $bytesMax) * 100));
                     $progress->setProgress($percent);
                     break;
             }
-        }));
+        }]);
 
         $this->elasticManager->install($version, $resource);
         $progress->finish();

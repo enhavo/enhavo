@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Grid;
 
 use Enhavo\Bundle\ResourceBundle\Batch\Batch;
@@ -16,7 +25,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
     private ?array $actions = null;
     private ?array $actionsSecondary = null;
 
-    /** @var Batch[]  */
+    /** @var Batch[] */
     private ?array $batches = null;
     private ?CollectionInterface $collection = null;
 
@@ -29,7 +38,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
             'filters' => [],
             'batches' => [],
             'collection' => [
-                'class' => TableCollection::class
+                'class' => TableCollection::class,
             ],
             'component' => 'grid-grid',
             'routes' => function (OptionsResolver $resolver): void {
@@ -40,7 +49,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
                     'batch_parameters' => [],
                     'open' => $this->resolveRoute('update', ['api' => false]),
                     'open_parameters' => [
-                        'id' => 'expr:resource.getId()'
+                        'id' => 'expr:resource.getId()',
                     ],
                 ]);
             },
@@ -78,7 +87,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
 
     protected function getFilters(): array
     {
-        if ($this->filters !== null) {
+        if (null !== $this->filters) {
             return $this->filters;
         }
 
@@ -89,7 +98,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
 
     protected function getColumns(): array
     {
-        if ($this->columns !== null) {
+        if (null !== $this->columns) {
             return $this->columns;
         }
 
@@ -100,7 +109,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
 
     protected function getActions(): array
     {
-        if ($this->actions !== null) {
+        if (null !== $this->actions) {
             return $this->actions;
         }
 
@@ -111,7 +120,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
 
     protected function getActionsSecondary(): array
     {
-        if ($this->actionsSecondary !== null) {
+        if (null !== $this->actionsSecondary) {
             return $this->actionsSecondary;
         }
 
@@ -122,7 +131,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
 
     protected function getBatches(): array
     {
-        if ($this->batches !== null) {
+        if (null !== $this->batches) {
             return $this->batches;
         }
 
@@ -133,7 +142,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
 
     protected function getCollection(): CollectionInterface
     {
-        if ($this->collection !== null) {
+        if (null !== $this->collection) {
             return $this->collection;
         }
 
@@ -155,6 +164,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
         foreach ($this->getActions() as $action) {
             $data[] = $action->createViewData();
         }
+
         return $data;
     }
 
@@ -164,6 +174,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
         foreach ($this->getActionsSecondary() as $action) {
             $data[] = $action->createViewData();
         }
+
         return $data;
     }
 
@@ -173,6 +184,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
         foreach ($this->getColumns() as $column) {
             $data[] = $column->createColumnViewData();
         }
+
         return $data;
     }
 
@@ -182,6 +194,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
         foreach ($this->getFilters() as $filter) {
             $data[] = $filter->createViewData();
         }
+
         return $data;
     }
 
@@ -191,6 +204,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
         foreach ($this->getBatches() as $batch) {
             $data[] = $batch->createViewData();
         }
+
         return $data;
     }
 

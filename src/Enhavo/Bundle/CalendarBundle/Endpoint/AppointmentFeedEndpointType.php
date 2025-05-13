@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\CalendarBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -12,14 +21,14 @@ class AppointmentFeedEndpointType extends AbstractEndpointType
 {
     public function __construct(
         private readonly AppointmentProvider $appointmentProvider,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
-        if (!$request->query->has('start') || !$request->query->has('end')){
+        if (!$request->query->has('start') || !$request->query->has('end')) {
             $context->setStatusCode(400);
+
             return;
         }
 
@@ -31,7 +40,7 @@ class AppointmentFeedEndpointType extends AbstractEndpointType
 
         $eventsArray = [];
         /** @var Appointment $normalizedAppointment */
-        foreach ($normalizedAppointments as $normalizedAppointment){
+        foreach ($normalizedAppointments as $normalizedAppointment) {
             $event = [
                 'title' => $normalizedAppointment->getTitle(),
                 'start' => $normalizedAppointment->getDateFrom()->format('Y-m-d H:i:s'),

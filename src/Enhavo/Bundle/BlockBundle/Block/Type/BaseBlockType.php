@@ -1,9 +1,12 @@
 <?php
-/**
- * BaseConfiguration.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 17/10/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Block\Type;
@@ -12,8 +15,8 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\BlockBundle\Block\BlockTypeInterface;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Component\Type\AbstractType;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BaseBlockType extends AbstractType implements BlockTypeInterface
@@ -21,8 +24,7 @@ class BaseBlockType extends AbstractType implements BlockTypeInterface
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly NormalizerInterface $normalizer,
-    )
-    {
+    ) {
     }
 
     public function createViewData(BlockInterface $block, Data $data, $resource, array $options)
@@ -32,7 +34,6 @@ class BaseBlockType extends AbstractType implements BlockTypeInterface
 
     public function finishViewData(BlockInterface $block, Data $data, $resource, array $options)
     {
-
     }
 
     public function getModel(array $options)

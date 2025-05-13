@@ -1,9 +1,12 @@
 <?php
-/**
- * ListMenuBuilder.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 20/09/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Menu\Type;
@@ -19,8 +22,7 @@ class ListMenuType extends AbstractMenuType
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly MenuManager $menuManager,
-    )
-    {
+    ) {
     }
 
     public function createViewData(array $options, Data $data): void
@@ -33,7 +35,7 @@ class ListMenuType extends AbstractMenuType
         $data->add([
             'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
             'icon' => $options['icon'],
-            'items' => $items
+            'items' => $items,
         ]);
     }
 
@@ -42,8 +44,10 @@ class ListMenuType extends AbstractMenuType
         $enabled = $options['enabled'];
         if ($enabled) {
             $items = $this->menuManager->getMenuItems($options['items']);
+
             return count($items) > 0;
         }
+
         return false;
     }
 

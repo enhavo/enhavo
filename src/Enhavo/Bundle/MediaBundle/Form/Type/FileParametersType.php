@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 20.09.17
- * Time: 23:57
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Form\Type;
@@ -18,10 +21,10 @@ class FileParametersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('alt', TextType::class, [
-            'required' => false
+            'required' => false,
         ]);
         $builder->add('title', TextType::class, [
-            'required' => false
+            'required' => false,
         ]);
     }
 

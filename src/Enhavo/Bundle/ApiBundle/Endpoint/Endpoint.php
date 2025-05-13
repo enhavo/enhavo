@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -11,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @property EndpointTypeInterface $type
+ * @property EndpointTypeInterface   $type
  * @property EndpointTypeInterface[] $parents
  */
 class Endpoint extends AbstractContainerType
@@ -20,11 +29,10 @@ class Endpoint extends AbstractContainerType
         TypeInterface $type,
         array $parents,
         array $options,
-        string $key = null,
+        ?string $key = null,
         array $extensions = [],
         private readonly ?EndpointDataCollector $endpointDataCollector = null,
-    )
-    {
+    ) {
         parent::__construct($type, $parents, $options, $key, $extensions);
     }
 
@@ -58,6 +66,7 @@ class Endpoint extends AbstractContainerType
         if ($context->isStopped()) {
             $this->endpointDataCollector?->setContext($context);
             $this->endpointDataCollector?->setData($data);
+
             return $context->getResponse() ?? $this->type->getResponse($this->options, $request, $data, $context);
         }
 
@@ -68,6 +77,7 @@ class Endpoint extends AbstractContainerType
                 if ($context->isStopped()) {
                     $this->endpointDataCollector?->setContext($context);
                     $this->endpointDataCollector?->setData($data);
+
                     return $context->getResponse() ?? $this->type->getResponse($this->options, $request, $data, $context);
                 }
             }

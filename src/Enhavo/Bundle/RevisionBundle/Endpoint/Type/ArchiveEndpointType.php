@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RevisionBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -19,8 +28,7 @@ class ArchiveEndpointType extends AbstractEndpointType
         private readonly InputFactory $inputFactory,
         private readonly RevisionManager $revisionManager,
         private readonly CsrfTokenManagerInterface $csrfTokenManager,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -30,7 +38,7 @@ class ArchiveEndpointType extends AbstractEndpointType
 
         $resource = $input->getResource();
 
-        if ($resource === null) {
+        if (null === $resource) {
             throw $this->createNotFoundException();
         }
 
@@ -38,6 +46,7 @@ class ArchiveEndpointType extends AbstractEndpointType
             $context->setStatusCode(400);
             $data['success'] = false;
             $data['message'] = 'Invalid token';
+
             return;
         }
 

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m
- * Date: 15.04.17
- * Time: 16:31
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CalendarBundle\Import;
@@ -54,28 +57,28 @@ class FacebookEventsImporter implements ImporterInterface, ContainerAwareInterfa
 
         try {
             $response = $fbInstance->get('/'.$this->pageName.'/events', $this->appId.'|'.$this->appSecret);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return [];
         }
         $graphNodes = $response->getGraphEdge();
 
         $appointments = [];
-        foreach ($graphNodes as $graphNode){
+        foreach ($graphNodes as $graphNode) {
             $event = $graphNode->all();
 
-            if( !array_key_exists('start_time', $event) ||
-                !array_key_exists('end_time', $event) ||
-                !array_key_exists('name', $event)){
+            if (!array_key_exists('start_time', $event)
+                || !array_key_exists('end_time', $event)
+                || !array_key_exists('name', $event)) {
                 continue;
             }
 
-            if($from) {
-                if($event['end_time'] < $from){
+            if ($from) {
+                if ($event['end_time'] < $from) {
                     continue;
                 }
             }
-            if($to) {
-                if($event['start_time'] > $to){
+            if ($to) {
+                if ($event['start_time'] > $to) {
                     continue;
                 }
             }
@@ -87,24 +90,25 @@ class FacebookEventsImporter implements ImporterInterface, ContainerAwareInterfa
             $appointment->setDateTo($event['end_time']);
             $appointment->setTitle($event['name']);
             $appointment->setExternalId($this->getPrefix().$event['id']);
-            if(array_key_exists('description', $event)) {
+            if (array_key_exists('description', $event)) {
                 $appointment->setTeaser($event['description']);
             }
-            if(array_key_exists('place', $event)){
+            if (array_key_exists('place', $event)) {
                 $placeNode = $event['place']->all();
                 $appointment->setLocationName($placeNode['name']);
-                if(array_key_exists('location', $placeNode)) {
+                if (array_key_exists('location', $placeNode)) {
                     $locationNode = $placeNode['location']->all();
-                    $appointment->setLocationCity(isset($locationNode['city']) ? $locationNode['city'] : '');
-                    $appointment->setLocationCountry(isset($locationNode['country']) ? $locationNode['country'] : '');
-                    $appointment->setLocationLongitude(isset($locationNode['longitude']) ? $locationNode['longitude'] : '');
-                    $appointment->setLocationLatitude(isset($locationNode['latitude']) ? $locationNode['latitude'] : '');
-                    $appointment->setLocationStreet(isset($locationNode['street']) ? $locationNode['street'] : '');
-                    $appointment->setLocationZip(isset($locationNode['zip']) ? $locationNode['zip'] : '');
+                    $appointment->setLocationCity($locationNode['city'] ?? '');
+                    $appointment->setLocationCountry($locationNode['country'] ?? '');
+                    $appointment->setLocationLongitude($locationNode['longitude'] ?? '');
+                    $appointment->setLocationLatitude($locationNode['latitude'] ?? '');
+                    $appointment->setLocationStreet($locationNode['street'] ?? '');
+                    $appointment->setLocationZip($locationNode['zip'] ?? '');
                 }
             }
             $appointments[] = $appointment;
         }
+
         return $appointments;
     }
 

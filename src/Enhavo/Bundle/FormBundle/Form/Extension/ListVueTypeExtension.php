@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Form\Extension;
 
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
@@ -13,9 +22,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ListVueTypeExtension extends AbstractVueTypeExtension
 {
     public function __construct(
-        private VueForm $vueForm
-    )
-    {
+        private VueForm $vueForm,
+    ) {
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)

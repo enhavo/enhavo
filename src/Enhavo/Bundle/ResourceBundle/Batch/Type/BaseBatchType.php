@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Batch\Type;
 
 use Doctrine\ORM\EntityRepository;
@@ -20,21 +29,19 @@ class BaseBatchType extends AbstractBatchType
         private readonly RouterInterface $router,
         private readonly CsrfTokenManagerInterface $tokenManager,
         private readonly ResourceExpressionLanguage $expressionLanguage,
-    )
-    {
+    ) {
     }
 
     public function createViewData(array $options, Data $data): void
     {
         $route = $options['route'];
-        if ($route === null) {
+        if (null === $route) {
             $route = $this->routeResolver->getRoute('batch', ['api' => true]);
         }
 
-        if ($route === null) {
+        if (null === $route) {
             throw new \Exception('Can\'t find batch route, please provide a route over the "route" option');
         }
-
 
         $data->set('label', $this->getLabel($options));
         $data->set('confirmMessage', $this->getConfirmMessage($options));
@@ -51,9 +58,10 @@ class BaseBatchType extends AbstractBatchType
 
     private function getConfirmMessage($options): ?string
     {
-        if($options['confirm_message'] !== null) {
+        if (null !== $options['confirm_message']) {
             return $this->translator->trans($options['confirm_message'], [], $options['translation_domain']);
         }
+
         return null;
     }
 
@@ -61,22 +69,22 @@ class BaseBatchType extends AbstractBatchType
     {
         return $this->expressionLanguage->evaluate($options['permission'], [
             'repository' => $repository,
-            'batch' => $this
+            'batch' => $this,
         ]);
     }
 
     public function isEnabled(array $options): bool
     {
-        return !!$this->expressionLanguage->evaluate($options['enabled'], [
-            'batch' => $this
+        return (bool) $this->expressionLanguage->evaluate($options['enabled'], [
+            'batch' => $this,
         ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'permission'  => null,
-            'position'  => 0,
+            'permission' => null,
+            'position' => 0,
             'translation_domain' => null,
             'enabled' => true,
             'confirm_message' => null,

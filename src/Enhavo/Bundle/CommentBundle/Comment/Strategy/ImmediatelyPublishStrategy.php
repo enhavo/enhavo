@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-10-25
- * Time: 11:55
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Comment\Strategy;
-
 
 use Enhavo\Bundle\CommentBundle\Comment\CommentManager;
 use Enhavo\Bundle\CommentBundle\Comment\PublishStrategyInterface;
@@ -23,7 +25,6 @@ class ImmediatelyPublishStrategy implements PublishStrategyInterface
 
     /**
      * ImmediatelyPublishStrategy constructor.
-     * @param CommentManager $commentManager
      */
     public function __construct(CommentManager $commentManager)
     {
@@ -32,7 +33,6 @@ class ImmediatelyPublishStrategy implements PublishStrategyInterface
 
     public function preCreate(CommentInterface $comment, array $options): void
     {
-
     }
 
     public function postCreate(CommentInterface $comment, array $options): void
@@ -42,6 +42,5 @@ class ImmediatelyPublishStrategy implements PublishStrategyInterface
 
     public function configureOptions(OptionsResolver $resolver)
     {
-
     }
 }

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-08-30
- * Time: 00:08
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Util;
@@ -12,13 +15,13 @@ class NameTransformer
 {
     private function normalizeCase($name)
     {
-        if(is_array($name)) {
+        if (is_array($name)) {
             $parts = $name;
-        } elseif(preg_match('/-/', $name)) {
+        } elseif (preg_match('/-/', $name)) {
             $parts = explode('-', $name);
-        } elseif(preg_match('/_/', $name)) {
+        } elseif (preg_match('/_/', $name)) {
             $parts = explode('_', $name);
-        } elseif($this->isCamelCase($name)) {
+        } elseif ($this->isCamelCase($name)) {
             $parts = [];
             $name = lcfirst($name);
             $length = strlen($name);
@@ -32,14 +35,14 @@ class NameTransformer
                     $word .= $name[$i];
                 }
             }
-            if($word) {
+            if ($word) {
                 $parts[] = $word;
             }
         } else {
             $parts = [$name];
         }
 
-        foreach($parts as &$part) {
+        foreach ($parts as &$part) {
             $part = strtolower($part);
         }
 
@@ -54,6 +57,7 @@ class NameTransformer
                 return true;
             }
         }
+
         return false;
     }
 
@@ -61,24 +65,27 @@ class NameTransformer
     {
         $parts = $this->normalizeCase($name);
         $first = true;
-        foreach($parts as &$part) {
-            if(!$first || !$firstLetterLow) {
+        foreach ($parts as &$part) {
+            if (!$first || !$firstLetterLow) {
                 $part = ucfirst($part);
             }
             $first = false;
         }
+
         return implode('', $parts);
     }
 
     public function kebabCase($name)
     {
         $parts = $this->normalizeCase($name);
+
         return implode('-', $parts);
     }
 
     public function snakeCase($name)
     {
         $parts = $this->normalizeCase($name);
+
         return implode('_', $parts);
     }
 }

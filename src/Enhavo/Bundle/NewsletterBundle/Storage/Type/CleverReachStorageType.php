@@ -1,13 +1,17 @@
 <?php
-/**
- * @author blutze-media
- * @since 2020-09-03
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Client\CleverReachClient;
-use Enhavo\Bundle\NewsletterBundle\Entity\Group;
 use Enhavo\Bundle\NewsletterBundle\Exception\ActivateException;
 use Enhavo\Bundle\NewsletterBundle\Exception\InsertException;
 use Enhavo\Bundle\NewsletterBundle\Exception\NoGroupException;
@@ -38,13 +42,12 @@ class CleverReachStorageType extends AbstractStorageType
     }
 
     /**
-     * @param SubscriberInterface $subscriber
-     * @param array $options
-     * @return void
      * @throws NoGroupException
      * @throws InsertException
      * @throws UpdateException
      * @throws ActivateException
+     *
+     * @return void
      */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
@@ -56,7 +59,6 @@ class CleverReachStorageType extends AbstractStorageType
             if ($this->client->exists($subscriber->getEmail(), $group)) {
                 $this->client->updateSubscriber($subscriber, $group);
                 $this->client->activateSubscriber($subscriber, $group);
-
             } else {
                 $this->client->saveSubscriber($subscriber, $group);
             }
@@ -64,11 +66,10 @@ class CleverReachStorageType extends AbstractStorageType
     }
 
     /**
-     * @param SubscriberInterface $subscriber
-     * @param array $options
-     * @return void
      * @throws NoGroupException
      * @throws RemoveException
+     *
+     * @return void
      */
     public function removeSubscriber(SubscriberInterface $subscriber, array $options)
     {
@@ -101,13 +102,9 @@ class CleverReachStorageType extends AbstractStorageType
         $this->setAttributes($subscriber, $options['global_attributes'], $response['global_attributes']);
 
         return $subscriber;
-
     }
 
     /**
-     * @param SubscriberInterface $subscriber
-     * @param array $options
-     * @return bool
      * @throws NoGroupException
      */
     public function exists(SubscriberInterface $subscriber, array $options): bool
@@ -125,9 +122,6 @@ class CleverReachStorageType extends AbstractStorageType
         return true;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -142,9 +136,6 @@ class CleverReachStorageType extends AbstractStorageType
     }
 
     /**
-     * @param $groupId
-     * @param array $options
-     * @return GroupInterface|null
      * @throws NoGroupException
      */
     public function getGroup($groupId, array $options): ?GroupInterface
@@ -160,9 +151,6 @@ class CleverReachStorageType extends AbstractStorageType
         throw new NoGroupException(sprintf('group with id "%s" does not exist', $groupId));
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getGroups(array $options): array
     {
         $this->client->init($options['client_id'], $options['client_secret'], $options['attributes'], $options['global_attributes']);
@@ -188,10 +176,9 @@ class CleverReachStorageType extends AbstractStorageType
     }
 
     /**
-     * @param SubscriberInterface $subscriber
-     * @param $groups
-     * @return array
      * @throws NoGroupException
+     *
+     * @return array
      */
     private function mapGroups(SubscriberInterface $subscriber, $groups)
     {
@@ -204,7 +191,7 @@ class CleverReachStorageType extends AbstractStorageType
             }
         }
 
-        if (count($groups) === 0) {
+        if (0 === count($groups)) {
             throw new NoGroupException('no groups given');
         }
 
@@ -219,18 +206,14 @@ class CleverReachStorageType extends AbstractStorageType
             foreach ($values as $valueKey => $valueValue) {
                 if (is_array($valueValue)) {
                     throw new \Exception('Not implemented');
-                } else {
-                    if (isset($attributes[$valueKey])) {
-                        $propertyAccessor->setValue($subscriber, $attributes[$valueKey], $valueValue);
-                    }
+                }
+                if (isset($attributes[$valueKey])) {
+                    $propertyAccessor->setValue($subscriber, $attributes[$valueKey], $valueValue);
                 }
             }
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     public static function getName(): ?string
     {
         return 'cleverreach';

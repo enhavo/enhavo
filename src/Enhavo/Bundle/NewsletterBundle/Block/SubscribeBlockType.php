@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Block;
 
 use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
@@ -19,7 +28,7 @@ class SubscribeBlockType extends AbstractBlockType
             'template' => 'theme/block/subscribe.html.twig',
             'label' => 'Newsletter Subscribe',
             'translation_domain' => 'EnhavoNewsletterBundle',
-            'groups' => ['default', 'content']
+            'groups' => ['default', 'content'],
         ]);
     }
 

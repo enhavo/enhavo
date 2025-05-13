@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\EventListener;
 
 use App\Entity\Person;
@@ -13,8 +22,7 @@ class PersonSubscriber implements EventSubscriberInterface
     public function __construct(
         private readonly RevisionManager $revisionManager,
         private readonly TokenStorageInterface $tokenStorage,
-    )
-    {
+    ) {
     }
 
     public static function getSubscribedEvents()

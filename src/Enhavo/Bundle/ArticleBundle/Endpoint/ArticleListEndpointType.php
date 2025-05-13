@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ArticleBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -13,8 +22,7 @@ class ArticleListEndpointType extends AbstractEndpointType
 {
     public function __construct(
         private readonly ArticleRepository $repository,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void

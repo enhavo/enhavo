@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-05-08
- * Time: 21:27
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Cache;
@@ -27,18 +30,18 @@ class HttpCache implements CacheInterface
         private $port = null,
         private $schema = null,
         private $timeout = 2,
-        private $method = 'PURGE'
-    )
-    {}
+        private $method = 'PURGE',
+    ) {
+    }
 
     private function getUri(FileInterface $file, $format)
     {
         $path = $this->generator->generateFormat($file, $format);
         $request = $this->requestStack->getMainRequest();
 
-        $host = $this->host ? $this->host :$request->getHost();
-        $port = $this->port ? $this->port :$request->getPort();
-        $schema = $this->schema ? $this->schema :$request->getScheme();
+        $host = $this->host ? $this->host : $request->getHost();
+        $port = $this->port ? $this->port : $request->getPort();
+        $schema = $this->schema ? $this->schema : $request->getScheme();
 
         return sprintf('%s://%s:%s%s', $schema, $host, $port, $path);
     }
@@ -56,7 +59,6 @@ class HttpCache implements CacheInterface
 
     public function set(FileInterface $file, $format)
     {
-
     }
 
     public function refresh(FileInterface $file, $format)

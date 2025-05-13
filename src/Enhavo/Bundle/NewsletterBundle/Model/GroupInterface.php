@@ -1,38 +1,33 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-05-29
- * Time: 18:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Model;
 
+use Doctrine\Common\Collections\Collection;
+
 interface GroupInterface
 {
-    /**
-     * @param LocalSubscriberInterface $subscriber
-     * @return GroupInterface
-     */
     public function addSubscriber(LocalSubscriberInterface $subscriber): GroupInterface;
 
-    /**
-     * @param LocalSubscriberInterface $subscriber
-     * @return mixed
-     */
     public function removeSubscriber(LocalSubscriberInterface $subscriber);
 
     /**
      * Get subscriber
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getSubscribers();
 
     /**
      * Get code for storage service mapping
-     *
-     * @return mixed
      */
     public function getCode();
 

@@ -1,10 +1,19 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Locale;
 
 class ChainResolverEntry
 {
-    /** @var integer */
+    /** @var int */
     private $priority;
 
     /** @var LocaleResolverInterface */
@@ -12,8 +21,6 @@ class ChainResolverEntry
 
     /**
      * ResolverEntry constructor.
-     * @param int $priority
-     * @param LocaleResolverInterface $resolver
      */
     public function __construct(LocaleResolverInterface $resolver, int $priority = 100)
     {
@@ -21,17 +28,11 @@ class ChainResolverEntry
         $this->resolver = $resolver;
     }
 
-    /**
-     * @return int
-     */
     public function getPriority(): int
     {
         return $this->priority;
     }
 
-    /**
-     * @return LocaleResolverInterface
-     */
     public function getResolver(): LocaleResolverInterface
     {
         return $this->resolver;

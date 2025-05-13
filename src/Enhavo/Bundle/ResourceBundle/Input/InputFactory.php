@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Input;
 
 use Enhavo\Bundle\ResourceBundle\Exception\InputException;
@@ -13,8 +22,7 @@ class InputFactory
 
     public function __construct(
         private array $configurations,
-    )
-    {
+    ) {
     }
 
     public function setContainer(ContainerInterface $container): void
@@ -29,14 +37,14 @@ class InputFactory
         }
 
         $configuration = $this->configurations[$key];
-        
+
         if (!isset($configuration['class'])) {
             throw InputException::configurationClassMissing($key);
         }
 
         $class = $configuration['class'];
         unset($configuration['class']);
-        
+
         if ($this->container->has($class)) {
             $input = clone $this->container->get($class);
         } else {

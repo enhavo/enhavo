@@ -1,8 +1,18 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Repository;
 
 use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\QueryBuilder;
 use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch\SearchFilter;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\BetweenQuery;
@@ -20,22 +30,22 @@ class IndexRepository extends EntityRepository
         $query->setParameter('word', $word);
         $query->select('sum(s.score)');
         $query->andWhere('s.word = :word');
+
         return $query->getQuery()->getSingleResult();
     }
 
     /**
-     * @param SearchFilter $filter
      * @return array
      */
     public function getSearchResults(SearchFilter $filter)
     {
         $query = $this->createSearchQuery($filter);
+
         return $query->getQuery()->getResult();
     }
 
     /**
-     * @param SearchFilter $filter
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
     public function createSearchQuery(SearchFilter $filter)
     {
@@ -56,23 +66,23 @@ class IndexRepository extends EntityRepository
         $query->groupBy('d.id');
 
         $i = 0;
-        foreach($filter->getWords() as  $word) {
+        foreach ($filter->getWords() as $word) {
             $query->orWhere('i.word = :word_'.$i);
             $query->setParameter('word_'.$i, $word);
-            $i++;
+            ++$i;
         }
 
-        if($filter->getQueries()) {
+        if ($filter->getQueries()) {
             $i = 0;
-            foreach($filter->getQueries() as $key => $filerQuery) {
+            foreach ($filter->getQueries() as $key => $filerQuery) {
                 $ids = $this->createFilterIds($key, $filerQuery);
                 $query->andWhere(sprintf('d.id IN (:filterIds_%s)', $i));
                 $query->setParameter(sprintf('filterIds_%s', $i), $ids);
-                $i++;
+                ++$i;
             }
-        };
+        }
 
-        if($filter->getOrderBy()) {
+        if ($filter->getOrderBy()) {
             $query->andWhere('f.key = :orderKey');
             $query->setParameter('orderKey', $filter->getOrderBy());
             $query->orderBy('f.value', $filter->getOrderDirection());
@@ -80,7 +90,7 @@ class IndexRepository extends EntityRepository
             $query->orderBy('calculated_score', 'DESC');
         }
 
-        if($filter->getLimit() !== null) {
+        if (null !== $filter->getLimit()) {
             $query->setMaxResults(intval($filter->getLimit()));
         }
 
@@ -95,12 +105,12 @@ class IndexRepository extends EntityRepository
         if (isset($result[0]) && isset($result[0]['result_count'])) {
             return $result[0]['result_count'];
         }
+
         return 0;
     }
 
     /**
-     * @param SearchFilter $filter
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
     public function createCountQuery(SearchFilter $filter)
     {
@@ -114,23 +124,23 @@ class IndexRepository extends EntityRepository
         $query->leftJoin('d.filters', 'f');
 
         $i = 0;
-        foreach($filter->getWords() as  $word) {
+        foreach ($filter->getWords() as $word) {
             $query->orWhere('i.word = :word_'.$i);
             $query->setParameter('word_'.$i, $word);
-            $i++;
+            ++$i;
         }
 
-        if($filter->getQueries()) {
+        if ($filter->getQueries()) {
             $i = 0;
-            foreach($filter->getQueries() as $key => $filerQuery) {
+            foreach ($filter->getQueries() as $key => $filerQuery) {
                 $ids = $this->createFilterIds($key, $filerQuery);
                 $query->andWhere(sprintf('d.id IN (:filterIds_%s)', $i));
                 $query->setParameter(sprintf('filterIds_%s', $i), $ids);
-                $i++;
+                ++$i;
             }
-        };
+        }
 
-        if($filter->getOrderBy()) {
+        if ($filter->getOrderBy()) {
             $query->andWhere('f.key = :orderKey');
             $query->setParameter('orderKey', $filter->getOrderBy());
         }
@@ -145,27 +155,28 @@ class IndexRepository extends EntityRepository
         $query->from(Filter::class, 'f');
         $query->join('f.dataSet', 'd');
 
-        if($filterQuery instanceof MatchQuery) {
+        if ($filterQuery instanceof MatchQuery) {
             $query->setParameter('key_1', $key);
             $query->setParameter('value_1', $filterQuery->getValue());
             $query->orWhere(sprintf('(f.key = :key_1 AND f.value %s :value_1)', $filterQuery->getOperator()));
-        } elseif($filterQuery instanceof BetweenQuery) {
+        } elseif ($filterQuery instanceof BetweenQuery) {
             $query->setParameter('key_1', $key);
             $query->setParameter('value_1', $filterQuery->getFrom());
             $query->setParameter('value_2', $filterQuery->getTo());
             $query->orWhere(sprintf(
                 '(f.key = :key_1 AND f.value %s :value_1 AND f.value %s :value_2)',
-                $filterQuery->getOperatorFrom() == BetweenQuery::OPERATOR_EQUAL_THAN ? '>=' : '>',
-                $filterQuery->getOperatorTo() == BetweenQuery::OPERATOR_EQUAL_THAN ? '<=' : '<'
+                BetweenQuery::OPERATOR_EQUAL_THAN == $filterQuery->getOperatorFrom() ? '>=' : '>',
+                BetweenQuery::OPERATOR_EQUAL_THAN == $filterQuery->getOperatorTo() ? '<=' : '<'
             ));
         }
 
         $result = $query->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);
 
         $ids = [];
-        foreach($result as $row) {
+        foreach ($result as $row) {
             $ids[] = $row['id'];
         }
+
         return $ids;
     }
 }

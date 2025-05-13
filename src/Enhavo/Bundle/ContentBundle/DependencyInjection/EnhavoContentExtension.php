@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ContentBundle\DependencyInjection;
 
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\PrependExtensionTrait;
@@ -19,7 +28,7 @@ class EnhavoContentExtension extends Extension implements PrependExtensionInterf
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $collectors = [];
-        if(isset($config['sitemap']) && isset($config['sitemap']['collectors'])) {
+        if (isset($config['sitemap']) && isset($config['sitemap']['collectors'])) {
             $collectors = $config['sitemap']['collectors'];
         }
         $container->setParameter('enhavo_content.sitemap.collectors', $collectors);
@@ -27,9 +36,9 @@ class EnhavoContentExtension extends Extension implements PrependExtensionInterf
         $container->setParameter('enhavo_content.video.vimeo.api_key', $config['video']['vimeo']['api_key']);
         $container->setParameter('enhavo_content.video.youtube.api_key', $config['video']['youtube']['api_key']);
 
-        $configFiles = array(
+        $configFiles = [
             'services.yaml',
-        );
+        ];
 
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TaxonomyBundle\Validator\Constraints;
 
 use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
@@ -12,7 +21,8 @@ class TermUniqueValidator extends ConstraintValidator
 {
     public function __construct(
         private TermRepository $termRepository,
-    ) {}
+    ) {
+    }
 
     public function validate($value, Constraint $constraint)
     {
@@ -28,7 +38,7 @@ class TermUniqueValidator extends ConstraintValidator
 
         $similarTerms = $this->termRepository->findBy([
             'name' => $value->getName(),
-            'taxonomy' => $value->getTaxonomy()
+            'taxonomy' => $value->getTaxonomy(),
         ]);
         $isDuplicate = false;
         foreach ($similarTerms as $similarTerm) {

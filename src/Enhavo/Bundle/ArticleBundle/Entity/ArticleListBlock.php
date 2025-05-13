@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ArticleBundle\Entity;
 
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
@@ -7,43 +16,31 @@ use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
 class ArticleListBlock extends AbstractBlock
 {
     /**
-     * @var  boolean
+     * @var bool
      */
     private $pagination = true;
 
     /**
-     * @var integer
+     * @var int
      */
     private $limit = 10;
 
-    /**
-     * @return bool
-     */
     public function getPagination(): ?bool
     {
         return $this->pagination;
     }
 
-    /**
-     * @param bool $pagination
-     */
-    public function setPagination(bool $pagination = null): void
+    public function setPagination(?bool $pagination = null): void
     {
         $this->pagination = $pagination;
     }
 
-    /**
-     * @return int
-     */
     public function getLimit(): ?int
     {
         return $this->limit;
     }
 
-    /**
-     * @param int $limit
-     */
-    public function setLimit(int $limit = null): void
+    public function setLimit(?int $limit = null): void
     {
         $this->limit = $limit;
     }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Tests\Duplicate\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -47,20 +56,18 @@ class CollectionDuplicateTypeTest extends TestCase
         $sourceItem->addChild($sourceChildItemOne);
         $sourceItem->addChild($sourceChildItemTwo);
 
-
-        $dependencies->duplicateFactory->method('duplicate')->willReturnCallback(function() use (&$duplicateStack) {
+        $dependencies->duplicateFactory->method('duplicate')->willReturnCallback(function () use (&$duplicateStack) {
             return array_pop($duplicateStack);
         });
 
         $instance = $this->createInstance($dependencies);
-
 
         $sourceValue = new SourceValue($sourceItem->children, $sourceItem, 'children');
         $targetValue = new TargetValue(null, $targetItem, 'children');
 
         $instance->duplicate([
             'by_reference' => true,
-            'groups' => 'test'
+            'groups' => 'test',
         ], $sourceValue, $targetValue, ['groups' => 'test']);
 
         $this->assertEquals($targetItem, $targetChildItemOne->parent);

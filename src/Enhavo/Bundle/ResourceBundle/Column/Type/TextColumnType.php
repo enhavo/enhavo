@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 02.02.16
- * Time: 11:10
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Column\Type;
@@ -41,7 +44,7 @@ class TextColumnType extends AbstractColumnType
             'model' => 'TextColumn',
             'wrap' => true,
             'strip_tags' => false,
-            'whitespace' => 'normal'
+            'whitespace' => 'normal',
         ]);
         $resolver->setRequired(['property']);
     }

@@ -1,10 +1,12 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 06.03.18
- * Time: 15:19
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver;
@@ -18,16 +20,14 @@ class EnhavoResourceResolver implements EntityResolverInterface
 {
     public function __construct(
         private readonly array $resources,
-        private readonly ResourceManager $resourceManager
-    )
-    {
+        private readonly ResourceManager $resourceManager,
+    ) {
     }
 
     public function getName($entity): string
     {
         if (is_string($entity)) {
             $className = $entity;
-
         } else {
             $className = get_class($entity);
             if ($entity instanceof Proxy) {
@@ -35,8 +35,8 @@ class EnhavoResourceResolver implements EntityResolverInterface
             }
         }
 
-        foreach($this->resources as $type => $resource) {
-            if($resource['classes']['model'] == $className) {
+        foreach ($this->resources as $type => $resource) {
+            if ($resource['classes']['model'] == $className) {
                 return $type;
             }
         }
@@ -47,9 +47,10 @@ class EnhavoResourceResolver implements EntityResolverInterface
     public function getEntity(int $id, string $name): ?object
     {
         $repository = $this->getRepository($name);
-        if ($repository === null) {
+        if (null === $repository) {
             return null;
         }
+
         return $repository->find($id);
     }
 
@@ -60,6 +61,7 @@ class EnhavoResourceResolver implements EntityResolverInterface
         }
 
         $repository = $this->resourceManager->getRepository($class);
+
         return $repository;
     }
 }

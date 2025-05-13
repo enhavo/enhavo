@@ -1,9 +1,12 @@
 <?php
-/**
- * SubscriberExistsValidator.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 05/01/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Validator\Constraints;
@@ -22,25 +25,18 @@ class SubscriberExistsValidator extends ConstraintValidator
 
     /**
      * SubscriberExistsValidator constructor.
-     *
-     * @param SubscriptionManager $manager
      */
     public function __construct(SubscriptionManager $manager)
     {
         $this->manager = $manager;
     }
 
-    /**
-     * @param mixed $value
-     *
-     * @param Constraint $constraint
-     */
     public function validate($value, Constraint $constraint)
     {
         if ($value instanceof SubscriberInterface) {
             $subscription = $this->manager->getSubscription($value->getSubscription());
             $strategy = $subscription->getStrategy();
-            if ($value->getEmail() !== null && $strategy->exists($value)) {
+            if (null !== $value->getEmail() && $strategy->exists($value)) {
                 $message = $strategy->handleExists($value);
                 $this->context->buildViolation($message ?? $constraint->message)
                     ->setParameter('%email%', $value->getEmail())

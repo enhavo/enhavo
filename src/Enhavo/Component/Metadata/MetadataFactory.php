@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-10
- * Time: 13:03
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Metadata;
-
 
 class MetadataFactory
 {
@@ -25,15 +27,14 @@ class MetadataFactory
     private ?array $classes = null;
 
     public function __construct(
-        private readonly string $metaDataClass
-    )
-    {
+        private readonly string $metaDataClass,
+    ) {
     }
 
     /** @retrun string[] */
     public function getAllClasses(): array
     {
-        if ($this->classes !== null) {
+        if (null !== $this->classes) {
             return $this->classes;
         }
         $this->classes = [];
@@ -59,6 +60,7 @@ class MetadataFactory
         $hasMetadata = $this->loadMetadata($className, $metadata);
 
         $this->metadata[$className] = $hasMetadata || $force ? $metadata : null;
+
         return $this->metadata[$className];
     }
 
@@ -74,7 +76,7 @@ class MetadataFactory
 
         $hasMetadata = false;
         foreach ($this->loadedData[$className] as $normalizedData) {
-            if ($normalizedData !== false) {
+            if (false !== $normalizedData) {
                 $hasMetadata = true;
             }
             foreach ($this->providers as $provider) {
@@ -89,7 +91,6 @@ class MetadataFactory
     {
         $this->providers[] = $provider;
     }
-
 
     public function removeProvider(ProviderInterface $provider): void
     {

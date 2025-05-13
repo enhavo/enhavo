@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 11.11.15
- * Time: 13:41
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ContactBundle\ErrorResolver;
@@ -11,7 +14,8 @@ namespace Enhavo\Bundle\ContactBundle\ErrorResolver;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class FormErrorResolver {
+class FormErrorResolver
+{
     /**
      * @var TranslatorInterface
      */
@@ -23,7 +27,6 @@ class FormErrorResolver {
     }
 
     /**
-     * @param FormInterface $form
      * @return array
      */
     public function getErrors(FormInterface $form)
@@ -32,12 +35,11 @@ class FormErrorResolver {
     }
 
     /**
-     * @param FormInterface $form
      * @return array
      */
     protected function getErrorArray(FormInterface $form)
     {
-        $errors = array();
+        $errors = [];
 
         foreach ($form->getErrors() as $key => $error) {
             $errors[] = $error->getMessage();
@@ -53,12 +55,11 @@ class FormErrorResolver {
     }
 
     /**
-     * @param FormInterface $form
      * @return array
      */
     protected function getErrorMessages(FormInterface $form)
     {
-        $errors = array();
+        $errors = [];
 
         foreach ($form->getErrors() as $key => $error) {
             $errors[] = $this->translator->trans($error->getMessage());
@@ -67,7 +68,7 @@ class FormErrorResolver {
         foreach ($form->all() as $child) {
             if (!$child->isValid()) {
                 $childErrors = $this->getErrorMessages($child);
-                foreach($childErrors as $childError) {
+                foreach ($childErrors as $childError) {
                     $errors[] = $childError;
                 }
             }

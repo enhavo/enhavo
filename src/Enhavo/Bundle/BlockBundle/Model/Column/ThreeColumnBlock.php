@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Model\Column;
 
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
@@ -78,16 +87,16 @@ class ThreeColumnBlock extends Column
         $this->columnThree = $columnThree;
     }
 
-    public function setNode(NodeInterface $node = null)
+    public function setNode(?NodeInterface $node = null)
     {
         parent::setNode($node);
-        if($this->getColumnOne()) {
+        if ($this->getColumnOne()) {
             $this->getColumnOne()->setParent($node);
         }
-        if($this->getColumnTwo()) {
+        if ($this->getColumnTwo()) {
             $this->getColumnTwo()->setParent($node);
         }
-        if($this->getColumnThree()) {
+        if ($this->getColumnThree()) {
             $this->getColumnThree()->setParent($node);
         }
     }

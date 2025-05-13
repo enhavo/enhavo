@@ -1,16 +1,26 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Tests\DependencyInjection\Merge;
 
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\GridConfigurationMerger;
-use PHPUnit\Framework\TestCase;
 use Enhavo\Bundle\ResourceBundle\Grid\Grid;
+use PHPUnit\Framework\TestCase;
 
 class GridConfigurationMergerTest extends TestCase
 {
     public function createDependencies()
     {
         $dependencies = new GridConfigurationMergerDependencies();
+
         return $dependencies;
     }
 
@@ -37,7 +47,7 @@ class GridConfigurationMergerTest extends TestCase
                         ],
                     ],
                 ],
-            ]
+            ],
         ];
 
         $configExtend = [
@@ -49,8 +59,8 @@ class GridConfigurationMergerTest extends TestCase
                             'label' => 'title',
                         ],
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
 
         $configs = $instance->performMerge([$configBase, $configExtend]);
@@ -78,7 +88,7 @@ class GridConfigurationMergerTest extends TestCase
                         ],
                     ],
                 ],
-            ]
+            ],
         ];
 
         $configExtend = [
@@ -90,8 +100,8 @@ class GridConfigurationMergerTest extends TestCase
                             'label' => 'title',
                         ],
                     ],
-                ]
-            ]
+                ],
+            ],
         ];
 
         $configs = $instance->performMerge([$configExtend, $configBase]);
@@ -118,9 +128,9 @@ class GridConfigurationMergerTest extends TestCase
                             'label' => 'id',
                         ],
                     ],
-                    'resource' => 'base'
+                    'resource' => 'base',
                 ],
-            ]
+            ],
         ];
 
         $configExtend = [
@@ -132,7 +142,7 @@ class GridConfigurationMergerTest extends TestCase
                         ],
                     ],
                 ],
-            ]
+            ],
         ];
 
         $configs = $instance->performMerge([$configBase, $configExtend]);
@@ -163,9 +173,9 @@ class GridConfigurationMergerTest extends TestCase
         $configBase = [
             'grids' => [
                 'base' => [
-                    'resource' => 'base'
+                    'resource' => 'base',
                 ],
-            ]
+            ],
         ];
 
         $configs = $instance->performMerge([$configBase]);

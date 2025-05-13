@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Strategy\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
@@ -14,13 +23,11 @@ class NotifyStrategyType extends AbstractStrategyType
 
     /**
      * NotifyStrategyType constructor.
-     * @param NewsletterManager $newsletterManager
      */
     public function __construct(NewsletterManager $newsletterManager)
     {
         $this->newsletterManager = $newsletterManager;
     }
-
 
     public function addSubscriber(SubscriberInterface $subscriber, array $options)
     {
@@ -45,7 +52,7 @@ class NotifyStrategyType extends AbstractStrategyType
             $subject = $this->trans($options['subject'], [], $options['translation_domain']);
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $subscriber->getEmail(), $subject, $template, [
-                'subscriber' => $subscriber
+                'subscriber' => $subscriber,
             ], $options['content_type']);
             $this->newsletterManager->sendMessage($message);
         }
@@ -61,7 +68,7 @@ class NotifyStrategyType extends AbstractStrategyType
             $subject = $this->trans($options['admin_subject'], [], $options['translation_domain']);
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $to, $subject, $template, [
-                'subscriber' => $subscriber
+                'subscriber' => $subscriber,
             ], $options['content_type']);
             $this->newsletterManager->sendMessage($message);
         }
@@ -72,6 +79,7 @@ class NotifyStrategyType extends AbstractStrategyType
         if ($options['check_exists']) {
             return $this->getStorage()->exists($subscriber);
         }
+
         return false;
     }
 
@@ -94,5 +102,4 @@ class NotifyStrategyType extends AbstractStrategyType
     {
         return 'notify';
     }
-
 }

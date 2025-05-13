@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-08
- * Time: 22:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Batch\Type;
@@ -13,10 +16,10 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Batch\Batch;
 use Enhavo\Bundle\ResourceBundle\Batch\Type\DeleteBatchType;
+use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\ResourceBundle\Tests\Mock\ResourceMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Symfony\Component\HttpFoundation\Request;
 
 class DeleteBatchTypeTest extends TestCase
@@ -26,12 +29,14 @@ class DeleteBatchTypeTest extends TestCase
         $dependencies = new DeleteBatchTypeDependencies();
         $dependencies->resourceManager = $this->getMockBuilder(ResourceManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
+
         return $dependencies;
     }
 
     private function createInstance(DeleteBatchTypeDependencies $dependencies): DeleteBatchType
     {
         $instance = new DeleteBatchType($dependencies->resourceManager);
+
         return $instance;
     }
 

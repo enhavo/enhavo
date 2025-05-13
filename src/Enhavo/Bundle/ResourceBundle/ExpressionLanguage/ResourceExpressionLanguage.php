@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\ExpressionLanguage;
 
 use Symfony\Component\ExpressionLanguage\ExpressionFunctionProviderInterface;
@@ -10,7 +19,7 @@ class ResourceExpressionLanguage
     private array $variables = [];
     private readonly ExpressionLanguage $expressionLanguage;
 
-    public function __construct(ExpressionLanguage $expressionLanguage = null)
+    public function __construct(?ExpressionLanguage $expressionLanguage = null)
     {
         $this->expressionLanguage = $expressionLanguage ?? new ExpressionLanguage();
     }
@@ -20,6 +29,7 @@ class ResourceExpressionLanguage
         if (str_starts_with($expression, 'expr:')) {
             $values = array_merge($this->variables, $values);
             $expression = trim(substr($expression, 5));
+
             return $this->expressionLanguage->evaluate($expression, $values);
         }
 
@@ -31,7 +41,7 @@ class ResourceExpressionLanguage
         foreach ($array as $key => $item) {
             if (is_string($item)) {
                 $array[$key] = $this->evaluate($item, $values);
-            } else if (is_array($item) && $recursive) {
+            } elseif (is_array($item) && $recursive) {
                 $array[$key] = $this->evaluateArray($item, $values, $recursive);
             }
         }

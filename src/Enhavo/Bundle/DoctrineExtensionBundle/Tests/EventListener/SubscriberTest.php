@@ -1,17 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-12
- * Time: 14:02
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Tools\SchemaTool;
-use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Metadata;
 use Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Provider\ExtendProvider;
 use Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Provider\ReferenceProvider;
@@ -29,14 +31,14 @@ abstract class SubscriberTest extends TestCase
     protected function bootstrap($entityDir)
     {
         $finder = new Finder();
-        $finder->files()->in(__DIR__ . '/../Fixtures/Proxy');
+        $finder->files()->in(__DIR__.'/../Fixtures/Proxy');
         foreach ($finder as $file) {
-            if($file->getExtension() === 'php') {
+            if ('php' === $file->getExtension()) {
                 unlink($file->getRealPath());
             }
         }
 
-        $config = ORMSetup::createAttributeMetadataConfiguration(array($entityDir), true, __DIR__ . '/../Fixtures/Proxy');
+        $config = ORMSetup::createAttributeMetadataConfiguration([$entityDir], true, __DIR__.'/../Fixtures/Proxy');
         $conn = ['url' => 'sqlite:///:memory:'];
         $this->em = EntityManager::create($conn, $config);
     }
@@ -46,7 +48,7 @@ abstract class SubscriberTest extends TestCase
         $schema = new SchemaTool($this->em);
         $metadata = [];
         $classNames = $this->em->getConfiguration()->getMetadataDriverImpl()->getAllClassNames();
-        foreach($classNames as $class) {
+        foreach ($classNames as $class) {
             $metadata[] = $this->em->getClassMetadata($class);
         }
         $schema->createSchema($metadata);
@@ -58,6 +60,7 @@ abstract class SubscriberTest extends TestCase
         $factory->addDriver(new ConfigurationDriver($configuration));
         $factory->addProvider(new ExtendProvider());
         $factory->addProvider(new ReferenceProvider());
+
         return new MetadataRepository($factory, false);
     }
 
@@ -65,9 +68,10 @@ abstract class SubscriberTest extends TestCase
     {
         $tables = $this->em->getConnection()->query('SELECT name FROM sqlite_master WHERE type =\'table\' AND name NOT LIKE \'sqlite_%\';')->fetchAll();
         $tableNames = [];
-        foreach($tables as $table) {
+        foreach ($tables as $table) {
             $tableNames[] = $table['name'];
         }
+
         return $tableNames;
     }
 }

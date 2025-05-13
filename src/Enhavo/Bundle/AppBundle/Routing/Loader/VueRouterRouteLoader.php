@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Routing\Loader;
 
 use Symfony\Component\Config\Loader\FileLoader;
@@ -10,7 +19,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class VueRouterRouteLoader extends FileLoader
 {
-    public function load(mixed $resource, string $type = null): RouteCollection
+    public function load(mixed $resource, ?string $type = null): RouteCollection
     {
         $collection = new RouteCollection();
 
@@ -31,9 +40,9 @@ class VueRouterRouteLoader extends FileLoader
     {
         $ext = pathinfo($resource->getResource(), PATHINFO_EXTENSION);
 
-        if ($ext === 'yaml') {
+        if ('yaml' === $ext) {
             return Yaml::parseFile($resource->getResource());
-        } elseif ($ext === 'json') {
+        } elseif ('json' === $ext) {
             return json_decode(file_get_contents($resource->getResource()), true);
         }
 
@@ -63,16 +72,16 @@ class VueRouterRouteLoader extends FileLoader
 
     private function convertPath($path)
     {
-        $path = preg_replace_callback('/:([0-9A-Za-z_-]+)/', function($matches) {
-            return '{' . $matches[1] . '}';
+        $path = preg_replace_callback('/:([0-9A-Za-z_-]+)/', function ($matches) {
+            return '{'.$matches[1].'}';
         }, $path);
 
         return $path;
     }
 
-    public function supports(mixed $resource, string $type = null)
+    public function supports(mixed $resource, ?string $type = null)
     {
-        if ($type === 'vue') {
+        if ('vue' === $type) {
             return true;
         }
 

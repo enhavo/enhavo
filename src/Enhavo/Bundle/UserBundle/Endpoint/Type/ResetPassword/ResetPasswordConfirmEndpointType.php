@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Endpoint\Type\ResetPassword;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -24,8 +33,7 @@ class ResetPasswordConfirmEndpointType extends AbstractFormEndpointType
         private readonly UserManager $userManager,
         private readonly UserRepository $userRepository,
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     protected function init($options, Request $request, Data $data, Context $context): void
@@ -37,6 +45,7 @@ class ResetPasswordConfirmEndpointType extends AbstractFormEndpointType
             $data->set('message', $this->translator->trans('reset_password.confirm.invalid_token', [], 'EnhavoUserBundle'));
             $context->stop();
             $context->setStatusCode(404);
+
             return;
         }
 
@@ -48,6 +57,7 @@ class ResetPasswordConfirmEndpointType extends AbstractFormEndpointType
     {
         $user = $context->get('targetUser');
         $configuration = $this->provider->getResetPasswordConfirmConfiguration();
+
         return $this->createForm($configuration->getFormClass(), $user, $configuration->getFormOptions());
     }
 
@@ -71,6 +81,7 @@ class ResetPasswordConfirmEndpointType extends AbstractFormEndpointType
     protected function getRedirectUrl($options, Request $request, Data $data, Context $context, FormInterface $form): ?string
     {
         $configuration = $this->provider->getResetPasswordConfirmConfiguration();
+
         return $this->generateUrl($configuration->getRedirectRoute());
     }
 

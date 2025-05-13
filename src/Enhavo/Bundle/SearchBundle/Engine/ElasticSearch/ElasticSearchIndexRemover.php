@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Engine\ElasticSearch;
 
 use Elastica\Client;
@@ -28,7 +37,7 @@ class ElasticSearchIndexRemover
 
     public function removeIndex($resource)
     {
-        if($this->metadataRepository->hasMetadata($resource)) {
+        if ($this->metadataRepository->hasMetadata($resource)) {
             /** @var Metadata $metadata */
             $metadata = $this->metadataRepository->getMetadata($resource);
 
@@ -53,6 +62,7 @@ class ElasticSearchIndexRemover
     private function getIndex()
     {
         $index = $this->client->getIndex($this->indexName);
+
         return $index;
     }
 }
