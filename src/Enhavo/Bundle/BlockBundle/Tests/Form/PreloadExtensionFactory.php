@@ -1,14 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-21
- * Time: 23:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Tests\Form;
 
-use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockCollectionType;
 use PHPUnit\Framework\TestCase;

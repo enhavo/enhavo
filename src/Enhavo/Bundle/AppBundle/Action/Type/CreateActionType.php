@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -8,7 +17,6 @@ use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
-
 
 /**
  * @author gseidel
@@ -19,15 +27,14 @@ class CreateActionType extends AbstractActionType
         private readonly RouterInterface $router,
         private readonly RouteResolverInterface $routeResolver,
         private readonly ResourceExpressionLanguage $expressionLanguage,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $route = $this->expressionLanguage->evaluate($options['route']) ?? $this->routeResolver->getRoute('create', ['api' => false]);
 
-        if ($route === null) {
+        if (null === $route) {
             throw new \Exception('Can\'t find create route, please provide a route over the "route" option');
         }
 
@@ -37,7 +44,6 @@ class CreateActionType extends AbstractActionType
         $data->set('frameKey', $options['frame_key']);
         $data->set('target', $options['target']);
     }
-
 
     public function configureOptions(OptionsResolver $resolver): void
     {

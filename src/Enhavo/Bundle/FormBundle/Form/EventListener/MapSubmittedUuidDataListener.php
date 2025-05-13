@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Form\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -13,8 +22,7 @@ class MapSubmittedUuidDataListener implements EventSubscriberInterface
     public function __construct(
         private readonly ?string $uuidProperty = null,
         private ?PropertyAccessor $propertyAccessor = null,
-    )
-    {
+    ) {
         $this->propertyAccessor = $propertyAccessor ?? new PropertyAccessor();
     }
 
@@ -27,7 +35,7 @@ class MapSubmittedUuidDataListener implements EventSubscriberInterface
 
     public function preSubmit(FormEvent $event): void
     {
-        if ($this->uuidProperty === null) {
+        if (null === $this->uuidProperty) {
             return;
         }
 
@@ -39,7 +47,7 @@ class MapSubmittedUuidDataListener implements EventSubscriberInterface
             if (!array_key_exists($this->uuidProperty, $item)) {
                 $event->getForm()->addError(new FormError('Uuid missing'));
                 break;
-            } else if (empty($item[$this->uuidProperty])) {
+            } elseif (empty($item[$this->uuidProperty])) {
                 $event->getForm()->addError(new FormError('Uuid should not be blank'));
                 break;
             }
@@ -52,7 +60,7 @@ class MapSubmittedUuidDataListener implements EventSubscriberInterface
             if ($uuid && $data) {
                 foreach ($data as $index => $item) {
                     $itemUuid = $this->propertyAccessor->getValue($item, $this->uuidProperty);
-                    if ($itemUuid !== null && $uuid === $itemUuid) {
+                    if (null !== $itemUuid && $uuid === $itemUuid) {
                         $map[$name] = $index;
                         break;
                     }
@@ -66,7 +74,7 @@ class MapSubmittedUuidDataListener implements EventSubscriberInterface
             }
         }
 
-        if (count($map) === 0) {
+        if (0 === count($map)) {
             return;
         }
 
@@ -82,9 +90,9 @@ class MapSubmittedUuidDataListener implements EventSubscriberInterface
         $nextIndex = $max + 1;
 
         foreach ($map as $name => $index) {
-            if ($index === null) {
+            if (null === $index) {
                 $index = $nextIndex;
-                $nextIndex++;
+                ++$nextIndex;
             }
             $map[$name] = $index;
         }

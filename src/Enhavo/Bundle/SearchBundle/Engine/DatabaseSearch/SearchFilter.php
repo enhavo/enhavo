@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 25.08.18
- * Time: 14:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch;
-
 
 class SearchFilter
 {
@@ -19,7 +21,7 @@ class SearchFilter
     /**
      * @var string
      */
-    private $contentClass = null;
+    private $contentClass;
 
     /**
      * @var array
@@ -37,7 +39,7 @@ class SearchFilter
     private $orderDirection;
 
     /**
-     * @var integer
+     * @var int
      */
     private $limit;
 

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: philippsester
- * Date: 17.12.18
- * Time: 12:21
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
@@ -19,23 +22,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MailChimpStorageType extends AbstractStorageType
 {
-
     /** @var MailChimpClient */
     private $client;
 
     /**
      * MailChimpStorageType constructor.
-     * @param MailChimpClient $client
      */
     public function __construct(MailChimpClient $client)
     {
         $this->client = $client;
     }
 
-
     /**
-     * @param SubscriberInterface $subscriber
-     * @param array $options
      * @throws GuzzleException
      * @throws NoGroupException
      */
@@ -54,9 +52,6 @@ class MailChimpStorageType extends AbstractStorageType
     }
 
     /**
-     * @param SubscriberInterface $subscriber
-     * @param array $options
-     * @return bool
      * @throws GuzzleException
      * @throws NoGroupException
      */
@@ -79,12 +74,12 @@ class MailChimpStorageType extends AbstractStorageType
     {
         $resolver->setDefaults([
             'body_parameters' => [
-                'email_address' => 'email'
+                'email_address' => 'email',
             ],
             'groups' => [],
         ]);
         $resolver->setRequired([
-            'server', 'api_key'
+            'server', 'api_key',
         ]);
     }
 
@@ -99,7 +94,7 @@ class MailChimpStorageType extends AbstractStorageType
             }
         }
 
-        if (count($groups) === 0) { // todo: only if group is required in mailchimp api?
+        if (0 === count($groups)) { // todo: only if group is required in mailchimp api?
             throw new NoGroupException('no groups given');
         }
 

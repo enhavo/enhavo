@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 24.04.18
- * Time: 13:47
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Factory;
@@ -34,12 +37,12 @@ class NodeFactory
         /** @var NodeInterface $node */
         $node = new $class();
 
-        if($this->contentFactory) {
+        if ($this->contentFactory) {
             $content = $this->contentFactory->createNew();
             $node->setContent($content);
         }
 
-        if($this->configurationFactory) {
+        if ($this->configurationFactory) {
             $configuration = $this->configurationFactory->createNew();
             $node->setConfiguration($configuration);
         }

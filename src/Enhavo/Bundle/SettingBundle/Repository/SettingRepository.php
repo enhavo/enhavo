@@ -1,9 +1,12 @@
 <?php
-/**
- * SliderRepository.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 15/10/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SettingBundle\Repository;
@@ -12,5 +15,4 @@ use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class SettingRepository extends EntityRepository
 {
-
 }

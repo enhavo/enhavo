@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-02-17
- * Time: 22:32
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Init;
@@ -20,7 +23,6 @@ class InitManager
 
     /**
      * InitManager constructor.
-     * @param CollectorInterface $collector
      */
     public function __construct(CollectorInterface $collector)
     {
@@ -31,7 +33,7 @@ class InitManager
     {
         $io = new Output($output);
         /** @var InitInterface $initializer */
-        foreach($this->collector->getTypes() as $initializer) {
+        foreach ($this->collector->getTypes() as $initializer) {
             $io->writeln('Initializer');
             $initializer->init($io);
         }

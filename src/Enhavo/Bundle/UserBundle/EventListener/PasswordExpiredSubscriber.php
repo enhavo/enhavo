@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\EventListener;
 
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
@@ -17,8 +26,7 @@ class PasswordExpiredSubscriber implements EventSubscriberInterface
     public function __construct(
         private UserManager $userManager,
         private ConfigurationProvider $configurationProvider,
-    )
-    {
+    ) {
     }
 
     public static function getSubscribedEvents(): array
@@ -45,8 +53,8 @@ class PasswordExpiredSubscriber implements EventSubscriberInterface
         $updated = $user->getPasswordUpdatedAt() ? clone $user->getPasswordUpdatedAt() : null;
 
         return
-            $configuration->getPasswordMaxAge() &&
-            (!$updated || $updated->modify(sprintf('+%s', $configuration->getPasswordMaxAge())) < new \DateTime())
+            $configuration->getPasswordMaxAge()
+            && (!$updated || $updated->modify(sprintf('+%s', $configuration->getPasswordMaxAge())) < new \DateTime())
         ;
     }
 }

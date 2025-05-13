@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-02-11
- * Time: 14:21
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Toolbar\Type;
@@ -19,8 +22,7 @@ class IconToolbarWidgetType extends AbstractToolbarWidgetType
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly RouterInterface $router,
-    )
-    {
+    ) {
     }
 
     public function createViewData(array $options, Data $data): void
@@ -33,9 +35,9 @@ class IconToolbarWidgetType extends AbstractToolbarWidgetType
 
     private function getUrl($config)
     {
-        if ($config['url'] !== null) {
+        if (null !== $config['url']) {
             return $config['url'];
-        } elseif($config['route'] !== null) {
+        } elseif (null !== $config['route']) {
             return $this->router->generate($config['route'], $config['route_parameters'] ?? []);
         }
 
@@ -44,7 +46,7 @@ class IconToolbarWidgetType extends AbstractToolbarWidgetType
 
     private function getTarget($config)
     {
-        if(!in_array($config['target'], ['_frame', '_blank', '_self'])) {
+        if (!in_array($config['target'], ['_frame', '_blank', '_self'])) {
             throw new \InvalidArgumentException(sprintf('Target must be _frame, _blank or _self, but "%s" given', $config['target']));
         }
 
@@ -71,7 +73,7 @@ class IconToolbarWidgetType extends AbstractToolbarWidgetType
         ]);
 
         $resolver->setRequired([
-            'icon'
+            'icon',
         ]);
     }
 

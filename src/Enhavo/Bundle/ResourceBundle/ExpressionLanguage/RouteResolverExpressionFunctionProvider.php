@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\ExpressionLanguage;
 
 use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
@@ -9,8 +18,7 @@ class RouteResolverExpressionFunctionProvider implements ResourceExpressionFunct
 {
     public function __construct(
         private readonly RouteResolverInterface $routeResolver,
-    )
-    {
+    ) {
     }
 
     public function getFunctions(): array
@@ -24,7 +32,7 @@ class RouteResolverExpressionFunctionProvider implements ResourceExpressionFunct
                 function ($args, string $name, array $context = []) {
                     return $this->routeResolver->getRoute($name, $context);
                 }
-            )
+            ),
         ];
     }
 }

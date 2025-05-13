@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 18.08.17
- * Time: 15:36
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\Twig;
@@ -16,9 +19,9 @@ class SlugifyExtension extends AbstractExtension
 {
     public function getFilters()
     {
-        return array(
-            new TwigFilter('slugify', array($this, 'render')),
-        );
+        return [
+            new TwigFilter('slugify', [$this, 'render']),
+        ];
     }
 
     public function render($string, $separator = '-')

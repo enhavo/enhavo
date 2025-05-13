@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 14.10.17
- * Time: 13:46
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\EventListener;
@@ -15,7 +18,6 @@ use Doctrine\ORM\Event\PostRemoveEventArgs;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Events;
 use Enhavo\Bundle\MediaBundle\Exception\FileNotFoundException;
-use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
@@ -27,16 +29,17 @@ class DoctrineContentSubscriber implements EventSubscriber
         private readonly StorageInterface $storage,
         private readonly FileNotFoundHandlerInterface $handler,
         private readonly array $fileNotFoundHandlerParameters,
-    ) {}
+    ) {
+    }
 
     public function getSubscribedEvents(): array
     {
-        return array(
+        return [
             Events::postLoad,
             Events::postUpdate,
             Events::postPersist,
             Events::postRemove,
-        );
+        ];
     }
 
     public function postUpdate(PostUpdateEventArgs $args): void

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Security\EntryPoint;
 
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
@@ -18,16 +27,16 @@ class FormAuthenticationEntryPoint implements AuthenticationEntryPointInterface
     public function __construct(
         private RouterInterface $router,
         private ConfigurationProvider $configurationProvider,
-    )
-    {
+    ) {
     }
 
-    public function start(Request $request, AuthenticationException $authException = null): Response
+    public function start(Request $request, ?AuthenticationException $authException = null): Response
     {
         $params = [
-            'redirect' => $request->getRequestUri()
+            'redirect' => $request->getRequestUri(),
         ];
         $route = $this->configurationProvider->getLoginConfiguration()->getRoute();
+
         return new RedirectResponse($this->router->generate($route, $params));
     }
 }

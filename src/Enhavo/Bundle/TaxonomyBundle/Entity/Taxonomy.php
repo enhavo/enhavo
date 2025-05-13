@@ -1,12 +1,24 @@
 <?php
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TaxonomyBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\TaxonomyBundle\Model\TaxonomyInterface;
 
 class Taxonomy implements TaxonomyInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -16,7 +28,7 @@ class Taxonomy implements TaxonomyInterface
     private $name;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      */
     private $terms;
 
@@ -25,22 +37,19 @@ class Taxonomy implements TaxonomyInterface
      */
     public function __construct()
     {
-        $this->terms = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->terms = new ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @param $name
-     */
     public function setName($name)
     {
         $this->name = $name;

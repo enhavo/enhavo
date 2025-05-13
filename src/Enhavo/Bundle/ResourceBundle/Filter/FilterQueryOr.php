@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Filter;
 
 class FilterQueryOr
@@ -11,16 +20,16 @@ class FilterQueryOr
 
     public function addWhere($property, $operator, $value, $joinProperty = null)
     {
-        if ($joinProperty === null) {
+        if (null === $joinProperty) {
             $joinProperty = [];
         } elseif (!is_array($joinProperty)) {
-            $joinProperty = [ $joinProperty ];
+            $joinProperty = [$joinProperty];
         }
         $this->where[] = [
             'property' => $property,
             'operator' => $operator,
             'value' => $value,
-            'joinProperty' => $joinProperty
+            'joinProperty' => $joinProperty,
         ];
 
         return $this;
@@ -28,20 +37,20 @@ class FilterQueryOr
 
     public function removeWhere($property, $operator, $value, $joinProperty = null)
     {
-        if(!$property && !$operator && !$value && !$joinProperty){
+        if (!$property && !$operator && !$value && !$joinProperty) {
             return $this;
         }
-        foreach ($this->where as $index => $where){
-            if($property && $where['property'] !== $property){
+        foreach ($this->where as $index => $where) {
+            if ($property && $where['property'] !== $property) {
                 continue;
             }
-            if($operator && $where['operator'] !== $operator){
+            if ($operator && $where['operator'] !== $operator) {
                 continue;
             }
-            if($value && $where['value'] !== $value){
+            if ($value && $where['value'] !== $value) {
                 continue;
             }
-            if($joinProperty && $where['joinProperty'] !== $joinProperty){
+            if ($joinProperty && $where['joinProperty'] !== $joinProperty) {
                 continue;
             }
             unset($this->where[$index]);

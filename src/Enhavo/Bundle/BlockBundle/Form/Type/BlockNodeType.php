@@ -1,9 +1,12 @@
 <?php
-/**
- * ContainerType.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 23/08/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
@@ -28,7 +31,7 @@ class BlockNodeType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Node::class,
             'label' => 'block.label.container',
             'translation_domain' => 'EnhavoBlockBundle',
@@ -36,7 +39,7 @@ class BlockNodeType extends AbstractType
             'items' => [],
             'add_label' => '',
             'prototype' => true,
-        ));
+        ]);
     }
 
     public function getBlockPrefix()

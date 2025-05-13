@@ -1,13 +1,22 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Command;
 
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
+use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver;
-use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,7 +26,6 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  * Class CreateUserCommand
- * @package Enhavo\Bundle\UserBundle\Command
  *
  * @property $userFactory UserFactory
  */
@@ -30,16 +38,11 @@ class CreateUserCommand extends AbstractUserCommand
         UserRepository $userRepository,
         UserIdentifierProviderResolver $resolver,
         string $userClass,
-        private FactoryInterface $userFactory
-    )
-    {
+        private FactoryInterface $userFactory,
+    ) {
         parent::__construct($userManager, $userRepository, $resolver, $userClass);
     }
 
-
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $definitions = $this->getPropertyDefinitions();
@@ -74,9 +77,6 @@ EOT
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var UserInterface $user */
@@ -85,7 +85,7 @@ EOT
         $this->applyProperties($input, $user);
         $password = $input->getArgument('password');
         $disable = $input->getOption('disable');
-        $superAdmin = (bool)$input->getOption('super-admin');
+        $superAdmin = (bool) $input->getOption('super-admin');
 
         $user->setPlainPassword($password);
         $user->setEnabled(!$disable);
@@ -117,9 +117,6 @@ EOT
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         parent::interact($input, $output);

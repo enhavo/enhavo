@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge;
 
 abstract class AbstractConfigurationMerger
@@ -22,7 +31,6 @@ abstract class AbstractConfigurationMerger
         $beforeConfig = null;
 
         foreach ($configs as $config) {
-
             $extends = $config['extends'] ?? null;
             $overwrite = $config['overwrite'] ?? false;
 
@@ -30,9 +38,9 @@ abstract class AbstractConfigurationMerger
 
             // set class
             if (!array_key_exists('class', $config)) {
-                $config['class'] = $beforeConfig !== null ? $beforeConfig['class'] : $defaultClass;
+                $config['class'] = null !== $beforeConfig ? $beforeConfig['class'] : $defaultClass;
             }
-            
+
             // extends target config
             if (isset($extends)) {
                 if (!array_key_exists($extends, $allConfigs)) {
@@ -48,12 +56,12 @@ abstract class AbstractConfigurationMerger
             }
 
             // extends with same name
-            if ($beforeConfig !== null) {
+            if (null !== $beforeConfig) {
                 if ($this->isCallable($config, $overwrite)) {
                     $config = $config['class']::mergeConfigs($beforeConfig, $config);
                 }
             }
-            
+
             $beforeConfig = $config;
         }
 
@@ -81,7 +89,7 @@ abstract class AbstractConfigurationMerger
 
     private function isCallable($config, bool $overwrite): bool
     {
-        if ($overwrite === true) {
+        if (true === $overwrite) {
             return false;
         }
 

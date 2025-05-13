@@ -1,9 +1,12 @@
 <?php
-/**
- * Article.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 03/08/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ArticleBundle\Entity;
@@ -11,10 +14,10 @@ namespace Enhavo\Bundle\ArticleBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\ArticleBundle\Model\ArticleInterface;
+use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentSubjectTrait;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
-use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\TaxonomyBundle\Model\TermInterface;
 
@@ -60,9 +63,10 @@ class Article extends Content implements ArticleInterface, CommentSubjectInterfa
      * Set picture
      *
      * @param $picture FileInterface|null
+     *
      * @return Article
      */
-    public function setPicture(FileInterface $picture = null)
+    public function setPicture(?FileInterface $picture = null)
     {
         $this->picture = $picture;
 
@@ -82,7 +86,6 @@ class Article extends Content implements ArticleInterface, CommentSubjectInterfa
     /**
      * Set teaser
      *
-     * @param ?string $teaser
      * @return Article
      */
     public function setTeaser(?string $teaser)
@@ -105,17 +108,17 @@ class Article extends Content implements ArticleInterface, CommentSubjectInterfa
     /**
      * Set content
      *
-     * @param ?NodeInterface $content
      * @return Content
      */
-    public function setContent(NodeInterface $content = null)
+    public function setContent(?NodeInterface $content = null)
     {
         $this->content = $content;
-        if($content) {
+        if ($content) {
             $content->setType(NodeInterface::TYPE_ROOT);
             $content->setProperty('content');
             $content->setResource($this);
         }
+
         return $this;
     }
 
@@ -132,8 +135,6 @@ class Article extends Content implements ArticleInterface, CommentSubjectInterfa
     /**
      * Add category
      *
-     * @param TermInterface $category
-     *
      * @return Article
      */
     public function addCategory(TermInterface $category)
@@ -145,8 +146,6 @@ class Article extends Content implements ArticleInterface, CommentSubjectInterfa
 
     /**
      * Remove category
-     *
-     * @param TermInterface $category
      */
     public function removeCategory(TermInterface $category)
     {
@@ -166,8 +165,6 @@ class Article extends Content implements ArticleInterface, CommentSubjectInterfa
     /**
      * Add tag
      *
-     * @param TermInterface $tag
-     *
      * @return Article
      */
     public function addTag(TermInterface $tag)
@@ -179,8 +176,6 @@ class Article extends Content implements ArticleInterface, CommentSubjectInterfa
 
     /**
      * Remove tag
-     *
-     * @param TermInterface $tag
      */
     public function removeTag(TermInterface $tag)
     {

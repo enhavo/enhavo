@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 03.05.18
- * Time: 19:02
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\NavItem;
@@ -64,7 +67,6 @@ abstract class AbstractNavItemType extends AbstractType implements NavItemTypeIn
 
     public function configureOptions(OptionsResolver $resolver)
     {
-
     }
 
     public static function getName(): ?string

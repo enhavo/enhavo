@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Action;
 
 use Enhavo\Bundle\AppBundle\Action\Type\OpenActionType;
@@ -19,7 +28,7 @@ class StatsActionType extends AbstractActionType
             'route' => 'enhavo_newsletter_admin_newsletter_stats',
             'frame_key' => 'stats-view',
             'target' => '_frame',
-            'append_id' => true
+            'append_id' => true,
         ]);
     }
 
@@ -27,9 +36,10 @@ class StatsActionType extends AbstractActionType
     {
         if (!$resource instanceof NewsletterInterface) {
             return false;
-        } elseif($resource->getState() === NewsletterInterface::STATE_CREATED) {
+        } elseif (NewsletterInterface::STATE_CREATED === $resource->getState()) {
             return false;
         }
+
         return $this->parent->isEnabled($options, $resource);
     }
 

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-10-26
- * Time: 17:56
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Comment;
@@ -28,8 +31,6 @@ class AdminConfirmUrlGenerator implements ConfirmUrlGeneratorInterface
 
     /**
      * AdminConfirmUrlGenerator constructor.
-     * @param RouterInterface $router
-     * @param Router $entityRouter
      */
     public function __construct(RouterInterface $router, Router $entityRouter)
     {
@@ -38,17 +39,16 @@ class AdminConfirmUrlGenerator implements ConfirmUrlGeneratorInterface
     }
 
     /**
-     * @param CommentInterface $comment
      * @return string
      */
     public function generate(CommentInterface $comment)
     {
         $subjectUrl = $this->entityRouter->generate($comment->getSubject(), [], UrlGeneratorInterface::ABSOLUTE_PATH, 'view');
         $commentListUrl = $this->router->generate('enhavo_comment_admin_comment_index', [
-            'id' => $comment->getSubject()->getThread()->getId()
+            'id' => $comment->getSubject()->getThread()->getId(),
         ]);
         $commentDetailUrl = $this->router->generate('enhavo_comment_admin_comment_update', [
-            'id' => $comment->getId()
+            'id' => $comment->getId(),
         ]);
 
         $state = [
@@ -57,26 +57,26 @@ class AdminConfirmUrlGenerator implements ConfirmUrlGeneratorInterface
                     'url' => $subjectUrl,
                     'id' => '1',
                     'storage' => [
-                        ['key' => 'comment-view', 'value' => 2]
-                    ]
+                        ['key' => 'comment-view', 'value' => 2],
+                    ],
                 ],
                 [
                     'url' => $commentListUrl,
                     'id' => '2',
                     'storage' => [
-                        ['key' => 'edit-view', 'value' => 3]
-                    ]
+                        ['key' => 'edit-view', 'value' => 3],
+                    ],
                 ],
                 [
                     'url' => $commentDetailUrl,
-                    'id' => '3'
-                ]
+                    'id' => '3',
+                ],
             ],
-            'storage' => []
+            'storage' => [],
         ];
 
         return $this->router->generate('enhavo_app_index', [
-            'state' => StateEncoder::encode($state)
+            'state' => StateEncoder::encode($state),
         ], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 }

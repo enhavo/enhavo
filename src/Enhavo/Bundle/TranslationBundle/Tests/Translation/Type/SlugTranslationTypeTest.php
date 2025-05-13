@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation\Type;
 
@@ -11,11 +19,11 @@ use PHPUnit\Framework\TestCase;
 
 class SlugTranslationTypeTest extends TestCase
 {
-
     private function createDependencies()
     {
         /** @var TextTranslator|MockObject $textTranslator */
         $textTranslator = $this->getMockBuilder(TextTranslator::class)->disableOriginalConstructor()->getMock();
+
         return $textTranslator;
     }
 
@@ -31,8 +39,6 @@ class SlugTranslationTypeTest extends TestCase
 
     public function testGetParentType()
     {
-
         $this->assertEquals(TextTranslationType::class, SlugTranslationType::getParentType());
     }
-
 }

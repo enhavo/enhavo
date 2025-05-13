@@ -1,9 +1,12 @@
 <?php
-/**
- * NewsletterMenuBuilder.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 21/09/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Menu;
@@ -21,7 +24,7 @@ class NewsletterMenu extends AbstractMenuType
             'label' => 'newsletter.label.newsletter',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'route' => 'enhavo_newsletter_admin_newsletter_index',
-            'permission' => 'ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX'
+            'permission' => 'ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_INDEX',
         ]);
     }
 

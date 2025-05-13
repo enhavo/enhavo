@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-07-08
- * Time: 16:00
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Template;
@@ -12,7 +15,7 @@ use Psr\Container\ContainerInterface;
 
 /**
  * Trait TemplateControllerTrait
- * @package Enhavo\Bundle\AppBundle\Controller
+ *
  * @property ContainerInterface $container
  */
 trait TemplateResolverTrait

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\VueFormBundle\Form;
 
 use Symfony\Component\Form\FormView;
@@ -57,7 +66,7 @@ class VueForm
     {
         $data = [];
         foreach ($returnData as $key => $value) {
-            if (in_array($key, $fields) || $key == 'name') {
+            if (in_array($key, $fields) || 'name' == $key) {
                 $data[$key] = $value;
             }
         }

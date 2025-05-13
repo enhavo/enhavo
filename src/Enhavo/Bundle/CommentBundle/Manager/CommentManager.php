@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\CommentBundle\Manager;
 
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
@@ -15,27 +24,25 @@ class CommentManager
         private readonly array $subjects,
         private readonly TranslatorInterface $translator,
         private readonly ResourceManager $resourceManager,
-    )
-    {
-        $this->propertyAccessor = new PropertyAccessor;
+    ) {
+        $this->propertyAccessor = new PropertyAccessor();
     }
 
     public function getSubjectLabel(CommentInterface $comment): ?string
     {
         $config = $this->getSubjectConfig($comment->getSubject());
 
-        if ($config === null) {
+        if (null === $config) {
             return '';
         }
 
-
         $label = null;
         if (isset($config['label'])) {
-            $label =  $this->translator->trans($config['label'], [], $config['translation_domain']);
+            $label = $this->translator->trans($config['label'], [], $config['translation_domain']);
         } else {
             $metadata = $this->resourceManager->getMetadata($comment->getSubject());
             if ($metadata) {
-                $label =  $this->translator->trans($metadata->getLabel(), [], $metadata->getTranslationDomain());
+                $label = $this->translator->trans($metadata->getLabel(), [], $metadata->getTranslationDomain());
             }
         }
 
@@ -46,7 +53,7 @@ class CommentManager
     {
         $config = $this->getSubjectConfig($comment->getSubject());
 
-        if ($config === null) {
+        if (null === $config) {
             return '';
         }
 
@@ -63,7 +70,7 @@ class CommentManager
         }
 
         $parent = get_parent_class($subject);
-        if ($parent !== false) {
+        if (false !== $parent) {
             return $this->getSubjectConfig($parent);
         }
 

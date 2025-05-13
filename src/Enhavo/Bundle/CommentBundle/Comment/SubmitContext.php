@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-10-24
- * Time: 13:25
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Comment;
-
 
 use Symfony\Component\Form\FormInterface;
 
@@ -19,14 +21,12 @@ class SubmitContext
     private $form;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $insert;
 
     /**
      * SubmitContext constructor.
-     * @param FormInterface $form
-     * @param bool $insert
      */
     public function __construct(FormInterface $form, bool $insert)
     {
@@ -34,17 +34,11 @@ class SubmitContext
         $this->insert = $insert;
     }
 
-    /**
-     * @return FormInterface
-     */
     public function getForm(): FormInterface
     {
         return $this->form;
     }
 
-    /**
-     * @return bool
-     */
     public function isInsert(): bool
     {
         return $this->insert;

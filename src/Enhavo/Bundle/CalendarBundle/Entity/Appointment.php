@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\CalendarBundle\Entity;
 
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
+use Enhavo\Bundle\CalendarBundle\Model\AppointmentInterface;
 use Enhavo\Bundle\ContentBundle\Entity\Content;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
-use Enhavo\Bundle\CalendarBundle\Model\AppointmentInterface;
 
 /**
  * Appointment
@@ -88,7 +97,7 @@ class Appointment extends Content implements AppointmentInterface
     protected $importerName;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $notImporterHandled;
 
@@ -167,17 +176,17 @@ class Appointment extends Content implements AppointmentInterface
     /**
      * Set content
      *
-     * @param NodeInterface $content
      * @return Appointment
      */
-    public function setContent(NodeInterface $content = null)
+    public function setContent(?NodeInterface $content = null)
     {
         $this->content = $content;
-        if($content) {
+        if ($content) {
             $content->setType(NodeInterface::TYPE_ROOT);
             $content->setProperty('content');
             $content->setResource($this);
         }
+
         return $this;
     }
 
@@ -199,10 +208,7 @@ class Appointment extends Content implements AppointmentInterface
         return $this->picture;
     }
 
-    /**
-     * @param FileInterface|null $picture
-     */
-    public function setPicture(FileInterface $picture = null)
+    public function setPicture(?FileInterface $picture = null)
     {
         $this->picture = $picture;
     }
@@ -211,11 +217,11 @@ class Appointment extends Content implements AppointmentInterface
      */
     private $condition;
 
-
     /**
      * Set externalId
      *
      * @param string $externalId
+     *
      * @return Appointment
      */
     public function setExternalId($externalId)
@@ -239,6 +245,7 @@ class Appointment extends Content implements AppointmentInterface
      * Set condition
      *
      * @param string $condition
+     *
      * @return Appointment
      */
     public function setCondition($condition)
@@ -262,6 +269,7 @@ class Appointment extends Content implements AppointmentInterface
      * Set locationLongitude
      *
      * @param string $locationLongitude
+     *
      * @return Appointment
      */
     public function setLocationLongitude($locationLongitude)
@@ -285,6 +293,7 @@ class Appointment extends Content implements AppointmentInterface
      * Set locationLatitude
      *
      * @param string $locationLatitude
+     *
      * @return Appointment
      */
     public function setLocationLatitude($locationLatitude)
@@ -308,6 +317,7 @@ class Appointment extends Content implements AppointmentInterface
      * Set locationName
      *
      * @param string $locationName
+     *
      * @return Appointment
      */
     public function setLocationName($locationName)
@@ -331,6 +341,7 @@ class Appointment extends Content implements AppointmentInterface
      * Set locationCity
      *
      * @param string $locationCity
+     *
      * @return Appointment
      */
     public function setLocationCity($locationCity)
@@ -354,6 +365,7 @@ class Appointment extends Content implements AppointmentInterface
      * Set locationCountry
      *
      * @param string $locationCountry
+     *
      * @return Appointment
      */
     public function setLocationCountry($locationCountry)
@@ -377,6 +389,7 @@ class Appointment extends Content implements AppointmentInterface
      * Set locationStreet
      *
      * @param string $locationStreet
+     *
      * @return Appointment
      */
     public function setLocationStreet($locationStreet)
@@ -400,6 +413,7 @@ class Appointment extends Content implements AppointmentInterface
      * Set locationZip
      *
      * @param string $locationZip
+     *
      * @return Appointment
      */
     public function setLocationZip($locationZip)
@@ -423,6 +437,7 @@ class Appointment extends Content implements AppointmentInterface
      * Set repeatRule
      *
      * @param string $repeatRule
+     *
      * @return Appointment
      */
     public function setRepeatRule($repeatRule)
@@ -446,6 +461,7 @@ class Appointment extends Content implements AppointmentInterface
      * Set importerName
      *
      * @param string $importerName
+     *
      * @return Appointment
      */
     public function setImporterName($importerName)
@@ -468,7 +484,8 @@ class Appointment extends Content implements AppointmentInterface
     /**
      * Set notImporterHandled
      *
-     * @param boolean $notImporterHandled
+     * @param bool $notImporterHandled
+     *
      * @return Appointment
      */
     public function setNotImporterHandled($notImporterHandled)
@@ -481,7 +498,7 @@ class Appointment extends Content implements AppointmentInterface
     /**
      * Get notImporterHandled
      *
-     * @return boolean
+     * @return bool
      */
     public function getNotImporterHandled()
     {

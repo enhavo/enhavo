@@ -1,7 +1,12 @@
 <?php
-/**
- * @author blutze-media
- * @since 2021-09-22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
@@ -9,42 +14,29 @@ namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
 class PhpFunction
 {
     public function __construct(
-        private string  $name,
-        private string  $visibility,
-        private array   $args,
-        private array   $body,
+        private string $name,
+        private string $visibility,
+        private array $args,
+        private array $body,
         private ?string $returns,
-    )
-    {
+    ) {
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getVisibility(): string
     {
         return $this->visibility;
     }
 
-    /**
-     * @return array
-     */
     public function getArgs(): array
     {
         return $this->args;
     }
 
-    /**
-     * @return array
-     */
     public function getBody(): array
     {
         return $this->body;
@@ -55,9 +47,6 @@ class PhpFunction
         return implode(sprintf("\n%s", str_repeat(' ', $indentation)), $this->body);
     }
 
-    /**
-     * @return string
-     */
     public function getReturnsString(): string
     {
         return $this->returns ? sprintf(': %s', $this->returns) : '';
@@ -72,5 +61,4 @@ class PhpFunction
 
         return implode(', ', $strings);
     }
-
 }

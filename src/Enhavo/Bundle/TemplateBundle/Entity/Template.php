@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: philippsester
- * Date: 24.05.19
- * Time: 19:01
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TemplateBundle\Entity;
@@ -57,7 +60,7 @@ class Template implements Routeable
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getCode()
     {
@@ -67,17 +70,17 @@ class Template implements Routeable
     /**
      * Set content
      *
-     * @param NodeInterface $content
      * @return Template
      */
-    public function setContent(NodeInterface $content = null)
+    public function setContent(?NodeInterface $content = null)
     {
         $this->content = $content;
-        if($content) {
+        if ($content) {
             $content->setType(NodeInterface::TYPE_ROOT);
             $content->setProperty('content');
             $content->setResource($this);
         }
+
         return $this;
     }
 
@@ -91,33 +94,21 @@ class Template implements Routeable
         return $this->content;
     }
 
-    /**
-     * @return RouteInterface
-     */
     public function getRoute(): ?RouteInterface
     {
         return $this->route;
     }
 
-    /**
-     * @param RouteInterface $route
-     */
     public function setRoute(?RouteInterface $route): void
     {
         $this->route = $route;
     }
 
-    /**
-     * @return \Enhavo\Bundle\TemplateBundle\Template\Template
-     */
     public function getTemplate(): \Enhavo\Bundle\TemplateBundle\Template\Template
     {
         return $this->template;
     }
 
-    /**
-     * @param \Enhavo\Bundle\TemplateBundle\Template\Template $template
-     */
     public function setTemplate(\Enhavo\Bundle\TemplateBundle\Template\Template $template): void
     {
         $this->template = $template;

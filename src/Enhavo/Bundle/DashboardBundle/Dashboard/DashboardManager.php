@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-21
- * Time: 16:55
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DashboardBundle\Dashboard;
@@ -17,31 +20,31 @@ class DashboardManager
         private readonly FactoryInterface $factory,
         private readonly AuthorizationCheckerInterface $checker,
         private readonly array $configuration,
-    )
-    {
+    ) {
     }
 
     public function createViewData(): array
     {
         $data = [];
         $dashboardWidgets = $this->getDashboardWidgets($this->configuration);
-        foreach($dashboardWidgets as $dashboardWidget) {
+        foreach ($dashboardWidgets as $dashboardWidget) {
             $data[] = $dashboardWidget->createViewData();
         }
+
         return $data;
     }
 
     private function getDashboardWidgets(array $configuration): array
     {
         $dashboardWidgets = [];
-        foreach($configuration as $key => $options) {
+        foreach ($configuration as $key => $options) {
             $dashboardWidget = $this->factory->create($options, $key);
 
             if (!$dashboardWidget->isEnabled()) {
                 continue;
             }
 
-            if ($dashboardWidget->getPermission() !== null && !$this->checker->isGranted($dashboardWidget->getPermission())) {
+            if (null !== $dashboardWidget->getPermission() && !$this->checker->isGranted($dashboardWidget->getPermission())) {
                 continue;
             }
 

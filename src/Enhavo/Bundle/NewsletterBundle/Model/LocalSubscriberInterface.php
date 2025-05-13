@@ -1,16 +1,18 @@
 <?php
+
 /*
- * LocalSubscriberInterface.php
+ * This file is part of the enhavo package.
  *
- * @since 07.09.20, 16:33
- * @author blutze
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Model;
 
 /**
  * Interface LocalSubscriberInterface
- * @package Enhavo\Bundle\NewsletterBundle\Model
  *
  * @method getGroups() ArrayCollection|Collection
  */
@@ -44,7 +46,6 @@ interface LocalSubscriberInterface extends GroupAwareInterface
 
     /**
      * @param string $key
-     *
      */
     public function setSubscription($key);
 
@@ -53,15 +54,7 @@ interface LocalSubscriberInterface extends GroupAwareInterface
      */
     public function getSubscription();
 
-    /**
-     * @return string|null
-     */
     public function getToken(): ?string;
 
-    /**
-     * @param string|null $token
-     */
     public function setToken(?string $token): void;
-
-
 }

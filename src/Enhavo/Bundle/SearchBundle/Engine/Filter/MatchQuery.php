@@ -1,25 +1,27 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 29.08.18
- * Time: 18:48
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Engine\Filter;
 
-
 class MatchQuery implements QueryInterface
 {
-    const OPERATOR_EQUAL = '=';
-    const OPERATOR_GREATER = '>';
-    const OPERATOR_LESS = '<';
-    const OPERATOR_GREATER_EQUAL = '>=';
-    const OPERATOR_LESS_EQUAL = '<=';
-    const OPERATOR_NOT = '!=';
+    public const OPERATOR_EQUAL = '=';
+    public const OPERATOR_GREATER = '>';
+    public const OPERATOR_LESS = '<';
+    public const OPERATOR_GREATER_EQUAL = '>=';
+    public const OPERATOR_LESS_EQUAL = '<=';
+    public const OPERATOR_NOT = '!=';
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $value;
 

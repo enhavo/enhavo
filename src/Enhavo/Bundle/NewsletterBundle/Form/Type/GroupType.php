@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -11,22 +20,22 @@ class GroupType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, array(
+        $builder->add('name', TextType::class, [
             'label' => 'group.label.name',
-            'translation_domain' => 'EnhavoNewsletterBundle'
-        ));
+            'translation_domain' => 'EnhavoNewsletterBundle',
+        ]);
 
-        $builder->add('code', TextType::class, array(
+        $builder->add('code', TextType::class, [
             'label' => 'group.label.code',
-            'translation_domain' => 'EnhavoNewsletterBundle'
-        ));
+            'translation_domain' => 'EnhavoNewsletterBundle',
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\NewsletterBundle\Entity\Group'
-        ));
+        $resolver->setDefaults([
+            'data_class' => 'Enhavo\Bundle\NewsletterBundle\Entity\Group',
+        ]);
     }
 
     public function getBlockPrefix()

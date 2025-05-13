@@ -1,26 +1,34 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Fixtures\Fixtures;
 
-use Enhavo\Bundle\CommentBundle\Exception\NotFoundException;
 use App\Fixtures\AbstractFixture;
+use Enhavo\Bundle\CommentBundle\Exception\NotFoundException;
 use Enhavo\Bundle\NavigationBundle\Factory\NodeFactory;
+use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\Resolver\NodeResolver;
+use Enhavo\Bundle\PageBundle\Entity\Page;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class NavigationFixture extends AbstractFixture
 {
     private $propertyAccessor;
 
-    function __construct()
+    public function __construct()
     {
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
-    /**
-     * @inheritdoc
-     */
-    function create($args)
+    public function create($args)
     {
         $navigation = $this->container->get('enhavo_navigation.factory.navigation')->createNew();
         $navigation->setName($args['name']);
@@ -29,18 +37,17 @@ class NavigationFixture extends AbstractFixture
         $this->addNodes($navigation, $args['content']);
 
         $this->translate($navigation);
+
         return $navigation;
     }
 
-    function addNodes($resource, $content)
+    public function addNodes($resource, $content)
     {
         foreach ($content as $item) {
-
             $node = null;
             if (isset($item['content'])) {
                 $node = $this->createNode(['type' => $item['type']]);
                 $this->addNodes($node, $item['content']);
-
             } else {
                 $node = $this->createNode($item);
             }
@@ -48,8 +55,7 @@ class NavigationFixture extends AbstractFixture
             if ($node) {
                 if (method_exists($resource, 'addNode')) {
                     $resource->addNode($node);
-
-                } else if (method_exists($resource, 'addChild')) {
+                } elseif (method_exists($resource, 'addChild')) {
                     $resource->addChild($node);
                 }
             }
@@ -57,10 +63,9 @@ class NavigationFixture extends AbstractFixture
     }
 
     /**
-     * @param array $item
-     * @return \Enhavo\Bundle\NavigationBundle\Model\NodeInterface|null
+     * @return NodeInterface|null
      */
-    function createNode(array $item)
+    public function createNode(array $item)
     {
         $type = $item['type'];
         unset($item['type']);
@@ -73,15 +78,16 @@ class NavigationFixture extends AbstractFixture
             $factory = $resolver->resolveFactory($type);
             $node = $factory->createNew();
         } catch (\Exception $ex) {
-            print_r($ex->getMessage());echo PHP_EOL;die;
+            print_r($ex->getMessage());
+            echo PHP_EOL;
+            exit;
         }
 
         if ($node) {
-
-            if ($type == 'page' && isset($item['link'])) {
+            if ('page' == $type && isset($item['link'])) {
                 $page = $this->getPage($item['link']);
                 if (!$page) {
-                    throw new NotFoundException('Page with name"' . $item['link'] . '" was not found"');
+                    throw new NotFoundException('Page with name"'.$item['link'].'" was not found"');
                 }
                 $node->setContent($page);
             }
@@ -108,30 +114,23 @@ class NavigationFixture extends AbstractFixture
     }
 
     /**
-     * @param $slug
-     * @return \Enhavo\Bundle\PageBundle\Entity\Page|object|null
+     * @return Page|object|null
      */
-    function getPage($slug)
+    public function getPage($slug)
     {
         $page = $this->manager->getRepository('EnhavoPageBundle:Page')->findOneBy([
-            'slug' => $slug
+            'slug' => $slug,
         ]);
 
         return $page;
     }
 
-    /**
-     * @inheritdoc
-     */
-    function getName()
+    public function getName()
     {
         return 'Navigation';
     }
 
-    /**
-     * @inheritdoc
-     */
-    function getOrder()
+    public function getOrder()
     {
         return 30;
     }

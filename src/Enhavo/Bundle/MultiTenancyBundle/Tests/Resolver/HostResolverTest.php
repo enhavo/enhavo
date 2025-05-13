@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\MultiTenancyBundle\Tests\Resolver;
 
@@ -19,6 +27,7 @@ class HostResolverTest extends TestCase
         $dependencies->provider = $this->createMock(ProviderInterface::class);
         $dependencies->requestStack = $this->createMock(RequestStack::class);
         $dependencies->request = $this->createMock(Request::class);
+
         return $dependencies;
     }
 

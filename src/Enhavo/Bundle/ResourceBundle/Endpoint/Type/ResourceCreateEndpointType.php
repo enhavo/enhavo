@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -23,8 +32,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
         private readonly VueForm $vueForm,
         private readonly RouteResolverInterface $routeResolver,
         private readonly ResourceExpressionLanguage $expressionLanguage,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -55,13 +63,13 @@ class ResourceCreateEndpointType extends AbstractEndpointType
                     $form = $input->createForm($resource);
 
                     $redirectRoute = $this->routeResolver->getRoute('update', ['api' => false]) ?? $options['update_route'];
-                    if ($redirectRoute === null) {
+                    if (null === $redirectRoute) {
                         throw new \Exception('Can\'t find update route, please provide a route over the "update_route" option');
                     }
                     $redirectRouteParameters = array_merge(['id' => $resource->getId()], $this->expressionLanguage->evaluateArray($options['update_route_parameters']));
 
-                    $apiRoute = $this->routeResolver->getRoute('update', ['api' => true])  ?? $options['update_api_route'];
-                    if ($apiRoute === null) {
+                    $apiRoute = $this->routeResolver->getRoute('update', ['api' => true]) ?? $options['update_api_route'];
+                    if (null === $apiRoute) {
                         throw new \Exception('Can\'t find update api route, please provide a route over the "update_api_route" option');
                     }
                     $apiRouteParameters = array_merge(['id' => $resource->getId()], $this->expressionLanguage->evaluateArray($options['update_api_route_parameters']));

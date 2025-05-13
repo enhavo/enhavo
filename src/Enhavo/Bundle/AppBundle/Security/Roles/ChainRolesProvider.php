@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Security\Roles;
 
 class ChainRolesProvider implements RolesProvider
@@ -11,7 +20,7 @@ class ChainRolesProvider implements RolesProvider
 
     public function addProvider(RolesProvider $rolesProvider)
     {
-        $this->rolesProviders []= $rolesProvider;
+        $this->rolesProviders[] = $rolesProvider;
     }
 
     /**
@@ -20,7 +29,7 @@ class ChainRolesProvider implements RolesProvider
     public function getRoles()
     {
         $roles = [];
-        foreach($this->rolesProviders as $rolesProvider) {
+        foreach ($this->rolesProviders as $rolesProvider) {
             $roles = array_merge($roles, $rolesProvider->getRoles());
         }
 

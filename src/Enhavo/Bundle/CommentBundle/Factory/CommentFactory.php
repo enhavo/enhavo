@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-10-26
- * Time: 18:16
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Factory;
@@ -20,9 +23,6 @@ class CommentFactory extends Factory
      */
     private $threadRepository;
 
-    /**
-     * @param FilterRepositoryInterface $repository
-     */
     public function setThreadRepository(FilterRepositoryInterface $repository)
     {
         $this->threadRepository = $repository;
@@ -31,12 +31,13 @@ class CommentFactory extends Factory
     public function createWithThreadId($threadId)
     {
         $thread = $this->threadRepository->find($threadId);
-        if($thread === null) {
+        if (null === $thread) {
             throw NotFoundException::createNoThreadException($threadId);
         }
         /** @var CommentInterface $comment */
         $comment = $this->createNew();
         $comment->setThread($thread);
+
         return $comment;
     }
 }

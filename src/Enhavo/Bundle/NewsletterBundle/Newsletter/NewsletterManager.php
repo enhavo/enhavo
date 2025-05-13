@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 
@@ -23,6 +31,7 @@ use Twig\Environment;
  * NewsletterManager.php
  *
  * @since 05/07/16
+ *
  * @author gseidel
  */
 class NewsletterManager
@@ -38,12 +47,11 @@ class NewsletterManager
         private readonly ProviderInterface $provider,
         private readonly NormalizerInterface $normalizer,
         private readonly string $from,
-        private readonly array $templates
+        private readonly array $templates,
     ) {
     }
 
     /**
-     * @param NewsletterInterface $newsletter
      * @throws SendException
      */
     public function prepare(NewsletterInterface $newsletter): void
@@ -71,10 +79,7 @@ class NewsletterManager
     public function send(NewsletterInterface $newsletter, $limit = null)
     {
         if (!$newsletter->isPrepared()) {
-            throw new SendException(sprintf(
-                'Newsletter with id "%s" is not prepared yet. Prepare the newsletter first before sending',
-                $newsletter->getId())
-            );
+            throw new SendException(sprintf('Newsletter with id "%s" is not prepared yet. Prepare the newsletter first before sending', $newsletter->getId()));
         }
 
         if ($newsletter->isSent()) {
@@ -95,7 +100,7 @@ class NewsletterManager
                 $this->sendNewsletter($receiver);
                 $receiver->setSentAt(new \DateTime());
                 $this->em->flush();
-                $mailsSent++;
+                ++$mailsSent;
             }
         }
 
@@ -112,6 +117,7 @@ class NewsletterManager
             $newsletter->setFinishAt(new \DateTime());
             $this->em->flush();
         }
+
         return $mailsSent;
     }
 
@@ -154,9 +160,10 @@ class NewsletterManager
     public function renderPreview(NewsletterInterface $newsletter): string
     {
         $receivers = $this->provider->getTestReceivers($newsletter);
-        foreach($receivers as $receiver) {
+        foreach ($receivers as $receiver) {
             $receiver->setNewsletter($newsletter);
         }
+
         return $this->render($receivers[0]);
     }
 
@@ -197,19 +204,21 @@ class NewsletterManager
 
     public function getTemplate(?string $key): string
     {
-        if ($key === null) {
-            if (count($this->templates) === 1) {
+        if (null === $key) {
+            if (1 === count($this->templates)) {
                 $key = array_keys($this->templates)[0];
+
                 return $this->templates[$key]['template'];
             }
             throw new \Exception(sprintf('No template found for key "%s"', $key));
         }
+
         return $this->templates[$key]['template'];
     }
 
     public function update(NewsletterInterface $newsletter): void
     {
-        if ($newsletter->getSlug() === null) {
+        if (null === $newsletter->getSlug()) {
             $newsletter->setSlug(Slugifier::slugify($newsletter->getSubject()));
         }
     }

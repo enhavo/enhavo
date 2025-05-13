@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Index\Metadata;
 
 use Enhavo\Bundle\SearchBundle\Tests\Mock\ModelMock;
@@ -22,8 +31,8 @@ class IndexAttributeDriverTest extends TestCase
                 'text' => [
                     'property' => 'text',
                     'type' => 'text',
-                ]
-            ]
+                ],
+            ],
         ], $result);
     }
 }

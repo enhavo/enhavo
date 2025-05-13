@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Form\EventListener;
 
 use Enhavo\Bundle\UserBundle\Model\Credentials;
@@ -14,8 +23,7 @@ class CredentialsEventSubscriber implements EventSubscriberInterface
     public function __construct(
         private RequestStack $requestStack,
         private CsrfTokenManager $tokenManager,
-    )
-    {
+    ) {
     }
 
     public static function getSubscribedEvents(): array
@@ -32,8 +40,8 @@ class CredentialsEventSubscriber implements EventSubscriberInterface
 
         /** @var Credentials $credentials */
         $credentials = $event->getData();
-        if ($credentials === null) {
-            $credentials = new $dataClass;
+        if (null === $credentials) {
+            $credentials = new $dataClass();
         }
 
         $credentials->setCsrfToken($this->getCsrfToken());
@@ -47,6 +55,7 @@ class CredentialsEventSubscriber implements EventSubscriberInterface
     {
         /** @var Credentials $credentials */
         $credentials = $this->requestStack->getSession()->get('_security.credentials', null);
+
         return null === $credentials ? '' : $credentials->getUserIdentifier();
     }
 
@@ -54,6 +63,7 @@ class CredentialsEventSubscriber implements EventSubscriberInterface
     {
         /** @var Credentials $credentials */
         $credentials = $this->requestStack->getSession()->get('_security.credentials', null);
+
         return null !== $credentials && $credentials->isRememberMe();
     }
 

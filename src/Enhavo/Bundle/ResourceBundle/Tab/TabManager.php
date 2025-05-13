@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-02-19
- * Time: 02:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Tab;
@@ -17,8 +20,7 @@ class TabManager
     public function __construct(
         private readonly AuthorizationCheckerInterface $checker,
         private readonly FactoryInterface $tabFactory,
-    )
-    {
+    ) {
     }
 
     /** @return Tab[] */
@@ -33,7 +35,7 @@ class TabManager
                 continue;
             }
 
-            if ($tab->getPermission($input) !== null && !$this->checker->isGranted($tab->getPermission($input))) {
+            if (null !== $tab->getPermission($input) && !$this->checker->isGranted($tab->getPermission($input))) {
                 continue;
             }
 

@@ -1,9 +1,12 @@
 <?php
-/**
- * CalendarMenuBuilder.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 21/09/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CalendarBundle\Menu;
@@ -21,7 +24,7 @@ class CalendarMenu extends AbstractMenuType
             'label' => 'label.calendar',
             'translation_domain' => 'EnhavoCalendarBundle',
             'route' => 'enhavo_calendar_admin_appointment_index',
-            'permission' => 'ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX'
+            'permission' => 'ROLE_ENHAVO_CALENDAR_APPOINTMENT_INDEX',
         ]);
     }
 

@@ -1,19 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-04
- * Time: 10:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Type\DuplicateActionType;
+use Enhavo\Bundle\ResourceBundle\Action\Action;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
-use Enhavo\Bundle\ResourceBundle\Tests\Mock\ResourceMock;
-use Enhavo\Bundle\ResourceBundle\Action\Action;
 use Enhavo\Bundle\ResourceBundle\Tests\Action\Type\BaseActionTypeFactoryTrait;
+use Enhavo\Bundle\ResourceBundle\Tests\Mock\ResourceMock;
 use Enhavo\Bundle\ResourceBundle\Tests\Mock\RouterMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -33,6 +36,7 @@ class DuplicateActionTypeTest extends TestCase
         $dependencies->router = new RouterMock();
         $dependencies->routeResolver = $this->getMockBuilder(RouteResolverInterface::class)->getMock();
         $dependencies->expressionLanguage = new ResourceExpressionLanguage();
+
         return $dependencies;
     }
 
@@ -57,9 +61,8 @@ class DuplicateActionTypeTest extends TestCase
         $action = new Action($type, [
             $this->createBaseActionType($this->createBaseActionTypeDependencies()),
             $this->createUrlActionType($this->createUrlActionTypeDependencies()),
-
         ], [
-            'route' => 'duplicate_route'
+            'route' => 'duplicate_route',
         ]);
 
         $viewData = $action->createViewData(new ResourceMock(1));

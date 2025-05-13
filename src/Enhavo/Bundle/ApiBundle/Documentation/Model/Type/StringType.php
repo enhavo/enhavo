@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model\Type;
 
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Documentation;
@@ -10,8 +19,7 @@ class StringType
     public function __construct(
         private array &$data,
         private $parent,
-    )
-    {
+    ) {
         $this->data['type'] = 'string';
     }
 

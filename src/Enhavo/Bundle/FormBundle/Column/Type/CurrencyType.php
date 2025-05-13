@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 02.02.16
- * Time: 11:10
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Column\Type;
@@ -17,9 +20,8 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 class CurrencyType extends AbstractColumnType
 {
     public function __construct(
-        private readonly CurrencyFormatter $formatter
-    )
-    {
+        private readonly CurrencyFormatter $formatter,
+    ) {
     }
 
     public function createResourceViewData(array $options, object $resource, Data $data): void
@@ -47,7 +49,7 @@ class CurrencyType extends AbstractColumnType
             'component' => 'column-text',
             'wrap' => true,
             'currency' => 'Euro',
-            'position' => 'right'
+            'position' => 'right',
         ]);
         $resolver->setRequired(['property']);
     }

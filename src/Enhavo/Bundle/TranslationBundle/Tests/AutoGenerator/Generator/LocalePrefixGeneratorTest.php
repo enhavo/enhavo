@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace AutoGenerator\Generator;
-
 
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Factory\RouteFactory;
@@ -119,14 +126,15 @@ class LocalePrefixGeneratorTest extends TestCase
         $dependencies->translationManager->method('getLocales')->willReturn(['pl', 'ru']);
         $dependencies->routeTranslator->method('getTranslation')->willReturnCallback(function ($resource, $property, $locale) use ($dependencies) {
             $route = $dependencies->routeFactory->createNew();
+
             return $route;
         });
-        $dependencies->textTranslator->method('getTranslation')->willReturnCallback(function ($resource, $property, $locale) use ($dependencies) {
-            return $resource->getName() . '-' . $property . '-' . $locale;
+        $dependencies->textTranslator->method('getTranslation')->willReturnCallback(function ($resource, $property, $locale) {
+            return $resource->getName().'-'.$property.'-'.$locale;
         });
 
-        $dependencies->routeTranslator->method('setTranslation')->willReturnCallback(function ($resource, $property, $locale, $route) {
-            $this->assertEquals('/harry-hirsch-name-' . $locale, $route->getStaticPrefix());
+        $dependencies->routeTranslator->method('setTranslation')->willReturnCallback(function ($resource, $property, $locale, $route): void {
+            $this->assertEquals('/harry-hirsch-name-'.$locale, $route->getStaticPrefix());
         });
         $dependencies->routeTranslator->expects($this->exactly(1))->method('setTranslation');
 
@@ -143,8 +151,6 @@ class LocalePrefixGeneratorTest extends TestCase
             'default_prefix_locale' => false,
             'translation_prefix_locale' => false,
         ]);
-
-
     }
 
     public function testGenerateTranslationsPrefix()
@@ -156,14 +162,15 @@ class LocalePrefixGeneratorTest extends TestCase
         $dependencies->translationManager->method('getLocales')->willReturn(['pl', 'ru']);
         $dependencies->routeTranslator->method('getTranslation')->willReturnCallback(function ($resource, $property, $locale) use ($dependencies) {
             $route = $dependencies->routeFactory->createNew();
+
             return $route;
         });
-        $dependencies->textTranslator->method('getTranslation')->willReturnCallback(function ($resource, $property, $locale) use ($dependencies) {
-            return $resource->getName() . '-' . $property . '-' . $locale;
+        $dependencies->textTranslator->method('getTranslation')->willReturnCallback(function ($resource, $property, $locale) {
+            return $resource->getName().'-'.$property.'-'.$locale;
         });
 
-        $dependencies->routeTranslator->method('setTranslation')->willReturnCallback(function ($resource, $property, $locale, $route) {
-            $this->assertEquals('/' .$locale . '/harry-hirsch-name-' . $locale, $route->getStaticPrefix());
+        $dependencies->routeTranslator->method('setTranslation')->willReturnCallback(function ($resource, $property, $locale, $route): void {
+            $this->assertEquals('/'.$locale.'/harry-hirsch-name-'.$locale, $route->getStaticPrefix());
         });
         $dependencies->routeTranslator->expects($this->exactly(1))->method('setTranslation');
 
@@ -191,17 +198,18 @@ class LocalePrefixGeneratorTest extends TestCase
         $dependencies->translationManager->method('getLocales')->willReturn(['pl', 'ru', 'gr']);
         $dependencies->routeTranslator->method('getTranslation')->willReturnCallback(function ($resource, $property, $locale) use ($dependencies) {
             $route = $dependencies->routeFactory->createNew();
-            if ($locale == 'gr') {
+            if ('gr' == $locale) {
                 $route->setStaticPrefix('/prefixed');
             }
+
             return $route;
         });
-        $dependencies->textTranslator->method('getTranslation')->willReturnCallback(function ($resource, $property, $locale) use ($dependencies) {
+        $dependencies->textTranslator->method('getTranslation')->willReturnCallback(function ($resource, $property, $locale) {
             return null;
         });
 
-        $dependencies->routeTranslator->method('setTranslation')->willReturnCallback(function ($resource, $property, $locale, $route) {
-            $this->assertEquals('/' .$locale . '/harry-hirsch', $route->getStaticPrefix());
+        $dependencies->routeTranslator->method('setTranslation')->willReturnCallback(function ($resource, $property, $locale, $route): void {
+            $this->assertEquals('/'.$locale.'/harry-hirsch', $route->getStaticPrefix());
         });
         $dependencies->routeTranslator->expects($this->exactly(1))->method('setTranslation');
 
@@ -217,7 +225,7 @@ class LocalePrefixGeneratorTest extends TestCase
             'generate_translations' => true,
             'default_prefix_locale' => false,
             'translation_prefix_locale' => true,
-            'allow_fallback' => true
+            'allow_fallback' => true,
         ]);
     }
 
@@ -234,7 +242,7 @@ class LocalePrefixGeneratorTest extends TestCase
 
             return $route;
         });
-        $dependencies->textTranslator->method('getTranslation')->willReturnCallback(function ($resource, $property, $locale) use ($dependencies) {
+        $dependencies->textTranslator->method('getTranslation')->willReturnCallback(function ($resource, $property, $locale) {
             return null;
         });
 
@@ -252,7 +260,7 @@ class LocalePrefixGeneratorTest extends TestCase
             'generate_translations' => true,
             'default_prefix_locale' => false,
             'translation_prefix_locale' => false,
-            'allow_fallback' => true
+            'allow_fallback' => true,
         ]);
     }
 
@@ -264,7 +272,6 @@ class LocalePrefixGeneratorTest extends TestCase
         $this->assertEquals('locale_prefix', $instance->getType());
     }
 }
-
 
 class LocalePrefixGeneratorTestDependencies
 {

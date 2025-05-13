@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Grid;
 
 use Doctrine\ORM\EntityRepository;
@@ -58,10 +67,11 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
     }
 
     /**
-     * @return Action[]
      * @throws GridException
+     *
+     * @return Action[]
      */
-    protected function createActions($configuration, object $resource = null): array
+    protected function createActions($configuration, ?object $resource = null): array
     {
         if (!$this->container->has(ActionManager::class)) {
             throw GridException::missingService(ActionManager::class);
@@ -74,8 +84,9 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
     }
 
     /**
-     * @return Column[]
      * @throws GridException
+     *
+     * @return Column[]
      */
     protected function createColumns($configuration): array
     {
@@ -90,8 +101,9 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
     }
 
     /**
-     * @return Filter[]
      * @throws GridException
+     *
+     * @return Filter[]
      */
     protected function createFilters($configuration): array
     {
@@ -106,8 +118,9 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
     }
 
     /**
-     * @return Batch[]
      * @throws GridException
+     *
+     * @return Batch[]
      */
     protected function createBatches($configuration, EntityRepository $entityRepository): array
     {
@@ -134,7 +147,6 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
     }
 
     /**
-     * @return CollectionInterface
      * @throws GridException
      */
     protected function createCollection(EntityRepository $repository, array $filters, array $columns, array $routes, array $configuration, string $resourceName): CollectionInterface
@@ -157,6 +169,7 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
 
         /** @var ResourceExpressionLanguage $expressionLanguage */
         $expressionLanguage = $this->container->get(ResourceExpressionLanguage::class);
+
         return $expressionLanguage->evaluate($expression, $parameters);
     }
 
@@ -166,6 +179,7 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
         foreach ($array as $key => $item) {
             $newArray[$key] = $this->evaluate($item, $parameters);
         }
+
         return $newArray;
     }
 
@@ -177,6 +191,7 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
 
         /** @var RouteResolverInterface $routeResolver */
         $routeResolver = $this->container->get(RouteResolverInterface::class);
+
         return $routeResolver->getRoute($name, $context);
     }
 
@@ -193,6 +208,7 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
 
         /** @var RequestStack $requestStack */
         $requestStack = $this->container->get(RequestStack::class);
+
         return $requestStack->getMainRequest();
     }
 

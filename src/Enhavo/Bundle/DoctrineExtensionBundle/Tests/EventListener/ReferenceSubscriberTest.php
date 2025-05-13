@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-09
- * Time: 14:20
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener;
@@ -26,6 +29,7 @@ class ReferenceSubscriberTest extends SubscriberTest
         $dependencies = new ReferenceSubscriberDependencies();
         $dependencies->metadataRepository = $this->createMetadataRepository($configuration);
         $dependencies->entityResolver = new ClassNameResolver($this->em);
+
         return $dependencies;
     }
 
@@ -36,7 +40,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
     public function testSubscriber()
     {
-        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Reference');
 
         $dependencies = $this->createDependencies([
             Entity::class => [
@@ -44,10 +48,10 @@ class ReferenceSubscriberTest extends SubscriberTest
                     'node' => [
                         'nameField' => 'nodeName',
                         'idField' => 'nodeId',
-                        'cascade' => ['persist', 'remove']
-                    ]
-                ]
-            ]
+                        'cascade' => ['persist', 'remove'],
+                    ],
+                ],
+            ],
         ]);
 
         $subscriber = $this->createInstance($dependencies);
@@ -74,7 +78,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
         /** @var Entity $entity */
         $entityContainer = $this->em->getRepository(EntityContainer::class)->findOneBy([
-            'name' => 'container_one'
+            'name' => 'container_one',
         ]);
 
         // Should not be needed
@@ -89,7 +93,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
         /** @var Entity $entity */
         $entity = $this->em->getRepository(Entity::class)->findOneBy([
-            'name' => 'node_one'
+            'name' => 'node_one',
         ]);
 
         $this->assertEquals('one', $entity->node->name);
@@ -105,7 +109,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
     public function testReferenceSameObject()
     {
-        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Reference');
 
         $dependencies = $this->createDependencies([
             Entity::class => [
@@ -113,10 +117,10 @@ class ReferenceSubscriberTest extends SubscriberTest
                     'node' => [
                         'nameField' => 'nodeName',
                         'idField' => 'nodeId',
-                        'cascade' => ['persist']
-                    ]
-                ]
-            ]
+                        'cascade' => ['persist'],
+                    ],
+                ],
+            ],
         ]);
 
         $subscriber = $this->createInstance($dependencies);
@@ -144,7 +148,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
     public function testPersistence()
     {
-        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Reference');
 
         $dependencies = $this->createDependencies([
             Entity::class => [
@@ -152,10 +156,10 @@ class ReferenceSubscriberTest extends SubscriberTest
                     'node' => [
                         'nameField' => 'nodeName',
                         'idField' => 'nodeId',
-                        'cascade' => ['persist']
-                    ]
-                ]
-            ]
+                        'cascade' => ['persist'],
+                    ],
+                ],
+            ],
         ]);
 
         $subscriber = $this->createInstance($dependencies);
@@ -190,7 +194,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
     public function testDeleteEntityThatIsReferenced()
     {
-        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Reference');
 
         $dependencies = $this->createDependencies([
             Entity::class => [
@@ -198,10 +202,10 @@ class ReferenceSubscriberTest extends SubscriberTest
                     'node' => [
                         'nameField' => 'nodeName',
                         'idField' => 'nodeId',
-                        'cascade' => ['persist']
-                    ]
-                ]
-            ]
+                        'cascade' => ['persist'],
+                    ],
+                ],
+            ],
         ]);
 
         $subscriber = $this->createInstance($dependencies);
@@ -211,7 +215,7 @@ class ReferenceSubscriberTest extends SubscriberTest
         // Entity has a reference to Node, so we create an Entity class with a Node and try to delete only the Node
 
         $node = new NodeBase();
-        $node->name = ('node');
+        $node->name = 'node';
 
         $entity = new Entity();
         $entity->name = 'entity';
@@ -234,7 +238,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
     public function testCascadeDeleteEntity()
     {
-        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Reference');
 
         $dependencies = $this->createDependencies([
             Entity::class => [
@@ -242,10 +246,10 @@ class ReferenceSubscriberTest extends SubscriberTest
                     'node' => [
                         'nameField' => 'nodeName',
                         'idField' => 'nodeId',
-                        'cascade' => ['persist', 'remove']
-                    ]
-                ]
-            ]
+                        'cascade' => ['persist', 'remove'],
+                    ],
+                ],
+            ],
         ]);
 
         $subscriber = $this->createInstance($dependencies);
@@ -278,7 +282,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
     public function testCascadeDeleteContainingNullEntity()
     {
-        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Reference');
 
         $dependencies = $this->createDependencies([
             Entity::class => [
@@ -286,10 +290,10 @@ class ReferenceSubscriberTest extends SubscriberTest
                     'node' => [
                         'nameField' => 'nodeName',
                         'idField' => 'nodeId',
-                        'cascade' => ['persist', 'remove']
-                    ]
-                ]
-            ]
+                        'cascade' => ['persist', 'remove'],
+                    ],
+                ],
+            ],
         ]);
 
         $subscriber = $this->createInstance($dependencies);
@@ -315,7 +319,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
     public function testPersistOnFetchEntity()
     {
-        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Reference');
 
         $dependencies = $this->createDependencies([
             Entity::class => [
@@ -323,14 +327,13 @@ class ReferenceSubscriberTest extends SubscriberTest
                     'node' => [
                         'nameField' => 'nodeName',
                         'idField' => 'nodeId',
-                        'cascade' => ['persist']
-                    ]
-                ]
-            ]
+                        'cascade' => ['persist'],
+                    ],
+                ],
+            ],
         ]);
 
         $subscriber = $this->createInstance($dependencies);
-
 
         $this->em->getEventManager()->addEventSubscriber($subscriber);
         $this->updateSchema();
@@ -359,7 +362,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
     public function testCascadePersistAndRemoveOnFetchEntity()
     {
-        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Reference');
 
         $dependencies = $this->createDependencies([
             Entity::class => [
@@ -367,14 +370,13 @@ class ReferenceSubscriberTest extends SubscriberTest
                     'node' => [
                         'nameField' => 'nodeName',
                         'idField' => 'nodeId',
-                        'cascade' => ['persist', 'remove']
-                    ]
-                ]
-            ]
+                        'cascade' => ['persist', 'remove'],
+                    ],
+                ],
+            ],
         ]);
 
         $subscriber = $this->createInstance($dependencies);
-
 
         $this->em->getEventManager()->addEventSubscriber($subscriber);
         $this->updateSchema();
@@ -433,7 +435,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
     public function testReferenceSameEntity()
     {
-        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Reference');
 
         $dependencies = $this->createDependencies([
             Entity::class => [
@@ -441,10 +443,10 @@ class ReferenceSubscriberTest extends SubscriberTest
                     'node' => [
                         'nameField' => 'nodeName',
                         'idField' => 'nodeId',
-                        'cascade' => ['persist', 'remove']
-                    ]
-                ]
-            ]
+                        'cascade' => ['persist', 'remove'],
+                    ],
+                ],
+            ],
         ]);
 
         $subscriber = $this->createInstance($dependencies);
@@ -479,7 +481,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
     public function testPersistWithCascadeLoop()
     {
-        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Reference');
 
         $dependencies = $this->createDependencies([
             Entity::class => [
@@ -487,10 +489,10 @@ class ReferenceSubscriberTest extends SubscriberTest
                     'node' => [
                         'nameField' => 'nodeName',
                         'idField' => 'nodeId',
-                        'cascade' => ['persist', 'remove']
-                    ]
-                ]
-            ]
+                        'cascade' => ['persist', 'remove'],
+                    ],
+                ],
+            ],
         ]);
 
         $subscriber = $this->createInstance($dependencies);

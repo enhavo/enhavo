@@ -21,10 +21,10 @@ return (new PhpCsFixer\Config())
         'braces' => [
             'allow_single_line_closure' => true,
         ],
-//        'header_comment' => [
-//            'header' => $header,
-//            'location' => 'after_open',
-//        ],
+        'header_comment' => [
+            'header' => $header,
+            'location' => 'after_open',
+        ],
         'no_useless_else' => true,
         'no_useless_return' => true,
         'ordered_imports' => true,

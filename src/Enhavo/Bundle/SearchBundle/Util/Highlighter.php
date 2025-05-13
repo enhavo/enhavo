@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 31.05.16
- * Time: 12:01
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Util;
@@ -27,13 +30,13 @@ class Highlighter
     {
         $textWords = preg_split("/[\s]+/", $text);
         $searchWords = [];
-        foreach($words as $word) {
+        foreach ($words as $word) {
             $searchWords[] = $this->textSimplify->simplify($word);
         }
 
         $matches = [];
-        for($i = 0; $i < count($textWords); $i++) {
-            if(in_array($this->textSimplify->simplify($textWords[$i]), $searchWords)) {
+        for ($i = 0; $i < count($textWords); ++$i) {
+            if (in_array($this->textSimplify->simplify($textWords[$i]), $searchWords)) {
                 $match = new HighlightMatch();
                 $match->setBehind($this->lookBehind($textWords, $i));
                 $match->setForward($this->lookForward($textWords, $i));
@@ -43,7 +46,7 @@ class Highlighter
             }
         }
 
-        if(empty($match)) {
+        if (empty($match)) {
             return '';
         }
 
@@ -53,43 +56,41 @@ class Highlighter
     private function lookBehind($textWords, $i, $length = 10)
     {
         $behind = [];
-        for($j = 0; $j < $length; $j++) {
-            if(isset($textWords[$i-($j+1)])) {
-                $word = $textWords[$i-($j+1)];
-                if(preg_match('/[.!?:;]/', $word)) {
+        for ($j = 0; $j < $length; ++$j) {
+            if (isset($textWords[$i - ($j + 1)])) {
+                $word = $textWords[$i - ($j + 1)];
+                if (preg_match('/[.!?:;]/', $word)) {
                     break;
-                } else {
-                    $behind[] = $word;
                 }
+                $behind[] = $word;
             }
         }
+
         return array_reverse($behind);
     }
 
     private function lookForward($textWords, $i, $length = 10)
     {
         $forward = [];
-        for($j = 0; $j < $length; $j++) {
-            if(isset($textWords[$i+$j+1])) {
-                $word = $textWords[$i+$j+1];
-                if(preg_match('/[.!?:;]/', $word)) {
+        for ($j = 0; $j < $length; ++$j) {
+            if (isset($textWords[$i + $j + 1])) {
+                $word = $textWords[$i + $j + 1];
+                if (preg_match('/[.!?:;]/', $word)) {
                     $forward[] = $word;
                     break;
-                } else {
-                    $forward[] = $word;
                 }
+                $forward[] = $word;
             }
         }
+
         return array_reverse($forward);
     }
 
     /**
      * @param HighlightMatch[] $matches
-     * @param string[] $searchWords
-     * @param integer $textLength
-     * @param $startTag
-     * @param $closeTag
-     * @param $concat
+     * @param string[]         $searchWords
+     * @param int              $textLength
+     *
      * @return string
      */
     private function concatMatches($matches, $searchWords, $textLength, $startTag, $closeTag, $concat)
@@ -98,44 +99,46 @@ class Highlighter
 
         $sequences = [];
         $sequenceLengthTotal = 0;
-        foreach($matches as $match) {
+        foreach ($matches as $match) {
             $sequenceLength = 0;
             $sequence = $this->highlightWord($match->getWord(), $searchWords, $startTag, $closeTag);
             $sequenceLength += strlen($match->getWord()) + 1;
 
             do {
                 $behind = $match->popBehind();
-                if($behind !== null) {
+                if (null !== $behind) {
                     $sequenceLength += strlen($behind) + 1;
                     $sequence = sprintf('%s %s', $this->highlightWord($behind, $searchWords, $startTag, $closeTag), $sequence);
                 }
 
                 $forward = $match->popForward();
-                if($forward !== null) {
+                if (null !== $forward) {
                     $sequenceLength += strlen($forward) + 1;
                     $sequence = sprintf('%s %s', $sequence, $this->highlightWord($forward, $searchWords, $startTag, $closeTag));
                 }
 
-                if(count($match->getBehind()) === 0 && count($match->getForward()) === 0) {
+                if (0 === count($match->getBehind()) && 0 === count($match->getForward())) {
                     break;
                 }
-            } while($lengthPerMatch >= $sequenceLength);
+            } while ($lengthPerMatch >= $sequenceLength);
 
             $sequences[] = $sequence;
             $sequenceLengthTotal += $sequenceLength;
 
-            if($sequenceLengthTotal > $textLength) {
+            if ($sequenceLengthTotal > $textLength) {
                 break;
             }
         }
+
         return implode($concat, $sequences);
     }
 
     private function highlightWord($word, $searchWords, $startTag, $closeTag)
     {
-        if(in_array($this->textSimplify->simplify($word), $searchWords)) {
+        if (in_array($this->textSimplify->simplify($word), $searchWords)) {
             return $startTag.$word.$closeTag;
         }
+
         return $word;
     }
 }

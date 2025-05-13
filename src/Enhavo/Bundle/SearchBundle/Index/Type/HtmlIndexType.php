@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 23.06.16
- * Time: 10:29
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Index\Type;
@@ -14,7 +17,6 @@ use Enhavo\Bundle\SearchBundle\Index\IndexTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
-
 
 class HtmlIndexType extends AbstractIndexType implements IndexTypeInterface
 {
@@ -29,7 +31,7 @@ class HtmlIndexType extends AbstractIndexType implements IndexTypeInterface
     {
         $value = $this->propertyAccessor->getValue($model, $options['property']);
 
-        if ($value === null) {
+        if (null === $value) {
             return;
         }
 
@@ -38,15 +40,15 @@ class HtmlIndexType extends AbstractIndexType implements IndexTypeInterface
         $tags = array_keys($tagWeights);
 
         // strip off all ignored tags, insert space before and after them to keep word boundaries.
-        $value = str_replace(array('<', '>'), array(' <', '> '), $value);
-        $value = strip_tags($value, '<' . implode('><', $tags) . '>');
+        $value = str_replace(['<', '>'], [' <', '> '], $value);
+        $value = strip_tags($value, '<'.implode('><', $tags).'>');
 
         // split html tags from plain text.
         $split = preg_split('/\s*<([^>]+?)>\s*/', $value, -1, PREG_SPLIT_DELIM_CAPTURE);
 
         $tag = false; // odd/even counter. Tag or no tag.
         $tagName = null;
-        $tagStack = array();
+        $tagStack = [];
         foreach ($split as $tagValue) {
             // if tag is true we are handling the tags in the array, if tag is false we are handling text between the tags
             if ($tag) {
@@ -54,13 +56,13 @@ class HtmlIndexType extends AbstractIndexType implements IndexTypeInterface
                 $tagName = strtolower($tagName);
 
                 // Closing or opening tag?
-                if (substr($tagName, 0,1) == '/') {
+                if ('/' == substr($tagName, 0, 1)) {
                     array_pop($tagStack);
                 } else {
                     $tagStack[] = $tagName;
                 }
             } else {
-                if ($tagValue != '') {
+                if ('' != $tagValue) {
                     $currentTag = null;
                     if (count($tagStack)) {
                         $currentTag = $tagStack[count($tagStack) - 1];
@@ -77,7 +79,7 @@ class HtmlIndexType extends AbstractIndexType implements IndexTypeInterface
     {
         $value = $this->propertyAccessor->getValue($model, $options['property']);
 
-        if ($value === null) {
+        if (null === $value) {
             return;
         }
 
@@ -94,7 +96,7 @@ class HtmlIndexType extends AbstractIndexType implements IndexTypeInterface
         $resolver->setRequired('property');
 
         $resolver->setDefaults([
-            'weights' => []
+            'weights' => [],
         ]);
 
         $resolver->setNormalizer('weights', function ($options, $value) {
@@ -111,7 +113,7 @@ class HtmlIndexType extends AbstractIndexType implements IndexTypeInterface
                 'strong' => 3,
                 'em' => 3,
                 'a' => 10,
-                'p' => 1
+                'p' => 1,
             ], $value);
         });
     }

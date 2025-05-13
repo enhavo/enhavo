@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Block;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,9 +30,8 @@ class Cleaner
 
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly AssociationFinder $associationFinder
-    )
-    {
+        private readonly AssociationFinder $associationFinder,
+    ) {
     }
 
     public function setBlockManager(BlockManager $blockManager): void
@@ -31,10 +39,10 @@ class Cleaner
         $this->blockManager = $blockManager;
     }
 
-    public function clean(OutputLoggerInterface $outputLogger = null, bool $dryRun = false): void
+    public function clean(?OutputLoggerInterface $outputLogger = null, bool $dryRun = false): void
     {
         $this->isDryRun = $dryRun;
-        $this->outputLogger = $outputLogger !== null ? $outputLogger : new ChainOutputLogger();
+        $this->outputLogger = null !== $outputLogger ? $outputLogger : new ChainOutputLogger();
         $this->blocksDeleted = 0;
         $this->nodesDeleted = 0;
 
@@ -52,7 +60,7 @@ class Cleaner
 
         $this->cleanBlocksWithoutNode();
 
-        $this->outputLogger->info('Cleanup complete, ' . $this->nodesDeleted . ' nodes and ' . $this->blocksDeleted . ' blocks deleted.');
+        $this->outputLogger->info('Cleanup complete, '.$this->nodesDeleted.' nodes and '.$this->blocksDeleted.' blocks deleted.');
     }
 
     /**
@@ -62,8 +70,10 @@ class Cleaner
     {
         $this->outputLogger->debug('Finding root/list nodes without resource');
         $nodesToDelete = $this->findRootAndListNodesWithoutRootResource();
-        if (count($nodesToDelete) > 0) $this->outputLogger->debug('');
-        $this->outputLogger->debug('done, ' . count($nodesToDelete) . ' found.');
+        if (count($nodesToDelete) > 0) {
+            $this->outputLogger->debug('');
+        }
+        $this->outputLogger->debug('done, '.count($nodesToDelete).' found.');
 
         if (count($nodesToDelete) > 0) {
             $this->outputLogger->debug('Deleting');
@@ -81,8 +91,10 @@ class Cleaner
     {
         $this->outputLogger->debug('Finding non-root nodes without parent');
         $nodesToDelete = $this->findNodesWithoutParent();
-        if (count($nodesToDelete) > 0) $this->outputLogger->debug('');
-        $this->outputLogger->debug('done, ' . count($nodesToDelete) . ' found.');
+        if (count($nodesToDelete) > 0) {
+            $this->outputLogger->debug('');
+        }
+        $this->outputLogger->debug('done, '.count($nodesToDelete).' found.');
 
         if (count($nodesToDelete) > 0) {
             $this->outputLogger->debug('Deleting');
@@ -100,8 +112,10 @@ class Cleaner
     {
         $this->outputLogger->debug('Finding block nodes without blocks');
         $nodesToDelete = $this->findBlockNodesWithoutBlock();
-        if (count($nodesToDelete) > 0) $this->outputLogger->debug('');
-        $this->outputLogger->debug('done, ' . count($nodesToDelete) . ' found.');
+        if (count($nodesToDelete) > 0) {
+            $this->outputLogger->debug('');
+        }
+        $this->outputLogger->debug('done, '.count($nodesToDelete).' found.');
 
         if (count($nodesToDelete) > 0) {
             $this->outputLogger->debug('Deleting');
@@ -116,8 +130,10 @@ class Cleaner
     {
         $this->outputLogger->debug('Finding blocks without node');
         $blocksToDelete = $this->findBlocksWithoutNode();
-        if (count($blocksToDelete) > 0) $this->outputLogger->debug('');
-        $this->outputLogger->debug('done, ' . count($blocksToDelete) . ' found.');
+        if (count($blocksToDelete) > 0) {
+            $this->outputLogger->debug('');
+        }
+        $this->outputLogger->debug('done, '.count($blocksToDelete).' found.');
 
         if (count($blocksToDelete) > 0) {
             $this->outputLogger->debug('Deleting');
@@ -129,38 +145,39 @@ class Cleaner
     }
 
     /**
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     private function findRootAndListNodesWithoutRootResource()
     {
         $nodesToDelete = [];
 
         $rootNodes = $this->entityManager->getRepository(Node::class)->findBy([
-            'type' => Node::TYPE_ROOT
+            'type' => Node::TYPE_ROOT,
         ]);
 
         /** @var Node $rootNode */
-        foreach($rootNodes as $rootNode) {
+        foreach ($rootNodes as $rootNode) {
             $associations = $this->associationFinder->findAssociationsTo($rootNode, NodeInterface::class, [NodeInterface::class, BlockInterface::class]);
-            if (count($associations) === 0) {
+            if (0 === count($associations)) {
                 $nodesToDelete[$rootNode->getId()] = $rootNode;
                 $this->outputLogger->write('.', Level::Debug);
             }
         }
 
         $listNodes = $this->entityManager->getRepository(Node::class)->findBy([
-            'type' => Node::TYPE_LIST
+            'type' => Node::TYPE_LIST,
         ]);
 
         /** @var Node $listNode */
-        foreach($listNodes as $listNode) {
+        foreach ($listNodes as $listNode) {
             if ($listNode->getRoot() && isset($nodesToDelete[$listNode->getRoot()->getId()])) {
                 // List node is part of a node tree that is already queued for deleting
                 continue;
             }
             $associations = $this->associationFinder->findAssociationsTo($listNode, NodeInterface::class, [NodeInterface::class]);
-            if (count($associations) === 0) {
+            if (0 === count($associations)) {
                 $nodesToDelete[$listNode->getId()] = $listNode;
                 $this->outputLogger->write('.', Level::Debug);
             }
@@ -170,22 +187,23 @@ class Cleaner
     }
 
     /**
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     private function findBlockNodesWithoutBlock()
     {
         $nodesToDelete = [];
 
         $blockNodes = $this->entityManager->getRepository(Node::class)->findBy([
-            'type' => Node::TYPE_BLOCK
+            'type' => Node::TYPE_BLOCK,
         ]);
 
         /** @var Node $blockNode */
-        foreach($blockNodes as $blockNode) {
+        foreach ($blockNodes as $blockNode) {
             $associations = $this->associationFinder->findAssociationsTo($blockNode, NodeInterface::class, [NodeInterface::class]);
-            if (count($associations) === 0) {
-                $nodesToDelete []= $blockNode;
+            if (0 === count($associations)) {
+                $nodesToDelete[] = $blockNode;
                 $this->outputLogger->write('.', Level::Debug);
             }
         }
@@ -193,23 +211,23 @@ class Cleaner
         return $nodesToDelete;
     }
 
-
     /**
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     private function findNodesWithoutParent()
     {
         $nodesToDelete = [];
 
         $nodes = $this->entityManager->getRepository(Node::class)->findBy([
-            'parent' => null
+            'parent' => null,
         ]);
 
         /** @var Node $node */
-        foreach($nodes as $node) {
-            if ($node->getType() !== NodeInterface::TYPE_ROOT) {
-                $nodesToDelete []= $node;
+        foreach ($nodes as $node) {
+            if (NodeInterface::TYPE_ROOT !== $node->getType()) {
+                $nodesToDelete[] = $node;
                 $this->outputLogger->write('.', Level::Debug);
             }
         }
@@ -226,15 +244,15 @@ class Cleaner
 
         $blockConfigurations = $this->blockManager->getBlocks();
 
-        foreach($blockConfigurations as $blockConfiguration) {
+        foreach ($blockConfigurations as $blockConfiguration) {
             $blocks = $this->entityManager->getRepository($blockConfiguration->getModel())->findAll();
 
             /** @var BlockInterface $block */
-            foreach($blocks as $block) {
+            foreach ($blocks as $block) {
                 $node = $block->getNode();
 
-                if ($node === null) {
-                    $blocksToDelete []= $block;
+                if (null === $node) {
+                    $blocksToDelete[] = $block;
                     $this->outputLogger->write('.', Level::Debug);
                 }
             }
@@ -248,11 +266,11 @@ class Cleaner
      */
     private function deleteSingleBlocks($blocksToDelete)
     {
-        foreach($blocksToDelete as $block) {
+        foreach ($blocksToDelete as $block) {
             if (!$this->isDryRun) {
                 $this->entityManager->remove($block);
             }
-            $this->blocksDeleted++;
+            ++$this->blocksDeleted;
             $this->outputLogger->write('.', Level::Debug);
         }
         if (!$this->isDryRun) {
@@ -265,7 +283,7 @@ class Cleaner
      */
     private function deleteNodeTrees($nodesToDelete)
     {
-        foreach($nodesToDelete as $node) {
+        foreach ($nodesToDelete as $node) {
             $this->deleteNodeTreeRecursive($node);
         }
 
@@ -274,24 +292,21 @@ class Cleaner
         }
     }
 
-    /**
-     * @param NodeInterface $node
-     */
     private function deleteNodeTreeRecursive(NodeInterface $node)
     {
-        foreach($node->getChildren() as $child) {
+        foreach ($node->getChildren() as $child) {
             $this->deleteNodeTreeRecursive($child);
         }
 
         if ($node->getBlock()) {
-            $this->blocksDeleted++;
+            ++$this->blocksDeleted;
             if (!$this->isDryRun) {
                 $this->entityManager->remove($node->getBlock());
             }
             $this->outputLogger->write('.', Level::Debug);
         }
 
-        $this->nodesDeleted++;
+        ++$this->nodesDeleted;
         if (!$this->isDryRun) {
             $this->entityManager->remove($node);
         }

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-08-29
- * Time: 20:28
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Translator;
@@ -27,8 +30,7 @@ class DataMapEntry
 
     /**
      * DataMapEntry constructor.
-     * @param string|null $property
-     * @param string|null $locale
+     *
      * @param mixed|null $data
      */
     public function __construct(?string $property, ?string $locale, $data)
@@ -38,17 +40,11 @@ class DataMapEntry
         $this->data = $data;
     }
 
-    /**
-     * @return string|null
-     */
     public function getProperty(): ?string
     {
         return $this->property;
     }
 
-    /**
-     * @return string|null
-     */
     public function getLocale(): ?string
     {
         return $this->locale;

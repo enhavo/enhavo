@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\VueFormBundle\Form\Extension;
 
 use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
@@ -13,15 +22,14 @@ class BaseVueTypeExtension extends AbstractVueTypeExtension
 {
     public function __construct(
         private TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     public function buildVueData(FormView $view, VueData $data, array $options)
     {
         $data['disabled'] = $view->vars['disabled'];
 
-        if ($view->vars['label'] && $view->vars['translation_domain'] !== false) {
+        if ($view->vars['label'] && false !== $view->vars['translation_domain']) {
             $data['label'] = $this->translator->trans($view->vars['label'], $view->vars['label_translation_parameters'], $view->vars['translation_domain']);
         } else {
             $data['label'] = $view->vars['label'];

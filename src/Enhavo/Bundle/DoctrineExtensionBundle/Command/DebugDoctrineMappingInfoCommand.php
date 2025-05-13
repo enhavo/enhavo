@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-05-24
- * Time: 18:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Command;
@@ -19,8 +22,7 @@ class DebugDoctrineMappingInfoCommand extends Command
 {
     public function __construct(
         private readonly EntityManagerInterface $em,
-    )
-    {
+    ) {
         parent::__construct();
     }
 

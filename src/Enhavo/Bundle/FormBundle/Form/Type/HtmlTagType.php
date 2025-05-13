@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 26.01.18
- * Time: 16:34
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
@@ -38,30 +41,30 @@ class HtmlTagType extends AbstractType
         }
 
         $builder->addModelTransformer(new CallbackTransformer(
-            function ($original) use ($options) {
-                if($original === null) {
+            function ($original) {
+                if (null === $original) {
                     return [
                         'text' => '',
-                        'tag' => null
+                        'tag' => null,
                     ];
-                } else if (preg_match("#^<([a-z0-9-_]*?) class=['\"](.*?)['\"]>(.*?)</([a-z0-9-_]*?)>$#i", $original, $match)) {
+                } elseif (preg_match("#^<([a-z0-9-_]*?) class=['\"](.*?)['\"]>(.*?)</([a-z0-9-_]*?)>$#i", $original, $match)) {
                     return [
                         'text' => html_entity_decode($match[3]),
                         'tag' => $match[1],
-                        'class' => $match[2]
+                        'class' => $match[2],
                     ];
-                } else if(preg_match("#^<([a-z0-9-_]*?)>(.*?)</([a-z0-9-_]*?)>$#i", $original, $match)) {
+                } elseif (preg_match('#^<([a-z0-9-_]*?)>(.*?)</([a-z0-9-_]*?)>$#i', $original, $match)) {
                     return [
                         'text' => html_entity_decode($match[2]),
                         'tag' => $match[1],
-                        'class' => ''
+                        'class' => '',
                     ];
                 }
 
                 return [
                     'text' => $original,
                     'tag' => null,
-                    'class' => null
+                    'class' => null,
                 ];
             },
             function ($submitted) use ($options) {
@@ -70,13 +73,14 @@ class HtmlTagType extends AbstractType
 
                 $text = $submitted['text'];
 
-                if($tag !== null && $class !== null) {
-                    return sprintf('<%s class="%s">%s</%s>', $tag, $class, $text,  $tag);
-                } else if($tag !== null) {
+                if (null !== $tag && null !== $class) {
+                    return sprintf('<%s class="%s">%s</%s>', $tag, $class, $text, $tag);
+                } elseif (null !== $tag) {
                     return sprintf('<%s>%s</%s>', $tag, $text, $tag);
-                } else if($class !== null) {
+                } elseif (null !== $class) {
                     $tag = $options['class_fallback_tag'];
-                    return sprintf('<%s class="%s">%s</%s>', $tag, $class, $text,  $tag);
+
+                    return sprintf('<%s class="%s">%s</%s>', $tag, $class, $text, $tag);
                 }
 
                 return $text;

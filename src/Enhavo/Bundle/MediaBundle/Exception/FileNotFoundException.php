@@ -1,14 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 26.08.17
- * Time: 15:51
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Exception;
 
 class FileNotFoundException extends StorageException
 {
-
 }

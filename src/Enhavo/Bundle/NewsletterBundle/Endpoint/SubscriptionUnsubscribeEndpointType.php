@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -14,8 +23,7 @@ class SubscriptionUnsubscribeEndpointType extends AbstractEndpointType
     public function __construct(
         private readonly SubscriptionManager $subscriptionManager,
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void

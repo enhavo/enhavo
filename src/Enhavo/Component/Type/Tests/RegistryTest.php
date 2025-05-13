@@ -1,15 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-08
- * Time: 09:49
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Type\Tests;
 
-use Enhavo\Component\Type\AbstractTypeExtension;
 use Enhavo\Component\Type\AbstractType;
+use Enhavo\Component\Type\AbstractTypeExtension;
 use Enhavo\Component\Type\Exception\TypeNotFoundException;
 use Enhavo\Component\Type\Exception\TypeNotValidException;
 use Enhavo\Component\Type\Registry;
@@ -25,6 +28,7 @@ class RegistryTest extends TestCase
         $dependencies = new RegistryDependencies();
         $dependencies->container = $this->getMockBuilder(ContainerInterface::class)->getMock();
         $dependencies->namespace = 'Test';
+
         return $dependencies;
     }
 
@@ -32,18 +36,20 @@ class RegistryTest extends TestCase
     {
         $registry = new Registry($dependencies->namespace);
         $registry->setContainer($dependencies->container);
+
         return $registry;
     }
 
     public function testGetTypeByFQCN()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->container->method('get')->willReturnCallback(function($id) {
+        $dependencies->container->method('get')->willReturnCallback(function ($id) {
             $services = [
                 'test_type_id' => new TestType(),
                 'parent_test_type_id' => new ParentTestType(),
                 'root_type_id' => new RootType(),
             ];
+
             return $services[$id];
         });
 
@@ -62,10 +68,11 @@ class RegistryTest extends TestCase
     public function testGetTypeByName()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->container->method('get')->willReturnCallback(function($id) {
+        $dependencies->container->method('get')->willReturnCallback(function ($id) {
             $services = [
                 'root_type_id' => new RootType(),
             ];
+
             return $services[$id];
         });
 
@@ -169,7 +176,7 @@ class RegistryTest extends TestCase
         $dependencies = $this->createDependencies();
         $testExtensionType = new TestExtensionType();
         $testOtherExtensionType = new TestOtherExtensionType();
-        $dependencies->container->method('get')->willReturnCallback(function($id) use ($testExtensionType, $testOtherExtensionType) {
+        $dependencies->container->method('get')->willReturnCallback(function ($id) use ($testExtensionType, $testOtherExtensionType) {
             return match ($id) {
                 $testExtensionType::class => $testExtensionType,
                 $testOtherExtensionType::class => $testOtherExtensionType,
@@ -213,7 +220,7 @@ class RegistryDependencies
 {
     /** @var ContainerInterface|\PHPUnit_Framework_MockObject_MockObject */
     public $container;
-    /** @var String */
+    /** @var string */
     public $namespace;
 }
 
@@ -340,19 +347,16 @@ class OtherTestType extends AbstractType
 
 class NoInterface
 {
-
 }
 
 interface IndirectInterface extends TypeInterface
 {
-
 }
 
 class IndirectClass implements IndirectInterface
 {
     public function setKey(?string $key)
     {
-
     }
 
     public static function getName(): ?string
@@ -367,11 +371,9 @@ class IndirectClass implements IndirectInterface
 
     public function setParent(TypeInterface $parent)
     {
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-
     }
 }

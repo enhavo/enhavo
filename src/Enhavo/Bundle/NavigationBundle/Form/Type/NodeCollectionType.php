@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 03.05.18
- * Time: 18:42
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Form\Type;
@@ -27,9 +30,6 @@ class NodeCollectionType extends AbstractType
 
     /**
      * NodeCollectionType constructor.
-     * @param string $class
-     * @param string $formClass
-     * @param NavItemManager $navItemManager
      */
     public function __construct(string $class, string $formClass, NavItemManager $navItemManager)
     {
@@ -47,13 +47,13 @@ class NodeCollectionType extends AbstractType
             'entry_types_options' => $this->getEntryTypesOptions(),
             'entry_types_prototype_data' => $this->getEntryTypesPrototypeData(),
             'entry_type_name' => 'name',
-            'entry_type_resolver' => function(NodeInterface $node) {
+            'entry_type_resolver' => function (NodeInterface $node) {
                 return $node->getName();
             },
             'prototype_storage' => 'enhavo_navigation',
             'allow_add' => true,
             'allow_delete' => true,
-            'custom_name_property' => 'label'
+            'custom_name_property' => 'label',
         ]);
     }
 
@@ -65,16 +65,17 @@ class NodeCollectionType extends AbstractType
     private function getEntryTypes()
     {
         $types = [];
-        foreach($this->navItemManager->getNavItems() as $key => $navItem) {
+        foreach ($this->navItemManager->getNavItems() as $key => $navItem) {
             $types[$key] = $this->formClass;
         }
+
         return $types;
     }
 
     private function getEntryTypesOptions()
     {
         $types = [];
-        foreach($this->navItemManager->getNavItems() as $key => $navItem) {
+        foreach ($this->navItemManager->getNavItems() as $key => $navItem) {
             $types[$key] = [
                 'subject_type' => $navItem->getForm(),
                 'subject_type_options' => $navItem->getFormOptions(),
@@ -82,22 +83,24 @@ class NodeCollectionType extends AbstractType
                 'translation_domain' => $navItem->getTranslationDomain(),
             ];
         }
+
         return $types;
     }
 
     private function getEntryTypesPrototypeData()
     {
         $data = [];
-        foreach($this->navItemManager->getNavItems() as $key => $item) {
+        foreach ($this->navItemManager->getNavItems() as $key => $item) {
             /** @var NodeInterface $node */
-            $node = new $this->class;
+            $node = new $this->class();
             $node->setName($key);
             $modelClass = $item->getModel();
-            if ($modelClass !== null) {
-                $node->setSubject(new $modelClass);
+            if (null !== $modelClass) {
+                $node->setSubject(new $modelClass());
             }
             $data[$key] = $node;
         }
+
         return $data;
     }
 }

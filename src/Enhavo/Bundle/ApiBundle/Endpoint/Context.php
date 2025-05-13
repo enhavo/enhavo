@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\Endpoint;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -14,16 +23,14 @@ class Context
     private array $data = [];
 
     public function __construct(
-        private readonly Request $request
-    )
-    {
+        private readonly Request $request,
+    ) {
     }
 
     public function getRequest(): Request
     {
         return $this->request;
     }
-
 
     public function getStatusCode(): int
     {
@@ -51,6 +58,7 @@ class Context
     public function setHeader($name, $value): self
     {
         $this->headers[strtolower($name)] = new Header($name, $value);
+
         return $this;
     }
 
@@ -70,6 +78,7 @@ class Context
         if ($this->hasHeader($name)) {
             unset($this->headers[strtolower($name)]);
         }
+
         return $this;
     }
 

@@ -1,9 +1,12 @@
 <?php
-/**
- * FormatRepository.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 03/09/17
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Repository;
@@ -23,6 +26,7 @@ class FormatRepository extends EntityRepository
             ->getQuery();
 
         $result = $query->getSingleScalarResult();
+
         return intval($result);
     }
 
@@ -39,6 +43,7 @@ class FormatRepository extends EntityRepository
         if (count($allResults) > 0) {
             return $allResults[0];
         }
+
         return null;
     }
 
@@ -47,7 +52,7 @@ class FormatRepository extends EntityRepository
         $queryBuilder = $this->createQueryBuilder('format');
         $queryBuilder
             ->andWhere('format.lockAt < :lockTimeout')
-            ->setParameter('lockTimeout', new \DateTime($lockTimeout . ' seconds ago'));
+            ->setParameter('lockTimeout', new \DateTime($lockTimeout.' seconds ago'));
 
         return $queryBuilder->getQuery()->getResult();
     }

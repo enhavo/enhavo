@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 23.09.18
- * Time: 10:49
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MultiTenancyBundle\ExpressionLanguage;
@@ -12,13 +15,11 @@ use Enhavo\Bundle\MultiTenancyBundle\Resolver\ResolverInterface;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionFunctionProviderInterface;
 use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 
-
 class TenantExpressionFunctionProvider implements ResourceExpressionFunctionProviderInterface
 {
     public function __construct(
-        private ResolverInterface $resolver
-    )
-    {
+        private ResolverInterface $resolver,
+    ) {
     }
 
     public function getFunctions()

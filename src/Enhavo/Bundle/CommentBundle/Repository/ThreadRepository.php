@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-10-21
- * Time: 19:29
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Repository;
@@ -12,5 +15,4 @@ use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class ThreadRepository extends EntityRepository
 {
-
 }

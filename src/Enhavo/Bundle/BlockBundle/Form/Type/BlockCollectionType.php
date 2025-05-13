@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 03.05.18
- * Time: 18:42
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
@@ -20,9 +23,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class BlockCollectionType extends AbstractType
 {
     public function __construct(
-        private readonly BlockManager $blockManager
-    )
-    {
+        private readonly BlockManager $blockManager,
+    ) {
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -34,7 +36,7 @@ class BlockCollectionType extends AbstractType
             'entry_types_options' => $this->getEntryTypesOptions(),
             'entry_types_prototype_data' => $this->getEntryTypesPrototypeData(),
             'entry_type_name' => 'name',
-            'entry_type_resolver' => function(NodeInterface $node) {
+            'entry_type_resolver' => function (NodeInterface $node) {
                 return $node->getName();
             },
             'allow_add' => true,
@@ -48,17 +50,17 @@ class BlockCollectionType extends AbstractType
                 if ($node instanceof CustomNameInterface) {
                     return $node->getCustomName();
                 }
+
                 return null;
-            }
+            },
         ]);
 
-        $resolver->setNormalizer('entry_type_filter', function (Options $options, $value)
-        {
-            if ($value !== null) {
+        $resolver->setNormalizer('entry_type_filter', function (Options $options, $value) {
+            if (null !== $value) {
                 return $value;
             }
 
-            if (count($options['item_groups']) === 0 && count($options['items']) === 0) {
+            if (0 === count($options['item_groups']) && 0 === count($options['items'])) {
                 return null;
             }
 
@@ -82,7 +84,7 @@ class BlockCollectionType extends AbstractType
                 }
             }
 
-            return function() use ($keys) {
+            return function () use ($keys) {
                 return $keys;
             };
         });
@@ -94,6 +96,7 @@ class BlockCollectionType extends AbstractType
         foreach ($this->blockManager->getBlocks() as $key => $block) {
             $types[$key] = NodeType::class;
         }
+
         return $types;
     }
 
@@ -106,6 +109,7 @@ class BlockCollectionType extends AbstractType
                 'label' => $block->getLabel(),
             ];
         }
+
         return $types;
     }
 
@@ -119,6 +123,7 @@ class BlockCollectionType extends AbstractType
             $node->setBlock($block);
             $data[$key] = $node;
         }
+
         return $data;
     }
 

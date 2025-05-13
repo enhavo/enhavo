@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Endpoint\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,17 +50,19 @@ class ImageCropperEndpointType extends AbstractEndpointType
     {
         $format = $this->getFormat($options, $request);
 
-        if ($request->getMethod() == Request::METHOD_POST) {
+        if (Request::METHOD_POST == $request->getMethod()) {
             if (!$this->csrfTokenManager->isTokenValid(new CsrfToken('image_cropper', $request->getPayload()->get('token')))) {
                 $context->setStatusCode(400);
                 $data['success'] = false;
                 $data['message'] = 'Invalid token';
+
                 return;
             }
 
             $this->cropFormat($request, $format);
             $data['success'] = true;
             $data['message'] = null;
+
             return;
         }
 
@@ -69,18 +80,17 @@ class ImageCropperEndpointType extends AbstractEndpointType
         $ratio = $this->imageCropperManager->getFormatRatio($format);
 
         if (is_array($parameters)) {
-            if(array_key_exists('cropHeight', $parameters) &&
-                array_key_exists('cropWidth', $parameters) &&
-                array_key_exists('cropX', $parameters) &&
-                array_key_exists('cropY', $parameters))
-            {
+            if (array_key_exists('cropHeight', $parameters)
+                && array_key_exists('cropWidth', $parameters)
+                && array_key_exists('cropX', $parameters)
+                && array_key_exists('cropY', $parameters)) {
                 return [
                     'height' => $parameters['cropHeight'],
                     'width' => $parameters['cropWidth'],
                     'x' => $parameters['cropX'],
-                    'y' =>$parameters['cropY'],
+                    'y' => $parameters['cropY'],
                     'ratio' => $ratio,
-                    'url' => $url
+                    'url' => $url,
                 ];
             }
         }
@@ -91,7 +101,7 @@ class ImageCropperEndpointType extends AbstractEndpointType
             'x' => null,
             'y' => null,
             'ratio' => $ratio,
-            'url' => $url
+            'url' => $url,
         ];
     }
 
@@ -103,29 +113,29 @@ class ImageCropperEndpointType extends AbstractEndpointType
                 'label' => 'action.label.save',
                 'translation_domain' => 'EnhavoResourceBundle',
                 'icon' => 'save',
-                'method' => 'crop'
+                'method' => 'crop',
             ],
             'zoom_in' => [
                 'type' => MediaCropActionType::class,
                 'label' => 'media.image_cropper.label.tooltip_zoom_in',
                 'translation_domain' => 'EnhavoMediaBundle',
                 'icon' => 'add',
-                'method' => 'zoomIn'
+                'method' => 'zoomIn',
             ],
             'zoom_out' => [
                 'type' => MediaCropActionType::class,
                 'label' => 'media.image_cropper.label.tooltip_zoom_out',
                 'translation_domain' => 'EnhavoMediaBundle',
                 'icon' => 'remove',
-                'method' => 'zoomOut'
+                'method' => 'zoomOut',
             ],
             'reset' => [
                 'type' => MediaCropActionType::class,
                 'label' => 'media.image_cropper.label.tooltip_reset',
                 'translation_domain' => 'EnhavoMediaBundle',
                 'icon' => 'reply',
-                'method' => 'reset'
-            ]
+                'method' => 'reset',
+            ],
         ];
 
         $viewData = [];
@@ -133,6 +143,7 @@ class ImageCropperEndpointType extends AbstractEndpointType
         foreach ($actions as $key => $action) {
             $viewData[$key] = $action->createViewData($format);
         }
+
         return $viewData;
     }
 
@@ -146,7 +157,7 @@ class ImageCropperEndpointType extends AbstractEndpointType
         $y = intval($payload->get('y'));
 
         $parameters = $format->getParameters();
-        if(!is_array($parameters)) {
+        if (!is_array($parameters)) {
             $parameters = [];
         }
 
@@ -167,10 +178,10 @@ class ImageCropperEndpointType extends AbstractEndpointType
         $format = $request->get('format');
 
         $file = $this->fileRepository->findOneBy([
-            'token' => $token
+            'token' => $token,
         ]);
 
-        if ($file === null) {
+        if (null === $file) {
             throw $this->createNotFoundException();
         }
 
@@ -179,6 +190,7 @@ class ImageCropperEndpointType extends AbstractEndpointType
         }
 
         $format = $this->mediaManager->getFormat($file, $format);
+
         return $format;
     }
 

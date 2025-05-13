@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-04
- * Time: 10:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
@@ -24,6 +27,7 @@ class CloseActionTypeTest extends TestCase
         $dependencies = new CloseActionTypeTestDependencies();
         $dependencies->translator = new TranslatorMock();
         $dependencies->resourceExpressionLanguage = $this->getMockBuilder(ResourceExpressionLanguage::class)->disableOriginalConstructor()->getMock();
+
         return $dependencies;
     }
 
@@ -36,7 +40,6 @@ class CloseActionTypeTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $type = $this->createInstance($dependencies);
-
 
         $baseType = new BaseActionType($dependencies->translator, $dependencies->resourceExpressionLanguage);
         $action = new Action($type, [$baseType], []);

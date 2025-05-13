@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
@@ -42,12 +51,12 @@ class NewsletterType extends AbstractType
     {
         $builder->add('slug', TextType::class, [
             'label' => 'newsletter.form.label.slug',
-            'translation_domain' => 'EnhavoNewsletterBundle'
+            'translation_domain' => 'EnhavoNewsletterBundle',
         ]);
 
         $builder->add('subject', TextType::class, [
             'label' => 'newsletter.form.label.subject',
-            'translation_domain' => 'EnhavoNewsletterBundle'
+            'translation_domain' => 'EnhavoNewsletterBundle',
         ]);
 
         $builder->add('groups', AutoCompleteEntityType::class, [
@@ -55,62 +64,61 @@ class NewsletterType extends AbstractType
             'translation_domain' => 'EnhavoNewsletterBundle',
             'multiple' => true,
             'class' => GroupInterface::class,
-            'route' => "enhavo_newsletter_admin_api_group_auto_complete",
+            'route' => 'enhavo_newsletter_admin_api_group_auto_complete',
         ]);
 
         $builder->add('content', BlockNodeType::class, [
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
-            'item_groups' => ['newsletter', 'simple']
+            'item_groups' => ['newsletter', 'simple'],
         ]);
 
         $builder->add('attachments', MediaType::class, [
             'label' => 'newsletter.form.label.attachments',
             'translation_domain' => 'EnhavoNewsletterBundle',
             'multiple' => true,
-            'required' => false
+            'required' => false,
         ]);
 
         $builder->add('createdAt', DateTimeType::class, [
-            'disabled' => true
+            'disabled' => true,
         ]);
 
         $builder->add('startAt', DateTimeType::class, [
-            'disabled' => true
+            'disabled' => true,
         ]);
 
         $builder->add('finishAt', DateTimeType::class, [
-            'disabled' => true
+            'disabled' => true,
         ]);
 
         $builder->add('state', TextType::class, [
-            'disabled' => true
+            'disabled' => true,
         ]);
 
         $builder->add('id', TextType::class, [
-            'disabled' => true
+            'disabled' => true,
         ]);
 
-
-        if(count($this->templates) > 1) {
+        if (count($this->templates) > 1) {
             $choices = [];
-            foreach($this->templates as $key => $values) {
+            foreach ($this->templates as $key => $values) {
                 $choices[$this->translator->trans($values['label'], [], $values['translation_domain'])] = $key;
             }
 
-            $builder->add('template', ChoiceType::class, array(
+            $builder->add('template', ChoiceType::class, [
                 'label' => 'newsletter.form.label.template',
                 'translation_domain' => 'EnhavoNewsletterBundle',
-                'choices' => $choices
-            ));
+                'choices' => $choices,
+            ]);
         }
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => $this->dataClass
-        ));
+        $resolver->setDefaults([
+            'data_class' => $this->dataClass,
+        ]);
     }
 
     public function getBlockPrefix()

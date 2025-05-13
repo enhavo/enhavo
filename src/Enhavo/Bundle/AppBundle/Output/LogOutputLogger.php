@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Output;
 
 use Monolog\Level;
@@ -24,60 +33,44 @@ class LogOutputLogger extends AbstractOutputLogger
 
     /**
      * TerminalOutputLogger constructor.
-     * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function writeln($message, $level = Level::Info, $context = array())
+    public function writeln($message, $level = Level::Info, $context = [])
     {
-        if ($this->lineBuffer !== '') {
+        if ('' !== $this->lineBuffer) {
             if ($this->lineBufferLogLevel !== $level) {
                 $this->flushLineBuffer();
             } else {
-                $message = $this->lineBuffer . $message;
+                $message = $this->lineBuffer.$message;
                 $this->lineBuffer = '';
             }
         }
         $this->logger->log($level, $message, $context);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function write($message, $level = Level::Info)
     {
-        if ($this->lineBuffer !== '' && $this->lineBufferLogLevel != $level) {
+        if ('' !== $this->lineBuffer && $this->lineBufferLogLevel != $level) {
             $this->flushLineBuffer();
         }
         $this->lineBuffer .= $message;
         $this->lineBufferLogLevel = $level;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function progressStart($max = 0)
     {
         // No progress bar in log
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function progressAdvance($step = 1)
     {
         // No progress bar in log
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function progressFinish()
     {
         // No progress bar in log
@@ -85,8 +78,8 @@ class LogOutputLogger extends AbstractOutputLogger
 
     private function flushLineBuffer()
     {
-        if ($this->lineBuffer !== '') {
-            $this->logger->log($this->lineBufferLogLevel, $this->lineBuffer, array());
+        if ('' !== $this->lineBuffer) {
+            $this->logger->log($this->lineBufferLogLevel, $this->lineBuffer, []);
         }
         $this->lineBuffer = '';
     }

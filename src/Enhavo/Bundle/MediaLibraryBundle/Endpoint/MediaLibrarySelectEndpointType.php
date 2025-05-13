@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaLibraryBundle\Endpoint;
 
 use Doctrine\Persistence\ObjectRepository;
@@ -18,8 +27,7 @@ class MediaLibrarySelectEndpointType extends AbstractEndpointType
         private readonly FileFactory $fileFactory,
         private readonly ObjectRepository $itemRepository,
         private readonly ResourceManager $resourceManager,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 02.02.16
- * Time: 11:18
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Column\Type;
@@ -22,8 +25,7 @@ class BaseColumnType extends AbstractType implements ColumnTypeInterface
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly ResourceExpressionLanguage $expressionLanguage,
-    )
-    {
+    ) {
     }
 
     public function buildSortingQuery($options, FilterQuery $query, string $direction): void
@@ -37,15 +39,14 @@ class BaseColumnType extends AbstractType implements ColumnTypeInterface
 
     public function createResourceViewData(array $options, object $resource, Data $data): void
     {
-
     }
 
     public function createColumnViewData(array $options, Data $data): void
     {
         $data->set('label', $this->translator->trans($options['label'], [], $options['translation_domain']));
         $data->set('width', $options['width']);
-        $data->set('component',  $options['component']);
-        $data->set('model',  $options['model']);
+        $data->set('component', $options['component']);
+        $data->set('model', $options['model']);
         $data->set('sortable', $options['sortable'] ?? false);
         $data->set('visibleCondition', $options['visible_condition']);
         $data->set('visible', $options['visible']);
@@ -58,7 +59,7 @@ class BaseColumnType extends AbstractType implements ColumnTypeInterface
 
     public function isEnabled(array $options): bool
     {
-        return !!$this->expressionLanguage->evaluate($options['enabled']);
+        return (bool) $this->expressionLanguage->evaluate($options['enabled']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

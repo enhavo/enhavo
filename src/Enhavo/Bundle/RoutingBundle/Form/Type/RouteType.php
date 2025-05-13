@@ -1,9 +1,12 @@
 <?php
-/**
- * RouteType.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 19/05/15
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\Form\Type;
@@ -11,15 +14,12 @@ namespace Enhavo\Bundle\RoutingBundle\Form\Type;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
 
 class RouteType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('path', TextType::class);
@@ -27,7 +27,7 @@ class RouteType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'label' => 'label.url',
             'translation_domain' => 'EnhavoAppBundle',
             'data_class' => Route::class,
@@ -39,9 +39,10 @@ class RouteType extends AbstractType
                 $route = new Route();
                 $route->setPath($path);
                 $route->generateRouteName();
+
                 return $route;
             },
-        ));
+        ]);
     }
 
     public function getBlockPrefix()

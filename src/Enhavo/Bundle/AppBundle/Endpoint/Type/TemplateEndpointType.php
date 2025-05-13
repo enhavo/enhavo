@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -21,8 +30,7 @@ class TemplateEndpointType extends AbstractEndpointType
         private readonly TemplateExpressionLanguageEvaluator $templateExpressionLanguageEvaluator,
         private readonly TwigRouter $twigRouter,
         private readonly RouteCollectorInterface $routeCollector,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context)
@@ -32,7 +40,7 @@ class TemplateEndpointType extends AbstractEndpointType
         $this->loadData($options, $data);
 
         if (is_array($options['variants'])) {
-            $this->loadVariants($request,  $data, $options['variants']);
+            $this->loadVariants($request, $data, $options['variants']);
         }
 
         if ($options['routes']) {
@@ -111,7 +119,7 @@ class TemplateEndpointType extends AbstractEndpointType
     private function checkVariantCondition(Request $request, $condition): bool
     {
         $parts = explode('=', $condition);
-        if (count($parts) != 2) {
+        if (2 != count($parts)) {
             throw new \Exception(sprintf('Variant condition need exactly one equal sign, %s given for condition \'%s\'', count($parts) - 1, $condition));
         }
 

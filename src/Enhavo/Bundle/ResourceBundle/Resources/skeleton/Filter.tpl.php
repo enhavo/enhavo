@@ -1,12 +1,12 @@
-<?= "<?php\n"; ?>
+<?php echo "<?php\n"; ?>
 
-namespace <?= $namespace; ?>;
+namespace <?php echo $namespace; ?>;
 
 use Enhavo\Bundle\AppBundle\Filter\AbstractFilterType;
 use Enhavo\Bundle\AppBundle\Filter\FilterQuery;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class <?= $class_name; ?> extends AbstractFilterType
+class <?php echo $class_name; ?> extends AbstractFilterType
 {
     public function createViewData($options, $name)
     {
@@ -30,6 +30,6 @@ class <?= $class_name; ?> extends AbstractFilterType
 
     public function getType()
     {
-        return '<?= $name; ?>';
+        return '<?php echo $name; ?>';
     }
 }

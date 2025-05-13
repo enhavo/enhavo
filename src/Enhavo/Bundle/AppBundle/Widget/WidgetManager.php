@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-02-19
- * Time: 02:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Widget;
@@ -19,7 +22,6 @@ class WidgetManager
 
     /**
      * ActionManager constructor.
-     * @param TypeCollector $collector
      */
     public function __construct(TypeCollector $collector)
     {
@@ -27,8 +29,6 @@ class WidgetManager
     }
 
     /**
-     * @param $type
-     * @param $options
      * @return Widget
      */
     public function getWidget($type, $options)
@@ -36,16 +36,12 @@ class WidgetManager
         return $this->createWidget($type, $options);
     }
 
-    /**
-     * @param string $type
-     * @param array $options
-     * @return Widget
-     */
     private function createWidget(string $type, array $options): Widget
     {
         /** @var WidgetTypeInterface $type */
         $type = $this->collector->getType($type);
         $widget = new Widget($type, $options);
+
         return $widget;
     }
 }

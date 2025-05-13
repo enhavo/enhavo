@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-27
- * Time: 08:33
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\NavItem\Type;
@@ -17,7 +20,8 @@ class NavItemType extends AbstractType implements NavItemTypeInterface
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-    ) {}
+    ) {
+    }
 
     public function getModel($options)
     {
@@ -74,7 +78,7 @@ class NavItemType extends AbstractType implements NavItemTypeInterface
         ]);
 
         $resolver->setRequired([
-            'label', 'model', 'factory', 'form'
+            'label', 'model', 'factory', 'form',
         ]);
     }
 }

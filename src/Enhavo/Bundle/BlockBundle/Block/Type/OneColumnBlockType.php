@@ -1,17 +1,20 @@
 <?php
-/**
- * OneColumnConfiguration.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 08/08/18
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
-use Enhavo\Bundle\BlockBundle\Model\Column\OneColumnBlock;
+use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Enhavo\Bundle\BlockBundle\Factory\OneColumnBlockFactory;
 use Enhavo\Bundle\BlockBundle\Form\Type\OneColumnBlockType as OneColumnBlockFormType;
-use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
+use Enhavo\Bundle\BlockBundle\Model\Column\OneColumnBlock;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OneColumnBlockType extends AbstractBlockType
@@ -25,7 +28,7 @@ class OneColumnBlockType extends AbstractBlockType
             'template' => 'theme/block/one-column.html.twig',
             'label' => 'one_column.label.one_column',
             'translation_domain' => 'EnhavoBlockBundle',
-            'groups' => ['default', 'layout']
+            'groups' => ['default', 'layout'],
         ]);
     }
 

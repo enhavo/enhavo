@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jenny
- * Date: 12.12.16
- * Time: 13:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Twig;
@@ -28,15 +31,15 @@ class BrandingExtension extends AbstractExtension
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('is_branding', array($this, 'isBranding')),
-            new TwigFunction('is_branding_version', array($this, 'isBrandingVersion')),
-            new TwigFunction('is_branding_created_by', array($this, 'isBrandingCreatedBy')),
-            new TwigFunction('branding_text', array($this, 'getBrandingText'), array('is_safe' => array('html'))),
-            new TwigFunction('branding_logo', array($this, 'getBrandingLogo')),
-            new TwigFunction('branding_version', array($this, 'getBrandingVersion')),
-            new TwigFunction('branding_background_image', array($this, 'getBackgroundImage')),
-        );
+        return [
+            new TwigFunction('is_branding', [$this, 'isBranding']),
+            new TwigFunction('is_branding_version', [$this, 'isBrandingVersion']),
+            new TwigFunction('is_branding_created_by', [$this, 'isBrandingCreatedBy']),
+            new TwigFunction('branding_text', [$this, 'getBrandingText'], ['is_safe' => ['html']]),
+            new TwigFunction('branding_logo', [$this, 'getBrandingLogo']),
+            new TwigFunction('branding_version', [$this, 'getBrandingVersion']),
+            new TwigFunction('branding_background_image', [$this, 'getBackgroundImage']),
+        ];
     }
 
     public function isBranding()

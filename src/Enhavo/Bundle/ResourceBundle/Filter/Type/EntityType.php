@@ -1,9 +1,12 @@
 <?php
-/**
- * TextFilter.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 19/01/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Filter\Type;
@@ -19,8 +22,7 @@ class EntityType extends AbstractFilterType
 {
     public function __construct(
         private readonly ResourceManager $resourceManager,
-    )
-    {
+    ) {
     }
 
     public function createViewData($options, Data $data): void
@@ -34,7 +36,7 @@ class EntityType extends AbstractFilterType
 
     public function buildQuery($options, FilterQuery $query, mixed $value): void
     {
-        if ($value == null) {
+        if (null == $value) {
             return;
         }
 
@@ -45,21 +47,21 @@ class EntityType extends AbstractFilterType
 
     protected function getInitialValue($options)
     {
-        if ($options['initial_value'] === null) {
+        if (null === $options['initial_value']) {
             return 0;
         }
 
         $repository = $this->resourceManager->getRepository($options['resource']);
 
         $method = $options['initial_value'];
-        $arguments =  $options['initial_value_arguments'];
+        $arguments = $options['initial_value_arguments'];
 
         $reflectionClass = new \ReflectionClass(get_class($repository));
         if (!$reflectionClass->hasMethod($options['initial_value'])) {
             throw new \InvalidArgumentException('Parameter "initial_value" must be a method of the repository defined by parameter "repository"');
         }
 
-        if($arguments) {
+        if ($arguments) {
             if (!is_array($arguments)) {
                 $arguments = [$arguments];
             }
@@ -68,7 +70,7 @@ class EntityType extends AbstractFilterType
             $initialValueEntity = call_user_func([$repository, $method]);
         }
 
-        if (!$initialValueEntity || (is_array($initialValueEntity) && count($initialValueEntity) == 0)) {
+        if (!$initialValueEntity || (is_array($initialValueEntity) && 0 == count($initialValueEntity))) {
             return null;
         }
         if (is_array($initialValueEntity) && count($initialValueEntity) > 0) {
@@ -76,6 +78,7 @@ class EntityType extends AbstractFilterType
         }
 
         $propertyAccessor = new PropertyAccessor();
+
         return $propertyAccessor->getValue($initialValueEntity, 'id');
     }
 
@@ -84,9 +87,9 @@ class EntityType extends AbstractFilterType
         $repository = $this->resourceManager->getRepository($options['resource']);
 
         $method = $options['method'];
-        $arguments =  $options['arguments'];
+        $arguments = $options['arguments'];
 
-        if(is_array($arguments)) {
+        if (is_array($arguments)) {
             $entities = call_user_func_array([$repository, $method], $arguments);
         } else {
             $entities = call_user_func([$repository, $method]);
@@ -99,13 +102,14 @@ class EntityType extends AbstractFilterType
             if ($choiceLabel) {
                 $label = $propertyAccessor->getValue($entity, $choiceLabel);
             } else {
-                $label = (string)$entity;
+                $label = (string) $entity;
             }
             $choices[] = [
                 'label' => $label,
-                'code' => $propertyAccessor->getValue($entity, 'id')
+                'code' => $propertyAccessor->getValue($entity, 'id'),
             ];
         }
+
         return $choices;
     }
 
@@ -121,7 +125,7 @@ class EntityType extends AbstractFilterType
         ]);
 
         $resolver->setRequired([
-            'resource', 'property'
+            'resource', 'property',
         ]);
     }
 

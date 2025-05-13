@@ -1,9 +1,12 @@
 <?php
-/**
- * MediaManager.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 13/08/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Media;
@@ -46,10 +49,10 @@ class MediaManager
     {
         if ($file instanceof FileInterface) {
             $this->fileNotFoundHandler->handleFileNotFound($file, $this->fileNotFoundHandlerParameter);
-        } else if ($file instanceof FormatInterface) {
+        } elseif ($file instanceof FormatInterface) {
             $formatName = $file->getName();
             $originalFile = $file->getFile();
-            if (!file_exists($originalFile->getContent()->getFilePath()))  {
+            if (!file_exists($originalFile->getContent()->getFilePath())) {
                 $this->fileNotFoundHandler->handleFileNotFound($originalFile, $this->fileNotFoundHandlerParameter);
             }
             $this->formatManager->applyFormat($originalFile, $formatName);
@@ -94,8 +97,7 @@ class MediaManager
             // Find the position of the unit in the ordered string which is the power of magnitude to multiply a kilobyte by.
             return round($size * pow(1024, stripos('bkmgtpezy', $unit[0])));
         }
-        else {
-            return round($size);
-        }
+
+        return round($size);
     }
 }

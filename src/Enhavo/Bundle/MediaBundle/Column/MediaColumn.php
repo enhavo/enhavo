@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: fliebl
- * Date: 10.06.16
- * Time: 09:15
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Column;
@@ -21,8 +24,7 @@ class MediaColumn extends AbstractColumnType
 {
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
-    )
-    {
+    ) {
     }
 
     public function createResourceViewData(array $options, object $resource, Data $data): void
@@ -35,37 +37,34 @@ class MediaColumn extends AbstractColumnType
 
         $file = $propertyAccessor->getValue($resource, $property);
 
-        if ($file == null) {
+        if (null == $file) {
             $data->set('height', $height);
             $data->set('url', null);
+
             return;
         }
 
         if ($file instanceof Collection && $file->first() instanceof FileInterface) {
             $files = $file->toArray();
-            usort($files, function($a, $b) {
+            usort($files, function ($a, $b) {
                 /** @var FileInterface $a */
                 /** @var FileInterface $b */
                 if ($a->getOrder() == $b->getOrder()) {
                     return 0;
-                } else if ($a->getOrder() > $b->getOrder()) {
+                } elseif ($a->getOrder() > $b->getOrder()) {
                     return 1;
-                } else {
-                    return -1;
                 }
+
+                return -1;
             });
             $file = $files[0];
         }
 
-        if($file !== null && !$file instanceof FileInterface) {
-            throw new FileException(sprintf(
-                'Error rendering TableWidget type PictureWidget: Property must be of type "Enhavo\Bundle\MediaBundle\Model\FileInterface" or a Collection thereof, is "%s"',
-                get_class($file)
-            ));
+        if (null !== $file && !$file instanceof FileInterface) {
+            throw new FileException(sprintf('Error rendering TableWidget type PictureWidget: Property must be of type "Enhavo\Bundle\MediaBundle\Model\FileInterface" or a Collection thereof, is "%s"', get_class($file)));
         }
 
         $url = $this->urlGenerator->generateFormat($file, $format);
-
 
         $data->set('height', $height);
         $data->set('url', $url);

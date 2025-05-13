@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 16.01.18
- * Time: 14:54
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Form\Extension;
@@ -22,12 +25,9 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class EntityTypeExtension extends AbstractTypeExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if($options['multiple'] && $options['sortable']) {
+        if ($options['multiple'] && $options['sortable']) {
             $propertyAccessor = PropertyAccess::createPropertyAccessor();
             $submittedData = null;
             $builder->addViewTransformer(new CallbackTransformer(
@@ -36,36 +36,34 @@ class EntityTypeExtension extends AbstractTypeExtension
                 },
                 function ($submittedDescription) use (&$submittedData) {
                     $submittedData = $submittedDescription;
+
                     return $submittedDescription;
                 }
             ));
 
             $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use (&$submittedData, $propertyAccessor, $options) {
                 $data = $event->getForm()->getData();
-                if($data instanceof Collection) {
-                    foreach($data as $entry) {
+                if ($data instanceof Collection) {
+                    foreach ($data as $entry) {
                         $id = $propertyAccessor->getValue($entry, 'id');
                         $position = array_search($id, $submittedData);
-                        $position++;
+                        ++$position;
                         $propertyAccessor->setValue($entry, $options['sort_property'], $position);
                     }
                 }
+
                 return $data;
             });
-
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        if($options['multiple'] && $options['sortable']) {
+        if ($options['multiple'] && $options['sortable']) {
             $view->vars['attr']['data-select2-options'] = json_encode([
                 'multiple' => $options['multiple'],
                 'sortable' => $options['sortable'],
-                'count' => $options['count']
+                'count' => $options['count'],
             ]);
         }
         $view->vars['count'] = $options['count'];

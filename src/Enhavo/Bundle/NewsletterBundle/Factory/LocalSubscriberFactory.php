@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Factory;
 
 use Doctrine\ORM\EntityRepository;
@@ -13,8 +22,7 @@ class LocalSubscriberFactory extends Factory implements LocalSubscriberFactoryIn
     public function __construct(
         string $className,
         private readonly EntityRepository $groupRepository,
-    )
-    {
+    ) {
         parent::__construct($className);
     }
 
@@ -35,6 +43,7 @@ class LocalSubscriberFactory extends Factory implements LocalSubscriberFactoryIn
 
         $subscriber = $this->createNew();
         $subscriber->addGroup($group);
+
         return $subscriber;
     }
 }

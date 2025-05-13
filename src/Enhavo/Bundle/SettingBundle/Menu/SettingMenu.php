@@ -1,9 +1,12 @@
 <?php
-/**
- * SettingMenu.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 21/09/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SettingBundle\Menu;
@@ -14,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SettingMenu extends AbstractMenuType
 {
-    public function configureOptions(OptionsResolver $resolver) :void
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'icon' => 'settings',
@@ -27,19 +30,21 @@ class SettingMenu extends AbstractMenuType
             'key' => null,
         ]);
 
-        $resolver->setNormalizer('route_parameters', function($options, $value) {
+        $resolver->setNormalizer('route_parameters', function ($options, $value) {
             if ($options['group']) {
                 return array_merge(['group' => $options['group']], $value);
             } elseif ($options['key']) {
                 return array_merge(['key' => $options['setting']], $value);
             }
+
             return $value;
         });
 
-        $resolver->setNormalizer('route', function($options, $value) {
+        $resolver->setNormalizer('route', function ($options, $value) {
             if ($options['setting']) {
                 return 'enhavo_setting_setting_edit';
             }
+
             return $value;
         });
     }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Tests\Security\Authentication;
 
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
@@ -33,6 +42,7 @@ class FormAuthenticationEntryPointTest extends TestCase
             return $route.'.generated';
         });
         $dependencies->configurationProvider = $this->getMockBuilder(ConfigurationProvider::class)->disableOriginalConstructor()->getMock();
+
         return $dependencies;
     }
 
@@ -41,10 +51,11 @@ class FormAuthenticationEntryPointTest extends TestCase
         $dependencies = $this->createDependencies();
         $instance = $this->createInstance($dependencies);
 
-        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function() {
+        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function () {
             $configuration = new LoginConfiguration();
             $configuration->setRoute('config.login.route');
             $configuration->setCheckRoute('config.login.route');
+
             return $configuration;
         });
 

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Model\Database;
 
 /**
@@ -8,7 +17,7 @@ namespace Enhavo\Bundle\SearchBundle\Model\Database;
 class Index
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $id;
 
@@ -23,7 +32,7 @@ class Index
     protected $locale;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $weight;
 

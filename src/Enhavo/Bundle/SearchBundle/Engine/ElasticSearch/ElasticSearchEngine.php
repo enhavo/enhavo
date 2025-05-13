@@ -1,16 +1,28 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 10.05.18
- * Time: 22:07
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Engine\ElasticSearch;
 
 use Doctrine\ORM\EntityManager;
 use Elastica\Client;
+use Elastica\Document;
 use Elastica\Index;
+use Elastica\Mapping;
+use Elastica\Query;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\ConstantScore;
+use Elastica\Query\MatchPhrasePrefix;
+use Elastica\Query\Range;
+use Elastica\Query\Term;
+use Elastica\Search;
 use Enhavo\Bundle\AppBundle\Output\OutputLoggerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\BetweenQuery;
@@ -20,18 +32,14 @@ use Enhavo\Bundle\SearchBundle\Engine\Filter\MatchQuery;
 use Enhavo\Bundle\SearchBundle\Engine\Result\EntitySubjectLoader;
 use Enhavo\Bundle\SearchBundle\Engine\Result\ResultEntry;
 use Enhavo\Bundle\SearchBundle\Engine\Result\ResultSummary;
+use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
 use Enhavo\Bundle\SearchBundle\Exception\FilterQueryNotSupportedException;
 use Enhavo\Bundle\SearchBundle\Exception\IndexException;
 use Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider;
-use Enhavo\Bundle\SearchBundle\Index\Metadata\Metadata;
-use Pagerfanta\Pagerfanta;
-use Enhavo\Component\Metadata\MetadataRepository;
-use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
 use Enhavo\Bundle\SearchBundle\Index\IndexDataProvider;
-use Elastica\Document;
-use Elastica\Search;
-use Elastica\Query;
-use Elastica\Mapping;
+use Enhavo\Bundle\SearchBundle\Index\Metadata\Metadata;
+use Enhavo\Component\Metadata\MetadataRepository;
+use Pagerfanta\Pagerfanta;
 
 class ElasticSearchEngine implements SearchEngineInterface
 {
@@ -51,7 +59,6 @@ class ElasticSearchEngine implements SearchEngineInterface
         $dsn,
         private readonly ?array $indexSettings,
         private readonly int $pageSize = 100,
-
     ) {
         if (!self::supports($dsn)) {
             return;
@@ -64,14 +71,14 @@ class ElasticSearchEngine implements SearchEngineInterface
     public function initialize($force = false): void
     {
         $createIndexArguments = [];
-        if ($this->indexSettings !== null) {
+        if (null !== $this->indexSettings) {
             $createIndexArguments['settings'] = $this->indexSettings;
         }
 
         $index = $this->getIndex();
         if (!$index->exists()) {
             $index->create($createIndexArguments);
-        } else if ($index->exists() && $force) {
+        } elseif ($index->exists() && $force) {
             $index->delete();
             $index->create($createIndexArguments);
         }
@@ -79,8 +86,8 @@ class ElasticSearchEngine implements SearchEngineInterface
         $mapping = new Mapping();
 
         $indexData = [];
-        for ($i = 0; $i <= 100; $i++) {
-            $indexData['value.' . $i] = ['type' => 'text'];
+        for ($i = 0; $i <= 100; ++$i) {
+            $indexData['value.'.$i] = ['type' => 'text'];
         }
 
         $filterData = [];
@@ -89,7 +96,7 @@ class ElasticSearchEngine implements SearchEngineInterface
 
             foreach ($fields as $field) {
                 $filterData[$field->getKey()] = [
-                    'type' => $this->mapDataType($field->getFieldType())
+                    'type' => $this->mapDataType($field->getFieldType()),
                 ];
             }
         }
@@ -99,11 +106,11 @@ class ElasticSearchEngine implements SearchEngineInterface
             'className' => ['type' => 'keyword'],
             'indexData' => [
                 'type' => 'object',
-                'properties' => $indexData
+                'properties' => $indexData,
             ],
             'filterData' => [
                 'type' => 'object',
-                'properties' => $filterData
+                'properties' => $filterData,
             ],
         ]);
 
@@ -112,11 +119,11 @@ class ElasticSearchEngine implements SearchEngineInterface
 
     private function mapDataType($type)
     {
-        if ($type == null) {
+        if (null == $type) {
             return 'keyword';
-        } else if ($type === 'string') {
+        } elseif ('string' === $type) {
             return 'keyword';
-        } else if ($type === 'bool') {
+        } elseif ('bool' === $type) {
             return 'boolean';
         }
 
@@ -124,29 +131,30 @@ class ElasticSearchEngine implements SearchEngineInterface
     }
 
     /**
-     * @param Filter $filter
      * @return Query
      */
     private function createQuery(Filter $filter)
     {
-        $query = new Query\BoolQuery();
+        $query = new BoolQuery();
         $this->applyTermQueries($filter, $query);
         $this->applyFilterQueries($filter, $query);
+
         return $this->createMasterQuery($filter, $query);
     }
 
     private function createSuggestQuery(Filter $filter)
     {
-        $query = new Query\BoolQuery();
+        $query = new BoolQuery();
         $this->applySuggestQueries($filter, $query);
         $this->applyFilterQueries($filter, $query);
+
         return $this->createMasterQuery($filter, $query);
     }
 
-    private function applyTermQueries(Filter $filter, Query\BoolQuery $query)
+    private function applyTermQueries(Filter $filter, BoolQuery $query)
     {
         if ($filter->getTerm()) {
-            for ($i = 1; $i <= 100; $i++) {
+            for ($i = 1; $i <= 100; ++$i) {
                 $fieldName = sprintf('indexData.value.%s', $i);
 
                 $termQuery = new Query\MatchQuery($fieldName, [
@@ -157,7 +165,7 @@ class ElasticSearchEngine implements SearchEngineInterface
                     $termQuery->setFieldParam($fieldName, 'fuzziness', 2);
                 }
 
-                $constantScoreQuery = new Query\ConstantScore($termQuery);
+                $constantScoreQuery = new ConstantScore($termQuery);
                 $constantScoreQuery->setBoost($i);
 
                 $query->addShould($constantScoreQuery);
@@ -166,17 +174,17 @@ class ElasticSearchEngine implements SearchEngineInterface
         }
     }
 
-    private function applySuggestQueries(Filter $filter, Query\BoolQuery $query)
+    private function applySuggestQueries(Filter $filter, BoolQuery $query)
     {
         if ($filter->getTerm()) {
-            for ($i = 1; $i <= 100; $i++) {
+            for ($i = 1; $i <= 100; ++$i) {
                 $fieldName = sprintf('indexData.value.%s', $i);
 
-                $termQuery = new Query\MatchPhrasePrefix($fieldName, [
+                $termQuery = new MatchPhrasePrefix($fieldName, [
                     'query' => $filter->getTerm(),
                 ]);
 
-                $constantScoreQuery = new Query\ConstantScore($termQuery);
+                $constantScoreQuery = new ConstantScore($termQuery);
                 $constantScoreQuery->setBoost($i);
 
                 $query->addShould($constantScoreQuery);
@@ -185,7 +193,7 @@ class ElasticSearchEngine implements SearchEngineInterface
         }
     }
 
-    private function applyFilterQueries(Filter $filter, Query\BoolQuery $query)
+    private function applyFilterQueries(Filter $filter, BoolQuery $query)
     {
         foreach ($filter->getQueries() as $key => $filterQuery) {
             $fieldName = sprintf('filterData.%s', $key);
@@ -193,20 +201,20 @@ class ElasticSearchEngine implements SearchEngineInterface
         }
 
         if ($filter->getClass()) {
-            $termQuery = new Query\Term();
+            $termQuery = new Term();
             $termQuery->setTerm('className', $filter->getClass());
             $query->addFilter($termQuery);
         }
     }
 
-    private function createMasterQuery(Filter $filter, Query\BoolQuery $query)
+    private function createMasterQuery(Filter $filter, BoolQuery $query)
     {
         $masterQuery = new Query($query);
 
-        if ($filter->getLimit() !== null) {
+        if (null !== $filter->getLimit()) {
             $masterQuery->setSize(intval($filter->getLimit()));
         }
-        if ($filter->getOrderBy() !== null) {
+        if (null !== $filter->getOrderBy()) {
             $direction = $filter->getOrderDirection();
             if (empty($direction)) {
                 $direction = 'ASC';
@@ -220,26 +228,28 @@ class ElasticSearchEngine implements SearchEngineInterface
     private function createFilterQuery($fieldName, $filterQuery)
     {
         if ($filterQuery instanceof MatchQuery) {
-            if ($filterQuery->getOperator() == MatchQuery::OPERATOR_EQUAL) {
-                $query = new Query\Term();
+            if (MatchQuery::OPERATOR_EQUAL == $filterQuery->getOperator()) {
+                $query = new Term();
                 $query->setTerm($fieldName, $filterQuery->getValue());
+
                 return $query;
-            } elseif ($filterQuery->getOperator() == MatchQuery::OPERATOR_NOT) {
-                $query = new Query\Term();
+            } elseif (MatchQuery::OPERATOR_NOT == $filterQuery->getOperator()) {
+                $query = new Term();
                 $query->setTerm($fieldName, $filterQuery->getValue());
-                $boolQuery = new Query\BoolQuery();
+                $boolQuery = new BoolQuery();
                 $boolQuery->addMustNot($query);
-                return $query;
-            } else {
-                $operatorMap = [
-                    MatchQuery::OPERATOR_GREATER => 'gt',
-                    MatchQuery::OPERATOR_GREATER_EQUAL => 'gte',
-                    MatchQuery::OPERATOR_LESS => 'lt',
-                    MatchQuery::OPERATOR_LESS_EQUAL => 'lte',
-                ];
-                $query = new Query\Range($fieldName, [$operatorMap[$filterQuery->getOperator()] => $filterQuery->getValue()]);
+
                 return $query;
             }
+            $operatorMap = [
+                MatchQuery::OPERATOR_GREATER => 'gt',
+                MatchQuery::OPERATOR_GREATER_EQUAL => 'gte',
+                MatchQuery::OPERATOR_LESS => 'lt',
+                MatchQuery::OPERATOR_LESS_EQUAL => 'lte',
+            ];
+            $query = new Range($fieldName, [$operatorMap[$filterQuery->getOperator()] => $filterQuery->getValue()]);
+
+            return $query;
         } elseif ($filterQuery instanceof BetweenQuery) {
             $operatorFromMap = [
                 BetweenQuery::OPERATOR_THAN => 'gt',
@@ -249,17 +259,19 @@ class ElasticSearchEngine implements SearchEngineInterface
                 BetweenQuery::OPERATOR_THAN => 'lt',
                 BetweenQuery::OPERATOR_EQUAL_THAN => 'lte',
             ];
-            $query = new Query\Range($fieldName, [
+            $query = new Range($fieldName, [
                 $operatorFromMap[$filterQuery->getOperatorFrom()] => $filterQuery->getFrom(),
-                $operatorToMap[$filterQuery->getOperatorTo()] => $filterQuery->getTo()
+                $operatorToMap[$filterQuery->getOperatorTo()] => $filterQuery->getTo(),
             ]);
+
             return $query;
         } elseif ($filterQuery instanceof ContainsQuery) {
-            $boolQuery = new Query\BoolQuery();
+            $boolQuery = new BoolQuery();
             foreach ($filterQuery->getValues() as $value) {
-                $term = new Query\Term([$fieldName => $value]);
+                $term = new Term([$fieldName => $value]);
                 $boolQuery->addShould($term);
             }
+
             return $boolQuery;
         }
         throw new FilterQueryNotSupportedException(sprintf('Filter query from type "%s" is not supported', get_class($filterQuery)));
@@ -273,6 +285,7 @@ class ElasticSearchEngine implements SearchEngineInterface
 
         $entries = $this->getSearchEntries($search);
         $summary = new ResultSummary($entries, count($entries));
+
         return $summary;
     }
 
@@ -285,6 +298,7 @@ class ElasticSearchEngine implements SearchEngineInterface
             $className = $data['className'];
             $entries[] = new ResultEntry(new EntitySubjectLoader($this->entityResolver, $className, $id), $data['filterData'], $document->getScore());
         }
+
         return $entries;
     }
 
@@ -293,6 +307,7 @@ class ElasticSearchEngine implements SearchEngineInterface
         $search = new Search($this->client);
         $search->addIndex($this->getIndex());
         $search->setQuery($this->createQuery($filter));
+
         return $search->count();
     }
 
@@ -317,8 +332,8 @@ class ElasticSearchEngine implements SearchEngineInterface
                 $weight = intval(substr($key, 6));
 
                 $tokens = $index->analyze([
-                    "analyzer" => "standard",
-                    "text" => $text
+                    'analyzer' => 'standard',
+                    'text' => $text,
                 ]);
 
                 foreach ($tokens as $token) {
@@ -345,7 +360,7 @@ class ElasticSearchEngine implements SearchEngineInterface
 
             $suggestionScore[] = [
                 'term' => $key,
-                'score' => $score
+                'score' => $score,
             ];
         }
 
@@ -355,8 +370,9 @@ class ElasticSearchEngine implements SearchEngineInterface
 
         $suggestions = [];
         foreach ($suggestionScore as $suggestion) {
-            $suggestions[] = $filter->getTerm() . substr($suggestion['term'], strlen($canonicalTerm));
+            $suggestions[] = $filter->getTerm().substr($suggestion['term'], strlen($canonicalTerm));
         }
+
         return $suggestions;
     }
 
@@ -367,6 +383,7 @@ class ElasticSearchEngine implements SearchEngineInterface
         $search->setQuery($this->createQuery($filter));
 
         $pagerfanta = new Pagerfanta(new ElasticaORMAdapter($search, $this->entityResolver));
+
         return new ResultSummary($pagerfanta, $search->count());
     }
 
@@ -387,10 +404,6 @@ class ElasticSearchEngine implements SearchEngineInterface
         return $this->client->getIndex($this->indexName);
     }
 
-    /**
-     * @param $resource
-     * @return Document
-     */
     private function createDocument($resource): Document
     {
         /** @var Metadata $metadata */
@@ -402,7 +415,7 @@ class ElasticSearchEngine implements SearchEngineInterface
         $documentId = $this->documentIdGenerator->generateDocumentId($className, $id);
 
         $indexData = [];
-        foreach($indexes as $index) {
+        foreach ($indexes as $index) {
             $weight = intval($index->getWeight());
             $key = 'value.'.$weight;
             if (!array_key_exists($key, $indexData)) {
@@ -420,7 +433,7 @@ class ElasticSearchEngine implements SearchEngineInterface
             'id' => $id,
             'className' => $className,
             'indexData' => $indexData,
-            'filterData' => $filterData
+            'filterData' => $filterData,
         ];
 
         return new Document($documentId, $data);
@@ -431,21 +444,22 @@ class ElasticSearchEngine implements SearchEngineInterface
         $this->indexRemover->removeIndex($resource);
     }
 
-    public function reindex(bool $force = false, string $class = null, OutputLoggerInterface $logger = null): void
+    public function reindex(bool $force = false, ?string $class = null, ?OutputLoggerInterface $logger = null): void
     {
         // only delete index if we are going to reindex all
-        if ($class === null) {
+        if (null === $class) {
             $this->getIndex()->delete();
             $this->initialize();
         }
 
-        if ($class !== null && !in_array($class, $this->classes)) {
+        if (null !== $class && !in_array($class, $this->classes)) {
             $logger?->error(sprintf('Class "%s" is not configured for indexing', $class));
+
             return;
         }
 
         foreach ($this->classes as $indexClass) {
-            if ($class !== null && $class !== $indexClass) {
+            if (null !== $class && $class !== $indexClass) {
                 continue;
             }
 
@@ -455,9 +469,9 @@ class ElasticSearchEngine implements SearchEngineInterface
             $logger?->info(sprintf('Indexing "%s" found "%s"', $indexClass, $amount));
             $logger?->progressStart($amount);
 
-            $pages = ceil($amount/$this->pageSize);
-            for ($page = 0; $page < $pages; $page++) {
-                $entities = $repository->findBy([], [], $this->pageSize, $page*$this->pageSize);
+            $pages = ceil($amount / $this->pageSize);
+            for ($page = 0; $page < $pages; ++$page) {
+                $entities = $repository->findBy([], [], $this->pageSize, $page * $this->pageSize);
                 foreach ($entities as $entity) {
                     try {
                         $logger?->progressAdvance(1);

@@ -1,15 +1,22 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Tests\Factory;
 
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
-use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Client\ClientInterface;
 use Symfony\Component\HttpClient\CurlHttpClient;
 use Symfony\Component\Panther\ProcessManager\WebServerManager;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -21,7 +28,7 @@ class FileFactoryTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        if (self::$server === null) {
+        if (null === self::$server) {
             self::$server = new WebServerManager(__DIR__.'/../fixtures/server', '127.0.0.1', 1234, 'index.php', '/ready');
             self::$server->start();
         }
@@ -67,8 +74,8 @@ class FileFactoryTest extends TestCase
 
         $file = $instance->createFromUri('http://127.0.0.1:1234/create/from/uri');
 
-        $this->assertEquals("test.txt", $file->getBasename());
-        $this->assertEquals("1234", $file->getToken());
+        $this->assertEquals('test.txt', $file->getBasename());
+        $this->assertEquals('1234', $file->getToken());
     }
 
     public function testCreateFromUriWithFileName()
@@ -78,10 +85,10 @@ class FileFactoryTest extends TestCase
 
         $instance = $this->createInstance($dependencies);
 
-        $file = $instance->createFromUri('http://127.0.0.1:1234/create/from/uri', "filename.txt");
+        $file = $instance->createFromUri('http://127.0.0.1:1234/create/from/uri', 'filename.txt');
 
-        $this->assertEquals("filename.txt", $file->getBasename());
-        $this->assertEquals("1234", $file->getToken());
+        $this->assertEquals('filename.txt', $file->getBasename());
+        $this->assertEquals('1234', $file->getToken());
     }
 
     public function testCreateFromUriWithMimeType()
@@ -91,10 +98,10 @@ class FileFactoryTest extends TestCase
 
         $instance = $this->createInstance($dependencies);
 
-        $file = $instance->createFromUri('http://127.0.0.1:1234/create/from/uri', "filename.txt");
+        $file = $instance->createFromUri('http://127.0.0.1:1234/create/from/uri', 'filename.txt');
 
-        $this->assertEquals("text/plain", $file->getMimeType());
-        $this->assertEquals("1234", $file->getToken());
+        $this->assertEquals('text/plain', $file->getMimeType());
+        $this->assertEquals('1234', $file->getToken());
     }
 }
 

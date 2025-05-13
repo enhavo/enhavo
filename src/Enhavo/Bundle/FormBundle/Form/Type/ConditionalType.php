@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-15
- * Time: 06:56
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
@@ -28,35 +31,33 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
 
     public function __construct(
         private VueForm $vueForm,
-    )
-    {
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $prototypes = [];
-        foreach ($options['entry_types'] as  $key => $type) {
-            $prototypeOptions = isset($options['entry_types_options'][$key]) ? $options['entry_types_options'][$key] : [];
+        foreach ($options['entry_types'] as $key => $type) {
+            $prototypeOptions = $options['entry_types_options'][$key] ?? [];
             $prototypes[$key] = $builder->create($options['prototype_name'], $type, $prototypeOptions)->getForm();
         }
         $builder->setAttribute('prototypes', $prototypes);
 
-
         $builder->add('conditional', HiddenType::class, []);
         $builder->add('key', HiddenType::class, []);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options): void {
             $form = $event->getForm();
             $data = $event->getData();
 
             $key = $this->resolveKey($options, $data, $form);
             if ($key) {
                 $this->key = $key;
-                $this->addConditional($options, $form,  $key);
+                $this->addConditional($options, $form, $key);
             }
         });
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options) {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($options): void {
             $form = $event->getForm();
             $data = $event->getData();
 
@@ -71,7 +72,7 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
             }
 
             if ($key) {
-                $this->addConditional($options, $form,  $key);
+                $this->addConditional($options, $form, $key);
             }
         });
 
@@ -91,7 +92,7 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
 
     private function addConditional($options, $form, $key)
     {
-        if ($key === null) {
+        if (null === $key) {
             return;
         }
 
@@ -100,7 +101,7 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
         }
 
         $type = $options['entry_types'][$key];
-        $formOptions = isset($options['entry_types_options'][$key]) ? $options['entry_types_options'][$key] : [];
+        $formOptions = $options['entry_types_options'][$key] ?? [];
 
         $form->add('conditional', $type, $formOptions);
     }
@@ -167,6 +168,7 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
             // if key changed we let the form itself create a new data object by setting its data to null
             $conditionalForm->setData(null);
             $this->keyChanged = false;
+
             return;
         }
 

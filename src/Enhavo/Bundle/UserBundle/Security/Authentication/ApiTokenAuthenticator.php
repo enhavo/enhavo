@@ -1,8 +1,12 @@
 <?php
-/**
- * @author blutze-media
- * @author gseidel
- * @since 2020-10-26
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\UserBundle\Security\Authentication;
@@ -16,27 +20,26 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
-use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 
 class ApiTokenAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
         private readonly UserRepository $userRepository,
-    )
-    {
+    ) {
     }
 
     public function supports(Request $request): ?bool
     {
-        return $request->headers->has('authorization') &&
-            str_starts_with($request->headers->get('authorization'), 'Bearer ');
+        return $request->headers->has('authorization')
+            && str_starts_with($request->headers->get('authorization'), 'Bearer ');
     }
 
     public function authenticate(Request $request): Passport
     {
-        $apiToken = substr($request->headers->get('authorization'), 7); ;
+        $apiToken = substr($request->headers->get('authorization'), 7);
         if (empty($apiToken)) {
             throw new BadCredentialsException('Token not valid');
         }
@@ -48,7 +51,7 @@ class ApiTokenAuthenticator extends AbstractAuthenticator
         }
 
         return new SelfValidatingPassport(new UserBadge($userIdentifier), [
-            new CsrfDisableFormProtectionBadge()
+            new CsrfDisableFormProtectionBadge(),
         ]);
     }
 
@@ -61,7 +64,7 @@ class ApiTokenAuthenticator extends AbstractAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $data = [
-            'message' => 'Token not valid'
+            'message' => 'Token not valid',
         ];
 
         return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);

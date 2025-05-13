@@ -1,11 +1,19 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\ResourceBundle\Action\Type\BaseActionType;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use PHPUnit\Framework\MockObject\MockObject;
-use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 trait BaseActionTypeFactoryTrait
@@ -20,7 +28,7 @@ trait BaseActionTypeFactoryTrait
         $dependencies = new BaseActionTypeDependencies();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->disableOriginalConstructor()->getMock();
         $dependencies->translator->method('trans')->willReturnCallback(function ($label) {
-            return $label . '.translated';
+            return $label.'.translated';
         });
         $dependencies->expressionLanguage = new ResourceExpressionLanguage();
 

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -7,14 +16,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-
 class ChangePasswordCommand extends AbstractUserCommand
 {
     protected static $defaultName = 'enhavo:user:change-password';
 
-    /**
-     * {@inheritdoc}
-     */
     protected function configure()
     {
         $definitions = $this->getPropertyDefinitions();
@@ -39,15 +44,13 @@ EOT
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $user = $this->getUser($input);
 
-        if ($user === null) {
+        if (null === $user) {
             $output->writeln('<error> Can\'t find user! </error>');
+
             return Command::FAILURE;
         }
 
@@ -57,12 +60,10 @@ EOT
         $this->userManager->changePassword($user);
 
         $output->writeln(sprintf('Changed password for user <comment>%s</comment>', $user->getUserIdentifier()));
+
         return Command::SUCCESS;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         parent::interact($input, $output);

@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-07-02
- * Time: 10:38
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Entity;
-
 
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
@@ -15,7 +17,7 @@ use Enhavo\Bundle\NavigationBundle\Model\SubjectInterface;
 
 class Submenu implements SubjectInterface
 {
-    /** @var integer|null */
+    /** @var int|null */
     private $id;
 
     /** @var NodeInterface|null */
@@ -24,9 +26,6 @@ class Submenu implements SubjectInterface
     /** @var array */
     private $nodes = [];
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
@@ -37,34 +36,26 @@ class Submenu implements SubjectInterface
      */
     public function getNodes()
     {
-        if($this->node) {
+        if ($this->node) {
             return $this->node->getChildren();
         }
+
         return $this->nodes;
     }
 
-    /**
-     * @return NodeInterface|null
-     */
     public function getNode(): ?NodeInterface
     {
         return $this->node;
     }
 
-    /**
-     * @param NodeInterface|null $node
-     */
     public function setNode(?NodeInterface $node): void
     {
         $this->node = $node;
-        foreach($this->nodes as $node) {
+        foreach ($this->nodes as $node) {
             $this->node->addChild($node);
         }
     }
 
-    /**
-     * @param NodeInterface $node
-     */
     public function addNode(NodeInterface $node)
     {
         if ($this->node) {
@@ -74,9 +65,6 @@ class Submenu implements SubjectInterface
         $this->nodes[] = $node;
     }
 
-    /**
-     * @param NodeInterface $node
-     */
     public function removeNode(NodeInterface $node)
     {
         if ($this->node) {

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-07-02
- * Time: 17:24
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Tests\Navigation;
@@ -60,7 +63,7 @@ class NavigationManagerTest extends TestCase
 
         $node = new Node();
         $this->assertFalse($manager->isActive($node, [
-            'exclude' => [VoterMock::class]
+            'exclude' => [VoterMock::class],
         ]));
     }
 
@@ -72,7 +75,7 @@ class NavigationManagerTest extends TestCase
 
         $node = new Node();
         $this->assertFalse($manager->isActive($node, [
-            'exclude' => [$voter]
+            'exclude' => [$voter],
         ]));
     }
 
@@ -84,7 +87,7 @@ class NavigationManagerTest extends TestCase
 
         $node = new Node();
         $this->assertTrue($manager->isActive($node, [
-            'voters' => [VoterMock::class]
+            'voters' => [VoterMock::class],
         ]));
     }
 
@@ -98,7 +101,7 @@ class NavigationManagerTest extends TestCase
 
         $node = new Node();
         $this->assertTrue($manager->isActive($node, [
-            'voters' => [$voterIn]
+            'voters' => [$voterIn],
         ]));
     }
 }
@@ -110,7 +113,6 @@ class VoterMock implements VoterInterface
 
     /**
      * VoterMock constructor.
-     * @param string $vote
      */
     public function __construct(string $vote)
     {

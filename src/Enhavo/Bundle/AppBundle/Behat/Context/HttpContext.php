@@ -1,15 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 16.10.17
- * Time: 21:53
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 use Behat\Gherkin\Node\PyStringNode;
-use Enhavo\Bundle\AppBundle\Behat\Context\KernelAwareContext;
 use PHPUnit\Framework\Assert;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,15 +32,11 @@ class HttpContext implements KernelAwareContext
      */
     private $request;
 
-
     public function __construct()
     {
         $this->request = new Request();
     }
 
-    /**
-     * @param KernelInterface $kernel
-     */
     public function setKernel(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
@@ -81,7 +79,7 @@ class HttpContext implements KernelAwareContext
      */
     public function requestPostDataIs(PyStringNode $string)
     {
-        $data = Yaml::parse((string)$string);
+        $data = Yaml::parse((string) $string);
         $this->request->setMethod('POST');
         $this->request->request->add($data);
     }
@@ -99,7 +97,7 @@ class HttpContext implements KernelAwareContext
      */
     public function responeBodyIs(PyStringNode $string)
     {
-        Assert::assertEquals((string)$string, $this->response->getContent());
+        Assert::assertEquals((string) $string, $this->response->getContent());
     }
 
     /**

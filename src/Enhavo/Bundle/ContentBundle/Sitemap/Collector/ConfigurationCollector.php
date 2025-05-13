@@ -1,9 +1,12 @@
 <?php
-/**
- * ConfigurationCollector.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 01/03/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ContentBundle\Sitemap\Collector;
@@ -21,7 +24,7 @@ class ConfigurationCollector extends AbstractType implements CollectorInterface
 
     public function setOptions($options)
     {
-        if(!isset($options['entries'])) {
+        if (!isset($options['entries'])) {
             throw new \InvalidArgumentException(sprintf('entries not defined', $this->getType()));
         }
 
@@ -32,22 +35,20 @@ class ConfigurationCollector extends AbstractType implements CollectorInterface
     {
         $entries = $this->options['entries'];
         $urls = [];
-        foreach($entries as $entry) {
+        foreach ($entries as $entry) {
             $url = new SitemapUrl();
-            if(isset($entry['lastmod'])) {
+            if (isset($entry['lastmod'])) {
                 $url->setLastModified(new \DateTime($entry['lastmod']));
             }
-            if(isset($entry['loc'])) {
+            if (isset($entry['loc'])) {
                 $url->setLocation($entry['loc']);
             }
             $urls[] = $url;
         }
+
         return $urls;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getType()
     {
         return 'configuration';

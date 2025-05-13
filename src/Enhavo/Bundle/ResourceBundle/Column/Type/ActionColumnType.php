@@ -1,8 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 19.11.17
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Column\Type;
@@ -15,9 +19,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ActionColumnType extends AbstractColumnType
 {
     public function __construct(
-        private readonly ActionManager $actionManager
-    )
-    {
+        private readonly ActionManager $actionManager,
+    ) {
     }
 
     public function createResourceViewData(array $options, object $resource, Data $data): void

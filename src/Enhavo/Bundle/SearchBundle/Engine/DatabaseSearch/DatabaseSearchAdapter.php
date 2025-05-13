@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 25.08.18
- * Time: 15:25
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Engine\DatabaseSearch;
@@ -30,18 +33,14 @@ class DatabaseSearchAdapter implements AdapterInterface
         $this->resolver = $resolver;
         $this->queryBuilder = $queryBuilder;
     }
-    /**
-     * {@inheritdoc}
-     */
+
     public function getNbResults(): int
     {
         $queryBuilder = clone $this->queryBuilder;
+
         return count($queryBuilder->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSlice($offset, $length): iterable
     {
         $queryBuilder = clone $this->queryBuilder;
@@ -51,9 +50,10 @@ class DatabaseSearchAdapter implements AdapterInterface
         $rows = $queryBuilder->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);
 
         $result = [];
-        foreach($rows as $item) {
+        foreach ($rows as $item) {
             $result[] = $this->resolver->getEntity($item['id'], $item['class']);
         }
+
         return $result;
     }
 }

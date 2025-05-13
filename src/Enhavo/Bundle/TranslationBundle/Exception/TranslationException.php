@@ -1,15 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 15.10.17
- * Time: 22:35
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Exception;
 
-
 class TranslationException extends \Exception
 {
-
 }

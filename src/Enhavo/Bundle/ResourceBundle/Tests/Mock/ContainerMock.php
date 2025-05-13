@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Tests\Mock;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -27,7 +36,7 @@ class ContainerMock implements ContainerInterface
 
     public function initialized(string $id): bool
     {
-       return $this->initialized;
+        return $this->initialized;
     }
 
     public function getParameter(string $name)

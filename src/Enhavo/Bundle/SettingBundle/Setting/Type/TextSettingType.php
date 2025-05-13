@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\WysiwygType;
@@ -10,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class TextSettingType
- * @package Enhavo\Bundle\SettingBundle\Setting\Type
+ *
  * @property ValueAccessSettingType $parent
  */
 class TextSettingType extends AbstractSettingType
@@ -19,10 +28,10 @@ class TextSettingType extends AbstractSettingType
     {
         $settingEntity = $this->parent->getSettingEntity($options, $key);
 
-        if ($settingEntity->getValue() === null) {
+        if (null === $settingEntity->getValue()) {
             $settingEntity->setValue(new TextValue($settingEntity));
 
-            if ($options['default'] !== null) {
+            if (null !== $options['default']) {
                 $settingEntity->getValue()->setValue($options['default']);
             }
         }
@@ -47,13 +56,14 @@ class TextSettingType extends AbstractSettingType
     {
         $resolver->setDefaults([
             'wysiwyg' => false,
-            'form_type' => TextareaType::class
+            'form_type' => TextareaType::class,
         ]);
 
         $resolver->setNormalizer('form_type', function ($options, $value) {
             if ($options['wysiwyg']) {
                 return WysiwygType::class;
             }
+
             return $value;
         });
     }

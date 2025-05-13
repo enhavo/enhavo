@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RoutingBundle\Router\Strategy;
 
 use Enhavo\Bundle\AppBundle\Util\StateEncoder;
@@ -9,7 +18,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AdminStrategy extends AbstractStrategy
 {
-    public function generate($resource , $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $options = [])
+    public function generate($resource, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $options = [])
     {
         $id = $this->getProperty($resource, $options['id_property']);
         $parameters = array_merge($parameters, ['id' => $id]);
@@ -22,18 +31,18 @@ class AdminStrategy extends AbstractStrategy
                     'url' => $indexUrl,
                     'id' => '1',
                     'storage' => [
-                        ['key' => 'edit-view', 'value' => 2]
-                    ]
+                        ['key' => 'edit-view', 'value' => 2],
+                    ],
                 ],
                 [
                     'url' => $updateUrl,
-                    'id' => '2'
-                ]
+                    'id' => '2',
+                ],
             ],
-            'storage' => []
+            'storage' => [],
         ];
 
-        return $this->getRouter()->generate('enhavo_app_index', [ 'state' => StateEncoder::encode($state) ], $referenceType);
+        return $this->getRouter()->generate('enhavo_app_index', ['state' => StateEncoder::encode($state)], $referenceType);
     }
 
     public function getType()

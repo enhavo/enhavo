@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\FileNotFound;
 
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
@@ -17,12 +26,13 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
 {
-    const PARAMETER_SAVE_TO_DISK = 'save_to_disk';
+    public const PARAMETER_SAVE_TO_DISK = 'save_to_disk';
 
     public function __construct(
         private readonly Filesystem $filesystem,
         private readonly string $savePath,
-    ) {}
+    ) {
+    }
 
     public function handleSave(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
     {
@@ -77,17 +87,18 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
         $image->save($path, [
             'format' => 'jpg',
         ]);
+
         return new PathContent($path);
     }
 
     private function isImage(FileInterface|FormatInterface $file): bool
     {
-        return strtolower(substr($file->getMimeType(), 0, 5)) == 'image';
+        return 'image' == strtolower(substr($file->getMimeType(), 0, 5));
     }
 
     private function isPdf(FileInterface|FormatInterface $file): bool
     {
-        return $file->getMimeType() === 'application/pdf';
+        return 'application/pdf' === $file->getMimeType();
     }
 
     private function createPdf(FileInterface|FormatInterface $file, array $parameters)
@@ -118,6 +129,7 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
             aGVja3N1bSAvNTg3QjE1MkEzNEI1MjZCRkM5MzIyMTM2NjMxMDNCQTAKPj4Kc3RhcnR4cmVmCjc3
             MAolJUVPRgo='
         ));
+
         return new PathContent($path);
     }
 
@@ -125,6 +137,7 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
     {
         $path = $this->getSavePath($file->getChecksum(), $parameters);
         $this->filesystem->dumpFile($path, '');
+
         return new PathContent($path);
     }
 
@@ -138,6 +151,7 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
         if ($this->filesystem->exists($path)) {
             return new PathContent($path);
         }
+
         return null;
     }
 
@@ -146,7 +160,8 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
         if (!$this->saveToDisk($parameters)) {
             return tempnam(sys_get_temp_dir(), 'Content');
         }
-        return $this->savePath . '/' . substr($checksum, 0, 2) . '/' . substr($checksum, 2);
+
+        return $this->savePath.'/'.substr($checksum, 0, 2).'/'.substr($checksum, 2);
     }
 
     private function saveToDisk(array $parameters): bool
@@ -154,12 +169,14 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
         if (array_key_exists(self::PARAMETER_SAVE_TO_DISK, $parameters)) {
             return $parameters[self::PARAMETER_SAVE_TO_DISK];
         }
+
         return true;
     }
 
     private function generateColors($randomSeed): array
     {
         $hue = (intval($randomSeed) * 100) % 256;
+
         return [
             0 => $this->hvsToRgbColorCode($hue, 24, 255),
             1 => $this->hvsToRgbColorCode($hue, 48, 255),
@@ -189,26 +206,26 @@ class CreateDummyFileNotFoundHandler implements FileNotFoundHandlerInterface
 
         switch ($hueInt) {
             case 0:
-                list($red, $green, $blue) = array($valueNormalized, $v3, $v1);
+                list($red, $green, $blue) = [$valueNormalized, $v3, $v1];
                 break;
             case 1:
-                list($red, $green, $blue) = array($v2, $valueNormalized, $v1);
+                list($red, $green, $blue) = [$v2, $valueNormalized, $v1];
                 break;
             case 2:
-                list($red, $green, $blue) = array($v1, $valueNormalized, $v3);
+                list($red, $green, $blue) = [$v1, $valueNormalized, $v3];
                 break;
             case 3:
-                list($red, $green, $blue) = array($v1, $v2, $valueNormalized);
+                list($red, $green, $blue) = [$v1, $v2, $valueNormalized];
                 break;
             case 4:
-                list($red, $green, $blue) = array($v3, $v1, $valueNormalized);
+                list($red, $green, $blue) = [$v3, $v1, $valueNormalized];
                 break;
             case 5:
-            case 6: //for when $H=1 is given
-                list($red, $green, $blue) = array($valueNormalized, $v1, $v2);
+            case 6: // for when $H=1 is given
+                list($red, $green, $blue) = [$valueNormalized, $v1, $v2];
                 break;
         }
 
-        return '#' . dechex(floor($red * 255)) . dechex(floor($green * 255)) . dechex(floor($blue * 255));
+        return '#'.dechex(floor($red * 255)).dechex(floor($green * 255)).dechex(floor($blue * 255));
     }
 }

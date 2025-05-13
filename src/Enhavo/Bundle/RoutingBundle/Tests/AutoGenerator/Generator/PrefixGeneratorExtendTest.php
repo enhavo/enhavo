@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-02-20
- * Time: 11:06
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\Tests\AutoGenerator\Generator;
@@ -20,12 +23,10 @@ class PrefixGeneratorExtendTest extends PrefixGenerator
     protected function existsPrefix($prefix, $resource, array $options): bool
     {
         $this->resource = $resource;
+
         return parent::existsPrefix($prefix, $resource, $options);
     }
 
-    /**
-     * @return object
-     */
     public function getResource(): object
     {
         return $this->resource;

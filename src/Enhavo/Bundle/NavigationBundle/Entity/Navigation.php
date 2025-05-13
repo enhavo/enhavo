@@ -1,17 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 03.02.18
- * Time: 00:06
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 class Navigation
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -26,7 +32,7 @@ class Navigation
     private $code;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      */
     private $nodes;
 
@@ -35,11 +41,11 @@ class Navigation
      */
     public function __construct()
     {
-        $this->nodes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->nodes = new ArrayCollection();
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -81,7 +87,6 @@ class Navigation
     /**
      * Add nodes
      *
-     * @param Node $node
      * @return Navigation
      */
     public function addNode(Node $node)
@@ -94,8 +99,6 @@ class Navigation
 
     /**
      * Remove nodes
-     *
-     * @param Node $node
      */
     public function removeNode(Node $node)
     {
@@ -106,7 +109,7 @@ class Navigation
     /**
      * Get nodes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getNodes()
     {

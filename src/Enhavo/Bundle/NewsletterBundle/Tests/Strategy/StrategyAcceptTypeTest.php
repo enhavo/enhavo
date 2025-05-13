@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Strategy;
 
 use Enhavo\Bundle\AppBundle\Mailer\Message;
@@ -41,6 +50,7 @@ class StrategyAcceptTypeTest extends TestCase
     {
         $strategy = new Strategy($type, $parents, $options);
         $type->setParent($parents[0]);
+
         return $strategy;
     }
 
@@ -48,12 +58,12 @@ class StrategyAcceptTypeTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $dependencies->pendingManager->expects($this->once())->method('createFrom');
-        $dependencies->pendingManager->expects($this->once())->method('save')->willReturnCallback(function (PendingSubscriber $subscriber) {
-
+        $dependencies->pendingManager->expects($this->once())->method('save')->willReturnCallback(function (PendingSubscriber $subscriber): void {
         });
         $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event, $key) {
             $this->assertInstanceOf(SubscriberEvent::class, $event);
             $this->assertInstanceOf(SubscriberInterface::class, $event->getSubscriber());
+
             return $event;
         });
         $dependencies->router->expects($this->once())->method('generate')->willReturnCallback(function ($name) {
@@ -75,8 +85,7 @@ class StrategyAcceptTypeTest extends TestCase
 
         /** @var SubscriberInterface|MockObject $subscriber */
         $subscriber = $this->getMockBuilder(SubscriberInterface::class)->getMock();
-        $subscriber->expects($this->once())->method('setCreatedAt')->willReturnCallback(function (\DateTime $date) {
-
+        $subscriber->expects($this->once())->method('setCreatedAt')->willReturnCallback(function (\DateTime $date): void {
         });
         $subscriber->expects($this->once())->method('setConfirmationToken');
         $subscriber->expects($this->once())->method('getSubscription')->willReturn('default');
@@ -93,8 +102,7 @@ class StrategyAcceptTypeTest extends TestCase
             'sender_name' => 'enhavo',
             'admin_email' => 'admin@enhavo.com',
             'admin_subject' => '__SUBJECT__',
-            'translation_domain' => ''
-
+            'translation_domain' => '',
         ]);
         $this->assertEquals('subscriber.form.message.accept', $strategy->addSubscriber($subscriber));
     }
@@ -102,13 +110,14 @@ class StrategyAcceptTypeTest extends TestCase
     public function testActivateSubscriber()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->pendingManager->expects($this->once())->method('removeBy')->willReturnCallback(function ($email, $subscription) {
+        $dependencies->pendingManager->expects($this->once())->method('removeBy')->willReturnCallback(function ($email, $subscription): void {
             $this->assertEquals('to@enhavo.com', $email);
             $this->assertEquals('default', $subscription);
         });
         $dependencies->eventDispatcher->expects($this->exactly(2))->method('dispatch')->willReturnCallback(function ($event, $key) {
             $this->assertInstanceOf(SubscriberEvent::class, $event);
             $this->assertInstanceOf(SubscriberInterface::class, $event->getSubscriber());
+
             return $event;
         });
         $dependencies->storage->expects($this->once())->method('saveSubscriber');
@@ -139,8 +148,7 @@ class StrategyAcceptTypeTest extends TestCase
             'sender_name' => 'enhavo',
             'admin_email' => 'admin@enhavo.com',
             'admin_subject' => '__SUBJECT__',
-            'translation_domain' => ''
-
+            'translation_domain' => '',
         ]);
         $strategy->setStorage($dependencies->storage);
         $strategy->activateSubscriber($subscriber);
@@ -153,7 +161,7 @@ class StrategyAcceptTypeTest extends TestCase
             $this->assertEquals('to@enhavo.com', $email);
             $this->assertMatchesRegularExpression('/(default|missing)/', $subscription);
 
-            return ($subscription === 'default' ? new PendingSubscriber() : null);
+            return 'default' === $subscription ? new PendingSubscriber() : null;
         });
         $dependencies->storage->expects($this->once())->method('exists')->willReturn(true);
 
@@ -172,8 +180,7 @@ class StrategyAcceptTypeTest extends TestCase
             'sender_name' => 'enhavo',
             'admin_email' => 'admin@enhavo.com',
             'admin_subject' => '__SUBJECT__',
-            'translation_domain' => ''
-
+            'translation_domain' => '',
         ]);
         $strategy->setStorage($dependencies->storage);
         $this->assertEquals(true, $strategy->exists($subscriber));
@@ -194,7 +201,6 @@ class StrategyAcceptTypeTest extends TestCase
             'admin_subject' => '__SUBJECT__',
             'translation_domain' => '',
             'check_exists' => false,
-
         ]);
         $strategy->setStorage($dependencies->storage);
         $this->assertEquals(false, $strategy->exists($subscriber));

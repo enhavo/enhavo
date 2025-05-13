@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaLibraryBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
@@ -15,7 +24,7 @@ class TagMenuType extends AbstractMenuType
             'label' => 'media_library.label.tag',
             'translation_domain' => 'EnhavoMediaLibraryBundle',
             'route' => 'enhavo_media_library_admin_tag_index',
-            'permission' => 'ROLE_ENHAVO_MEDIA_LIBRARY_TAG_INDEX'
+            'permission' => 'ROLE_ENHAVO_MEDIA_LIBRARY_TAG_INDEX',
         ]);
     }
 

@@ -1,9 +1,12 @@
 <?php
-/**
- * TextFilter.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 19/01/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Filter\Type;
@@ -18,8 +21,7 @@ class BetweenFilterType extends AbstractFilterType
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     public function createViewData($options, Data $data): void
@@ -30,7 +32,7 @@ class BetweenFilterType extends AbstractFilterType
         $data->set('initialValue', $this->getInitialValue($options));
         $data->set('value', [
             'from' => null,
-            'to' => null
+            'to' => null,
         ]);
     }
 
@@ -39,7 +41,7 @@ class BetweenFilterType extends AbstractFilterType
         $from = '';
         $to = '';
         if (is_array($options['initial_value'])) {
-            if (count($options['initial_value']) != 2) {
+            if (2 != count($options['initial_value'])) {
                 throw new \InvalidArgumentException('Parameter "initial_value" must either be null, a scalar or an array with two entries');
             }
 
@@ -58,9 +60,10 @@ class BetweenFilterType extends AbstractFilterType
             $from = $options['initial_value'];
             $to = $options['initial_value'];
         }
+
         return [
             'from' => $from,
-            'to' => $to
+            'to' => $to,
         ];
     }
 
@@ -71,15 +74,15 @@ class BetweenFilterType extends AbstractFilterType
 
         if (!empty($fromValue) && empty($toValue)) {
             $this->buildFromQuery($query, $options, $fromValue);
-        } elseif(empty($fromValue) && !empty($toValue)) {
+        } elseif (empty($fromValue) && !empty($toValue)) {
             $this->buildToQuery($query, $options, $toValue);
-        } elseif(!empty($fromValue) && !empty($toValue)) {
+        } elseif (!empty($fromValue) && !empty($toValue)) {
             $this->buildFromQuery($query, $options, $fromValue);
             $this->buildToQuery($query, $options, $toValue);
         }
     }
 
-    private function buildFromQuery(FilterQuery$query, $options, $fromValue): void
+    private function buildFromQuery(FilterQuery $query, $options, $fromValue): void
     {
         $propertyPath = explode('.', $options['property']);
         $property = array_pop($propertyPath);

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Test\Form\Extension;
 
 use Enhavo\Bundle\FormBundle\Form\Extension\PolyCollectionVueTypeExtension;
@@ -40,7 +49,7 @@ class PolyCollectionVueTypeExtensionTest extends TypeTestCase
         $form = $this->factory->create(PolyCollectionType::class, null, [
             'entry_types' => [
                 'key1' => TextType::class,
-            ]
+            ],
         ]);
 
         $data = $vueForm->createData($form->createView());

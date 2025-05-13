@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-08-29
- * Time: 00:23
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Translator;
@@ -19,8 +22,9 @@ class DataMap
             $this->map[$oid] = [];
         } else {
             $entry = $this->find($this->map[$oid], $property, $locale);
-            if ($entry !== null) {
+            if (null !== $entry) {
                 $entry->setData($data);
+
                 return;
             }
         }
@@ -36,7 +40,7 @@ class DataMap
         }
 
         $entry = $this->find($this->map[$oid], $property, $locale);
-        if ($entry !== null) {
+        if (null !== $entry) {
             return $entry->getData();
         }
 
@@ -53,9 +57,8 @@ class DataMap
 
     /**
      * @param DataMapEntry[] $entries
-     * @param string|null $property
-     * @param string|null $locale
-     * @return DataMapEntry|null
+     * @param string|null    $property
+     * @param string|null    $locale
      */
     private function find(array $entries, $property, $locale): ?DataMapEntry
     {
@@ -64,6 +67,7 @@ class DataMap
                 return $entry;
             }
         }
+
         return null;
     }
 }

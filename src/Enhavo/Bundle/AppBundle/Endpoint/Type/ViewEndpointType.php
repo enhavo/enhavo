@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -17,18 +26,20 @@ class ViewEndpointType extends AbstractEndpointType
     public function __construct(
         private Environment $twig,
         private TemplateResolver $templateResolver,
-    ) {}
+    ) {
+    }
 
     public function getResponse($options, Request $request, Data $data, Context $context): Response
     {
-        if ($request->get('_format') === 'json') {
+        if ('json' === $request->get('_format')) {
             return $this->parent->getResponse($options, $request, $data, $context);
-        } else if (!$request->get('_format') || $request->get('_format') === 'html') {
-            if ($options['template'] === null && !$context->has('template')) {
+        } elseif (!$request->get('_format') || 'html' === $request->get('_format')) {
+            if (null === $options['template'] && !$context->has('template')) {
                 throw new \Exception('If format is html, then a template need to be provided over the configuration or context');
             }
             $template = $context->has('template') ? $context->get('template') : $options['template'];
             $content = $this->twig->render($this->templateResolver->resolve($template), $data->normalize());
+
             return $this->updateResponse(new Response($content), $context);
         }
 
@@ -43,7 +54,7 @@ class ViewEndpointType extends AbstractEndpointType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'template' => null
+            'template' => null,
         ]);
     }
 }

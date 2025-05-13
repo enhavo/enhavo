@@ -1,11 +1,19 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Fixtures;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use InvalidArgumentException;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader as DataFixturesLoader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -37,9 +45,7 @@ class DemoFixtures
         $loader->loadFromDirectory($path);
         $fixtures = $loader->getFixtures();
         if (!$fixtures) {
-            throw new InvalidArgumentException(
-                sprintf('Could not find any fixtures to load in: %s', $path)
-            );
+            throw new \InvalidArgumentException(sprintf('Could not find any fixtures to load in: %s', $path));
         }
 
         $purger = new ORMPurger($this->em);

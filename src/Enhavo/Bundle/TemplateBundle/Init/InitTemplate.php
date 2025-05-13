@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-07-11
- * Time: 11:50
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TemplateBundle\Init;
@@ -47,11 +50,6 @@ class InitTemplate implements InitInterface
 
     /**
      * InitTemplate constructor.
-     * @param EntityManagerInterface $em
-     * @param TemplateManager $templateManager
-     * @param Factory $templateFactory
-     * @param EntityRepository $templateRepository
-     * @param ResourceManager $resourceManager
      */
     public function __construct(EntityManagerInterface $em, TemplateManager $templateManager, Factory $templateFactory, EntityRepository $templateRepository, ResourceManager $resourceManager)
     {
@@ -68,16 +66,16 @@ class InitTemplate implements InitInterface
 
         /** @var Template[] $currentTemplates */
         $currentTemplates = $this->templateRepository->findAll();
-        foreach($templates as $code => $template) {
+        foreach ($templates as $code => $template) {
             $exists = false;
-            foreach($currentTemplates as $currentTemplate) {
-                if($currentTemplate->getCode() === $code) {
+            foreach ($currentTemplates as $currentTemplate) {
+                if ($currentTemplate->getCode() === $code) {
                     $exists = true;
                     break;
                 }
             }
-            if(!$exists) {
-                /** @var Template $newTemplate */
+            if (!$exists) {
+                /* @var Template $newTemplate */
                 $io->writeln(sprintf('Add template "%s"', $code));
                 $newTemplate = $this->templateFactory->createByTemplate($template);
                 $newTemplate->setCode($code);
@@ -85,14 +83,13 @@ class InitTemplate implements InitInterface
             }
         }
 
-        foreach($currentTemplates as $currentTemplate) {
-            if(!array_key_exists($currentTemplate->getCode(), $templates)) {
+        foreach ($currentTemplates as $currentTemplate) {
+            if (!array_key_exists($currentTemplate->getCode(), $templates)) {
                 $io->writeln(sprintf('Remove template "%s"', $currentTemplate->getCode()));
                 $this->resourceManager->delete($currentTemplate);
                 $this->em->remove($currentTemplate);
             }
         }
-
     }
 
     public function getType()

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -25,8 +34,7 @@ class FileReplaceEndpointType extends AbstractEndpointType
         private readonly ValidatorInterface $validator,
         private readonly FileRepository $fileRepository,
         private readonly ResourceManager $resourceManager,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -59,7 +67,7 @@ class FileReplaceEndpointType extends AbstractEndpointType
         $token = $request->get('token');
 
         $file = $this->fileRepository->findOneBy([
-            'token' => $token
+            'token' => $token,
         ]);
 
         if (!$file) {
@@ -72,7 +80,7 @@ class FileReplaceEndpointType extends AbstractEndpointType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'validation_groups' => ['media_upload']
+            'validation_groups' => ['media_upload'],
         ]);
     }
 

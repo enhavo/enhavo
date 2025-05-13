@@ -1,9 +1,12 @@
 <?php
-/**
- * MediaExtension.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 07/09/14
- * @author Gerhard Seidel <gseidel.message@googlemail.com>
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Twig;
@@ -17,25 +20,24 @@ class MediaTwigExtension extends AbstractExtension
 {
     public function __construct(
         private readonly TwigRouter $twigRouter,
-    )
-    {
+    ) {
     }
 
     public function getFunctions(): array
     {
-        return array(
-            new TwigFunction('media_url', array($this, 'getMediaUrl')),
-            new TwigFunction('media_filename', array($this, 'getMediaFilename')),
-            new TwigFunction('media_parameter', array($this, 'getMediaParameter')),
-            new TwigFunction('media_is_picture', array($this, 'isPicture')),
-        );
+        return [
+            new TwigFunction('media_url', [$this, 'getMediaUrl']),
+            new TwigFunction('media_filename', [$this, 'getMediaFilename']),
+            new TwigFunction('media_parameter', [$this, 'getMediaParameter']),
+            new TwigFunction('media_is_picture', [$this, 'isPicture']),
+        ];
     }
 
     public function getMediaUrl(?array $file, $format = null, $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): ?string
     {
-        if ($file === null) {
+        if (null === $file) {
             return null;
-        } else if ($format !== null) {
+        } elseif (null !== $format) {
             return $this->twigRouter->generate('enhavo_media_theme_format', [
                 'token' => $file['token'],
                 'shortChecksum' => $file['shortChecksum'],
@@ -43,19 +45,19 @@ class MediaTwigExtension extends AbstractExtension
                 'extension' => $file['extension'],
                 'format' => $format,
             ], $referenceType);
-        } else {
-            return $this->twigRouter->generate('enhavo_media_theme_file', [
-                'token' => $file['token'],
-                'shortChecksum' => $file['shortChecksum'],
-                'filename' => $file['filename'],
-                'extension' => $file['extension'],
-            ], $referenceType);
         }
+
+        return $this->twigRouter->generate('enhavo_media_theme_file', [
+            'token' => $file['token'],
+            'shortChecksum' => $file['shortChecksum'],
+            'filename' => $file['filename'],
+            'extension' => $file['extension'],
+        ], $referenceType);
     }
 
     public function getMediaFilename(?array $file): ?string
     {
-        if ($file === null) {
+        if (null === $file) {
             return null;
         }
 
@@ -64,7 +66,7 @@ class MediaTwigExtension extends AbstractExtension
 
     public function getMediaParameter(?array $file, $parameterName): ?string
     {
-        if ($file === null) {
+        if (null === $file) {
             return null;
         }
 
@@ -77,7 +79,7 @@ class MediaTwigExtension extends AbstractExtension
 
     public function isPicture(?array $file): bool
     {
-        if ($file === null) {
+        if (null === $file) {
             return false;
         }
 

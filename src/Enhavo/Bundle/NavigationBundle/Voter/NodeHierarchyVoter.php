@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 19.07.18
- * Time: 18:05
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Voter;
@@ -24,14 +27,15 @@ class NodeHierarchyVoter implements VoterInterface
     public function vote(NodeInterface $node)
     {
         $descendants = $node->getDescendants();
-        foreach($descendants as $descendant) {
+        foreach ($descendants as $descendant) {
             $vote = $this->navigationManager->isActive($descendant, [
-                'exclude' => [$this]
+                'exclude' => [$this],
             ]);
-            if($vote == VoterInterface::VOTE_IN) {
+            if (VoterInterface::VOTE_IN == $vote) {
                 return VoterInterface::VOTE_IN;
             }
         }
+
         return VoterInterface::VOTE_ABSTAIN;
     }
 }

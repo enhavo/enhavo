@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Tests\Column\Type;
 
 use Enhavo\Bundle\ResourceBundle\Column\Column;
@@ -13,6 +22,7 @@ class PositionColumnTypeTest extends TestCase
     public function createDependencies()
     {
         $dependencies = new PositionColumnTypeDependencies();
+
         return $dependencies;
     }
 
@@ -24,12 +34,12 @@ class PositionColumnTypeTest extends TestCase
         return $instance;
     }
 
-    function testName()
+    public function testName()
     {
         $this->assertEquals('position', PositionColumnType::getName());
     }
 
-    function testCreateResourceView()
+    public function testCreateResourceView()
     {
         $dependencies = $this->createDependencies();
         $instance = $this->createInstance($dependencies);

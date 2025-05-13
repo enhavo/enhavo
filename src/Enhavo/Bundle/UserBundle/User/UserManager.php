@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\User;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,21 +45,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UserManager
 {
     public function __construct(
-        protected EntityManagerInterface               $em,
-        protected MailerManager                        $mailerManager,
-        private UserIdentifierProviderResolver         $resolver,
-        private TokenGeneratorInterface                $tokenGenerator,
-        private TranslatorInterface                    $translator,
-        private UserPasswordHasherInterface            $userPasswordHasher,
-        protected RouterInterface                      $router,
-        private EventDispatcherInterface               $eventDispatcher,
-        private TokenStorageInterface                  $tokenStorage,
-        private RequestStack                           $requestStack,
+        protected EntityManagerInterface $em,
+        protected MailerManager $mailerManager,
+        private UserIdentifierProviderResolver $resolver,
+        private TokenGeneratorInterface $tokenGenerator,
+        private TranslatorInterface $translator,
+        private UserPasswordHasherInterface $userPasswordHasher,
+        protected RouterInterface $router,
+        private EventDispatcherInterface $eventDispatcher,
+        private TokenStorageInterface $tokenStorage,
+        private RequestStack $requestStack,
         private SessionAuthenticationStrategyInterface $sessionStrategy,
-        private UserCheckerInterface                   $userChecker,
-        private string                                 $defaultFirewall,
+        private UserCheckerInterface $userChecker,
+        private string $defaultFirewall,
     ) {
-
     }
 
     public function add(UserInterface $user): void
@@ -69,9 +77,9 @@ class UserManager
         $this->updatePassword($user);
 
         if ($user instanceof ApiTokenAwareInterface) {
-            if ($user->getApiAccess() && $user->getApiToken() === null) {
+            if ($user->getApiAccess() && null === $user->getApiToken()) {
                 $this->updateApiToken($user, false);
-            } else if (!$user->getApiAccess() && $user->getApiToken() !== null) {
+            } elseif (!$user->getApiAccess() && null !== $user->getApiToken()) {
                 $user->setApiToken(null);
                 $user->setApiTokenCreatedAt(null);
             }
@@ -190,9 +198,9 @@ class UserManager
         $message->setContext([
             'user' => $user,
             'confirmation_url' => $this->router->generate($configuration->getConfirmationRoute(), [
-                'token' => $user->getConfirmationToken()
+                'token' => $user->getConfirmationToken(),
             ], UrlGeneratorInterface::ABSOLUTE_URL),
-            'configuration' => $configuration
+            'configuration' => $configuration,
         ]);
         $this->mailerManager->sendMessage($message);
     }
@@ -226,7 +234,7 @@ class UserManager
         $message = $this->createUserMessage($user, $configuration);
         $message->setContext([
             'user' => $user,
-            'configuration' => $configuration
+            'configuration' => $configuration,
         ]);
         $this->mailerManager->sendMessage($message);
     }
@@ -250,8 +258,8 @@ class UserManager
         $message->setContext([
             'user' => $user,
             'confirmation_url' => $this->router->generate($configuration->getConfirmationRoute(), [
-                'token' => $user->getConfirmationToken()
-            ], UrlGeneratorInterface::ABSOLUTE_URL)
+                'token' => $user->getConfirmationToken(),
+            ], UrlGeneratorInterface::ABSOLUTE_URL),
         ]);
         $this->mailerManager->sendMessage($message);
     }
@@ -272,9 +280,9 @@ class UserManager
         $message->setContext([
             'user' => $user,
             'confirmation_url' => $this->router->generate($configuration->getConfirmationRoute(), [
-                'token' => $user->getConfirmationToken()
+                'token' => $user->getConfirmationToken(),
             ], UrlGeneratorInterface::ABSOLUTE_URL),
-            'configuration' => $configuration
+            'configuration' => $configuration,
         ]);
         $this->mailerManager->sendMessage($message);
     }
@@ -299,9 +307,9 @@ class UserManager
         $message->setContext([
             'user' => $user,
             'confirmation_url' => $this->router->generate($configuration->getConfirmationRoute(), [
-                'token' => $user->getConfirmationToken()
+                'token' => $user->getConfirmationToken(),
             ], UrlGeneratorInterface::ABSOLUTE_URL),
-            'configuration' => $configuration
+            'configuration' => $configuration,
         ]);
         $this->mailerManager->sendMessage($message);
     }
@@ -321,7 +329,7 @@ class UserManager
         $message = $this->createUserMessage($user, $configuration);
         $message->setContext([
             'user' => $user,
-            'configuration' => $configuration
+            'configuration' => $configuration,
         ]);
         $this->mailerManager->sendMessage($message);
     }
@@ -346,9 +354,9 @@ class UserManager
         $message->setContext([
             'user' => $user,
             'confirmation_url' => $this->router->generate($configuration->getConfirmationRoute(), [
-                'token' => $user->getConfirmationToken()
+                'token' => $user->getConfirmationToken(),
             ], UrlGeneratorInterface::ABSOLUTE_URL),
-            'configuration' => $configuration
+            'configuration' => $configuration,
         ]);
         $this->mailerManager->sendMessage($message);
     }

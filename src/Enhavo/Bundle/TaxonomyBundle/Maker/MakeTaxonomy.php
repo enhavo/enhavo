@@ -1,9 +1,12 @@
 <?php
-/**
- * MakeTaxonomy.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 25/05/19
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TaxonomyBundle\Maker;
@@ -54,7 +57,6 @@ class MakeTaxonomy extends AbstractMaker
 
     public function configureDependencies(DependencyBuilder $dependencies)
     {
-
     }
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
@@ -65,7 +67,7 @@ class MakeTaxonomy extends AbstractMaker
         $hierarchy = $input->getArgument('hierarchy');
         $namespace = sprintf('%s\\Form\\Type', $this->util->getBundleNamespace($bundleName));
         $className = sprintf('%sType', $name);
-        $class = sprintf("%s\\%s", $namespace, $className);
+        $class = sprintf('%s\\%s', $namespace, $className);
 
         $generator->generateFile(
             sprintf('%sResources/config/routing/admin/%s.yaml', $path, $this->nameTransformer->snakeCase($name)),

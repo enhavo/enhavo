@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translator\Text;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
@@ -69,6 +76,7 @@ class TextTranslatorTest extends TestCase
             $params['class'] = 'translated';
             $paramstring = implode(',', $params);
             $translation->method('getTranslation')->willReturn($paramstring);
+
             return $translation;
         });
 
@@ -88,6 +96,7 @@ class TextTranslatorTest extends TestCase
             $params['class'] = 'translated';
             $paramstring = implode(',', $params);
             $translation->method('getTranslation')->willReturn($paramstring);
+
             return $translation;
         });
 
@@ -107,7 +116,6 @@ class TextTranslatorTest extends TestCase
 
         $this->assertNull($translator->getTranslation($entity, 'name', 'es'));
     }
-
 
     public function testGetTranslationMissing()
     {
@@ -149,7 +157,6 @@ class TextTranslatorTest extends TestCase
 
         $translator->delete($entity, 'name');
     }
-
 }
 
 class TextTranslatorTestDependencies

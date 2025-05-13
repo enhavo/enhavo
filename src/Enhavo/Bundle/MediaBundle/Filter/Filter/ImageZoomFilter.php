@@ -1,16 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 11.11.17
- * Time: 12:09
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Filter\Filter;
 
 use Enhavo\Bundle\MediaBundle\Filter\AbstractFilter;
 use Enhavo\Bundle\MediaBundle\Model\FilterSetting;
-use Imagine\Exception\RuntimeException;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 
@@ -25,13 +27,13 @@ class ImageZoomFilter extends AbstractFilter
         $factor = $setting->getSetting('zoom', 1);
 
         $size = $imagine->getSize();
-        $height = intval(round($size->getHeight()*$factor));
-        $width =  intval(round($size->getWidth()*$factor));
+        $height = intval(round($size->getHeight() * $factor));
+        $width = intval(round($size->getWidth() * $factor));
 
         $imagine->resize(new Box($width, $height));
 
         $imagine->save($content->getFilePath(), [
-            'format' => $this->getImageFormat($content)
+            'format' => $this->getImageFormat($content),
         ]);
     }
 

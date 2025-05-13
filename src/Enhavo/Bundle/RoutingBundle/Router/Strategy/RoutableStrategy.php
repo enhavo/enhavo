@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 18.08.18
- * Time: 19:26
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\Router\Strategy;
@@ -25,12 +28,12 @@ class RoutableStrategy extends AbstractStrategy
         $this->router = $router;
     }
 
-    public function generate($resource , $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $options = [])
+    public function generate($resource, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $options = [])
     {
         /** @var RouteInterface $route */
         $route = $this->getProperty($resource, $options['property']);
 
-        if ($route === null) {
+        if (null === $route) {
             return null;
         }
 
@@ -40,6 +43,7 @@ class RoutableStrategy extends AbstractStrategy
             if ($options['error']) {
                 throw new UrlResolverException($e->getMessage());
             }
+
             return null;
         }
     }

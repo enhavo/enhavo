@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-08-30
- * Time: 00:46
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Translator\Route;
@@ -16,7 +19,6 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
  * Class RouteTranslator
- * @package Enhavo\Bundle\TranslationBundle\Translator\Route
  */
 class RouteTranslator extends AbstractTranslator
 {
@@ -29,7 +31,7 @@ class RouteTranslator extends AbstractTranslator
         $translationRoute = $this->buffer->load($entity, $property, $locale)
             ?? $this->load($entity, $property, $locale);
 
-        if ($translationRoute === null) {
+        if (null === $translationRoute) {
             $translationRoute = $this->createTranslationRoute($entity, $property, $locale, $value);
         } else {
             if ($translationRoute->getRoute() !== $value) {
@@ -49,13 +51,14 @@ class RouteTranslator extends AbstractTranslator
         }
 
         $translationRoute = $this->buffer->load($entity, $property, $locale);
-        if ($translationRoute !== null) {
+        if (null !== $translationRoute) {
             return $translationRoute->getRoute();
         }
 
         $translationRoute = $this->load($entity, $property, $locale);
-        if ($translationRoute !== null) {
+        if (null !== $translationRoute) {
             $this->buffer->store($entity, $property, $locale, $translationRoute);
+
             return $translationRoute->getRoute();
         }
 
@@ -69,7 +72,7 @@ class RouteTranslator extends AbstractTranslator
 
     private function createTranslationRoute($entity, $property, $locale, ?RouteInterface $route): ?TranslationRoute
     {
-        if ($route === null || empty($route->getStaticPrefix())) {
+        if (null === $route || empty($route->getStaticPrefix())) {
             return null;
         }
 
@@ -130,7 +133,7 @@ class RouteTranslator extends AbstractTranslator
         $oldValue = $accessor->getValue($entity, $property);
         $this->originalData->store($entity, $property, null, $oldValue);
 
-        if ($newValue !== null || $options['allow_null']) {
+        if (null !== $newValue || $options['allow_null']) {
             $accessor->setValue($entity, $property, $newValue);
         }
     }

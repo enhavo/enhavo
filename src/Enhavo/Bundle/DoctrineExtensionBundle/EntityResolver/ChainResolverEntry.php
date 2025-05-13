@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 05.08.18
- * Time: 17:17
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver;
-
 
 class ChainResolverEntry
 {
@@ -17,14 +19,12 @@ class ChainResolverEntry
     private $resolver;
 
     /**
-     * @var integer
+     * @var int
      */
     private $priority;
 
     /**
      * ChainResolverEntry constructor.
-     * @param EntityResolverInterface $resolver
-     * @param int $priority
      */
     public function __construct(EntityResolverInterface $resolver, int $priority)
     {
@@ -32,17 +32,11 @@ class ChainResolverEntry
         $this->priority = $priority;
     }
 
-    /**
-     * @return EntityResolverInterface
-     */
     public function getResolver(): EntityResolverInterface
     {
         return $this->resolver;
     }
 
-    /**
-     * @return int
-     */
     public function getPriority(): int
     {
         return $this->priority;

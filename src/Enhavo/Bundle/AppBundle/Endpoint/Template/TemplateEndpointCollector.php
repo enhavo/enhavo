@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Endpoint\Template;
 
 use Enhavo\Bundle\AppBundle\Endpoint\Type\TemplateEndpointType;
@@ -10,8 +19,7 @@ class TemplateEndpointCollector
 {
     public function __construct(
         private RouterInterface $router,
-    )
-    {
+    ) {
     }
 
     /** @return TemplateEndpointEntry[] */
@@ -22,7 +30,7 @@ class TemplateEndpointCollector
 
         foreach ($routes as $routeName => $route) {
             $defaults = $route->getDefaults();
-            if (isset($defaults['_endpoint']['type']) && (in_array($defaults['_endpoint']['type'], ['template', TemplateEndpointType::class]))) {
+            if (isset($defaults['_endpoint']['type']) && in_array($defaults['_endpoint']['type'], ['template', TemplateEndpointType::class])) {
                 if ($this->filter($filter, $routeName, $route, $defaults['_endpoint'])) {
                     $entries[] = $this->createEntry($route, $routeName, $defaults['_endpoint']);
                 }

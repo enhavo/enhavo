@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Area;
 
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -10,9 +19,8 @@ class FirewallAreaResolver implements AreaResolverInterface
     public function __construct(
         private readonly FirewallMapInterface $firewallMap,
         private readonly RequestStack $requestStack,
-        private readonly array $config
-    )
-    {
+        private readonly array $config,
+    ) {
     }
 
     public function resolve(): ?string

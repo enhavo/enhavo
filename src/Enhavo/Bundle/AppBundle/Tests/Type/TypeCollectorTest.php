@@ -1,48 +1,58 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Type;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class TypeCollectorTest extends TestCase
 {
-
     private function getContainerMock()
     {
         $mock = $this->getMockBuilder(ContainerInterface::class)->getMock();
-        $mock->method('get')->willReturnCallback(function($id){
-            if($id == 'id1'){
+        $mock->method('get')->willReturnCallback(function ($id) {
+            if ('id1' == $id) {
                 return $this->getTypeInterfaceMock($id);
             }
-            if($id == 'id2'){
+            if ('id2' == $id) {
                 return $this->getTypeInterfaceMock($id);
             }
         });
+
         return $mock;
     }
 
     private function getTypeInterfaceMock($id)
     {
         $mock = $this->getMockBuilder(TypeInterface::class)->getMock();
-        $mock->method('getType')->willReturnCallback(function() use ($id){
-            if($id == 'id1'){
+        $mock->method('getType')->willReturnCallback(function () use ($id) {
+            if ('id1' == $id) {
                 return 'alias1';
             }
-            if($id == 'id2'){
+            if ('id2' == $id) {
                 return 'alias2';
             }
         });
+
         return $mock;
     }
 
-    function testInitialize()
+    public function testInitialize()
     {
         $collector = new TypeCollector($this->getContainerMock(), 'typeName');
         $this->assertInstanceOf(TypeCollector::class, $collector);
     }
 
-    function testTypeCollector()
+    public function testTypeCollector()
     {
         $collector = new TypeCollector($this->getContainerMock());
         $collector->add('alias1', 'id1');

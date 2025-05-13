@@ -1,9 +1,13 @@
 <?php
-/**
- * @since 18/11/15
- * @author gseidel
- */
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 
@@ -24,8 +28,7 @@ class PreviewEndpointType extends AbstractEndpointType
         private readonly InputFactory $inputFactory,
         private readonly FactoryInterface $endpointFactory,
         private readonly ResourceExpressionLanguage $expressionLanguage,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void

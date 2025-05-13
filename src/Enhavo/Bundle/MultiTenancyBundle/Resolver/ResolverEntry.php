@@ -1,12 +1,19 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\MultiTenancyBundle\Resolver;
 
-
 class ResolverEntry
 {
-    /** @var integer */
+    /** @var int */
     private $priority;
 
     /** @var ResolverInterface */
@@ -14,8 +21,6 @@ class ResolverEntry
 
     /**
      * ResolverEntry constructor.
-     * @param int $priority
-     * @param ResolverInterface $resolver
      */
     public function __construct(ResolverInterface $resolver, int $priority = 100)
     {
@@ -23,17 +28,11 @@ class ResolverEntry
         $this->resolver = $resolver;
     }
 
-    /**
-     * @return int
-     */
     public function getPriority(): int
     {
         return $this->priority;
     }
 
-    /**
-     * @return ResolverInterface
-     */
     public function getResolver(): ResolverInterface
     {
         return $this->resolver;

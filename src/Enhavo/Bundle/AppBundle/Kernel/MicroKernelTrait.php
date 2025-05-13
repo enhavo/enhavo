@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Kernel;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait as BaseMicroKernelTrait;
@@ -18,7 +27,7 @@ trait MicroKernelTrait
     private function configureRoutes(RoutingConfigurator $routes): void
     {
         // load only template routes in template environment
-        if ($this->environment === 'template') {
+        if ('template' === $this->environment) {
             $configDir = $this->getConfigDir();
             $routes->import($configDir.'/{routes}/template/*.{php,yaml}');
         } else {

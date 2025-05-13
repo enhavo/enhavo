@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Engine\ElasticSearch;
 
 use Elastica\Client;
@@ -34,8 +43,9 @@ class ClientFactory
 
         $parts = parse_url($dsn);
         if (!isset($parts['path'])) {
-            throw  new \Exception('The path must be defined for search dsn');
+            throw new \Exception('The path must be defined for search dsn');
         }
+
         return substr($parts['path'], 1);
     }
 }

@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Tests\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\BooleanType;
+use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\Form\PreloadedExtension;
 
 class BooleanTypeTest extends TypeTestCase
 {
@@ -14,7 +23,7 @@ class BooleanTypeTest extends TypeTestCase
     protected function setUp(): void
     {
         $this->translator = $this->createMock(TranslatorInterface::class);
-        $this->translator->method('trans')->willReturnCallback(function($id) {
+        $this->translator->method('trans')->willReturnCallback(function ($id) {
             return $id;
         });
         parent::setUp();
@@ -23,9 +32,10 @@ class BooleanTypeTest extends TypeTestCase
     protected function getExtensions()
     {
         $type = new BooleanType($this->translator);
-        return array(
-            new PreloadedExtension(array($type), array()),
-        );
+
+        return [
+            new PreloadedExtension([$type], []),
+        ];
     }
 
     public function testSubmitValidDataToTrue()

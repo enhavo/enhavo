@@ -1,9 +1,12 @@
 <?php
-/**
- * ArticleMenuBuilder.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 21/09/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ArticleBundle\Menu;
@@ -22,15 +25,15 @@ class ArticleRootMenuType extends AbstractMenuType
             'translation_domain' => 'EnhavoArticleBundle',
             'items' => [
                 'article' => [
-                    'type' => 'article_article'
+                    'type' => 'article_article',
                 ],
                 'category' => [
-                    'type' => 'article_category'
+                    'type' => 'article_category',
                 ],
                 'tag' => [
-                    'type' => 'article_tag'
+                    'type' => 'article_tag',
                 ],
-            ]
+            ],
         ]);
     }
 

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MultiTenancyBundle\Filter;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -13,9 +22,8 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 class TenancyFilterType extends AbstractFilterType
 {
     public function __construct(
-        private readonly TenantManager $tenantManager
-    )
-    {
+        private readonly TenantManager $tenantManager,
+    ) {
     }
 
     public function createViewData($options, Data $data): void
@@ -25,7 +33,7 @@ class TenancyFilterType extends AbstractFilterType
 
     protected function getInitialValue($options)
     {
-        return $options['initial_value'] === null ? $this->tenantManager->getTenant()->getKey() : $options['initial_value'];
+        return null === $options['initial_value'] ? $this->tenantManager->getTenant()->getKey() : $options['initial_value'];
     }
 
     private function getTenantChoices($options): array
@@ -33,12 +41,13 @@ class TenancyFilterType extends AbstractFilterType
         $data = [];
         $tenants = $this->tenantManager->getTenants();
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
-        foreach($tenants as $key => $tenant) {
+        foreach ($tenants as $key => $tenant) {
             $data[] = [
                 'label' => $propertyAccessor->getValue($tenant, $options['tenantLabelProperty']),
                 'code' => $tenant->getKey(),
             ];
         }
+
         return $data;
     }
 
@@ -46,7 +55,7 @@ class TenancyFilterType extends AbstractFilterType
     {
         $this->tenantManager->disableDoctrineFilter();
 
-        if($value == null) {
+        if (null == $value) {
             return;
         }
 
@@ -74,7 +83,7 @@ class TenancyFilterType extends AbstractFilterType
             'label' => 'filter.tenancy.label',
             'translation_domain' => 'EnhavoMultiTenancyBundle',
             'tenantLabelProperty' => 'name',
-            'component' => 'filter-option'
+            'component' => 'filter-option',
         ]);
     }
 

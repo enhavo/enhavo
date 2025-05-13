@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-02-18
- * Time: 17:43
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Menu\Type;
@@ -17,8 +20,7 @@ class DropdownMenuType extends AbstractMenuType
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     public function createViewData(array $options, Data $data): void
@@ -40,6 +42,7 @@ class DropdownMenuType extends AbstractMenuType
                 'code' => $value,
             ];
         }
+
         return $data;
     }
 
@@ -53,6 +56,7 @@ class DropdownMenuType extends AbstractMenuType
                 ];
             }
         }
+
         return null;
     }
 

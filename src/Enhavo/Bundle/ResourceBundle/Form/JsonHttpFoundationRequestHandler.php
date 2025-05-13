@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Form;
 
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
@@ -51,7 +60,7 @@ class JsonHttpFoundationRequestHandler extends HttpFoundationRequestHandler
             $name = $form->getName();
             $content = json_decode($request->getContent(), true);
 
-            if (json_last_error() !== JSON_ERROR_NONE) {
+            if (JSON_ERROR_NONE !== json_last_error()) {
                 $form->submit(null, false);
                 $form->addError(
                     new FormError(

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 02.02.16
- * Time: 11:11
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Column\Type;
@@ -29,10 +32,10 @@ class MultiplePropertyColumnType extends AbstractColumnType
 
     public function createResourceViewData(array $options, object $resource, Data $data): void
     {
-        $propertyAccessor= new PropertyAccessor();
+        $propertyAccessor = new PropertyAccessor();
 
         $list = [];
-        foreach($options['properties'] as $property) {
+        foreach ($options['properties'] as $property) {
             $list[] = $propertyAccessor->getValue($resource, $property);
         }
 
@@ -44,7 +47,7 @@ class MultiplePropertyColumnType extends AbstractColumnType
         $resolver->setDefaults([
             'component' => 'column-text',
             'model' => 'TextColumn',
-            'separator' => ','
+            'separator' => ',',
         ]);
         $resolver->setRequired(['properties']);
     }

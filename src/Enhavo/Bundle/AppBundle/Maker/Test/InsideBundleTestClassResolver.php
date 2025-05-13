@@ -1,18 +1,27 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Maker\Test;
 
 class InsideBundleTestClassResolver implements TestClassResolverInterface
 {
     public function __construct(
-        private string $projectDir
-    )
-    {
+        private string $projectDir,
+    ) {
     }
 
     public function getClassName(string $originalFqcn): string
     {
         $reflector = new \ReflectionClass($originalFqcn);
+
         return sprintf('%sTest', $reflector->getShortName());
     }
 
@@ -27,7 +36,7 @@ class InsideBundleTestClassResolver implements TestClassResolverInterface
             if ($isBundle) {
                 $newParts[] = 'Tests';
                 $isBundle = null;
-            } else if ($isBundle === false && preg_match('/.+Bundle$/', $part)) {
+            } elseif (false === $isBundle && preg_match('/.+Bundle$/', $part)) {
                 $isBundle = true;
             }
             $newParts[] = $part;

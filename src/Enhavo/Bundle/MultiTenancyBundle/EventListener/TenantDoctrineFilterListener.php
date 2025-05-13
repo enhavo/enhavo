@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MultiTenancyBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,8 +34,7 @@ class TenantDoctrineFilterListener
 
     /**
      * TenantDoctrineFilterListener constructor.
-     * @param ResolverInterface $resolver
-     * @param EntityManagerInterface $entityManager
+     *
      * @param array $configuration
      */
     public function __construct(ResolverInterface $resolver, EntityManagerInterface $entityManager, $configuration)
@@ -40,7 +48,7 @@ class TenantDoctrineFilterListener
     {
         if ($this->configuration['enabled']) {
             $tenant = $this->resolver->getTenant();
-            if ($tenant === null) {
+            if (null === $tenant) {
                 return;
             }
 
@@ -56,9 +64,9 @@ class TenantDoctrineFilterListener
     {
         $result = [];
         // TODO: This is too slow and seriously impacts page performance, therefore it is currently not supported. We should look into caching possibilities if we want to support this.
-//        if ($this->configuration['detect_by_interface']) {
-//            $result = $this->detectByInterface();
-//        }
+        //        if ($this->configuration['detect_by_interface']) {
+        //            $result = $this->detectByInterface();
+        //        }
         foreach ($this->configuration['classes'] as $class) {
             $result[$class] = $class;
             foreach (class_parents($class) as $parentClass) {
@@ -69,16 +77,16 @@ class TenantDoctrineFilterListener
         return $result;
     }
 
-//    private function detectByInterface()
-//    {
-//        $result = [];
-//        $metaData = $this->entityManager->getMetadataFactory()->getAllMetadata();
-//        /** @var ClassMetadata $classMetadata */
-//        foreach($metaData as $classMetadata) {
-//            if ($classMetadata->getReflectionClass()->implementsInterface(TenantAwareInterface::class)) {
-//                $result [$classMetadata->rootEntityName] = $classMetadata->rootEntityName;
-//            }
-//        }
-//        return $result;
-//    }
+    //    private function detectByInterface()
+    //    {
+    //        $result = [];
+    //        $metaData = $this->entityManager->getMetadataFactory()->getAllMetadata();
+    //        /** @var ClassMetadata $classMetadata */
+    //        foreach($metaData as $classMetadata) {
+    //            if ($classMetadata->getReflectionClass()->implementsInterface(TenantAwareInterface::class)) {
+    //                $result [$classMetadata->rootEntityName] = $classMetadata->rootEntityName;
+    //            }
+    //        }
+    //        return $result;
+    //    }
 }

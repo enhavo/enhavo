@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SearchBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,8 +27,7 @@ class AnalyzeCommand extends Command
         private IndexDataProvider $indexDataProvider,
         private FilterDataProvider $filterDataProvider,
         private EntityManagerInterface $em,
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -39,13 +48,14 @@ class AnalyzeCommand extends Command
 
         $entity = $this->em->getRepository($class)->find($id);
 
-        if ($entity === null) {
+        if (null === $entity) {
             $output->writeln('Entity not found');
+
             return Command::FAILURE;
         }
 
         $data = $this->indexDataProvider->getIndexData($entity);
-        if (count($data) === 0) {
+        if (0 === count($data)) {
             $output->writeln('No data to index');
         } else {
             $output->writeln('Data:');
@@ -54,9 +64,8 @@ class AnalyzeCommand extends Command
             }
         }
 
-
         $filter = $this->filterDataProvider->getFilterData($entity);
-        if (count($filter) === 0) {
+        if (0 === count($filter)) {
             $output->writeln('No filter to index');
         } else {
             $output->writeln('Filter:');

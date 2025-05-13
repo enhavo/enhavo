@@ -1,9 +1,17 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RevisionBundle\Revision;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\ResourceBundle\Event\ResourcePreDeleteEvent;
 use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\RevisionBundle\Entity\Archive;
@@ -23,8 +31,7 @@ class RevisionManager
         private readonly FactoryInterface $binFactory,
         private readonly FactoryInterface $archiveFactory,
         private readonly EventDispatcherInterface $eventDispatcher,
-    )
-    {
+    ) {
     }
 
     public function saveRevision(RevisionInterface $subject, ?UserInterface $user = null): RevisionInterface
@@ -37,6 +44,7 @@ class RevisionManager
         $revision->setRevisionUser($user);
         $this->em->persist($revision);
         $this->em->flush();
+
         return $revision;
     }
 
@@ -80,7 +88,6 @@ class RevisionManager
         return $revision;
     }
 
-
     public function softDelete(RevisionInterface $subject): void
     {
         $now = new \DateTime();
@@ -95,9 +102,9 @@ class RevisionManager
         $bin->setResourceAlias($this->resourceManager->getMetadata($subject)?->getAlias());
         $this->em->persist($bin);
 
-        $this->eventDispatcher->dispatch(new ResourcePreSoftDeleteEvent($subject),'enhavo_resource.pre_soft_delete');
+        $this->eventDispatcher->dispatch(new ResourcePreSoftDeleteEvent($subject), 'enhavo_resource.pre_soft_delete');
         $this->em->flush();
-        $this->eventDispatcher->dispatch(new ResourcePreSoftDeleteEvent($subject),'enhavo_resource.post_soft_delete');
+        $this->eventDispatcher->dispatch(new ResourcePreSoftDeleteEvent($subject), 'enhavo_resource.post_soft_delete');
     }
 
     public function undelete(RevisionInterface $subject): void
@@ -105,15 +112,13 @@ class RevisionManager
         $subject->setRevisionState(RevisionInterface::STATE_MAIN);
         $subject->setRevisionDate(null);
 
-        $this->eventDispatcher->dispatch(new ResourcePreUndeleteEvent($subject),'enhavo_resource.pre_undelete');
+        $this->eventDispatcher->dispatch(new ResourcePreUndeleteEvent($subject), 'enhavo_resource.pre_undelete');
         $this->em->flush();
-        $this->eventDispatcher->dispatch(new ResourcePostUndeleteEvent($subject),'enhavo_resource.post_undelete');
-
+        $this->eventDispatcher->dispatch(new ResourcePostUndeleteEvent($subject), 'enhavo_resource.post_undelete');
     }
 
     public function publish(RevisionInterface $subject): void
     {
-
     }
 
     public function getPublish(RevisionInterface $subject): RevisionInterface

@@ -1,13 +1,20 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NavigationBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointTypeExtension;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
 use Enhavo\Bundle\AppBundle\Endpoint\Type\ViewEndpointType;
-use Enhavo\Bundle\AppBundle\View\View;
 use Enhavo\Bundle\NavigationBundle\Repository\NavigationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,7 +23,8 @@ class NavigationEndpointExtension extends AbstractEndpointTypeExtension
 {
     public function __construct(
         private NavigationRepository $navigationRepository,
-    ) {}
+    ) {
+    }
 
     public function handleRequest($options, Request $request, Data $data, Context $context)
     {
@@ -28,7 +36,7 @@ class NavigationEndpointExtension extends AbstractEndpointTypeExtension
 
         $navigationData = [];
         foreach ($navigations as $navigation) {
-            if ($options['navigation'] === true || (is_array($options['navigation']) && in_array($navigation->getCode(), $options['navigation']))) {
+            if (true === $options['navigation'] || (is_array($options['navigation']) && in_array($navigation->getCode(), $options['navigation']))) {
                 $navigationData[$navigation->getCode()] = $this->normalize($navigation, null, ['groups' => ['endpoint.navigation']]);
             }
         }

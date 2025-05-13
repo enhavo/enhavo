@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-08-26
- * Time: 00:54
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Locale;
@@ -24,7 +27,6 @@ class RequestLocaleResolver implements LocaleResolverInterface
 
     /**
      * FixLocaleResolver constructor.
-     * @param RequestStack $requestStack
      */
     public function __construct(RequestStack $requestStack, $defaultLocale = 'en')
     {
@@ -36,7 +38,7 @@ class RequestLocaleResolver implements LocaleResolverInterface
     {
         $locale = $this->requestStack->getMainRequest()->getLocale();
 
-        if($locale === null) {
+        if (null === $locale) {
             return $this->defaultLocale;
         }
 

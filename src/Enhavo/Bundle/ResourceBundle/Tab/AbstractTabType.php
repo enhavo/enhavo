@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-02-19
- * Time: 02:15
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Tab;
@@ -18,9 +21,8 @@ use Enhavo\Component\Type\AbstractType;
  */
 abstract class AbstractTabType extends AbstractType implements TabTypeInterface
 {
-    public function createViewData(array $options, Data $data, InputInterface $input = null): void
+    public function createViewData(array $options, Data $data, ?InputInterface $input = null): void
     {
-
     }
 
     public function getPermission(array $options, InputInterface $input): mixed

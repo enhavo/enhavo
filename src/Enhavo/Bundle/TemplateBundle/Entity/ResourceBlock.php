@@ -1,28 +1,32 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TemplateBundle\Entity;
 
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
+use Enhavo\Bundle\TemplateBundle\Template\Template;
 
 class ResourceBlock extends AbstractBlock
 {
     /**
-     * @var \Enhavo\Bundle\TemplateBundle\Template\Template
+     * @var Template
      */
     private $template;
 
-    /**
-     * @return \Enhavo\Bundle\TemplateBundle\Template\Template
-     */
-    public function getTemplate(): \Enhavo\Bundle\TemplateBundle\Template\Template
+    public function getTemplate(): Template
     {
         return $this->template;
     }
 
-    /**
-     * @param \Enhavo\Bundle\TemplateBundle\Template\Template $template
-     */
-    public function setTemplate(\Enhavo\Bundle\TemplateBundle\Template\Template $template): void
+    public function setTemplate(Template $template): void
     {
         $this->template = $template;
     }

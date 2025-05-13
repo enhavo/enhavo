@@ -1,18 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 13.02.18
- * Time: 00:58
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Form\Config;
 
-
 class Condition
 {
-    const AND = 'and';
-    const OR = 'or';
+    public const AND = 'and';
+    public const OR = 'or';
 
     /**
      * @var string
@@ -26,17 +28,18 @@ class Condition
 
     /**
      * @param array|string|null $values
-     * @param string $operator
-     * @param string|null $scope
+     * @param string            $operator
+     * @param string|null       $scope
+     *
      * @return ConditionObserver
      */
     public function createObserver($values, $scope = null, $operator = self::AND)
     {
-        if(!is_array($values)) {
+        if (!is_array($values)) {
             $values = [$values];
         }
-        foreach($values as &$value) {
-            $value = (string)$value;
+        foreach ($values as &$value) {
+            $value = (string) $value;
         }
 
         return new ConditionObserver($this, $values, $operator, $scope);

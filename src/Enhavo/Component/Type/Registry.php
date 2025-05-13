@@ -1,10 +1,12 @@
 <?php
 
-/**
- * AbstractCollector.php
+/*
+ * This file is part of the enhavo package.
  *
- * @since 29/05/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Type;
@@ -17,7 +19,6 @@ class Registry implements RegistryInterface
 {
     use ContainerAwareTrait;
 
-    /** @var string */
     private string $namespace;
 
     /** @var RegistryEntry[] */
@@ -25,7 +26,6 @@ class Registry implements RegistryInterface
 
     /** @var RegistryExtension[] */
     private array $extensions = [];
-
 
     public function __construct(string $namespace)
     {
@@ -35,7 +35,7 @@ class Registry implements RegistryInterface
     public function register(string $class, string $id)
     {
         $this->checkInterface($class);
-        /** @var string|TypeInterface $class */
+        /* @var string|TypeInterface $class */
         $this->checkClassAlreadyExists($class);
         $this->checkNameExists($class::getName());
         $this->checkParentType($class);
@@ -44,7 +44,6 @@ class Registry implements RegistryInterface
     }
 
     /**
-     * @param $class
      * @throws TypeNotValidException
      */
     private function checkInterface($class): void
@@ -55,31 +54,32 @@ class Registry implements RegistryInterface
     }
 
     /**
-     * @param $name
      * @throws TypeNotValidException
      */
     private function checkNameExists($name)
     {
         $entry = $this->getEntry($name);
-        if ($name !== null && $entry !== null) {
+        if (null !== $name && null !== $entry) {
             throw TypeNotValidException::nameExists($name, $this->namespace, $entry->getClass());
         }
     }
 
     /**
      * @param string $class
+     *
      * @throws TypeNotValidException
      */
     private function checkClassAlreadyExists($class)
     {
         $entry = $this->getEntry($class);
-        if ($entry !== null) {
+        if (null !== $entry) {
             throw TypeNotValidException::classExists($class, $this->namespace);
         }
     }
 
     /**
      * @param string|TypeInterface $class
+     *
      * @throws TypeNotValidException
      */
     private function checkParentType($class)
@@ -87,13 +87,13 @@ class Registry implements RegistryInterface
         /** @var string|TypeInterface $parentClass */
         $parentClass = $class::getParentType();
         $classes = [$class];
-        while ($parentClass !== null) {
+        while (null !== $parentClass) {
             if (in_array($parentClass, $classes)) {
                 $classes[] = $parentClass;
                 throw TypeNotValidException::circleReferences($classes);
             }
 
-            if ($parentClass !== null && !class_exists($parentClass)) {
+            if (null !== $parentClass && !class_exists($parentClass)) {
                 throw TypeNotValidException::parentNotFound($class, $parentClass);
             }
 
@@ -111,30 +111,29 @@ class Registry implements RegistryInterface
 
     private function getEntry($name): ?RegistryEntry
     {
-        foreach($this->entries as $entry) {
-            if ($entry->getName() !== null && $entry->getName() === $name) {
+        foreach ($this->entries as $entry) {
+            if (null !== $entry->getName() && $entry->getName() === $name) {
                 return $entry;
-            } elseif($entry->getClass() === $name)  {
+            } elseif ($entry->getClass() === $name) {
                 return $entry;
             }
         }
+
         return null;
     }
 
     /**
-     * @param string $name
      * @throws TypeNotFoundException
-     * @return TypeInterface
      */
     public function getType(string $name): TypeInterface
     {
         $entry = $this->getEntry($name);
 
-        if ($entry === null) {
+        if (null === $entry) {
             throw TypeNotFoundException::notFound($name, $this->namespace, $this->getPossibleNames());
         }
 
-        if ($entry->getService() === null) {
+        if (null === $entry->getService()) {
             $entry->setService($this->createService($entry));
         }
 
@@ -147,7 +146,7 @@ class Registry implements RegistryInterface
         $service = $this->container->get($entry->getId());
 
         $parent = $service::getParentType();
-        if($parent !== null) {
+        if (null !== $parent) {
             $service->setParent($this->getType($parent));
         }
 
@@ -157,19 +156,20 @@ class Registry implements RegistryInterface
     private function getPossibleNames()
     {
         $names = [];
-        foreach($this->entries as $entry) {
-            if($entry->getName() !== null) {
+        foreach ($this->entries as $entry) {
+            if (null !== $entry->getName()) {
                 $names[] = $entry->getName();
             }
             $names[] = $entry->getClass();
         }
+
         return $names;
     }
 
     public function registerExtension(string $class, string $id, int $priority = 10)
     {
         $this->checkExtensionInterface($class);
-        /** @var string|TypeExtensionInterface $class */
+        /* @var string|TypeExtensionInterface $class */
         $this->checkExtendedTypeAvailable($class);
 
         $this->extensions[] = new RegistryExtension($id, $class, $class::getExtendedTypes(), $priority);
@@ -206,7 +206,7 @@ class Registry implements RegistryInterface
         foreach ($this->extensions as $extension) {
             foreach ($extension->getExtendedTypes() as $extendedType) {
                 if ($this->checkExtends($type, $extendedType)) {
-                    if ($extension->getService() === null) {
+                    if (null === $extension->getService()) {
                         $service = $this->container->get($extension->getId());
                         $extension->setService($service);
                     }
@@ -215,6 +215,7 @@ class Registry implements RegistryInterface
                 }
             }
         }
+
         return $extensions;
     }
 
@@ -227,6 +228,7 @@ class Registry implements RegistryInterface
         } elseif ($type::getName() && $type::getName() === $extendedType) {
             return true;
         }
+
         return false;
     }
 }

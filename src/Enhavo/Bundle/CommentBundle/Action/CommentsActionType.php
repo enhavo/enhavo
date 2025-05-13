@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-10-26
- * Time: 12:42
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Action;
@@ -19,18 +22,17 @@ class CommentsActionType extends AbstractActionType
 {
     public function __construct(
         private readonly RouterInterface $router,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         if (!$resource instanceof CommentSubjectInterface) {
             throw CommentSubjectException::createTypeException($resource);
         }
 
         $url = $this->router->generate($options['route'], [
-            'id' => $resource->getThread()->getId()
+            'id' => $resource->getThread()->getId(),
         ]);
 
         $data['url'] = $url;
@@ -38,13 +40,13 @@ class CommentsActionType extends AbstractActionType
         $data['frameKey'] = 'comment-view';
     }
 
-    public function isEnabled(array $options, object $resource = null): bool
+    public function isEnabled(array $options, ?object $resource = null): bool
     {
         if (!$resource instanceof CommentSubjectInterface) {
             throw CommentSubjectException::createTypeException($resource);
         }
 
-        if ($resource->getThread()?->getId() === null) {
+        if (null === $resource->getThread()?->getId()) {
             return false;
         }
 

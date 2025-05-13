@@ -1,9 +1,12 @@
 <?php
-/**
- * ArticleListBlockType.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 04/05/19
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ArticleBundle\Block;
@@ -23,8 +26,7 @@ class ArticleListBlockType extends AbstractBlockType
     public function __construct(
         private readonly ArticleRepository $repository,
         private readonly NormalizerInterface $normalizer,
-    )
-    {
+    ) {
     }
 
     public function createViewData(BlockInterface $block, Data $data, $resource, array $options)
@@ -43,7 +45,7 @@ class ArticleListBlockType extends AbstractBlockType
             'template' => 'theme/block/article-list.html.twig',
             'label' => 'article.label.article_list',
             'translation_domain' => 'EnhavoArticleBundle',
-            'groups' => ['default', 'content']
+            'groups' => ['default', 'content'],
         ]);
     }
 

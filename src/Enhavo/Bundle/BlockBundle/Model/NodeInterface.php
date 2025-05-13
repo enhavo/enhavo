@@ -1,10 +1,12 @@
 <?php
 
-/**
- * NodeInterface.php
+/*
+ * This file is part of the enhavo package.
  *
- * @since 22/05/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Model;
@@ -13,19 +15,15 @@ use Doctrine\Common\Collections\Collection;
 
 interface NodeInterface
 {
-    const TYPE_ROOT = 'root';
-    const TYPE_BLOCK = 'block';
-    const TYPE_LIST = 'list';
+    public const TYPE_ROOT = 'root';
+    public const TYPE_BLOCK = 'block';
+    public const TYPE_LIST = 'list';
 
     /**
-     * @return integer
+     * @return int
      */
     public function getId();
 
-    /**
-     * @param NodeInterface $node
-     * @return mixed
-     */
     public function setParent(NodeInterface $node);
 
     /**
@@ -48,10 +46,7 @@ interface NodeInterface
      */
     public function getBlock();
 
-    /**
-     * @param BlockInterface $block
-     */
-    public function setBlock(BlockInterface $block = null);
+    public function setBlock(?BlockInterface $block = null);
 
     /**
      * @return int
@@ -68,34 +63,16 @@ interface NodeInterface
      */
     public function getChildren();
 
-    /**
-     * @param NodeInterface $child
-     */
     public function addChild(NodeInterface $child);
 
-    /**
-     * @param NodeInterface $child
-     */
     public function removeChild(NodeInterface $child);
 
-    /**
-     * @return array
-     */
     public function getViewData(): ?array;
 
-    /**
-     * @param array $viewData
-     */
     public function setViewData(?array $viewData): void;
 
-    /**
-     * @return string
-     */
     public function getProperty(): string;
 
-    /**
-     * @param string $property
-     */
     public function setProperty(string $property): void;
 
     /**
@@ -108,34 +85,16 @@ interface NodeInterface
      */
     public function setResource($resource): void;
 
-    /**
-     * @return bool
-     */
     public function isEnable(): ?bool;
 
-    /**
-     * @param bool $enable
-     */
     public function setEnable(?bool $enable);
 
-    /**
-     * @return string|null
-     */
     public function getType(): ?string;
 
-    /**
-     * @param string $type
-     */
     public function setType(?string $type): void;
 
-    /**
-     * @return string
-     */
     public function getTemplate(): ?string;
 
-    /**
-     * @param string $template
-     */
     public function setTemplate(?string $template): void;
 
     /**
@@ -164,12 +123,12 @@ interface NodeInterface
     public function getNext();
 
     /**
-     * @return  NodeInterface[]
+     * @return NodeInterface[]
      */
     public function getSiblings();
 
     /**
-     * @return  NodeInterface[]
+     * @return NodeInterface[]
      */
     public function getNextSiblings();
 

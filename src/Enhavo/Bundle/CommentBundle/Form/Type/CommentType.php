@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-09-16
- * Time: 15:20
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Form\Type;
@@ -34,26 +37,26 @@ class CommentType extends AbstractType
     {
         $builder->add('name', TextType::class, [
             'label' => 'comment.label.name',
-            'translation_domain' => 'EnhavoCommentBundle'
+            'translation_domain' => 'EnhavoCommentBundle',
         ]);
 
         $builder->add('email', TextType::class, [
             'label' => 'comment.label.email',
-            'translation_domain' => 'EnhavoCommentBundle'
+            'translation_domain' => 'EnhavoCommentBundle',
         ]);
 
         $builder->add('comment', TextareaType::class, [
             'label' => 'comment.label.comment',
-            'translation_domain' => 'EnhavoCommentBundle'
+            'translation_domain' => 'EnhavoCommentBundle',
         ]);
 
         $builder->add('createdAt', DateTimeType::class, [
             'label' => 'comment.label.created_at',
-            'translation_domain' => 'EnhavoCommentBundle'
+            'translation_domain' => 'EnhavoCommentBundle',
         ]);
 
         $builder->add('user', UserAutoCompleteEntityType::class, [
-            'placeholder' => '---'
+            'placeholder' => '---',
         ]);
 
         $builder->add('state', ChoiceType::class, [
@@ -62,15 +65,15 @@ class CommentType extends AbstractType
             'choices' => [
                 'comment.label.pending' => CommentInterface::STATE_PENDING,
                 'comment.label.publish' => CommentInterface::STATE_PUBLISH,
-                'comment.label.deny' => CommentInterface::STATE_DENY
-            ]
+                'comment.label.deny' => CommentInterface::STATE_DENY,
+            ],
         ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => $this->dataClass
+            'data_class' => $this->dataClass,
         ]);
     }
 }

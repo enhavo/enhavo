@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-08-26
- * Time: 00:45
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\EventListener;
@@ -13,15 +16,14 @@ use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-
 class TimestampableSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             ResourceEvents::PRE_CREATE => 'preSave',
-            ResourceEvents::PRE_UPDATE => 'preSave'
-        );
+            ResourceEvents::PRE_UPDATE => 'preSave',
+        ];
     }
 
     public function preSave(ResourceEvent $event)
@@ -31,7 +33,7 @@ class TimestampableSubscriber implements EventSubscriberInterface
         if ($resource instanceof Timestampable) {
             $now = new \DateTime();
             $resource->setUpdatedAt($now);
-            if ($resource->getCreatedAt() === null) {
+            if (null === $resource->getCreatedAt()) {
                 $resource->setCreatedAt($now);
             }
         }

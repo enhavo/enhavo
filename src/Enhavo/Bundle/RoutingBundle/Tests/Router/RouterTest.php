@@ -1,13 +1,21 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\RoutingBundle\Tests\Router;
 
-use Enhavo\Bundle\RoutingBundle\Metadata\Router as MetadataRouter;
 use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
 use Enhavo\Bundle\RoutingBundle\Exception\UrlResolverException;
-use Enhavo\Bundle\RoutingBundle\Router\Router;
 use Enhavo\Bundle\RoutingBundle\Metadata\Metadata;
+use Enhavo\Bundle\RoutingBundle\Metadata\Router as MetadataRouter;
+use Enhavo\Bundle\RoutingBundle\Router\Router;
 use Enhavo\Bundle\RoutingBundle\Router\Strategy\IdStrategy;
 use Enhavo\Bundle\RoutingBundle\Router\Strategy\SlugIdStrategy;
 use Enhavo\Bundle\RoutingBundle\Router\Strategy\SlugStrategy;
@@ -56,10 +64,10 @@ class RouterTest extends TestCase
         $dependencies->metadata->expects($this->once())->method('getRouter')->willReturn([$dependencies->metadataRouter]);
         $dependencies->metadataRouter->expects($this->once())->method('getName')->willReturn('default');
         $dependencies->metadataRouter->expects($this->once())->method('getOptions')->willReturn([
-            'route' => 'my_route'
+            'route' => 'my_route',
         ]);
         $dependencies->router->expects($this->once())->method('generate')->willReturnCallback(function ($route, $parameters, $refType) {
-            return $route .'-' .$parameters['id'];
+            return $route.'-'.$parameters['id'];
         });
         $dependencies->container->method('get')->willReturn($dependencies->router);
         $strategy = new IdStrategy();
@@ -73,7 +81,6 @@ class RouterTest extends TestCase
         $path = $router->generate($mock);
 
         $this->assertEquals('my_route-999', $path);
-
     }
 
     public function testGenerateSlug()
@@ -83,10 +90,10 @@ class RouterTest extends TestCase
         $dependencies->metadata->expects($this->once())->method('getRouter')->willReturn([$dependencies->metadataRouter]);
         $dependencies->metadataRouter->expects($this->once())->method('getName')->willReturn('default');
         $dependencies->metadataRouter->expects($this->once())->method('getOptions')->willReturn([
-            'route' => 'my_route'
+            'route' => 'my_route',
         ]);
         $dependencies->router->expects($this->once())->method('generate')->willReturnCallback(function ($route, $parameters, $refType) {
-            return $route .'-' .$parameters['slug'];
+            return $route.'-'.$parameters['slug'];
         });
         $dependencies->container->method('get')->willReturn($dependencies->router);
         $strategy = new SlugStrategy();
@@ -101,7 +108,6 @@ class RouterTest extends TestCase
         $path = $router->generate($mock);
 
         $this->assertEquals('my_route-some-slug', $path);
-
     }
 
     public function testGenerateSlugId()
@@ -111,10 +117,10 @@ class RouterTest extends TestCase
         $dependencies->metadata->expects($this->once())->method('getRouter')->willReturn([$dependencies->metadataRouter]);
         $dependencies->metadataRouter->expects($this->once())->method('getName')->willReturn('default');
         $dependencies->metadataRouter->expects($this->once())->method('getOptions')->willReturn([
-            'route' => 'my_route'
+            'route' => 'my_route',
         ]);
         $dependencies->router->expects($this->once())->method('generate')->willReturnCallback(function ($route, $parameters, $refType) {
-            return $route .'-' .$parameters['id'].'-'.$parameters['slug'];
+            return $route.'-'.$parameters['id'].'-'.$parameters['slug'];
         });
         $dependencies->container->method('get')->willReturn($dependencies->router);
         $strategy = new SlugIdStrategy();
@@ -152,4 +158,3 @@ class RouterTestDependencies
     /** @var RouterInterface|MockObject */
     public $router;
 }
-

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\Documentation;
 
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Documentation;
@@ -12,22 +21,18 @@ class DocumentationCollector implements EndpointFactoryAwareInterface
 {
     use EndpointFactoryTrait;
 
-    const DEFAULT = 'default';
+    public const DEFAULT = 'default';
 
     public function __construct(
         private RouterInterface $router,
         private array $sectionConfig,
-    )
-    {
+    ) {
     }
 
     public function collect($section = self::DEFAULT): array
     {
         if (!$this->hasSection($section)) {
-            throw new \Exception(sprintf('Section "%s" does not exist. Maybe you forgot to add it to the configuration. Available sections: "%s"',
-                $section,
-                join(',', $this->getSections()
-            )));
+            throw new \Exception(sprintf('Section "%s" does not exist. Maybe you forgot to add it to the configuration. Available sections: "%s"', $section, join(',', $this->getSections())));
         }
 
         $sectionConfig = $this->sectionConfig[$section];

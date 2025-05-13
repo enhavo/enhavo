@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\ResourceBundle\Action\Type\SaveActionType;
@@ -15,9 +24,10 @@ class TransitionActionType extends SaveActionType
 
         $resolver->setNormalizer('route_parameters', function ($options, $value) {
             $value['transition'] = $options['transition'];
-            if ($options['graph'] !== null) {
+            if (null !== $options['graph']) {
                 $value['graph'] = $options['graph'];
             }
+
             return $value;
         });
 

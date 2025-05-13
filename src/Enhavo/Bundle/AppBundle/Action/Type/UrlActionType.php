@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-02-19
- * Time: 02:15
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
@@ -20,23 +23,22 @@ class UrlActionType extends AbstractActionType
     public function __construct(
         private readonly RouterInterface $router,
         private readonly ResourceExpressionLanguage $expressionLanguage,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $data->set('url', $options['url'] ?? $this->getUrl($options, $resource));
     }
 
-    private function getUrl(array $options, object $resource = null): string
+    private function getUrl(array $options, ?object $resource = null): string
     {
         $parameters = $this->expressionLanguage->evaluateArray($options['route_parameters'], [
-            'resource' => $resource
+            'resource' => $resource,
         ]);
 
         $route = $this->expressionLanguage->evaluate($options['route'], [
-            'resource' => $resource
+            'resource' => $resource,
         ]);
 
         return $this->router->generate($route, $parameters);
@@ -50,10 +52,11 @@ class UrlActionType extends AbstractActionType
             'url' => null,
         ]);
 
-        $resolver->setNormalizer('route', function($options, $value) {
-            if ($options['url'] === null && $value === null) {
+        $resolver->setNormalizer('route', function ($options, $value) {
+            if (null === $options['url'] && null === $value) {
                 throw new InvalidOptionsException('Need to configure "route" or "url" option');
             }
+
             return $value;
         });
     }

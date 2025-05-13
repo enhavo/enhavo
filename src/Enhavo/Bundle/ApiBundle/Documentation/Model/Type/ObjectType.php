@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model\Type;
 
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Documentation;
@@ -10,8 +19,7 @@ class ObjectType
     public function __construct(
         private array &$data,
         private $parent,
-    )
-    {
+    ) {
         $this->data['type'] = 'object';
     }
 
@@ -19,6 +27,7 @@ class ObjectType
     {
         $this->reset();
         $this->data['$ref'] = $ref;
+
         return $this;
     }
 
@@ -33,7 +42,7 @@ class ObjectType
             $this->data['properties'][$name] = [];
         }
 
-        return match($type) {
+        return match ($type) {
             'object' => new ObjectType($this->data['properties'][$name], $this),
             'string' => new StringType($this->data['properties'][$name], $this),
             'integer' => new IntegerType($this->data['properties'][$name], $this),

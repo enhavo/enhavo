@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-15
- * Time: 18:04
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Prototype;
@@ -30,7 +33,7 @@ class PrototypeManager
 
     /**
      * PrototypeManager constructor.
-     * @param TokenGeneratorInterface $tokenGenerator
+     *
      * @param bool $csrfProtection
      */
     public function __construct(TokenGeneratorInterface $tokenGenerator, $csrfProtection = true)
@@ -41,7 +44,7 @@ class PrototypeManager
 
     public function initStorage($storageName)
     {
-        if($this->hasStorage($storageName)) {
+        if ($this->hasStorage($storageName)) {
             throw new \InvalidArgumentException();
         }
         $this->storage[$storageName] = true;
@@ -54,13 +57,13 @@ class PrototypeManager
 
     public function buildPrototype(FormBuilderInterface $builder, $storageName, $type, $options, $parameters, $data = null)
     {
-        if(!$this->hasStorage($storageName)) {
+        if (!$this->hasStorage($storageName)) {
             throw new \InvalidArgumentException();
         }
 
-        if($this->csrfProtection) {
+        if ($this->csrfProtection) {
             $options = array_merge($options, [
-                'csrf_protection' => false
+                'csrf_protection' => false,
             ]);
         }
 
@@ -71,27 +74,28 @@ class PrototypeManager
     }
 
     /**
-     * @param $storageName
      * @return Prototype[]
      */
     public function getPrototypes($storageName): array
     {
         $prototypes = [];
-        foreach($this->prototypes as $prototype) {
-            if($prototype->getStorageName() === $storageName) {
+        foreach ($this->prototypes as $prototype) {
+            if ($prototype->getStorageName() === $storageName) {
                 $prototypes[] = $prototype;
             }
         }
+
         return $prototypes;
     }
 
     public function normalizePrototypeStorage($optionName, OptionsResolver $resolver)
     {
         $tokenGenerator = $this->tokenGenerator;
-        $resolver->setNormalizer($optionName, function($options, $value) use ($tokenGenerator) {
-            if($value === null) {
+        $resolver->setNormalizer($optionName, function ($options, $value) use ($tokenGenerator) {
+            if (null === $value) {
                 $value = $tokenGenerator->generateToken(8);
             }
+
             return $value;
         });
     }
@@ -99,15 +103,13 @@ class PrototypeManager
     public function getPrototypeViews()
     {
         $data = [];
-        foreach($this->prototypes as $prototype) {
+        foreach ($this->prototypes as $prototype) {
             $data[] = new PrototypeView($prototype);
         }
+
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars['attr']['data-prototype-full-name'] = $view->vars['full_name'];
@@ -115,6 +117,5 @@ class PrototypeManager
 
     public function buildPrototypeView(FormView $view)
     {
-
     }
 }

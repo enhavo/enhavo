@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MultiTenancyBundle\Menu;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -17,8 +26,7 @@ class SwitchTenantMenu extends AbstractMenuType
         private readonly TenantManager $tenantManager,
         private readonly AuthorizationCheckerInterface $authorizationChecker,
         private readonly RouterInterface $router,
-    )
-    {
+    ) {
     }
 
     public function createViewData(array $options, Data $data): void
@@ -51,10 +59,10 @@ class SwitchTenantMenu extends AbstractMenuType
         foreach ($tenants as $tenant) {
             if ($tenant->getRole()) {
                 if ($this->authorizationChecker->isGranted($tenant->getRole())) {
-                    $result []= $tenant;
+                    $result[] = $tenant;
                 }
             } else {
-                $result []= $tenant;
+                $result[] = $tenant;
             }
         }
 
@@ -65,7 +73,7 @@ class SwitchTenantMenu extends AbstractMenuType
     {
         if (!$options['enabled']) {
             return false;
-        } else if (count($this->getTenants()) <= 1) {
+        } elseif (count($this->getTenants()) <= 1) {
             return false;
         }
 
@@ -77,9 +85,9 @@ class SwitchTenantMenu extends AbstractMenuType
         $resolver->setDefaults([
             'permission' => 'ROLE_ADMIN',
             'model' => 'SwitchTenantMenuItem',
-            'choices' =>  $this->getChoices(),
+            'choices' => $this->getChoices(),
             'value' => $this->getValue(),
-            'route' => 'enhavo_multi_tenancy_admin_api_tenant_switch'
+            'route' => 'enhavo_multi_tenancy_admin_api_tenant_switch',
         ]);
     }
 

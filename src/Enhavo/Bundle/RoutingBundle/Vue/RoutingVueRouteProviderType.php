@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RoutingBundle\Vue;
 
 use Doctrine\ORM\AbstractQuery;
@@ -16,8 +25,7 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
 
     public function __construct(
         private readonly RouteRepository $routeRepository,
-    )
-    {
+    ) {
     }
 
     public function getRoutes($options, array|string|null $groups = null): array
@@ -35,6 +43,7 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
         foreach ($routes as $route) {
             $vueRoutes[] = $this->createVueRoute($route, $options);
         }
+
         return $vueRoutes;
     }
 
@@ -67,7 +76,7 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
             'meta' => [
                 'name' => $options['meta_name'],
                 'id' => $route['contentId'],
-            ]
+            ],
         ]);
     }
 

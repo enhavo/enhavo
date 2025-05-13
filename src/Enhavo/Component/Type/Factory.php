@@ -1,9 +1,12 @@
 <?php
-/**
- * TypeFactory.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 12/02/18
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Type;
@@ -15,19 +18,19 @@ class Factory implements FactoryInterface
     public function __construct(
         private readonly string $class,
         private readonly RegistryInterface $registry,
-    )
-    {
+    ) {
     }
 
     /**
-     * @param array $options
      * @param string|null $key
+     *
      * @throws TypeCreateException
+     *
      * @return object
      */
     public function create(array $options, $key = null)
     {
-        if(!isset($options['type'])) {
+        if (!isset($options['type'])) {
             throw TypeCreateException::missingOption($this->class, $options);
         }
 
@@ -41,6 +44,7 @@ class Factory implements FactoryInterface
             'key' => $key,
             'extensions' => $this->getExtensions($type, $parents),
         ]);
+
         return $class;
     }
 
@@ -54,7 +58,7 @@ class Factory implements FactoryInterface
         $parents = [];
 
         $parent = $type::getParentType();
-        while ($parent !== null) {
+        while (null !== $parent) {
             $parentType = $this->registry->getType($parent);
             $parents[] = $parentType;
             $parent = $parentType::getParentType($parentType);

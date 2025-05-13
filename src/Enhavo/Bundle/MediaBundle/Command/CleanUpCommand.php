@@ -1,16 +1,18 @@
 <?php
-/**
- * CleanUpCommand.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 13/11/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Command;
 
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Repository\FileRepository;
@@ -19,6 +21,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 class CleanUpCommand extends Command
@@ -50,42 +53,56 @@ class CleanUpCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
      * @throws \Exception
+     *
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->isDryRun = $input->getOption('dry-run');
 
         $output->writeln('Starting file cleanup');
-        if ($output->isVerbose()) $output->writeln('');
-
-        if ($output->isVerbose()) $output->writeln('Deleting unreferenced file database entries...');
-        if ($this->enableDeleteUnreferenced) {
-            $deleted = $this->deleteUnreferencedDatabaseEntries($output);
-            if ($output->isVerbose()) $output->writeln('done, ' . $deleted . ' database entries deleted.');
-
-        } else {
-            if ($output->isVerbose()) $output->writeln('skipped, enable_delete_unreferenced is disabled.');
+        if ($output->isVerbose()) {
+            $output->writeln('');
         }
 
-        if ($output->isVerbose()) $output->writeln('Deleting files in media directory without database entry...');
-        $deleted = $this->deleteFilesWithoutDatabaseEntry($output);
-        if ($output->isVerbose()) $output->writeln('done, ' . $deleted . ' files deleted.');
+        if ($output->isVerbose()) {
+            $output->writeln('Deleting unreferenced file database entries...');
+        }
+        if ($this->enableDeleteUnreferenced) {
+            $deleted = $this->deleteUnreferencedDatabaseEntries($output);
+            if ($output->isVerbose()) {
+                $output->writeln('done, '.$deleted.' database entries deleted.');
+            }
+        } else {
+            if ($output->isVerbose()) {
+                $output->writeln('skipped, enable_delete_unreferenced is disabled.');
+            }
+        }
 
-        if ($output->isVerbose()) $output->writeln('');
+        if ($output->isVerbose()) {
+            $output->writeln('Deleting files in media directory without database entry...');
+        }
+        $deleted = $this->deleteFilesWithoutDatabaseEntry($output);
+        if ($output->isVerbose()) {
+            $output->writeln('done, '.$deleted.' files deleted.');
+        }
+
+        if ($output->isVerbose()) {
+            $output->writeln('');
+        }
         $output->writeln('Cleanup complete.');
-        if ($this->isDryRun) $output->writeln('This was a dry run, no actual files were deleted.');
+        if ($this->isDryRun) {
+            $output->writeln('This was a dry run, no actual files were deleted.');
+        }
 
         return Command::SUCCESS;
     }
 
     /**
-     * @param OutputInterface $output
-     * @return int
      * @throws \Exception
+     *
+     * @return int
      */
     private function deleteUnreferencedDatabaseEntries(OutputInterface $output)
     {
@@ -94,29 +111,33 @@ class CleanUpCommand extends Command
 
         $numDeleted = 0;
 
-        foreach($files as $file) {
-
+        foreach ($files as $file) {
             try {
                 $isReferenced = $this->isReferenced($file->getId(), $references);
             } catch (\Exception $exception) {
-                throw new \Exception('Exception occurred while checking references for file #' . $file->getId() . ': ' . $exception->getMessage());
+                throw new \Exception('Exception occurred while checking references for file #'.$file->getId().': '.$exception->getMessage());
             }
 
             if (!$isReferenced) {
-                if (!$this->isDryRun) $this->mediaManager->deleteFile($file);
-                if ($output->isVerbose()) $output->write('.');
-                $numDeleted++;
+                if (!$this->isDryRun) {
+                    $this->mediaManager->deleteFile($file);
+                }
+                if ($output->isVerbose()) {
+                    $output->write('.');
+                }
+                ++$numDeleted;
             }
         }
         if ($numDeleted > 0) {
-            if ($output->isVerbose()) $output->writeln('');
+            if ($output->isVerbose()) {
+                $output->writeln('');
+            }
         }
 
         return $numDeleted;
     }
 
     /**
-     * @param OutputInterface $output
      * @return int
      */
     private function deleteFilesWithoutDatabaseEntry(OutputInterface $output)
@@ -126,20 +147,24 @@ class CleanUpCommand extends Command
 
         $toDelete = [];
 
-        foreach($finder as $fileInfo) {
-            if(preg_match('/^\d+$/', $fileInfo->getFilename())) {
+        foreach ($finder as $fileInfo) {
+            if (preg_match('/^\d+$/', $fileInfo->getFilename())) {
                 /** @var FileInterface|null $file */
                 $file = $this->fileRepository->find($fileInfo->getFilename());
                 if (!$file) {
-                    $toDelete [] = $fileInfo->getPath() . '/' . $fileInfo->getFilename();
-                    if ($output->isVerbose()) $output->write('.');
+                    $toDelete[] = $fileInfo->getPath().'/'.$fileInfo->getFilename();
+                    if ($output->isVerbose()) {
+                        $output->write('.');
+                    }
                 } else {
                     if ($this->mediaPath !== $fileInfo->getPath()) {
                         $subPath = substr($fileInfo->getPath(), strlen($this->mediaPath) + 1);
                         $format = $this->formatRepository->findOneBy(['name' => $subPath, 'file' => $file]);
                         if (!$format) {
-                            $toDelete [] = $fileInfo->getPath() . '/' . $fileInfo->getFilename();
-                            if ($output->isVerbose()) $output->write('.');
+                            $toDelete[] = $fileInfo->getPath().'/'.$fileInfo->getFilename();
+                            if ($output->isVerbose()) {
+                                $output->write('.');
+                            }
                         }
                     }
                 }
@@ -147,13 +172,15 @@ class CleanUpCommand extends Command
         }
 
         if (!$this->isDryRun) {
-            foreach($toDelete as $filePath) {
+            foreach ($toDelete as $filePath) {
                 $this->fs->remove($filePath);
             }
         }
 
         if (count($toDelete) > 0) {
-            if ($output->isVerbose()) $output->writeln('');
+            if ($output->isVerbose()) {
+                $output->writeln('');
+            }
         }
 
         return count($toDelete);
@@ -168,24 +195,24 @@ class CleanUpCommand extends Command
         $tables = $schema->getTables();
 
         $references = [];
-        foreach($tables as $table) {
-            if ($table->getName() == 'media_format') {
+        foreach ($tables as $table) {
+            if ('media_format' == $table->getName()) {
                 continue;
             }
-            foreach($table->getForeignKeys() as $foreignKeyConstraint) {
-                if ($foreignKeyConstraint->getForeignTableName() == 'media_file') {
-                    $references []= [
+            foreach ($table->getForeignKeys() as $foreignKeyConstraint) {
+                if ('media_file' == $foreignKeyConstraint->getForeignTableName()) {
+                    $references[] = [
                         'table' => $table->getName(),
-                        'columns' => $foreignKeyConstraint->getLocalColumns()
+                        'columns' => $foreignKeyConstraint->getLocalColumns(),
                     ];
                 }
             }
         }
 
         $referenceStatements = [];
-        foreach($references as $reference) {
+        foreach ($references as $reference) {
             foreach ($reference['columns'] as $column) {
-                $referenceStatements []= $this->entityManager->getConnection()->prepare('SELECT count(*) AS nr FROM ' . $reference['table'] . ' WHERE ' . $column . ' = :fileId');
+                $referenceStatements[] = $this->entityManager->getConnection()->prepare('SELECT count(*) AS nr FROM '.$reference['table'].' WHERE '.$column.' = :fileId');
             }
         }
 
@@ -193,13 +220,14 @@ class CleanUpCommand extends Command
     }
 
     /**
-     * @param int $fileId
+     * @param int         $fileId
      * @param Statement[] $references
+     *
      * @return bool
      */
     private function isReferenced($fileId, $references)
     {
-        foreach($references as $reference) {
+        foreach ($references as $reference) {
             $reference->bindValue('fileId', $fileId);
             $result = $reference->executeQuery();
             if ($result && $result->rowCount() > 0) {
@@ -209,6 +237,7 @@ class CleanUpCommand extends Command
                 }
             }
         }
+
         return false;
     }
 }

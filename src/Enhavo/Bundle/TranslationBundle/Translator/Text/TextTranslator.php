@@ -1,9 +1,12 @@
 <?php
-/**
- * TextTranslator.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 03/11/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Translator\Text;
@@ -15,7 +18,6 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
  * Class TextTranslator
- * @package Enhavo\Bundle\TranslationBundle\Translator\Text
  */
 class TextTranslator extends AbstractTranslator
 {
@@ -28,11 +30,12 @@ class TextTranslator extends AbstractTranslator
         $translation = $this->buffer->load($entity, $property, $locale);
         if ($translation instanceof Translation) {
             $translation->setTranslation($value);
+
             return;
         }
 
         $translation = $this->load($entity, $property, $locale);
-        if ($translation === null) {
+        if (null === $translation) {
             $translation = $this->createTranslation($entity, $property, $locale, $value);
         } else {
             $translation->setTranslation($value);
@@ -48,13 +51,14 @@ class TextTranslator extends AbstractTranslator
         }
 
         $translation = $this->buffer->load($entity, $property, $locale);
-        if ($translation !== null) {
+        if (null !== $translation) {
             return $translation->getTranslation();
         }
 
         $translation = $this->load($entity, $property, $locale);
-        if ($translation !== null) {
+        if (null !== $translation) {
             $this->buffer->store($entity, $property, $locale, $translation);
+
             return $translation->getTranslation();
         }
 
@@ -75,7 +79,7 @@ class TextTranslator extends AbstractTranslator
         $this->originalData->store($entity, $property, null, $oldValue);
 
         // set null values only if fallback is not allowed
-        if ($newValue !== null || !$options['allow_fallback']) {
+        if (null !== $newValue || !$options['allow_fallback']) {
             $accessor->setValue($entity, $property, $newValue);
         }
     }
@@ -98,6 +102,7 @@ class TextTranslator extends AbstractTranslator
         $translation->setLocale($locale);
         $translation->setTranslation($data);
         $this->entityManager->persist($translation);
+
         return $translation;
     }
 
@@ -108,8 +113,9 @@ class TextTranslator extends AbstractTranslator
             'class' => $this->entityResolver->getName($entity),
             'refId' => $entity->getId(),
             'property' => $property,
-            'locale' => $locale
+            'locale' => $locale,
         ]);
+
         return $translation;
     }
 

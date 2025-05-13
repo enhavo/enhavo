@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\PageBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -17,8 +26,7 @@ class PageEndpointType extends AbstractEndpointType
 {
     public function __construct(
         private readonly PageRepository $repository,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -26,12 +34,12 @@ class PageEndpointType extends AbstractEndpointType
         /** @var PageInterface $resource */
         $resource = $options['resource'];
 
-        if ($resource === null) {
+        if (null === $resource) {
             $id = intval($request->get('id'));
             $resource = $this->repository->find($id);
         }
 
-        if ($resource === null) {
+        if (null === $resource) {
             throw $this->createNotFoundException();
         }
 

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -30,8 +39,9 @@ EOT
     {
         $user = $this->getUser($input);
 
-        if ($user === null) {
+        if (null === $user) {
             $output->writeln('<error> Can\'t find user! </error>');
+
             return Command::FAILURE;
         }
 

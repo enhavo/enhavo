@@ -1,16 +1,25 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Vue\RouteProvider;
 
 trait VueProviderTypeHelperTrait
 {
     protected function isGroupSelected($options, $group): bool
     {
-        if ($options['groups'] === null && $group === null) {
+        if (null === $options['groups'] && null === $group) {
             return true;
         }
 
-        if (isset($options['groups']) && $options['groups'] === true) {
+        if (isset($options['groups']) && true === $options['groups']) {
             return true;
         }
 
@@ -55,8 +64,8 @@ trait VueProviderTypeHelperTrait
 
     protected function convertPath($path)
     {
-        $path = preg_replace_callback('/\{([0-9A-Za-z_-]+)\}/', function($matches) {
-            return ':' . $matches[1];
+        $path = preg_replace_callback('/\{([0-9A-Za-z_-]+)\}/', function ($matches) {
+            return ':'.$matches[1];
         }, $path);
 
         return $path;

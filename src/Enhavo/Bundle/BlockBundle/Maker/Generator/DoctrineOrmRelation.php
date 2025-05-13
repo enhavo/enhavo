@@ -1,7 +1,12 @@
 <?php
-/**
- * @author blutze-media
- * @since 2021-09-22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
@@ -11,10 +16,6 @@ class DoctrineOrmRelation
     private string $name;
     private array $config;
 
-    /**
-     * @param string $name
-     * @param array $config
-     */
     public function __construct(string $name, array $config)
     {
         $this->name = $name;

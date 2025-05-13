@@ -1,15 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 19.07.18
- * Time: 18:05
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Voter;
-
-use Enhavo\Bundle\NavigationBundle\Entity\Link;
-use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 
 class LinkHierarchyVoter extends LinkVoter
 {
@@ -21,15 +21,15 @@ class LinkHierarchyVoter extends LinkVoter
 
         $linkInfo = parse_url($url);
 
-        if(isset($linkInfo['host']) && ($linkInfo['host'] != $host)) {
+        if (isset($linkInfo['host']) && ($linkInfo['host'] != $host)) {
             return false;
         }
 
-        if(isset($linkInfo['path'])) {
+        if (isset($linkInfo['path'])) {
             $linkParts = explode('/', $linkInfo['path']);
             $pathParts = explode('/', $path);
 
-            if(!array_diff($linkParts, $pathParts)) {
+            if (!array_diff($linkParts, $pathParts)) {
                 return true;
             }
         }

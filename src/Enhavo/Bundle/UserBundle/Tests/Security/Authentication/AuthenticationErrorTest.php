@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Tests\Security\Authentication;
 
 use Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError;
@@ -28,6 +37,7 @@ class AuthenticationErrorTest extends TestCase
             return $message.'.translated';
         });
         $dependencies->authenticationUtils = $this->getMockBuilder(AuthenticationUtils::class)->disableOriginalConstructor()->getMock();
+
         return $dependencies;
     }
 
@@ -43,7 +53,6 @@ class AuthenticationErrorTest extends TestCase
         $this->assertEquals('login.error.credentials.translated', $message);
     }
 }
-
 
 class AuthenticationErrorDependencies
 {

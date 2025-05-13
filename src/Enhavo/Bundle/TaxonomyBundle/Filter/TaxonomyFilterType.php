@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-05-25
- * Time: 19:38
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TaxonomyBundle\Filter;
@@ -19,9 +22,8 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 class TaxonomyFilterType extends AbstractFilterType
 {
     public function __construct(
-        private readonly EntityManagerInterface $em
-    )
-    {
+        private readonly EntityManagerInterface $em,
+    ) {
     }
 
     public function createViewData($options, Data $data): void
@@ -32,7 +34,7 @@ class TaxonomyFilterType extends AbstractFilterType
 
     public function buildQuery($options, FilterQuery $query, mixed $value): void
     {
-        if ($value == null) {
+        if (null == $value) {
             return;
         }
 
@@ -43,7 +45,7 @@ class TaxonomyFilterType extends AbstractFilterType
 
     private function getInitialValue($options)
     {
-        if ($options['initial_value'] === null) {
+        if (null === $options['initial_value']) {
             return 0;
         }
 
@@ -69,7 +71,7 @@ class TaxonomyFilterType extends AbstractFilterType
             $initialValueEntity = call_user_func([$repository, $method]);
         }
 
-        if (!$initialValueEntity || (is_array($initialValueEntity) && count($initialValueEntity) == 0)) {
+        if (!$initialValueEntity || (is_array($initialValueEntity) && 0 == count($initialValueEntity))) {
             return null;
         }
         if (is_array($initialValueEntity) && count($initialValueEntity) > 0) {
@@ -77,6 +79,7 @@ class TaxonomyFilterType extends AbstractFilterType
         }
 
         $propertyAccessor = new PropertyAccessor();
+
         return $propertyAccessor->getValue($initialValueEntity, 'id');
     }
 
@@ -89,9 +92,10 @@ class TaxonomyFilterType extends AbstractFilterType
         foreach ($entities as $entity) {
             $choices[] = [
                 'label' => $propertyAccessor->getValue($entity, 'name'),
-                'code' => $propertyAccessor->getValue($entity, 'id')
+                'code' => $propertyAccessor->getValue($entity, 'id'),
             ];
         }
+
         return $choices;
     }
 

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle;
 
 use Enhavo\Bundle\ResourceBundle\Action\Action;
@@ -14,15 +23,15 @@ use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\GridCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\InputCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\RequestHandlerCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\ResourceCompilerPass;
-use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\ResourceManagerCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\ResourceExpressionCompilerPass;
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\ResourceManagerCompilerPass;
+use Enhavo\Bundle\ResourceBundle\Duplicate\Duplicate;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionFunctionProviderInterface;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionVariableProviderInterface;
 use Enhavo\Bundle\ResourceBundle\Filter\Filter;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterTypeInterface;
 use Enhavo\Bundle\ResourceBundle\Tab\Tab;
 use Enhavo\Bundle\ResourceBundle\Tab\TabTypeInterface;
-use Enhavo\Bundle\ResourceBundle\Duplicate\Duplicate;
 use Enhavo\Component\Type\TypeCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;

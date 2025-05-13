@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-03-28
- * Time: 15:31
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Column;
@@ -13,14 +16,13 @@ use Enhavo\Bundle\ResourceBundle\Filter\FilterQuery;
 use Enhavo\Component\Type\AbstractContainerType;
 
 /**
- * @property ColumnTypeInterface $type
+ * @property ColumnTypeInterface   $type
  * @property ColumnTypeInterface[] $parents
  */
 class Column extends AbstractContainerType
 {
-    const SORTING_DIRECTION_ASC = 'asc';
-    const SORTING_DIRECTION_DESC = 'desc';
-
+    public const SORTING_DIRECTION_ASC = 'asc';
+    public const SORTING_DIRECTION_DESC = 'desc';
 
     public function buildSortingQuery(FilterQuery $query, string $direction): void
     {

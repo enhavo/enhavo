@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 20.06.18
- * Time: 11:34
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\PageBundle\Model;
@@ -13,7 +16,7 @@ use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 
 interface PageInterface
 {
-    public function setContent(NodeInterface $content = null): PageInterface;
+    public function setContent(?NodeInterface $content = null): PageInterface;
 
     public function getContent(): ?NodeInterface;
 

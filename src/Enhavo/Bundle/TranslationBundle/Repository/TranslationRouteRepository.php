@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TranslationBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -29,7 +38,7 @@ class TranslationRouteRepository extends EntityRepository
             ->getQuery()
             ->getResult();
 
-        if($translationRoute) {
+        if ($translationRoute) {
             return $translationRoute[0];
         }
 
@@ -37,8 +46,6 @@ class TranslationRouteRepository extends EntityRepository
     }
 
     /**
-     * @param $class
-     * @param $id
      * @return array|TranslationRoute[]
      */
     public function findTranslationRoutes($class, $id): array

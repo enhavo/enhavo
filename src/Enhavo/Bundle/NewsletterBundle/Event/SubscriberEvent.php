@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m
- * Date: 01.12.16
- * Time: 14:38
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Event;
@@ -30,8 +33,6 @@ class SubscriberEvent extends Event
 
     /**
      * SubscriberEvent constructor.
-     * @param string $type
-     * @param SubscriberInterface $subscriber
      */
     public function __construct(string $type, SubscriberInterface $subscriber)
     {
@@ -39,20 +40,13 @@ class SubscriberEvent extends Event
         $this->subscriber = $subscriber;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return SubscriberInterface
-     */
     public function getSubscriber(): SubscriberInterface
     {
         return $this->subscriber;
     }
-
 }

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-12
- * Time: 16:02
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference;
@@ -11,13 +14,12 @@ namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\Fixtures\Entity\Reference;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-
 #[ORM\Entity]
 class EntityContainer
 {
     #[ORM\Id]
-    #[ORM\Column(name: "id", type: Types::INTEGER)]
-    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     public ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Entity::class, cascade: ['all'], fetch: 'LAZY')]

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Model\Block\VideoBlock;
@@ -13,22 +22,22 @@ class VideoBlockType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', HeadLineType::class, array(
+        $builder->add('title', HeadLineType::class, [
             'label' => 'form.label.title',
-            'translation_domain' => 'EnhavoAppBundle'
-        ));
+            'translation_domain' => 'EnhavoAppBundle',
+        ]);
 
-        $builder->add('url', TextType::class, array(
+        $builder->add('url', TextType::class, [
             'label' => 'video.form.label.url',
-            'translation_domain' => 'EnhavoBlockBundle'
-        ));
+            'translation_domain' => 'EnhavoBlockBundle',
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => VideoBlock::class
-        ));
+        $resolver->setDefaults([
+            'data_class' => VideoBlock::class,
+        ]);
     }
 
     public function getBlockPrefix()

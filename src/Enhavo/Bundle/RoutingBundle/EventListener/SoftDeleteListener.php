@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RoutingBundle\EventListener;
 
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
@@ -11,16 +20,15 @@ class SoftDeleteListener implements EventSubscriberInterface
 {
     public function __construct(
         private readonly TokenGeneratorInterface $tokenGenerator,
-    )
-    {
+    ) {
     }
 
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             'enhavo_resource.pre_soft_delete' => 'preSoftDelete',
-            'enhavo_resource.pre_undelete' => 'preUndelete'
-        );
+            'enhavo_resource.pre_undelete' => 'preUndelete',
+        ];
     }
 
     public function preSoftDelete(ResourceEvent $event)
@@ -36,7 +44,7 @@ class SoftDeleteListener implements EventSubscriberInterface
             $resource->setRevisionParameters($parameters);
 
             $resource->getRoute()->setCondition('false');
-            $resource->getRoute()->setStaticPrefix(sprintf('/soft_deleted_%s' , $this->tokenGenerator->generateToken()));
+            $resource->getRoute()->setStaticPrefix(sprintf('/soft_deleted_%s', $this->tokenGenerator->generateToken()));
         }
     }
 

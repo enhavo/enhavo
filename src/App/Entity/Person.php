@@ -1,15 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-02
- * Time: 17:41
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Entity;
 
 use App\Repository\PersonRepository;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -34,7 +36,7 @@ class Person implements RevisionInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     #[Duplicate('clone', ['groups' => ['duplicate', 'revision', 'restore']])]
-    private ?DateTime $birthday = null;
+    private ?\DateTime $birthday = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     #[Duplicate('string', ['postfix' => ' Copy!!', 'groups' => ['duplicate']])]
@@ -45,15 +47,15 @@ class Person implements RevisionInterface
         targetEntity: Term::class,
         cascade: ['persist', 'remove', 'refresh']
     )]
-    #[ORM\JoinColumn( onDelete: 'SET NULL')]
-    #[Duplicate('reference', [ 'groups' => ['duplicate', 'revision', 'restore']])]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    #[Duplicate('reference', ['groups' => ['duplicate', 'revision', 'restore']])]
     private ?Term $occupation = null;
 
     #[ORM\ManyToOne(
         targetEntity: Term::class,
         cascade: ['persist', 'remove', 'refresh']
     )]
-    #[ORM\JoinColumn( onDelete: 'SET NULL')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[Duplicate('reference', ['groups' => ['duplicate', 'revision', 'restore']])]
     private ?Term $category = null;
 
@@ -61,7 +63,7 @@ class Person implements RevisionInterface
         targetEntity: Term::class,
         cascade: ['persist', 'remove', 'refresh']
     )]
-    #[ORM\JoinColumn( onDelete: 'SET NULL')]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[Duplicate('reference', ['groups' => ['duplicate', 'revision', 'restore']])]
     private ?Term $otherCategory = null;
 
@@ -74,7 +76,7 @@ class Person implements RevisionInterface
 
     #[ORM\ManyToOne(
         targetEntity: Person::class,
-        inversedBy: "revisions",
+        inversedBy: 'revisions',
     )]
     private ?RevisionInterface $revisionSubject = null;
 
@@ -117,12 +119,12 @@ class Person implements RevisionInterface
         return $this->id;
     }
 
-    public function getBirthday(): ?DateTime
+    public function getBirthday(): ?\DateTime
     {
         return $this->birthday;
     }
 
-    public function setBirthday(?DateTime $birthday): void
+    public function setBirthday(?\DateTime $birthday): void
     {
         $this->birthday = $birthday;
     }

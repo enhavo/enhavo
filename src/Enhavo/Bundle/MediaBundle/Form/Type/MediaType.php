@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 19.09.17
- * Time: 10:59
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Form\Type;
@@ -15,33 +18,32 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MediaType extends AbstractType
 {
     public function __construct(
         private readonly ActionManager $actionManager,
         private readonly array $formConfigurations,
-    )
-    {
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options): void {
             $data = $event->getData();
-            if ($options['multiple'] === false && $data instanceof FileInterface) {
+            if (false === $options['multiple'] && $data instanceof FileInterface) {
                 $event->setData([$data]);
             }
         }, 1);
 
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options) {
-            if ($options['multiple'] === false) {
+        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options): void {
+            if (false === $options['multiple']) {
                 $data = $event->getData();
                 if (is_array($data)) {
-                    if(count($data)) {
+                    if (count($data)) {
                         $event->setData(array_pop($data));
                     } else {
                         $event->setData(null);
@@ -56,7 +58,7 @@ class MediaType extends AbstractType
         $view->vars['information'] = $options['information'];
         $view->vars['multiple'] = $options['multiple'];
         $view->vars['edit'] = $options['edit'];
-        $view->vars['sortable'] = $options['multiple']  ? $options['sortable'] : false;
+        $view->vars['sortable'] = $options['multiple'] ? $options['sortable'] : false;
         $view->vars['actions'] = $this->getActions($options);
         $view->vars['route'] = $options['route'] ?? $this->formConfigurations[$options['config']]['route'];
         $view->vars['upload'] = $options['upload'] ?? $this->formConfigurations[$options['config']]['upload'];
@@ -71,6 +73,7 @@ class MediaType extends AbstractType
         foreach ($actions as $action) {
             $viewData[] = $action->createViewData();
         }
+
         return $viewData;
     }
 
@@ -81,9 +84,10 @@ class MediaType extends AbstractType
          * order do keep doctrine references synchronized.
          */
         $resolver->setNormalizer('by_reference', function ($options, $value) {
-            if ($options['multiple'] === false) {
+            if (false === $options['multiple']) {
                 return true;
             }
+
             return $value;
         });
 
@@ -99,7 +103,7 @@ class MediaType extends AbstractType
             return $value;
         });
 
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'entry_type' => FileType::class,
             'entry_options' => [],
             'edit' => true,
@@ -120,7 +124,7 @@ class MediaType extends AbstractType
             'upload' => null,
             'formats' => [],
             'uuid_property' => 'id',
-        ));
+        ]);
 
         $resolver->setAllowedValues('config', array_keys($this->formConfigurations));
     }

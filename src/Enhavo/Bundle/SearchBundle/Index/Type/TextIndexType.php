@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 23.06.16
- * Time: 10:29
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Index\Type;
@@ -39,7 +42,7 @@ class TextIndexType extends AbstractIndexType implements IndexTypeInterface
         $resolver->setRequired('property');
 
         $resolver->setDefaults([
-            'weight' => 1
+            'weight' => 1,
         ]);
     }
 

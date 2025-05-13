@@ -1,7 +1,12 @@
 <?php
-/**
- * @author blutze-media
- * @since 2021-10-13
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
@@ -24,7 +29,6 @@ class MailjetStorageType extends AbstractStorageType
 
     /**
      * CleverReachStorageType constructor.
-     * @param $cleverReachClient
      */
     public function __construct($cleverReachClient)
     {
@@ -32,11 +36,10 @@ class MailjetStorageType extends AbstractStorageType
     }
 
     /**
-     * @param SubscriberInterface $subscriber
-     * @param array $options
-     * @return mixed|void
      * @throws InsertException
      * @throws NoGroupException
+     *
+     * @return mixed|void
      */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
@@ -59,7 +62,6 @@ class MailjetStorageType extends AbstractStorageType
 
         if ($options['gdpr_delete']) {
             $this->client->gdprDelete($subscriber, $options['client_key'], $options['client_secret']);
-
         } else {
             foreach ($groups as $group) {
                 if (!$this->client->exists($subscriber->getConfirmationToken(), $group)) {
@@ -74,24 +76,19 @@ class MailjetStorageType extends AbstractStorageType
     {
         $this->client->init($options['client_key'], $options['client_secret']);
 
-        $response = $this->client->getSubscriber($subscriber->getEmail()??$subscriber->getConfirmationToken());
+        $response = $this->client->getSubscriber($subscriber->getEmail() ?? $subscriber->getConfirmationToken());
 
         if ($response) {
             $subscriber->setEmail($response['Email']);
             $subscriber->setConfirmationToken($response['ID']);
-
         } else {
             throw new NotFoundHttpException('No Subscriber found');
         }
 
         return $subscriber;
-
     }
 
     /**
-     * @param SubscriberInterface $subscriber
-     * @param array $options
-     * @return bool
      * @throws NoGroupException
      */
     public function exists(SubscriberInterface $subscriber, array $options): bool
@@ -109,9 +106,6 @@ class MailjetStorageType extends AbstractStorageType
         return false;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -124,7 +118,6 @@ class MailjetStorageType extends AbstractStorageType
         ]);
     }
 
-
     private function mapGroups(SubscriberInterface $subscriber, $groups)
     {
         if ($subscriber instanceof GroupAwareInterface) {
@@ -136,16 +129,13 @@ class MailjetStorageType extends AbstractStorageType
             }
         }
 
-        if (count($groups) === 0) {
+        if (0 === count($groups)) {
             throw new NoGroupException('no groups given');
         }
 
         return $groups;
     }
 
-    /**
-     * @inheritDoc
-     */
     public static function getName(): ?string
     {
         return 'mailjet';

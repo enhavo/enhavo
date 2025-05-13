@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\EventListener;
 
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
@@ -17,7 +26,6 @@ class NewsletterSubscriber implements EventSubscriberInterface
 
     /**
      * NewsletterSubscriber constructor.
-     * @param NewsletterManager $newsletterManager
      */
     public function __construct(NewsletterManager $newsletterManager)
     {
@@ -26,16 +34,16 @@ class NewsletterSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             ResourceEvents::PRE_CREATE => 'preSave',
-            ResourceEvents::PRE_UPDATE => 'preSave'
-        );
+            ResourceEvents::PRE_UPDATE => 'preSave',
+        ];
     }
 
     public function preSave(ResourceEvent $event)
     {
         $resource = $event->getSubject();
-        if($resource instanceof NewsletterInterface) {
+        if ($resource instanceof NewsletterInterface) {
             $this->newsletterManager->update($resource);
         }
     }

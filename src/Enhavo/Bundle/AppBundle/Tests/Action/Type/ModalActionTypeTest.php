@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-04
- * Time: 10:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
@@ -22,6 +25,7 @@ class ModalActionTypeTest extends TestCase
     private function createDependencies(): ModalActionTypeDependencies
     {
         $dependencies = new ModalActionTypeDependencies();
+
         return $dependencies;
     }
 
@@ -38,13 +42,13 @@ class ModalActionTypeTest extends TestCase
 
         $action = new Action($type, [], [
             'modal' => [
-                'model' => 'TestModal'
-            ]
+                'model' => 'TestModal',
+            ],
         ]);
         $viewData = $action->createViewData();
 
         $this->assertEquals([
-            'model' => 'TestModal'
+            'model' => 'TestModal',
         ], $viewData['modal']);
     }
 

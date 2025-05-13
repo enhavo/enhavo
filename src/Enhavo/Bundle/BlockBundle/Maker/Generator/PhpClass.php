@@ -1,7 +1,12 @@
 <?php
-/**
- * @author blutze-media
- * @since 2021-09-22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
@@ -15,11 +20,10 @@ class PhpClass
         private string $namespace,
         private string $name,
         private ?string $implements,
-        private array  $use,
+        private array $use,
         private array $traits,
-        private array  $properties,
-    )
-    {
+        private array $properties,
+    ) {
         $this->functions = [];
     }
 
@@ -86,7 +90,6 @@ class PhpClass
         if (count($body)) {
             array_unshift($this->functions, new PhpFunction('__construct', 'public', [], $body, null));
         }
-
     }
 
     public function generateGetter($key): ?PhpFunction
@@ -97,6 +100,7 @@ class PhpClass
             $name = sprintf('get%s', ucfirst($key));
             $returns = sprintf('%s%s', $nullable, $classProperty->getType());
             $body = [sprintf('return $this->%s;', $key)];
+
             return new PhpFunction($name, 'public', [], $body, $returns);
         }
 
@@ -131,7 +135,6 @@ class PhpClass
 
         return null;
     }
-
 
     public function generateAdder($key): PhpFunction
     {
@@ -191,12 +194,8 @@ class PhpClass
         return $this->implements;
     }
 
-    /**
-     * @return array
-     */
     public function getTraits(): array
     {
         return $this->traits;
     }
-
 }

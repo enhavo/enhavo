@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Tests\Column\Type;
 
 use Enhavo\Bundle\ResourceBundle\Column\Column;
@@ -12,14 +21,15 @@ class ListColumnTypeTest extends TestCase
     public function createDependencies()
     {
         $dependencies = new ListColumnTypeDependencies();
+
         return $dependencies;
     }
 
     public function createInstance(ListColumnTypeDependencies $dependencies)
     {
         $instance = new ListColumnType(
-
         );
+
         return $instance;
     }
 
@@ -36,7 +46,7 @@ class ListColumnTypeTest extends TestCase
         $column = new Column($instance, [], [
             'property' => 'children',
             'item_property' => 'name',
-            'separator' => '-'
+            'separator' => '-',
         ]);
 
         $resource = $this->getResourceMock();

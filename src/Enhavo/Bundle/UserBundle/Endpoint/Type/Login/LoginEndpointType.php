@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Endpoint\Type\Login;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -25,8 +34,7 @@ class LoginEndpointType extends AbstractFormEndpointType
         private readonly ConfigurationProvider $provider,
         private readonly FirewallMap $firewallMap,
         private readonly TokenStorageInterface $tokenStorage,
-    )
-    {
+    ) {
     }
 
     protected function init($options, Request $request, Data $data, Context $context): void
@@ -34,7 +42,7 @@ class LoginEndpointType extends AbstractFormEndpointType
         if ($this->tokenStorage->getToken()) {
             $redirect = $this->getSuccessRedirect($request);
 
-            if ($request->get('_format') === 'html') {
+            if ('html' === $request->get('_format')) {
                 $context->setResponse(new RedirectResponse($redirect));
             } else {
                 $data->set('redirect', $redirect);
@@ -48,6 +56,7 @@ class LoginEndpointType extends AbstractFormEndpointType
     protected function getForm($options, Request $request, Data $data, Context $context): FormInterface
     {
         $configuration = $this->provider->getLoginConfiguration();
+
         return $this->createForm($configuration->getFormClass(), null, $configuration->getFormOptions());
     }
 
@@ -69,7 +78,7 @@ class LoginEndpointType extends AbstractFormEndpointType
         $this->removeTargetPath($request->getSession(), $firewallName);
         $request->getSession()->set('_security.credentials', null);
 
-        if ($targetPath === null) {
+        if (null === $targetPath) {
             $configuration = $this->provider->getLoginConfiguration();
             $targetPath = $this->generateUrl($configuration->getRedirectRoute());
         }
@@ -82,7 +91,7 @@ class LoginEndpointType extends AbstractFormEndpointType
         $failurePath = $request->get('failureRedirect');
 
         if ($failurePath) {
-            if ($request->get('_format') === 'html') {
+            if ('html' === $request->get('_format')) {
                 $context->setResponse(new RedirectResponse($failurePath));
             } else {
                 $data->set('redirect', $failurePath);

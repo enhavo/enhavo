@@ -1,8 +1,16 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Duplicate\Type;
 
-use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateType;
 use Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateTypeInterface;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
@@ -18,18 +26,16 @@ class BaseDuplicateType extends AbstractType implements DuplicateTypeInterface
 
     public function duplicate($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void
     {
-
     }
 
     public function finish($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void
     {
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'groups' => null
+            'groups' => null,
         ]);
     }
 
@@ -37,11 +43,11 @@ class BaseDuplicateType extends AbstractType implements DuplicateTypeInterface
     {
         $group = $context['groups'] ?? null;
 
-        if ($options['groups'] === null && $group === null) {
+        if (null === $options['groups'] && null === $group) {
             return true;
         }
 
-        if (isset($options['groups']) && $options['groups'] === true) {
+        if (isset($options['groups']) && true === $options['groups']) {
             return true;
         }
 

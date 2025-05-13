@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\VueFormBundle\Form\Extension;
 
 use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
@@ -13,9 +22,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ChoiceVueTypeExtension extends AbstractVueTypeExtension
 {
     public function __construct(
-        private TranslatorInterface $translator
-    )
-    {
+        private TranslatorInterface $translator,
+    ) {
     }
 
     public function buildVueData(FormView $view, VueData $data, array $options)
@@ -23,7 +31,7 @@ class ChoiceVueTypeExtension extends AbstractVueTypeExtension
         $data['expanded'] = $view->vars['expanded'];
         $data['multiple'] = $view->vars['multiple'];
         $data['choices'] = $this->getChoices($view->vars['choices'], $view);
-        $data['placeholder'] = $view->vars['placeholder'] ? $this->translator->trans($view->vars['placeholder'], [], $view->vars['translation_domain']) : null ;
+        $data['placeholder'] = $view->vars['placeholder'] ? $this->translator->trans($view->vars['placeholder'], [], $view->vars['translation_domain']) : null;
         $data['placeholderInChoices'] = $view->vars['placeholder_in_choices'];
         $data['preferredChoices'] = $this->getChoices($view->vars['preferred_choices'], $view);
         $data['separator'] = $view->vars['separator'];
@@ -37,17 +45,18 @@ class ChoiceVueTypeExtension extends AbstractVueTypeExtension
             if (\is_iterable($choice)) {
                 $data[] = [
                     'label' => $this->translator->trans($choice->label, [], $view->vars['choice_translation_domain']),
-                    'choices' => $this->getChoices($choice, $view)
+                    'choices' => $this->getChoices($choice, $view),
                 ];
             } else {
                 $data[] = [
                     'label' => $this->translator->trans($choice->label, [], $view->vars['choice_translation_domain']),
                     'attr' => $choice->attr,
                     'value' => $choice->value,
-                    'choices' => []
+                    'choices' => [],
                 ];
             }
         }
+
         return $data;
     }
 
@@ -70,7 +79,7 @@ class ChoiceVueTypeExtension extends AbstractVueTypeExtension
     {
         $resolver->setDefaults([
             'component' => 'form-choice',
-            'component_model' => 'ChoiceForm'
+            'component_model' => 'ChoiceForm',
         ]);
     }
 

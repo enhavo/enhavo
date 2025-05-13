@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m
- * Date: 01.12.16
- * Time: 13:07
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
-
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,7 +20,7 @@ use Enhavo\Bundle\NewsletterBundle\Model\Subscriber;
 class Group implements GroupInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -75,7 +77,6 @@ class Group implements GroupInterface
         $this->name = $name;
     }
 
-
     /**
      * @return string
      */
@@ -93,7 +94,6 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param LocalSubscriberInterface $subscriber
      * @return $this|GroupInterface
      */
     public function addSubscriber(LocalSubscriberInterface $subscriber): GroupInterface
@@ -104,7 +104,6 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param LocalSubscriberInterface $subscriber
      * @return mixed|void
      */
     public function removeSubscriber(LocalSubscriberInterface $subscriber)
@@ -122,21 +121,17 @@ class Group implements GroupInterface
 
     /**
      * Add newsletter
-     *
-     * @param Newsletter $newsletter
-     * @return GroupInterface
      */
     public function addNewsletter(Newsletter $newsletter): GroupInterface
     {
         $this->newsletters[] = $newsletter;
         $newsletter->getGroups()->add($this);
+
         return $this;
     }
 
     /**
      * Remove newsletter
-     *
-     * @param Newsletter $newsletter
      */
     public function removeNewsletter(Newsletter $newsletter)
     {
@@ -147,7 +142,7 @@ class Group implements GroupInterface
     /**
      * Get newsletters
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getNewsletters()
     {

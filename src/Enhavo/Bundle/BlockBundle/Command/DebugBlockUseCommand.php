@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,8 +40,6 @@ class DebugBlockUseCommand extends Command
 
     /**
      * FindBlockUsageCommand constructor.
-     * @param EntityManagerInterface $entityManager
-     * @param BlockManager $blockManager
      */
     public function __construct(EntityManagerInterface $entityManager, BlockManager $blockManager)
     {
@@ -51,11 +58,9 @@ class DebugBlockUseCommand extends Command
     }
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return int|null|void
      * @throws \Exception
+     *
+     * @return int|void|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -69,6 +74,7 @@ class DebugBlockUseCommand extends Command
             $this->logger->error(sprintf('Unknown block named "%s". Name must be a key registered under enhavo_block.blocks.', $type));
             $this->logger->info(sprintf('Registered blocks: %s', implode(', ', array_keys($this->blockConfig))));
             $this->logger->info('');
+
             return Command::FAILURE;
         }
 
@@ -82,7 +88,7 @@ class DebugBlockUseCommand extends Command
         if ($type) {
             $this->findBlockType($type, $id);
         } else {
-            foreach(array_keys($this->blockConfig) as $type) {
+            foreach (array_keys($this->blockConfig) as $type) {
                 $this->findBlockType($type, $id);
             }
         }
@@ -97,13 +103,15 @@ class DebugBlockUseCommand extends Command
 
             $entity = $this->entityManager->getRepository($className)->find($id);
             if (!$entity) {
-                $this->logger->error('Found no block of type ' . $type . ' with id ' . $id);
+                $this->logger->error('Found no block of type '.$type.' with id '.$id);
                 $this->logger->info('');
+
                 return;
             }
             if (!($entity instanceof BlockInterface)) {
-                $this->logger->error('Configuration error: Entity of type ' . $className . ' with id ' . $id . ' is not a Block');
+                $this->logger->error('Configuration error: Entity of type '.$className.' with id '.$id.' is not a Block');
                 $this->logger->info('');
+
                 return;
             }
 
@@ -113,22 +121,24 @@ class DebugBlockUseCommand extends Command
             $this->logger->info(sprintf('Searching usage for blocks of type "%s":', $type));
 
             $entities = $this->entityManager->getRepository($className)->findAll();
-            foreach($entities as $entity) {
+            foreach ($entities as $entity) {
                 $this->findSingleEntity($entity);
             }
 
-            if (count($entities) === 0) {
+            if (0 === count($entities)) {
                 $this->logger->info('None found.');
             }
             $this->logger->info('');
         }
     }
 
-    private function findSingleEntity($entity) {
+    private function findSingleEntity($entity)
+    {
         if ($entity instanceof BlockInterface) {
             $resource = $this->blockManager->findRootResource($entity);
             if (!$resource) {
-                $this->logger->info('#' . $entity->getId() . ' -> Found no root resource for block, might be orphaned. Run enhavo:block:clean-up to delete erroneous block structures.');
+                $this->logger->info('#'.$entity->getId().' -> Found no root resource for block, might be orphaned. Run enhavo:block:clean-up to delete erroneous block structures.');
+
                 return;
             }
             $this->outputFoundConnection($entity, $resource);
@@ -139,17 +149,17 @@ class DebugBlockUseCommand extends Command
 
     private function outputFoundConnection($entity, $resource)
     {
-        $message = '#' . $entity->getId() . ' -> ' . get_class($resource) . ', id = ' . $resource->getId();
+        $message = '#'.$entity->getId().' -> '.get_class($resource).', id = '.$resource->getId();
         if (method_exists($resource, 'getTenant')) {
-            $message .= ', tenant = "' . $resource->getTenant() . '"';
+            $message .= ', tenant = "'.$resource->getTenant().'"';
         }
         if (method_exists($resource, 'getTitle')) {
-            $message .= ', title = "' . $resource->getTitle() . '"';
+            $message .= ', title = "'.$resource->getTitle().'"';
         }
         if (method_exists($resource, 'getRoute')) {
             $route = $resource->getRoute();
             if ($route instanceof RouteInterface) {
-                $message .= ', route = "' . $route->getStaticPrefix() . '"';
+                $message .= ', route = "'.$route->getStaticPrefix().'"';
             }
         }
 

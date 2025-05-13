@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Tests\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\ConditionalType;
@@ -18,13 +27,14 @@ class ConditionalTypeTest extends TypeTestCase
     protected function getTypeExtensions()
     {
         return [
-            new VueTypeExtension()
+            new VueTypeExtension(),
         ];
     }
+
     protected function getExtensions()
     {
         return [
-            new PreloadedExtension([new ConditionalType(new VueForm())], [])
+            new PreloadedExtension([new ConditionalType(new VueForm())], []),
         ];
     }
 
@@ -42,7 +52,7 @@ class ConditionalTypeTest extends TypeTestCase
             'conditional' => [
                 'a' => 'Hello',
             ],
-            'key' => 'a'
+            'key' => 'a',
         ]);
 
         $data = $form->getData();
@@ -59,12 +69,13 @@ class ConditionalTypeTest extends TypeTestCase
                 'text' => TextType::class,
                 'date' => DateType::class,
             ],
-            'entry_type_resolver' => function($data) {
+            'entry_type_resolver' => function ($data) {
                 if (is_string($data)) {
                     return 'text';
                 } elseif ($data instanceof \DateTime) {
                     return 'date';
                 }
+
                 return null;
             },
         ]);
@@ -84,12 +95,13 @@ class ConditionalTypeTest extends TypeTestCase
                 'car' => CarType::class,
                 'bike' => BikeType::class,
             ],
-            'entry_type_resolver' => function($data) {
+            'entry_type_resolver' => function ($data) {
                 if ($data instanceof Car) {
                     return 'car';
                 } elseif ($data instanceof Bike) {
                     return 'bike';
                 }
+
                 return null;
             },
         ]);
@@ -98,7 +110,7 @@ class ConditionalTypeTest extends TypeTestCase
             'conditional' => [
                 'pedals' => 'MyPedals',
             ],
-            'key' => 'bike'
+            'key' => 'bike',
         ]);
 
         $this->assertInstanceOf(Bike::class, $form->getData());
@@ -113,12 +125,13 @@ class ConditionalTypeTest extends TypeTestCase
                 'car' => CarType::class,
                 'bike' => BikeType::class,
             ],
-            'entry_type_resolver' => function($data) {
+            'entry_type_resolver' => function ($data) {
                 if ($data instanceof Car) {
                     return 'car';
                 } elseif ($data instanceof Bike) {
                     return 'bike';
                 }
+
                 return null;
             },
         ]);
@@ -137,12 +150,13 @@ class ConditionalTypeTest extends TypeTestCase
                 'nested' => ConditionalType::class,
                 'bike' => BikeType::class,
             ],
-            'entry_type_resolver' => function($data) {
+            'entry_type_resolver' => function ($data) {
                 if ($data instanceof Car) {
                     return 'nested';
                 } elseif ($data instanceof Bike) {
                     return 'bike';
                 }
+
                 return null;
             },
             'entry_types_options' => [
@@ -151,16 +165,17 @@ class ConditionalTypeTest extends TypeTestCase
                         'car' => CarType::class,
                         'bike' => BikeType::class,
                     ],
-                    'entry_type_resolver' => function($data) {
+                    'entry_type_resolver' => function ($data) {
                         if ($data instanceof Car) {
                             return 'car';
                         } elseif ($data instanceof Bike) {
                             return 'bike';
                         }
+
                         return null;
                     },
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $view = $form->createView();
@@ -169,11 +184,11 @@ class ConditionalTypeTest extends TypeTestCase
         $form->submit([
             'conditional' => [
                 'conditional' => [
-                    'pedals' => '2'
+                    'pedals' => '2',
                 ],
-                'key' => 'bike'
+                'key' => 'bike',
             ],
-            'key' => 'nested'
+            'key' => 'nested',
         ]);
 
         $data = $form->getData();
@@ -187,15 +202,15 @@ class ConditionalTypeTest extends TypeTestCase
 
         $form = $this->factory->create(ConditionalType::class, $car, [
             'entry_types' => [],
-            'entry_type_resolver' => function($data) {
+            'entry_type_resolver' => function ($data) {
                 return null;
             },
-            'entry_types_options' => []
+            'entry_types_options' => [],
         ]);
 
         $form->submit([
             'conditional' => [],
-            'key' => ''
+            'key' => '',
         ]);
 
         $this->assertNull($form->getData());

@@ -1,7 +1,12 @@
 <?php
-/**
- * @author blutze-media
- * @since 2021-09-22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
@@ -11,8 +16,7 @@ class DoctrineOrmYaml
     public function __construct(
         private string $tableName,
         private array $fields,
-    )
-    {
+    ) {
     }
 
     public function getFields(): array
@@ -58,12 +62,11 @@ class DoctrineOrmYaml
 
         if ($relation) {
             $result = [];
-
         } else {
             $typeOption = [];
             if ($field->getOrmType()) {
                 $typeOption = [
-                    'type' => sprintf("Types::%s", strtoupper($field->getOrmType()))
+                    'type' => sprintf('Types::%s', strtoupper($field->getOrmType())),
                 ];
             }
             $result = $typeOption + [
@@ -84,12 +87,8 @@ class DoctrineOrmYaml
         return isset($this->fields[$key]['relation']) ? new DoctrineOrmRelation($key, $this->fields[$key]['relation']) : null;
     }
 
-    /**
-     * @return string
-     */
     public function getTableName(): string
     {
         return $this->tableName;
     }
-
 }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Maker;
 
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
@@ -11,9 +20,8 @@ class MakerUtil
     private NameTransformer $nameTransformer;
 
     public function __construct(
-        private KernelInterface $kernel
-    )
-    {
+        private KernelInterface $kernel,
+    ) {
         $this->nameTransformer = new NameTransformer();
     }
 
@@ -28,6 +36,7 @@ class MakerUtil
         if (preg_match('/^(.+)Bundle$/', $result, $matches)) {
             $result = $matches[1];
         }
+
         return $result;
     }
 
@@ -46,6 +55,7 @@ class MakerUtil
         $bundle = $this->kernel->getBundle($bundleName);
         $class = get_class($bundle);
         $namespace = substr($class, 0, strlen($class) - strlen($bundleName) - 1);
+
         return $namespace;
     }
 

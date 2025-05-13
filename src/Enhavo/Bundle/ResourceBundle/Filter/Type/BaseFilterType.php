@@ -1,9 +1,12 @@
 <?php
-/**
- * TextFilter.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 19/01/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Filter\Type;
@@ -21,8 +24,7 @@ class BaseFilterType extends AbstractType implements FilterTypeInterface
     public function __construct(
         private readonly ResourceExpressionLanguage $expressionLanguage,
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     public function createViewData($options, Data $data): void
@@ -34,20 +36,19 @@ class BaseFilterType extends AbstractType implements FilterTypeInterface
 
     public function buildQuery($options, FilterQuery $query, mixed $value): void
     {
-
     }
 
     public function getPermission($options): mixed
     {
         return $this->expressionLanguage->evaluate($options['permission'], [
-            'options' => $options
+            'options' => $options,
         ]);
     }
 
     public function isEnabled($options): bool
     {
-        return !!$this->expressionLanguage->evaluate($options['enabled'], [
-            'options' => $options
+        return (bool) $this->expressionLanguage->evaluate($options['enabled'], [
+            'options' => $options,
         ]);
     }
 

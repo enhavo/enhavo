@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-08-29
- * Time: 14:45
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\EventListener;
@@ -19,8 +22,7 @@ class AccessControl implements AccessControlInterface
         private RequestStack $requestStack,
         private array $accessControl,
         private $defaultAccess = true,
-    )
-    {
+    ) {
         $this->access = $defaultAccess;
     }
 
@@ -31,7 +33,7 @@ class AccessControl implements AccessControlInterface
         }
 
         $request = $this->requestStack->getMainRequest();
-        if ($request === null) {
+        if (null === $request) {
             return false;
         }
 
@@ -44,6 +46,7 @@ class AccessControl implements AccessControlInterface
         }
 
         $this->isResolved = true;
+
         return $this->access;
     }
 }

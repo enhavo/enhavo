@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Twig;
 
 use Enhavo\Bundle\FormBundle\Prototype\PrototypeManager;
@@ -25,16 +34,12 @@ class PrototypeExtension extends AbstractExtension
 
     /**
      * PrototypeExtension constructor.
-     * @param PrototypeManager $prototypeManager
      */
     public function __construct(PrototypeManager $prototypeManager)
     {
         $this->prototypeManager = $prototypeManager;
     }
 
-    /**
-     * @param Environment $environment
-     */
     public function setEnvironment(Environment $environment): void
     {
         $this->environment = $environment;
@@ -42,10 +47,10 @@ class PrototypeExtension extends AbstractExtension
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('form_prototype', array($this, 'renderPrototype'), ['is_safe' => ['html']]),
-            new TwigFunction('form_prototypes', array($this, 'renderPrototypes'), ['is_safe' => ['html']]),
-        );
+        return [
+            new TwigFunction('form_prototype', [$this, 'renderPrototype'], ['is_safe' => ['html']]),
+            new TwigFunction('form_prototypes', [$this, 'renderPrototypes'], ['is_safe' => ['html']]),
+        ];
     }
 
     public function renderPrototype(FormView $view, $parameters = [])
@@ -53,20 +58,21 @@ class PrototypeExtension extends AbstractExtension
         /** @var FormRenderer $formRenderer */
         $formRenderer = $this->environment->getRuntime(FormRenderer::class);
         $this->prototypeManager->buildPrototypeView($view);
+
         return $formRenderer->searchAndRenderBlock($view, 'widget', $parameters);
     }
 
     public function renderPrototypes()
     {
-        if($this->isRendered) {
+        if ($this->isRendered) {
             return '';
         }
 
         $this->isRendered = true;
 
-        /** @var FormRenderer $formRenderer */
+        /* @var FormRenderer $formRenderer */
         return $this->environment->render('@EnhavoForm/admin/form/form/prototypes.html.twig', [
-            'prototypes' => $this->prototypeManager->getPrototypeViews()
+            'prototypes' => $this->prototypeManager->getPrototypeViews(),
         ]);
     }
 }

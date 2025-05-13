@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 27.08.17
- * Time: 13:30
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Factory;
@@ -16,11 +19,13 @@ trait GuessTrait
      * Guess the mime type of a file.
      *
      * @param string $path Full file name including path and extension
+     *
      * @return string|null Mime type of null if none found
      */
     protected function guessMimeType($path)
     {
         $guesser = MimeTypes::getDefault();
+
         return $guesser->guessMimeType($path);
     }
 
@@ -30,6 +35,7 @@ trait GuessTrait
      * If the mime type is unknown, returns null.
      *
      * @param string $path
+     *
      * @return string|null The guessed extension or null if it cannot be guessed
      */
     protected function guessExtension($path)
@@ -39,6 +45,7 @@ trait GuessTrait
         if ($extensions && count($extensions)) {
             return $extensions[0];
         }
+
         return null;
     }
 }

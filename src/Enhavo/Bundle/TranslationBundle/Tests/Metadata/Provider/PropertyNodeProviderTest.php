@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-13
- * Time: 11:04
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Metadata\Provider;
@@ -24,9 +27,9 @@ class PropertyNodeProviderTest extends TestCase
                 'first_name' => [
                     'type' => 'text',
                     'option1' => 'value1',
-                    'option2' => 'value2'
-                ]
-            ]
+                    'option2' => 'value2',
+                ],
+            ],
         ]);
 
         $this->assertCount(1, $metadata->getProperties());
@@ -36,7 +39,7 @@ class PropertyNodeProviderTest extends TestCase
         $this->assertEquals('text', $metadata->getProperties()['firstName']->getType());
         $this->assertEquals([
             'option1' => 'value1',
-            'option2' => 'value2'
+            'option2' => 'value2',
         ], $metadata->getProperties()['firstName']->getOptions());
     }
 

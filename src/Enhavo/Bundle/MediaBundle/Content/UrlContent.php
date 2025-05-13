@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 27.08.17
- * Time: 10:29
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Content;
@@ -25,20 +28,19 @@ class UrlContent extends AbstractContent
     private $path;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $loaded = false;
 
     public function __construct(
         $url,
         private ?HttpClientInterface $client = null,
-    )
-    {
+    ) {
         $this->url = $url;
         $tempPath = tempnam(sys_get_temp_dir(), 'Content');
         $this->path = $tempPath;
 
-        if ($this->client == null) {
+        if (null == $this->client) {
             $this->client = HttpClient::create();
         }
     }
@@ -46,24 +48,26 @@ class UrlContent extends AbstractContent
     public function getContent()
     {
         $this->load();
+
         return file_get_contents($this->path);
     }
 
     public function getFilePath()
     {
         $this->load();
+
         return $this->path;
     }
 
     private function load()
     {
-        if($this->loaded === true) {
+        if (true === $this->loaded) {
             return;
         }
 
         $client = $this->client;
         $response = $client->request('GET', $this->url);
-        if($response->getStatusCode() != 200) {
+        if (200 != $response->getStatusCode()) {
             throw new FileException(sprintf('File could not be download from uri "%s".', $this->url));
         }
 
@@ -72,7 +76,7 @@ class UrlContent extends AbstractContent
 
     public function __unset($reference)
     {
-        if($this->loaded) {
+        if ($this->loaded) {
             unlink($this->path);
         }
     }

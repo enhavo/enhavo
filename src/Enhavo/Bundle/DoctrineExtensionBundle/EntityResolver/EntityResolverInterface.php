@@ -1,25 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 06.03.18
- * Time: 15:19
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver;
 
 interface EntityResolverInterface
 {
-    /**
-     * @param $entity
-     * @return string
-     */
     public function getName($entity): string;
 
-    /**
-     * @param int $id
-     * @param string $name
-     * @return object|null
-     */
     public function getEntity(int $id, string $name): ?object;
 }

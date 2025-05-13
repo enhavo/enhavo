@@ -1,12 +1,21 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\BlockBundle\Model\CustomNameInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
-use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -14,12 +23,12 @@ use Symfony\Component\Uid\Uuid;
  */
 class Node implements NodeInterface, CustomNameInterface
 {
-    /** @var integer */
+    /** @var int */
     private $id;
 
     private string $uuid;
 
-    /** @var integer */
+    /** @var int */
     private $position;
 
     /** @var NodeInterface */
@@ -34,7 +43,7 @@ class Node implements NodeInterface, CustomNameInterface
     /** @var BlockInterface */
     private $block;
 
-    /** @var integer */
+    /** @var int */
     private $blockId;
 
     /** @var string */
@@ -49,7 +58,7 @@ class Node implements NodeInterface, CustomNameInterface
     /** @var object */
     private $resource;
 
-    /** @var boolean */
+    /** @var bool */
     private $enable;
 
     /** @var string */
@@ -67,7 +76,7 @@ class Node implements NodeInterface, CustomNameInterface
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -87,14 +96,13 @@ class Node implements NodeInterface, CustomNameInterface
     /**
      * Set container
      *
-     * @param NodeInterface $parent
      * @return Node
      */
     public function setParent(?NodeInterface $parent)
     {
         $this->parent = $parent;
 
-        if($parent === null) {
+        if (null === $parent) {
             $this->setBlock(null);
             $this->setBlockId(null);
             $this->setBlockClass(null);
@@ -103,9 +111,6 @@ class Node implements NodeInterface, CustomNameInterface
         return $this;
     }
 
-    /**
-     * @return NodeInterface
-     */
     public function getParent(): ?NodeInterface
     {
         return $this->parent;
@@ -127,34 +132,22 @@ class Node implements NodeInterface, CustomNameInterface
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
     public function getTemplate(): ?string
     {
         return $this->template;
     }
 
-    /**
-     * @param string $template
-     */
     public function setTemplate(?string $template): void
     {
         $this->template = $template;
     }
 
-    /**
-     * @return BlockInterface
-     */
     public function getBlock(): ?BlockInterface
     {
         return $this->block;
     }
 
-    /**
-     * @param BlockInterface $block
-     */
-    public function setBlock(BlockInterface $block = null)
+    public function setBlock(?BlockInterface $block = null)
     {
         if ($this->block) {
             $this->block->setNode(null);
@@ -168,34 +161,22 @@ class Node implements NodeInterface, CustomNameInterface
         $this->block = $block;
     }
 
-    /**
-     * @return int
-     */
     public function getBlockId(): ?int
     {
         return $this->blockId;
     }
 
-    /**
-     * @param int $blockId
-     */
-    public function setBlockId(int $blockId = null): void
+    public function setBlockId(?int $blockId = null): void
     {
         $this->blockId = $blockId;
     }
 
-    /**
-     * @return string
-     */
     public function getBlockClass(): ?string
     {
         return $this->blockClass;
     }
 
-    /**
-     * @param string $blockClass
-     */
-    public function setBlockClass(string $blockClass = null): void
+    public function setBlockClass(?string $blockClass = null): void
     {
         $this->blockClass = $blockClass;
     }
@@ -224,51 +205,33 @@ class Node implements NodeInterface, CustomNameInterface
         return $this->children;
     }
 
-    /**
-     * @param NodeInterface $child
-     */
     public function addChild(NodeInterface $child)
     {
         $this->children->add($child);
         $child->setParent($this);
     }
 
-    /**
-     * @param NodeInterface $child
-     */
     public function removeChild(NodeInterface $child)
     {
         $this->children->removeElement($child);
         $child->setParent(null);
     }
 
-    /**
-     * @return array
-     */
     public function getViewData(): ?array
     {
         return $this->viewData;
     }
 
-    /**
-     * @param array $viewData
-     */
     public function setViewData(?array $viewData): void
     {
         $this->viewData = $viewData;
     }
 
-    /**
-     * @return string
-     */
     public function getProperty(): string
     {
         return $this->property;
     }
 
-    /**
-     * @param string $property
-     */
     public function setProperty(string $property): void
     {
         $this->property = $property;
@@ -290,33 +253,21 @@ class Node implements NodeInterface, CustomNameInterface
         $this->resource = $resource;
     }
 
-    /**
-     * @return bool
-     */
     public function isEnable(): ?bool
     {
         return $this->enable;
     }
 
-    /**
-     * @param bool $enable
-     */
     public function setEnable(?bool $enable): void
     {
         $this->enable = $enable;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     */
     public function setType(?string $type): void
     {
         $this->type = $type;
@@ -335,7 +286,8 @@ class Node implements NodeInterface, CustomNameInterface
             } else {
                 break;
             }
-        } while($parent = $parent->getParent());
+        } while ($parent = $parent->getParent());
+
         return $parents;
     }
 
@@ -344,11 +296,12 @@ class Node implements NodeInterface, CustomNameInterface
      */
     public function getRoot()
     {
-        if ($this->type === self::TYPE_ROOT) {
+        if (self::TYPE_ROOT === $this->type) {
             return $this;
         }
 
         $parents = $this->getParents();
+
         return count($parents) ? array_pop($parents) : null;
     }
 
@@ -365,6 +318,7 @@ class Node implements NodeInterface, CustomNameInterface
                 $data[] = $descendant;
             }
         }
+
         return $data;
     }
 
@@ -375,13 +329,15 @@ class Node implements NodeInterface, CustomNameInterface
     {
         if ($this->parent) {
             $index = $this->parent->getChildren()->indexOf($this);
-            $beforeIndex = $this->parent->getChildren()->indexOf($index-1);
-            if ($beforeIndex !== false) {
+            $beforeIndex = $this->parent->getChildren()->indexOf($index - 1);
+            if (false !== $beforeIndex) {
                 return $this->parent->getChildren()->get($beforeIndex);
             }
         }
+
         return null;
     }
+
     /**
      * @return NodeInterface|null
      */
@@ -389,16 +345,17 @@ class Node implements NodeInterface, CustomNameInterface
     {
         if ($this->parent) {
             $index = $this->parent->getChildren()->indexOf($this);
-            $nextIndex = $this->parent->getChildren()->indexOf($index+1);
-            if ($nextIndex !== false) {
+            $nextIndex = $this->parent->getChildren()->indexOf($index + 1);
+            if (false !== $nextIndex) {
                 return $this->parent->getChildren()->get($nextIndex);
             }
         }
+
         return null;
     }
 
     /**
-     * @return  NodeInterface[]
+     * @return NodeInterface[]
      */
     public function getSiblings()
     {
@@ -417,7 +374,7 @@ class Node implements NodeInterface, CustomNameInterface
     }
 
     /**
-     * @return  NodeInterface[]
+     * @return NodeInterface[]
      */
     public function getNextSiblings()
     {
@@ -429,7 +386,8 @@ class Node implements NodeInterface, CustomNameInterface
             } else {
                 break;
             }
-        } while($sibling = $sibling->getNext());
+        } while ($sibling = $sibling->getNext());
+
         return $siblings;
     }
 
@@ -446,7 +404,8 @@ class Node implements NodeInterface, CustomNameInterface
             } else {
                 break;
             }
-        } while($sibling = $sibling->getBefore());
+        } while ($sibling = $sibling->getBefore());
+
         return $siblings;
     }
 
@@ -455,6 +414,7 @@ class Node implements NodeInterface, CustomNameInterface
         if ($this->block instanceof CustomNameInterface) {
             return $this->block->getCustomName();
         }
+
         return null;
     }
 }

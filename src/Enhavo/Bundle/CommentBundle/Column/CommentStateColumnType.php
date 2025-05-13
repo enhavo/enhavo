@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 02.02.16
- * Time: 11:18
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Column;
@@ -19,8 +22,7 @@ class CommentStateColumnType extends AbstractColumnType
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     public function createResourceViewData(array $options, object $resource, Data $data): void
@@ -32,9 +34,8 @@ class CommentStateColumnType extends AbstractColumnType
         $stateMap = [
             CommentInterface::STATE_PUBLISH => 'green',
             CommentInterface::STATE_DENY => 'red',
-            CommentInterface::STATE_PENDING  => 'orange'
+            CommentInterface::STATE_PENDING => 'orange',
         ];
-
 
         $data->set('value', $this->translator->trans(sprintf('comment.label.%s', $resource->getState()), [], 'EnhavoCommentBundle'));
         $data->set('color', $stateMap[$resource->getState()]);

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -13,8 +22,7 @@ class NewsletterStatsEndpointType extends AbstractEndpointType
 {
     public function __construct(
         private readonly NewsletterRepository $repository,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -22,7 +30,7 @@ class NewsletterStatsEndpointType extends AbstractEndpointType
         /** @var NewsletterInterface $newsletter */
         $newsletter = $this->repository->find($request->get('id'));
 
-        if ($newsletter === null) {
+        if (null === $newsletter) {
             throw $this->createNotFoundException();
         }
 

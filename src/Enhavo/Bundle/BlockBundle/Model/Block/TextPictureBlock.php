@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Model\Block;
 
 use Enhavo\Bundle\BlockBundle\Entity\AbstractBlock;
@@ -10,9 +19,9 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
  */
 class TextPictureBlock extends AbstractBlock
 {
-    const LAYOUT_1_1 = 0;
-    const LAYOUT_1_2 = 1;
-    const LAYOUT_2_1 = 2;
+    public const LAYOUT_1_1 = 0;
+    public const LAYOUT_1_2 = 1;
+    public const LAYOUT_2_1 = 2;
 
     private ?string $text = null;
     private ?string $title = null;
@@ -73,7 +82,7 @@ class TextPictureBlock extends AbstractBlock
     /**
      * Set if text is displayed left, otherwise it will be right
      *
-     * @param boolean $textLeft
+     * @param bool $textLeft
      *
      * @return TextPictureBlock
      */
@@ -87,7 +96,7 @@ class TextPictureBlock extends AbstractBlock
     /**
      * Get if text is left
      *
-     * @return boolean
+     * @return bool
      */
     public function getTextLeft()
     {
@@ -97,7 +106,6 @@ class TextPictureBlock extends AbstractBlock
     /**
      * Set file
      *
-     * @param FileInterface|null $file
      * @return TextPictureBlock
      */
     public function setFile(?FileInterface $file)
@@ -120,7 +128,7 @@ class TextPictureBlock extends AbstractBlock
     /**
      * Set float
      *
-     * @param boolean $float
+     * @param bool $float
      *
      * @return TextPictureBlock
      */
@@ -134,7 +142,7 @@ class TextPictureBlock extends AbstractBlock
     /**
      * Get float
      *
-     * @return boolean
+     * @return bool
      */
     public function getFloat()
     {

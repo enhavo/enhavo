@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaLibraryBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -23,8 +32,7 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
         private readonly ValidatorInterface $validator,
         private readonly ResourceManager $resourceManager,
         private readonly array $constraints,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -33,7 +41,7 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
         $data['errors'] = [];
 
         $storedItems = [];
-        foreach($request->files as $file) {
+        foreach ($request->files as $file) {
             $uploadedFiles = is_array($file) ? $file : [$file];
             /** @var $uploadedFile UploadedFile */
             foreach ($uploadedFiles as $uploadedFile) {
@@ -43,6 +51,7 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
                         $data['success'] = false;
                         $data['errors'] = $errors;
                         $context->setStatusCode(400);
+
                         return;
                     }
 
@@ -52,6 +61,7 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
                         $data['success'] = false;
                         $data['errors'] = $errors;
                         $context->setStatusCode(400);
+
                         return;
                     }
 
@@ -61,8 +71,7 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
                     $file->setGarbage(false);
                     $this->resourceManager->save($item);
                     $storedItems[] = $file;
-
-                } catch(StorageException $exception) {
+                } catch (StorageException $exception) {
                     foreach ($storedItems as $item) {
                         $this->resourceManager->delete($item);
                     }
@@ -90,10 +99,11 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
         foreach ($constraints as $constraint) {
             $class = is_string($constraint) ? $constraint : array_keys($constraint)[0];
             $options = is_string($constraint) ? [] : $constraint[array_keys($constraint)[0]];
-            $options = $options === null ? [] : $options;
+            $options = null === $options ? [] : $options;
 
             $data[] = new $class(...$options);
         }
+
         return $data;
     }
 

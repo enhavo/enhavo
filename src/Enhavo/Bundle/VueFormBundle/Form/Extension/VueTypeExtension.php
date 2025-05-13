@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\VueFormBundle\Form\Extension;
 
 use Enhavo\Bundle\VueFormBundle\Form\AbstractVueTypeExtension;
@@ -15,7 +24,7 @@ class VueTypeExtension extends AbstractVueTypeExtension
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         if (!isset($view->vars['vue_data'])) {
-            $view->vars['vue_data'] = new VueData($view);;
+            $view->vars['vue_data'] = new VueData($view);
         }
     }
 

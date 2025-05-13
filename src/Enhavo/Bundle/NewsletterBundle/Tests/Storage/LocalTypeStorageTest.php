@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Storage;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -34,6 +41,7 @@ class LocalTypeStorageTest extends TestCase
         $dependencies->subscriberRepository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->groupRepository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->subscriberFactory = $this->getMockBuilder(LocalSubscriberFactoryInterface::class)->getMock();
+
         return $dependencies;
     }
 
@@ -54,17 +62,18 @@ class LocalTypeStorageTest extends TestCase
         $dependencies->subscriberFactory->expects($this->never())->method('createFrom');
         $dependencies->groupRepository->expects($this->once())->method('findOneBy')->willReturnCallback(function ($criteria) use ($group) {
             $this->assertEquals(['code' => 'local'], $criteria);
-            if ($criteria['code'] !== 'local') {
+            if ('local' !== $criteria['code']) {
                 return null;
             }
+
             return $group;
         });
         $dependencies->entityManager->expects($this->once())->method('persist');
         $dependencies->entityManager->expects($this->once())->method('flush');
         $storage = $this->createInstance(new LocalStorageType($dependencies->entityManager, $dependencies->subscriberRepository, $dependencies->groupRepository, $dependencies->subscriberFactory), [new StorageType()], [
             'groups' => [
-                'local'
-            ]
+                'local',
+            ],
         ]);
         /** @var SubscriberInterface|MockObject $subscriberMock */
         $subscriberMock = $this->getMockBuilder(SubscriberInterface::class)->getMock();
@@ -77,15 +86,15 @@ class LocalTypeStorageTest extends TestCase
         $dependencies->subscriberRepository->expects($this->once())->method('findOneBy')->willReturn(null);
         $dependencies->subscriberFactory = new LocalSubscriberFactory(LocalSubscriber::class, $dependencies->groupRepository);
         $dependencies->groupRepository->expects($this->once())->method('findOneBy')->willReturn($group);
-        $dependencies->entityManager->expects($this->once())->method('persist')->willReturnCallback(function ($subscriber) {
-            /** @var $subscriber LocalSubscriber */
+        $dependencies->entityManager->expects($this->once())->method('persist')->willReturnCallback(function ($subscriber): void {
+            /* @var $subscriber LocalSubscriber */
             $this->assertInstanceOf(LocalSubscriber::class, $subscriber);
             $this->assertEquals('to@enhavo.com', $subscriber->getEmail());
             $this->assertEquals('default', $subscriber->getSubscription());
             $this->assertNotNull($subscriber->getCreatedAt());
         });
         $storage = $this->createInstance(new LocalStorageType($dependencies->entityManager, $dependencies->subscriberRepository, $dependencies->groupRepository, $dependencies->subscriberFactory), [new StorageType()], [
-            'groups' => [$group]
+            'groups' => [$group],
         ]);
 
         $storage->saveSubscriber($subscriberMock);
@@ -94,7 +103,7 @@ class LocalTypeStorageTest extends TestCase
         $dependencies->subscriberRepository->expects($this->once())->method('findOneBy')->willReturn(null);
         $dependencies->subscriberFactory->expects($this->once())->method('createFrom')->willReturn($localSubscriber);
         $storage = $this->createInstance(new LocalStorageType($dependencies->entityManager, $dependencies->subscriberRepository, $dependencies->groupRepository, $dependencies->subscriberFactory), [new StorageType()], [
-            'groups' => []
+            'groups' => [],
         ]);
         $this->expectException(NoGroupException::class);
         $storage->saveSubscriber($subscriberMock);
@@ -104,7 +113,7 @@ class LocalTypeStorageTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $localSubscriber = new LocalSubscriber();
-                $localSubscriber->setEmail('to@enhavo.com');
+        $localSubscriber->setEmail('to@enhavo.com');
         $localSubscriber->setSubscription('default');
         $group = new Group();
         $group->setCode('local');
@@ -113,16 +122,17 @@ class LocalTypeStorageTest extends TestCase
         $dependencies->subscriberFactory->expects($this->never())->method('createFrom');
         $dependencies->groupRepository->expects($this->exactly(2))->method('findOneBy')->willReturnCallback(function ($criteria) use ($group) {
             $this->assertEquals(['code' => 'local'], $criteria);
-            if ($criteria['code'] !== 'local') {
+            if ('local' !== $criteria['code']) {
                 return null;
             }
+
             return $group;
         });
 
         $storage = $this->createInstance(new LocalStorageType($dependencies->entityManager, $dependencies->subscriberRepository, $dependencies->groupRepository, $dependencies->subscriberFactory), [new StorageType()], [
             'groups' => [
-                'local'
-            ]
+                'local',
+            ],
         ]);
         /** @var SubscriberInterface|MockObject $subscriberMock */
         $subscriberMock = $this->getMockBuilder(SubscriberInterface::class)->getMock();
@@ -144,8 +154,8 @@ class LocalTypeStorageTest extends TestCase
 
         $storage = $this->createInstance(new LocalStorageType($dependencies->entityManager, $dependencies->subscriberRepository, $dependencies->groupRepository, $dependencies->subscriberFactory), [new StorageType()], [
             'groups' => [
-                'local'
-            ]
+                'local',
+            ],
         ]);
 
         $newsletter = new Newsletter();
@@ -183,20 +193,20 @@ class LocalTypeStorageTest extends TestCase
         $dependencies->entityManager->expects($this->once())->method('remove');
         $dependencies->entityManager->expects($this->exactly(2))->method('flush');
         $dependencies->subscriberRepository->expects($this->exactly(3))->method('findOneBy')->willReturnCallback(function ($criteria) use ($group) {
-            if ($criteria['subscription'] === 'missing') {
+            if ('missing' === $criteria['subscription']) {
                 return null;
-            } else if ($criteria['subscription'] === 'found') {
+            } elseif ('found' === $criteria['subscription']) {
                 return new LocalSubscriber();
-
-            } else if ($criteria['subscription'] === 'groups') {
+            } elseif ('groups' === $criteria['subscription']) {
                 $subscriber = new LocalSubscriber();
                 $subscriber->addGroup($group);
+
                 return $subscriber;
             }
         });
 
         $storage = $this->createInstance(new LocalStorageType($dependencies->entityManager, $dependencies->subscriberRepository, $dependencies->groupRepository, $dependencies->subscriberFactory), [new StorageType()], [
-            'groups' => []
+            'groups' => [],
         ]);
 
         $subscriber = new Subscriber();
@@ -217,14 +227,11 @@ class LocalTypeStorageTest extends TestCase
         $subscriber->addGroup($group);
         $result = $storage->removeSubscriber($subscriber);
         $this->assertEquals(true, $result);
-
     }
-
 }
 
 class NotNewsletter implements NewsletterInterface
 {
-
     public function getId()
     {
     }
@@ -247,7 +254,6 @@ class NotNewsletter implements NewsletterInterface
 
     public function setContent(NodeInterface $content)
     {
-
     }
 
     public function getContent()
@@ -261,37 +267,30 @@ class NotNewsletter implements NewsletterInterface
 
     public function setTemplate(?string $template)
     {
-
     }
 
     public function isPrepared()
     {
-
     }
 
     public function isSent()
     {
-
     }
 
     public function getState()
     {
-
     }
 
     public function setState(string $state)
     {
-
     }
 
     public function addReceiver(Receiver $receiver)
     {
-
     }
 
     public function removeReceiver(Receiver $receiver)
     {
-
     }
 
     public function getReceivers()
@@ -301,12 +300,10 @@ class NotNewsletter implements NewsletterInterface
 
     public function addAttachment(FileInterface $attachments)
     {
-
     }
 
     public function removeAttachment(FileInterface $attachments)
     {
-
     }
 
     public function getAttachments()
@@ -321,7 +318,6 @@ class NotNewsletter implements NewsletterInterface
 
     public function setStartAt(?\DateTime $startAt): void
     {
-
     }
 
     public function getFinishAt(): ?\DateTime
@@ -331,17 +327,14 @@ class NotNewsletter implements NewsletterInterface
 
     public function setFinishAt(?\DateTime $finishAt): void
     {
-
     }
 
     public function getCreatedAt(): ?\DateTime
     {
-
     }
 
     public function setCreatedAt(?\DateTime $createdAt): void
     {
-
     }
 }
 
@@ -350,19 +343,18 @@ class LocalTypeStorageTestDependencies
     /**
      * @var EntityManagerInterface|MockObject
      */
-    public  $entityManager;
+    public $entityManager;
 
     /**
      * @var RepositoryInterface|MockObject
      */
-    public  $subscriberRepository;
+    public $subscriberRepository;
 
     /**
      * @var RepositoryInterface|MockObject
      */
-    public  $groupRepository;
+    public $groupRepository;
 
     /** @var LocalSubscriberFactoryInterface|MockObject */
     public $subscriberFactory;
 }
-

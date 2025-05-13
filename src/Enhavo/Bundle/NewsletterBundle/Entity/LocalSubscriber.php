@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -13,7 +22,7 @@ use Enhavo\Bundle\NewsletterBundle\Model\LocalSubscriberInterface;
 class LocalSubscriber implements LocalSubscriberInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -56,7 +65,7 @@ class LocalSubscriber implements LocalSubscriberInterface
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -107,6 +116,7 @@ class LocalSubscriber implements LocalSubscriberInterface
      * Set condition
      *
      * @param string $condition
+     *
      * @return LocalSubscriber
      */
     public function setCondition($condition)
@@ -126,17 +136,11 @@ class LocalSubscriber implements LocalSubscriberInterface
         return $this->condition;
     }
 
-    /**
-     * @param GroupInterface $group
-     */
     public function addGroup(GroupInterface $group): void
     {
         $this->groups[] = $group;
     }
 
-    /**
-     * @param GroupInterface $group
-     */
     public function removeGroup(GroupInterface $group): void
     {
         $this->groups->removeElement($group);
@@ -166,17 +170,11 @@ class LocalSubscriber implements LocalSubscriberInterface
         $this->subscription = $key;
     }
 
-    /**
-     * @return string|null
-     */
     public function getToken(): ?string
     {
         return $this->token;
     }
 
-    /**
-     * @param string|null $token
-     */
     public function setToken(?string $token): void
     {
         $this->token = $token;

@@ -1,15 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-02-20
- * Time: 08:47
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\Tests\AutoGenerator\Generator;
 
 use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
-use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryInterface;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\PrefixGenerator;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
@@ -24,6 +26,7 @@ class PrefixGeneratorTest extends TestCase
         $resource->setRoute(new Route());
         $resource->setTitle('this is a title');
         $resource->setSubTitle('My subtitle');
+
         return $resource;
     }
 
@@ -31,11 +34,13 @@ class PrefixGeneratorTest extends TestCase
     {
         $repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
         $repository->method('findBy')->willReturnCallback(function ($criteria) use ($existPrefixes) {
-            if(isset($criteria['staticPrefix']) && in_array($criteria['staticPrefix'], $existPrefixes)) {
+            if (isset($criteria['staticPrefix']) && in_array($criteria['staticPrefix'], $existPrefixes)) {
                 return [new Route()];
             }
+
             return [];
         });
+
         return $repository;
     }
 
@@ -45,7 +50,7 @@ class PrefixGeneratorTest extends TestCase
         $resource = $this->createResource();
 
         $generator = new Generator(new PrefixGenerator($repository), [
-            'properties' => 'title'
+            'properties' => 'title',
         ], $resource);
 
         $generator->generate();
@@ -74,7 +79,7 @@ class PrefixGeneratorTest extends TestCase
 
         $generator = new Generator(new PrefixGenerator($repository), [
             'properties' => ['title', 'subTitle'],
-            'format' => '/{subTitle}/{title}/'
+            'format' => '/{subTitle}/{title}/',
         ], $resource);
 
         $generator->generate();
@@ -89,7 +94,7 @@ class PrefixGeneratorTest extends TestCase
 
         $generator = new Generator(new PrefixGenerator($repository), [
             'properties' => 'title',
-            'unique' => true
+            'unique' => true,
         ], $resource);
 
         $generator->generate();
@@ -105,7 +110,7 @@ class PrefixGeneratorTest extends TestCase
 
         $generator = new Generator(new PrefixGenerator($repository), [
             'properties' => 'title',
-            'unique' => true
+            'unique' => true,
         ], $resource);
 
         $generator->generate();
@@ -136,7 +141,7 @@ class PrefixGeneratorTest extends TestCase
         $generator = new Generator(new PrefixGenerator($repository), [
             'properties' => ['title', 'subTitle'],
             'unique' => true,
-            'format' => '/{title}/{subTitle}/'
+            'format' => '/{title}/{subTitle}/',
         ], $resource);
 
         $generator->generate();
@@ -153,7 +158,7 @@ class PrefixGeneratorTest extends TestCase
             'properties' => ['title', 'subTitle'],
             'unique' => true,
             'unique_property' => 'title',
-            'format' => '/{title}/{subTitle}'
+            'format' => '/{title}/{subTitle}',
         ], $resource);
 
         $generator->generate();
@@ -169,7 +174,7 @@ class PrefixGeneratorTest extends TestCase
 
         $generator = new Generator(new PrefixGenerator($repository), [
             'properties' => 'title',
-            'overwrite' => true
+            'overwrite' => true,
         ], $resource);
 
         $generator->generate();
@@ -185,7 +190,7 @@ class PrefixGeneratorTest extends TestCase
 
         $generator = new Generator(new PrefixGenerator($repository), [
             'properties' => 'title',
-            'overwrite' => false
+            'overwrite' => false,
         ], $resource);
 
         $generator->generate();

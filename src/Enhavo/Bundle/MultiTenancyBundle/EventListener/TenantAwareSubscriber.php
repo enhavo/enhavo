@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 23.07.18
- * Time: 17:46
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MultiTenancyBundle\EventListener;
@@ -26,15 +29,15 @@ class TenantAwareSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return array(
-            ResourceEvents::PRE_CREATE => ['preCreate', 10]    // Needs to run before RoutingBundle AutoGenerators
-        );
+        return [
+            ResourceEvents::PRE_CREATE => ['preCreate', 10],    // Needs to run before RoutingBundle AutoGenerators
+        ];
     }
 
     public function preCreate(ResourceEvent $event)
     {
         $resource = $event->getSubject();
-        if($resource instanceof TenantAwareInterface) {
+        if ($resource instanceof TenantAwareInterface) {
             $resource->setTenant($this->manager->getTenant()->getKey());
         }
     }

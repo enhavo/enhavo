@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-07-03
- * Time: 17:58
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Tests\Block;
@@ -33,6 +36,7 @@ class BlockManagerTest extends TestCase
         $dependencies->registry = new RegistryMock();
         $dependencies->factory = new Factory(Block::class, $dependencies->registry);
         $dependencies->configurations = [];
+
         return $dependencies;
     }
 
@@ -52,7 +56,7 @@ class BlockManagerTest extends TestCase
             ],
             'text2' => [
                 'type' => 'more_text',
-            ]
+            ],
         ];
         $manager = $this->createInstance($dependencies);
 
@@ -90,17 +94,16 @@ class BlockManagerTest extends TestCase
         $node->setType(NodeInterface::TYPE_BLOCK);
         $node->addChild($childNode);
 
-
         $manager->createViewData($node);
 
         $this->assertEquals([
             'foo' => 'bar',
-            'hello' => 'world'
+            'hello' => 'world',
         ], $node->getViewData());
 
         $this->assertEquals([
             'foo' => 'bar',
-            'hello' => 'world'
+            'hello' => 'world',
         ], $node->getChildren()[0]->getViewData());
     }
 }
@@ -145,9 +148,6 @@ class BlockManagerTextBlock implements BlockInterface
         return $this->node;
     }
 
-    /**
-     * @param NodeInterface $node
-     */
     public function setNode(NodeInterface $node)
     {
         $this->node = $node;

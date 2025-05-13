@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 08/06/14
- * Time: 16:32
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
@@ -13,11 +16,11 @@ use Enhavo\Bundle\FormBundle\Form\EventListener\MapSubmittedUuidDataListener;
 use Enhavo\Bundle\FormBundle\Form\EventListener\SortableArrayFormListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
 
 class ListType extends AbstractType
 {
@@ -36,27 +39,27 @@ class ListType extends AbstractType
         $view->vars['block_name'] = $options['block_name'];
         $view->vars['draggable_group'] = $options['draggable_group'];
         $view->vars['draggable_handle'] = $options['draggable_handle'];
-        $view->vars['uuid_check'] = !!$options['uuid_property'];
+        $view->vars['uuid_check'] = (bool) $options['uuid_property'];
 
         $array = $form->getData();
         if ($array instanceof Collection) {
             $array = $array->toArray();
         }
 
-        if ($array != null) {
+        if (null != $array) {
             end($array);
             $lastIndex = intval(key($array));
         } else {
             $lastIndex = -1;
         }
 
-        $view->vars['index'] = $lastIndex+1;
+        $view->vars['index'] = $lastIndex + 1;
         $view->vars['prototype_name'] = $options['prototype_name'];
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'border' => false,
             'sortable' => false,
             'uuid_property' => null,
@@ -66,10 +69,10 @@ class ListType extends AbstractType
             'allow_delete' => true,
             'draggable_group' => null,
             'draggable_handle' => '.drag-button',
-        ));
+        ]);
 
-        $resolver->setNormalizer('prototype_name', function(Options $options, $value) {
-            return '__' . uniqid() . '__';
+        $resolver->setNormalizer('prototype_name', function (Options $options, $value) {
+            return '__'.uniqid().'__';
         });
     }
 

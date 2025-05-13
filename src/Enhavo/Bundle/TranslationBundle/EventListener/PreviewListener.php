@@ -1,13 +1,15 @@
 <?php
-/**
- * PreviewListener.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 26/04/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\EventListener;
-
 
 use Enhavo\Bundle\AppBundle\Event\PreviewEvent;
 use Enhavo\Bundle\TranslationBundle\Locale\LocaleResolver;

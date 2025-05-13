@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,7 +26,6 @@ use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Component\Type\FactoryInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class TranslationManagerTest extends TestCase
@@ -36,6 +44,7 @@ class TranslationManagerTest extends TestCase
         $dependencies->enabled = true;
         $dependencies->translationPaths = ['#^/admin#'];
         $dependencies->requestStack = $this->getMockBuilder(RequestStack::class)->disableOriginalConstructor()->getMock();
+
         return $dependencies;
     }
 
@@ -95,7 +104,6 @@ class TranslationManagerTest extends TestCase
         $this->assertTrue($manager->isTranslatable($mock, 'something'));
     }
 
-
     public function testIsTranslatableWithoutMetadata()
     {
         $property = $this->getMockBuilder(PropertyNode::class)->disableOriginalConstructor()->getMock();
@@ -128,7 +136,7 @@ class TranslationManagerTest extends TestCase
         $metadata = $this->getMockBuilder(Metadata::class)->disableOriginalConstructor()->getMock();
         $metadata->method('getProperty')->willReturn($property);
         $translation = $this->getMockBuilder(Translation::class)->disableOriginalConstructor()->getMock();
-        $translation->method('getTranslation')->willReturnCallback(function($data, $property, $locale) {
+        $translation->method('getTranslation')->willReturnCallback(function ($data, $property, $locale) {
             return $property.'-'.$locale;
         });
 
@@ -140,7 +148,7 @@ class TranslationManagerTest extends TestCase
 
         $mock = new TranslatableMock();
         $this->assertEquals([
-            'de' => 'name-de'
+            'de' => 'name-de',
         ], $manager->getTranslations($mock, 'name'));
     }
 
@@ -152,7 +160,7 @@ class TranslationManagerTest extends TestCase
         $metadata = $this->getMockBuilder(Metadata::class)->disableOriginalConstructor()->getMock();
         $metadata->method('getProperty')->willReturn($property);
         $translation = $this->getMockBuilder(Translation::class)->disableOriginalConstructor()->getMock();
-        $translation->expects($this->once())->method('setTranslation')->willReturnCallback(function($data, $property, $locale, $value) {
+        $translation->expects($this->once())->method('setTranslation')->willReturnCallback(function ($data, $property, $locale, $value): void {
             $this->assertEquals('de', $locale);
             $this->assertEquals('value', $value);
         });
@@ -184,7 +192,7 @@ class TranslationManagerTest extends TestCase
 
         $translation = $this->getMockBuilder(Translation::class)->disableOriginalConstructor()->getMock();
 
-        $translation->method('delete')->willReturnCallback(function($data) {
+        $translation->method('delete')->willReturnCallback(function ($data): void {
             $data->setName(null);
         });
 
@@ -218,11 +226,11 @@ class TranslationManagerTest extends TestCase
         $metadata->method('getClassName')->willReturn(TranslatableMock::class);
 
         $translation = $this->getMockBuilder(Translation::class)->disableOriginalConstructor()->getMock();
-        $translation->method('translate')->willReturnCallback(function($data, $property, $locale) {
+        $translation->method('translate')->willReturnCallback(function ($data, $property, $locale): void {
             $data->setName($property.'-'.$locale);
         });
-        $translation->method('detach')->willReturnCallback(function($data, $property, $locale) {
-            $data->setName($property.'-' . $locale . '.old');
+        $translation->method('detach')->willReturnCallback(function ($data, $property, $locale): void {
+            $data->setName($property.'-'.$locale.'.old');
         });
 
         $dependencies = $this->createDependencies();
@@ -260,7 +268,7 @@ class TranslationManagerTest extends TestCase
         $metadata->method('getClassName')->willReturn(TranslatableMock::class);
 
         $translation = $this->getMockBuilder(Translation::class)->disableOriginalConstructor()->getMock();
-        $translation->method('translate')->willReturnCallback(function($data, $property, $locale) {
+        $translation->method('translate')->willReturnCallback(function ($data, $property, $locale): void {
             $data->setName($property.'-'.$locale);
         });
 
@@ -290,7 +298,6 @@ class TranslationManagerTest extends TestCase
         $manager = $this->createInstance($dependencies);
 
         $manager->translate(new TranslatableMock(), 'de');
-
     }
 
     public function testGetProperty()
@@ -298,11 +305,11 @@ class TranslationManagerTest extends TestCase
         $dependencies = $this->createDependencies();
 
         $translation = $this->getMockBuilder(Translation::class)->disableOriginalConstructor()->getMock();
-        $translation->expects($this->once())->method('getDefaultValue')->willReturnCallback(function($data, $property) {
-            return ($property.'-default');
+        $translation->expects($this->once())->method('getDefaultValue')->willReturnCallback(function ($data, $property) {
+            return $property.'-default';
         });
-        $translation->method('getTranslation')->willReturnCallback(function($data, $property, $locale) {
-            return ($property.'-'.$locale);
+        $translation->method('getTranslation')->willReturnCallback(function ($data, $property, $locale) {
+            return $property.'-'.$locale;
         });
         $dependencies->factory->method('create')->willReturn($translation);
 
@@ -341,7 +348,6 @@ class TranslationManagerTest extends TestCase
         $repository = $this->getMockBuilder(TranslationRepository::class)->disableOriginalConstructor()->getMock();
 
         $repository->method('findOneBy')->willReturnCallback(function ($options) {
-
             $translation = new \Enhavo\Bundle\TranslationBundle\Entity\Translation();
             $translation->setObject(implode(',', $options));
 
@@ -380,7 +386,7 @@ class TranslationManagerDependencies
     /** @var LocaleProviderInterface|MockObject */
     public $localeProvider;
 
-    /** @var boolean */
+    /** @var bool */
     public $enabled;
 
     /** @var array */

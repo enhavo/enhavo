@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Validator\Constraints;
 
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
@@ -11,11 +20,11 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class ClamAvValidator extends ConstraintValidator
 {
-    const RESULT_OK = 0;
-    const RESULT_VIRUS_FOUND = 1;
-    const RESULT_SOME_ERROR = 2;
+    public const RESULT_OK = 0;
+    public const RESULT_VIRUS_FOUND = 1;
+    public const RESULT_SOME_ERROR = 2;
 
-    const RESULT_CODES = [
+    public const RESULT_CODES = [
         self::RESULT_OK => 'No virus found',
         self::RESULT_VIRUS_FOUND => 'Virus(es) found',
         self::RESULT_SOME_ERROR => 'Some error(s) occurred',
@@ -23,8 +32,7 @@ class ClamAvValidator extends ConstraintValidator
 
     public function __construct(
         public array $config,
-    )
-    {
+    ) {
     }
 
     public function validate($value, Constraint $constraint)
@@ -44,7 +52,7 @@ class ClamAvValidator extends ConstraintValidator
             throw new ProcessFailedException($process);
         }
 
-        if ($exitCode !== self::RESULT_OK) {
+        if (self::RESULT_OK !== $exitCode) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{reason}}', self::RESULT_CODES[$exitCode])
                 ->addViolation();

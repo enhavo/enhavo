@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-02-19
- * Time: 02:15
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Action\Type;
@@ -20,11 +23,10 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly ResourceExpressionLanguage $expressionLanguage,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $data->set('component', $options['component']);
         $data->set('model', $options['model']);
@@ -37,19 +39,19 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
         $data->set('confirmLabelCancel', $this->translator->trans($options['confirm_label_cancel'] ?? '', [], $options['translation_domain']));
     }
 
-    public function isEnabled(array $options, object $resource = null): bool
+    public function isEnabled(array $options, ?object $resource = null): bool
     {
-        return !!$this->expressionLanguage->evaluate($options['enabled'], [
+        return (bool) $this->expressionLanguage->evaluate($options['enabled'], [
             'resource' => $resource,
-            'action' => $this
+            'action' => $this,
         ]);
     }
 
-    public function getPermission(array $options, object $resource = null): mixed
+    public function getPermission(array $options, ?object $resource = null): mixed
     {
         return $this->expressionLanguage->evaluate($options['permission'], [
             'resource' => $resource,
-            'action' => $this
+            'action' => $this,
         ]);
     }
 
@@ -68,7 +70,7 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
             'confirm_message' => null,
             'confirm_label_ok' => null,
             'confirm_label_cancel' => null,
-            'component' => 'action-action'
+            'component' => 'action-action',
         ]);
 
         $resolver->setRequired([

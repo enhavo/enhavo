@@ -1,24 +1,29 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SettingBundle\Endpoint\Extension;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
-
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointTypeExtension;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\AppBundle\Endpoint\Type\ViewEndpointType;
 use Enhavo\Bundle\SettingBundle\Setting\SettingManager;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class SettingEndpointExtensionType extends AbstractEndpointTypeExtension
 {
     public function __construct(
         private readonly SettingManager $settingManager,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context)
@@ -32,9 +37,9 @@ class SettingEndpointExtensionType extends AbstractEndpointTypeExtension
         $groups = [];
         if (is_string($options['settings'])) {
             $groups[] = $options['settings'];
-        } else if (is_array($options['settings'])) {
+        } elseif (is_array($options['settings'])) {
             $groups = $options['settings'];
-        } else if (is_bool($options['settings'])) {
+        } elseif (is_bool($options['settings'])) {
             $keys = $this->settingManager->getKeys();
             foreach ($keys as $key) {
                 $settings[$key] = $this->normalizeSetting($key);
@@ -53,13 +58,14 @@ class SettingEndpointExtensionType extends AbstractEndpointTypeExtension
         $data->set('settings', $settings);
     }
 
-    private function normalizeSetting($key) {
+    private function normalizeSetting($key)
+    {
         $value = $this->settingManager->getValue($key);
-        if (is_scalar($value) || $value == null) {
+        if (is_scalar($value) || null == $value) {
             return $value;
-        } else {
-            return $this->normalize($value, null, ['groups' => 'endpoint']);
         }
+
+        return $this->normalize($value, null, ['groups' => 'endpoint']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

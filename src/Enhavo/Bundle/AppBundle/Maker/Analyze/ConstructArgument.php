@@ -1,14 +1,22 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Maker\Analyze;
 
 class ConstructArgument
 {
     public function __construct(
         private string $name,
-        private ?string $type = null
-    )
-    {
+        private ?string $type = null,
+    ) {
     }
 
     public function getName(): string
@@ -20,6 +28,7 @@ class ConstructArgument
     {
         if ($this->type) {
             $parts = explode('\\', $this->type);
+
             return array_pop($parts);
         }
 
@@ -33,32 +42,32 @@ class ConstructArgument
 
     public function isInt(): bool
     {
-        return $this->type == 'int' || $this->type == 'integer';
+        return 'int' == $this->type || 'integer' == $this->type;
     }
 
     public function isBool(): bool
     {
-        return $this->type == 'bool' || $this->type == 'boolean';
+        return 'bool' == $this->type || 'boolean' == $this->type;
     }
 
     public function isFloat(): bool
     {
-        return $this->type == 'float';
+        return 'float' == $this->type;
     }
 
     public function isArray(): bool
     {
-        return $this->type == 'array';
+        return 'array' == $this->type;
     }
 
     public function isString(): bool
     {
-        return $this->type == 'string';
+        return 'string' == $this->type;
     }
 
     public function isObject(): bool
     {
-        return $this->type == 'object';
+        return 'object' == $this->type;
     }
 
     public function isInterface(): bool
@@ -68,6 +77,7 @@ class ConstructArgument
             // $reflection = new \ReflectionClass($this->getFullType());
             // return $reflection->isInterface();
         }
+
         return false;
     }
 
@@ -78,6 +88,5 @@ class ConstructArgument
 
     public function getFullType()
     {
-
     }
 }

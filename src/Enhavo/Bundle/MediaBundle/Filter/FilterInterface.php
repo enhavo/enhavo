@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 11.11.17
- * Time: 12:11
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Filter;
@@ -18,7 +21,7 @@ interface FilterInterface extends TypeInterface
 {
     /**
      * @param FileInterface|ContentInterface|FormatInterface $file
-     * @param FilterSetting $setting
+     *
      * @return void
      */
     public function apply($file, FilterSetting $setting);

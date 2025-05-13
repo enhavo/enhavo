@@ -1,10 +1,18 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Maker;
 
 use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
-use Exception;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -34,8 +42,7 @@ class MakeBlock extends AbstractMaker
         private MakerUtil $util,
         private Environment $twigEnvironment,
         private Filesystem $fileSystem,
-    )
-    {
+    ) {
         $this->nameTransformer = new NameTransformer();
     }
 
@@ -54,11 +61,10 @@ class MakeBlock extends AbstractMaker
 
     public function configureDependencies(DependencyBuilder $dependencies)
     {
-
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     private function generateFromYamlFile($file, ConsoleStyle $io, Generator $generator)
     {
@@ -78,7 +84,7 @@ class MakeBlock extends AbstractMaker
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     private function generateFromPath($path, ConsoleStyle $io, Generator $generator)
     {
@@ -122,7 +128,7 @@ class MakeBlock extends AbstractMaker
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
@@ -132,21 +138,18 @@ class MakeBlock extends AbstractMaker
         if ($path) {
             if (is_file($path)) {
                 $this->generateFromYamlFile(sprintf('%s/%s', $this->kernel->getProjectDir(), $path), $io, $generator);
-
             } else {
                 $this->generateFromPath(sprintf('%s/%s', $this->kernel->getProjectDir(), $path), $io, $generator);
             }
-
         } else {
             $this->generateFromInputArguments($input, $io, $generator);
-
         }
 
         $generator->writeChanges();
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     private function generateFromInputArguments(InputInterface $input, ConsoleStyle $io, Generator $generator)
     {
@@ -158,7 +161,7 @@ class MakeBlock extends AbstractMaker
             $name => [
                 'namespace' => $namespace,
                 'block_type' => $type,
-            ]
+            ],
         ]);
 
         $this->generateBlockEntityFile($generator, $block);
@@ -203,7 +206,7 @@ class MakeBlock extends AbstractMaker
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     private function generateBlockItemFiles(Generator $generator, BlockDefinition $blockDefinition)
     {
@@ -250,7 +253,7 @@ class MakeBlock extends AbstractMaker
         $generator->generateFile(
             $filePath,
             $this->getTemplatePath('block/block-type.tpl.php'), [
-                'definition' => $block
+                'definition' => $block,
             ]
         );
     }
@@ -311,8 +314,10 @@ class MakeBlock extends AbstractMaker
         if ($this->fileSystem->exists($filePath)) {
             if (!$noOverwrite && $this->overwriteExisting) {
                 $this->fileSystem->remove($filePath);
+
                 return true;
             }
+
             return false;
         }
 

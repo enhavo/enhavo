@@ -1,9 +1,17 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\CalendarBundle\Tests\Import;
 
 use Enhavo\Bundle\CalendarBundle\Import\ICSImporter;
-use Enhavo\Bundle\MediaBundle\Provider\ProviderInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
@@ -17,7 +25,7 @@ class ICSIImporterTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        if (self::$server === null) {
+        if (null === self::$server) {
             self::$server = new WebServerManager(__DIR__.'/../fixtures/server', '127.0.0.1', 1234, 'index.php', '/ready');
             self::$server->start();
         }
@@ -34,8 +42,8 @@ class ICSIImporterTest extends TestCase
     private function createDependencies()
     {
         $dependencies = new ICSIImporterTestDependencies();
-        $dependencies->importerName = "Test";
-        $dependencies->config = ['url' => 'http://127.0.0.1:1234/importer',];
+        $dependencies->importerName = 'Test';
+        $dependencies->config = ['url' => 'http://127.0.0.1:1234/importer'];
         $dependencies->client = new CurlHttpClient();
 
         return $dependencies;

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jhelbing
- * Date: 23.06.16
- * Time: 10:29
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Index\Type;
@@ -35,13 +38,13 @@ class CollectionIndexType extends AbstractIndexType implements IndexTypeInterfac
     {
         $value = $this->propertyAccessor->getValue($model, $options['property']);
         if ($value) {
-            foreach($value as $item) {
-                if(is_string($item)) {
+            foreach ($value as $item) {
+                if (is_string($item)) {
                     $index = new IndexData(trim($value), $options['weight']);
                     $builder->addIndex($index);
-                } elseif(is_object($value)) {
+                } elseif (is_object($value)) {
                     $indexes = $this->indexDataProvider->getIndexData($item);
-                    foreach($indexes as $index) {
+                    foreach ($indexes as $index) {
                         $builder->addIndex($index);
                     }
                 }

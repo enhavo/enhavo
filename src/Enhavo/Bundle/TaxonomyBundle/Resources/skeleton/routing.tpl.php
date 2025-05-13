@@ -1,67 +1,67 @@
-<?= $bundle_name; ?>_<?= $name; ?>_index:
+<?php echo $bundle_name; ?>_<?php echo $name; ?>_index:
     options:
         expose: true
-    path: /<?= $bundle_url; ?>/<?= $name_url; ?>/index
+    path: /<?php echo $bundle_url; ?>/<?php echo $name_url; ?>/index
     methods: [GET]
     defaults:
-        _controller: enhavo_taxonomy.controller.term:<?php if($hierarchy): ?>list<?php else: ?>index<?php endif; ?>Action
+        _controller: enhavo_taxonomy.controller.term:<?php if ($hierarchy) { ?>list<?php } else { ?>index<?php } ?>Action
         _sylius:
             viewer:
                 title: taxonomy.label.term
                 translationDomain: EnhavoTaxonomyBundle
-                <?php if($hierarchy): ?>data<?php else: ?>table<?php endif; ?>_route: <?= $bundle_name; ?>_<?= $name; ?>_<?php if($hierarchy): ?>data<?php else: ?>table<?php endif; ?>
-                batch_route: <?= $bundle_name; ?>_<?= $name; ?>_batch
-                open_route: <?= $bundle_name; ?>_<?= $name; ?>_update
+                <?php if ($hierarchy) { ?>data<?php } else { ?>table<?php } ?>_route: <?php echo $bundle_name; ?>_<?php echo $name; ?>_<?php if ($hierarchy) { ?>data<?php } else { ?>table<?php } ?>
+                batch_route: <?php echo $bundle_name; ?>_<?php echo $name; ?>_batch
+                open_route: <?php echo $bundle_name; ?>_<?php echo $name; ?>_update
                 actions:
                     create:
                         type: create
-                        route: <?= $bundle_name; ?>_<?= $name; ?>_create
+                        route: <?php echo $bundle_name; ?>_<?php echo $name; ?>_create
 
-<?= $bundle_name; ?>_<?= $name; ?>_create:
+<?php echo $bundle_name; ?>_<?php echo $name; ?>_create:
     options:
         expose: true
-    path:  /<?= $bundle_url; ?>/<?= $name_url; ?>/create
+    path:  /<?php echo $bundle_url; ?>/<?php echo $name_url; ?>/create
     methods: [GET,POST]
     defaults:
         _controller: enhavo_taxonomy.controller.term:createAction
         _sylius:
-            redirect: <?= $bundle_name; ?>_<?= $name; ?>_update
-            form: '<?= $form_type; ?>'
+            redirect: <?php echo $bundle_name; ?>_<?php echo $name; ?>_update
+            form: '<?php echo $form_type; ?>'
             factory:
                 method: createNewOnTaxonomy
                 arguments:
-                    - '<?= $name; ?>'
+                    - '<?php echo $name; ?>'
             viewer:
                 translationDomain: EnhavoTaxonomyBundle
 
-<?= $bundle_name; ?>_<?= $name; ?>_update:
+<?php echo $bundle_name; ?>_<?php echo $name; ?>_update:
     options:
         expose: true
-    path:  /<?= $bundle_url; ?>/<?= $name_url; ?>/update/{id}
+    path:  /<?php echo $bundle_url; ?>/<?php echo $name_url; ?>/update/{id}
     methods: [GET,POST]
     defaults:
         _controller: enhavo_taxonomy.controller.term:updateAction
         _sylius:
-            form: '<?= $form_type; ?>'
+            form: '<?php echo $form_type; ?>'
             viewer:
                 translationDomain: EnhavoTaxonomyBundle
                 actions_secondary:
                     delete:
                         type: delete
-                        route: <?= $bundle_name; ?>_<?= $name; ?>_delete
+                        route: <?php echo $bundle_name; ?>_<?php echo $name; ?>_delete
 
-<?php if(!$hierarchy): ?>
-<?= $bundle_name; ?>_<?= $name; ?>_table:
+<?php if (!$hierarchy) { ?>
+<?php echo $bundle_name; ?>_<?php echo $name; ?>_table:
     options:
         expose: true
-    path:  /<?= $bundle_url; ?>/<?= $name_url; ?>/table
+    path:  /<?php echo $bundle_url; ?>/<?php echo $name_url; ?>/table
     defaults:
         _controller: enhavo_taxonomy.controller.term:tableAction
         _sylius:
             repository:
                 method: findByTaxonomyName
                 arguments:
-                    - '<?= $name; ?>'
+                    - '<?php echo $name; ?>'
             viewer:
                 translationDomain: EnhavoTaxonomyBundle
                 width: 12
@@ -72,18 +72,18 @@
                         label: term.label.name
                         translation_domain: EnhavoTaxonomyBundle
                         property: name
-<?php else: ?>
-<?= $bundle_name; ?>_<?= $name; ?>_data:
+<?php } else { ?>
+<?php echo $bundle_name; ?>_<?php echo $name; ?>_data:
     options:
         expose: true
-    path:  /<?= $bundle_url; ?>/<?= $name_url; ?>/data
+    path:  /<?php echo $bundle_url; ?>/<?php echo $name_url; ?>/data
     defaults:
         _controller: enhavo_taxonomy.controller.term:listDataAction
         _sylius:
             repository:
                 method: findRootsByTaxonomyName
                 arguments:
-                    - '<?= $name; ?>'
+                    - '<?php echo $name; ?>'
             viewer:
                 translationDomain: EnhavoTaxonomyBundle
                 width: 12
@@ -96,20 +96,20 @@
                         label: term.label.name
                         translation_domain: EnhavoTaxonomyBundle
                         property: name
-<?php endif; ?>
+<?php } ?>
 
-<?= $bundle_name; ?>_<?= $name; ?>_delete:
+<?php echo $bundle_name; ?>_<?php echo $name; ?>_delete:
     options:
         expose: true
-    path: /<?= $bundle_url; ?>/<?= $name_url; ?>/delete/{id}
+    path: /<?php echo $bundle_url; ?>/<?php echo $name_url; ?>/delete/{id}
     methods: [POST]
     defaults:
         _controller: enhavo_taxonomy.controller.term:deleteAction
 
-<?= $bundle_name; ?>_<?= $name; ?>_batch:
+<?php echo $bundle_name; ?>_<?php echo $name; ?>_batch:
     options:
         expose: true
-    path: /<?= $bundle_url; ?>/<?= $name_url; ?>/batch
+    path: /<?php echo $bundle_url; ?>/<?php echo $name_url; ?>/batch
     methods: [POST]
     defaults:
         _controller: enhavo_taxonomy.controller.term:batchAction

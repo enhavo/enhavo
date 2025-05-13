@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 14.05.18
- * Time: 00:01
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Event;
-
 
 use Enhavo\Bundle\SearchBundle\Indexer\Filter;
 use Enhavo\Bundle\SearchBundle\Indexer\IndexData;

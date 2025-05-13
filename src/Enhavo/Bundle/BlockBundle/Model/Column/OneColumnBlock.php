@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Model\Column;
 
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
@@ -30,10 +39,10 @@ class OneColumnBlock extends Column
         $this->column = $column;
     }
 
-    public function setNode(NodeInterface $node = null)
+    public function setNode(?NodeInterface $node = null)
     {
         parent::setNode($node);
-        if($this->getColumn()) {
+        if ($this->getColumn()) {
             $this->getColumn()->setParent($node);
         }
     }

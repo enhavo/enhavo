@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Tab;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -12,7 +21,7 @@ use Enhavo\Component\Type\AbstractContainerType;
  */
 class Tab extends AbstractContainerType
 {
-    public function createViewData(InputInterface $input = null): array
+    public function createViewData(?InputInterface $input = null): array
     {
         $data = new Data();
         $data->set('key', $this->key);
@@ -26,12 +35,12 @@ class Tab extends AbstractContainerType
         return $data->normalize();
     }
 
-    public function getPermission(InputInterface $input = null)
+    public function getPermission(?InputInterface $input = null)
     {
         return $this->type->getPermission($this->options, $input);
     }
 
-    public function isEnabled(InputInterface $input = null): bool
+    public function isEnabled(?InputInterface $input = null): bool
     {
         return $this->type->isEnabled($this->options, $input);
     }

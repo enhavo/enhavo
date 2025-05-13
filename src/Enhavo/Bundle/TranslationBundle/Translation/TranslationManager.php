@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-08-25
- * Time: 02:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Translation;
@@ -12,11 +15,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
+use Enhavo\Bundle\TranslationBundle\Entity\Translation as TranslationEntity;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
-use Enhavo\Bundle\TranslationBundle\Entity\Translation as TranslationEntity;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -41,14 +44,14 @@ class TranslationManager
     /** @var EntityResolverInterface */
     private $localeProvider;
 
-    /** @var boolean */
+    /** @var bool */
     private $enabled;
 
     /** @var RequestStack */
     private $requestStack;
 
-    /** @var boolean|null */
-    private $cachedTranslation = null;
+    /** @var bool|null */
+    private $cachedTranslation;
 
     /** @var Translation[][] */
     private $translation = [];
@@ -67,9 +70,8 @@ class TranslationManager
         EntityResolverInterface $entityResolver,
         LocaleProviderInterface $localeProvider,
         $enabled,
-        RequestStack $requestStack
-    )
-    {
+        RequestStack $requestStack,
+    ) {
         $this->metadataRepository = $metadataRepository;
         $this->factory = $factory;
         $this->entityManager = $entityManager;
@@ -89,7 +91,7 @@ class TranslationManager
 
     public function isTranslatable(?object $data, $property = null): bool
     {
-        if ($data === null) {
+        if (null === $data) {
             return false;
         }
 
@@ -97,14 +99,14 @@ class TranslationManager
             return false;
         }
 
-        if ($property === null) {
+        if (null === $property) {
             return true;
         }
 
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($data);
 
-        return $metadata->getProperty($property) !== null;
+        return null !== $metadata->getProperty($property);
     }
 
     public function getLocales()
@@ -129,6 +131,7 @@ class TranslationManager
             }
             $translationValues[$locale] = $translation->getTranslation($data, $property, $locale);
         }
+
         return $translationValues;
     }
 
@@ -152,8 +155,6 @@ class TranslationManager
     }
 
     /**
-     * @param $object
-     * @param $locale
      * @throws TranslationException
      */
     public function translate($object, $locale)
@@ -208,16 +209,14 @@ class TranslationManager
     private function isTranslated($entity): bool
     {
         $oid = spl_object_hash($entity);
+
         return isset($this->translatedLocale[$oid]);
     }
 
-    /**
-     * @param $object
-     * @return string|null
-     */
     private function getTranslatedLocale($object): ?string
     {
         $oid = spl_object_hash($object);
+
         return $this->translatedLocale[$oid];
     }
 
@@ -226,14 +225,12 @@ class TranslationManager
         $oid = spl_object_hash($entity);
         if (false === $value) {
             unset($this->translatedLocale[$oid]);
-
         } else {
             $this->translatedLocale[$oid] = $value;
         }
     }
 
     /**
-     * @param $entity
      * @throws TranslationException
      */
     private function checkEntity($entity)
@@ -244,7 +241,6 @@ class TranslationManager
     }
 
     /**
-     * @param $object
      * @return PropertyNode[]
      */
     private function getObjectProperties($object): array
@@ -256,8 +252,6 @@ class TranslationManager
     }
 
     /**
-     * @param $data
-     * @param $propertyName
      * @return Translation
      */
     private function getTranslation($data, $propertyName)
@@ -277,17 +271,17 @@ class TranslationManager
         return $this->translation[$className][$propertyName];
     }
 
-
     public function fetchBySlug($class, $slug, $locale = null, $allowFallback = false)
     {
-        if ($locale === null) {
+        if (null === $locale) {
             $locale = $this->localeResolver->resolve();
         }
 
         if ($locale === $this->getDefaultLocale()) {
             $entity = $this->entityManager->getRepository($class)->findOneBy([
-                'slug' => $slug
+                'slug' => $slug,
             ]);
+
             return $entity;
         }
 
@@ -296,10 +290,10 @@ class TranslationManager
             'class' => $this->entityResolver->getName($class),
             'property' => 'slug',
             'translation' => $slug,
-            'locale' => $locale
+            'locale' => $locale,
         ]);
 
-        if ($translation !== null) {
+        if (null !== $translation) {
             return $translation->getObject();
         }
 

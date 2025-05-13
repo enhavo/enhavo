@@ -1,9 +1,12 @@
 <?php
-/**
- * PreviewButton.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 29/05/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Action\Type;
@@ -15,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AutoSaveActionType extends AbstractActionType
 {
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $data->set('timeout', $options['timeout']);
         $data->set('iconInactive', $options['icon_inactive']);

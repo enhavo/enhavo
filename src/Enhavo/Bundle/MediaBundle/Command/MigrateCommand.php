@@ -1,17 +1,25 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Console\Helper\ProgressBar;
 
 class MigrateCommand extends Command
 {
@@ -19,8 +27,7 @@ class MigrateCommand extends Command
         private string $storagePath,
         private ChecksumGeneratorInterface $checksumGenerator,
         private EntityManagerInterface $em,
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -44,7 +51,7 @@ class MigrateCommand extends Command
     {
         $fs = new Filesystem();
 
-        $fileDir = $this->storagePath . '/file';
+        $fileDir = $this->storagePath.'/file';
 
         if (!$fs->exists($fileDir)) {
             $fs->mkdir($fileDir);
@@ -56,7 +63,7 @@ class MigrateCommand extends Command
             $output->writeln('Migrate files:');
             $progressBar = new ProgressBar($output, $total);
             $progressBar->start();
-            $this->moveFromDir($this->storagePath, $fileDir,  $progressBar, false);
+            $this->moveFromDir($this->storagePath, $fileDir, $progressBar, false);
             $progressBar->finish();
         }
     }
@@ -65,7 +72,7 @@ class MigrateCommand extends Command
     {
         $fs = new Filesystem();
 
-        $formatDir = $this->storagePath . '/format';
+        $formatDir = $this->storagePath.'/format';
 
         if (!$fs->exists($formatDir)) {
             $fs->mkdir($formatDir);
@@ -96,7 +103,7 @@ class MigrateCommand extends Command
 
                 $this->moveFromDir($dir, $formatDir, $progressBar, true);
 
-                if ((new Finder())->files()->in($dir)->depth('== 0')->count() === 0) {
+                if (0 === (new Finder())->files()->in($dir)->depth('== 0')->count()) {
                     $fs->remove($dir);
                 }
             }
@@ -129,11 +136,11 @@ class MigrateCommand extends Command
                 ]);
             }
 
-            if (!$fs->exists($targetDir . '/' . $prefix)) {
-                $fs->mkdir($targetDir . '/' . $prefix);
+            if (!$fs->exists($targetDir.'/'.$prefix)) {
+                $fs->mkdir($targetDir.'/'.$prefix);
             }
 
-            $target = $targetDir . '/' . $prefix . '/' . $newFilename;
+            $target = $targetDir.'/'.$prefix.'/'.$newFilename;
 
             if ($fs->exists($target)) {
                 $fs->remove($file);

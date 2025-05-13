@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-04
- * Time: 10:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
@@ -28,6 +31,7 @@ class PreviewActionTypeTest extends TestCase
         $dependencies->routeResolver = $this->getMockBuilder(RouteResolverInterface::class)->getMock();
         $dependencies->resourceExpressionLanguage = new ResourceExpressionLanguage();
         $dependencies->router = new RouterMock();
+
         return $dependencies;
     }
 

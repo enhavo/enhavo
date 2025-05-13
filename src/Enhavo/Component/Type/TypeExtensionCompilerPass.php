@@ -1,10 +1,12 @@
 <?php
 
-/**
- * AbstractCollectorPass.php
+/*
+ * This file is part of the enhavo package.
  *
- * @since 29/05/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Type;
@@ -16,14 +18,10 @@ class TypeExtensionCompilerPass implements CompilerPassInterface
 {
     public function __construct(
         private string $namespace,
-        private string $tagName
-    )
-    {
+        private string $tagName,
+    ) {
     }
 
-    /**
-     * @inheritdoc
-     */
     public function process(ContainerBuilder $container)
     {
         $registryDefinitionId = sprintf('%s[%s]', RegistryInterface::class, $this->namespace);
@@ -44,7 +42,7 @@ class TypeExtensionCompilerPass implements CompilerPassInterface
             $tagServiceDefinition->setPublic(true);
             $registryDefinition->addMethodCall(
                 'registerExtension',
-                array($tagServiceDefinition->getClass() ?: $id, $id, $priority)
+                [$tagServiceDefinition->getClass() ?: $id, $id, $priority]
             );
         }
     }

@@ -1,9 +1,12 @@
 <?php
-/**
- * LocalResolver.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 27/11/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Locale;
@@ -35,6 +38,7 @@ class LocaleResolver implements LocaleResolverInterface
         }
 
         $this->resolveLocale();
+
         return $this->locale;
     }
 
@@ -43,7 +47,7 @@ class LocaleResolver implements LocaleResolverInterface
         $locales = $this->localeProvider->getLocales();
         $this->locale = $this->localeProvider->getDefaultLocale();
         $request = $this->requestStack->getMainRequest();
-        if ($request !== null) {
+        if (null !== $request) {
             $locale = $request->attributes->get('_locale');
             if ($locale && in_array($locale, $locales)) {
                 $this->locale = $locale;

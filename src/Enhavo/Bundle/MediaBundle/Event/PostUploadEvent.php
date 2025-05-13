@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Event;
 
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
@@ -7,7 +16,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class PostUploadEvent extends Event
 {
-    const DEFAULT_EVENT_NAME = 'enhavo_media.post_upload';
+    public const DEFAULT_EVENT_NAME = 'enhavo_media.post_upload';
 
     private FileInterface $subject;
 
@@ -16,9 +25,6 @@ class PostUploadEvent extends Event
         $this->subject = $subject;
     }
 
-    /**
-     * @return FileInterface
-     */
     public function getSubject(): FileInterface
     {
         return $this->subject;

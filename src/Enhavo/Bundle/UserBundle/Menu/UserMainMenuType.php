@@ -1,15 +1,17 @@
 <?php
-/**
- * UserMenuBuilder.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 21/09/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\UserBundle\Menu;
 
 use Enhavo\Bundle\AppBundle\Menu\AbstractMenuType;
-use Enhavo\Bundle\AppBundle\Menu\Type\LinkMenuType;
 use Enhavo\Bundle\AppBundle\Menu\Type\ListMenuType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,12 +25,12 @@ class UserMainMenuType extends AbstractMenuType
             'translation_domain' => 'EnhavoUserBundle',
             'items' => [
                 'user_user' => [
-                    'type' => 'user_user'
+                    'type' => 'user_user',
                 ],
                 'user_group' => [
-                    'type' => 'user_group'
-                ]
-            ]
+                    'type' => 'user_group',
+                ],
+            ],
         ]);
     }
 

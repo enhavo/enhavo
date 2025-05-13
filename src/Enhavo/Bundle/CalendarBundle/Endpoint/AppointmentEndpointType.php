@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\CalendarBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -15,8 +24,7 @@ class AppointmentEndpointType extends AbstractEndpointType
 {
     public function __construct(
         private readonly AppointmentRepository $repository,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -24,14 +32,14 @@ class AppointmentEndpointType extends AbstractEndpointType
         /** @var AppointmentInterface $resource */
         $resource = $options['resource'];
 
-        if ($resource === null) {
+        if (null === $resource) {
             $findValue = $request->get($options['find_by']);
             $resource = $this->repository->findOneBy([
                 $options['find_by'] => $findValue,
             ]);
         }
 
-        if ($resource === null) {
+        if (null === $resource) {
             throw $this->createNotFoundException();
         }
 
@@ -50,7 +58,7 @@ class AppointmentEndpointType extends AbstractEndpointType
             'preview' => false,
             'template' => '{{ area }}/resource/appointment/show.html.twig',
             'resource' => null,
-            'find_by' => 'id'
+            'find_by' => 'id',
         ]);
     }
 }

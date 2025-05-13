@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\ContactBundle\Contact;
-
 
 use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
@@ -41,9 +48,8 @@ class ContactManager
         array $mailerDefaults,
         FormFactoryInterface $formFactory,
         MailerManager $mailerManager,
-        TemplateResolver $templateResolver
-    )
-    {
+        TemplateResolver $templateResolver,
+    ) {
         $this->forms = $forms;
         $this->mailerDefaults = $mailerDefaults;
         $this->formFactory = $formFactory;
@@ -99,6 +105,7 @@ class ContactManager
         if (!isset($this->forms[$key])) {
             throw new \Exception(sprintf('Key "%s" not defined in forms.', $key));
         }
+
         return $this->forms[$key];
     }
 
@@ -108,6 +115,7 @@ class ContactManager
         if (!isset($configuration[$option])) {
             throw new \Exception(sprintf('Option "%s" not defined in configuration.', $key));
         }
+
         return $configuration[$option];
     }
 
@@ -125,6 +133,7 @@ class ContactManager
     public function getTemplate($key, $templateKey)
     {
         $templateConfiguration = $this->getOption($key, 'template');
+
         return $this->templateResolver->resolve($templateConfiguration[$templateKey]);
     }
 }

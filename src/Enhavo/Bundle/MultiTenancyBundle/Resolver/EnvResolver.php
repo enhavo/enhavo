@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\MultiTenancyBundle\Resolver;
 
@@ -17,7 +25,6 @@ class EnvResolver implements ResolverInterface
 
     /**
      * EnvResolver constructor.
-     * @param ProviderInterface $provider
      */
     public function __construct(ProviderInterface $provider, $envName = 'TENANCY')
     {
@@ -37,12 +44,9 @@ class EnvResolver implements ResolverInterface
                 }
             }
 
-            throw new ResolveException(sprintf(
-                'Environment variable was defined with value "%s", but does not match any of this tenants [%s]',
-                $envValue,
-                implode(',', $keys)
-            ));
+            throw new ResolveException(sprintf('Environment variable was defined with value "%s", but does not match any of this tenants [%s]', $envValue, implode(',', $keys)));
         }
+
         return null;
     }
 }

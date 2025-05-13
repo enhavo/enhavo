@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-02-19
- * Time: 02:15
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Tab\Type;
@@ -21,8 +24,7 @@ class BaseTabType extends AbstractType implements TabTypeInterface
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly ResourceExpressionLanguage $expressionLanguage,
-    )
-    {
+    ) {
     }
 
     public function createViewData(array $options, Data $data, InputInterface $input): void
@@ -34,9 +36,9 @@ class BaseTabType extends AbstractType implements TabTypeInterface
 
     public function isEnabled(array $options, InputInterface $input): bool
     {
-        return !!$this->expressionLanguage->evaluate($options['enabled'], [
+        return (bool) $this->expressionLanguage->evaluate($options['enabled'], [
             'input' => $input,
-            'tab' => $this
+            'tab' => $this,
         ]);
     }
 
@@ -44,7 +46,7 @@ class BaseTabType extends AbstractType implements TabTypeInterface
     {
         return $this->expressionLanguage->evaluate($options['permission'], [
             'input' => $input,
-            'tab' => $this
+            'tab' => $this,
         ]);
     }
 

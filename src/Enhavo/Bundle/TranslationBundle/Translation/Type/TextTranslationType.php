@@ -1,15 +1,17 @@
 <?php
-/**
- * TranslationTableStrategy.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 27/11/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
-use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
 use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,7 +22,6 @@ class TextTranslationType extends AbstractTranslationType
 
     /**
      * TextTranslationType constructor.
-     * @param TranslatorInterface $translator
      */
     public function __construct(TranslatorInterface $translator)
     {
@@ -65,7 +66,7 @@ class TextTranslationType extends AbstractTranslationType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'allow_fallback' => false
+            'allow_fallback' => false,
         ]);
     }
 }

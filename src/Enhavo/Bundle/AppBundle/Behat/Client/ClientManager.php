@@ -1,15 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-08
- * Time: 22:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Behat\Client;
 
-use Symfony\Component\Panther\ProcessManager\WebServerManager;
 use Symfony\Component\Panther\Client as PantherClient;
+use Symfony\Component\Panther\ProcessManager\WebServerManager;
 
 class ClientManager
 {
@@ -102,6 +105,7 @@ class ClientManager
         $this->startWebServer($webServerOptions);
         $client = PantherClient::createChromeClient(null, null, [], $this->baseUri);
         $this->pantherClients[] = $client;
+
         return $client;
     }
 
@@ -128,7 +132,7 @@ class ClientManager
 
     public function getClient()
     {
-        if(count($this->pantherClients) === 0) {
+        if (0 === count($this->pantherClients)) {
             $this->createClient();
         }
 

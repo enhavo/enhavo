@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\DashboardBundle\Dashboard\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -32,11 +41,11 @@ class BaseDashboardWidgetType extends AbstractType implements DashboardWidgetTyp
             'enabled' => true,
             'permission' => null,
             'width' => 4,
-            'model' => 'BaseDashboardWidget'
+            'model' => 'BaseDashboardWidget',
         ]);
 
         $resolver->setRequired([
-            'component'
+            'component',
         ]);
     }
 

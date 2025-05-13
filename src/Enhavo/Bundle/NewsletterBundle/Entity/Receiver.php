@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: philippsester
- * Date: 17.08.19
- * Time: 17:26
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
@@ -15,7 +18,7 @@ use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 class Receiver
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -45,19 +48,19 @@ class Receiver
     private $token;
 
     /**
-     * @var Collection $trackings
+     * @var Collection
      */
     private $tracking;
 
     /**
-     * @var NewsletterInterface $newsletter
+     * @var NewsletterInterface
      */
     private $newsletter;
 
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -69,102 +72,66 @@ class Receiver
      */
     public function __construct()
     {
-        $this->tracking = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tracking = new ArrayCollection();
         $this->createdAt = new \DateTime();
     }
 
-    /**
-     * @return string|null
-     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string|null $email
-     */
     public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param \DateTime $createdAt
-     */
     public function setCreatedAt(\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    /**
-     * @return null|\DateTime
-     */
     public function getSentAt(): ?\DateTime
     {
         return $this->sentAt;
     }
 
-    /**
-     * @param \DateTime $sentAt
-     */
     public function setSentAt(\DateTime $sentAt): void
     {
         $this->sentAt = $sentAt;
     }
 
-    /**
-     * @return array
-     */
     public function getParameters(): array
     {
         return $this->parameters;
     }
 
-    /**
-     * @param array $parameters
-     */
     public function setParameters(array $parameters): void
     {
         $this->parameters = $parameters;
     }
 
-    /**
-     * @return string
-     */
     public function getToken(): ?string
     {
         return $this->token;
     }
 
-    /**
-     * @param string|null $token
-     */
     public function setToken(?string $token): void
     {
         $this->token = $token;
     }
 
-    /**
-     * @param Tracking $tracking
-     */
     public function addTracking(Tracking $tracking): void
     {
         $this->tracking[] = $tracking;
         $tracking->setReceiver($this);
     }
 
-    /**
-     * @param Tracking $tracking
-     */
     public function removeTracking(Tracking $tracking): void
     {
         $this->tracking->removeElement($tracking);
@@ -179,17 +146,11 @@ class Receiver
         return $this->tracking;
     }
 
-    /**
-     * @return NewsletterInterface
-     */
     public function getNewsletter(): NewsletterInterface
     {
         return $this->newsletter;
     }
 
-    /**
-     * @param NewsletterInterface $newsletter
-     */
     public function setNewsletter(NewsletterInterface $newsletter): void
     {
         $this->newsletter = $newsletter;
@@ -197,7 +158,7 @@ class Receiver
 
     public function isSent()
     {
-        return $this->getSentAt() !== null;
+        return null !== $this->getSentAt();
     }
 
     public function trackOpen()

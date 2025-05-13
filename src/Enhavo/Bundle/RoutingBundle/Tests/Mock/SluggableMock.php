@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RoutingBundle\Tests\Mock;
 
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
@@ -19,9 +28,6 @@ class SluggableMock implements Slugable
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -35,9 +41,6 @@ class SluggableMock implements Slugable
         $this->slug = $slug;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class MediaSettingType
- * @package Enhavo\Bundle\SettingBundle\Setting\Type
+ *
  * @property ValueAccessSettingType $parent
  */
 class MediaSettingType extends AbstractSettingType
@@ -22,7 +31,6 @@ class MediaSettingType extends AbstractSettingType
 
     /**
      * MediaSettingType constructor.
-     * @param FileFactory $fileFactory
      */
     public function __construct(FileFactory $fileFactory)
     {
@@ -33,7 +41,7 @@ class MediaSettingType extends AbstractSettingType
     {
         $settingEntity = $this->parent->getSettingEntity($options, $key);
 
-        if ($settingEntity->getValue() === null) {
+        if (null === $settingEntity->getValue()) {
             $settingEntity->setValue(new MediaValue($options['multiple'], $settingEntity));
 
             if ($options['multiple'] && is_array($options['default']) && count($options['default'])) {
@@ -43,7 +51,7 @@ class MediaSettingType extends AbstractSettingType
                     $files->add($file);
                 }
                 $settingEntity->getValue()->setValue($files);
-            } else if (!$options['multiple'] && $options['default'] !== null) {
+            } elseif (!$options['multiple'] && null !== $options['default']) {
                 $file = $this->fileFactory->createFromPath($options['default']);
                 $settingEntity->getValue()->setValue($file);
             }
@@ -55,16 +63,17 @@ class MediaSettingType extends AbstractSettingType
         if ($options['multiple']) {
             $data = [];
             /** @var FileInterface $file */
-            foreach($value->getValue() as $file) {
+            foreach ($value->getValue() as $file) {
                 $data[] = $file->getBasename();
             }
+
             return join(', ', $data);
-        } else {
-            $file = $value->getValue();
-            if ($file !== null) {
-                return $file->getBasename();
-            }
         }
+        $file = $value->getValue();
+        if (null !== $file) {
+            return $file->getBasename();
+        }
+
         return '';
     }
 
@@ -77,10 +86,10 @@ class MediaSettingType extends AbstractSettingType
     {
         $resolver->setDefaults([
             'multiple' => false,
-            'form_type' => MediaType::class
+            'form_type' => MediaType::class,
         ]);
 
-        $resolver->setNormalizer('form_options', function($options, $value) {
+        $resolver->setNormalizer('form_options', function ($options, $value) {
             return array_merge([
                 'multiple' => $options['multiple'],
             ], $value);

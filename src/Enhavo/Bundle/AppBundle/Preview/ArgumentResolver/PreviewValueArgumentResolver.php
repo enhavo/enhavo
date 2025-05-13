@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Preview\ArgumentResolver;
 
 use Enhavo\Bundle\AppBundle\Preview\PreviewManager;
@@ -14,7 +23,6 @@ class PreviewValueArgumentResolver implements ArgumentValueResolverInterface
 
     /**
      * PreviewValueArgumentResolver constructor.
-     * @param PreviewManager $previewManager
      */
     public function __construct(PreviewManager $previewManager)
     {
@@ -23,9 +31,10 @@ class PreviewValueArgumentResolver implements ArgumentValueResolverInterface
 
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
-        if ($argument->getName() === 'preview' && $argument->getType() === 'bool') {
+        if ('preview' === $argument->getName() && 'bool' === $argument->getType()) {
             return true;
         }
+
         return false;
     }
 

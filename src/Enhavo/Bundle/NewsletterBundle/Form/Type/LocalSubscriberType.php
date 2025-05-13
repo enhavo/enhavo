@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Entity\LocalSubscriber;
@@ -12,18 +21,17 @@ class LocalSubscriberType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', TextType::class, array(
+        $builder->add('email', TextType::class, [
             'label' => 'subscriber.form.label.email',
-            'translation_domain' => 'EnhavoNewsletterBundle'
-        ));
-
+            'translation_domain' => 'EnhavoNewsletterBundle',
+        ]);
     }
 
     public function resolveOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => LocalSubscriber::class,
-        ));
+        ]);
     }
 
     public function getBlockPrefix()

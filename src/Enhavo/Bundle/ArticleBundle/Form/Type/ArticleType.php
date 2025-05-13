@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ArticleBundle\Form\Type;
 
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockNodeType;
@@ -17,39 +26,38 @@ class ArticleType extends AbstractType
 {
     public function __construct(
         private readonly string $dataClass,
-    )
-    {
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('teaser', WysiwygType::class, array(
+        $builder->add('teaser', WysiwygType::class, [
             'label' => 'form.label.teaser',
             'translation_domain' => 'EnhavoAppBundle',
-        ));
+        ]);
 
-        $builder->add('picture', MediaType::class, array(
+        $builder->add('picture', MediaType::class, [
             'label' => 'form.label.picture',
             'translation_domain' => 'EnhavoAppBundle',
             'multiple' => false,
             'formats' => [
-                'articleThumbnail' => 'Article Thumbnail'
-            ]
-        ));
+                'articleThumbnail' => 'Article Thumbnail',
+            ],
+        ]);
 
-        $builder->add('content', BlockNodeType::class, array(
+        $builder->add('content', BlockNodeType::class, [
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
-        ));
+        ]);
 
-        $builder->add('thread', ThreadType::class, array(
+        $builder->add('thread', ThreadType::class, [
             'label' => 'form.label.comment',
             'translation_domain' => 'EnhavoAppBundle',
-        ));
+        ]);
 
         $builder->add('categories', TermTreeChoiceType::class, [
             'multiple' => true,
-            'taxonomy' => 'article_category'
+            'taxonomy' => 'article_category',
         ]);
 
         $builder->add('tags', TermAutoCompleteChoiceType::class, [
@@ -64,11 +72,11 @@ class ArticleType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults( array(
+        $resolver->setDefaults([
             'data_class' => $this->dataClass,
             'slugable' => true,
-            'validation_groups' => ['default']
-        ));
+            'validation_groups' => ['default'],
+        ]);
     }
 
     public function getParent()

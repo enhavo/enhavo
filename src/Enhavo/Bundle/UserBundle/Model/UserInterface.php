@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Model;
 
 use Enhavo\Bundle\AppBundle\Model\Timestampable;
@@ -11,9 +20,9 @@ use Symfony\Component\Security\Core\User\UserInterface as BaseUserInterface;
  */
 interface UserInterface extends BaseUserInterface, GroupableInterface, PasswordAuthenticatedUserInterface, Timestampable
 {
-    const ROLE_DEFAULT = 'ROLE_USER';
-    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
-    const ROLE_ADMIN = 'ROLE_ADMIN';
+    public const ROLE_DEFAULT = 'ROLE_USER';
+    public const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
 
     public function getUserIdentifier(): string;
 
@@ -43,11 +52,11 @@ interface UserInterface extends BaseUserInterface, GroupableInterface, PasswordA
 
     public function setConfirmationToken(?string $confirmationToken);
 
-    public function setPasswordRequestedAt(\DateTime $date = null);
+    public function setPasswordRequestedAt(?\DateTime $date = null);
 
     public function isPasswordRequestNonExpired($ttl);
 
-    public function setLastLogin(\DateTime $time = null);
+    public function setLastLogin(?\DateTime $time = null);
 
     public function hasRole(?string $role);
 

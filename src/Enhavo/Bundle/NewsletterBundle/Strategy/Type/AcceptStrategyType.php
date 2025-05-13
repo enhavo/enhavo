@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Strategy\Type;
 
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
@@ -23,9 +32,6 @@ class AcceptStrategyType extends AbstractStrategyType
 
     /**
      * AcceptStrategyType constructor.
-     * @param NewsletterManager $newsletterManager
-     * @param PendingSubscriberManager $pendingManager
-     * @param RouterInterface $router
      */
     public function __construct(NewsletterManager $newsletterManager, PendingSubscriberManager $pendingManager, RouterInterface $router)
     {
@@ -33,7 +39,6 @@ class AcceptStrategyType extends AbstractStrategyType
         $this->pendingManager = $pendingManager;
         $this->router = $router;
     }
-
 
     public function addSubscriber(SubscriberInterface $subscriber, array $options)
     {
@@ -69,10 +74,9 @@ class AcceptStrategyType extends AbstractStrategyType
             $subject = $this->trans($options['subject'], [], $options['translation_domain']);
 
             $message = $this->newsletterManager->createMessage($from, $senderName, $subscriber->getEmail(), $subject, $template, [
-                'subscriber' => $subscriber
+                'subscriber' => $subscriber,
             ], $options['content_type']);
             $this->newsletterManager->sendMessage($message);
-
         }
     }
 
@@ -80,7 +84,7 @@ class AcceptStrategyType extends AbstractStrategyType
     {
         $link = $this->router->generate($options['activate_route'], array_merge($options['activate_route_parameters'], [
             'token' => $subscriber->getConfirmationToken(),
-            'type' => $subscriber->getSubscription()
+            'type' => $subscriber->getSubscription(),
         ]), UrlGeneratorInterface::ABSOLUTE_URL);
 
         $template = $options['admin_template'];
@@ -91,7 +95,7 @@ class AcceptStrategyType extends AbstractStrategyType
 
         $message = $this->newsletterManager->createMessage($from, $senderName, $to, $subject, $template, [
             'subscriber' => $subscriber,
-            'link' => $link
+            'link' => $link,
         ], $options['content_type']);
         $this->newsletterManager->sendMessage($message);
     }
@@ -142,5 +146,4 @@ class AcceptStrategyType extends AbstractStrategyType
     {
         return 'accept';
     }
-
 }

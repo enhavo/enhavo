@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Tests\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Type\HtmlTagType;
@@ -10,13 +19,13 @@ class HtmlTagTypeTest extends TypeTestCase
     public function testTagChoice()
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
-            'tag_choices' => ['p', 'span']
+            'tag_choices' => ['p', 'span'],
         ]);
 
         $form->setData(false);
         $form->submit([
             'text' => 'Hello World',
-            'tag' => 'p'
+            'tag' => 'p',
         ]);
 
         $this->assertEquals('<p>Hello World</p>', $form->getData());
@@ -25,12 +34,12 @@ class HtmlTagTypeTest extends TypeTestCase
     public function testTagChoiceWithDefault()
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
-            'tag_choices' => ['p', 'span']
+            'tag_choices' => ['p', 'span'],
         ]);
 
         $form->setData(false);
         $form->submit([
-            'text' => 'Hello World'
+            'text' => 'Hello World',
         ]);
 
         $this->assertEquals('Hello World', $form->getData());
@@ -39,13 +48,13 @@ class HtmlTagTypeTest extends TypeTestCase
     public function testTagChoiceWithChoice()
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
-            'tag_choices' => ['p', 'span']
+            'tag_choices' => ['p', 'span'],
         ]);
 
         $form->setData(false);
         $form->submit([
             'text' => 'Hello World',
-            'tag' => 'span'
+            'tag' => 'span',
         ]);
 
         $this->assertEquals('<span>Hello World</span>', $form->getData());
@@ -54,7 +63,7 @@ class HtmlTagTypeTest extends TypeTestCase
     public function testTagOption()
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
-            'tag_empty_data' => 'p'
+            'tag_empty_data' => 'p',
         ]);
 
         $form->setData(false);
@@ -69,12 +78,12 @@ class HtmlTagTypeTest extends TypeTestCase
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
             'class_choices' => ['foo', 'bar'],
-            'tag_empty_data' => 'p'
+            'tag_empty_data' => 'p',
         ]);
 
         $form->setData(false);
         $form->submit([
-            'text' => 'Hello World'
+            'text' => 'Hello World',
         ]);
 
         $this->assertEquals('<p>Hello World</p>', $form->getData());
@@ -84,13 +93,13 @@ class HtmlTagTypeTest extends TypeTestCase
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
             'class_choices' => ['foo', 'bar'],
-            'tag_empty_data' => 'p'
+            'tag_empty_data' => 'p',
         ]);
 
         $form->setData(false);
         $form->submit([
             'text' => 'Hello World',
-            'class' => 'foo'
+            'class' => 'foo',
         ]);
 
         $this->assertEquals('<p class="foo">Hello World</p>', $form->getData());
@@ -100,7 +109,7 @@ class HtmlTagTypeTest extends TypeTestCase
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
             'class_empty_data' => 'foobar',
-            'tag_empty_data' => 'p'
+            'tag_empty_data' => 'p',
         ]);
 
         $form->setData(false);
@@ -131,7 +140,7 @@ class HtmlTagTypeTest extends TypeTestCase
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
             'tag_empty_data' => 'h1',
-            'tag_choices' => ['p', 'span']
+            'tag_choices' => ['p', 'span'],
         ]);
 
         $form->setData('<p>Hello World</p>');
@@ -144,7 +153,7 @@ class HtmlTagTypeTest extends TypeTestCase
     public function testTextWithHTML()
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
-            'tag_choices' => ['h1', 'h2']
+            'tag_choices' => ['h1', 'h2'],
         ]);
 
         $form->submit([
@@ -158,7 +167,7 @@ class HtmlTagTypeTest extends TypeTestCase
     public function testReadTextWithTag()
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
-            'tag_choices' => ['h1', 'h2']
+            'tag_choices' => ['h1', 'h2'],
         ]);
 
         $form->setData('<h2><p>Hello World</p></h2>');
@@ -171,7 +180,7 @@ class HtmlTagTypeTest extends TypeTestCase
     public function testReadTextWithClass()
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
-            'tag_choices' => ['h1', 'h2']
+            'tag_choices' => ['h1', 'h2'],
         ]);
 
         $form->setData('<h2><p class="foobar">Hello World</p></h2>');
@@ -184,7 +193,7 @@ class HtmlTagTypeTest extends TypeTestCase
     public function testFallbackClassTag()
     {
         $form = $this->factory->create(HtmlTagType::class, null, [
-            'class_choices' => ['foo', 'bar']
+            'class_choices' => ['foo', 'bar'],
         ]);
 
         $form->submit([

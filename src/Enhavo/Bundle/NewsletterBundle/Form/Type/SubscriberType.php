@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -17,20 +26,18 @@ class SubscriberType extends AbstractType
 
     /**
      * SubscriberType constructor.
-     * @param RouterInterface $router
      */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
     }
 
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', EmailType::class, array(
+        $builder->add('email', EmailType::class, [
             'label' => 'subscriber.form.label.email',
-            'translation_domain' => 'EnhavoNewsletterBundle'
-        ));
+            'translation_domain' => 'EnhavoNewsletterBundle',
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -38,7 +45,7 @@ class SubscriberType extends AbstractType
         $resolver->setDefaults([
             'groups' => null,
             'subscription' => null,
-            'route' => 'enhavo_newsletter_subscribe_add'
+            'route' => 'enhavo_newsletter_subscribe_add',
         ]);
     }
 

@@ -1,7 +1,15 @@
 <?php
 
-namespace Enhavo\Bundle\ResourceBundle\Authorization;
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
+namespace Enhavo\Bundle\ResourceBundle\Authorization;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
@@ -31,7 +39,8 @@ class PermissionVoter implements VoterInterface
 
         $role = str_replace('.', '_', $permission->name);
         $role = str_replace('-', '_', $role);
-        $role = 'ROLE_' . $role . '_' . $permission->action;
+        $role = 'ROLE_'.$role.'_'.$permission->action;
+
         return strtoupper($role);
     }
 }

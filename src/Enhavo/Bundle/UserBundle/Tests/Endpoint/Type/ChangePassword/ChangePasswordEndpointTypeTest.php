@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Tests\Endpoint\Type\ChangePassword;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -31,7 +40,7 @@ class ChangePasswordEndpointTypeTest extends TestCase
         $dependencies->provider = $this->getMockBuilder(ConfigurationProvider::class)->disableOriginalConstructor()->getMock();
         $dependencies->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->disableOriginalConstructor()->getMock();
-        $dependencies->container = new ContainerMock;
+        $dependencies->container = new ContainerMock();
         $dependencies->form = $this->getMockBuilder(FormInterface::class)->getMock();
         $dependencies->formFactory = new FormFactoryMock($dependencies->form);
         $dependencies->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->getMock();

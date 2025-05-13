@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Tests\DependencyInjection;
 
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Configuration;
@@ -16,6 +25,7 @@ class ConfigurationTest extends TestCase
         $configs = $gridConfigurationMerger->performMerge($configs);
 
         $processor = new Processor();
+
         return $processor->processConfiguration($configuration, $configs);
     }
 
@@ -28,16 +38,16 @@ class ConfigurationTest extends TestCase
                     'prop1' => '1',
                     'prop2' => '2',
                 ],
-            ]
+            ],
         ];
 
-        $b  = [
+        $b = [
             'grids' => [
                 'my.grid' => [
                     'class' => 'Test',
                     'prop1' => '2',
                 ],
-            ]
+            ],
         ];
 
         $configuration = new Configuration();
@@ -60,16 +70,16 @@ class ConfigurationTest extends TestCase
                     'class' => Grid::class,
                     'prop1' => '1',
                 ],
-            ]
+            ],
         ];
 
-        $b  = [
+        $b = [
             'grids' => [
                 'my.grid' => [
                     'class' => Grid::class,
                     'prop2' => '2',
                 ],
-            ]
+            ],
         ];
 
         $configuration = new Configuration();
@@ -92,21 +102,20 @@ class ConfigurationTest extends TestCase
                     'class' => Grid::class,
                     'prop1' => '1',
                 ],
-            ]
+            ],
         ];
 
-        $b  = [
+        $b = [
             'grids' => [
                 'my.grid' => [
                     'overwrite' => true,
                     'class' => Grid::class,
                     'prop2' => '2',
                 ],
-            ]
+            ],
         ];
 
         $configuration = new Configuration();
-
 
         $config = $this->process($configuration, [$a, $b]);
 
@@ -117,7 +126,6 @@ class ConfigurationTest extends TestCase
         ], $config['grids']['my.grid']);
     }
 
-
     public function testGridMergePriority()
     {
         $a = [
@@ -127,20 +135,19 @@ class ConfigurationTest extends TestCase
                     'priority' => 10,
                     'prop3' => '1',
                 ],
-            ]
+            ],
         ];
 
-        $b  = [
+        $b = [
             'grids' => [
                 'my.grid' => [
                     'class' => Grid::class,
                     'prop3' => '2',
                 ],
-            ]
+            ],
         ];
 
         $configuration = new Configuration();
-
 
         $config = $this->process($configuration, [$a, $b]);
 
@@ -152,13 +159,13 @@ class ConfigurationTest extends TestCase
 
     public function testGridMergeExtends()
     {
-        $a  = [
+        $a = [
             'grids' => [
                 'my.grid' => [
-                    'extends' =>  'base.grid',
+                    'extends' => 'base.grid',
                     'prop2' => '22',
                 ],
-            ]
+            ],
         ];
 
         $b = [
@@ -168,7 +175,7 @@ class ConfigurationTest extends TestCase
                     'prop1' => '1',
                     'prop2' => '2',
                 ],
-            ]
+            ],
         ];
 
         $configuration = new Configuration();

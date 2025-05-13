@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Batch;
 
 use Doctrine\ORM\EntityRepository;
@@ -19,16 +28,15 @@ class SendTestBatchType extends AbstractBatchType
     public function __construct(
         private readonly NewsletterManager $newsletterManager,
         private readonly TranslatorInterface $translator,
-        private readonly FormFactoryInterface $formFactory
-    )
-    {
+        private readonly FormFactoryInterface $formFactory,
+    ) {
     }
 
     public function execute(array $options, array $ids, EntityRepository $repository, Data $data, Context $context): void
     {
         $form = $this->formFactory->create(NewsletterEmailType::class);
         $form->handleRequest($context->getRequest());
-        if(!$form->isValid()) {
+        if (!$form->isValid()) {
             throw new BatchExecutionException($this->translator->trans('newsletter.batch.error.email', [], 'EnhavoNewsletterBundle'));
         }
 

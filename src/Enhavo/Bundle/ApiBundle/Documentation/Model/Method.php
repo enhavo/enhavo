@@ -1,46 +1,58 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model;
 
 class Method
 {
-    const GET = 'get';
-    const PUT = 'put';
-    const POST = 'post';
-    const DELETE = 'delete';
-    const OPTIONS = 'options';
-    const HEAD = 'head';
-    const PATCH = 'patch';
-    const TRACE = 'trace';
+    public const GET = 'get';
+    public const PUT = 'put';
+    public const POST = 'post';
+    public const DELETE = 'delete';
+    public const OPTIONS = 'options';
+    public const HEAD = 'head';
+    public const PATCH = 'patch';
+    public const TRACE = 'trace';
 
     public function __construct(
         private array &$method,
         private Path $parent,
-    )
-    {
+    ) {
     }
 
     public function ref($ref): self
     {
         $this->method['$ref'] = $ref;
+
         return $this;
     }
 
     public function description($description): self
     {
         $this->method['description'] = $description;
+
         return $this;
     }
 
     public function summary($summary): self
     {
         $this->method['summary'] = $summary;
+
         return $this;
     }
 
     public function operationId($operationId): self
     {
         $this->method['operationId'] = $operationId;
+
         return $this;
     }
 
@@ -70,7 +82,7 @@ class Method
         }
 
         $parameter = [
-            'name' => $name
+            'name' => $name,
         ];
 
         $this->method['parameters'][] = &$parameter;

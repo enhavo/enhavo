@@ -1,18 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 11.08.18
- * Time: 00:30
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MultiTenancyBundle\Matcher;
 
 use Enhavo\Bundle\MultiTenancyBundle\Request\RequestContext as EnhavoRequestContext;
-use Symfony\Component\Routing\RequestContext as SymfonyRequestContext;
 use Enhavo\Bundle\MultiTenancyBundle\Resolver\ResolverInterface;
 use Symfony\Cmf\Component\Routing\NestedMatcher\UrlMatcher;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RequestContext as SymfonyRequestContext;
 use Symfony\Component\Routing\RouteCollection;
 
 class ConditionUrlMatcher extends UrlMatcher
@@ -21,7 +24,7 @@ class ConditionUrlMatcher extends UrlMatcher
         RouteCollection $routes,
         SymfonyRequestContext $context,
         private ResolverInterface $resolver,
-    ){
+    ) {
         parent::__construct($routes, $context);
     }
 

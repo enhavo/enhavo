@@ -1,9 +1,12 @@
 <?php
-/**
- * FileRepository.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 17/12/15
- * @author Fabian Liebl <fl@weareindeed.com>
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Repository;
@@ -12,7 +15,7 @@ use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 
 class FileRepository extends EntityRepository
 {
-    public function findGarbage(\DateTime $now = null)
+    public function findGarbage(?\DateTime $now = null)
     {
         if (!$now) {
             $now = new \DateTime();
@@ -38,6 +41,7 @@ class FileRepository extends EntityRepository
             ->getQuery();
 
         $result = $query->getSingleScalarResult();
+
         return intval($result);
     }
 
@@ -62,7 +66,7 @@ class FileRepository extends EntityRepository
 
             $qb
                 ->andWhere('f.checksum LIKE :shortChecksum')
-                ->setParameter('shortChecksum', $criteria['shortChecksum'] . '%');
+                ->setParameter('shortChecksum', $criteria['shortChecksum'].'%');
         }
 
         return $qb->getQuery()->getOneOrNullResult();

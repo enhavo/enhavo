@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Twig;
 
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -15,18 +24,17 @@ class TwigRouter implements RouterInterface
     private ?RequestContext $context = null;
 
     public function __construct(
-        private readonly RequestStack $requestStack
-    )
-    {
+        private readonly RequestStack $requestStack,
+    ) {
     }
 
     private function init(): void
     {
-        if ($this->generator !== null) {
+        if (null !== $this->generator) {
             return;
         }
 
-        if ($this->context === null) {
+        if (null === $this->context) {
             $this->context = new RequestContext();
             $request = $this->requestStack->getCurrentRequest();
             if ($request) {
@@ -41,6 +49,7 @@ class TwigRouter implements RouterInterface
     public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         $this->init();
+
         return $this->generator->generate($name, $parameters, $referenceType);
     }
 
@@ -53,13 +62,15 @@ class TwigRouter implements RouterInterface
     public function getRouteCollection(): RouteCollection
     {
         $this->init();
+
         return $this->routes;
     }
 
     public function exists($name): bool
     {
         $this->init();
-        return !!$this->routes->get($name);
+
+        return (bool) $this->routes->get($name);
     }
 
     public function setContext(RequestContext $context)

@@ -1,14 +1,20 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
-use Enhavo\Bundle\ApiBundle\Documentation\Model\Method;
-use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\AppBundle\Endpoint\Type\ViewEndpointType;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +29,7 @@ class SettingEndpoint extends AbstractEndpointType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'settings' => true
+            'settings' => true,
         ]);
     }
 

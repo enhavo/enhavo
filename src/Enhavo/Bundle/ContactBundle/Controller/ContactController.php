@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ContactBundle\Controller;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
@@ -20,7 +29,6 @@ class ContactController extends AbstractController
 
     /**
      * ContactController constructor.
-     * @param ContactManager $contactManager
      */
     public function __construct(ContactManager $contactManager)
     {
@@ -32,27 +40,27 @@ class ContactController extends AbstractController
         /** @var FormInterface $form */
         $form = $this->contactManager->createForm($key);
         $form->handleRequest($request);
-        if($form->isSubmitted()) {
+        if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $this->contactManager->submit($form->getData(), $key);
 
                 if ($request->isXmlHttpRequest()) {
                     return new JsonResponse([
-                        'success' => true
+                        'success' => true,
                     ]);
                 }
+
                 return $this->redirectToRoute('enhavo_contact_finish', ['key' => $key]);
-            } else {
-                if ($request->isXmlHttpRequest()) {
-                    return new JsonResponse([
-                        'success' => false
-                    ], 400);
-                }
+            }
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse([
+                    'success' => false,
+                ], 400);
             }
         }
 
         return $this->render($this->contactManager->getTemplate($key, 'submit'), [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 

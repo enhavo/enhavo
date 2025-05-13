@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -39,16 +48,13 @@ class Newsletter implements Slugable, NewsletterInterface, Timestampable
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -86,18 +92,17 @@ class Newsletter implements Slugable, NewsletterInterface, Timestampable
     /**
      * Set content
      *
-     * @param NodeInterface $content
-     *
      * @return Newsletter
      */
     public function setContent(NodeInterface $content)
     {
         $this->content = $content;
-        if($content) {
+        if ($content) {
             $content->setType(NodeInterface::TYPE_ROOT);
             $content->setProperty('content');
             $content->setResource($this);
         }
+
         return $this;
     }
 
@@ -111,65 +116,41 @@ class Newsletter implements Slugable, NewsletterInterface, Timestampable
         return $this->content;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param \DateTime|null $createdAt
-     */
     public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getStartAt(): ?\DateTime
     {
         return $this->startAt;
     }
 
-    /**
-     * @param \DateTime|null $startAt
-     */
     public function setStartAt(?\DateTime $startAt): void
     {
         $this->startAt = $startAt;
     }
 
-    /**
-     * @return \DateTime|null
-     */
     public function getFinishAt(): ?\DateTime
     {
         return $this->finishAt;
     }
 
-    /**
-     * @param \DateTime|null $finishAt
-     */
     public function setFinishAt(?\DateTime $finishAt): void
     {
         $this->finishAt = $finishAt;
     }
 
-    /**
-     * @return string
-     */
     public function getTemplate(): ?string
     {
         return $this->template;
     }
 
-    /**
-     * @param string|null $template
-     */
     public function setTemplate(?string $template): void
     {
         $this->template = $template;
@@ -183,36 +164,27 @@ class Newsletter implements Slugable, NewsletterInterface, Timestampable
         return $this->groups;
     }
 
-    /**
-     * @param mixed $group
-     */
     public function addGroup($group)
     {
         $this->groups->add($group);
     }
 
-    /**
-     * @param mixed $group
-     */
     public function removeGroup($group)
     {
         $this->groups->removeElement($group);
     }
 
     /**
-     * @param Receiver $receiver
      * @return $this|NewsletterInterface
      */
     public function addReceiver(Receiver $receiver)
     {
         $this->receivers[] = $receiver;
         $receiver->setNewsletter($this);
+
         return $this;
     }
 
-    /**
-     * @param Receiver $receiver
-     */
     public function removeReceiver(Receiver $receiver)
     {
         $this->receivers->removeElement($receiver);
@@ -227,17 +199,11 @@ class Newsletter implements Slugable, NewsletterInterface, Timestampable
         return $this->receivers;
     }
 
-    /**
-     * @param FileInterface $attachment
-     */
     public function addAttachment(FileInterface $attachment)
     {
         $this->attachments[] = $attachment;
     }
 
-    /**
-     * @param FileInterface $attachment
-     */
     public function removeAttachment(FileInterface $attachment)
     {
         $this->attachments->removeElement($attachment);
@@ -251,30 +217,21 @@ class Newsletter implements Slugable, NewsletterInterface, Timestampable
         return $this->attachments;
     }
 
-    /**
-     * @return bool
-     */
     public function isPrepared(): bool
     {
-        return $this->state != NewsletterInterface::STATE_CREATED;
+        return NewsletterInterface::STATE_CREATED != $this->state;
     }
 
     public function isSent()
     {
-        return $this->state == NewsletterInterface::STATE_SENT;
+        return NewsletterInterface::STATE_SENT == $this->state;
     }
 
-    /**
-     * @return string
-     */
     public function getState(): string
     {
         return $this->state;
     }
 
-    /**
-     * @param string $state
-     */
     public function setState(string $state): void
     {
         $this->state = $state;

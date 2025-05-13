@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RoutingBundle\Tests\AutoGenerator\Generator;
 
 use Doctrine\ORM\AbstractQuery;
@@ -47,6 +56,7 @@ class SlugGeneratorTest extends TestCase
     {
         $resource = new SluggableMock();
         $resource->setName('Resource Name');
+
         return $resource;
     }
 
@@ -93,8 +103,9 @@ class SlugGeneratorTest extends TestCase
         $dependencies->em->method('createQueryBuilder')->willReturn($dependencies->queryBuilder);
 
         $stack = [0, 1];
-        $dependencies->query->method('getResult')->willReturnCallback(function() use (&$stack) {
+        $dependencies->query->method('getResult')->willReturnCallback(function () use (&$stack) {
             $value = array_pop($stack);
+
             return [0 => ['nr' => $value]];
         });
 
@@ -114,11 +125,12 @@ class SlugGeneratorTest extends TestCase
     }
 }
 
-class SlugGeneratorTestDependencies {
+class SlugGeneratorTestDependencies
+{
     /** @var EntityManagerInterface|MockObject */
     public $em;
     /** @var QueryBuilder|MockObject */
     public $queryBuilder;
-    /** @var AbstractQuery|MockObject $query */
+    /** @var AbstractQuery|MockObject */
     public $query;
 }

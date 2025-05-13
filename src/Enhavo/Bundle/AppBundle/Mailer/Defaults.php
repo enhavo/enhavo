@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Mailer;
 
 class Defaults
@@ -15,9 +24,6 @@ class Defaults
 
     /**
      * Defaults constructor.
-     * @param string $mailFrom
-     * @param string $mailSenderName
-     * @param string $mailTo
      */
     public function __construct(string $mailFrom, string $mailSenderName, string $mailTo)
     {
@@ -26,25 +32,16 @@ class Defaults
         $this->mailTo = $mailTo;
     }
 
-    /**
-     * @return string
-     */
     public function getMailFrom(): string
     {
         return $this->mailFrom;
     }
 
-    /**
-     * @return string
-     */
     public function getMailSenderName(): string
     {
         return $this->mailSenderName;
     }
 
-    /**
-     * @return string
-     */
     public function getMailTo(): string
     {
         return $this->mailTo;

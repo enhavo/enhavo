@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Twig;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -10,8 +19,7 @@ class RouterExtension extends AbstractExtension
 {
     public function __construct(
         private readonly TwigRouter $router,
-    )
-    {
+    ) {
     }
 
     public function getFunctions()

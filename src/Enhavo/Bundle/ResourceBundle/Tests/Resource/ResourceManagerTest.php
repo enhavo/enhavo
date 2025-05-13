@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Resource;
 
@@ -30,6 +38,7 @@ class ResourceManagerTest extends TestCase
         $dependencies->duplicateFactory = $this->getMockBuilder(DuplicateFactory::class)->disableOriginalConstructor()->getMock();
         $dependencies->deleteHandler = $this->getMockBuilder(DeleteHandlerInterface::class)->getMock();
         $dependencies->container = new ContainerMock();
+
         return $dependencies;
     }
 
@@ -45,6 +54,7 @@ class ResourceManagerTest extends TestCase
             $dependencies->resources,
         );
         $manager->setContainer($dependencies->container);
+
         return $manager;
     }
 
@@ -61,6 +71,7 @@ class ResourceManagerTest extends TestCase
             $expectedEventName = array_shift($expectedEvents);
             $this->assertEquals($expectedEventName, $eventName);
             $this->assertInstanceOf(ResourceEvent::class, $event);
+
             return $event;
         });
         $manager = $this->createInstance($dependencies);
@@ -79,6 +90,7 @@ class ResourceManagerTest extends TestCase
         $dependencies->eventDispatcher->method('dispatch')->willReturnCallback(function ($event, $eventName) use (&$expectedEvents) {
             $expectedEventName = array_shift($expectedEvents);
             $this->assertEquals($expectedEventName, $eventName);
+
             return $event;
         });
 
@@ -101,6 +113,7 @@ class ResourceManagerTest extends TestCase
             $expectedEventName = array_shift($expectedEvents);
             $this->assertEquals($expectedEventName, $eventName);
             $this->assertInstanceOf(ResourceEvent::class, $event);
+
             return $event;
         });
         $manager = $this->createInstance($dependencies);

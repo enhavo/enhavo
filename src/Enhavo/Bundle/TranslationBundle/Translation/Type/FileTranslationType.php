@@ -1,9 +1,12 @@
 <?php
-/**
- * RouteTranslationType.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 27/11/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
@@ -18,7 +21,6 @@ class FileTranslationType extends AbstractTranslationType
 
     /**
      * TextTranslationType constructor.
-     * @param TranslatorInterface $translator
      */
     public function __construct(TranslatorInterface $translator)
     {
@@ -59,5 +61,4 @@ class FileTranslationType extends AbstractTranslationType
     {
         return 'file';
     }
-
 }

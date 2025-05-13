@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RevisionBundle\Endpoint\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,8 +30,7 @@ class RevisionAwareRestoreType extends AbstractEndpointType
         private readonly RevisionManager $revisionManager,
         private readonly CsrfTokenManagerInterface $csrfTokenManager,
         private readonly EntityManagerInterface $em,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -38,9 +46,8 @@ class RevisionAwareRestoreType extends AbstractEndpointType
             throw $this->createNotFoundException();
         }
 
-
         $subject = $resource->getSubject();
-        if ($subject === null) {
+        if (null === $subject) {
             throw $this->createNotFoundException();
         }
 
@@ -48,10 +55,11 @@ class RevisionAwareRestoreType extends AbstractEndpointType
             $context->setStatusCode(400);
             $data['success'] = false;
             $data['message'] = 'Invalid token';
+
             return;
         }
 
-        if ($options['method'] === 'undelete') {
+        if ('undelete' === $options['method']) {
             $this->revisionManager->undelete($subject);
         } else {
             $this->revisionManager->dearchive($subject);

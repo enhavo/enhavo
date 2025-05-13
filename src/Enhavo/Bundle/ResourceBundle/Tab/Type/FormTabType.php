@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Tab\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -9,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FormTabType extends AbstractTabType
 {
-    public function createViewData(array $options, Data $data, InputInterface $input = null): void
+    public function createViewData(array $options, Data $data, ?InputInterface $input = null): void
     {
         $data->set('arrangement', $this->generateArrangement($options['arrangement']));
     }
@@ -30,7 +39,7 @@ class FormTabType extends AbstractTabType
 
     private function generateArrangement($arrangement): array
     {
-        if ($arrangement === null) {
+        if (null === $arrangement) {
             return [];
         }
 
@@ -40,12 +49,13 @@ class FormTabType extends AbstractTabType
         foreach ($lines as $line) {
             $rows[] = $this->generateRow($line);
         }
+
         return $rows;
     }
 
     private function generateRow($line): array
     {
-        $columns = explode("|", $line);
+        $columns = explode('|', $line);
         $data = [];
         foreach ($columns as $column) {
             preg_match('/([A-Za-z.-_]+)/', trim($column), $matches);
@@ -54,13 +64,14 @@ class FormTabType extends AbstractTabType
             preg_match('/\{([0-9]+)\}/', trim($column), $matches);
             $size = intval($matches[1] ?? 1);
 
-            if ($key !== null && $size > 0) {
+            if (null !== $key && $size > 0) {
                 $data[] = [
                     'key' => $key,
                     'size' => $size,
                 ];
             }
         }
+
         return $data;
     }
 }

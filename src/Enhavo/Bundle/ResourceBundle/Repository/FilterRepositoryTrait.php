@@ -1,9 +1,12 @@
 <?php
-/**
- * EntityRepositoryTrait.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 21/01/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Repository;
@@ -22,6 +25,7 @@ trait FilterRepositoryTrait
             if (!class_exists(QueryAdapter::class)) {
                 throw new \LogicException('You can not use the "paginator" if Pagerfanta Doctrine ORM Adapter is not available. Try running "composer require pagerfanta/doctrine-orm-adapter".');
             }
+
             return new Pagerfanta(new QueryAdapter($queryBuilder, false, false));
         }
 

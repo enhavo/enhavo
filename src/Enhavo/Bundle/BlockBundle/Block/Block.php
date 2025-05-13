@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 18.05.18
- * Time: 13:54
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Block;
@@ -56,10 +59,11 @@ class Block extends AbstractContainerType
     {
         $data = new Data();
         /** @var BlockTypeInterface $parent */
-        foreach($this->parents as $parent) {
+        foreach ($this->parents as $parent) {
             $parent->createViewData($block, $data, $resource, $this->options);
         }
         $this->type->createViewData($block, $data, $resource, $this->options);
+
         return $data->normalize();
     }
 
@@ -67,10 +71,11 @@ class Block extends AbstractContainerType
     {
         $data = new Data($data);
         /** @var BlockTypeInterface $parent */
-        foreach($this->parents as $parent) {
+        foreach ($this->parents as $parent) {
             $parent->finishViewData($block, $data, $resource, $this->options);
         }
         $this->type->finishViewData($block, $data, $resource, $this->options);
+
         return $data->normalize();
     }
 }

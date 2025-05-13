@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\VueFormBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -22,11 +31,9 @@ abstract class AbstractVueType extends AbstractType
 
     public function buildVueData(FormView $view, VueData $data, array $options)
     {
-
     }
 
     public function finishVueData(FormView $view, VueData $data, array $options)
     {
-
     }
 }

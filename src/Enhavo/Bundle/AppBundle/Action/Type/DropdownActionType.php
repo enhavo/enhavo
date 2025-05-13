@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -16,11 +25,11 @@ class DropdownActionType extends AbstractActionType
         $this->actionManager = $actionManager;
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $actions = $this->actionManager->getActions($options['items'], $resource);
         $items = [];
-        foreach($actions as $action) {
+        foreach ($actions as $action) {
             $items[] = $action->createViewData($resource);
         }
 
@@ -37,7 +46,7 @@ class DropdownActionType extends AbstractActionType
         ]);
 
         $resolver->setRequired([
-            'items'
+            'items',
         ]);
     }
 

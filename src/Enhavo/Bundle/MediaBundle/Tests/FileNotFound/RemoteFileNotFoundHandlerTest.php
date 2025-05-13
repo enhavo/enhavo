@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Tests\FileNotFound;
 
 use Enhavo\Bundle\MediaBundle\Entity\File;
@@ -20,7 +29,7 @@ class RemoteFileNotFoundHandlerTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        if (self::$server === null) {
+        if (null === self::$server) {
             self::$server = new WebServerManager(__DIR__.'/../fixtures/server', '127.0.0.1', 1234, 'index.php', '/ready');
             self::$server->start();
         }
@@ -63,10 +72,10 @@ class RemoteFileNotFoundHandlerTest extends TestCase
         $file = new File();
 
         $instance->handleLoad($file, $dependencies->storage, $dependencies->exception, [
-            RemoteFileNotFoundHandler::PARAMETER_SERVER_URL => 'http://127.0.0.1:1234'
+            RemoteFileNotFoundHandler::PARAMETER_SERVER_URL => 'http://127.0.0.1:1234',
         ]);
 
-        $this->assertEquals("File could not be found.", $file->getContent()->getContent());
+        $this->assertEquals('File could not be found.', $file->getContent()->getContent());
     }
 }
 

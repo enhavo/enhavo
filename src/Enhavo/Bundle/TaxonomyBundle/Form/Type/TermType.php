@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TaxonomyBundle\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
@@ -16,29 +25,28 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TermType extends AbstractType
 {
     public function __construct(
-        private readonly string $dataClass
-    )
-    {
+        private readonly string $dataClass,
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class, array(
+        $builder->add('name', TextType::class, [
             'label' => 'form.label.name',
             'translation_domain' => 'EnhavoAppBundle',
-        ));
+        ]);
 
-        $builder->add('text', WysiwygType::class, array(
+        $builder->add('text', WysiwygType::class, [
             'label' => 'form.label.text',
             'translation_domain' => 'EnhavoAppBundle',
-        ));
+        ]);
 
         if ($options['parent']) {
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
                 $form = $event->getForm();
                 $data = $event->getData();
 
-                /** @var TermInterface $data */
+                /* @var TermInterface $data */
                 $form->add('parent', EntityType::class, [
                     'label' => 'form.label.parent',
                     'translation_domain' => 'EnhavoAppBundle',
@@ -52,8 +60,9 @@ class TermType extends AbstractType
                             $query->setParameter('id', $data->getId());
                             $query->setParameter('taxonomy', $data->getTaxonomy());
                         }
+
                         return $query;
-                    }
+                    },
                 ]);
             });
         }
@@ -61,17 +70,17 @@ class TermType extends AbstractType
         if ($options['slug']) {
             $builder->add('slug', TextType::class, [
                 'label' => 'form.label.slug',
-                'translation_domain' => 'EnhavoAppBundle'
+                'translation_domain' => 'EnhavoAppBundle',
             ]);
         }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults( array(
+        $resolver->setDefaults([
             'data_class' => $this->dataClass,
             'parent' => false,
             'slug' => true,
-        ));
+        ]);
     }
 }

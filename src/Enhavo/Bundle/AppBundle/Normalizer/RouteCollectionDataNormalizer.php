@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Normalizer;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -8,7 +17,7 @@ use Symfony\Component\Routing\RouteCollection;
 
 class RouteCollectionDataNormalizer extends AbstractDataNormalizer
 {
-    public function buildData(Data $data, $object, string $format = null, array $context = [])
+    public function buildData(Data $data, $object, ?string $format = null, array $context = [])
     {
         /** @var $object RouteCollection */
         foreach ($object as $name => $route) {

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Tests\Endpoint\Template;
 
 use Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator;
@@ -15,9 +24,9 @@ class LoaderTest extends TestCase
             ->getMock();
 
         $templateExpressionLanguageEvaluatorMock
-            ->method('evaluate')->willReturnCallback(function($value) { return $value; });
+            ->method('evaluate')->willReturnCallback(function ($value) { return $value; });
 
-        return new Loader(__DIR__ . '/../../Fixtures/data', $templateExpressionLanguageEvaluatorMock);
+        return new Loader(__DIR__.'/../../Fixtures/data', $templateExpressionLanguageEvaluatorMock);
     }
 
     public function testLoadYaml()
@@ -26,7 +35,7 @@ class LoaderTest extends TestCase
         $data = $loader->load('test.yaml');
 
         $this->assertEquals([
-            'message' => 'Hello World!'
+            'message' => 'Hello World!',
         ], $data);
     }
 
@@ -36,7 +45,7 @@ class LoaderTest extends TestCase
         $data = $loader->load('test.json');
 
         $this->assertEquals([
-            'message' => 'Hello World!'
+            'message' => 'Hello World!',
         ], $data);
     }
 
@@ -46,7 +55,7 @@ class LoaderTest extends TestCase
         $data = $loader->load('test.php');
 
         $this->assertEquals([
-            'message' => 'Hello World!'
+            'message' => 'Hello World!',
         ], $data);
     }
 
@@ -56,7 +65,7 @@ class LoaderTest extends TestCase
         $data = $loader->load('test-loader.php');
 
         $this->assertEquals([
-            'message' => 'Hello World!'
+            'message' => 'Hello World!',
         ], $data);
     }
 
@@ -67,14 +76,14 @@ class LoaderTest extends TestCase
         $target = [
             'key1' => 'value',
             'key2' => [
-                'key2_1' => 'deep1'
-            ]
+                'key2_1' => 'deep1',
+            ],
         ];
 
         $source = [
             'key1' => 'other',
             'key3' => [
-                'key3_1' => 'deep1'
+                'key3_1' => 'deep1',
             ],
         ];
 
@@ -83,10 +92,10 @@ class LoaderTest extends TestCase
         $this->assertEquals([
             'key1' => 'other',
             'key2' => [
-                'key2_1' => 'deep1'
+                'key2_1' => 'deep1',
             ],
             'key3' => [
-                'key3_1' => 'deep1'
+                'key3_1' => 'deep1',
             ],
         ], $target);
     }
@@ -102,8 +111,8 @@ class LoaderTest extends TestCase
                 'key2_2' => [
                     'key2_2_1' => 'hello',
                     'key2_2_2' => 'other',
-                ]
-            ]
+                ],
+            ],
         ];
 
         $source = [
@@ -114,7 +123,7 @@ class LoaderTest extends TestCase
                     'key2_2_3' => 'world',
                 ],
                 'key2_3' => 'deep11',
-                'key2_4' => 'deep111'
+                'key2_4' => 'deep111',
             ],
         ];
 
@@ -130,8 +139,8 @@ class LoaderTest extends TestCase
                     'key2_2_3' => 'world',
                 ],
                 'key2_3' => 'deep11',
-                'key2_4' => 'deep111'
-            ]
+                'key2_4' => 'deep111',
+            ],
         ], $target);
     }
 
@@ -146,8 +155,8 @@ class LoaderTest extends TestCase
                 'key2_2' => [
                     'key2_2_1' => 'hello',
                     'key2_2_2' => 'other',
-                ]
-            ]
+                ],
+            ],
         ];
 
         $source = [
@@ -158,7 +167,7 @@ class LoaderTest extends TestCase
                     'key2_2_3' => 'world',
                 ],
                 'key2_3' => 'deep11',
-                'key2_4' => 'deep111'
+                'key2_4' => 'deep111',
             ],
         ];
 
@@ -173,8 +182,8 @@ class LoaderTest extends TestCase
                     'key2_2_3' => 'world',
                 ],
                 'key2_3' => 'deep11',
-                'key2_4' => 'deep111'
-            ]
+                'key2_4' => 'deep111',
+            ],
         ], $target);
     }
 
@@ -189,8 +198,8 @@ class LoaderTest extends TestCase
                 'key2_2' => [
                     'key2_2_1' => 'hello',
                     'key2_2_2' => 'other',
-                ]
-            ]
+                ],
+            ],
         ];
 
         $source = [
@@ -201,7 +210,7 @@ class LoaderTest extends TestCase
                     'key2_2_3' => 'world',
                 ],
                 'key2_3' => 'deep11',
-                'key2_4' => 'deep111'
+                'key2_4' => 'deep111',
             ],
         ];
 
@@ -215,7 +224,7 @@ class LoaderTest extends TestCase
                     'key2_2_3' => 'world',
                 ],
                 'key2_3' => 'deep11',
-                'key2_4' => 'deep111'
+                'key2_4' => 'deep111',
             ],
         ], $target);
     }
@@ -231,8 +240,8 @@ class LoaderTest extends TestCase
                 'key2_2' => [
                     'key2_2_1' => 'hello',
                     'key2_2_2' => 'other',
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $source = new Data([
@@ -243,7 +252,7 @@ class LoaderTest extends TestCase
                     'key2_2_3' => 'world',
                 ],
                 'key2_3' => 'deep11',
-                'key2_4' => 'deep111'
+                'key2_4' => 'deep111',
             ],
         ]);
 
@@ -259,8 +268,8 @@ class LoaderTest extends TestCase
                     'key2_2_3' => 'world',
                 ],
                 'key2_3' => 'deep11',
-                'key2_4' => 'deep111'
-            ]
+                'key2_4' => 'deep111',
+            ],
         ], $target->data);
     }
 }
@@ -269,8 +278,7 @@ class Data implements \IteratorAggregate, \ArrayAccess
 {
     public function __construct(
         public $data = [],
-    )
-    {
+    ) {
     }
 
     public function getIterator(): \Traversable

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Maker;
 
 use Enhavo\Bundle\AppBundle\Util\NameTransformer;
@@ -21,9 +30,8 @@ class MakeRouting extends AbstractMaker
     private NameTransformer $nameTransformer;
 
     public function __construct(
-        private readonly MakerUtil $util
-    )
-    {
+        private readonly MakerUtil $util,
+    ) {
         $this->nameTransformer = new NameTransformer();
     }
 
@@ -46,7 +54,6 @@ class MakeRouting extends AbstractMaker
 
     public function configureDependencies(DependencyBuilder $dependencies)
     {
-
     }
 
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
@@ -69,14 +76,14 @@ class MakeRouting extends AbstractMaker
             $routingApiPath = sprintf('%s/Resources/config/routing/%s_api/%s.yaml', $this->util->getBundlePath($bundle), $areaName, $this->nameTransformer->snakeCase($resource));
         }
 
-        $routePrefix = $namespace . '_' . $areaName . '_' . $resource;
-        $routeApiPrefix = $namespace . '_' . $areaName . '_api_' . $resource;
-        $pathPrefix = $this->getUrl('/'. $namespace . '/' . $resource);
-        $pathApiPrefix = $this->getUrl('/'. $namespace . '/' . $resource);
+        $routePrefix = $namespace.'_'.$areaName.'_'.$resource;
+        $routeApiPrefix = $namespace.'_'.$areaName.'_api_'.$resource;
+        $pathPrefix = $this->getUrl('/'.$namespace.'/'.$resource);
+        $pathApiPrefix = $this->getUrl('/'.$namespace.'/'.$resource);
 
         $generator->generateFile(
             $routingPath,
-            __DIR__ . '/../Resources/skeleton/routing.tpl.php',
+            __DIR__.'/../Resources/skeleton/routing.tpl.php',
             [
                 'route_prefix' => $routePrefix,
                 'route_api_prefix' => $routeApiPrefix,
@@ -88,7 +95,7 @@ class MakeRouting extends AbstractMaker
 
         $generator->generateFile(
             $routingApiPath,
-            __DIR__ . '/../Resources/skeleton/routing_api.tpl.php',
+            __DIR__.'/../Resources/skeleton/routing_api.tpl.php',
             [
                 'route_prefix' => $routePrefix,
                 'route_api_prefix' => $routeApiPrefix,
@@ -105,6 +112,6 @@ class MakeRouting extends AbstractMaker
 
     private function getUrl($input)
     {
-        return preg_replace('/_/', '-',  $this->nameTransformer->snakeCase($input));
+        return preg_replace('/_/', '-', $this->nameTransformer->snakeCase($input));
     }
 }

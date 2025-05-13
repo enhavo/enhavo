@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Collection;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -11,8 +20,7 @@ class ResourceItems implements \Iterator
     public function __construct(
         private readonly array $items,
         private readonly Data $meta = new Data(),
-    )
-    {
+    ) {
     }
 
     public function getItems(): array
@@ -34,7 +42,7 @@ class ResourceItems implements \Iterator
 
         return [
             'items' => $items,
-            'meta' => $this->meta->normalize()
+            'meta' => $this->meta->normalize(),
         ];
     }
 

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\DependencyInjection\CompilerPass;
 
 use Enhavo\Bundle\ApiBundle\Normalizer\DataNormalizer;
@@ -25,7 +34,7 @@ class DataNormalizerCompilerPass implements CompilerPassInterface
             $services[$id] = new Reference($id);
             $definition = $container->findDefinition($id);
             $arguments = [$definition->getClass()];
-            if ($priority !== null) {
+            if (null !== $priority) {
                 $arguments[] = $priority;
             }
             $dataNormalizer->addMethodCall('register', $arguments);

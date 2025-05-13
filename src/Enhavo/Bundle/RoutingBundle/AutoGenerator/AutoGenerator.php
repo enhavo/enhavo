@@ -1,15 +1,18 @@
 <?php
-/**
- * AutoGenerator.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 11/12/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\AutoGenerator;
 
-use Enhavo\Bundle\RoutingBundle\Metadata\Metadata;
 use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
+use Enhavo\Bundle\RoutingBundle\Metadata\Metadata;
 use Enhavo\Component\Metadata\MetadataRepository;
 
 class AutoGenerator
@@ -35,11 +38,11 @@ class AutoGenerator
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($resource);
 
-        if ($metadata === null) {
+        if (null === $metadata) {
             return;
         }
 
-        foreach($metadata->getGenerators() as $generatorConfig) {
+        foreach ($metadata->getGenerators() as $generatorConfig) {
             /** @var GeneratorInterface $generator */
             $type = $this->collector->getType($generatorConfig->getType());
             $generator = $this->createGenerator($type, $generatorConfig->getOptions(), $resource);

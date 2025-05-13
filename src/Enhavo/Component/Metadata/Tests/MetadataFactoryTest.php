@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-10
- * Time: 22:41
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Metadata\Tests;
@@ -20,6 +23,7 @@ class MetadataFactoryTest extends TestCase
     {
         $dependencies = new MetadataFactoryDependencies();
         $dependencies->metaDataClass = MetadataFactoryMetadata::class;
+
         return $dependencies;
     }
 
@@ -118,21 +122,19 @@ class MetadataFactoryMetadata extends Metadata
 
 class MetadataFactoryResource
 {
-
 }
 
 class MetadataFactoryOtherResource
 {
-
 }
 
 class MetadataFactoryNameProvider implements ProviderInterface
 {
     public function provide(Metadata $metadata, $normalizedData)
     {
-        if($metadata instanceof MetadataFactoryMetadata) {
-            if(array_key_exists('names', $normalizedData)) {
-                foreach($normalizedData['names'] as $name) {
+        if ($metadata instanceof MetadataFactoryMetadata) {
+            if (array_key_exists('names', $normalizedData)) {
+                foreach ($normalizedData['names'] as $name) {
                     $metadata->names[] = $name;
                 }
             }
@@ -149,16 +151,16 @@ class MetadataFactoryDriver implements DriverInterface
 
     public function load()
     {
-
     }
 
-    public function loadClass($className): array|null|false
+    public function loadClass($className): array|false|null
     {
-        if ($className === MetadataFactoryResource::class) {
+        if (MetadataFactoryResource::class === $className) {
             return [
-                'names' => ['Peter']
+                'names' => ['Peter'],
             ];
         }
+
         return false;
     }
 }

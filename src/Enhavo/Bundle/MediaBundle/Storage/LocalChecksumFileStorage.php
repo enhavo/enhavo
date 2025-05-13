@@ -1,22 +1,25 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 26.08.17
- * Time: 14:07
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Storage;
 
-use Enhavo\Bundle\MediaBundle\Exception\FileNotFoundException;
-use Enhavo\Bundle\MediaBundle\Repository\FileRepository;
-use Enhavo\Bundle\MediaBundle\Repository\FormatRepository;
-use Symfony\Component\Filesystem\Filesystem;
+use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
+use Enhavo\Bundle\MediaBundle\Exception\FileNotFoundException;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
-use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
+use Enhavo\Bundle\MediaBundle\Repository\FileRepository;
+use Enhavo\Bundle\MediaBundle\Repository\FormatRepository;
+use Symfony\Component\Filesystem\Filesystem;
 
 class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInterface
 {
@@ -25,8 +28,7 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
         private readonly Filesystem $filesystem,
         private readonly FileRepository $fileRepository,
         private readonly FormatRepository $formatRepository,
-    )
-    {
+    ) {
     }
 
     public function deleteContent(FormatInterface|FileInterface $file): void
@@ -35,11 +37,11 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
 
         if ($file instanceof FileInterface) {
             $amount = $this->fileRepository->countByChecksum($file->getChecksum());
-        } else if ($file instanceof FormatInterface) {
+        } elseif ($file instanceof FormatInterface) {
             $amount = $this->formatRepository->countByChecksum($file->getChecksum());
         }
 
-        if ($amount === 0) {
+        if (0 === $amount) {
             $path = $this->getFilePath($file);
             if ($this->filesystem->exists($path)) {
                 $this->filesystem->remove($path);
@@ -64,6 +66,7 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
         }
 
         $this->filesystem->dumpFile($path, $file->getContent()->getContent());
+
         return new PathContent($path);
     }
 
@@ -72,9 +75,7 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
         $this->checkFile($file);
         $path = $this->getFilePath($file);
         if (!$this->filesystem->exists($path)) {
-            throw new FileNotFoundException(sprintf(
-                'File not found for name "%s". Expected on path "%s"', $file->getBasename(), $path
-            ));
+            throw new FileNotFoundException(sprintf('File not found for name "%s". Expected on path "%s"', $file->getBasename(), $path));
         }
 
         return new PathContent($path);
@@ -83,6 +84,7 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
     public function existsChecksum(string $checksum): bool
     {
         $path = $this->getPathByChecksum($checksum);
+
         return $this->filesystem->exists($path);
     }
 
@@ -90,9 +92,7 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
     {
         $path = $this->getPathByChecksum($checksum);
         if (!$this->filesystem->exists($path)) {
-            throw new StorageException(sprintf(
-                'File not found for checksum "%s"', $checksum
-            ));
+            throw new StorageException(sprintf('File not found for checksum "%s"', $checksum));
         }
 
         return new PathContent($path);
@@ -110,16 +110,14 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
 
     private function checkFile(FormatInterface|FileInterface $file): void
     {
-        if ($file->getChecksum() === null) {
-            throw new StorageException(sprintf(
-                'File with name "%s" need checksum for storing to filesystem.', $file->getBasename()
-            ));
+        if (null === $file->getChecksum()) {
+            throw new StorageException(sprintf('File with name "%s" need checksum for storing to filesystem.', $file->getBasename()));
         }
     }
 
     private function getFilePath(FormatInterface|FileInterface $file): string
     {
-        return $this->getDirPath($file) . '/' . $this->getFilename($file);
+        return $this->getDirPath($file).'/'.$this->getFilename($file);
     }
 
     private function getDirPath(FormatInterface|FileInterface $file): string
@@ -130,21 +128,21 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
                 $this->basePath,
                 substr($file->getChecksum(), 0, 2),
             );
-        } else {
-            return sprintf(
-                '%s/format/%s',
-                $this->basePath,
-                substr($file->getChecksum(), 0, 2),
-            );
         }
+
+        return sprintf(
+            '%s/format/%s',
+            $this->basePath,
+            substr($file->getChecksum(), 0, 2),
+        );
     }
 
     private function getFilename(FormatInterface|FileInterface $file): string
     {
         if ($file instanceof FileInterface) {
             return substr($file->getChecksum(), 2);
-        } else {
-            return substr($file->getChecksum(), 2);
         }
+
+        return substr($file->getChecksum(), 2);
     }
 }

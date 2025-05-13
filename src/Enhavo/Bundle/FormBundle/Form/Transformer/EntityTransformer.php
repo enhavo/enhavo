@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Form\Transformer;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,10 +35,6 @@ class EntityTransformer implements DataTransformerInterface
 
     /**
      * EntityTransformer constructor.
-     * @param EntityManagerInterface $em
-     * @param string $class
-     * @param string $property
-     * @param \Closure|null $queryBuilder
      */
     public function __construct(EntityManagerInterface $em, string $class, string $property, ?\Closure $queryBuilder, \Closure $factory)
     {
@@ -42,17 +47,18 @@ class EntityTransformer implements DataTransformerInterface
 
     public function transform($entity)
     {
-        if ($entity === null) {
+        if (null === $entity) {
             return '';
         }
 
         $propertyAccessor = new PropertyAccessor();
+
         return $propertyAccessor->getValue($entity, $this->property);
     }
 
     public function reverseTransform($string)
     {
-        if (trim($string) === '') {
+        if ('' === trim($string)) {
             return null;
         }
 
@@ -60,7 +66,7 @@ class EntityTransformer implements DataTransformerInterface
         if ($this->queryBuilder instanceof \Closure) {
             /** @var QueryBuilder $queryBuilder */
             $queryBuilder = $this->queryBuilder->call($this, $repository);
-            if ($queryBuilder === null) {
+            if (null === $queryBuilder) {
                 throw new \InvalidArgumentException(sprintf('Option query_builder need to return a QueryBuilder. Maybe you forgot a return.'));
             }
             $alias = $queryBuilder->getRootAliases();
@@ -77,15 +83,15 @@ class EntityTransformer implements DataTransformerInterface
             }
         } else {
             $entity = $repository->findOneBy([
-                $this->property => $string
+                $this->property => $string,
             ]);
         }
 
-        if ($entity === null) {
+        if (null === $entity) {
             if ($this->factory instanceof \Closure) {
                 $entity = $this->factory->call($this);
             } else {
-                $entity = new $this->class;
+                $entity = new $this->class();
             }
 
             $propertyAccessor = new PropertyAccessor();

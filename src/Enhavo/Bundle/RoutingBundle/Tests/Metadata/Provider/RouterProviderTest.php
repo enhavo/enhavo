@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-13
- * Time: 10:48
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\Tests\Metadata\Provider;
@@ -24,9 +27,9 @@ class RouterProviderTest extends TestCase
                 'admin' => [
                     'type' => 'route',
                     'option1' => 'value1',
-                    'option2' => 'value2'
-                ]
-            ]
+                    'option2' => 'value2',
+                ],
+            ],
         ]);
 
         $this->assertCount(1, $metadata->getRouter());
@@ -34,7 +37,7 @@ class RouterProviderTest extends TestCase
         $this->assertEquals('admin', $metadata->getRouter()[0]->getName());
         $this->assertEquals([
             'option1' => 'value1',
-            'option2' => 'value2'
+            'option2' => 'value2',
         ], $metadata->getRouter()[0]->getOptions());
     }
 

@@ -1,17 +1,20 @@
 <?php
-/**
- * ThreeColumnConfiguration.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 08/08/18
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
-use Enhavo\Bundle\BlockBundle\Model\Column\ThreeColumnBlock;
+use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Enhavo\Bundle\BlockBundle\Factory\ThreeColumnBlockFactory;
 use Enhavo\Bundle\BlockBundle\Form\Type\ThreeColumnBlockType as ThreeColumnBlockFormType;
-use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
+use Enhavo\Bundle\BlockBundle\Model\Column\ThreeColumnBlock;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ThreeColumnBlockType extends AbstractBlockType
@@ -25,7 +28,7 @@ class ThreeColumnBlockType extends AbstractBlockType
             'template' => 'theme/block/three-column.html.twig',
             'label' => 'three_column.label.three_column',
             'translation_domain' => 'EnhavoBlockBundle',
-            'groups' => ['default', 'layout']
+            'groups' => ['default', 'layout'],
         ]);
     }
 

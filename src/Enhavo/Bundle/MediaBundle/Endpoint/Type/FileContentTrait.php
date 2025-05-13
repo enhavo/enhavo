@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\Endpoint\Type;
 
 use Enhavo\Bundle\MediaBundle\Http\FileRangeResponse;
@@ -30,20 +39,19 @@ trait FileContentTrait
             $end = $length - 1;
 
             if (preg_match('/bytes=(\d*)-(\d*)/', $rangeHeader, $matches)) {
-                $start = ($matches[1] !== '') ? intval($matches[1]) : 0;
-                $end = ($matches[2] !== '') ? intval($matches[2]) : $end;
+                $start = ('' !== $matches[1]) ? intval($matches[1]) : 0;
+                $end = ('' !== $matches[2]) ? intval($matches[2]) : $end;
             }
 
             $response = new FileRangeResponse($file, $start, $end);
-
-        } else if (!$this->streamingDisabled && $this->streamingThreshold < $fileSize) {
-            $response = new StreamedResponse(function () use ($file) {
+        } elseif (!$this->streamingDisabled && $this->streamingThreshold < $fileSize) {
+            $response = new StreamedResponse(function () use ($file): void {
                 $outputStream = fopen('php://output', 'wb');
                 $fileStream = fopen($file->getContent()->getFilePath(), 'r');
                 stream_copy_to_stream($fileStream, $outputStream);
             });
             $response->headers->set('Content-Type', $file->getMimeType());
-        } else if ($request->get('disposition') === 'attachment'){
+        } elseif ('attachment' === $request->get('disposition')) {
             $response = new FileResponse($file);
             $response->headers->set('Content-Type', 'application/octet-stream');
             $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $file->getBasename()));
@@ -62,6 +70,7 @@ trait FileContentTrait
         if ($response instanceof StreamedResponse) {
             // StreamedResponse will return an empty response if cached via http cache, so we prevent caching
             $response->setPrivate();
+
             return;
         }
 
@@ -79,7 +88,7 @@ trait FileContentTrait
             ->setPublic();
 
         $response->headers->add([
-            AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER => true
+            AbstractSessionListener::NO_AUTO_CACHE_CONTROL_HEADER => true,
         ]);
     }
 
@@ -87,6 +96,7 @@ trait FileContentTrait
     {
         $date = new \DateTime();
         $date->modify(sprintf('+%s seconds', $seconds));
+
         return $date;
     }
 }

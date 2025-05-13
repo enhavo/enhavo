@@ -1,13 +1,21 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\AppBundle\Mailer;
 
 use Enhavo\Bundle\AppBundle\Exception\MailAttachmentException;
 use Enhavo\Bundle\AppBundle\Exception\MailNotFoundException;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -78,11 +86,12 @@ class MailerManager
         $ccs = [];
         if (is_string($this->mailsConfig[$key]['cc'])) {
             $ccs[] = trim($this->mailsConfig[$key]['cc']);
-        } else if (is_array($this->mailsConfig[$key]['cc'])) {
+        } elseif (is_array($this->mailsConfig[$key]['cc'])) {
             foreach ($this->mailsConfig[$key]['cc'] as $cc) {
                 $ccs[] = trim($cc);
             }
         }
+
         return $ccs;
     }
 
@@ -91,17 +100,18 @@ class MailerManager
         $bcs = [];
         if (is_string($this->mailsConfig[$key]['bcc'])) {
             $bcs[] = trim($this->mailsConfig[$key]['bcc']);
-        } else if (is_array($this->mailsConfig[$key]['bcc'])) {
+        } elseif (is_array($this->mailsConfig[$key]['bcc'])) {
             foreach ($this->mailsConfig[$key]['bcc'] as $cc) {
                 $bcs[] = trim($cc);
             }
         }
+
         return $bcs;
     }
 
     public function createMessage(): Message
     {
-        return new $this->model;
+        return new $this->model();
     }
 
     public function sendMessage(Message $message): void
@@ -133,10 +143,10 @@ class MailerManager
             $email->addBcc(new Address($bcc));
         }
 
-        if ($message->getContent() === null) {
+        if (null === $message->getContent()) {
             $template = $this->environment->load($this->templateResolver->resolve($message->getTemplate()));
 
-            if ($message->getContentType() === Message::CONTENT_TYPE_MIXED) {
+            if (Message::CONTENT_TYPE_MIXED === $message->getContentType()) {
                 $email->html($template->renderBlock('text_html', $message->getContext()));
                 $email->text($template->renderBlock('text_plain', $message->getContext()));
             } else {
@@ -146,16 +156,15 @@ class MailerManager
             $email->html($message->getContent());
         }
 
-        foreach ($message->getAttachments() as $attachment)
-        {
+        foreach ($message->getAttachments() as $attachment) {
             $file = $attachment->getFile();
 
             // MediaBundle is maybe not installed
             if (is_subclass_of($file, 'Enhavo\Bundle\MediaBundle\Model\FileInterface')) {
                 $email->attachFromPath($file->getContent()->getFilePath(), $attachment->getName() ?? $file->getBasename(), $attachment->getMimetype() ?? $file->getMimetype());
-            } else if ($file instanceof File) {
+            } elseif ($file instanceof File) {
                 $email->attachFromPath($file->getRealPath());
-            } else if (is_string($file)) {
+            } elseif (is_string($file)) {
                 $email->attachFromPath($file);
             } else {
                 throw new MailAttachmentException(sprintf('Attachment file type not supported. Give "%s"', is_object($file) ? get_class($file) : gettype($file)));

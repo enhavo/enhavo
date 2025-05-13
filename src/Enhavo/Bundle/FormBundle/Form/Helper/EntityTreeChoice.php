@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 17.10.18
- * Time: 17:31
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Form\Helper;
@@ -30,7 +33,6 @@ class EntityTreeChoice
 
     /**
      * EntityTreeChoice constructor.
-     * @param $choiceView
      */
     public function __construct(ChoiceView $choiceView)
     {
@@ -45,17 +47,11 @@ class EntityTreeChoice
         return $this->choiceView;
     }
 
-    /**
-     * @param EntityTreeChoice $children
-     */
     public function addChildren(EntityTreeChoice $children)
     {
         $this->children[] = $children;
     }
 
-    /**
-     * @param EntityTreeChoice $children
-     */
     public function removeChildren(EntityTreeChoice $children)
     {
         if (false !== $key = array_search($children, $this->children, true)) {
@@ -63,17 +59,11 @@ class EntityTreeChoice
         }
     }
 
-    /**
-     * @return mixed
-     */
     public function getFormView()
     {
         return $this->formView;
     }
 
-    /**
-     * @param mixed $formView
-     */
     public function setFormView($formView)
     {
         $this->formView = $formView;

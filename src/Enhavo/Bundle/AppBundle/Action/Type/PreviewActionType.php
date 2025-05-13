@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Action\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -18,21 +27,20 @@ class PreviewActionType extends AbstractActionType
         private readonly RouterInterface $router,
         private readonly RouteResolverInterface $routeResolver,
         private readonly ResourceExpressionLanguage $expressionLanguage,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $apiRoute = $this->expressionLanguage->evaluate($options['api_route'], [
             'resource' => $resource,
         ]);
 
-        if ($apiRoute === null) {
+        if (null === $apiRoute) {
             $apiRoute = $this->routeResolver->getRoute('preview', ['api' => true]);
         }
 
-        if ($apiRoute === null) {
+        if (null === $apiRoute) {
             throw new \Exception('Can\'t find an api route for preview, please provide a route over the "api_route" option');
         }
 
@@ -57,8 +65,8 @@ class PreviewActionType extends AbstractActionType
             'force_reload' => false,
             'api_route' => null,
             'api_route_parameters' => [
-                'id' => 'expr:resource?.getId()'
-            ]
+                'id' => 'expr:resource?.getId()',
+            ],
         ]);
     }
 

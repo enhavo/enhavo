@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -48,7 +57,6 @@ class PendingSubscriberActiveEndpointTypeTest extends TestCase
         $strategy->method('getStorage')->willReturn($storage);
 
         $formConfig = [
-
         ];
 
         return new Subscription($key, $strategy, Subscriber::class, $formConfig);
@@ -102,5 +110,4 @@ class PendingSubscriberActiveEndpointTypeDependencies
 {
     public SubscriptionManager|MockObject $subscriptionManager;
     public PendingSubscriberManager|MockObject $pendingManager;
-
 }

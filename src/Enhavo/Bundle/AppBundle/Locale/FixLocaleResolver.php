@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-08-26
- * Time: 00:54
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Locale;
-
 
 class FixLocaleResolver implements LocaleResolverInterface
 {
@@ -18,7 +20,6 @@ class FixLocaleResolver implements LocaleResolverInterface
 
     /**
      * FixLocaleResolver constructor.
-     * @param string $locale
      */
     public function __construct(string $locale)
     {

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Router\Strategy;
 
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
@@ -12,14 +21,13 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
-
 class RoutableStrategyTest extends TestCase
 {
-
     private function createDependencies()
     {
         $dependencies = new RoutableStrategyDependencies();
         $dependencies->router = $this->getMockBuilder(Router::class)->disableOriginalConstructor()->getMock();
+
         return $dependencies;
     }
 
@@ -27,6 +35,7 @@ class RoutableStrategyTest extends TestCase
     {
         $instance = new RoutableStrategy();
         $instance->setRouter($dependencies->router);
+
         return $instance;
     }
 
@@ -34,8 +43,8 @@ class RoutableStrategyTest extends TestCase
     {
         $dependencies = $this->createDependencies();
 
-        $dependencies->router->method('generate')->willReturnCallback(function(Route $route) {
-             return $route->getStaticPrefix();
+        $dependencies->router->method('generate')->willReturnCallback(function (Route $route) {
+            return $route->getStaticPrefix();
         });
 
         $mock = new RouteContentMock();
@@ -76,7 +85,7 @@ class RoutableStrategyTest extends TestCase
     {
         $dependencies = $this->createDependencies();
 
-        $dependencies->router->method('generate')->willReturnCallback(function(Route $route) {
+        $dependencies->router->method('generate')->willReturnCallback(function (Route $route): void {
             throw new RouteNotFoundException();
         });
 
@@ -91,7 +100,6 @@ class RoutableStrategyTest extends TestCase
         $instance->configureOptions($optionsResolver);
         $options = $optionsResolver->resolve();
 
-
         $this->expectException(UrlResolverException::class);
         $instance->generate($mock, options: $options);
     }
@@ -100,7 +108,7 @@ class RoutableStrategyTest extends TestCase
     {
         $dependencies = $this->createDependencies();
 
-        $dependencies->router->method('generate')->willReturnCallback(function(Route $route) {
+        $dependencies->router->method('generate')->willReturnCallback(function (Route $route): void {
             throw new RouteNotFoundException();
         });
 
@@ -114,7 +122,7 @@ class RoutableStrategyTest extends TestCase
         $optionsResolver = new OptionsResolver();
         $instance->configureOptions($optionsResolver);
         $options = $optionsResolver->resolve([
-            'error' => false
+            'error' => false,
         ]);
 
         $path = $instance->generate($mock, options: $options);

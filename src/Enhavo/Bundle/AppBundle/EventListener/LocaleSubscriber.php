@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-08-26
- * Time: 00:45
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\EventListener;
@@ -12,9 +15,7 @@ use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-
 
 class LocaleSubscriber implements EventSubscriberInterface
 {
@@ -27,7 +28,6 @@ class LocaleSubscriber implements EventSubscriberInterface
 
     /**
      * LocaleSubscriber constructor.
-     * @param LocaleResolverInterface $resolver
      */
     public function __construct(LocaleResolverInterface $resolver)
     {

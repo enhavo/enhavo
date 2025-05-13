@@ -1,13 +1,21 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\FormBundle\Serializer;
 
 use Enhavo\Bundle\FormBundle\Serializer\Encoder\Encoder;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @author gseidel
@@ -31,24 +39,23 @@ class FormSerializer
     }
 
     /**
-     * @param $formType
      * @return FormInterface
      */
     private function getForm($formType)
     {
-        if(is_string($formType)) {
+        if (is_string($formType)) {
             return $this->formFactory->create($formType);
         }
 
-        if($formType instanceof FormTypeInterface) {
+        if ($formType instanceof FormTypeInterface) {
             return $this->formFactory->create($formType);
         }
 
-        if($formType instanceof FormBuilderInterface) {
+        if ($formType instanceof FormBuilderInterface) {
             return $formType;
         }
 
-        if($formType instanceof FormInterface) {
+        if ($formType instanceof FormInterface) {
             return $formType;
         }
 
@@ -61,6 +68,7 @@ class FormSerializer
         $form->setData($data);
         $data = $this->serializeForm($form);
         $encoder = $this->encoder->getEncoder($format);
+
         return $encoder->encode($data);
     }
 
@@ -74,6 +82,7 @@ class FormSerializer
             $name = $child->getConfig()->getName();
             $data[$name] = $this->serializeForm($child);
         }
+
         return $data;
     }
 }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SettingBundle\Tests\Setting;
 
 use Enhavo\Bundle\SettingBundle\Setting\Setting;
@@ -15,22 +24,25 @@ class SettingManagerTest extends TestCase
         $dependencies = new SettingManagerDependencies();
         $dependencies->factory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $dependencies->settingConfig = [];
+
         return $dependencies;
     }
 
     public function createInstance(SettingManagerDependencies $dependencies)
     {
         $instance = new SettingManager($dependencies->factory, $dependencies->settingConfig);
+
         return $instance;
     }
 
     public function testGetters()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->factory->method('create')->willReturnCallback(function($config, $key) {
+        $dependencies->factory->method('create')->willReturnCallback(function ($config, $key) {
             $setting = new SettingMock();
             $setting->key = $key;
             $setting->config = $config;
+
             return $setting;
         });
         $dependencies->settingConfig = [
@@ -39,12 +51,12 @@ class SettingManagerTest extends TestCase
                 'value' => 'hello',
                 'form_type' => 'hello_form',
                 'form_type_options' => 'hello_options',
-                'view_value' => 'hello_view'
+                'view_value' => 'hello_view',
             ],
             'other-setting' => [
                 'type' => 'foobar',
-                'value' => 'world'
-            ]
+                'value' => 'world',
+            ],
         ];
 
         $manager = $this->createInstance($dependencies);
@@ -91,7 +103,9 @@ class SettingMock extends Setting
     public ?string $key;
     public array $config;
 
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function getValue()
     {

@@ -1,17 +1,19 @@
 <?php
 
-/**
- * DoctrineExtendListener.php
+/*
+ * This file is part of the enhavo package.
  *
- * @since 28/07/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
+use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Enhavo\Bundle\DoctrineExtensionBundle\Metadata\Metadata;
 use Enhavo\Component\Metadata\MetadataRepository;
@@ -21,14 +23,12 @@ use Enhavo\Component\Metadata\MetadataRepository;
  *
  * Check if a target class was extended and then add a single table inheritance
  * to that class and its metadata.
- *
  */
 class ExtendSubscriber implements EventSubscriber
 {
     public function __construct(
-        private readonly MetadataRepository $metadataRepository
-    )
-    {
+        private readonly MetadataRepository $metadataRepository,
+    ) {
     }
 
     public function getSubscribedEvents(): array
@@ -44,14 +44,14 @@ class ExtendSubscriber implements EventSubscriber
         $metadata = $eventArgs->getClassMetadata();
 
         $extensionMetadata = $this->getMetadata($metadata->getName());
-        if ($extensionMetadata !== null && $extensionMetadata->getExtends()) {
+        if (null !== $extensionMetadata && $extensionMetadata->getExtends()) {
             return;
         }
 
         $extendedMetadata = [];
         $this->collectExtendedMetadata($metadata->getName(), $extendedMetadata);
 
-        if (count($extendedMetadata) === 0) {
+        if (0 === count($extendedMetadata)) {
             return;
         }
 
@@ -59,7 +59,7 @@ class ExtendSubscriber implements EventSubscriber
         $metadata->setDiscriminatorColumn([
             'name' => 'discr',
             'type' => 'string',
-            'length' => 255
+            'length' => 255,
         ]);
 
         $metadata->addDiscriminatorMapClass('root', $metadata->getName());
@@ -84,6 +84,7 @@ class ExtendSubscriber implements EventSubscriber
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($className);
+
         return $metadata;
     }
 }

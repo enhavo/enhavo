@@ -1,7 +1,12 @@
 <?php
-/**
- * @author blutze-media
- * @since 2022-02-28
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Form\Type;
@@ -25,8 +30,7 @@ class ItemType extends AbstractType
         private readonly MediaLibraryManager $mediaLibraryManager,
         private readonly UrlGeneratorInterface $themeUrlGenerator,
         private readonly string $dataClass,
-    )
-    {
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -48,11 +52,11 @@ class ItemType extends AbstractType
                 'translation_domain' => 'EnhavoMediaLibraryBundle',
                 'create_route' => 'enhavo_media_library_admin_tag_create',
                 'edit_route' => 'enhavo_media_library_admin_tag_update',
-                'frame_key' => 'media_library_tags'
+                'frame_key' => 'media_library_tags',
             ])
         ;
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             $form = $event->getForm();
 
             /** @var ?Item $data */

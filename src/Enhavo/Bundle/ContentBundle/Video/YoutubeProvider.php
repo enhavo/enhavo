@@ -1,19 +1,27 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ContentBundle\Video;
 
 use Enhavo\Bundle\ContentBundle\Exception\VideoException;
 use Enhavo\Bundle\ContentBundle\Model\Video;
-use function League\Uri\parse;
 
 class YoutubeProvider implements ProviderInterface
 {
-    const REGEX = '/(?:http:|https:)*?\/\/(?:www\.|)(?:youtube\.com|m\.youtube\.com|youtu\.|youtube-nocookie\.com).*(?:v=|v%3D|v\/|(?:a|p)\/(?:a|u)\/\d.*\/|watch\?|vi(?:=|\/)|\/embed\/|\/shorts\/|oembed\?|be\/|e\/)([^&?%#\/\n]*)/';
-    const PROVIDER_NAME = 'youtube';
-    const IMAGE_TYPE_MQ = 'mqdefault';
-    const IMAGE_TYPE_HQ = 'hqdefault';
-    const IMAGE_TYPE_SQ = 'sddefault';
-    const IMAGE_TYPE_MAX = 'maxresdefault';
+    public const REGEX = '/(?:http:|https:)*?\/\/(?:www\.|)(?:youtube\.com|m\.youtube\.com|youtu\.|youtube-nocookie\.com).*(?:v=|v%3D|v\/|(?:a|p)\/(?:a|u)\/\d.*\/|watch\?|vi(?:=|\/)|\/embed\/|\/shorts\/|oembed\?|be\/|e\/)([^&?%#\/\n]*)/';
+    public const PROVIDER_NAME = 'youtube';
+    public const IMAGE_TYPE_MQ = 'mqdefault';
+    public const IMAGE_TYPE_HQ = 'hqdefault';
+    public const IMAGE_TYPE_SQ = 'sddefault';
+    public const IMAGE_TYPE_MAX = 'maxresdefault';
 
     /** @var ?string */
     private $apiKey;
@@ -24,9 +32,6 @@ class YoutubeProvider implements ProviderInterface
     /** @var bool */
     private $checkThumbnailUrl;
 
-    /**
-     * @param string $apiKey
-     */
     public function __construct(?string $apiKey = null, $imageType = self::IMAGE_TYPE_MAX, $checkThumbnailUrl = true)
     {
         $this->apiKey = $apiKey;
@@ -44,20 +49,20 @@ class YoutubeProvider implements ProviderInterface
                 '',
                 '',
                 $this->getThumbnailUrl($videoId, $this->imageType),
-                sprintf("https://www.youtube.com/watch?v=%s", $videoId),
-                sprintf("https://www.youtube.com/embed/%s", $videoId)
+                sprintf('https://www.youtube.com/watch?v=%s', $videoId),
+                sprintf('https://www.youtube.com/embed/%s', $videoId)
             );
         }
 
-        $hash = json_decode(file_get_contents(sprintf("https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=%s&key=%s", $videoId, $this->apiKey)));
+        $hash = json_decode(file_get_contents(sprintf('https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=%s&key=%s', $videoId, $this->apiKey)));
 
         return new Video(
             self::PROVIDER_NAME,
             $hash->items[0]->snippet->title,
-            str_replace(array("", "<br/>", "<br />"), NULL, $hash->items[0]->snippet->description),
+            str_replace(['', '<br/>', '<br />'], null, $hash->items[0]->snippet->description),
             $this->getThumbnailUrl($hash->items[0]->id, $this->imageType),
-            sprintf("https://www.youtube.com/watch?v=%s", $hash->items[0]->id),
-            sprintf("https://www.youtube.com/embed/%s", $hash->items[0]->id)
+            sprintf('https://www.youtube.com/watch?v=%s', $hash->items[0]->id),
+            sprintf('https://www.youtube.com/embed/%s', $hash->items[0]->id)
         );
     }
 
@@ -67,6 +72,7 @@ class YoutubeProvider implements ProviderInterface
         if ($result) {
             return $matches[1];
         }
+
         return null;
     }
 
@@ -85,7 +91,7 @@ class YoutubeProvider implements ProviderInterface
             return $url;
         }
 
-        while($type = array_pop($types)) {
+        while ($type = array_pop($types)) {
             $url = sprintf('https://i.ytimg.com/vi/%s/%s.jpg', $id, $type);
             if ($this->checkUrl($url)) {
                 return $url;
@@ -98,7 +104,8 @@ class YoutubeProvider implements ProviderInterface
     private function checkUrl($url): bool
     {
         $headers = get_headers($url);
-        return substr($headers[0], 9, 3) == "200";
+
+        return '200' == substr($headers[0], 9, 3);
     }
 
     public function isSupported(string $url): bool

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-11
- * Time: 22:46
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EntityResolver;
@@ -55,7 +58,6 @@ class ChainResolverEntityDummy
 
     /**
      * EntityDummy constructor.
-     * @param $name
      */
     public function __construct($name)
     {
@@ -80,9 +82,10 @@ class ClassNameResolverDummy implements EntityResolverInterface
             return $entity;
         }
 
-        if($this->name === null) {
+        if (null === $this->name) {
             throw new ResolveException();
         }
+
         return $this->name;
     }
 

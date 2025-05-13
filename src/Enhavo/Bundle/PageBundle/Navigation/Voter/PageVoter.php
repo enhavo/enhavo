@@ -1,18 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 20.07.18
- * Time: 14:59
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\PageBundle\Navigation\Voter;
 
 use Enhavo\Bundle\NavigationBundle\Entity\Content;
-use Enhavo\Bundle\NavigationBundle\Voter\VoterInterface;
-use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
+use Enhavo\Bundle\NavigationBundle\Voter\VoterInterface;
 use Enhavo\Bundle\PageBundle\Entity\Page;
+use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class PageVoter implements VoterInterface
@@ -28,13 +31,14 @@ class PageVoter implements VoterInterface
     public function vote(NodeInterface $node)
     {
         $subject = $node->getSubject();
-        if($node->getName() === 'page' && $subject instanceof Content && $subject->getContent()) {
+        if ('page' === $node->getName() && $subject instanceof Content && $subject->getContent()) {
             /** @var Page $page */
             $page = $subject->getContent();
-            if($this->match($page)) {
+            if ($this->match($page)) {
                 return VoterInterface::VOTE_IN;
             }
         }
+
         return VoterInterface::VOTE_ABSTAIN;
     }
 
@@ -45,11 +49,11 @@ class PageVoter implements VoterInterface
 
         $pageRouteName = null;
         $pageRoute = $page->getRoute();
-        if($pageRoute instanceof Route) {
+        if ($pageRoute instanceof Route) {
             $pageRouteName = $pageRoute->getName();
         }
 
-        return $pageRouteName !== null && $routeName == $pageRouteName;
+        return null !== $pageRouteName && $routeName == $pageRouteName;
     }
 
     protected function getRequest()

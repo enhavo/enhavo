@@ -1,13 +1,15 @@
 <?php
-/**
- * Slugifier.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 23/03/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\Slugifier;
-
 
 interface SlugifierInterface
 {

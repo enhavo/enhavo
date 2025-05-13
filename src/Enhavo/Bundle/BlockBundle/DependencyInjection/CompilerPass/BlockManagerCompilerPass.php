@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\DependencyInjection\CompilerPass;
 
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
@@ -19,7 +28,7 @@ class BlockManagerCompilerPass implements CompilerPassInterface
             $factory = $block['factory'] ?? null;
             if ($factory && $container->hasDefinition($factory)) {
                 $services[$factory] = new Reference($factory);
-            } else if ($factory) {
+            } elseif ($factory) {
                 $definition = new Definition($factory);
                 $name = sprintf('block.%s.factory', $key);
                 $container->setDefinition($name, $definition);

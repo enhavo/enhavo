@@ -1,9 +1,12 @@
 <?php
-/**
- * PropertyParser.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 10/05/18
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Metadata\Provider;
@@ -20,15 +23,13 @@ class ConfigProvider implements ProviderInterface
 
     public function __construct(
         private string $name,
-    )
-    {
+    ) {
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
     public function provide(Metadata $metadata, $normalizedData)
     {
         if (array_key_exists($this->name, $normalizedData) && is_array($normalizedData[$this->name])) {
-
             $configs = [];
 
             $values = $this->propertyAccessor->getValue($metadata, $this->name);

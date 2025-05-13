@@ -1,9 +1,12 @@
 <?php
-/**
- * NewsletterMenuBuilder.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 21/09/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Menu;
@@ -22,15 +25,15 @@ class NewsletterMainMenuType extends AbstractMenuType
             'translation_domain' => 'EnhavoNewsletterBundle',
             'items' => [
                 'newsletter_newsletter' => [
-                    'type' => 'newsletter_newsletter'
+                    'type' => 'newsletter_newsletter',
                 ],
                 'newsletter_group' => [
-                    'type' => 'newsletter_group'
+                    'type' => 'newsletter_group',
                 ],
                 'pending_subscribers' => [
-                    'type' => 'newsletter_pending'
+                    'type' => 'newsletter_pending',
                 ],
-            ]
+            ],
         ]);
     }
 

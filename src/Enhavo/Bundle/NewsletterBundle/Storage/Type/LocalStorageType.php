@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Storage\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,8 +35,7 @@ class LocalStorageType extends AbstractStorageType
         private readonly EntityRepository $subscriberRepository,
         private readonly EntityRepository $groupRepository,
         private readonly LocalSubscriberFactoryInterface $subscriberFactory,
-    )
-    {
+    ) {
     }
 
     public function getReceivers(NewsletterInterface $newsletter, array $options): array
@@ -66,11 +74,10 @@ class LocalStorageType extends AbstractStorageType
     }
 
     /**
-     * @param SubscriberInterface $subscriber
-     * @param array $options
-     * @return mixed|void
      * @throws MappingException
      * @throws NoGroupException
+     *
+     * @return mixed|void
      */
     public function saveSubscriber(SubscriberInterface $subscriber, array $options)
     {
@@ -82,7 +89,7 @@ class LocalStorageType extends AbstractStorageType
             $groups = $subscriber->getGroups();
         }
 
-        if (count($groups) === 0) {
+        if (0 === count($groups)) {
             throw new NoGroupException('no groups given');
         }
 
@@ -152,7 +159,7 @@ class LocalStorageType extends AbstractStorageType
     public function exists(SubscriberInterface $subscriber, array $options): bool
     {
         $local = $this->getLocalSubscriber($subscriber);
-        if ($local === null || count($local->getGroups()) == 0) {
+        if (null === $local || 0 == count($local->getGroups())) {
             return false;
         }
 
@@ -171,25 +178,17 @@ class LocalStorageType extends AbstractStorageType
         return true;
     }
 
-    /**
-     * @param SubscriberInterface $subscriber
-     * @return LocalSubscriberInterface
-     */
     private function getLocalSubscriber(SubscriberInterface $subscriber): ?LocalSubscriberInterface
     {
         /** @var LocalSubscriberInterface $subscriber */
         $subscriber = $this->subscriberRepository->findOneBy([
             'email' => $subscriber->getEmail(),
-            'subscription' => $subscriber->getSubscription()
+            'subscription' => $subscriber->getSubscription(),
         ]);
 
         return $subscriber;
     }
 
-    /**
-     * @param SubscriberInterface $subscriber
-     * @return LocalSubscriberInterface
-     */
     private function createSubscriber(SubscriberInterface $subscriber): LocalSubscriberInterface
     {
         return $this->subscriberFactory->createFrom($subscriber);
@@ -198,7 +197,7 @@ class LocalStorageType extends AbstractStorageType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'groups' => []
+            'groups' => [],
         ]);
     }
 
@@ -208,23 +207,19 @@ class LocalStorageType extends AbstractStorageType
     }
 
     /**
-     * @param string $code
-     * @return GroupInterface
      * @throws MappingException
      */
     private function findGroup(string $code): GroupInterface
     {
         /** @var Group $group */
         $group = $this->groupRepository->findOneBy([
-            'code' => $code
+            'code' => $code,
         ]);
 
         if ($group) {
             return $group;
         }
 
-        throw new MappingException(
-            sprintf('Group with code "%s" does not exist.', $code)
-        );
+        throw new MappingException(sprintf('Group with code "%s" does not exist.', $code));
     }
 }

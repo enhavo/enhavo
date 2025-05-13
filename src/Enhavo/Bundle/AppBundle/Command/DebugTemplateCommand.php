@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-05-24
- * Time: 18:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Command;
-
 
 use Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface;
 use Symfony\Component\Console\Command\Command;
@@ -19,8 +21,7 @@ class DebugTemplateCommand extends Command
 {
     public function __construct(
         private readonly TemplateResolverInterface $templateResolver,
-    )
-    {
+    ) {
         parent::__construct();
     }
 

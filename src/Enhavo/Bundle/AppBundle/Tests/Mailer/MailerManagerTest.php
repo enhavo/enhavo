@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Tests\Mailer;
 
 use Enhavo\Bundle\AppBundle\Exception\MailNotFoundException;
@@ -27,7 +36,7 @@ class MailerManagerTest extends TestCase
         });
         $dependencies->environment = new Environment(new FilesystemLoader([
             'Fixtures/Mail/MailManager',
-        ], __DIR__ . '/../'));
+        ], __DIR__.'/../'));
         $dependencies->mailer = $this->getMockBuilder(MailerInterface::class)->disableOriginalConstructor()->getMock();
         $dependencies->mailsConfig = [];
         $dependencies->translator = new TranslatorMock();
@@ -37,6 +46,7 @@ class MailerManagerTest extends TestCase
             'to' => 'to@enhavo.com',
         ];
         $dependencies->model = Message::class;
+
         return $dependencies;
     }
 
@@ -75,12 +85,12 @@ class MailerManagerTest extends TestCase
                 'translation_domain' => null,
                 'cc' => null,
                 'bcc' => null,
-            ]
+            ],
         ];
 
         $manager = $this->createInstance($dependencies);
 
-        $dependencies->mailer->expects($this->once())->method('send')->willReturnCallback(function (Email $email) {
+        $dependencies->mailer->expects($this->once())->method('send')->willReturnCallback(function (Email $email): void {
             $this->assertEquals('__subject__', $email->getSubject());
 
             $this->assertEquals('from@enhavo.com', $email->getFrom()[0]->getAddress());
@@ -93,7 +103,7 @@ class MailerManagerTest extends TestCase
         });
 
         $manager->sendMail('default', $this->createDefaultResource(), [
-            new Attachment(__DIR__ . '/../Fixtures/Mail/MailManager/dummy-attachment.txt')
+            new Attachment(__DIR__.'/../Fixtures/Mail/MailManager/dummy-attachment.txt'),
         ]);
     }
 
@@ -114,12 +124,12 @@ class MailerManagerTest extends TestCase
                 'template' => 'simple-mail.html.twig',
                 'content_type' => Message::CONTENT_TYPE_PLAIN,
                 'translation_domain' => null,
-            ]
+            ],
         ];
 
         $manager = $this->createInstance($dependencies);
 
-        $dependencies->mailer->expects($this->once())->method('send')->willReturnCallback(function (Email $email) {
+        $dependencies->mailer->expects($this->once())->method('send')->willReturnCallback(function (Email $email): void {
             $this->assertEquals('__text__', $email->getHtmlBody());
             $this->assertEquals('__subject__trans', $email->getSubject());
             $this->assertEquals('cc1@test.de', $email->getCc()[0]->getAddress());

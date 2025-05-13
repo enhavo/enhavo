@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaLibraryBundle\Collection;
 
 use Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface;
@@ -21,11 +30,9 @@ class MediaLibraryCollection extends TableCollection
         RouterInterface $router,
         private MediaLibraryManager $mediaLibraryManager,
         private UrlGeneratorInterface $urlGenerator,
-    )
-    {
+    ) {
         parent::__construct($expressionLanguage, $filterQueryFactory, $requestStack, $router);
     }
-
 
     protected function createItem($resource, array $context): ResourceItem
     {
@@ -39,6 +46,7 @@ class MediaLibraryCollection extends TableCollection
         $item['suffix'] = $file->getExtension();
         $item['type'] = $resource->getContentType();
         $item['date'] = $file->getCreatedAt() ? $resource->getFile()->getCreatedAt()->format('Y-m-d') : '';
+
         return $item;
     }
 }

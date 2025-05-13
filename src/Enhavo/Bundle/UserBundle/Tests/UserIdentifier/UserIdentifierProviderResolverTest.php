@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Tests\UserIdentifier;
 
 use Enhavo\Bundle\ResourceBundle\Tests\Mock\ContainerMock;
@@ -15,6 +24,7 @@ class UserIdentifierProviderResolverTest extends TestCase
     {
         $dependency = new UserIdentifierProviderResolverDependencies();
         $dependency->container = new ContainerMock();
+
         return $dependency;
     }
 
@@ -22,6 +32,7 @@ class UserIdentifierProviderResolverTest extends TestCase
     {
         $instance = new UserIdentifierProviderResolver($dependencies->userIdentifiers);
         $instance->setContainer($dependencies->container);
+
         return $instance;
     }
 
@@ -43,7 +54,7 @@ class UserIdentifierProviderResolverTest extends TestCase
         $resolver = $this->createInstance($dependency);
 
         $this->assertTrue($resolver->getProviderByClass(AppUser::class) === $appProvider);
-        $this->assertTrue($resolver->getProvider(new AppUser) === $appProvider);
+        $this->assertTrue($resolver->getProvider(new AppUser()) === $appProvider);
 
         $this->assertTrue($resolver->getProviderByClass(EnhavoUser::class) === $enhavoProvider);
         $this->assertTrue($resolver->getProvider(new EnhavoUser()) === $enhavoProvider);
@@ -62,7 +73,7 @@ class UserIdentifierProviderResolverTest extends TestCase
         $resolver = $this->createInstance($dependency);
 
         $this->assertTrue($resolver->getProviderByClass(AppUser::class) === $enhavoProvider);
-        $this->assertTrue($resolver->getProvider(new AppUser) === $enhavoProvider);
+        $this->assertTrue($resolver->getProvider(new AppUser()) === $enhavoProvider);
     }
 
     public function testGetProviders()
@@ -96,17 +107,14 @@ class EnhavoUser implements UserInterface
 
     public function getPassword()
     {
-
     }
 
     public function eraseCredentials(): void
     {
-
     }
 
     public function getUsername()
     {
-
     }
 
     public function getUserIdentifier(): string
@@ -117,7 +125,6 @@ class EnhavoUser implements UserInterface
 
 class AppUser extends EnhavoUser
 {
-
 }
 
 class Provider implements UserIdentifierProviderInterface

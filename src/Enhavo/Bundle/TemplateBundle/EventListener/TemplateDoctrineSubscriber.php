@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-06-25
- * Time: 15:05
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TemplateBundle\EventListener;
@@ -19,20 +22,17 @@ class TemplateDoctrineSubscriber implements EventSubscriber
 {
     use ContainerAwareTrait;
 
-    /**
-     * {@inheritDoc}
-     */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             Events::postLoad,
-        );
+        ];
     }
 
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getObject();
-        if($entity instanceof Template) {
+        if ($entity instanceof Template) {
             $template = $this->getTemplateManager()->getTemplate($entity->getCode());
             $entity->setTemplate($template);
         }

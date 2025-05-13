@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -33,15 +42,15 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
 
                 $url = $this->getRedirectUrl($options, $request, $data, $context, $form);
                 if ($url) {
-                    if ($request->get('_format') === 'html') {
+                    if ('html' === $request->get('_format')) {
                         $context->setResponse($this->redirect($url));
+
                         return;
-                    } else {
-                        $data->set('redirect', $url);
                     }
+                    $data->set('redirect', $url);
                 }
 
-                $form =  $this->getForm($options, $request, $data, $context);
+                $form = $this->getForm($options, $request, $data, $context);
                 $context->set('form', $form);
             } else {
                 $data->set('success', false);
@@ -61,7 +70,6 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
 
     protected function init($options, Request $request, Data $data, Context $context): void
     {
-
     }
 
     abstract protected function getForm($options, Request $request, Data $data, Context $context): FormInterface;
@@ -70,7 +78,6 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
 
     protected function handleFailed($options, Request $request, Data $data, Context $context, FormInterface $form): void
     {
-
     }
 
     protected function getRedirectUrl($options, Request $request, Data $data, Context $context, FormInterface $form): ?string
@@ -80,7 +87,6 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
 
     protected function final($options, Request $request, Data $data, Context $context, FormInterface $form): void
     {
-
     }
 
     public static function getParentType(): ?string

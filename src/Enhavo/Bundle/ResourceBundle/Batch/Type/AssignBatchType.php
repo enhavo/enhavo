@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Batch\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,9 +52,9 @@ class AssignBatchType extends AbstractBatchType
             $resource = $repository->find($id);
             if ($resource) {
                 $propertyAccessor->setValue($resource, $options['property'], $data);
-                $i++;
+                ++$i;
             }
-            if ($i%100 === 0) {
+            if (0 === $i % 100) {
                 $this->em->flush();
             }
         }
@@ -60,7 +69,7 @@ class AssignBatchType extends AbstractBatchType
             'translation_domain' => 'EnhavoResourceBundle',
             'form_parameters' => [],
             'error_assign' => 'batch.assign.error.assign',
-            'data_property' => null
+            'data_property' => null,
         ]);
 
         $resolver->setRequired(['form', 'property']);

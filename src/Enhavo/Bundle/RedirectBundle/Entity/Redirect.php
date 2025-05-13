@@ -1,15 +1,24 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RedirectBundle\Entity;
 
+use Enhavo\Bundle\RedirectBundle\Model\RedirectInterface;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
-use Enhavo\Bundle\RedirectBundle\Model\RedirectInterface;
 
 class Redirect implements RedirectInterface
 {
     private ?int $id = null;
-    private ?string $from  = null;
+    private ?string $from = null;
     private ?string $to = null;
     private ?int $code = null;
     private ?Route $route = null;
@@ -39,7 +48,7 @@ class Redirect implements RedirectInterface
         return $this->to;
     }
 
-    public function setRoute(RouteInterface $route = null): void
+    public function setRoute(?RouteInterface $route = null): void
     {
         $this->route = $route;
     }

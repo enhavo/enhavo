@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Translator;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
@@ -23,7 +30,7 @@ abstract class AbstractTranslator implements TranslatorInterface
     /** @var DataMap */
     protected $originalData;
 
-    /** @var LocaleProviderInterface  */
+    /** @var LocaleProviderInterface */
     protected $localeProvider;
 
     public function __construct(EntityManagerInterface $entityManager, EntityResolverInterface $entityResolver, LocaleProviderInterface $localeProvider)
@@ -54,6 +61,7 @@ abstract class AbstractTranslator implements TranslatorInterface
 
         if (null === $originalValue) {
             $accessor = PropertyAccess::createPropertyAccessor();
+
             return $accessor->getValue($entity, $property);
         }
 

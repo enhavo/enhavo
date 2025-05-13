@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m
- * Date: 28.04.17
- * Time: 18:02
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CalendarBundle\Provider;
-
 
 use Doctrine\ORM\EntityManager;
 use Enhavo\Bundle\CalendarBundle\Entity\Appointment;
@@ -35,7 +37,7 @@ class AppointmentProvider
 
         /** @var Appointment $appointment */
         foreach ($appointments as $index => $appointment) {
-            if($appointment->getRepeatRule()){
+            if ($appointment->getRepeatRule()) {
                 $appointmentsWithRRULE[] = $appointment;
             } else {
                 $normalizedAppointments[] = $appointment;
@@ -44,9 +46,9 @@ class AppointmentProvider
 
         $appointmentsWithoutRRULE = array_values($appointments);
 
-        foreach($appointmentsWithRRULE as $appointmentWithRRULE) {
+        foreach ($appointmentsWithRRULE as $appointmentWithRRULE) {
             $repeatedAppointments = $this->getAppointmentsWithRRule($appointmentWithRRULE, $startDate, $endDate);
-            foreach($repeatedAppointments as $repeatedAppointment) {
+            foreach ($repeatedAppointments as $repeatedAppointment) {
                 $normalizedAppointments[] = $repeatedAppointment;
             }
         }
@@ -60,7 +62,7 @@ class AppointmentProvider
 
         $transformer = new ArrayTransformer();
 
-        foreach ($appointmentsWithRRULE as $appointmentWithRRULE){
+        foreach ($appointmentsWithRRULE as $appointmentWithRRULE) {
             $rule = new Rule(
                 $appointmentWithRRULE->getRepeatRule(),
                 $appointmentWithRRULE->getDateFrom(),
@@ -68,8 +70,8 @@ class AppointmentProvider
             );
 
             $timeRanges = $transformer->transform($rule);
-            foreach ($timeRanges as $timeRange){
-                if($timeRange->getStart() < $endDate && $timeRange->getEnd() > $startDate){
+            foreach ($timeRanges as $timeRange) {
+                if ($timeRange->getStart() < $endDate && $timeRange->getEnd() > $startDate) {
                     /** @var Appointment $newAppointmentWithoutRRULE */
                     $newAppointmentWithoutRRULE = clone $appointmentWithRRULE;
                     $newAppointmentWithoutRRULE->setRepeatRule(null);

@@ -1,9 +1,12 @@
 <?php
-/**
- * MetadataCollector.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 10/05/18
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Metadata\Driver;
@@ -14,11 +17,10 @@ class PropertyAttributeTypeDriver implements DriverInterface
 {
     public function __construct(
         private readonly string $attributeClass,
-    )
-    {
+    ) {
     }
 
-    public function loadClass($className): array|null|false
+    public function loadClass($className): array|false|null
     {
         $reflection = new \ReflectionClass($className);
 
@@ -31,7 +33,6 @@ class PropertyAttributeTypeDriver implements DriverInterface
                 $options['type'] = $arguments[0];
 
                 $properties[$property->getName()] = $options;
-
             }
         }
 

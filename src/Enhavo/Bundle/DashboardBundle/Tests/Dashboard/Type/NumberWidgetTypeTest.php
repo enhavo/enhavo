@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\DashboardBundle\Tests\Widget\Type;
-
 
 use Enhavo\Bundle\DashboardBundle\Dashboard\DashboardWidget;
 use Enhavo\Bundle\DashboardBundle\Dashboard\Type\NumberDashboardWidgetType;
@@ -28,8 +35,9 @@ class NumberWidgetTypeTest extends TestCase
 
     private function createInstance(NumberWidgetTypeTestDependencies $dependencies): NumberDashboardWidgetType
     {
-        $instance =  new NumberDashboardWidgetType($dependencies->translator, $dependencies->resourceManager);
+        $instance = new NumberDashboardWidgetType($dependencies->translator, $dependencies->resourceManager);
         $instance->setContainer($dependencies->container);
+
         return $instance;
     }
 
@@ -38,10 +46,11 @@ class NumberWidgetTypeTest extends TestCase
         $dependencies = $this->createDependencies();
 
         $dependencies->container->method('has')->willReturn(false);
-        $dependencies->resourceManager->method('getRepository')->willReturnCallback(function($name) use ($dependencies) {
-            if ($name === 'test') {
+        $dependencies->resourceManager->method('getRepository')->willReturnCallback(function ($name) use ($dependencies) {
+            if ('test' === $name) {
                 return $dependencies->repository;
             }
+
             return null;
         });
         $dependencies->repository->method('findBy')->willReturn(543);
@@ -62,10 +71,11 @@ class NumberWidgetTypeTest extends TestCase
         $dependencies = $this->createDependencies();
 
         $dependencies->container->method('has')->willReturn(true);
-        $dependencies->container->method('get')->willReturnCallback(function($name) use ($dependencies) {
-            if ($name === 'test') {
+        $dependencies->container->method('get')->willReturnCallback(function ($name) use ($dependencies) {
+            if ('test' === $name) {
                 return $dependencies->repository;
             }
+
             return null;
         });
         $dependencies->repository->method('findBy')->willReturn(543);

@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\UserBundle\Tests\Model;
-
 
 use Enhavo\Bundle\UserBundle\Model\Group;
 use Enhavo\Bundle\UserBundle\Model\User;
@@ -30,6 +37,6 @@ class GroupTest extends TestCase
         $group->removeUser($user);
         $this->assertNotContains($user, $group->getUsers());
 
-        $this->assertEquals($group->getName(), (string)$group);
+        $this->assertEquals($group->getName(), (string) $group);
     }
 }

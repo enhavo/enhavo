@@ -1,9 +1,12 @@
 <?php
-/**
- * TextTranslator.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 03/11/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Translator\Media;
@@ -16,7 +19,6 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
  * Class FileTranslator
- * @package Enhavo\Bundle\TranslationBundle\Translator\Media
  */
 class FileTranslator extends AbstractTranslator
 {
@@ -29,11 +31,12 @@ class FileTranslator extends AbstractTranslator
         $translation = $this->buffer->load($entity, $property, $locale);
         if ($translation instanceof TranslationFile) {
             $translation->setFile($value);
+
             return;
         }
 
         $translation = $this->load($entity, $property, $locale);
-        if ($translation === null) {
+        if (null === $translation) {
             $translation = $this->createTranslationFile($entity, $property, $locale, $value);
         } else {
             $translation->setFile($value);
@@ -49,19 +52,19 @@ class FileTranslator extends AbstractTranslator
         }
 
         $translation = $this->buffer->load($entity, $property, $locale);
-        if ($translation !== null) {
+        if (null !== $translation) {
             return $translation->getFile();
         }
 
         $translation = $this->load($entity, $property, $locale);
-        if ($translation !== null) {
+        if (null !== $translation) {
             $this->buffer->store($entity, $property, $locale, $translation);
+
             return $translation->getFile();
         }
 
         return null;
     }
-
 
     public function translate($entity, string $property, string $locale, array $options)
     {
@@ -77,7 +80,7 @@ class FileTranslator extends AbstractTranslator
         $this->originalData->store($entity, $property, null, $oldValue);
 
         // never set null values
-        if ($newValue !== null) {
+        if (null !== $newValue) {
             $accessor->setValue($entity, $property, $newValue);
         }
     }
@@ -100,6 +103,7 @@ class FileTranslator extends AbstractTranslator
         $translation->setLocale($locale);
         $translation->setFile($data);
         $this->entityManager->persist($translation);
+
         return $translation;
     }
 
@@ -110,8 +114,9 @@ class FileTranslator extends AbstractTranslator
             'class' => $this->entityResolver->getName($entity),
             'refId' => $entity->getId(),
             'property' => $property,
-            'locale' => $locale
+            'locale' => $locale,
         ]);
+
         return $translation;
     }
 

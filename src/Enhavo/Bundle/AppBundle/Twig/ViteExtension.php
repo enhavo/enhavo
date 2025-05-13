@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Twig;
 
 use Enhavo\Bundle\AppBundle\Vite\ViteManager;
@@ -10,8 +19,7 @@ class ViteExtension extends AbstractExtension
 {
     public function __construct(
         private ViteManager $viteManager,
-    )
-    {
+    ) {
     }
 
     public function getFunctions(): array
@@ -32,6 +40,7 @@ class ViteExtension extends AbstractExtension
         foreach ($this->viteManager->getJSFiles($entrypoint, $build) as $file) {
             $output[] = sprintf('<script type="module" src="%s"></script>', $file);
         }
+
         return implode("\n", $output);
     }
 
@@ -41,6 +50,7 @@ class ViteExtension extends AbstractExtension
         foreach ($this->viteManager->getJSPreloadFiles($entrypoint, $build) as $file) {
             $output[] = sprintf('<link rel="modulepreload" href="%s" />', $file);
         }
+
         return implode("\n", $output);
     }
 
@@ -50,6 +60,7 @@ class ViteExtension extends AbstractExtension
         foreach ($this->viteManager->getCSSFiles($entrypoint, $build) as $file) {
             $output[] = sprintf('<link rel="stylesheet" type="text/css" href="%s" />', $file);
         }
+
         return implode("\n", $output);
     }
 

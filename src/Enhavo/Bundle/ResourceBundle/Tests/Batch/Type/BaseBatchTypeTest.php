@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-08
- * Time: 22:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Tests\Batch\Type;
@@ -33,6 +36,7 @@ class BaseBatchTypeTest extends TestCase
         $dependencies->repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
         $dependencies->tokenManager = $this->getMockBuilder(CsrfTokenManagerInterface::class)->getMock();
         $dependencies->expressionLanguage = new ResourceExpressionLanguage();
+
         return $dependencies;
     }
 
@@ -78,7 +82,7 @@ class BaseBatchTypeTest extends TestCase
 
         $batch = new Batch($type, [], [
             'label' => 'Base Label',
-            'permission' => 'ROLE_USER'
+            'permission' => 'ROLE_USER',
         ]);
 
         $this->assertEquals('ROLE_USER', $batch->getPermission($dependencies->repository));
@@ -91,7 +95,7 @@ class BaseBatchTypeTest extends TestCase
 
         $batch = new Batch($type, [], [
             'label' => 'Base Label',
-            'enabled' => false
+            'enabled' => false,
         ]);
 
         $this->assertFalse($batch->isEnabled());

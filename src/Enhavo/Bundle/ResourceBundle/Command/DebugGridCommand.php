@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-05-24
- * Time: 18:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Command;
@@ -17,9 +20,8 @@ use Symfony\Component\Yaml\Yaml;
 class DebugGridCommand extends Command
 {
     public function __construct(
-        private $grids
-    )
-    {
+        private $grids,
+    ) {
         parent::__construct();
     }
 
@@ -39,11 +41,11 @@ class DebugGridCommand extends Command
         foreach ($this->grids as $key => $grid) {
             if (str_starts_with($key, $name)) {
                 $output->writeln('------------------------------------------------------------');
-                $output->writeln(sprintf("Name: <info>%s</info>", $key));
+                $output->writeln(sprintf('Name: <info>%s</info>', $key));
                 $output->writeln('------------------------------------------------------------');
                 $lines = explode("\n", Yaml::dump($grid, 4));
                 foreach ($lines as $line) {
-                    $output->writeln('  ' . $line);
+                    $output->writeln('  '.$line);
                 }
             }
         }

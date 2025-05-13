@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
@@ -13,7 +22,8 @@ class AreaEndpointType extends AbstractEndpointType
         private readonly AreaResolverInterface $areaResolver,
         private readonly Environment $twig,
         private readonly array $areas,
-    ) {}
+    ) {
+    }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -22,7 +32,7 @@ class AreaEndpointType extends AbstractEndpointType
         ]);
 
         $area = $this->areaResolver->resolve();
-        if ($area === null) {
+        if (null === $area) {
             throw new \Exception('Can\'t resolve area');
         }
 

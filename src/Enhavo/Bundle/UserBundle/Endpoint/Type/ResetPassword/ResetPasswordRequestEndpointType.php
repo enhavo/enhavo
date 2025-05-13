@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Endpoint\Type\ResetPassword;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -24,8 +33,7 @@ class ResetPasswordRequestEndpointType extends AbstractFormEndpointType
         private readonly UserManager $userManager,
         private readonly UserRepository $userRepository,
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     protected function getForm($options, Request $request, Data $data, Context $context): FormInterface
@@ -33,7 +41,7 @@ class ResetPasswordRequestEndpointType extends AbstractFormEndpointType
         $configuration = $this->provider->getResetPasswordRequestConfiguration();
 
         return $this->createForm($configuration->getFormClass(), null, $configuration->getFormOptions([
-            'validation_groups' => ['exists', 'reset-password']
+            'validation_groups' => ['exists', 'reset-password'],
         ]));
     }
 
@@ -50,6 +58,7 @@ class ResetPasswordRequestEndpointType extends AbstractFormEndpointType
     protected function getRedirectUrl($options, Request $request, Data $data, Context $context, FormInterface $form): ?string
     {
         $configuration = $this->provider->getResetPasswordRequestConfiguration();
+
         return $this->generateUrl($configuration->getRedirectRoute());
     }
 

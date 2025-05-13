@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 28.06.18
- * Time: 19:03
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Twig;
@@ -16,16 +19,16 @@ class SplObjectExtension extends AbstractExtension
 {
     public function getFilters()
     {
-        return array(
-            new TwigFilter('spl_object_hash', array($this, 'getSplObjectHash')),
-        );
+        return [
+            new TwigFilter('spl_object_hash', [$this, 'getSplObjectHash']),
+        ];
     }
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('spl_object_hash', array($this, 'getSplObjectHash')),
-        );
+        return [
+            new TwigFunction('spl_object_hash', [$this, 'getSplObjectHash']),
+        ];
     }
 
     public function getSplObjectHash($object)

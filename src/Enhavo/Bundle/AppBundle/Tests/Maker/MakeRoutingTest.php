@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Tests\Maker;
 
 use Enhavo\Bundle\AppBundle\Maker\MakeRouting;
@@ -43,19 +52,21 @@ class MakeRoutingTest extends TestCase
         $fs->remove(__DIR__.'/../Fixtures/maker/routing'); // clean up
 
         $dependencies = $this->createDependencies();
-        $dependencies->input->method('getArgument')->willReturnCallback(function($name) {
-            if ($name == 'resource') {
+        $dependencies->input->method('getArgument')->willReturnCallback(function ($name) {
+            if ('resource' == $name) {
                 return 'app.example_resource';
             }
+
             return null;
         });
-        $dependencies->input->method('getOption')->willReturnCallback(function($name) {
-            if ($name == 'area') {
+        $dependencies->input->method('getOption')->willReturnCallback(function ($name) {
+            if ('area' == $name) {
                 return 'admin';
             }
+
             return null;
         });
-        $dependencies->generator->method('generateFile')->willReturnCallback(function (string $targetPath, string $templateName, array $variables = []) {
+        $dependencies->generator->method('generateFile')->willReturnCallback(function (string $targetPath, string $templateName, array $variables = []): void {
             $dirname = basename(dirname($targetPath));
             (new GeneratorHelper(__DIR__.'/../Fixtures/maker/routing/'.$dirname))->generateFile($targetPath, $templateName, $variables);
         });
@@ -77,11 +88,11 @@ class MakeRoutingTest extends TestCase
                         'component' => 'resource-index',
                         'groups' => 'admin',
                         'meta' => [
-                            'api' => 'app_admin_api_example_resource_index'
+                            'api' => 'app_admin_api_example_resource_index',
                         ],
                     ],
                     '_endpoint' => [
-                        'type' => 'admin'
+                        'type' => 'admin',
                     ],
                 ],
             ],
@@ -94,11 +105,11 @@ class MakeRoutingTest extends TestCase
                         'component' => 'resource-input',
                         'groups' => 'admin',
                         'meta' => [
-                            'api' => 'app_admin_api_example_resource_create'
+                            'api' => 'app_admin_api_example_resource_create',
                         ],
                     ],
                     '_endpoint' => [
-                        'type' => 'admin'
+                        'type' => 'admin',
                     ],
                 ],
             ],
@@ -111,14 +122,14 @@ class MakeRoutingTest extends TestCase
                         'component' => 'resource-input',
                         'groups' => 'admin',
                         'meta' => [
-                            'api' => 'app_admin_api_example_resource_update'
+                            'api' => 'app_admin_api_example_resource_update',
                         ],
                     ],
                     '_endpoint' => [
-                        'type' => 'admin'
+                        'type' => 'admin',
                     ],
                 ],
-            ]
+            ],
         ], $content);
 
         $routingFile = __DIR__.'/../Fixtures/maker/routing/admin_api/example_resource.yaml';

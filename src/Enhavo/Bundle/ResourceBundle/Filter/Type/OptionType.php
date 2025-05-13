@@ -1,9 +1,12 @@
 <?php
-/**
- * TextFilter.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 19/01/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Filter\Type;
@@ -19,8 +22,7 @@ class OptionType extends AbstractFilterType
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     public function createViewData($options, Data $data): void
@@ -29,28 +31,29 @@ class OptionType extends AbstractFilterType
         $this->validateInitialValue($options['initial_value'], $choices);
 
         $data->add([
-            'choices' => $choices
+            'choices' => $choices,
         ]);
     }
 
     private function formatChoices($options): array
     {
         $data = [];
-        foreach($options['options'] as $value => $label) {
+        foreach ($options['options'] as $value => $label) {
             $data[] = [
                 'label' => $this->translator->trans($label, [], $options['translation_domain']),
                 'code' => $value,
             ];
         }
+
         return $data;
     }
 
     private function validateInitialValue($value, $choices): void
     {
-        if ($value === null) {
+        if (null === $value) {
             return;
         }
-        foreach($choices as $choice) {
+        foreach ($choices as $choice) {
             if ($choice['code'] == $value) {
                 return;
             }
@@ -61,14 +64,14 @@ class OptionType extends AbstractFilterType
 
     public function buildQuery($options, FilterQuery $query, mixed $value): void
     {
-        if ($value === null || trim($value) === '') {
+        if (null === $value || '' === trim($value)) {
             return;
         }
 
         $possibleValues = $options['options'];
         $possibleValues = array_keys($possibleValues);
         $findPossibleValue = false;
-        foreach($possibleValues as $possibleValue) {
+        foreach ($possibleValues as $possibleValue) {
             if ($possibleValue == $value) {
                 $findPossibleValue = true;
                 break;

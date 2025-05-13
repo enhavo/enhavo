@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaBundle\DependencyInjection;
 
 use Enhavo\Bundle\MediaBundle\Cache\NoCache;
@@ -79,7 +88,6 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
-
     private function addFormSection(ArrayNodeDefinition $node): void
     {
         $node
@@ -115,6 +123,7 @@ class Configuration implements ConfigurationInterface
             ->end()
         ;
     }
+
     private function addFilterSection(ArrayNodeDefinition $node): void
     {
         $node

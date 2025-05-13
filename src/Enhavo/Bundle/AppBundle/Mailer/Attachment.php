@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Mailer;
 
 class Attachment
@@ -8,7 +17,8 @@ class Attachment
         private $file,
         private ?string $name = null,
         private ?string $mimetype = null,
-    ) {}
+    ) {
+    }
 
     public function getFile(): mixed
     {
@@ -17,9 +27,9 @@ class Attachment
 
     public function getName(): ?string
     {
-        if ($this->name === null) {
-
+        if (null === $this->name) {
         }
+
         return $this->name;
     }
 

@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\EventListener;
 
@@ -34,7 +42,7 @@ class DoctrineTranslationSubscriberTest extends TestCase
 
     protected function createInstance($dependencies)
     {
-        $subscriber =  new DoctrineTranslationSubscriber(
+        $subscriber = new DoctrineTranslationSubscriber(
             $dependencies->accessControl,
             $dependencies->metadataRepository,
             $dependencies->localeResolver,
@@ -42,10 +50,11 @@ class DoctrineTranslationSubscriberTest extends TestCase
 
         /** @var ContainerInterface|MockObject $container */
         $container = $this->getMockBuilder(ContainerInterface::class)->getMock();
-        $container->method('get')->willReturnCallback(function($name) use ($dependencies) {
-            if ($name === TranslationManager::class) {
+        $container->method('get')->willReturnCallback(function ($name) use ($dependencies) {
+            if (TranslationManager::class === $name) {
                 return $dependencies->translationManager;
             }
+
             return null;
         });
 
@@ -62,7 +71,7 @@ class DoctrineTranslationSubscriberTest extends TestCase
             'preRemove',
             'postLoad',
             'preFlush',
-            'postFlush'
+            'postFlush',
         ], $subscriber->getSubscribedEvents());
     }
 
@@ -104,7 +113,7 @@ class DoctrineTranslationSubscriberTest extends TestCase
         $eventArgs->method('getObjectManager')->willReturn($dependencies->entityManager);
         $dependencies->entityManager->method('getUnitOfWork')->willReturn($unitOfWork);
         $unitOfWork->method('getIdentityMap')->willReturn([
-            'class1' => [new TranslatableMock()]
+            'class1' => [new TranslatableMock()],
         ]);
 
         $subscriber->preFlush($eventArgs);
@@ -127,7 +136,7 @@ class DoctrineTranslationSubscriberTest extends TestCase
         $eventArgs->method('getObjectManager')->willReturn($dependencies->entityManager);
         $dependencies->entityManager->method('getUnitOfWork')->willReturn($unitOfWork);
         $unitOfWork->method('getIdentityMap')->willReturn([
-            'class1' => [new TranslatableMock()]
+            'class1' => [new TranslatableMock()],
         ]);
 
         $subscriber->postFlush($eventArgs);

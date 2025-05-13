@@ -1,13 +1,15 @@
 <?php
+
 /*
- * PendingSubscriberManager.php
+ * This file is part of the enhavo package.
  *
- * @since 07.09.20
- * @author blutze
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Pending;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
@@ -22,21 +24,19 @@ class PendingSubscriberManager
         private readonly EntityManagerInterface $entityManager,
         private readonly FactoryInterface $subscriberFactory,
         private readonly TokenGeneratorInterface $tokenGenerator,
-    )
-    {
+    ) {
     }
 
     public function save(PendingSubscriber $subscriber, $flush = true)
     {
         $subscriber->setConfirmationToken($this->tokenGenerator->generateToken());
-        if ($subscriber->getId() === null) {
+        if (null === $subscriber->getId()) {
             $this->entityManager->persist($subscriber);
         }
 
         if ($flush) {
             $this->entityManager->flush();
         }
-
     }
 
     public function remove(PendingSubscriber $subscriber, $flush = true)
@@ -54,7 +54,7 @@ class PendingSubscriberManager
         $repository = $this->entityManager->getRepository(PendingSubscriber::class);
         $repository->removeBy([
             'email' => $email,
-            'subscription' => $subscription
+            'subscription' => $subscription,
         ]);
 
         if ($flush) {
@@ -77,7 +77,7 @@ class PendingSubscriberManager
 
         return $repository->findOneBy([
             'email' => $email,
-            'subscription' => $subscription
+            'subscription' => $subscription,
         ]);
     }
 

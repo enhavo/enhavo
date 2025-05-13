@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-05-29
- * Time: 18:19
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Model;
@@ -15,15 +18,15 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Receiver;
 
 interface NewsletterInterface
 {
-    const STATE_CREATED = 'created';
-    const STATE_PREPARED = 'prepared';
-    const STATE_SENDING = 'sending';
-    const STATE_SENT = 'sent';
+    public const STATE_CREATED = 'created';
+    public const STATE_PREPARED = 'prepared';
+    public const STATE_SENDING = 'sending';
+    public const STATE_SENT = 'sent';
 
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId();
 
@@ -44,7 +47,6 @@ interface NewsletterInterface
     public function getSubject();
 
     /**
-     * @param NodeInterface $content
      * @return void
      */
     public function setContent(NodeInterface $content);
@@ -54,14 +56,8 @@ interface NewsletterInterface
      */
     public function getContent();
 
-    /**
-     * @return string|null
-     */
     public function getTemplate(): ?string;
 
-    /**
-     * @param string|null $template
-     */
     public function setTemplate(?string $template);
 
     /**
@@ -70,7 +66,7 @@ interface NewsletterInterface
     public function isPrepared();
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isSent();
 
@@ -79,23 +75,17 @@ interface NewsletterInterface
      */
     public function getState();
 
-    /**
-     * @param string $state
-     */
     public function setState(string $state);
 
     /**
      * Add receiver
      *
-     * @param Receiver $receiver
      * @return NewsletterInterface
      */
     public function addReceiver(Receiver $receiver);
 
     /**
      * Remove receiver
-     *
-     * @param Receiver $receiver
      */
     public function removeReceiver(Receiver $receiver);
 
@@ -108,15 +98,11 @@ interface NewsletterInterface
 
     /**
      * Add attachments
-     *
-     * @param FileInterface $attachments
      */
     public function addAttachment(FileInterface $attachments);
 
     /**
      * Remove attachments
-     *
-     * @param FileInterface $attachments
      */
     public function removeAttachment(FileInterface $attachments);
 
@@ -127,33 +113,15 @@ interface NewsletterInterface
      */
     public function getAttachments();
 
-    /**
-     * @return \DateTime|null
-     */
     public function getStartAt(): ?\DateTime;
 
-    /**
-     * @param \DateTime|null $startAt
-     */
     public function setStartAt(?\DateTime $startAt): void;
 
-    /**
-     * @return \DateTime|null
-     */
     public function getFinishAt(): ?\DateTime;
 
-    /**
-     * @param \DateTime|null $finishAt
-     */
     public function setFinishAt(?\DateTime $finishAt): void;
 
-    /**
-     * @return \DateTime|null
-     */
     public function getCreatedAt(): ?\DateTime;
 
-    /**
-     * @param \DateTime|null $createdAt
-     */
     public function setCreatedAt(?\DateTime $createdAt): void;
 }

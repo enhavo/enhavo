@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Endpoint\Type\Profile;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -23,15 +32,14 @@ class ProfileEndpointType extends AbstractFormEndpointType
         private readonly ConfigurationProvider $provider,
         private readonly UserManager $userManager,
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     protected function init($options, Request $request, Data $data, Context $context): void
     {
         $user = $this->getUser();
 
-        if ($user === null) {
+        if (null === $user) {
             throw $this->createAccessDeniedException();
         }
     }
@@ -40,6 +48,7 @@ class ProfileEndpointType extends AbstractFormEndpointType
     {
         $configuration = $this->provider->getProfileConfiguration();
         $user = $this->getUser();
+
         return $this->createForm($configuration->getFormClass(), $user, $configuration->getFormOptions());
     }
 

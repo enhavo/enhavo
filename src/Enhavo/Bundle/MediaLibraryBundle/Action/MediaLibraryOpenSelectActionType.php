@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MediaLibraryBundle\Action;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -11,11 +20,10 @@ class MediaLibraryOpenSelectActionType extends AbstractActionType
 {
     public function __construct(
         private readonly RouterInterface $router,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, object $resource = null): void
+    public function createViewData(array $options, Data $data, ?object $resource = null): void
     {
         $data->set('url', $this->router->generate('enhavo_media_library_admin_item_index', [
             'mode' => 'select',
@@ -28,7 +36,7 @@ class MediaLibraryOpenSelectActionType extends AbstractActionType
             'icon' => 'cloud_upload',
             'label' => 'media_library.label.media_library',
             'translation_domain' => 'EnhavoMediaLibraryBundle',
-            'model' => 'MediaLibraryOpenSelectAction'
+            'model' => 'MediaLibraryOpenSelectAction',
         ]);
     }
 

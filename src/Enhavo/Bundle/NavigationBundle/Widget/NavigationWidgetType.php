@@ -1,9 +1,12 @@
 <?php
-/**
- * NavigationWidgetType.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 25/06/18
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Widget;
@@ -21,7 +24,7 @@ class NavigationWidgetType extends AbstractWidgetType
     public function createViewData(array $options, $resource = null)
     {
         $navigation = $this->container->get('enhavo_navigation.navigation.repository')->findOneBy([
-            'code' => $options['navigation']
+            'code' => $options['navigation'],
         ]);
 
         $request = $this->container->get('request_stack')->getCurrentRequest();
@@ -29,7 +32,7 @@ class NavigationWidgetType extends AbstractWidgetType
 
         return [
             'navigation' => $navigation,
-            'route' => $route
+            'route' => $route,
         ];
     }
 

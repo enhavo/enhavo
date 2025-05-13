@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Form\Type;
 
 use Enhavo\Bundle\UserBundle\Form\EventListener\CredentialsEventSubscriber;
@@ -17,8 +26,7 @@ class LoginType extends AbstractType
 {
     public function __construct(
         private CredentialsEventSubscriber $credentialsEventSubscriber,
-    )
-    {
+    ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -30,7 +38,7 @@ class LoginType extends AbstractType
 
         $builder->add('password', PasswordType::class, [
             'label' => 'security.login.password',
-            'translation_domain' => 'EnhavoUserBundle'
+            'translation_domain' => 'EnhavoUserBundle',
         ]);
 
         $builder->add('csrfToken', HiddenType::class);

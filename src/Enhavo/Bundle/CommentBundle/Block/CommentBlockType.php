@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\CommentBundle\Block;
 
+use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Enhavo\Bundle\CommentBundle\Entity\CommentBlock;
 use Enhavo\Bundle\CommentBundle\Factory\CommentBlockFactory;
 use Enhavo\Bundle\CommentBundle\Form\Type\CommentBlockType as CommentBlockFormType;
-use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CommentBlockType extends AbstractBlockType
@@ -19,7 +28,7 @@ class CommentBlockType extends AbstractBlockType
             'template' => 'theme/block/comment.html.twig',
             'label' => 'comment.label.comment',
             'translation_domain' => 'EnhavoCommentBundle',
-            'groups' => ['template']
+            'groups' => ['template'],
         ]);
     }
 

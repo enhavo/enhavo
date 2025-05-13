@@ -1,20 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-06
- * Time: 21:57
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Util;
-
 
 class ArrayUtil
 {
     public static function merge($array1, $array2)
     {
-        $result = array();
-        foreach($array1 as $key => $value) {
+        $result = [];
+        foreach ($array1 as $key => $value) {
             if (isset($array2[$key])) {
                 if (is_array($value)) {
                     if (is_array($array2[$key])) {
@@ -34,6 +36,7 @@ class ArrayUtil
                 $result[$key] = $value;
             }
         }
+
         return $result;
     }
 }

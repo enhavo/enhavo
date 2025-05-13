@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MultiTenancyBundle\Model;
 
 class Tenant implements TenantInterface
@@ -20,67 +29,43 @@ class Tenant implements TenantInterface
     private $domains = [];
 
     /** @var string|null */
-    private $locale = null;
+    private $locale;
 
-    /**
-     * @return string
-     */
     public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @param string $key
-     */
     public function setKey(string $key): void
     {
         $this->key = $key;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
     public function getRole(): string
     {
         return $this->role;
     }
 
-    /**
-     * @param string $role
-     */
     public function setRole(string $role): void
     {
         $this->role = $role;
     }
 
-    /**
-     * @return string
-     */
     public function getBaseUrl(): string
     {
         return $this->baseUrl;
     }
 
-    /**
-     * @param string $baseUrl
-     */
     public function setBaseUrl(string $baseUrl): void
     {
         $this->baseUrl = $baseUrl;
@@ -102,17 +87,11 @@ class Tenant implements TenantInterface
         $this->domains = $domains;
     }
 
-    /**
-     * @return string|null
-     */
     public function getLocale(): ?string
     {
         return $this->locale;
     }
 
-    /**
-     * @param string|null $locale
-     */
     public function setLocale(?string $locale): void
     {
         $this->locale = $locale;

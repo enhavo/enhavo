@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 18.05.18
- * Time: 16:21
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\Factory;
-
 
 class Factory
 {
@@ -24,6 +26,7 @@ class Factory
     public function createNew()
     {
         $class = $this->class;
+
         return new $class();
     }
 }

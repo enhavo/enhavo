@@ -1,9 +1,12 @@
 <?php
-/**
- * Subscriber.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since $date
- * @author $username-media
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Model;
@@ -30,17 +33,11 @@ class Subscriber implements SubscriberInterface
      */
     private $confirmationToken;
 
-    /**
-     * @param string|null $email
-     */
     public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEmail(): ?string
     {
         return $this->email;
@@ -62,33 +59,21 @@ class Subscriber implements SubscriberInterface
         $this->createdAt = $createdAt;
     }
 
-    /**
-     * @return string|null
-     */
     public function getSubscription(): ?string
     {
         return $this->subscription;
     }
 
-    /**
-     * @param string|null $subscription
-     */
     public function setSubscription(?string $subscription): void
     {
         $this->subscription = $subscription;
     }
 
-    /**
-     * @return string|null
-     */
     public function getConfirmationToken(): ?string
     {
         return $this->confirmationToken;
     }
 
-    /**
-     * @param string|null $token
-     */
     public function setConfirmationToken(?string $token): void
     {
         $this->confirmationToken = $token;

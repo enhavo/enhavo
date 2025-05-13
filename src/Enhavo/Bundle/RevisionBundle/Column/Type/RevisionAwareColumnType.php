@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\RevisionBundle\Column\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -14,8 +23,7 @@ class RevisionAwareColumnType extends AbstractColumnType
     public function __construct(
         private readonly ResourceManager $resourceManager,
         private readonly TranslatorInterface $translator,
-    )
-    {
+    ) {
     }
 
     public function createResourceViewData(array $options, object $resource, Data $data): void

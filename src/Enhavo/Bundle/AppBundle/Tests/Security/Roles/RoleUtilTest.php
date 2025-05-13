@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundles\AppBundle\Tests\Security\Roles;
 
 use Enhavo\Bundle\AppBundle\Security\Roles\RoleUtil;
@@ -20,7 +29,8 @@ class RoleUtilTest extends TestCase
         $this->assertEquals('ROLE_ENHAVO_APP_ENTITYMOCK_DELETE', $roleUtil->getRoleName($resource, RoleUtil::ACTION_DELETE));
     }
 
-    public  function testGetAction(){
+    public function testGetAction()
+    {
         $roleUtil = new RoleUtil();
 
         $this->assertEquals(RoleUtil::ACTION_UPDATE, $roleUtil->getAction('ROLE_ENHAVO_APP_ENTITYMOCK_UPDATE'));

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ApiBundle\Normalizer;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -16,7 +25,8 @@ class DataNormalizer implements NormalizerInterface, NormalizerAwareInterface
     private readonly PriorityQueue $normalizers;
     private ?ContainerInterface $container = null;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->normalizers = new PriorityQueue();
     }
 
@@ -30,13 +40,12 @@ class DataNormalizer implements NormalizerInterface, NormalizerAwareInterface
         $this->normalizers->insert($class, $priority);
     }
 
-    public function normalize(mixed $object, string $format = null, array $context = []): array
+    public function normalize(mixed $object, ?string $format = null, array $context = []): array
     {
         if (!isset($context[DataNormalizer::class])) {
             $context[DataNormalizer::class] = [];
         }
         $context[DataNormalizer::class][spl_object_hash($object)] = true;
-
 
         $normalizers = $this->getNormalizerToExecute($object, $context);
         $normalizedData = $this->getNormalizedData($normalizers, $object, $format, $context);
@@ -52,7 +61,7 @@ class DataNormalizer implements NormalizerInterface, NormalizerAwareInterface
         return $data->normalize();
     }
 
-    public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool
+    public function supportsNormalization(mixed $data, ?string $format = null, array $context = []): bool
     {
         if (!is_object($data)) {
             return false;
@@ -89,11 +98,12 @@ class DataNormalizer implements NormalizerInterface, NormalizerAwareInterface
             $groups = $normalizer->getSerializationGroups($groups, $context);
         }
 
-        if ($groups === null) {
+        if (null === $groups) {
             return [];
         }
 
         $context['groups'] = $groups;
+
         return $this->normalizer->normalize($object, $format, $context);
     }
 
@@ -119,6 +129,7 @@ class DataNormalizer implements NormalizerInterface, NormalizerAwareInterface
                 }
             }
         }
+
         return $normalizerToExecute;
     }
 

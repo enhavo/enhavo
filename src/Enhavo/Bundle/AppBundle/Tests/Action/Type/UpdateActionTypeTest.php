@@ -1,17 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-04
- * Time: 10:22
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\AppBundle\Action\Type\UpdateActionType;
-use Enhavo\Bundle\ResourceBundle\Tests\Mock\ResourceMock;
 use Enhavo\Bundle\ResourceBundle\Action\Action;
 use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
+use Enhavo\Bundle\ResourceBundle\Tests\Mock\ResourceMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -23,6 +26,7 @@ class UpdateActionTypeTest extends TestCase
     {
         $dependencies = new UpdateActionTypeDependencies();
         $dependencies->routeResolver = $this->getMockBuilder(RouteResolverInterface::class)->getMock();
+
         return $dependencies;
     }
 

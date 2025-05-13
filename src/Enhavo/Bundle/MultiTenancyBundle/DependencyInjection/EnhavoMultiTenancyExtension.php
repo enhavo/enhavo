@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m
- * Date: 21.11.17
- * Time: 10:33
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MultiTenancyBundle\DependencyInjection;
@@ -31,14 +34,14 @@ class EnhavoMultiTenancyExtension extends Extension implements PrependExtensionI
         $container->setParameter('enhavo_multi_tenancy.tenant_switch_menu.url_prefix', $config['tenant_switch_menu']['url_prefix']);
         $container->setParameter('enhavo_multi_tenancy.tenant_switch_menu.session_key', $config['tenant_switch_menu']['session_key']);
 
-        $configFiles = array(
+        $configFiles = [
             'services/general.yaml',
             'services/doctrine.yaml',
             'services/menu.yaml',
             'services/resolver.yaml',
             'services/routing.yaml',
             'services/twig.yaml',
-        );
+        ];
 
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
@@ -48,7 +51,7 @@ class EnhavoMultiTenancyExtension extends Extension implements PrependExtensionI
     protected function prependFiles(): array
     {
         return [
-            __DIR__ . '/../Resources/config/app/config.yaml',
+            __DIR__.'/../Resources/config/app/config.yaml',
         ];
     }
 }

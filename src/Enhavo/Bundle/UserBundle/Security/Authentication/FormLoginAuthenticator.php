@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
 use Enhavo\Bundle\ApiBundle\Endpoint\Endpoint;
@@ -21,10 +30,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
-use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
 /**
  * @author gseidel
@@ -41,8 +50,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         private readonly FormFactoryInterface $formFactory,
         private readonly FactoryInterface $endpointFactory,
         string $className,
-    )
-    {
+    ) {
     }
 
     public function supports(Request $request): bool
@@ -64,7 +72,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $credentials = $this->getCredentials($request);
 
         $rememberMeBadge = new RememberMeBadge();
-        $credentials->isRememberMe() ? $rememberMeBadge->enable(): $rememberMeBadge->disable();
+        $credentials->isRememberMe() ? $rememberMeBadge->enable() : $rememberMeBadge->disable();
 
         $tokenBadge = new CsrfTokenBadge('authenticate', $credentials->getCsrfToken());
 
@@ -73,7 +81,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         return new Passport(
             $this->userBadge,
             new PasswordCredentials($credentials->getPassword()),
-            [ $rememberMeBadge, $tokenBadge ],
+            [$rememberMeBadge, $tokenBadge],
         );
     }
 
@@ -98,7 +106,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $user = $token->getUser();
         $event = $this->dispatchSuccess($user);
 
-        if ($event->getResponse() !== null) {
+        if (null !== $event->getResponse()) {
             return $event->getResponse();
         }
 
@@ -106,6 +114,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         if ($endpointConfig) {
             /** @var Endpoint $endpoint */
             $endpoint = $this->endpointFactory->create($endpointConfig);
+
             return $endpoint->getResponse($request);
         }
 
@@ -123,10 +132,11 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
         $user = $exception->getToken()?->getUser();
 
-        if ($user === null) {
+        if (null === $user) {
             try {
                 $user = $this->userBadge->getUser();
-            } catch (UserNotFoundException $e) {}
+            } catch (UserNotFoundException $e) {
+            }
         }
 
         $event = $this->dispatchFailure($user, $exception);
@@ -139,6 +149,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         if ($endpointConfig) {
             /** @var Endpoint $endpoint */
             $endpoint = $this->endpointFactory->create($endpointConfig);
+
             return $endpoint->getResponse($request);
         }
 
@@ -165,6 +176,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
     private function getLoginUrl(): string
     {
         $loginRoute = $this->configurationProvider->getLoginConfiguration()->getRoute();
+
         return $this->urlGenerator->generate($loginRoute);
     }
 }

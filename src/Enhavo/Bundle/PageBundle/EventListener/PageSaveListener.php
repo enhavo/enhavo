@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\PageBundle\EventListener;
 
 use Enhavo\Bundle\PageBundle\Model\PageInterface;
@@ -13,11 +22,10 @@ class PageSaveListener
         private readonly RevisionManager $revisionManager,
         private readonly TokenStorageInterface $tokenStorage,
         private readonly bool $revisionEnabled,
-    )
-    {
+    ) {
     }
 
-    function onSave(ResourceEvent $resourceEvent)
+    public function onSave(ResourceEvent $resourceEvent)
     {
         if ($this->revisionEnabled && $resourceEvent->getSubject() instanceof PageInterface) {
             $this->revisionManager->saveRevision($resourceEvent->getSubject(), $this->tokenStorage->getToken()?->getUser());

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 20.07.18
- * Time: 14:59
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\PageBundle\Navigation\Voter;
@@ -18,16 +21,17 @@ class PageHierarchyVoter extends PageVoter
     public function vote(NodeInterface $node)
     {
         $subject = $node->getSubject();
-        if($node->getName() === 'page' && $subject instanceof Content && $subject->getContent()) {
+        if ('page' === $node->getName() && $subject instanceof Content && $subject->getContent()) {
             /** @var Page $page */
             $page = $subject->getContent();
             $descendants = $page->getDescendants();
-            foreach($descendants as $descendant) {
-                if($this->match($descendant)) {
+            foreach ($descendants as $descendant) {
+                if ($this->match($descendant)) {
                     return VoterInterface::VOTE_IN;
                 }
             }
         }
+
         return VoterInterface::VOTE_ABSTAIN;
     }
 }

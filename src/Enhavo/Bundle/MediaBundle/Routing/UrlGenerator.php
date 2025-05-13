@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 03.09.17
- * Time: 23:26
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaBundle\Routing;
@@ -20,34 +23,35 @@ class UrlGenerator implements UrlGeneratorInterface
         private readonly RequestStack $requestStack,
         private readonly AdminUrlGenerator $adminUrlGenerator,
         private readonly ThemeUrlGenerator $themeUrlGenerator,
-
-    )
-    {
+    ) {
     }
 
     public function generate(FileInterface $file, $referenceType = SymfonyUrlGenerator::ABSOLUTE_PATH): string
     {
-        if ($this->getFirewallName() === 'admin') {
+        if ('admin' === $this->getFirewallName()) {
             return $this->adminUrlGenerator->generate($file, $referenceType);
         }
+
         return $this->themeUrlGenerator->generate($file, $referenceType);
     }
 
     public function generateFormat(FileInterface $file, string $format, $referenceType = SymfonyUrlGenerator::ABSOLUTE_PATH): string
     {
-        if ($this->getFirewallName() === 'admin') {
+        if ('admin' === $this->getFirewallName()) {
             return $this->adminUrlGenerator->generateFormat($file, $format, $referenceType);
         }
+
         return $this->themeUrlGenerator->generateFormat($file, $format, $referenceType);
     }
 
     private function getFirewallName(): ?string
     {
         $request = $this->requestStack->getMainRequest();
-        if ($request === null) {
+        if (null === $request) {
             return null;
         }
         $firewallConfig = $this->firewallMap->getFirewallConfig($request);
+
         return $firewallConfig?->getName();
     }
 }

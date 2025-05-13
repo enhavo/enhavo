@@ -1,17 +1,25 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 
 /**
  * Class PendingSubscriber
- * @package Enhavo\Bundle\NewsletterBundle\Entity
  */
 class PendingSubscriber
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -41,16 +49,13 @@ class PendingSubscriber
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @param $email
-     */
     public function setEmail($email)
     {
         $this->email = $email;
@@ -66,9 +71,6 @@ class PendingSubscriber
         return $this->email;
     }
 
-    /**
-     * @param $confirmationToken
-     */
     public function setConfirmationToken($confirmationToken)
     {
         $this->confirmationToken = $confirmationToken;
@@ -116,17 +118,11 @@ class PendingSubscriber
         $this->subscription = $subscription;
     }
 
-    /**
-     * @return SubscriberInterface
-     */
     public function getData(): SubscriberInterface
     {
         return $this->data;
     }
 
-    /**
-     * @param SubscriberInterface $data
-     */
     public function setData(SubscriberInterface $data): void
     {
         $this->data = $data;

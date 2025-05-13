@@ -1,11 +1,17 @@
 <?php
-/**
- * @author blutze-media
- * @since 2021-09-23
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 /**
  * @author blutze-media
+ *
  * @since 2021-09-22
  */
 
@@ -16,9 +22,8 @@ class PhpClassProperty
     public function __construct(
         private string $name,
         private string $visibility,
-        private array  $config,
-    )
-    {
+        private array $config,
+    ) {
     }
 
     public function getInitializer(): ?string
@@ -35,8 +40,7 @@ class PhpClassProperty
     {
         if (!isset($this->config['serialization_groups'])) {
             return ['endpoint.block'];
-
-        } else if (is_array($this->config['serialization_groups'])) {
+        } elseif (is_array($this->config['serialization_groups'])) {
             return $this->config['serialization_groups'];
         }
 
@@ -64,7 +68,7 @@ class PhpClassProperty
                 }
             }
         } else {
-            if (($this->isTypeScalar() || $this->isTypeArray())) {
+            if ($this->isTypeScalar() || $this->isTypeArray()) {
                 $attributes[] = [
                     'class' => 'Duplicate',
                     'type' => 'property',
@@ -79,13 +83,13 @@ class PhpClassProperty
     private function hasAttribute($attribute, $array): bool
     {
         foreach ($array as $item) {
-
             $rString = str_replace(' ', '', implode(',', $item));
             $aString = str_replace(' ', '', implode(',', $attribute));
             if ($aString === $rString) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -169,5 +173,4 @@ class PhpClassProperty
     {
         return $this->name;
     }
-
 }

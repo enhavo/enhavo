@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-09-06
- * Time: 12:16
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\CommentBundle\Entity;
@@ -15,14 +18,13 @@ use Enhavo\Bundle\CommentBundle\Model\CommentSubjectInterface;
 use Enhavo\Bundle\CommentBundle\Model\ThreadInterface;
 use Enhavo\Bundle\UserBundle\Model\UserInterface;
 
-
 class Comment implements CommentInterface
 {
     private ?int $id = null;
 
     private ?Thread $thread = null;
 
-    private Comment|null $parent = null;
+    private ?Comment $parent = null;
 
     /** @var Collection|Comment[] */
     private Collection $children;
@@ -60,65 +62,41 @@ class Comment implements CommentInterface
         return $this->id;
     }
 
-    /**
-     * @return ThreadInterface|null
-     */
     public function getThread(): ?ThreadInterface
     {
         return $this->thread;
     }
 
-    /**
-     * @param ThreadInterface|null $thread
-     */
     public function setThread(?ThreadInterface $thread): void
     {
         $this->thread = $thread;
     }
 
-    /**
-     * @return Comment|null
-     */
     public function getParent(): ?Comment
     {
         return $this->parent;
     }
 
-    /**
-     * @param Comment|null $parent
-     */
     public function setParent(?Comment $parent): void
     {
         $this->parent = $parent;
     }
 
-    /**
-     * @return string|null
-     */
     public function getComment(): ?string
     {
         return $this->comment;
     }
 
-    /**
-     * @param string|null $comment
-     */
     public function setComment(?string $comment): void
     {
         $this->comment = $comment;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param \DateTime $createdAt
-     */
     public function setCreatedAt(?\DateTime $createdAt): void
     {
         $this->createdAt = $createdAt;
@@ -132,18 +110,12 @@ class Comment implements CommentInterface
         return $this->children;
     }
 
-    /**
-     * @param Comment $child
-     */
     public function addChild(Comment $child)
     {
         $child->setParent($this);
         $this->children[] = $child;
     }
 
-    /**
-     * @param Comment $child
-     */
     public function removeChild(Comment $child)
     {
         $child->setParent(null);
@@ -154,45 +126,35 @@ class Comment implements CommentInterface
     {
         $this->publishedAt = new \DateTime();
         $this->state = CommentInterface::STATE_PUBLISH;
+
         return $this;
     }
 
     public function deny(): CommentInterface
     {
         $this->state = CommentInterface::STATE_DENY;
+
         return $this;
     }
 
-    /**
-     * @return \DateTime|null
-     */
     public function getPublishedAt(): ?\DateTime
     {
         return $this->publishedAt;
     }
 
-    /**
-     * @param \DateTime|null $publishedAt
-     */
     public function setPublishedAt(?\DateTime $publishedAt): void
     {
         $this->publishedAt = $publishedAt;
     }
 
-    /**
-     * @return string
-     */
     public function getState(): string
     {
         return $this->state;
     }
 
-    /**
-     * @param string $state
-     */
     public function setState(string $state): void
     {
-        if($state != $this->state) {
+        if ($state != $this->state) {
             $this->stateChanged = true;
         }
         $this->state = $state;
@@ -201,9 +163,10 @@ class Comment implements CommentInterface
     public function getSubject(): CommentSubjectInterface
     {
         $parents = $this->getParents();
-        if(count($parents) > 0) {
+        if (count($parents) > 0) {
             return $parents[count($parents) - 1]->getThread()->getSubject();
         }
+
         return $this->getThread()->getSubject();
     }
 
@@ -215,58 +178,41 @@ class Comment implements CommentInterface
         $parents = [];
         $parent = $this->getParent();
         do {
-            if($parent) {
+            if ($parent) {
                 $parents[] = $parent;
             } else {
                 break;
             }
-        } while($parent = $parent->getParent());
+        } while ($parent = $parent->getParent());
+
         return $parents;
     }
 
-    /**
-     * @return string|null
-     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string|null $email
-     */
     public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return string|null
-     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string|null $name
-     */
     public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return UserInterface|null
-     */
     public function getUser(): ?UserInterface
     {
         return $this->user;
     }
 
-    /**
-     * @param UserInterface|null $user
-     */
     public function setUser(?UserInterface $user): void
     {
         $this->user = $user;

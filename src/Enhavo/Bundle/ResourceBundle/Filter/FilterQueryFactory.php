@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 27.10.18
- * Time: 15:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Filter;
@@ -14,9 +17,8 @@ use Enhavo\Bundle\ResourceBundle\Column\Column;
 class FilterQueryFactory
 {
     public function __construct(
-        private EntityManagerInterface $em
-    )
-    {
+        private EntityManagerInterface $em,
+    ) {
     }
 
     /**

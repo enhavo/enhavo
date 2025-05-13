@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 25.08.18
- * Time: 18:16
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Util;
-
 
 class HighlightMatch
 {
@@ -76,17 +78,19 @@ class HighlightMatch
 
     public function popBehind()
     {
-        if(count($this->behind)) {
+        if (count($this->behind)) {
             return array_pop($this->behind);
         }
+
         return null;
     }
 
     public function popForward()
     {
-        if(count($this->forward)) {
+        if (count($this->forward)) {
             return array_pop($this->forward);
         }
+
         return null;
     }
 }

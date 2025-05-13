@@ -1,22 +1,26 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation\Type;
 
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\TranslationBundle\Translation\Type\RouteTranslationType;
-use Enhavo\Bundle\TranslationBundle\Translation\Type\TextTranslationType;
-use Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType;
 use Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator;
-use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Enhavo\Bundle\TranslationBundle\Translation\Translation;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RouteTranslationTypeTest extends TestCase
 {
-    /** @var RouteTranslator|MockObject $routeTranslator */
+    /** @var RouteTranslator|MockObject */
     private function createDependencies()
     {
         $routeTranslator = $this->getMockBuilder(RouteTranslator::class)->disableOriginalConstructor()->getMock();
@@ -37,7 +41,7 @@ class RouteTranslationTypeTest extends TestCase
     public function testSetTranslation()
     {
         $routeTranslator = $this->createDependencies();
-        $routeTranslator->expects($this->once())->method('setTranslation')->willReturnCallback(function($data, $property, $locale, $value) {
+        $routeTranslator->expects($this->once())->method('setTranslation')->willReturnCallback(function ($data, $property, $locale, $value): void {
             $this->assertTrue(is_object($data));
             $this->assertEquals('route', $property);
             $this->assertEquals('en', $locale);

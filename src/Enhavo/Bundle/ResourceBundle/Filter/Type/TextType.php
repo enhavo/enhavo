@@ -1,9 +1,12 @@
 <?php
-/**
- * TextFilter.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 19/01/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Filter\Type;
@@ -20,7 +23,7 @@ class TextType extends AbstractFilterType
         $property = array_pop($propertyPath);
 
         $operator = $options['operator'];
-        if($value !== null && trim($value) !== '') {
+        if (null !== $value && '' !== trim($value)) {
             $query->addWhere($property, $operator, $value, $propertyPath);
         }
     }

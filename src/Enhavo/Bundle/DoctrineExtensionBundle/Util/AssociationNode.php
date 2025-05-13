@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Util;
 
 class AssociationNode
@@ -8,11 +17,6 @@ class AssociationNode
     private string $field;
     private bool $singleValued;
 
-    /**
-     * @param string $class
-     * @param string $field
-     * @param bool $singleValued
-     */
     public function __construct(string $class, string $field, bool $singleValued)
     {
         $this->class = $class;
@@ -20,25 +24,16 @@ class AssociationNode
         $this->singleValued = $singleValued;
     }
 
-    /**
-     * @return string
-     */
     public function getClass(): string
     {
         return $this->class;
     }
 
-    /**
-     * @return string
-     */
     public function getField(): string
     {
         return $this->field;
     }
 
-    /**
-     * @return bool
-     */
     public function isSingleValued(): bool
     {
         return $this->singleValued;

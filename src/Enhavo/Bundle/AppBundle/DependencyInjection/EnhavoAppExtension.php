@@ -1,13 +1,22 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\DependencyInjection;
 
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\PrependExtensionTrait;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
 
 class EnhavoAppExtension extends Extension implements PrependExtensionInterface
 {
@@ -38,7 +47,7 @@ class EnhavoAppExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('enhavo_app.vite.builds', $config['vite']['builds'] ?? []);
         $container->setParameter('enhavo_app.form_mapping', ['admin' => $config['admin']['form_mapping'] ?? []]);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         $loader->load('services/action.yaml');
         $loader->load('services/area.yaml');

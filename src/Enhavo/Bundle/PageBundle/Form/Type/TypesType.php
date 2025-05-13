@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\PageBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -11,9 +20,8 @@ class TypesType extends AbstractType
 {
     public function __construct(
         private readonly array $types,
-        private readonly TranslatorInterface $translator
-    )
-    {
+        private readonly TranslatorInterface $translator,
+    ) {
     }
 
     public function getParent(): string
@@ -27,7 +35,7 @@ class TypesType extends AbstractType
             'label' => 'page.label.type',
             'translation_domain' => 'EnhavoPageBundle',
             'choices' => $this->getChoices(),
-            'placeholder' => '---'
+            'placeholder' => '---',
         ]);
     }
 
@@ -38,6 +46,7 @@ class TypesType extends AbstractType
             $label = $this->translator->trans($type['label'], [], $type['translation_domain']);
             $choices[$label] = $key;
         }
+
         return $choices;
     }
 }

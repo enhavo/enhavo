@@ -1,9 +1,12 @@
 <?php
-/**
- * AutoCompleteEntityType.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 19/01/17
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ResourceBundle\Filter\Type;
@@ -21,8 +24,7 @@ class AutoCompleteEntityType extends AbstractFilterType
     public function __construct(
         private readonly RouterInterface $router,
         private readonly ResourceManager $resourceManager,
-    )
-    {
+    ) {
     }
 
     public function createViewData($options, Data $data): void
@@ -41,7 +43,7 @@ class AutoCompleteEntityType extends AbstractFilterType
 
     private function getInitialValue($options): ?array
     {
-        if ($options['initial_value'] === null) {
+        if (null === $options['initial_value']) {
             return null;
         }
 
@@ -52,7 +54,7 @@ class AutoCompleteEntityType extends AbstractFilterType
         $repository = $this->resourceManager->getRepository($options['resource']);
 
         $method = $options['initial_value'];
-        $arguments =  $options['initial_value_arguments'];
+        $arguments = $options['initial_value_arguments'];
 
         $reflectionClass = new \ReflectionClass(get_class($repository));
         if (!$reflectionClass->hasMethod($options['initial_value'])) {
@@ -68,7 +70,7 @@ class AutoCompleteEntityType extends AbstractFilterType
             $initialValueEntity = call_user_func([$repository, $method]);
         }
 
-        if (!$initialValueEntity || (is_array($initialValueEntity) && count($initialValueEntity) == 0)) {
+        if (!$initialValueEntity || (is_array($initialValueEntity) && 0 == count($initialValueEntity))) {
             return null;
         }
         if (is_array($initialValueEntity) && count($initialValueEntity) > 0) {
@@ -80,17 +82,18 @@ class AutoCompleteEntityType extends AbstractFilterType
         if ($choiceLabel) {
             $label = $propertyAccessor->getValue($initialValueEntity, $choiceLabel);
         } else {
-            $label = (string)$initialValueEntity;
+            $label = (string) $initialValueEntity;
         }
+
         return [
             'label' => $label,
-            'code' => $propertyAccessor->getValue($initialValueEntity, 'id')
+            'code' => $propertyAccessor->getValue($initialValueEntity, 'id'),
         ];
     }
 
     public function buildQuery($options, FilterQuery $query, $value): void
     {
-        if ($value == null) {
+        if (null == $value) {
             return;
         }
 
@@ -108,7 +111,7 @@ class AutoCompleteEntityType extends AbstractFilterType
             'initial_value' => null,
             'initial_value_arguments' => null,
             'initial_value_repository' => null,
-            'initial_value_choice_label' => null
+            'initial_value_choice_label' => null,
         ]);
 
         $resolver->setRequired([

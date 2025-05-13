@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MultiTenancyBundle\Locale;
 
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
@@ -12,7 +21,6 @@ class TenantLocaleResolver implements LocaleResolverInterface
 
     /**
      * TenantLocaleResolver constructor.
-     * @param ResolverInterface $tenantResolver
      */
     public function __construct(ResolverInterface $tenantResolver)
     {
@@ -22,7 +30,7 @@ class TenantLocaleResolver implements LocaleResolverInterface
     public function resolve()
     {
         $tenant = $this->tenantResolver->getTenant();
-        if ($tenant->getLocale() !== null) {
+        if (null !== $tenant->getLocale()) {
             return $tenant->getLocale();
         }
 

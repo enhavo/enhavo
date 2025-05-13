@@ -1,7 +1,12 @@
 <?php
-/**
- * @author blutze-media
- * @since 2022-02-24
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Media;
@@ -17,11 +22,9 @@ class MediaLibraryManager
         private readonly array $contentTypes,
         private readonly ItemRepository $itemRepository,
         private readonly TermRepository $termRepository,
-        private readonly TranslatorInterface $translator
-    )
-    {
+        private readonly TranslatorInterface $translator,
+    ) {
     }
-
 
     public function getTags()
     {
@@ -35,6 +38,7 @@ class MediaLibraryManager
         foreach ($this->contentTypes as $key => $config) {
             $contentTypes[$key] = $this->translator->trans($config['label'], [], 'EnhavoMediaLibraryBundle');
         }
+
         return $contentTypes;
     }
 
@@ -53,7 +57,7 @@ class MediaLibraryManager
         foreach ($this->contentTypes as $key => $config) {
             $matchers = $config['mime_types'];
             foreach ($matchers as $matcher) {
-                $regex = '%' . $matcher . '%';
+                $regex = '%'.$matcher.'%';
                 if (preg_match($regex, $mimeType)) {
                     return $key;
                 }
@@ -62,5 +66,4 @@ class MediaLibraryManager
 
         return null;
     }
-
 }

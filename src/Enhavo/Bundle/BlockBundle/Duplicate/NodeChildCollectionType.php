@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Duplicate;
 
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
@@ -13,18 +22,19 @@ class NodeChildCollectionType extends AbstractDuplicateType
 {
     public function __construct(
         private readonly DuplicateFactory $duplicateFactory,
-    ) {}
+    ) {
+    }
 
     public function duplicate($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void
     {
-        if ($sourceValue->getValue() === null) {
+        if (null === $sourceValue->getValue()) {
             $targetValue->setValue(null);
         } else {
             $parent = $sourceValue->getParent();
             if (!$parent instanceof NodeInterface) {
-                 throw new \InvalidArgumentException(sprintf('Duplicate type %s is only valid on properties of an instance of %s', self::class, NodeInterface::class));
+                throw new \InvalidArgumentException(sprintf('Duplicate type %s is only valid on properties of an instance of %s', self::class, NodeInterface::class));
             }
-            if ($parent->getType() === NodeInterface::TYPE_BLOCK) {
+            if (NodeInterface::TYPE_BLOCK === $parent->getType()) {
                 // Stop on blocks. Iterating through the whole tree from root will create faulty block subtrees that
                 // reference the original blocks instead of the copies. Blocks with children need to add their own
                 // duplication attributes instead.

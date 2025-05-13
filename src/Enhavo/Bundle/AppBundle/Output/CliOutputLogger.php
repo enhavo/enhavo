@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Output;
 
 use Monolog\Level;
@@ -20,8 +29,6 @@ class CliOutputLogger extends AbstractOutputLogger
 
     /**
      * CliOutputLogger constructor.
-     *
-     * @param SymfonyStyle $symfonyStyle
      */
     public function __construct(SymfonyStyle $symfonyStyle)
     {
@@ -52,43 +59,28 @@ class CliOutputLogger extends AbstractOutputLogger
         return $this->symfonyStyle;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function writeln($message, $level = Level::Info, $context = array())
+    public function writeln($message, $level = Level::Info, $context = [])
     {
         $type = $level <= $this->getVerboseRequiredLevel() ? OutputInterface::OUTPUT_NORMAL | OutputInterface::VERBOSITY_VERBOSE : OutputInterface::OUTPUT_NORMAL;
         $this->symfonyStyle->writeln($message, $type);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function write($message, $level = Level::Info)
     {
         $type = $level <= $this->getVerboseRequiredLevel() ? OutputInterface::OUTPUT_NORMAL | OutputInterface::VERBOSITY_VERBOSE : OutputInterface::OUTPUT_NORMAL;
         $this->symfonyStyle->write($message, false, $type);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function progressStart($max = 0)
     {
         $this->symfonyStyle->progressStart($max);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function progressAdvance($step = 1)
     {
         $this->symfonyStyle->progressAdvance($step);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function progressFinish()
     {
         $this->symfonyStyle->progressFinish();

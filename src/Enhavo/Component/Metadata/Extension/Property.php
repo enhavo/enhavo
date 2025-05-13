@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-11
- * Time: 21:47
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Metadata\Extension;
-
 
 class Property
 {
@@ -19,8 +21,6 @@ class Property
 
     /**
      * Property constructor.
-     * @param string $name
-     * @param array $options
      */
     public function __construct(string $name, array $options = [])
     {
@@ -28,17 +28,11 @@ class Property
         $this->options = $options;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return array
-     */
     public function getOptions(): array
     {
         return $this->options;

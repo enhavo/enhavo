@@ -1,7 +1,15 @@
 <?php
 
-namespace Enhavo\Bundle\CalendarBundle\Form\Type;
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
+namespace Enhavo\Bundle\CalendarBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,9 +24,9 @@ class CalendarBlockType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Enhavo\Bundle\CalendarBundle\Entity\CalendarBlock'
-        ));
+        $resolver->setDefaults([
+            'data_class' => 'Enhavo\Bundle\CalendarBundle\Entity\CalendarBlock',
+        ]);
     }
 
     public function getName()

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
 use Laminas\Stdlib\PriorityQueue;
@@ -13,8 +22,7 @@ class AuthenticationError
     public function __construct(
         private AuthenticationUtils $authenticationUtils,
         private TranslatorInterface $translator,
-    )
-    {
+    ) {
         $this->errorMessages = new PriorityQueue();
     }
 
@@ -26,7 +34,7 @@ class AuthenticationError
     public function getError(): ?string
     {
         $error = $this->authenticationUtils->getLastAuthenticationError();
-        if ($error === null) {
+        if (null === $error) {
             return null;
         }
 

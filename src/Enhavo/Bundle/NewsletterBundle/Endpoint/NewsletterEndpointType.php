@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -20,8 +29,7 @@ class NewsletterEndpointType extends AbstractEndpointType
         private readonly NewsletterRepository $repository,
         private readonly ReceiverRepository $receiverRepository,
         private readonly NewsletterManager $newsletterManager,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -29,26 +37,27 @@ class NewsletterEndpointType extends AbstractEndpointType
         /** @var NewsletterInterface $resource */
         $resource = $options['resource'];
 
-        if ($resource === null) {
+        if (null === $resource) {
             $findValue = $request->get($options['find_by']);
             $resource = $this->repository->findOneBy([
                 $options['find_by'] => $findValue,
             ]);
         }
 
-        if ($resource === null) {
+        if (null === $resource) {
             throw $this->createNotFoundException();
         }
 
         $token = $request->get('token');
         if ($token) {
             $receiver = $this->receiverRepository->findOneBy([
-                'token' => $token
+                'token' => $token,
             ]);
 
             if ($receiver instanceof Receiver && $receiver->getNewsletter() === $resource) {
                 $content = $this->newsletterManager->render($receiver);
                 $context->setResponse(new Response($content));
+
                 return;
             }
         }
@@ -62,7 +71,7 @@ class NewsletterEndpointType extends AbstractEndpointType
         $resolver->setDefaults([
             'preview' => false,
             'resource' => null,
-            'find_by' => 'id'
+            'find_by' => 'id',
         ]);
     }
 }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\MultiTenancyBundle\Twig;
 
 use Enhavo\Bundle\MultiTenancyBundle\Model\TenantInterface;
@@ -14,7 +23,6 @@ class TenantExtension extends AbstractExtension
 
     /**
      * TenantExtension constructor.
-     * @param TenantManager $manager
      */
     public function __construct(TenantManager $manager)
     {
@@ -23,10 +31,10 @@ class TenantExtension extends AbstractExtension
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('tenant', array($this, 'getTenant')),
-            new TwigFunction('tenants', array($this, 'getTenants')),
-        );
+        return [
+            new TwigFunction('tenant', [$this, 'getTenant']),
+            new TwigFunction('tenants', [$this, 'getTenants']),
+        ];
     }
 
     /**

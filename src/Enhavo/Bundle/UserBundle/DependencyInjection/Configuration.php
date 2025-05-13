@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\DependencyInjection;
 
 use Enhavo\Bundle\UserBundle\Configuration\RequestConfigKeyProvider;
@@ -25,9 +34,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritDoc}
-     */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('enhavo_user');
@@ -209,7 +215,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('template')->defaultValue('{{ area }}/user/reset-password/finish.html.twig')->end()
                     ->end()
                 ->end()
-            ;
+        ;
     }
 
     private function addConfigChangeEmailSection(NodeDefinition $node)

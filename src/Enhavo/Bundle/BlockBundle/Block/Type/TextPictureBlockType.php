@@ -1,17 +1,20 @@
 <?php
-/**
- * TextPictureConfiguration.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 17/10/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Block\Type;
 
-use Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock;
+use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
 use Enhavo\Bundle\BlockBundle\Factory\TextPictureBlockFactory;
 use Enhavo\Bundle\BlockBundle\Form\Type\TextPictureBlockType as TextPictureBlockFormType;
-use Enhavo\Bundle\BlockBundle\Block\AbstractBlockType;
+use Enhavo\Bundle\BlockBundle\Model\Block\TextPictureBlock;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextPictureBlockType extends AbstractBlockType
@@ -25,7 +28,7 @@ class TextPictureBlockType extends AbstractBlockType
             'template' => 'theme/block/text-picture.html.twig',
             'label' => 'textPicture.label.textPicture',
             'translation_domain' => 'EnhavoBlockBundle',
-            'groups' => ['default', 'content', 'simple']
+            'groups' => ['default', 'content', 'simple'],
         ]);
     }
 

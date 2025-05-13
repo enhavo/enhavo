@@ -1,9 +1,12 @@
 <?php
-/**
- * TranslationExtension.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 07/11/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\Form\Extension;
@@ -23,12 +26,9 @@ class TranslationExtension extends AbstractTypeExtension
     ) {
     }
 
-    /**
-     * @inheritdoc
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if(!$this->isTranslatable($options)) {
+        if (!$this->isTranslatable($options)) {
             return;
         }
 

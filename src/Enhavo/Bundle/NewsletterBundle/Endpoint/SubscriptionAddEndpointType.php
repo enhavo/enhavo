@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\NewsletterBundle\Endpoint;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -16,8 +25,7 @@ class SubscriptionAddEndpointType extends AbstractEndpointType
         private readonly SubscriptionManager $subscriptionManager,
         private readonly TranslatorInterface $translator,
         private readonly VueForm $vueForm,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
@@ -39,7 +47,7 @@ class SubscriptionAddEndpointType extends AbstractEndpointType
                 'message' => $this->translator->trans($message, [], 'EnhavoNewsletterBundle'),
                 'form' => $this->vueForm->createData($form->createView()),
                 'subscriber' => $this->normalize($subscriber, 'json', [
-                    'groups' => ['subscription']
+                    'groups' => ['subscription'],
                 ]),
             ]);
         } else {
@@ -49,7 +57,7 @@ class SubscriptionAddEndpointType extends AbstractEndpointType
                 'message' => $this->translator->trans('subscriber.form.error.invalid', [], 'EnhavoNewsletterBundle'),
                 'form' => $this->vueForm->createData($form->createView()),
                 'subscriber' => $this->normalize($subscriber, 'json', [
-                    'groups' => ['subscription']
+                    'groups' => ['subscription'],
                 ]),
             ]);
 

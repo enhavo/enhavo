@@ -1,12 +1,21 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Mailer;
 
 class Message
 {
-    const CONTENT_TYPE_MIXED = 'multipart/mixed';
-    const CONTENT_TYPE_HTML = 'text/html';
-    const CONTENT_TYPE_PLAIN = 'text/plain';
+    public const CONTENT_TYPE_MIXED = 'multipart/mixed';
+    public const CONTENT_TYPE_HTML = 'text/html';
+    public const CONTENT_TYPE_PLAIN = 'text/plain';
 
     /** @var string */
     private $content;
@@ -23,36 +32,23 @@ class Message
         private array $cc = [],
         private array $bcc = [],
     ) {
-
     }
 
-    /**
-     * @return string
-     */
     public function getFrom(): ?string
     {
         return $this->from;
     }
 
-    /**
-     * @param string $from
-     */
     public function setFrom(?string $from): void
     {
         $this->from = $from;
     }
 
-    /**
-     * @return string
-     */
     public function getSenderName(): ?string
     {
         return $this->senderName;
     }
 
-    /**
-     * @param string $senderName
-     */
     public function setSenderName(?string $senderName): void
     {
         $this->senderName = $senderName;
@@ -74,81 +70,51 @@ class Message
         $this->to = $to;
     }
 
-    /**
-     * @return string
-     */
     public function getSubject(): ?string
     {
         return $this->subject;
     }
 
-    /**
-     * @param string $subject
-     */
     public function setSubject(?string $subject): void
     {
         $this->subject = $subject;
     }
 
-    /**
-     * @return string
-     */
     public function getTemplate(): ?string
     {
         return $this->template;
     }
 
-    /**
-     * @param string $template
-     */
     public function setTemplate(?string $template): void
     {
         $this->template = $template;
     }
 
-    /**
-     * @return string
-     */
     public function getContentType(): string
     {
         return $this->contentType;
     }
 
-    /**
-     * @param string $contentType
-     */
     public function setContentType(string $contentType): void
     {
         $this->contentType = $contentType;
     }
 
-    /**
-     * @return array
-     */
     public function getContext(): array
     {
         return $this->context;
     }
 
-    /**
-     * @param array $context
-     */
     public function setContext(array $context): void
     {
         $this->context = $context;
     }
 
-    /**
-     * @param mixed $context
-     */
     public function addContext($context)
     {
         $this->context[] = $context;
     }
 
-    /**
-     * @param mixed $context
-     */
     public function removeContext($context)
     {
         if (false !== $key = array_search($context, $this->context, true)) {
@@ -176,17 +142,11 @@ class Message
         return $this->attachments;
     }
 
-    /**
-     * @return string|null
-     */
     public function getContent(): ?string
     {
         return $this->content;
     }
 
-    /**
-     * @param string|null $content
-     */
     public function setContent(?string $content): void
     {
         $this->content = $content;

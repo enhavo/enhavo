@@ -1,12 +1,20 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Duplicate\Type;
 
 use Doctrine\Common\Collections\Collection;
 use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateType;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CollectionReferenceDuplicateType extends AbstractDuplicateType
 {
@@ -14,9 +22,9 @@ class CollectionReferenceDuplicateType extends AbstractDuplicateType
     {
         $originalValue = $targetValue->getOriginalValue();
 
-        if ($sourceValue->getValue() === null) {
+        if (null === $sourceValue->getValue()) {
             $targetValue->setValue(null);
-        } else if (is_array($sourceValue->getValue()) && is_array($originalValue)
+        } elseif (is_array($sourceValue->getValue()) && is_array($originalValue)
             || ($sourceValue->getValue() instanceof Collection && $originalValue instanceof Collection)
         ) {
             foreach ($sourceValue->getValue() as $sourceItem) {
@@ -47,7 +55,7 @@ class CollectionReferenceDuplicateType extends AbstractDuplicateType
             }
 
             $targetValue->setValue($originalValue);
-        } else if ($originalValue === null) {
+        } elseif (null === $originalValue) {
             $targetValue->setValue($sourceValue->getValue());
         }
     }

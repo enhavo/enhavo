@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 12.08.18
- * Time: 19:50
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
@@ -29,10 +32,10 @@ class PrefixGenerator extends AbstractGenerator
     public function generate($resource, $options = [])
     {
         $properties = $this->getSlugifiedProperties($resource, $options);
-        if(count($properties)) {
+        if (count($properties)) {
             /** @var RouteInterface $route */
             $route = $this->getProperty($resource, $options['route_property']);
-            if(!$options['overwrite'] && $route->getStaticPrefix()) {
+            if (!$options['overwrite'] && $route->getStaticPrefix()) {
                 return;
             }
             $route->setStaticPrefix($this->createPrefix($properties, $resource, $options));
@@ -42,7 +45,7 @@ class PrefixGenerator extends AbstractGenerator
     protected function existsPrefix($prefix, $resource, array $options): bool
     {
         $results = $this->routeRepository->findBy([
-            'staticPrefix' => $prefix
+            'staticPrefix' => $prefix,
         ]);
 
         return count($results);
@@ -53,13 +56,13 @@ class PrefixGenerator extends AbstractGenerator
         $result = [];
 
         $properties = $options['properties'];
-        if(!is_array($properties)){
+        if (!is_array($properties)) {
             $properties = [$properties];
         }
 
-        foreach ($properties as $property){
+        foreach ($properties as $property) {
             $slug = $this->getSlug($this->getProperty($resource, $property), $options);
-            if($slug){
+            if ($slug) {
                 $result[$property] = $slug;
             }
         }
@@ -69,9 +72,10 @@ class PrefixGenerator extends AbstractGenerator
 
     private function getSlug($input, $options)
     {
-        if($input instanceof \DateTimeInterface){
+        if ($input instanceof \DateTimeInterface) {
             $input = $input->format($options['date_format']);
         }
+
         return Slugifier::slugify($input);
     }
 
@@ -84,44 +88,43 @@ class PrefixGenerator extends AbstractGenerator
     {
         if ($options['format']) {
             $string = $options['format'];
-            foreach ($properties as $key => $value){
+            foreach ($properties as $key => $value) {
                 $string = str_replace(sprintf('{%s}', $key), $value, $string);
             }
+
             return $string;
-        } else {
-            return sprintf('/%s', join('-', $properties));
         }
+
+        return sprintf('/%s', join('-', $properties));
     }
 
     private function getUniqueUrl(array $properties, $resource, array $options): string
     {
-        if($options['unique_property']) {
+        if ($options['unique_property']) {
             $this->checkUniqueProperty($properties, $options);
             $isFirstTry = true;
-            while($this->existsPrefix($this->format($properties, $options), $resource, $options)) {
+            while ($this->existsPrefix($this->format($properties, $options), $resource, $options)) {
                 $properties = $this->increaseProperties($properties, $options, $isFirstTry);
                 $isFirstTry = false;
             }
+
             return $this->format($properties, $options);
         }
 
         $string = $this->format($properties, $options);
         $isFirstTry = true;
-        while($this->existsPrefix($string, $resource, $options)) {
+        while ($this->existsPrefix($string, $resource, $options)) {
             $string = $this->increaseString($string, $isFirstTry);
             $isFirstTry = false;
         }
+
         return $string;
     }
 
     private function checkUniqueProperty($properties, $options)
     {
-        if(!isset($properties[$options['unique_property']])) {
-            throw new \InvalidArgumentException(sprintf(
-                'The unique_property option "%s" don\'t exists in option properties. Available properties are "%s"',
-                $options['unique_property'],
-                is_array($options['properties']) ? join(',', $options['properties']) : $options['properties']
-            ));
+        if (!isset($properties[$options['unique_property']])) {
+            throw new \InvalidArgumentException(sprintf('The unique_property option "%s" don\'t exists in option properties. Available properties are "%s"', $options['unique_property'], is_array($options['properties']) ? join(',', $options['properties']) : $options['properties']));
         }
     }
 
@@ -137,21 +140,24 @@ class PrefixGenerator extends AbstractGenerator
 
     private function increaseString($string, $isFirstTry)
     {
-        if(!$isFirstTry) {
+        if (!$isFirstTry) {
             $isMatch = preg_match('/^(.*)-([0-9]+)$/', $string, $matches);
-            if($isMatch && isset($matches[1]) && isset($matches[2])) {
+            if ($isMatch && isset($matches[1]) && isset($matches[2])) {
                 $string = sprintf('%s-%u', $matches[1], intval($matches[2]) + 1);
+
                 return $string;
             }
         }
+
         return sprintf('%s-1', $string);
     }
 
     private function getUniqueProperty($properties, $options)
     {
-        if($options['unique_property']){
+        if ($options['unique_property']) {
             return $options['unique_property'];
         }
+
         return array_key_last($properties);
     }
 
@@ -164,10 +170,10 @@ class PrefixGenerator extends AbstractGenerator
             'format' => null,
             'unique' => true,
             'unique_property' => null,
-            'date_format' => 'Y-m-d'
+            'date_format' => 'Y-m-d',
         ]);
         $resolver->setRequired([
-            'properties'
+            'properties',
         ]);
     }
 

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Preview;
 
 /**
@@ -8,9 +17,7 @@ namespace Enhavo\Bundle\AppBundle\Preview;
 interface StrategyInterface
 {
     /**
-     * @param $resource
      * @param array $options
-     * @return mixed
      */
-    public function getPreviewResponse($resource, $options = array());
+    public function getPreviewResponse($resource, $options = []);
 }

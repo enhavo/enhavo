@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\ExpressionLanguage;
 
 use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
@@ -10,9 +19,8 @@ use Symfony\Component\ExpressionLanguage\ExpressionFunction;
 class PermissionExpressionFunctionProvider implements ResourceExpressionFunctionProviderInterface
 {
     public function __construct(
-        private readonly ResourceManager $resourceManager
-    )
-    {
+        private readonly ResourceManager $resourceManager,
+    ) {
     }
 
     public function getFunctions(): array
@@ -29,12 +37,13 @@ class PermissionExpressionFunctionProvider implements ResourceExpressionFunction
                     }
 
                     $name = $this->resourceManager->getMetadata($resource)?->getName();
-                    if ($name === null) {
+                    if (null === $name) {
                         throw MetadataException::notExists($resource);
                     }
+
                     return new Permission($name, $action);
                 }
-            )
+            ),
         ];
     }
 }

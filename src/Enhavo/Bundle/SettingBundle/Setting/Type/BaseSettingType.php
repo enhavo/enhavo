@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,15 +26,14 @@ class BaseSettingType extends AbstractSettingType implements SettingTypeInterfac
         private readonly EntityRepository $repository,
         private readonly Factory $factory,
         private readonly EntityManagerInterface $em,
-    )
-    {
+    ) {
     }
 
     public function getSettingEntity($options, $key): SettingEntity
     {
         /** @var SettingEntity $settingEntity */
         $settingEntity = $this->repository->findOneBy(['key' => $key]);
-        if ($settingEntity === null) {
+        if (null === $settingEntity) {
             $settingEntity = $this->factory->createNew();
             $settingEntity->setKey($key);
             $this->em->persist($settingEntity);
@@ -53,7 +61,7 @@ class BaseSettingType extends AbstractSettingType implements SettingTypeInterfac
         /** @var SettingEntity $settingEntity */
         $settingEntity = $this->repository->findOneBy(['key' => $key]);
 
-        if ($settingEntity === null) {
+        if (null === $settingEntity) {
             throw SettingNotExists::entityNotFound();
         }
 
@@ -71,7 +79,7 @@ class BaseSettingType extends AbstractSettingType implements SettingTypeInterfac
             'translation_domain' => null,
             'group' => null,
             'default' => null,
-            'label' => null
+            'label' => null,
         ]);
     }
 }

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-08
- * Time: 14:49
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Component\Type\Tests;
@@ -22,7 +25,7 @@ class TypeCompilerPassTest extends TestCase
         $container = new ContainerBuilder();
         $container->addDefinitions([
             'typeOne' => $this->createTypeDefinition('TypeOne'),
-            'typeTwo' => $this->createTypeDefinition('typeTwo')
+            'typeTwo' => $this->createTypeDefinition('typeTwo'),
         ]);
 
         $pass = new TypeCompilerPass('Test', 'test.tag', 'ConcreteTypeClass');
@@ -48,6 +51,7 @@ class TypeCompilerPassTest extends TestCase
         $definition->setClass($class);
         $definition->setPublic(false);
         $definition->addTag('test.tag');
+
         return $definition;
     }
 }

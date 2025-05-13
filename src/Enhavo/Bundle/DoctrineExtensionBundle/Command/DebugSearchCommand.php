@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,8 +22,7 @@ class DebugSearchCommand extends Command
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -58,11 +66,11 @@ class DebugSearchCommand extends Command
         $metaData = $this->entityManager->getMetadataFactory()->getAllMetadata();
         $result = [];
 
-        foreach($metaData as $classMetaData) {
+        foreach ($metaData as $classMetaData) {
             if (!$classMetaData->table || !isset($classMetaData->table['name'])) {
                 continue;
             }
-            if (!$classMetaData->identifier || count($classMetaData->identifier) !== 1 || $classMetaData->identifier[0] !== 'id') {
+            if (!$classMetaData->identifier || 1 !== count($classMetaData->identifier) || 'id' !== $classMetaData->identifier[0]) {
                 continue;
             }
             if ($classMetaData->isMappedSuperclass) {
@@ -70,18 +78,18 @@ class DebugSearchCommand extends Command
             }
 
             $tableName = $classMetaData->table['name'];
-            if(in_array($tableName, $excludeTables)) {
+            if (in_array($tableName, $excludeTables)) {
                 continue;
             }
 
             $columns = [];
 
-            foreach($classMetaData->getFieldNames() as $fieldName) {
+            foreach ($classMetaData->getFieldNames() as $fieldName) {
                 $fieldMapping = $classMetaData->getFieldMapping($fieldName);
-                if ($fieldMapping['type'] === 'text') {
+                if ('text' === $fieldMapping['type']) {
                     $columns[$fieldName] = $fieldName;
                 }
-                if ($fieldMapping['type'] === 'string' && $includeString) {
+                if ('string' === $fieldMapping['type'] && $includeString) {
                     $columns[$fieldName] = $fieldName;
                 }
             }
@@ -90,7 +98,7 @@ class DebugSearchCommand extends Command
                 if (!isset($result[$tableName])) {
                     $result[$tableName] = [];
                 }
-                foreach($columns as $column) {
+                foreach ($columns as $column) {
                     $result[$tableName][$column] = $column;
                 }
             }
@@ -104,10 +112,10 @@ class DebugSearchCommand extends Command
         $connection = $this->entityManager->getConnection();
         $lastWasHit = true;
 
-        foreach($fieldsToSearch as $tableName => $fieldNames) {
+        foreach ($fieldsToSearch as $tableName => $fieldNames) {
             $fieldQueries = [];
-            foreach($fieldNames as $fieldName) {
-                $fieldQueries []= sprintf('%s LIKE "%s"', $fieldName, $searchTerm);
+            foreach ($fieldNames as $fieldName) {
+                $fieldQueries[] = sprintf('%s LIKE "%s"', $fieldName, $searchTerm);
             }
             $query = sprintf('SELECT id FROM %s WHERE %s', $tableName, implode(' OR ', $fieldQueries));
 
@@ -118,7 +126,7 @@ class DebugSearchCommand extends Command
                     $output->writeln('');
                 }
                 $lastWasHit = true;
-                foreach($result as $row) {
+                foreach ($result as $row) {
                     $output->writeln(sprintf('Found: %s #%s', $tableName, $row['id']));
                 }
             } else {

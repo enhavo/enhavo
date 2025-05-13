@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-09-02
- * Time: 16:20
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Util;
-
 
 class StateEncoder
 {
@@ -16,6 +18,7 @@ class StateEncoder
         $state = json_encode($data);
         $state = gzcompress($state);
         $state = base64_encode($state);
+
         return $state;
     }
 
@@ -24,6 +27,7 @@ class StateEncoder
         $state = base64_decode($state);
         $state = gzuncompress($state);
         $data = json_decode($state, true);
+
         return $data;
     }
 }

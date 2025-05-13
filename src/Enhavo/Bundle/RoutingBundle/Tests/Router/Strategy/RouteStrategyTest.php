@@ -1,31 +1,39 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Router\Strategy;
 
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Exception\UrlResolverException;
 use Enhavo\Bundle\RoutingBundle\Router\Strategy\RouteStrategy;
-use Enhavo\Bundle\RoutingBundle\Tests\Mock\RouteContentMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\RouterInterface;
 
-
 class RouteStrategyTest extends TestCase
 {
-
     private function createDependencies()
     {
         $dependencies = new RouteStrategyDependencies();
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
+
         return $dependencies;
     }
 
     private function createInstance(RouteStrategyDependencies $dependencies)
     {
         $instance = new RouteStrategy($dependencies->router);
+
         return $instance;
     }
 
@@ -37,13 +45,12 @@ class RouteStrategyTest extends TestCase
         $route->setStaticPrefix('/servus');
         $route->setName('test');
 
-        $dependencies->router->method('generate')->willReturnCallback(function(string $routeName) use ($route) {
+        $dependencies->router->method('generate')->willReturnCallback(function (string $routeName) use ($route) {
             if ($routeName === $route->getName()) {
                 return $route->getStaticPrefix();
             }
             throw new RouteNotFoundException();
         });
-
 
         $instance = $this->createInstance($dependencies);
 

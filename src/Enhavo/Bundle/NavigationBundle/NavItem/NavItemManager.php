@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 23.08.18
- * Time: 21:56
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NavigationBundle\NavItem;
@@ -51,8 +54,10 @@ class NavItemManager
                     $factory->setContainer($this->container);
                 }
             }
+
             return $factory;
         }
+
         return null;
     }
 }

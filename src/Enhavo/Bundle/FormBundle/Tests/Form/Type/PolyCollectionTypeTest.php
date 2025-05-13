@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-15
- * Time: 06:57
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\FormBundle\Tests\Type;
@@ -35,7 +38,7 @@ class PolyCollectionTypeTest extends TypeTestCase
     {
         $form = $this->factory->create(PolyCollectionType::class, [], [
             'entry_types' => ['first' => FirstType::class, 'second' => SecondType::class],
-            'allow_add' => true
+            'allow_add' => true,
         ]);
 
         $form->submit([
@@ -45,7 +48,7 @@ class PolyCollectionTypeTest extends TypeTestCase
 
         $this->assertEquals([
             ['name' => 'hello'],
-            ['label' => 'world']
+            ['label' => 'world'],
         ], $form->getData());
     }
 
@@ -56,7 +59,7 @@ class PolyCollectionTypeTest extends TypeTestCase
             ['key' => 'second', 'label' => 'world'],
         ], [
             'entry_types' => ['first' => FirstType::class, 'second' => SecondType::class],
-            'entry_type_resolver' => function($data) { return $data['key']; },
+            'entry_type_resolver' => function ($data) { return $data['key']; },
         ]);
 
         $form->submit([
@@ -66,7 +69,7 @@ class PolyCollectionTypeTest extends TypeTestCase
 
         $this->assertEquals([
             ['key' => 'first', 'name' => 'foo'],
-            ['key' => 'second', 'label' => 'bar']
+            ['key' => 'second', 'label' => 'bar'],
         ], $form->getData());
     }
 
@@ -75,7 +78,7 @@ class PolyCollectionTypeTest extends TypeTestCase
         $form = $this->factory->create(PolyCollectionType::class, [], [
             'entry_types' => ['first' => ContainerDataType::class, 'second' => ContainerDataType::class],
             'entry_types_options' => ['first' => ['type' => FirstType::class], 'second' => ['type' => SecondType::class]],
-            'allow_add' => true
+            'allow_add' => true,
         ]);
 
         $form->submit([
@@ -85,7 +88,7 @@ class PolyCollectionTypeTest extends TypeTestCase
 
         $this->assertEquals([
             ['data' => ['name' => 'hello']],
-            ['data' => ['label' => 'world' ]]
+            ['data' => ['label' => 'world']],
         ], $form->getData());
     }
 
@@ -115,7 +118,7 @@ class PolyCollectionTypeTest extends TypeTestCase
             'entry_types' => ['first' => FirstType::class, 'second' => SecondType::class],
             'entry_types_options' => ['first' => ['data_class' => First::class], 'second' => ['data_class' => Second::class]],
             'allow_add' => true,
-            'allow_delete' => true
+            'allow_delete' => true,
         ]);
 
         $form->submit([
@@ -132,7 +135,7 @@ class PolyCollectionTypeTest extends TypeTestCase
     {
         $form = $this->factory->create(PolyCollectionType::class, [], [
             'entry_types' => ['first' => FirstType::class, 'second' => SecondType::class],
-            'allow_add' => false
+            'allow_add' => false,
         ]);
 
         $view = $form->createView();
@@ -165,7 +168,7 @@ class PolyCollectionTypeTest extends TypeTestCase
         $this->expectException(InvalidArgumentException::class);
         $form = $this->factory->create(PolyCollectionType::class, null, [
             'entry_types' => ['first' => FirstType::class],
-            'allow_add' => true
+            'allow_add' => true,
         ]);
 
         $form->submit([
@@ -177,7 +180,7 @@ class PolyCollectionTypeTest extends TypeTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
         $form = $this->factory->create(PolyCollectionType::class, null, [
-            'entry_types' => ['first' => FirstType::class]
+            'entry_types' => ['first' => FirstType::class],
         ]);
 
         $form->submit('something is wrong');
@@ -186,7 +189,7 @@ class PolyCollectionTypeTest extends TypeTestCase
     public function testSubmitWithEmptyData()
     {
         $form = $this->factory->create(PolyCollectionType::class, null, [
-            'entry_types' => ['first' => FirstType::class]
+            'entry_types' => ['first' => FirstType::class],
         ]);
 
         $form->submit(null);
@@ -198,7 +201,7 @@ class PolyCollectionTypeTest extends TypeTestCase
     {
         $this->expectException(UnexpectedTypeException::class);
         $form = $this->factory->create(PolyCollectionType::class, null, [
-            'entry_types' => ['first' => FirstType::class]
+            'entry_types' => ['first' => FirstType::class],
         ]);
         $form->setData('something is wrong');
     }
@@ -215,11 +218,11 @@ class PolyCollectionTypeTest extends TypeTestCase
             'entry_types' => [
                 'nested' => NestedType::class,
                 'first' => FirstType::class,
-                'second' => SecondType::class
+                'second' => SecondType::class,
             ],
             'allow_add' => true,
             'allow_delete' => true,
-            'prototype_storage' => 'test'
+            'prototype_storage' => 'test',
         ]);
 
         $form->createView();
@@ -249,13 +252,13 @@ class PolyCollectionTypeTest extends TypeTestCase
             'entry_types' => [
                 'nested' => NestedType::class,
                 'first' => FirstType::class,
-                'second' => SecondType::class
+                'second' => SecondType::class,
             ],
             'allow_add' => true,
             'allow_delete' => true,
-            'entry_type_filter' => function($keys) {
+            'entry_type_filter' => function ($keys) {
                 return ['nested'];
-            }
+            },
         ]);
 
         $view = $form->createView();
@@ -275,15 +278,14 @@ class PolyCollectionTypeTest extends TypeTestCase
         $formOptions = [
             'entry_types' => [
                 'first' => FirstType::class,
-                'second' => SecondType::class
+                'second' => SecondType::class,
             ],
             'entry_types_options' => [
                 'first' => ['data_class' => First::class, 'uuid_field' => true],
                 'second' => ['data_class' => Second::class, 'uuid_field' => true],
             ],
-            'uuid_property' => 'uuid'
+            'uuid_property' => 'uuid',
         ];
-
 
         $form = $this->factory->createNamedBuilder('container', options: [
             'data_class' => ItemsContainer::class,
@@ -296,7 +298,7 @@ class PolyCollectionTypeTest extends TypeTestCase
             'items' => [
                 0 => ['_key' => 'first', 'name' => 'Bob', 'uuid' => $first->uuid],
                 2 => ['_key' => 'second', 'label' => 'Alice', 'uuid' => $second->uuid],
-            ]
+            ],
         ]);
 
         $this->assertTrue($form->isSubmitted(), 'submitted');
@@ -315,15 +317,14 @@ class PolyCollectionTypeTest extends TypeTestCase
         $formOptions = [
             'entry_types' => [
                 'first' => FirstType::class,
-                'second' => SecondType::class
+                'second' => SecondType::class,
             ],
             'entry_types_options' => [
                 'first' => ['data_class' => First::class, 'uuid_field' => true],
                 'second' => ['data_class' => Second::class, 'uuid_field' => true],
             ],
-            'uuid_property' => 'uuid'
+            'uuid_property' => 'uuid',
         ];
-
 
         $form = $this->factory->createNamedBuilder('container', options: [
             'data_class' => ItemsContainer::class,
@@ -336,7 +337,7 @@ class PolyCollectionTypeTest extends TypeTestCase
             'items' => [
                 3 => ['_key' => 'first', 'name' => 'Bob2', 'uuid' => $first->uuid],
                 6 => ['_key' => 'first', 'name' => 'Bob3', 'uuid' => '022208e6-3f95-4add-a24e-9f2ee04ddd83'],
-            ]
+            ],
         ]);
 
         $this->assertTrue($form->isSubmitted(), 'submitted');
@@ -359,7 +360,7 @@ class UuidType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'uuid_field' => false
+            'uuid_field' => false,
         ]);
     }
 }
@@ -399,7 +400,7 @@ class NestedType extends AbstractType
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => false,
-            'prototype_storage' => 'test'
+            'prototype_storage' => 'test',
         ]);
     }
 }
@@ -442,10 +443,8 @@ class ItemsContainer
     }
 }
 
-
 interface Item
 {
-
 }
 
 class First implements Item
@@ -454,9 +453,8 @@ class First implements Item
         public ?string $id = null,
         public ?string $name = null,
         public ?string $uuid = null,
-    )
-    {
-        if ($this->uuid === null) {
+    ) {
+        if (null === $this->uuid) {
             $this->uuid = generateUuid();
         }
     }
@@ -468,9 +466,8 @@ class Second implements Item
         public ?string $id = null,
         public ?string $label = null,
         public ?string $uuid = null,
-    )
-    {
-        if ($this->uuid === null) {
+    ) {
+        if (null === $this->uuid) {
             $this->uuid = generateUuid();
         }
     }
@@ -478,11 +475,11 @@ class Second implements Item
 
 function generateUuid(): ?string
 {
-    return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
-        mt_rand( 0, 0xffff ),
-        mt_rand( 0, 0x0fff ) | 0x4000,
-        mt_rand( 0, 0x3fff ) | 0x8000,
-        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+    return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+        mt_rand(0, 0xFFFF), mt_rand(0, 0xFFFF),
+        mt_rand(0, 0xFFFF),
+        mt_rand(0, 0x0FFF) | 0x4000,
+        mt_rand(0, 0x3FFF) | 0x8000,
+        mt_rand(0, 0xFFFF), mt_rand(0, 0xFFFF), mt_rand(0, 0xFFFF)
     );
 }

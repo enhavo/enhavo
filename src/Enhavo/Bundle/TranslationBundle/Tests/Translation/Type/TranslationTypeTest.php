@@ -1,11 +1,18 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation\Type;
 
 use Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TranslationTypeTest extends TestCase
 {
@@ -18,6 +25,5 @@ class TranslationTypeTest extends TestCase
         $type->translate(null, 'prop', 'locale', []);
         $type->detach(null, 'prop', 'locale', []);
         $type->delete(null, 'prop');
-
     }
 }

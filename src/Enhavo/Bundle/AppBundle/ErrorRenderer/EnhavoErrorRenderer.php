@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\ErrorRenderer;
 
 use Enhavo\Bundle\ApiBundle\Endpoint\Endpoint;
@@ -26,9 +35,6 @@ class EnhavoErrorRenderer implements ErrorRendererInterface
         $this->debug = TwigErrorRenderer::isDebug($requestStack, $debug);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render(\Throwable $exception): FlattenException
     {
         $exception = $this->fallbackErrorRenderer->render($exception);
@@ -36,6 +42,7 @@ class EnhavoErrorRenderer implements ErrorRendererInterface
         $debug = ($this->debug)($exception);
         if ($debug) {
             $exception->setAsString($this->enhanceExceptionString($exception->getAsString()));
+
             return $exception;
         }
 
@@ -56,6 +63,7 @@ class EnhavoErrorRenderer implements ErrorRendererInterface
     {
         $jsSnippet = file_get_contents(__DIR__.'/../Resources/assets/exception.js');
         $replaceContent = sprintf("<script type='application/javascript'>\n%s\n</script>\n", $jsSnippet);
+
         return str_replace('</body>', $replaceContent, $content);
     }
 }

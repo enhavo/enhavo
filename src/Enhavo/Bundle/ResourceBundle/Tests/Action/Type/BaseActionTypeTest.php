@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ResourceBundle\Tests\Action\Type;
 
 use Enhavo\Bundle\ResourceBundle\Action\Action;
@@ -29,12 +38,10 @@ class BaseActionTypeTest extends TestCase
             'label' => 'Test',
         ]);
 
-
         $data = $action->createViewData();
-        $this->assertEquals('action-action' , $data['component']);
-        $this->assertEquals('test_icon' , $data['icon']);
+        $this->assertEquals('action-action', $data['component']);
+        $this->assertEquals('test_icon', $data['icon']);
         $this->assertEquals('Test.translated', $data['label']);
-        $this->assertEquals('TestModel' , $data['model']);
+        $this->assertEquals('TestModel', $data['model']);
     }
 }
-

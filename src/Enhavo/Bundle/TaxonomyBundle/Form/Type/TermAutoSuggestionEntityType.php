@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\TaxonomyBundle\Form\Type;
 
 use Doctrine\ORM\EntityRepository;
@@ -27,15 +36,16 @@ class TermAutoSuggestionEntityType extends AbstractType
     {
         $resolver->setDefaults([
             'class' => $this->dataClass,
-            'property' => 'name'
+            'property' => 'name',
         ]);
 
         $resolver->setNormalizer('query_builder', function (Options $options) {
             return function (EntityRepository $er) use ($options) {
                 $qb = $er->createQueryBuilder('e');
-                $qb->join('e.taxonomy' ,'t');
+                $qb->join('e.taxonomy', 't');
                 $qb->andWhere('t.name = :name');
                 $qb->setParameter('name', $options['taxonomy']);
+
                 return $qb;
             };
         });

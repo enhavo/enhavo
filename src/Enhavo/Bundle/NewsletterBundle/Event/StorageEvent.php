@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m
- * Date: 29.12.16
- * Time: 16:46
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Event;
@@ -13,7 +16,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class StorageEvent extends Event
 {
-    const TYPE_PRE_STORE = 'pre-store';
+    public const TYPE_PRE_STORE = 'pre-store';
     public const EVENT_MAILCHIMP_PRE_STORE = 'newsletter.mailchimp_pre_store';
     public const EVENT_CLEVERREACH_PRE_STORE = 'newsletter.cleverreach_pre_store';
     public const EVENT_MAILJET_PRE_STORE = 'newsletter.mailjet_pre_store';
@@ -28,9 +31,6 @@ class StorageEvent extends Event
      */
     private $subscriber;
 
-    /**
-     * @var
-     */
     private $dataArray;
 
     public function __construct(string $type, SubscriberInterface $subscriber, $data)
@@ -40,9 +40,6 @@ class StorageEvent extends Event
         $this->dataArray = $data;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
@@ -56,17 +53,11 @@ class StorageEvent extends Event
         return $this->subscriber;
     }
 
-    /**
-     * @return mixed
-     */
     public function getDataArray()
     {
         return $this->dataArray;
     }
 
-    /**
-     * @param mixed $dataArray
-     */
     public function setDataArray($dataArray): void
     {
         $this->dataArray = $dataArray;

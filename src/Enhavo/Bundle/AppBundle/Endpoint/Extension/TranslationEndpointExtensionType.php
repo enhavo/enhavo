@@ -1,9 +1,17 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Endpoint\Extension;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
-
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointTypeExtension;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\AppBundle\Endpoint\Type\ViewEndpointType;
@@ -17,8 +25,7 @@ class TranslationEndpointExtensionType extends AbstractEndpointTypeExtension
     public function __construct(
         private readonly TranslationDumper $translationDumper,
         private readonly LocaleResolverInterface $localeResolver,
-    )
-    {
+    ) {
     }
 
     public function handleRequest($options, Request $request, Data $data, Context $context)
@@ -30,7 +37,7 @@ class TranslationEndpointExtensionType extends AbstractEndpointTypeExtension
         $domains = [];
         if (is_string($options['translations'])) {
             $domains[] = $options['translations'];
-        } else if (is_array($options['translations'])) {
+        } elseif (is_array($options['translations'])) {
             $domains = $options['translations'];
         }
 

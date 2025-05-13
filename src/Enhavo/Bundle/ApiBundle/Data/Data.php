@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-06-08
- * Time: 19:02
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\ApiBundle\Data;
@@ -51,8 +54,6 @@ class Data implements \IteratorAggregate, \Countable, \ArrayAccess
      *
      * @param string $key     The key
      * @param mixed  $default The default value if the parameter key does not exist
-     *
-     * @return mixed
      */
     public function get($key, $default = null)
     {
@@ -67,7 +68,6 @@ class Data implements \IteratorAggregate, \Countable, \ArrayAccess
      */
     public function set($key, $value)
     {
-
         $this->data[$key] = $value;
     }
 
@@ -139,12 +139,12 @@ class Data implements \IteratorAggregate, \Countable, \ArrayAccess
 
     public function offsetGet($offset): mixed
     {
-        return isset($this->data[$offset]) ? $this->data[$offset] : null;
+        return $this->data[$offset] ?? null;
     }
 
     private function isValueNormalized($value): void
     {
-        if ($value !== null && !is_array($value) && !is_scalar($value)) {
+        if (null !== $value && !is_array($value) && !is_scalar($value)) {
             throw new \Exception(sprintf('Data value must be of type array or scalar. "%s" given.', gettype($value)));
         }
     }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
 use Enhavo\Bundle\FormBundle\Form\Transformer\CurrencyTransformer;
@@ -12,12 +21,11 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CurrencyType extends AbstractType
 {
-    /** @var  CurrencyTransformer */
+    /** @var CurrencyTransformer */
     private $currencyTransformer;
 
     /**
      * CurrencyType constructor.
-     * @param CurrencyTransformer $currencyTransformer
      */
     public function __construct(CurrencyTransformer $currencyTransformer)
     {

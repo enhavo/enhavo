@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -9,7 +18,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class TranslationDumperCompilerPass implements CompilerPassInterface
 {
-    const SERVICE = 'enhavo_app.translation.translation_dumper';
+    public const SERVICE = 'enhavo_app.translation.translation_dumper';
 
     public function process(ContainerBuilder $container)
     {
@@ -24,7 +33,7 @@ class TranslationDumperCompilerPass implements CompilerPassInterface
 
             $container
                 ->getDefinition(self::SERVICE)
-                ->addMethodCall('addLoader', array($attributes['alias'], new Reference($loaderId)));
+                ->addMethodCall('addLoader', [$attributes['alias'], new Reference($loaderId)]);
         }
     }
 
@@ -38,16 +47,16 @@ class TranslationDumperCompilerPass implements CompilerPassInterface
 
     private function getTranslationFilesFromAddResourceCalls(ContainerBuilder $container)
     {
-        $translationFiles = array();
+        $translationFiles = [];
 
         $methodCalls = $container->findDefinition('translator.default')->getMethodCalls();
         foreach ($methodCalls as $methodCall) {
-            if ($methodCall[0] === 'addResource') {
+            if ('addResource' === $methodCall[0]) {
                 $locale = $methodCall[1][2];
                 $filename = $methodCall[1][1];
 
                 if (!isset($translationFiles[$locale])) {
-                    $translationFiles[$locale] = array();
+                    $translationFiles[$locale] = [];
                 }
 
                 $translationFiles[$locale][] = $filename;
@@ -59,13 +68,13 @@ class TranslationDumperCompilerPass implements CompilerPassInterface
 
     private function getTranslationFiles(ContainerBuilder $container)
     {
-        $translationFiles = array();
+        $translationFiles = [];
         $translator = $container->findDefinition('translator.default');
 
         try {
             $translatorOptions = $translator->getArgument(4);
         } catch (OutOfBoundsException $e) {
-            $translatorOptions = array();
+            $translatorOptions = [];
         }
 
         if (isset($translatorOptions['resource_files'])) {

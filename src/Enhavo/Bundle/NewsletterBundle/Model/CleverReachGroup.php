@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: m
- * Date: 01.12.16
- * Time: 13:07
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\NewsletterBundle\Model;
-
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,7 +17,7 @@ use Doctrine\Common\Collections\Collection;
 class CleverReachGroup implements GroupInterface
 {
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
@@ -47,11 +49,6 @@ class CleverReachGroup implements GroupInterface
 
     /**
      * Group constructor.
-     * @param int $id
-     * @param string $name
-     * @param string $code
-     * @param \DateTime $lastChanged
-     * @param \DateTime $lastMailing
      */
     public function __construct(int $id, string $name, string $code, \DateTime $lastChanged, \DateTime $lastMailing)
     {
@@ -65,7 +62,6 @@ class CleverReachGroup implements GroupInterface
         $this->newsletters = new ArrayCollection();
     }
 
-
     /**
      * @return int
      */
@@ -74,40 +70,27 @@ class CleverReachGroup implements GroupInterface
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
     public function getCode(): string
     {
         return $this->code;
     }
 
-    /**
-     * @param string $code
-     */
     public function setCode(string $code): void
     {
         $this->code = $code;
     }
 
     /**
-     * @param LocalSubscriberInterface $subscriber
      * @return $this|GroupInterface
      */
     public function addSubscriber(LocalSubscriberInterface $subscriber): GroupInterface
@@ -118,7 +101,6 @@ class CleverReachGroup implements GroupInterface
     }
 
     /**
-     * @param LocalSubscriberInterface $subscriber
      * @return mixed|void
      */
     public function removeSubscriber(LocalSubscriberInterface $subscriber)
@@ -126,9 +108,6 @@ class CleverReachGroup implements GroupInterface
         $this->subscribers->removeElement($subscriber);
     }
 
-    /**
-     * @return Collection
-     */
     public function getSubscribers(): Collection
     {
         return $this->subscribers;

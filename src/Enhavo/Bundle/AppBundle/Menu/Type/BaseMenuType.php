@@ -1,9 +1,12 @@
 <?php
-/**
- * BaseMenuBuilder.php
+
+/*
+ * This file is part of the enhavo package.
  *
- * @since 20/09/16
- * @author gseidel
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Menu\Type;
@@ -18,8 +21,7 @@ class BaseMenuType extends AbstractType implements MenuTypeInterface
 {
     public function __construct(
         private readonly ResourceExpressionLanguage $expressionLanguage,
-    )
-    {
+    ) {
     }
 
     public function createViewData(array $options, Data $data): void
@@ -39,23 +41,23 @@ class BaseMenuType extends AbstractType implements MenuTypeInterface
 
         $resolver->setRequired([
             'component',
-            'model'
+            'model',
         ]);
     }
 
-    public function isEnabled(array $options, object $resource = null): bool
+    public function isEnabled(array $options, ?object $resource = null): bool
     {
-        return !!$this->expressionLanguage->evaluate($options['enabled'], [
+        return (bool) $this->expressionLanguage->evaluate($options['enabled'], [
             'resource' => $resource,
-            'action' => $this
+            'action' => $this,
         ]);
     }
 
-    public function getPermission(array $options, object $resource = null): mixed
+    public function getPermission(array $options, ?object $resource = null): mixed
     {
         return $this->expressionLanguage->evaluate($options['permission'], [
             'resource' => $resource,
-            'action' => $this
+            'action' => $this,
         ]);
     }
 

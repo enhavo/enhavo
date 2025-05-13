@@ -1,14 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-08-19
- * Time: 16:04
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\AppBundle\Output;
 
-use RuntimeException;
 use Symfony\Component\Console\Output\StreamOutput;
 
 class EchoStreamOutput extends StreamOutput
@@ -16,10 +18,10 @@ class EchoStreamOutput extends StreamOutput
     protected function doWrite($message, $newline)
     {
         if (false === @fwrite($this->getStream(), $message) || ($newline && (false === @fwrite($this->getStream(), PHP_EOL)))) {
-            throw new RuntimeException('Unable to write output.');
+            throw new \RuntimeException('Unable to write output.');
         }
 
-        echo $message . "\n";
+        echo $message."\n";
 
         ob_flush();
         flush();

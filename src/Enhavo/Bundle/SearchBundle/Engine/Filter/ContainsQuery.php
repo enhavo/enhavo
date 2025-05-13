@@ -1,13 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 29.08.18
- * Time: 18:48
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\SearchBundle\Engine\Filter;
-
 
 class ContainsQuery implements QueryInterface
 {
@@ -16,9 +18,9 @@ class ContainsQuery implements QueryInterface
      */
     private $values = [];
 
-    public function __construct(array $values = null)
+    public function __construct(?array $values = null)
     {
-        if($values !== null) {
+        if (null !== $values) {
             $this->values = $values;
         }
     }
@@ -36,7 +38,7 @@ class ContainsQuery implements QueryInterface
      */
     public function setValues($values)
     {
-        if($values !== null) {
+        if (null !== $values) {
             $this->values = $values;
         }
     }

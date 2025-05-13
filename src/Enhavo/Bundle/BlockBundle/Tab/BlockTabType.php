@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\BlockBundle\Tab;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -13,11 +22,10 @@ class BlockTabType extends AbstractTabType
 {
     public function __construct(
         private ActionManager $actionManager,
-    )
-    {
+    ) {
     }
 
-    public function createViewData(array $options, Data $data, InputInterface $input = null): void
+    public function createViewData(array $options, Data $data, ?InputInterface $input = null): void
     {
         $data['property'] = $options['property'];
         $data['actions'] = $this->actionManager->createViewData($options['actions']);
@@ -25,28 +33,28 @@ class BlockTabType extends AbstractTabType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-       $resolver->setDefaults([
-           'label' => 'content.label.content',
-           'translation_domain' =>  'EnhavoContentBundle',
-           'component' => 'tab-block',
-           'model' => 'BlockTab',
-           'actions' => [
-               'collapse' => [
-                   'type' => 'block_collapse'
-               ]
-           ],
-       ]);
+        $resolver->setDefaults([
+            'label' => 'content.label.content',
+            'translation_domain' => 'EnhavoContentBundle',
+            'component' => 'tab-block',
+            'model' => 'BlockTab',
+            'actions' => [
+                'collapse' => [
+                    'type' => 'block_collapse',
+                ],
+            ],
+        ]);
 
-       $resolver->setNormalizer('actions', function ($options, $value) {
-           if (isset($value['collapse']['type']) &&
-               $value['collapse']['type'] === 'block_collapse' &&
-               !isset($value['collapse']['property'])
-           ) {
-               $value['collapse']['property'] = $options['property'];
-           }
+        $resolver->setNormalizer('actions', function ($options, $value) {
+            if (isset($value['collapse']['type'])
+                && 'block_collapse' === $value['collapse']['type']
+                && !isset($value['collapse']['property'])
+            ) {
+                $value['collapse']['property'] = $options['property'];
+            }
 
-           return $value;
-       });
+            return $value;
+        });
 
         $resolver->setRequired(['property']);
     }

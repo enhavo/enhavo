@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Locale;
-
 
 use Enhavo\Bundle\TranslationBundle\Locale\LocalePathResolver;
 use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;
@@ -78,7 +85,6 @@ class LocalePathResolverTest extends TestCase
         $dependencies->request->method('getPathInfo')->willReturn('/en/action/id');
         $this->assertEquals('es', $resolver->resolve());
     }
-
 }
 
 class LocalePathResolverTestDependencies

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\UserBundle\Validator\Constraints;
 
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
@@ -13,22 +22,17 @@ class EmailNotExistsValidator extends ConstraintValidator
 
     /**
      * UsernameExistsValidator constructor.
-     * @param UserRepository $userRepository
      */
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
 
-    /**
-     * @param mixed $value
-     * @param Constraint $constraint
-     */
     public function validate($value, Constraint $constraint)
     {
         if (is_string($value)) {
             $user = $this->userRepository->findByEmail($value);
-            if ($user !== null) {
+            if (null !== $user) {
                 $this->context->buildViolation($constraint->message)->addViolation();
             }
         }

@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2019-09-15
- * Time: 16:58
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator;
@@ -22,10 +25,8 @@ class LocalePrefixGenerator extends AbstractGenerator
         private TranslatorInterface $routeTranslator,
         private TranslatorInterface $textTranslator,
         private RouteFactory $routeFactory,
-    )
-    {
+    ) {
     }
-
 
     public function generate($resource, $options = [])
     {
@@ -43,7 +44,7 @@ class LocalePrefixGenerator extends AbstractGenerator
         $locale = $this->translationManager->getDefaultLocale();
 
         $value = $value = $this->getProperty($resource, $options['property']);
-        if ($value !== null) {
+        if (null !== $value) {
             $route = $this->getProperty($resource, $options['route_property']);
             if (!$options['overwrite'] && $route->getStaticPrefix()) {
                 return;
@@ -106,7 +107,7 @@ class LocalePrefixGenerator extends AbstractGenerator
             'generate_default' => true,
             'generate_translations' => true,
             'default_prefix_locale' => true,
-            'translation_prefix_locale' => true
+            'translation_prefix_locale' => true,
         ]);
         $resolver->setRequired('property');
     }

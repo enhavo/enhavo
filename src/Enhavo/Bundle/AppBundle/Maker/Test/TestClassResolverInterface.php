@@ -1,11 +1,23 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\AppBundle\Maker\Test;
 
 interface TestClassResolverInterface
 {
     public function getClassName(string $originalFqcn): string;
+
     public function getNamespace(string $originalFqcn): string;
+
     public function getPath(string $originalFqcn): string;
+
     public function supports(string $originalFqcn): bool;
 }

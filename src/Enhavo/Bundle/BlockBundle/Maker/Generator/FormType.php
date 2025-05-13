@@ -1,7 +1,12 @@
 <?php
-/**
- * @author blutze-media
- * @since 2021-09-23
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\BlockBundle\Maker\Generator;
@@ -10,30 +15,20 @@ class FormType
 {
     public function __construct(
         private string $blockPrefix,
-        private array  $properties
-    )
-    {
+        private array $properties,
+    ) {
     }
 
-    /**
-     * @return string
-     */
     public function getNamespace(): string
     {
         return $this->namespace;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getBlockPrefix(): string
     {
         return $this->blockPrefix;
@@ -52,5 +47,4 @@ class FormType
 
         return $fields;
     }
-
 }

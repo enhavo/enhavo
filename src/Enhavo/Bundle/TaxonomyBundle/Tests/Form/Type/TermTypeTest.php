@@ -1,9 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gseidel
- * Date: 2020-01-21
- * Time: 23:14
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Enhavo\Bundle\TaxonomyBundle\Tests\Form\Type;
@@ -38,9 +41,10 @@ class TermTypeTest extends TypeTestCase
     public function getExtensions()
     {
         $type = new TermType(Term::class);
+
         return [
-            new PreloadedExtension([$type,], []),
-            PreloadExtensionFactory::createWysiwygExtension()
+            new PreloadedExtension([$type], []),
+            PreloadExtensionFactory::createWysiwygExtension(),
         ];
     }
 }
