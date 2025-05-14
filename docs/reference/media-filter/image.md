@@ -54,23 +54,23 @@ the value if the max value is reached.
 
 ### mode {#mode_image}
 
-**type**: [string]{.title-ref}
+**type**: `string`
 
-The possible values are [inset]{.title-ref} and [outbound]{.title-ref}.
-The default value is [outbound]{.title-ref}. The mode is only used if
+The possible values are `inset` and `outbound`.
+The default value is `outbound` The mode is only used if
 width and height are set. If the image need to be scaled and the sizes
-are not fit, the [inset]{.title-ref} says that the image will be set
-into the new size and you will see the full picture, that means also
+are not fit, the `inset` says that the image will be set
+into the new size, and you will see the full picture, that means also
 that you have spaces on the edges. If you set the value to
-[outbound]{.title-ref} the picture will be cut on the edges and fit to
+`outbound` the picture will be cut on the edges and fit to
 the size.
 
 ### format {#format_image}
 
 **type**: `string`
 
-Define the output format. That can be [jpg]{.title-ref},
-[png]{.title-ref} and [gif]{.title-ref}. If no format is set, the format
+Define the output format. That can be `jpg`,
+`png` and `gif`. If no format is set, the format
 will be the same as the input image.
 
 ### jpeg_quality {#jpeg_quality_image}
