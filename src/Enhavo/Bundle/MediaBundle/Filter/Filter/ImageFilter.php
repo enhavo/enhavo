@@ -335,6 +335,18 @@ class ImageFilter extends AbstractFilter
         return sscanf($backgroundColorHex, '%02x%02x%02x');
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function predictExtension(?string $originalExtension, FilterSetting $setting): ?string
+    {
+        $format = $setting->getSetting('format');
+        if ($format) {
+            return $format;
+        }
+        return $originalExtension;
+    }
+
     public function getType()
     {
         return 'image';

@@ -25,4 +25,15 @@ interface FilterInterface extends TypeInterface
      * @return void
      */
     public function apply($file, FilterSetting $setting);
+
+    /**
+     * Predicts the file extension of the resulting file after running this filter.
+     * This function needs to run fast without any actual conversions happening. If the extension cannot be predicted
+     * without any slow code, return null.
+     *
+     * @param string|null $originalExtension Extension predicted by the previous filter or the original file
+     * @param FilterSetting $setting
+     * @return string|null Predicted extension or null if unpredictable
+     */
+    public function predictExtension(?string $originalExtension, FilterSetting $setting): ?string;
 }

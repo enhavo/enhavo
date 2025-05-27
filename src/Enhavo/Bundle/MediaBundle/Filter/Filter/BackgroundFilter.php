@@ -42,6 +42,14 @@ class BackgroundFilter extends AbstractFilter
         return $newImage;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function predictExtension(?string $originalExtension, FilterSetting $setting): ?string
+    {
+        return $originalExtension;
+    }
+
     public function getType()
     {
         return 'background';
