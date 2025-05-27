@@ -6,6 +6,7 @@ import {Router} from "@enhavo/app/routing/Router";
 import {FrameStackSubscriber} from "@enhavo/app/frame/FrameStackSubscriber";
 import {FrameStateManager} from "@enhavo/app/frame/FrameStateManager";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
+import {Frame} from "@enhavo/app/frame/Frame";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 
@@ -15,10 +16,11 @@ export class MainManager
     public branding: Branding;
     public primaryToolbarWidgets: ToolbarWidgetInterface[];
     public secondaryToolbarWidgets: ToolbarWidgetInterface[];
+    private defaultTitle: string = ''
 
     constructor(
         private frameSubscriber: FrameStackSubscriber,
-        private frameStageManager: FrameStateManager,
+        private frameStateManager: FrameStateManager,
         private frameManager: FrameManager,
         private menuManager: MenuManager,
         private widgetManager: ToolbarWidgetManager,
@@ -30,12 +32,15 @@ export class MainManager
 
     async load()
     {
+        this.defaultTitle = document.title;
+
         this.frameManager.setMainFrame(true);
-        this.frameStageManager.subscribe();
+        this.frameStateManager.subscribe();
         this.frameSubscriber.subscribe();
         this.flashMessenger.subscribe();
+        this.subscribe();
 
-        await this.frameStageManager.loadState();
+        await this.frameStateManager.loadState();
 
         let url = this.router.generate('enhavo_app_admin_api_main');
 
@@ -64,5 +69,31 @@ export class MainManager
         }
 
         this.loading = false;
+    }
+
+    private subscribe()
+    {
+        this.frameManager.on('frame_updated', async (event) => {
+            this.updateTitle()
+        });
+
+        this.frameManager.on('frame_removed', async (event) => {
+            this.updateTitle()
+        });
+
+        this.frameManager.on('frame_added', async (event) => {
+            this.updateTitle()
+        });
+    }
+
+    private updateTitle()
+    {
+        this.frameManager.getFrames().then((frames: Frame[]) => {
+            for (let frame of frames) {
+                if (frame.focus) {
+                    document.title = frame.label != '' ? frame.label : this.defaultTitle;
+                }
+            }
+        });
     }
 }
