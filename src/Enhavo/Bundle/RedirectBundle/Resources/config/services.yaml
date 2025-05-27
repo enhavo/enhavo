@@ -3,6 +3,13 @@ services:
         tags:
             - { name: enhavo_app.menu }
 
+    Enhavo\Bundle\RedirectBundle\Controller\RedirectController:
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
+
     enhavo_redirect.redirect.redirect_manager:
         class: Enhavo\Bundle\RedirectBundle\Redirect\RedirectManager
         arguments:
