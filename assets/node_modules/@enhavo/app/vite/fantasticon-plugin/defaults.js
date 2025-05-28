@@ -14,6 +14,7 @@ export function defaults(options)
         prefix: name,
         descent: 60,
         normalize: true,
+        assetVersion: Date.now(),
         formatOptions: {
             svg: { ascent: 0 },
             json: { indent: 2 },
