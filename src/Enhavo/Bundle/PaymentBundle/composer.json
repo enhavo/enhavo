@@ -16,8 +16,14 @@
   },
   "require": {
     "php": "^8.0",
+<<<<<<< HEAD
     "enhavo/app-bundle": "^0.14",
     "sylius/payment-bundle": "^1.12",
     "sylius/payment": "^1.12"
+=======
+    "enhavo/app-bundle": "dev-master",
+    "sylius/payment-bundle": "1.12.*",
+    "sylius/payment": "1.12.*"
+>>>>>>> 79d1ffd3e (fix: stick sylius version to 1.12 (#2032))
   }
 }
