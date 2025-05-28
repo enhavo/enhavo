@@ -4,6 +4,7 @@ import { URL } from "node:url";
 import { dirname, relative } from "path/posix";
 import { assetPath, assetType, withoutQuery } from "@enhavo/app/vite/fantasticon-plugin/paths.js";
 import { watchDebounced } from "@enhavo/app/vite/fantasticon-plugin/util.js";
+import { getHash } from "fantasticon/lib/utils/hash.js";
 
 const fontAssetTypes = [
     "svg",
@@ -69,6 +70,7 @@ async function assetBuilder(config, generateFonts) {
                 name: cfg.name,
                 assetVersion: cfg.assetVersion,
                 files: files,
+                hash: results.assetsOut.svg ? getHash(results.assetsOut.svg.toString('utf8')) : null,
             }));
         }
 
