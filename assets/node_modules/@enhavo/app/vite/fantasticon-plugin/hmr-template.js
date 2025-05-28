@@ -5,7 +5,7 @@ export const hmrTemplate = (event, id, config, base) => `
 (function() {
   var link = document.createElement('link');
   link.setAttribute('data-id', '${id}');
-  link.setAttribute("href", "${base}${assetPath(config, "css")}?${Date.now()}");
+  link.setAttribute("href", "${base}${assetPath(config, "css")}?${config.assetVersion}");
   link.setAttribute("rel", "stylesheet");
   link.setAttribute("type", "text/css");
   var head = document.getElementsByTagName('head')[0];

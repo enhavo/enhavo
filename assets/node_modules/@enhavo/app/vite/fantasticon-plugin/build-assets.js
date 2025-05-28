@@ -1,4 +1,5 @@
 import { promises as fs } from "node:fs";
+import { join, basename } from "node:path";
 import { URL } from "node:url";
 import { dirname, relative } from "path/posix";
 import { assetPath, assetType, withoutQuery } from "@enhavo/app/vite/fantasticon-plugin/paths.js";
@@ -39,7 +40,14 @@ async function assetBuilder(config, generateFonts) {
         await fs.mkdir(cfg.inputDir, { recursive: true });
         cfg.inputDir = relative(".", cfg.inputDir);
 
+        // assetVersion is not a fantasticon config, so we delete and reapply it
+        const assetVersion = cfg.assetVersion;
+        delete cfg.assetVersion;
+
         const results = await generateFonts(cfg, writeToDisk);
+
+        cfg.assetVersion = assetVersion;
+
         assets = results.assetsOut;
         if (assets.ts) {
             const ts = assets.ts;
@@ -49,6 +57,21 @@ async function assetBuilder(config, generateFonts) {
             await fs.mkdir(dir, { recursive: true });
             await fs.writeFile(filePath, ts);
         }
+
+        if (writeToDisk) {
+            const files = [];
+            for (let writeResult of results.writeResults) {
+                files.push(basename(writeResult.writePath));
+            }
+
+            const manifestFilePath = join(cfg.outputDir, 'fantasticon.json');
+            await fs.writeFile(manifestFilePath, JSON.stringify({
+                name: cfg.name,
+                assetVersion: cfg.assetVersion,
+                files: files,
+            }));
+        }
+
         return assets;
     }
 
