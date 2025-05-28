@@ -6,7 +6,6 @@ export function fantasticonSetting(setting)
     let defaultSettings =  {
         name: "icon",
         inputDir: path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../assets/icons'),
-        fontTypes: ["ttf", "woff", "woff2"],
         assetTypes: ["css", "html"],
         prefix: 'icon',
         tag: '*',
