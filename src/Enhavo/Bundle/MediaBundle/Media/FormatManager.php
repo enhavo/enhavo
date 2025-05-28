@@ -159,6 +159,17 @@ class FormatManager
         return $fileFormat;
     }
 
+    public function predictFormatExtension(?string $originalExtension, string $formatName): ?string
+    {
+        $settings = $this->getFormatSettings($formatName, []);
+        $extension = $originalExtension;
+        foreach ($settings as $setting) {
+            $filter = $this->getFilter($setting->getType());
+            $extension = $filter->predictExtension($extension, $setting);
+        }
+        return $extension;
+    }
+
     private function saveFormat(FormatInterface $fileFormat): FormatInterface
     {
         $this->resourceManager->save($fileFormat);

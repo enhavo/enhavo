@@ -45,6 +45,26 @@ class ParentFilter extends AbstractFilter
         }
     }
 
+
+    /**
+     * @inheritDoc
+     */
+    public function predictExtension(?string $originalExtension, FilterSetting $setting): ?string
+    {
+        $parent = $setting->getSetting('parent');
+        $exclude = $setting->getSetting('exclude', []);
+        $settings = $this->formatManager->getFormatSettings($parent);
+        $extension = $originalExtension;
+        foreach ($settings as $setting) {
+            if (in_array($setting->getType(), $exclude)) {
+                continue;
+            }
+            $filter = $this->formatManager->getFilter($setting->getType());
+            $extension = $filter->predictExtension($extension, $setting);
+        }
+        return $extension;
+    }
+
     public function getType()
     {
         return 'parent';

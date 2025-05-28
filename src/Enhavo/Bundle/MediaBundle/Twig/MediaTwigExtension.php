@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\MediaBundle\Twig;
 
 use Enhavo\Bundle\AppBundle\Twig\TwigRouter;
+use Enhavo\Bundle\MediaBundle\Media\FormatManager;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -20,6 +21,7 @@ class MediaTwigExtension extends AbstractExtension
 {
     public function __construct(
         private readonly TwigRouter $twigRouter,
+        private readonly FormatManager $formatManager,
     ) {
     }
 
@@ -38,11 +40,16 @@ class MediaTwigExtension extends AbstractExtension
         if (null === $file) {
             return null;
         } elseif (null !== $format) {
+            $extension = $this->formatManager->predictFormatExtension($file['extension'], $format);
+            if (null === $extension) {
+                $extension = $file['extension'];
+            }
+
             return $this->twigRouter->generate('enhavo_media_theme_format', [
                 'token' => $file['token'],
                 'shortChecksum' => $file['shortChecksum'],
                 'filename' => $file['filename'],
-                'extension' => $file['extension'],
+                'extension' => $extension,
                 'format' => $format,
             ], $referenceType);
         }

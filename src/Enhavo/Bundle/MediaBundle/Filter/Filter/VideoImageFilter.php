@@ -46,6 +46,14 @@ class VideoImageFilter extends AbstractFilter
         $this->setMimeType($file, 'image/jpeg');
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function predictExtension(?string $originalExtension, FilterSetting $setting): ?string
+    {
+        return 'jpg';
+    }
+
     public function getType()
     {
         return 'video_image';
