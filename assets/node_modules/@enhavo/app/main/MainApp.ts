@@ -1,4 +1,5 @@
 import ViewStack from '@enhavo/app/view-stack/ViewStack';
+import ViewInterface from '@enhavo/app/view-stack/ViewInterface';
 import MenuManager from '@enhavo/app/menu/MenuManager';
 import Branding from '@enhavo/app/main/Branding';
 import StateManager from "@enhavo/app/state/StateManager";
@@ -16,6 +17,7 @@ export default class MainApp
     private readonly dataStorageManager: DataStorageManager;
     private readonly widgetManager: WidgetManager;
     private readonly componentRegistry: ComponentRegistryInterface;
+    private defaultTitle: string = ''
 
     constructor(
         brandingData: Branding,
@@ -39,12 +41,15 @@ export default class MainApp
     }
 
     init() {
+        this.defaultTitle = document.title;
+
         this.componentRegistry.registerStore('mainApp', this);
         this.data = this.componentRegistry.registerData(this.data);
 
         this.widgetManager.init();
         this.menuManager.init();
         this.viewStack.init();
+        this.subscribe();
 
         if(!this.viewStack.hasViews()) {
             this.menuManager.start();
@@ -59,5 +64,31 @@ export default class MainApp
     getViewStack(): ViewStack
     {
         return this.viewStack;
+    }
+
+    private subscribe()
+    {
+        this.viewStack.getDispatcher().on('removed', async (event) => {
+            window.setTimeout(() => {
+                this.updateTitle()
+            }, 200);
+        });
+
+        this.viewStack.getDispatcher().on('updated', async (event) => {
+            this.updateTitle()
+        });
+
+        this.viewStack.getDispatcher().on('loaded', async (event) => {
+            this.updateTitle()
+        });
+    }
+
+    private updateTitle()
+    {
+        for (let view of this.viewStack.getViews()) {
+            if (view.focus) {
+                document.title = view.label != '' && view.label != null ? view.label : this.defaultTitle;
+            }
+        }
     }
 }
