@@ -9,6 +9,6 @@
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
-    "@enhavo/app": "0.15.0"
+    "@enhavo/app": "^0.15"
   }
 }

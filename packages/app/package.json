@@ -13,7 +13,7 @@
     "node": ">=20.11.0"
   },
   "dependencies": {
-    "@enhavo/core": "0.15.0",
+    "@enhavo/core": "^0.15",
     "@hotwired/stimulus": "^3.0.1",
     "@ibm/plex": "^1.2.3",
     "@vuepic/vue-datepicker": "^8.3.1",
