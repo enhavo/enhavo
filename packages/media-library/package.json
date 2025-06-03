@@ -9,7 +9,7 @@
     "url": "https://github.com/enhavo/enhavo-extension.git"
   },
   "dependencies": {
-    "@enhavo/app": "0.8.0",
-    "@enhavo/core": "0.8.0"
+    "@enhavo/app": "0.15.0",
+    "@enhavo/core": "0.15.0"
   }
 }

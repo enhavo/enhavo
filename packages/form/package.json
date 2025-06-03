@@ -2,14 +2,14 @@
   "name": "@enhavo/form",
   "license": "MIT",
   "types": "index.ts",
-  "version": "0.8.0",
+  "version": "0.15.0",
   "homepage": "https://www.enhavo.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
-    "@enhavo/app": "0.8.0",
+    "@enhavo/app": "0.15.0",
     "@sereneinserenade/tiptap-search-and-replace": "^0.1.1",
     "@tiptap/extension-color": "^2.9.1",
     "@tiptap/extension-image": "^2.9.1",
