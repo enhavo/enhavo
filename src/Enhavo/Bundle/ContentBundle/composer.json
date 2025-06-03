@@ -13,7 +13,7 @@
   ],
   "require": {
     "php": "^8.2",
-    "enhavo/app-bundle": "dev-master",
+    "enhavo/app-bundle": "^0.15",
     "league/uri": "^6.4"
   },
   "autoload": {

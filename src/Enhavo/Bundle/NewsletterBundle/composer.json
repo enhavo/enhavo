@@ -13,12 +13,12 @@
   ],
   "require": {
     "php": "^8.2",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/form-bundle": "dev-master",
-    "enhavo/block-bundle": "dev-master",
+    "enhavo/app-bundle": "^0.15",
+    "enhavo/form-bundle": "^0.15",
+    "enhavo/block-bundle": "^0.15",
     "symfony/lock": "^6.4",
     "symfony/http-client": "^6.4",
-    "enhavo/cleverreach": "dev-master",
+    "enhavo/cleverreach": "^0.15",
     "mailjet/mailjet-apiv3-php": "^1.5",
     "mailchimp/marketing": "^3.0"
   },

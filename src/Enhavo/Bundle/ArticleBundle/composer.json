@@ -13,14 +13,14 @@
   ],
   "require": {
     "php": "^8.2",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/content-bundle": "dev-master",
-    "enhavo/taxonomy-bundle": "dev-master",
-    "enhavo/block-bundle": "dev-master",
-    "enhavo/form-bundle": "dev-master",
-    "enhavo/media-bundle": "dev-master",
-    "enhavo/template-bundle": "dev-master",
-    "enhavo/comment-bundle": "dev-master"
+    "enhavo/app-bundle": "^0.15",
+    "enhavo/content-bundle": "^0.15",
+    "enhavo/taxonomy-bundle": "^0.15",
+    "enhavo/block-bundle": "^0.15",
+    "enhavo/form-bundle": "^0.15",
+    "enhavo/media-bundle": "^0.15",
+    "enhavo/template-bundle": "^0.15",
+    "enhavo/comment-bundle": "^0.15"
   },
   "suggest": {
     "enhavo/search-bundle": "Make your articles searchable with EnhavoSearchBundle"

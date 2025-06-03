@@ -13,9 +13,9 @@
   ],
   "require": {
     "php": "^8.2",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/form-bundle": "dev-master",
-    "enhavo/media-bundle": "dev-master"
+    "enhavo/app-bundle": "^0.15",
+    "enhavo/form-bundle": "^0.15",
+    "enhavo/media-bundle": "^0.15"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\SettingBundle\\": "" }

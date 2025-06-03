@@ -13,9 +13,9 @@
   ],
   "require": {
     "php": "^8.2",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/block-bundle": "dev-master",
-    "enhavo/doctrine-extension-bundle": "dev-master"
+    "enhavo/app-bundle": "^0.15",
+    "enhavo/block-bundle": "^0.15",
+    "enhavo/doctrine-extension-bundle": "^0.15"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\CommentBundle\\": "" }

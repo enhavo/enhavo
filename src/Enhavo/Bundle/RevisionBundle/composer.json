@@ -13,9 +13,9 @@
   ],
   "require": {
     "php": "^8.2",
-    "enhavo/api-bundle": "dev-master",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/resource-bundle": "dev-master"
+    "enhavo/api-bundle": "^0.15",
+    "enhavo/app-bundle": "^0.15",
+    "enhavo/resource-bundle": "^0.15"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\RevisionBundle\\": "" }

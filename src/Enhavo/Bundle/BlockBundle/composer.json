@@ -13,10 +13,10 @@
   ],
   "require": {
     "php": "^8.2",
-    "enhavo/app-bundle": "dev-master",
-    "enhavo/doctrine-extension-bundle": "dev-master",
-    "enhavo/form-bundle": "dev-master",
-    "enhavo/media-bundle": "dev-master",
+    "enhavo/app-bundle": "^0.15",
+    "enhavo/doctrine-extension-bundle": "^0.15",
+    "enhavo/form-bundle": "^0.15",
+    "enhavo/media-bundle": "^0.15",
     "symfony/uid": "^6.4"
   },
   "autoload": {

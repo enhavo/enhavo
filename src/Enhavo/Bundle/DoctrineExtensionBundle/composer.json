@@ -13,7 +13,7 @@
   ],
   "require": {
     "php": "^8.2",
-    "enhavo/metadata": "dev-master"
+    "enhavo/metadata": "^0.15"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\DoctrineExtensionBundle\\": "" }
