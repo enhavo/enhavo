@@ -1,0 +1,26 @@
+{
+  "name": "@enhavo/dependency-injection",
+  "license": "MIT",
+  "type": "module",
+  "version": "0.15.0",
+  "homepage": "https://www.enhavo.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enhavo/enhavo.git"
+  },
+  "bin": {
+    "dependency-injection": "bin/dependency-injection.js",
+    "di": "bin/dependency-injection.js"
+  },
+  "dependencies": {
+    "@rollup/pluginutils": "^5.1",
+    "commander": "^9.4.0",
+    "glob": "^7.1.6",
+    "lodash": "^4.0",
+    "sha1": "^1.1.1",
+    "yaml": "^1.10.0"
+  },
+  "devDependencies": {
+    "acorn": "^7.3.1"
+  }
+}

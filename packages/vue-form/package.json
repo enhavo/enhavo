@@ -1,0 +1,17 @@
+{
+  "name": "@enhavo/vue-form",
+  "license": "MIT",
+  "types": "index.ts",
+  "type": "module",
+  "version": "0.15.0",
+  "homepage": "https://www.enhavo.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enhavo/enhavo.git"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "qs": "^6.10.1",
+    "uuid": "^3.3.2"
+  }
+}
