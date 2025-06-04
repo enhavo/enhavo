@@ -16,6 +16,7 @@ page:
     to_page: 'Open page'
     id: 'ID'
     public: 'public'
+    publicationDate: 'Publication date'
     title: 'Title'
     content: 'Content'
     meta: 'Meta'
