@@ -30,14 +30,14 @@ enhavo_resource:
                     label: Text
                 public:
                     type: boolean
-                    label: article.label.public
-                    translation_domain: EnhavoArticleBundle
+                    label: page.label.public
+                    translation_domain: EnhavoPageBundle
                     property: public
                     equals: true
             columns:
                 public:
-                    label: article.label.public
-                    translation_domain: EnhavoArticleBundle
+                    label: page.label.public
+                    translation_domain: EnhavoPageBundle
                     property: public
                     width: 2
                     type: boolean
@@ -45,14 +45,14 @@ enhavo_resource:
                     visible_condition: "desktop"
                 title:
                     type: text
-                    label: article.label.title
-                    translation_domain: EnhavoArticleBundle
+                    label: page.label.title
+                    translation_domain: EnhavoPageBundle
                     property: title
                     width: 7
                     sortable: true
                 publicationDate:
-                    label: article.label.publicationDate
-                    translation_domain: EnhavoArticleBundle
+                    label: page.label.publicationDate
+                    translation_domain: EnhavoPageBundle
                     property: publicationDate
                     type: date
                     width: 3

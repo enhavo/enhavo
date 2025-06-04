@@ -20,7 +20,8 @@ enhavo_resource:
                 title:
                     type: text
                     property: title
-                    label: Text
+                    label: article.label.title
+                    translation_domain: EnhavoArticleBundle
                 public:
                     type: boolean
                     label: article.label.public
