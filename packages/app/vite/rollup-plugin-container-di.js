@@ -61,6 +61,15 @@ export default function (opts = {}) {
                 }
             }
 
+            if (options.manualChunks && typeof options.manualChunks === 'object') {
+                for (const [chunkName, chunkList] of Object.entries(options.manualChunks)) {
+                    if (!chunks[chunkName]) {
+                        chunks[chunkName] = [];
+                    }
+                    chunks[chunkName].push(...chunkList);
+                }
+            }
+
             outputOptions.manualChunks = chunks;
             return outputOptions;
         }
