@@ -70,12 +70,18 @@ export default class Form
 
     public changeTab(key: string, store: boolean = true)
     {
+        let tabExists = false;
         for(let tab of this.tabs) {
             if (tab.key === key) {
                 tab.active = true;
+                tabExists = true;
                 continue;
             }
             tab.active = false;
+        }
+        if (!tabExists && this.tabs.length > 0) {
+            this.tabs[0].active = true;
+            key = this.tabs[0].key;
         }
 
         if (store) {
