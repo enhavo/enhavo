@@ -14,6 +14,7 @@ namespace Enhavo\Bundle\AppBundle\Twig;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\AppBundle\Widget\WidgetManager;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -31,10 +32,16 @@ class WidgetExtension extends AbstractExtension
      */
     private $templateResolver;
 
-    public function __construct(WidgetManager $widgetManager, TemplateResolver $templateResolver)
+    /**
+     * @var Environment
+     */
+    private $twigEnvironment;
+
+    public function __construct(WidgetManager $widgetManager, TemplateResolver $templateResolver, Environment $twigEnvironment)
     {
         $this->widgetManager = $widgetManager;
         $this->templateResolver = $templateResolver;
+        $this->twigEnvironment = $twigEnvironment;
     }
 
     public function getFunctions()
@@ -49,7 +56,7 @@ class WidgetExtension extends AbstractExtension
         $widget = $this->widgetManager->getWidget($type, $options);
         $data = $widget->createViewData($resource);
         $template = $this->templateResolver->resolve($widget->getTemplate());
-        $content = $this->container->get('twig')->render($template, $data);
+        $content = $this->twigEnvironment->render($template, $data);
 
         return $content;
     }

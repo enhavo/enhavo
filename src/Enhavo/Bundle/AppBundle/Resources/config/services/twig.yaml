@@ -42,6 +42,7 @@ services:
         arguments:
             - '@enhavo_app.widget.widget_manager'
             - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
+            - '@twig'
         calls:
             - [ setContainer, ['@service_container']]
         tags:
