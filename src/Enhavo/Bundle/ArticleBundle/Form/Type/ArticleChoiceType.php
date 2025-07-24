@@ -31,7 +31,7 @@ class ArticleChoiceType extends AbstractType
             'label' => 'article.label.article',
             'translation_domain' => 'EnhavoArticleBundle',
             'multiple' => false,
-            'route' => 'enhavo_article_article_auto_complete',
+            'route' => 'enhavo_article_admin_api_article_auto_complete',
         ]);
     }
 }
