@@ -31,7 +31,7 @@ class AutoCompleteEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
-        $term = $request->get('q', $options['term_key']);
+        $term = $request->get($options['term_key'], '');
         $page = $request->get('page', 1);
 
         $entities = $this->getEntities($options, $request, $term);
