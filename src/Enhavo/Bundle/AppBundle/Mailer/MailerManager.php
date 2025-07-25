@@ -149,6 +149,8 @@ class MailerManager
             if (Message::CONTENT_TYPE_MIXED === $message->getContentType()) {
                 $email->html($template->renderBlock('text_html', $message->getContext()));
                 $email->text($template->renderBlock('text_plain', $message->getContext()));
+            } elseif (Message::CONTENT_TYPE_PLAIN === $message->getContentType()) {
+                $email->text($template->render($message->getContext()));
             } else {
                 $email->html($template->render($message->getContext()));
             }
