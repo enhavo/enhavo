@@ -130,7 +130,7 @@ class MailerManagerTest extends TestCase
         $manager = $this->createInstance($dependencies);
 
         $dependencies->mailer->expects($this->once())->method('send')->willReturnCallback(function (Email $email): void {
-            $this->assertEquals('__text__', $email->getHtmlBody());
+            $this->assertEquals('__text__', $email->getTextBody());
             $this->assertEquals('__subject__trans', $email->getSubject());
             $this->assertEquals('cc1@test.de', $email->getCc()[0]->getAddress());
             $this->assertEquals('cc2@test.de', $email->getCc()[1]->getAddress());
