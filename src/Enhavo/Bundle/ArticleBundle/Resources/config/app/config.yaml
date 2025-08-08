@@ -8,7 +8,7 @@ enhavo_content:
         collectors:
             article:
                 type: publish
-                repository: enhavo_article.article.repository
+                repository: enhavo_article.article
 
 enhavo_routing:
     classes:
