@@ -32,6 +32,7 @@ services:
             - [setContainer, ['@service_container']]
         arguments:
             - '@enhavo_routing.router'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
         tags:
             - { name: enhavo.sitemap_collector, alias: repository }
 
@@ -42,6 +43,7 @@ services:
             - [setContainer, ['@service_container']]
         arguments:
             - '@enhavo_routing.router'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
         tags:
             - { name: enhavo.sitemap_collector, alias: publish }
 

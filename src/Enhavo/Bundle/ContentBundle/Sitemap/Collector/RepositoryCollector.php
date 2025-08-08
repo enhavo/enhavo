@@ -15,6 +15,7 @@ use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Enhavo\Bundle\ContentBundle\Model\SitemapUrl;
 use Enhavo\Bundle\ContentBundle\Sitemap\CollectorInterface;
 use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
+use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\RoutingBundle\Router\Router;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -32,14 +33,10 @@ class RepositoryCollector extends AbstractType implements CollectorInterface
      */
     protected $options;
 
-    /**
-     * @var Router
-     */
-    protected $router;
-
-    public function __construct(Router $router)
-    {
-        $this->router = $router;
+    public function __construct(
+        private readonly Router $router,
+        private readonly ResourceManager $resourceManager,
+    ) {
     }
 
     public function setOptions($options)
@@ -56,10 +53,14 @@ class RepositoryCollector extends AbstractType implements CollectorInterface
 
     protected function getResources()
     {
-        if (false === strpos(':', $this->options['repository'])) {
+        if ($this->container->has($this->options['repository'])) {
             $repository = $this->container->get($this->options['repository']);
-        } else {
+        } elseif (class_exists($this->options['repository'])) {
             $repository = $this->container->get('doctrine.orm.entity_manager')->getRepository($this->options['repository']);
+        } elseif ($this->resourceManager->getMetadata($this->options['repository'])) {
+            $repository = $this->resourceManager->getRepository($this->options['repository']);
+        } else {
+            throw new \Exception(sprintf('No repository found for value "%s"', $this->options['repository']));
         }
         $method = $this->options['method'];
 
