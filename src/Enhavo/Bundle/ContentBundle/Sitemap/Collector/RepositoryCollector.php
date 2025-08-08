@@ -53,7 +53,9 @@ class RepositoryCollector extends AbstractType implements CollectorInterface
 
     protected function getResources()
     {
-        if (class_exists($this->options['repository'])) {
+        if ($this->container->has($this->options['repository'])) {
+            $repository = $this->container->get($this->options['repository']);
+        } elseif (class_exists($this->options['repository'])) {
             $repository = $this->container->get('doctrine.orm.entity_manager')->getRepository($this->options['repository']);
         } else {
             $repository = $this->resourceManager->getRepository($this->options['repository']);
