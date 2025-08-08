@@ -57,8 +57,10 @@ class RepositoryCollector extends AbstractType implements CollectorInterface
             $repository = $this->container->get($this->options['repository']);
         } elseif (class_exists($this->options['repository'])) {
             $repository = $this->container->get('doctrine.orm.entity_manager')->getRepository($this->options['repository']);
-        } else {
+        } elseif ($this->resourceManager->getMetadata($this->options['repository'])) {
             $repository = $this->resourceManager->getRepository($this->options['repository']);
+        } else {
+            throw new \Exception(sprintf('No repository found for value "%s"', $this->options['repository']));
         }
         $method = $this->options['method'];
 
