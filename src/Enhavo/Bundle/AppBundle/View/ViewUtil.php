@@ -204,12 +204,12 @@ class ViewUtil
     public function getFlashMessages()
     {
         $messages = [];
-        $types = ['success', 'error', 'notice', 'warning'];
+        $types = ['success', 'error', 'notice', 'warning', 'danger'];
         foreach($types as $type) {
             foreach($this->requestStack->getSession()->getFlashBag()->get($type) as $message) {
                 $messages[] = [
                     'message' => $this->translator->trans(is_array($message) ? $message['message'] : $message),
-                    'type' => $type
+                    'type' => $type === 'danger' ? 'error' : $type
                 ];
             }
         }
