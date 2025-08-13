@@ -31,7 +31,7 @@
     "doctrine/collections": "^1.8",
     "doctrine/dbal": "^3.6",
     "doctrine/doctrine-migrations-bundle": "^3.1",
-    "doctrine/orm": "^2.20",
+    "doctrine/orm": "^2.20.6",
     "ezyang/htmlpurifier": "^4.12",
     "imagine/imagine": "^1.2",
     "johngrogg/ics-parser": "^2.2",
