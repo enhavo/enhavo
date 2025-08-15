@@ -13,7 +13,8 @@
   ],
   "require": {
     "php": "^8.2",
-    "enhavo/metadata": "^0.15"
+    "enhavo/metadata": "^0.15",
+    "doctrine/orm": "^2.20.6"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\DoctrineExtensionBundle\\": "" }
