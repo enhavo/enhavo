@@ -17,6 +17,10 @@ export default class ContainerBuilder
     }
 
     addFile(file) {
+        if (this._prepared) {
+            throw 'Can\'t add file to prepared builder';
+        }
+
         this.files.push(file);
     }
 
@@ -55,6 +59,9 @@ export default class ContainerBuilder
      * @param {Definition} definition
      */
     addDefinition(definition) {
+        if (this._prepared) {
+            throw 'Can\'t add definition to prepared builder';
+        }
         this.definitions.add(definition.getName(), definition);
     }
 
@@ -85,6 +92,9 @@ export default class ContainerBuilder
      * @param {CompilerPass} compilerPass
      */
     addCompilerPass(compilerPass) {
+        if (this._prepared) {
+            throw 'Can\'t add compiler pass to prepared builder';
+        }
         this.compilerPasses.add(compilerPass.getName(), compilerPass);
     }
 
@@ -100,8 +110,6 @@ export default class ContainerBuilder
             return;
         }
 
-        this._prepared = true;
-
         let compilers = this.getCompilerPasses().sort((a, b) => {
             return b.priority - a.priority;
         });
@@ -114,11 +122,18 @@ export default class ContainerBuilder
                 throw 'Error occurred while using compiler pass "'+compilerPass.path+'" with error: ' + e + "\n" + e.stack;
             }
         }
+
+        this._prepared = true;
     }
 
     reset() {
+        this._prepared = false;
         this.definitions = new Map();
         this.compilerPasses = new Map();
         this.files = [];
+    }
+
+    isPrepared() {
+        return this._prepared
     }
 }
