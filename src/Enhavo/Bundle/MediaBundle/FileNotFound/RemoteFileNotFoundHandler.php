@@ -37,7 +37,13 @@ class RemoteFileNotFoundHandler implements FileNotFoundHandlerInterface
 
     public function handleLoad(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
     {
-        $url = $this->getRemoteServerUrl($parameters).$this->urlGenerator->generate($file);
+        $serverUrl = $this->getRemoteServerUrl($parameters);
+
+        if ($file instanceof FileInterface) {
+            $url = $serverUrl.$this->urlGenerator->generate($file);
+        } else {
+            $url = $serverUrl.$this->urlGenerator->generate($file->getFile(), $file->getName());
+        }
 
         $response = $this->client->request('GET', $url);
         if (200 != $response->getStatusCode()) {
