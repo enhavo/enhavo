@@ -23,16 +23,19 @@ export default function (opts = {}) {
             if (!extensions.some((ext) => id.toLowerCase().endsWith(ext))) return null;
             if (!filter(id)) return null;
 
-            let loader = new Loader();
-            loader.loadFile(id, builder)
 
-            for (let loadedFile of loader.loadedFiles) {
-                if (fs.existsSync(loadedFile) && fs.lstatSync(loadedFile).isFile()) {
-                    this.addWatchFile(loadedFile);
+            if (!builder.isPrepared()) {
+                let loader = new Loader();
+                loader.loadFile(id, builder)
+
+                for (let loadedFile of loader.loadedFiles) {
+                    if (fs.existsSync(loadedFile) && fs.lstatSync(loadedFile).isFile()) {
+                        this.addWatchFile(loadedFile);
+                    }
                 }
+                await builder.prepare();
             }
 
-            await builder.prepare();
             let compiler = new Compiler;
             let resultData = compiler.compile(builder);
 
