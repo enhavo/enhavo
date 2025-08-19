@@ -28,7 +28,7 @@ class GuessPrefixGenerator extends AbstractGenerator
             if (!$options['overwrite'] && $route->getStaticPrefix()) {
                 return;
             }
-            $route->setStaticPrefix(sprintf('/%s', Slugifier::slugify($value)));
+            $route->setStaticPrefix(sprintf('/%s', Slugifier::slugify(strip_tags($value))));
         }
     }
 

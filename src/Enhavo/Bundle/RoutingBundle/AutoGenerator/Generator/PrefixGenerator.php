@@ -76,7 +76,7 @@ class PrefixGenerator extends AbstractGenerator
             $input = $input->format($options['date_format']);
         }
 
-        return Slugifier::slugify($input);
+        return Slugifier::slugify(strip_tags($input));
     }
 
     private function createPrefix(array $properties, $resource, array $options)
