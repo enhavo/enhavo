@@ -35,9 +35,9 @@ class HierarchyPrefixGenerator extends AbstractGenerator
 
         $slugs = [];
         foreach (array_reverse($parents) as $parent) {
-            $slugs[] = Slugifier::slugify($this->getProperty($parent, $options['prefix_property']));
+            $slugs[] = Slugifier::slugify(strip_tags($this->getProperty($parent, $options['prefix_property'])));
         }
-        $slugs[] = Slugifier::slugify($this->getProperty($resource, $options['prefix_property']));
+        $slugs[] = Slugifier::slugify(strip_tags($this->getProperty($resource, $options['prefix_property'])));
         $route->setStaticPrefix('/'.implode('/', $slugs));
     }
 

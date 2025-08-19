@@ -46,12 +46,12 @@ class SlugGenerator extends AbstractGenerator
 
     protected function createSlug($value, $resource, $options)
     {
-        return $options['unique'] ? $this->createUniqueSlug($value, $resource, $options) : Slugifier::slugify($value);
+        return $options['unique'] ? $this->createUniqueSlug($value, $resource, $options) : Slugifier::slugify(strip_tags($value));
     }
 
     protected function createUniqueSlug($value, $resource, $options)
     {
-        $baseSlug = Slugifier::slugify($value);
+        $baseSlug = Slugifier::slugify(strip_tags($value));
 
         if (!$this->slugExists($baseSlug, $resource, $options)) {
             return $baseSlug;
