@@ -11,9 +11,21 @@ export class Container
         /** @type {Array<Service>} */
         this._resolveStack = [];
         this._resolveCallStack = [];
+        this._pending = {};
     }
 
     async get(name) {
+        // sync concurrency calls on the same name to avoid returning unfinished services
+        if (this._pending[name]) {
+            return await this._pending[name];
+        }
+        this._pending[name] = this._get(name).finally(() => {
+            delete this._pending[name];
+        });
+        return await this._pending[name];
+    }
+
+    async _get(name) {
         if(typeof this._hashes[name] === 'undefined') {
             throw 'Service "'+name+'" does not exists';
         }
@@ -181,3 +193,4 @@ class Service
         this.state = null;
     }
 }
+
