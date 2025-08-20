@@ -25,7 +25,7 @@ class ChainFileNotFoundHandlerServicePass implements CompilerPassInterface
 
         $services = [];
         foreach ($container->findTaggedServiceIds('enhavo_media.file_not_found_handler') as $id => $tagAttributes) {
-            if ($id !== ChainFileNotFoundHandler::class) {
+            if (ChainFileNotFoundHandler::class !== $id) {
                 $services[$id] = new Reference($id);
             }
         }

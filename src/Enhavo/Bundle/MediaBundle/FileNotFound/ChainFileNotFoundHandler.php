@@ -33,7 +33,6 @@ use Psr\Container\ContainerInterface;
  *      'MyOtherFileNotFoundServiceWithParameters' => ['param1' => 'value1'],
  *   ]
  * ]
- *
  */
 class ChainFileNotFoundHandler implements FileNotFoundHandlerInterface
 {
@@ -49,6 +48,7 @@ class ChainFileNotFoundHandler implements FileNotFoundHandlerInterface
         foreach ($this->getHandlers($parameters) as $handlerData) {
             try {
                 $this->container->get($handlerData['handler'])->handleSave($file, $storage, $exception, $handlerData['parameters']);
+                return;
             } catch (FileException|StorageException|FileNotFoundException $e) {
                 // next handler
             }
@@ -62,6 +62,7 @@ class ChainFileNotFoundHandler implements FileNotFoundHandlerInterface
         foreach ($this->getHandlers($parameters) as $handlerData) {
             try {
                 $this->container->get($handlerData['handler'])->handleLoad($file, $storage, $exception, $handlerData['parameters']);
+                return;
             } catch (FileException|StorageException|FileNotFoundException $e) {
                 // next handler
             }
@@ -75,6 +76,7 @@ class ChainFileNotFoundHandler implements FileNotFoundHandlerInterface
         foreach ($this->getHandlers($parameters) as $handlerData) {
             try {
                 $this->container->get($handlerData['handler'])->handleDelete($file, $storage, $exception, $handlerData['parameters']);
+                return;
             } catch (FileException|StorageException|FileNotFoundException $e) {
                 // next handler
             }
@@ -88,6 +90,7 @@ class ChainFileNotFoundHandler implements FileNotFoundHandlerInterface
         foreach ($this->getHandlers($parameters) as $handlerData) {
             try {
                 $this->container->get($handlerData['handler'])->handleFileNotFound($file, $handlerData['parameters']);
+                return;
             } catch (FileException|StorageException|FileNotFoundException $e) {
                 // next handler
             }
@@ -97,8 +100,8 @@ class ChainFileNotFoundHandler implements FileNotFoundHandlerInterface
     }
 
     /**
-     * @return array of an array with key handler and parameters
-     * e.g.:
+     * @return array of an array with key handler and parameters e.g.:
+     *
      * [
      *   ["handler" => "service", "parameters" => []],
      *   ["handler" => "service2", "parameters" => []],
@@ -122,6 +125,7 @@ class ChainFileNotFoundHandler implements FileNotFoundHandlerInterface
                 }
             }
         }
+
         return $handlers;
     }
 }
