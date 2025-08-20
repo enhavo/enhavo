@@ -3,10 +3,18 @@ services:
 
     Enhavo\Bundle\MediaBundle\FileNotFound\RemoteFileNotFoundHandler:
         arguments:
-            - '@Enhavo\Bundle\MediaBundle\Routing\UrlGeneratorInterface'
+            - '@Enhavo\Bundle\MediaBundle\Routing\ThemeUrlGenerator'
             - '@http_client'
+        tags:
+            - { name: enhavo_media.file_not_found_handler }
 
     Enhavo\Bundle\MediaBundle\FileNotFound\CreateDummyFileNotFoundHandler:
         arguments:
             - '@filesystem'
             - '%kernel.project_dir%/var/media/dummy'
+        tags:
+            - { name: enhavo_media.file_not_found_handler }
+
+    Enhavo\Bundle\MediaBundle\FileNotFound\ChainFileNotFoundHandler:
+        tags:
+            - { name: enhavo_media.file_not_found_handler }

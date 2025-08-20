@@ -42,7 +42,7 @@ class RemoteFileNotFoundHandler implements FileNotFoundHandlerInterface
         if ($file instanceof FileInterface) {
             $url = $serverUrl.$this->urlGenerator->generate($file);
         } else {
-            $url = $serverUrl.$this->urlGenerator->generate($file->getFile(), $file->getName());
+            $url = $serverUrl.$this->urlGenerator->generateFormat($file->getFile(), $file->getName());
         }
 
         $response = $this->client->request('GET', $url);

@@ -12,7 +12,9 @@
 namespace Enhavo\Bundle\MediaBundle;
 
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
+use Enhavo\Bundle\MediaBundle\DependencyInjection\Compiler\ChainFileNotFoundHandlerServicePass;
 use Enhavo\Bundle\MediaBundle\DependencyInjection\Compiler\MediaCompilerPass;
+use Enhavo\Bundle\MediaBundle\FileNotFound\FileNotFoundHandlerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -21,6 +23,11 @@ class EnhavoMediaBundle extends Bundle
     public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new MediaCompilerPass());
+        $container->addCompilerPass(new ChainFileNotFoundHandlerServicePass());
+
+        $container
+            ->registerForAutoconfiguration(FileNotFoundHandlerInterface::class)
+            ->addTag('enhavo_media.file_not_found_handler');
 
         $container->addCompilerPass(
             new TypeCompilerPass('enhavo_media.extension_collector', 'enhavo.media_extension')
