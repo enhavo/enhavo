@@ -54,6 +54,9 @@ export class UserManager
     public login()
     {
         this.loading = true;
+        if (this.loginForm) {
+            this.loginForm.errors = [];
+        }
 
         const urlParams = new URLSearchParams(window.location.search);
         const redirect = urlParams.get('redirect');
@@ -92,7 +95,7 @@ export class UserManager
                 this.resetPasswordRequestForm = this.formFactory.create(data.form);
 
             });
-        });
+        })
     }
 
     public resetPasswordRequest(): Promise<ResetPasswordData>

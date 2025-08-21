@@ -4,6 +4,12 @@ services:
             - '@security.authentication_utils'
             - '@translator'
 
+    Enhavo\Bundle\UserBundle\Security\Authentication\ErrorMessage\InvalidCsrfToken:
+        arguments:
+            - '@translator'
+        tags:
+            - { name: 'enhavo_user.error_message' }
+
     Enhavo\Bundle\UserBundle\Security\Authentication\ErrorMessage\BadCredentialsError:
         arguments:
             - '@translator'

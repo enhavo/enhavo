@@ -2,7 +2,7 @@
     <user-app>
         <form-form :form="userManger.loginForm" v-if="userManger.loginForm" class="login-form" :key="userManger.loginForm.key">
 
-            <div class="feedback-messages" v-if="userManger.loginForm.errors.length > 0">
+            <div class="feedback-messages" v-if="userManger.loginForm.errors.length > 0" style="margin-bottom: 15px">
                 <div class="feedback-message error">
                     <div v-for="error in userManger.loginForm.errors">{{ error.message }}</div>
                 </div>
@@ -29,7 +29,7 @@
                     <span><i class="icon icon-check indicator"></i></span>
                     <form-label :form="userManger.loginForm.get('rememberMe')"></form-label>
                 </div>
-                <button class="btn login-button" type="submit" id="_submit" name="_submit" @click.prevent="userManger.login()">{{ translator.trans('enhavo_user.security.login.submit', null, 'javascript') }}</button>
+                <button class="btn login-button" type="submit" id="_submit" name="_submit" @click.prevent="userManger.login()" :disabled="userManger.loading">{{ translator.trans('enhavo_user.security.login.submit', null, 'javascript') }}</button>
             </div>
 
             <form-widget :form="userManger.loginForm.get('csrfToken')"></form-widget>
