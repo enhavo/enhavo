@@ -292,41 +292,35 @@ enhavo_media_theme_format:
             type: template_file
 ```
 
-The `template_file` is an endpoint type, that will take the `id` and the `format` parameter
-from the url and check the folder `/data/media/file` for a file with the name as id. The file extension will be ignored.
+The `template_file` is an endpoint type, that will take the `shortChecksum` and the `format` parameter
+from the url and check the folder `/data/media/file` for a file with the name as shortChecksum. The file extension will be ignored.
 
-So the url `/file/show/1` will expect a file at `/data/media/file/1.png`, whereas a format url `/file/show/format/header/1`
-will expect a file at `/data/media/format/header/1.png`. If the format was not found, it will display the corresponding file in the file 
-directory and if the endpoint can't find it either, it will throw a 404 response.
-
-Here is an example on how to define media files in your data: 
+Here is an example on how to define media files in your data:
 
 ```json
 {
-    "name": "app_image",
-    "type": "block",
-    "template": "theme/block/image.html.twig",
-    "children": [],
-    "data": {
-        "block": {
-            "Image": {
-                "id": 1,
-                "mimeType": "image/png",
-                "extension": "png",
-                "filename": "Sample",
-                "basename": "Sample.png",
-                "checksum": "033de9cc128e1c27985ed0502198fb60",
-                "shortChecksum": "1",
-                "token": "033de9cc",
-                "parameters": {
-                    "alt": null,
-                    "title": null
-                }
-            }
+    "image": {
+        "id": 1,
+        "mimeType": "image/png",
+        "extension": "png",
+        "filename": "Sample",
+        "basename": "Sample.png",
+        "checksum": "033de9cc128e1c27985ed0502198fb60",
+        "shortChecksum": "033de9cc",
+        "token": "033de9cc",
+        "parameters": {
+            "alt": null,
+            "title": null
         }
     }
 }
 ```
+
+So the url `/file/show/033de9cc` will expect a file at `/data/media/file/033de9cc.png`, whereas a format url `/file/show/format/header/033de9cc`
+will expect a file at `/data/media/format/header/033de9cc.png`. If the format was not found, it will display the corresponding file in the file 
+directory and if the endpoint can't find it either, it will throw a 404 response.
+
+
 
 ## Recommendations
 
@@ -352,10 +346,10 @@ To organise your data, we recommend following file structure:
 │  └─ footer.json
 ├─ media
 │  ├─ file
-│  │ └─ 1.jpg
+│  │ └─ 033de9cc.jpg
 │  └─ format
 │    └─ header
-│       └─ 1.jpg
+│       └─ 033de9cc.jpg
 └─ page
    ├─ homepage.json
    └─ imprint.json
