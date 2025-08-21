@@ -33,8 +33,10 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  *
  * A reference extension for doctrine, to reference multiple entities within one property.
  */
-readonly class ReferenceSubscriber implements EventSubscriber
+class ReferenceSubscriber implements EventSubscriber
 {
+    private bool $isFlush = false;
+
     public function __construct(
         private readonly MetadataRepository $metadataRepository,
         private readonly EntityResolverInterface $entityResolver,
@@ -137,17 +139,21 @@ readonly class ReferenceSubscriber implements EventSubscriber
         $uow = $args->getObjectManager()->getUnitOfWork();
 
         $metadata = $this->getMetadata($args->getObject());
-        if ($metadata !== null) {
+        if (null !== $metadata) {
             foreach ($metadata->getReferences() as $reference) {
                 if ($reference->hasCascade(Reference::CASCADE_PERSIST)) {
                     $propertyAccessor = PropertyAccess::createPropertyAccessor();
                     $targetEntity = $propertyAccessor->getValue($args->getObject(), $reference->getProperty());
-                    if ($targetEntity !== null &&
-                        !$uow->isInIdentityMap($targetEntity) &&
-                        !$uow->isScheduledForDelete($targetEntity) &&
-                        !$uow->isScheduledForInsert($targetEntity)
+                    if (null !== $targetEntity
+                        && !$uow->isInIdentityMap($targetEntity)
+                        && !$uow->isScheduledForDelete($targetEntity)
+                        && !$uow->isScheduledForInsert($targetEntity)
                     ) {
                         $uow->persist($targetEntity);
+                        if ($this->isFlush) {
+                            $metadata = $args->getObjectManager()->getClassMetadata(get_class($targetEntity));
+                            $uow->computeChangeSet($metadata, $targetEntity);
+                        }
                     }
                 }
             }
@@ -157,12 +163,12 @@ readonly class ReferenceSubscriber implements EventSubscriber
     public function preRemove(PreRemoveEventArgs $args): void
     {
         $metadata = $this->getMetadata($args->getObject());
-        if ($metadata !== null) {
+        if (null !== $metadata) {
             foreach ($metadata->getReferences() as $reference) {
                 if ($reference->hasCascade(Reference::CASCADE_REMOVE)) {
                     $propertyAccessor = PropertyAccess::createPropertyAccessor();
                     $targetEntity = $propertyAccessor->getValue($args->getObject(), $reference->getProperty());
-                    if ($targetEntity !== null) {
+                    if (null !== $targetEntity) {
                         $args->getObjectManager()->remove($targetEntity);
                     }
                 }
@@ -172,6 +178,7 @@ readonly class ReferenceSubscriber implements EventSubscriber
 
     public function preFlush(PreFlushEventArgs $args): void
     {
+        $this->isFlush = true;
         $uow = $args->getObjectManager()->getUnitOfWork();
         $this->persistEntities($uow, $args->getObjectManager());
     }
@@ -192,10 +199,10 @@ readonly class ReferenceSubscriber implements EventSubscriber
                         if ($reference->hasCascade(Reference::CASCADE_PERSIST)) {
                             $propertyAccessor = PropertyAccess::createPropertyAccessor();
                             $targetEntity = $propertyAccessor->getValue($entity, $reference->getProperty());
-                            if (null !== $targetEntity &&
-                                !$uow->isInIdentityMap($targetEntity) &&
-                                !$uow->isScheduledForDelete($targetEntity) &&
-                                !$uow->isScheduledForInsert($targetEntity)
+                            if (null !== $targetEntity
+                                && !$uow->isInIdentityMap($targetEntity)
+                                && !$uow->isScheduledForDelete($targetEntity)
+                                && !$uow->isScheduledForInsert($targetEntity)
                             ) {
                                 $em->persist($targetEntity);
                             }
@@ -230,6 +237,8 @@ readonly class ReferenceSubscriber implements EventSubscriber
         if (count($changes)) {
             $this->executeChanges($changes, $args->getObjectManager());
         }
+
+        $this->isFlush = false;
     }
 
     /**

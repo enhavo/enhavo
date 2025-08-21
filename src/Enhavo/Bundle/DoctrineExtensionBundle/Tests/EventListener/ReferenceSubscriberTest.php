@@ -521,7 +521,7 @@ class ReferenceSubscriberTest extends SubscriberTest
 
     public function testDeleteSameEntity()
     {
-        $this->bootstrap(__DIR__ . "/../Fixtures/Entity/Reference");
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Reference');
 
         $dependencies = $this->createDependencies([
             Entity::class => [
@@ -529,10 +529,10 @@ class ReferenceSubscriberTest extends SubscriberTest
                     'node' => [
                         'nameField' => 'nodeName',
                         'idField' => 'nodeId',
-                        'cascade' => ['persist', 'remove']
-                    ]
-                ]
-            ]
+                        'cascade' => ['persist', 'remove'],
+                    ],
+                ],
+            ],
         ]);
 
         $subscriber = $this->createInstance($dependencies);
