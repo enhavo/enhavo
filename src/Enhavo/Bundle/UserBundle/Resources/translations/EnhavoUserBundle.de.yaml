@@ -1,5 +1,7 @@
 login:
     error:
+        general: 'Ein Fehler ist aufgetreten'
+        invalid_csrf_token: 'Csrf Token nicht gültig'
         credentials: 'Falsche Logindaten'
         password_expired: 'Ihr Passwort ist abgelaufen. Bitte überprüfen Sie ihre Email setzen ihr Passwort neu.'
         max_failed_attempts: 'Zu viele Loginversuche. Bitte überprüfen Sie ihre Email und setzen ihr Passwort neu.'

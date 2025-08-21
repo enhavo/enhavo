@@ -1,5 +1,7 @@
 login:
     error:
+        general: 'An Error Occured'
+        invalid_csrf_token: 'Invalid Csrf token'
         credentials: 'Bad credentials'
         password_expired: 'Your password expired. Please check your inbox and reset your password with the provided link.'
         max_failed_attempts: 'Too many failed login attempts. Please check your inbox and reset your password with the provided link.'
