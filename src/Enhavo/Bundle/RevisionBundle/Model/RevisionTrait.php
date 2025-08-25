@@ -55,7 +55,7 @@ trait RevisionTrait
 
     public function getRevisionParameters(): array
     {
-        return $this->revisionParameters;
+        return $this->revisionParameters === null ? [] : $this->revisionParameters;
     }
 
     public function setRevisionParameters(array $revisionParameters = []): void
