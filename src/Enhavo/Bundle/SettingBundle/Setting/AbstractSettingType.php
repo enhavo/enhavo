@@ -62,7 +62,7 @@ abstract class AbstractSettingType extends AbstractType implements SettingTypeIn
             return $this->parent->getViewValue($options, $value, $key);
         }
 
-        return (string) $value->getValue();
+        return (string) $value?->getValue();
     }
 
     public function getGroup(array $options, $key = null)

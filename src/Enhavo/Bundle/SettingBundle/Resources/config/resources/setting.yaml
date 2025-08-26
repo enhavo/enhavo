@@ -44,3 +44,6 @@ enhavo_resource:
             tabs:
                 main:
                     type: form
+                    arrangement: |
+                        name
+                        value.value

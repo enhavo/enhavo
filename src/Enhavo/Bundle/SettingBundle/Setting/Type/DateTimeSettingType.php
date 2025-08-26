@@ -51,7 +51,7 @@ class DateTimeSettingType extends AbstractSettingType
     public function getViewValue(array $options, $value, $key = null)
     {
         /** @var \DateTime $date */
-        $date = $value->getValue();
+        $date = $value?->getValue();
         if (null === $date) {
             return '';
         }

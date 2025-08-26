@@ -69,9 +69,8 @@ class MediaSettingType extends AbstractSettingType
 
             return join(', ', $data);
         }
-        $file = $value->getValue();
-        if (null !== $file) {
-            return $file->getBasename();
+        if (null !== $value && null !== $value->getValue()) {
+            return $value->getValue()->getBasename();
         }
 
         return '';
