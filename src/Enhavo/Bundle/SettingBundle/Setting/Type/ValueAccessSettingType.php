@@ -31,7 +31,7 @@ class ValueAccessSettingType extends AbstractSettingType
     {
         $value = $this->parent->getValue($options, $key);
 
-        return $value->getValue();
+        return $value?->getValue();
     }
 
     public function getFormType(array $options, $key = null)
