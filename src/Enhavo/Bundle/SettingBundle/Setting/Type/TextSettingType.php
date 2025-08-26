@@ -39,7 +39,7 @@ class TextSettingType extends AbstractSettingType
 
     public function getViewValue(array $options, $value, $key = null)
     {
-        return strip_tags($value->getValue());
+        return strip_tags($value?->getValue());
     }
 
     public static function getParentType(): ?string

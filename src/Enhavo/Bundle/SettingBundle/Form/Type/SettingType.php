@@ -49,7 +49,7 @@ class SettingType extends AbstractType
             $form->add(
                 'value',
                 $settingManager->getFormType($settingEntity->getKey()),
-                $settingManager->getFormTypeOptions($settingEntity->getKey())
+                array_merge($settingManager->getFormTypeOptions($settingEntity->getKey()), ['data_class' => $settingEntity->getValueClass()]),
             );
         });
     }
