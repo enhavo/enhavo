@@ -16,6 +16,11 @@ export class MediaUtil
         return false;
     }
 
+    static isSvg(file: File): boolean
+    {
+        return file.mimeType === 'image/svg+xml';
+    }
+
     static getIcon(file: File): string
     {
         switch (file.mimeType) {

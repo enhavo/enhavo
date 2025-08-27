@@ -2,7 +2,10 @@
     <div class="form-media-item" :class="{ 'edit-show': form.editOpen }" :ref="(el) => form.setElement(el as HTMLElement)">
         <div class="thumb" :class="{ 'drag-button' : sortable }" @click="toggleEdit" data-drag-thumb>
             <img v-if="isImage(form.file)" :src="form.path('enhavoPreviewThumb')" draggable="false" />
-            <div v-else><span class="icon" :class="'icon-'+getIcon(form.file)"></span></div>
+            <template v-else>
+                <img v-if="isSvg(form.file)" :src="form.path()" draggable="false" />
+                <div v-else><span class="icon" :class="'icon-'+getIcon(form.file)"></span></div>
+            </template>
         </div>
         <div v-if="deletable" class="delete-button" @click="$emit('delete', form)"><i class="icon icon-close"></i></div>
         <div class="edit-container" ref="editContainer"
@@ -64,6 +67,11 @@ function updateEditContainerSize()
 function isImage(file: File): boolean
 {
     return MediaUtil.isImage(props.form.file);
+}
+
+function isSvg(file: File): boolean
+{
+    return MediaUtil.isSvg(props.form.file);
 }
 
 function getIcon(file: File): string
