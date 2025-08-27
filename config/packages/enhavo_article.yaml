@@ -1,3 +1,4 @@
 imports:
     - { resource: '@EnhavoArticleBundle/Resources/config/app/search.yaml' }
     - { resource: '@EnhavoArticleBundle/Resources/config/app/translation.yaml' }
+    - { resource: '@EnhavoArticleBundle/Resources/config/app/structured_data.yaml' }

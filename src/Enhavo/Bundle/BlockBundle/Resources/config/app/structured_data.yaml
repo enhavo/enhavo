@@ -1,0 +1,10 @@
+enhavo_content:
+    structured_data:
+        Enhavo\Bundle\BlockBundle\Entity\Node:
+            properties:
+                block:
+                    model:
+                        type: model
+                children:
+                    model:
+                        type: model

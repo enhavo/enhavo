@@ -35,9 +35,11 @@ class EnhavoContentExtension extends Extension implements PrependExtensionInterf
 
         $container->setParameter('enhavo_content.video.vimeo.api_key', $config['video']['vimeo']['api_key']);
         $container->setParameter('enhavo_content.video.youtube.api_key', $config['video']['youtube']['api_key']);
+        $container->setParameter('enhavo_content.structured_data', $config['structured_data']);
 
         $configFiles = [
-            'services.yaml',
+            'services/services.yaml',
+            'services/structured_data.yaml',
         ];
 
         foreach ($configFiles as $configFile) {

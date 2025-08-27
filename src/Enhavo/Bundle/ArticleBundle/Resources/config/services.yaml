@@ -41,6 +41,7 @@ services:
         arguments:
             - '@enhavo_article.article.repository'
             - '@Enhavo\Bundle\CommentBundle\Comment\CommentManager'
+            - '@Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataManager'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
