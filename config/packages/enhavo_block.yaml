@@ -1,6 +1,7 @@
 imports:
     - { resource: '@EnhavoBlockBundle/Resources/config/app/search.yaml' }
     - { resource: '@EnhavoBlockBundle/Resources/config/app/translation.yaml' }
+    - { resource: '@EnhavoBlockBundle/Resources/config/app/structured_data.yaml' }
 
 enhavo_block:
     blocks:

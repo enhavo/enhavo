@@ -27,6 +27,8 @@ class EnhavoArticleExtension extends Extension implements PrependExtensionInterf
         $config = $this->processConfiguration(new Configuration(), $configs);
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
+        $container->setParameter('enhavo_article.structured_data.article_image_format', $config['structured_data']['article_image_format']);
+
         $configFiles = [
             'services.yaml',
         ];

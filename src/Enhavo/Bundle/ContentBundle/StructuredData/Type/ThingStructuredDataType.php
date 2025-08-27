@@ -1,0 +1,110 @@
+<?php
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Enhavo\Bundle\ContentBundle\StructuredData\Type;
+
+use Enhavo\Bundle\ContentBundle\StructuredData\Context;
+use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataBag;
+use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTransformer;
+use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTypeInterface;
+use Enhavo\Component\Type\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+/**
+ * StructuredDataType representing https://schema.org/Thing
+ *
+ */
+class ThingStructuredDataType extends AbstractType implements StructuredDataTypeInterface
+{
+    private static array $properties = [
+        null,
+        '@id',
+        'additionalType',
+        'alternateName',
+        'description',
+        'disambiguatingDescription',
+        'identifier',
+        'image',
+        'mainEntityOfPage',
+        'name',
+        'potentialAction',
+        'sameAs',
+        'subjectOf',
+        'url',
+    ];
+
+    public function __construct(
+        private StructuredDataTransformer $transformer,
+    )
+    {
+    }
+
+    public function buildData(array $options, object $model, StructuredDataBag $bag, Context $context): void
+    {
+        if ($context->isClassAttribute()) {
+            $data = $bag->createType($context->getTypeName());
+            $data->set('@type', $context->getTypeName());
+        } else {
+            if (!$options['strict'] && !$bag->hasType($context->getTypeName())) {
+                // type not exists, but we are not strict, so do nothing
+                return;
+            }
+
+            $data = $bag->getType($context->getTypeName());
+            $value = $context->getPropertyValue();
+
+            if ($value === null) {
+                return;
+            }
+
+            if ($options['transform']) {
+                $value = $this->transformer->transform($options['transform'], $value, $options['transform_options']);
+            }
+
+            if ($value === null) {
+                return;
+            }
+
+            if ($data->has($options['property']) && $options['append']) {
+                $oldValue = $data->get($options['property']);
+                if (!is_array($oldValue)) {
+                    $oldValue = [$oldValue];
+                }
+                $oldValue[] = $value;
+                $value = $oldValue;
+            } else if ($data->has($options['property']) && !$options['overwrite']) {
+                // do not overwrite
+                return;
+            }
+
+            $data->set($options['property'], $value);
+        }
+    }
+
+    public function getTypeName(array $options): ?string
+    {
+        return 'Thing';
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'property' => null,
+            'transform' => null,
+            'transform_options' => [],
+            'overwrite' => true,
+            'append' => false,
+            'strict' => true,
+        ]);
+
+        $resolver->addAllowedValues('property', self::$properties);
+    }
+}

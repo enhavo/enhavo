@@ -59,6 +59,17 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
             ->end()
+
+            ->children()
+                ->arrayNode('structured_data')
+                    ->prototype('array')
+                        ->children()
+                            ->variableNode('class')->end()
+                            ->variableNode('properties')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
         ;
 
         return $treeBuilder;

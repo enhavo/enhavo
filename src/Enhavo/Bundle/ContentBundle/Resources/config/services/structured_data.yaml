@@ -1,0 +1,61 @@
+services:
+    Enhavo\Component\Metadata\MetadataRepository[StructuredData]:
+        class: Enhavo\Component\Metadata\MetadataRepository
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataFactory[StructuredData]'
+            - false
+            - false
+
+    Enhavo\Component\Metadata\MetadataFactory[StructuredData]:
+        class: Enhavo\Component\Metadata\MetadataFactory
+        arguments:
+            - 'Enhavo\Bundle\ContentBundle\StructuredData\Metadata\Metadata'
+        calls:
+            - [ addDriver, [ '@Enhavo\Bundle\ContentBundle\StructuredData\Metadata\StructuredDataConfigurationDriver' ] ]
+            - [ addDriver, [ '@Enhavo\Bundle\ContentBundle\StructuredData\Metadata\StructuredDataAttributeDriver' ] ]
+            - [ addProvider, [ '@Enhavo\Bundle\ContentBundle\StructuredData\Metadata\StructuredDataProvider' ] ]
+
+    Enhavo\Bundle\ContentBundle\StructuredData\Metadata\StructuredDataConfigurationDriver:
+        arguments:
+            - '%enhavo_content.structured_data%'
+
+    Enhavo\Bundle\ContentBundle\StructuredData\Metadata\StructuredDataAttributeDriver:
+
+    Enhavo\Bundle\ContentBundle\StructuredData\Metadata\StructuredDataProvider:
+
+    Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataManager:
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataRepository[StructuredData]'
+            - '@Enhavo\Component\Type\FactoryInterface[StructuredData]'
+
+    Enhavo\Bundle\ContentBundle\StructuredData\Type\ArticleStructuredDataType:
+        tags:
+            - { name: enhavo_content.structured_data }
+
+    Enhavo\Bundle\ContentBundle\StructuredData\Type\ThingStructuredDataType:
+        arguments:
+            - '@Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTransformer'
+        tags:
+            - { name: enhavo_content.structured_data }
+
+    Enhavo\Bundle\ContentBundle\StructuredData\Type\ModelStructuredDataType:
+        arguments:
+            - '@Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataManager'
+        tags:
+            - { name: enhavo_content.structured_data }
+
+    Enhavo\Bundle\ContentBundle\StructuredData\Type\CreativeWorkStructuredDataType:
+        tags:
+            - { name: enhavo_content.structured_data }
+
+    Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTransformer:
+
+    Enhavo\Bundle\ContentBundle\StructuredData\Transformer\HtmlTextTransformer:
+        tags:
+            - { name: enhavo_content.structured_data_transformer }
+
+    Enhavo\Bundle\ContentBundle\StructuredData\Transformer\MediaUrlTransformer:
+        arguments:
+            - '@Enhavo\Bundle\MediaBundle\Routing\ThemeUrlGenerator'
+        tags:
+            - { name: enhavo_content.structured_data_transformer }

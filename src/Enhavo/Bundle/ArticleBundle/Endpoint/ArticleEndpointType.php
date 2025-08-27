@@ -20,6 +20,7 @@ use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
 use Enhavo\Bundle\ArticleBundle\Model\ArticleInterface;
 use Enhavo\Bundle\ArticleBundle\Repository\ArticleRepository;
 use Enhavo\Bundle\CommentBundle\Comment\CommentManager;
+use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataManager;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,6 +30,7 @@ class ArticleEndpointType extends AbstractEndpointType
     public function __construct(
         private readonly ArticleRepository $repository,
         private readonly CommentManager $commentManager,
+        private readonly StructuredDataManager $structuredDataManager,
     ) {
     }
 
@@ -60,6 +62,7 @@ class ArticleEndpointType extends AbstractEndpointType
         $context->set('resource', $resource);
         $data->set('resource', $this->normalize($resource, null, ['groups' => ['endpoint']]));
         $data->set('commentForm', $this->normalize($commentContext->getForm(), null, ['groups' => ['endpoint']]));
+        $data->set('structuredData', $this->structuredDataManager->getData($resource));
     }
 
     public function describe($options, Path $path)

@@ -21,6 +21,17 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('enhavo_article');
         $rootNode = $treeBuilder->getRootNode();
 
+        $rootNode
+            ->children()
+                ->arrayNode('structured_data')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('article_image_format')->defaultValue(null)->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
         return $treeBuilder;
     }
 }
