@@ -13,8 +13,19 @@ namespace Enhavo\Bundle\ContentBundle\StructuredData\Metadata;
 
 class Metadata extends \Enhavo\Component\Metadata\Metadata
 {
-    private array $properties = [];
     private array $classes = [];
+    private array $properties = [];
+    private array $methods = [];
+
+    public function getClasses(): array
+    {
+        return $this->classes;
+    }
+
+    public function setClasses(array $classes): void
+    {
+        $this->classes = $classes;
+    }
 
     public function getProperties(): array
     {
@@ -26,13 +37,13 @@ class Metadata extends \Enhavo\Component\Metadata\Metadata
         $this->properties = $properties;
     }
 
-    public function getClasses(): array
+    public function getMethods(): array
     {
-        return $this->classes;
+        return $this->methods;
     }
 
-    public function setClasses(array $classes): void
+    public function setMethods(array $methods): void
     {
-        $this->classes = $classes;
+        $this->methods = $methods;
     }
 }

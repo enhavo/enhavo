@@ -13,8 +13,12 @@ namespace Enhavo\Bundle\ContentBundle\StructuredData;
 
 class Context
 {
+    const ATTRIBUTE_CLASS = 'class';
+    const ATTRIBUTE_PROPERTY = 'property';
+    const ATTRIBUTE_METHOD = 'method';
+
     public function __construct(
-        private bool $classAttribute,
+        private string $attributeType,
         private ?string $typeName,
         private ?string $propertyName = null,
         private mixed $propertyValue = null,
@@ -24,12 +28,17 @@ class Context
 
     public function isClassAttribute(): bool
     {
-        return $this->classAttribute;
+        return $this->attributeType === self::ATTRIBUTE_CLASS;
     }
 
     public function isPropertyAttribute(): bool
     {
-        return !$this->classAttribute;
+        return $this->attributeType === self::ATTRIBUTE_PROPERTY;
+    }
+
+    public function isMethodAttribute(): bool
+    {
+        return $this->attributeType === self::ATTRIBUTE_METHOD;
     }
 
     public function getPropertyName(): ?string

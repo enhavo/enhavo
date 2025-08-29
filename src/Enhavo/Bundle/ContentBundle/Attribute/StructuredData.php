@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\ContentBundle\Attribute;
 
-#[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_CLASS | \Attribute::IS_REPEATABLE)]
+#[\Attribute(\Attribute::TARGET_PROPERTY | \Attribute::TARGET_CLASS | \Attribute::IS_REPEATABLE | \Attribute::TARGET_METHOD)]
 class StructuredData
 {
     public function __construct(

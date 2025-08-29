@@ -1,35 +1,55 @@
 <?php
 
-/*
- * This file is part of the enhavo package.
- *
- * (c) WE ARE INDEED GmbH
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Enhavo\Bundle\ContentBundle\StructuredData;
 
-use Enhavo\Component\Type\AbstractContainerType;
+use Enhavo\Bundle\ApiBundle\Data\Data;
 
-/**
- * @property StructuredDataTypeInterface   $type
- * @property StructuredDataTypeInterface[] $parents
- */
-class StructuredData extends AbstractContainerType
+class StructuredData extends Data
 {
-    public function buildData(object $model, StructuredDataBag $bag, Context $context): void
-    {
-        foreach ($this->parents as $parent) {
-            $parent->buildData($this->options, $model, $bag, $context);
-        }
+    private ?string $type;
+    private bool $root = true;
 
-        $this->type->buildData($this->options, $model, $bag, $context);
+    public function getType(): ?string
+    {
+        return $this->type;
     }
 
-    public function getTypeName(): ?string
+    public function setType(?string $type): void
     {
-        return $this->type->getTypeName($this->options);
+        $this->type = $type;
+    }
+
+    public function isRoot(): bool
+    {
+        return $this->root;
+    }
+
+    public function setRoot(bool $root): void
+    {
+        $this->root = $root;
+    }
+
+    public function normalize(): array
+    {
+        $data = [];
+        if ($this->root) {
+            $data['@context'] = 'http://schema.org';
+        }
+
+        if ($this->type) {
+            $data['@type'] = $this->type;
+        }
+
+        foreach ($this->data as $key => $value) {
+            if ($value instanceof StructuredData) {
+                if ($value->count() > 0) {
+                    $data[$key] = $value->normalize();
+                }
+            } else {
+                $data[$key] = $value;
+            }
+        }
+
+        return $data;
     }
 }

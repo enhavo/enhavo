@@ -16,6 +16,7 @@ use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataBag;
 use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTransformer;
 use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTypeInterface;
 use Enhavo\Component\Type\AbstractType;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -50,8 +51,35 @@ class ThingStructuredDataType extends AbstractType implements StructuredDataType
     public function buildData(array $options, object $model, StructuredDataBag $bag, Context $context): void
     {
         if ($context->isClassAttribute()) {
-            $data = $bag->createType($context->getTypeName());
-            $data->set('@type', $context->getTypeName());
+            if ($options['append_type']) {
+                // must be created, so other mappings can apply on it, even if it won't be used
+                $data = $bag->createType($context->getTypeName(), false);
+
+                if (!$options['strict'] && !$bag->hasType($options['append_type'])) {
+                    // type not exists, but we are not strict, so do nothing
+                    return;
+                }
+
+                $appendToType = $bag->getType($options['append_type']);
+
+                if ($appendToType->has($options['append_property']) && !$options['overwrite']) {
+                    // do not overwrite
+                    return;
+                }
+
+                if ($appendToType->has($options['append_property']) && $options['append']) {
+                    $oldValue = $appendToType->get($options['append_property']);
+                    if (!is_array($oldValue)) {
+                        $oldValue = [$oldValue];
+                    }
+                    $oldValue[] = $data;
+                    $data = $oldValue;
+                }
+
+                $appendToType->set($options['append_property'], $data);
+            } else {
+                $bag->createType($context->getTypeName());
+            }
         } else {
             if (!$options['strict'] && !$bag->hasType($context->getTypeName())) {
                 // type not exists, but we are not strict, so do nothing
@@ -103,8 +131,23 @@ class ThingStructuredDataType extends AbstractType implements StructuredDataType
             'overwrite' => true,
             'append' => false,
             'strict' => true,
+            'append_type' => null,
+            'append_property' => null,
         ]);
 
+        $resolver->setNormalizer('append_type', function ($options, $value) {
+            if ($value !== null && null === $options['append_property']) {
+                throw new InvalidOptionsException('If "append_type" is set, "append_property" must also be provided');
+            }
+
+            return $value;
+        });
+
         $resolver->addAllowedValues('property', self::$properties);
+    }
+
+    public static function getName(): ?string
+    {
+        return 'thing';
     }
 }
