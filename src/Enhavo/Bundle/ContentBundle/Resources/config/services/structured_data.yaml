@@ -28,6 +28,10 @@ services:
             - '@Enhavo\Component\Metadata\MetadataRepository[StructuredData]'
             - '@Enhavo\Component\Type\FactoryInterface[StructuredData]'
 
+    Enhavo\Bundle\ContentBundle\StructuredData\Type\BaseStructuredDataType:
+        tags:
+            - { name: enhavo_content.structured_data }
+
     Enhavo\Bundle\ContentBundle\StructuredData\Type\ArticleStructuredDataType:
         tags:
             - { name: enhavo_content.structured_data }

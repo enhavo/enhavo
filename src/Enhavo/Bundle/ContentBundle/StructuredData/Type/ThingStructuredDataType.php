@@ -11,11 +11,10 @@
 
 namespace Enhavo\Bundle\ContentBundle\StructuredData\Type;
 
+use Enhavo\Bundle\ContentBundle\StructuredData\AbstractStructuredDataType;
 use Enhavo\Bundle\ContentBundle\StructuredData\Context;
 use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataBag;
 use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTransformer;
-use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTypeInterface;
-use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,7 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * StructuredDataType representing https://schema.org/Thing
  *
  */
-class ThingStructuredDataType extends AbstractType implements StructuredDataTypeInterface
+class ThingStructuredDataType extends AbstractStructuredDataType
 {
     private static array $properties = [
         null,

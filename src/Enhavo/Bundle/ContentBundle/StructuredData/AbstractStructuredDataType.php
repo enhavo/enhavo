@@ -12,7 +12,6 @@
 namespace Enhavo\Bundle\ContentBundle\StructuredData;
 
 use Enhavo\Bundle\ContentBundle\StructuredData\Type\BaseStructuredDataType;
-use Enhavo\Bundle\ContentBundle\StructuredData\Type\ThingStructuredDataType;
 use Enhavo\Component\Type\AbstractType;
 
 /**
@@ -30,8 +29,13 @@ abstract class AbstractStructuredDataType extends AbstractType implements Struct
         return $this->parent->getTypeName($options);
     }
 
+    public function getGroups(array $options): array
+    {
+        return $this->parent->getGroups($options);
+    }
+
     public static function getParentType(): ?string
     {
-        return ThingStructuredDataType::class;
+        return BaseStructuredDataType::class;
     }
 }

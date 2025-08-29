@@ -62,7 +62,7 @@ class ArticleEndpointType extends AbstractEndpointType
         $context->set('resource', $resource);
         $data->set('resource', $this->normalize($resource, null, ['groups' => ['endpoint']]));
         $data->set('commentForm', $this->normalize($commentContext->getForm(), null, ['groups' => ['endpoint']]));
-        $data->set('structuredData', $this->structuredDataManager->getData($resource));
+        $data->set('structuredData', $this->structuredDataManager->getData($resource, $options['structured_data_groups']));
     }
 
     public function describe($options, Path $path)
@@ -92,6 +92,7 @@ class ArticleEndpointType extends AbstractEndpointType
             'template' => '{{ area }}/resource/article/show.html.twig',
             'resource' => null,
             'find_by' => 'id',
+            'structured_data_groups' => null,
         ]);
     }
 }
