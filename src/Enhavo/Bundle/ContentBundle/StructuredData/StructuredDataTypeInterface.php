@@ -20,5 +20,7 @@ interface StructuredDataTypeInterface extends TypeInterface
 
     public function getTypeName(array $options): ?string;
 
+    public function getGroups(array $options): array;
+
     public function configureOptions(OptionsResolver $resolver);
 }

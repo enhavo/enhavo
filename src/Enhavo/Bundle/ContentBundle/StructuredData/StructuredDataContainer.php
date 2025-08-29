@@ -32,4 +32,9 @@ class StructuredDataContainer extends AbstractContainerType
     {
         return $this->type->getTypeName($this->options);
     }
+
+    public function getGroups(): array
+    {
+        return $this->type->getGroups($this->options);
+    }
 }

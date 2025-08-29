@@ -12,13 +12,12 @@
 namespace Enhavo\Bundle\ContentBundle\StructuredData\Type;
 
 use Doctrine\Common\Collections\Collection;
+use Enhavo\Bundle\ContentBundle\StructuredData\AbstractStructuredDataType;
 use Enhavo\Bundle\ContentBundle\StructuredData\Context;
 use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataBag;
 use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataManager;
-use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTypeInterface;
-use Enhavo\Component\Type\AbstractType;
 
-class ModelStructuredDataType extends AbstractType implements StructuredDataTypeInterface
+class ModelStructuredDataType extends AbstractStructuredDataType
 {
     public function __construct(
         private StructuredDataManager $structuredDataManager,

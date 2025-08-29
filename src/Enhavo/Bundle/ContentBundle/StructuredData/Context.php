@@ -22,6 +22,7 @@ class Context
         private ?string $typeName,
         private ?string $propertyName = null,
         private mixed $propertyValue = null,
+        private array|string|null $groups = null,
     )
     {
     }
@@ -54,5 +55,15 @@ class Context
     public function getTypeName(): ?string
     {
         return $this->typeName;
+    }
+
+    public function getGroups(): array|string|null
+    {
+        return $this->groups;
+    }
+
+    public function setGroups(array|string|null $groups): void
+    {
+        $this->groups = $groups;
     }
 }

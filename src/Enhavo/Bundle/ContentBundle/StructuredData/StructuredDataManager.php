@@ -14,6 +14,7 @@ namespace Enhavo\Bundle\ContentBundle\StructuredData;
 use Enhavo\Bundle\ContentBundle\StructuredData\Metadata\Metadata;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Component\Type\FactoryInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class StructuredDataManager
@@ -25,14 +26,14 @@ class StructuredDataManager
     {
     }
 
-    public function getData(object $model): array
+    public function getData(object $model, array|string|null $groups = null): array
     {
         $bag = new StructuredDataBag();
-        $this->buildData($model, $bag);
+        $this->buildData($model, $bag, $groups);
         return $bag->toArray();
     }
 
-    public function buildData(object $model, StructuredDataBag $bag): void
+    public function buildData(object $model, StructuredDataBag $bag, array|string|null $groups = null): void
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($model);
@@ -41,8 +42,10 @@ class StructuredDataManager
             /** @var StructuredDataContainer $structuredDataContainer */
             $structuredDataContainer = $this->structuredDataFactory->create($config);
 
-            $context = new Context(Context::ATTRIBUTE_CLASS, $structuredDataContainer->getTypeName());
-            $structuredDataContainer->buildData($model, $bag, $context);
+            if ($this->inGroup($structuredDataContainer->getGroups(), $groups)) {
+                $context = new Context(Context::ATTRIBUTE_CLASS, $structuredDataContainer->getTypeName(), groups: $groups);
+                $structuredDataContainer->buildData($model, $bag, $context);
+            }
         }
 
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
@@ -51,8 +54,11 @@ class StructuredDataManager
             foreach ($property as $config) {
                 /** @var StructuredDataContainer $structuredDataContainer */
                 $structuredDataContainer = $this->structuredDataFactory->create($config);
-                $context = new Context(Context::ATTRIBUTE_PROPERTY, $structuredDataContainer->getTypeName(), $propertyName, $propertyValue);
-                $structuredDataContainer->buildData($model, $bag, $context);
+
+                if ($this->inGroup($structuredDataContainer->getGroups(), $groups)) {
+                    $context = new Context(Context::ATTRIBUTE_PROPERTY, $structuredDataContainer->getTypeName(), $propertyName, $propertyValue, $groups);
+                    $structuredDataContainer->buildData($model, $bag, $context);
+                }
             }
         }
 
@@ -61,9 +67,31 @@ class StructuredDataManager
             foreach ($method as $config) {
                 /** @var StructuredDataContainer $structuredDataContainer */
                 $structuredDataContainer = $this->structuredDataFactory->create($config);
-                $context = new Context(Context::ATTRIBUTE_METHOD, $structuredDataContainer->getTypeName(), $methodName, $methodValue);
-                $structuredDataContainer->buildData($model, $bag, $context);
+
+                if ($this->inGroup($structuredDataContainer->getGroups(), $groups)) {
+                    $context = new Context(Context::ATTRIBUTE_METHOD, $structuredDataContainer->getTypeName(), $methodName, $methodValue, $groups);
+                    $structuredDataContainer->buildData($model, $bag, $context);
+                }
             }
         }
+    }
+
+    private function inGroup(array $typeGroups, array|string|null $contextGroups): bool
+    {
+        if (is_string($contextGroups)) {
+            $contextGroups = [$contextGroups];
+        } elseif ($contextGroups === null) {
+            $contextGroups = [];
+        }
+
+        if (count($contextGroups) === 0 && count($typeGroups) === 0) {
+            return true;
+        }
+
+        if (count($typeGroups) === 0) {
+            return true;
+        }
+
+        return count(array_intersect($typeGroups, $contextGroups)) > 0;
     }
 }
