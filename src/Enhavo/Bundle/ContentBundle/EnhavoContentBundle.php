@@ -17,7 +17,7 @@ use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTransformerInterfac
 use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTypeInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Enhavo\Bundle\ContentBundle\StructuredData\StructuredData;
+use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataContainer;
 
 class EnhavoContentBundle extends Bundle
 {
@@ -31,8 +31,7 @@ class EnhavoContentBundle extends Bundle
             new TypeCompilerPass('enhavo_content.sitemap_collector', 'enhavo.sitemap_collector')
         );
 
-        $container->addCompilerPass(new \Enhavo\Component\Type\TypeCompilerPass('StructuredData', 'enhavo_content.structured_data', StructuredData::class));
-
+        $container->addCompilerPass(new \Enhavo\Component\Type\TypeCompilerPass('StructuredData', 'enhavo_content.structured_data', StructuredDataContainer::class));
 
         $container
             ->registerForAutoconfiguration(StructuredDataTypeInterface::class)

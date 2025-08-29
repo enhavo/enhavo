@@ -38,22 +38,31 @@ class StructuredDataManager
         $metadata = $this->metadataRepository->getMetadata($model);
 
         foreach ($metadata->getClasses() as $config) {
-            /** @var StructuredData $structuredData */
-            $structuredData = $this->structuredDataFactory->create($config);
+            /** @var StructuredDataContainer $structuredDataContainer */
+            $structuredDataContainer = $this->structuredDataFactory->create($config);
 
-            $context = new Context(true, $structuredData->getTypeName());
-            $structuredData->buildData($model, $bag, $context);
+            $context = new Context(Context::ATTRIBUTE_CLASS, $structuredDataContainer->getTypeName());
+            $structuredDataContainer->buildData($model, $bag, $context);
         }
-
 
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
         foreach ($metadata->getProperties() as $propertyName => $property) {
             $propertyValue = $propertyAccessor->getValue($model, $propertyName);
             foreach ($property as $config) {
-                /** @var StructuredData $structuredData */
-                $structuredData = $this->structuredDataFactory->create($config);
-                $context = new Context(false, $structuredData->getTypeName(), $propertyName, $propertyValue);
-                $structuredData->buildData($model, $bag, $context);
+                /** @var StructuredDataContainer $structuredDataContainer */
+                $structuredDataContainer = $this->structuredDataFactory->create($config);
+                $context = new Context(Context::ATTRIBUTE_PROPERTY, $structuredDataContainer->getTypeName(), $propertyName, $propertyValue);
+                $structuredDataContainer->buildData($model, $bag, $context);
+            }
+        }
+
+        foreach ($metadata->getMethods() as $methodName => $method) {
+            $methodValue = $propertyAccessor->getValue($model, $methodName);
+            foreach ($method as $config) {
+                /** @var StructuredDataContainer $structuredDataContainer */
+                $structuredDataContainer = $this->structuredDataFactory->create($config);
+                $context = new Context(Context::ATTRIBUTE_METHOD, $structuredDataContainer->getTypeName(), $methodName, $methodValue);
+                $structuredDataContainer->buildData($model, $bag, $context);
             }
         }
     }

@@ -21,13 +21,13 @@ class StructuredDataAttributeDriver implements DriverInterface
         $reflection = new \ReflectionClass($className);
 
 
-        $classes = [];
+        $class = [];
         $attributes = $reflection->getAttributes(StructuredData::class);
         foreach ($attributes as $attribute) {
             $arguments = $attribute->getArguments();
             $options = $arguments[1] ?? [];
             $options['type'] = $arguments[0];
-            $classes[] = $options;
+            $class[] = $options;
         }
 
         $properties = [];
@@ -46,9 +46,26 @@ class StructuredDataAttributeDriver implements DriverInterface
             }
         }
 
+        $methods = [];
+        foreach ($reflection->getMethods() as $method) {
+            $attributes = $method->getAttributes(StructuredData::class);
+            foreach ($attributes as $attribute) {
+                $arguments = $attribute->getArguments();
+                $options = $arguments[1] ?? [];
+                $options['type'] = $arguments[0];
+
+                if (!array_key_exists($method->getName(), $properties)) {
+                    $methods[$method->getName()] = [];
+                }
+
+                $methods[$method->getName()][$options['type']] = $options;
+            }
+        }
+
         return [
+            'class' => $class,
             'properties' => $properties,
-            'class' => $classes,
+            'methods' => $methods,
         ];
     }
 

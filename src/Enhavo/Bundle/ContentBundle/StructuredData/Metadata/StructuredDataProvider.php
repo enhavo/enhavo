@@ -22,8 +22,25 @@ class StructuredDataProvider implements ProviderInterface
             return;
         }
 
-        $this->updateProperties($metadata, $normalizedData);
         $this->updateClasses($metadata, $normalizedData);
+        $this->updateProperties($metadata, $normalizedData);
+        $this->updateMethods($metadata, $normalizedData);
+    }
+
+    private function updateClasses(Metadata $metadata, $normalizedData)
+    {
+        $classes = $metadata->getClasses();
+
+        $normalizedClasses = $normalizedData['class'] ?? [];
+        foreach ($normalizedClasses as $key => $config) {
+            if (!isset($config['type'])) {
+                continue;
+            }
+
+            $classes[$config['type']] = $config;
+        }
+
+        $metadata->setClasses($classes);
     }
 
     private function updateProperties(Metadata $metadata, $normalizedData)
@@ -48,19 +65,25 @@ class StructuredDataProvider implements ProviderInterface
         $metadata->setProperties($properties);
     }
 
-    private function updateClasses(Metadata $metadata, $normalizedData)
+    private function updateMethods(Metadata $metadata, $normalizedData)
     {
-        $classes = $metadata->getClasses();
+        $methods = $metadata->getMethods();
 
-        $normalizedClasses = $normalizedData['class'] ?? [];
-        foreach ($normalizedClasses as $key => $config) {
-            if (!isset($config['type'])) {
-                continue;
+        $normalizedProperties = $normalizedData['methods'] ?? [];
+        foreach ($normalizedProperties as $methodName => $configArray) {
+            foreach ($configArray as $config) {
+                if (!isset($config['type'])) {
+                    continue;
+                }
+
+                if (!array_key_exists($methodName, $methods)) {
+                    $methods[$methodName] = [];
+                }
+
+                $methods[$methodName][$config['type']] = $config;
             }
-
-            $classes[$config['type']] = $config;
         }
 
-        $metadata->setClasses($classes);
+        $metadata->setMethods($methods);
     }
 }

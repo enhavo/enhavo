@@ -11,15 +11,16 @@
 
 namespace Enhavo\Bundle\ContentBundle\StructuredData;
 
-use Enhavo\Bundle\ApiBundle\Data\Data;
 
 class StructuredDataBag
 {
     private array $data = [];
 
-    public function createType(string $type): Data
+    public function createType(string $type, $root = true): StructuredData
     {
-        $typeData = new Data();
+        $typeData = new StructuredData();
+        $typeData->setType($type);
+        $typeData->setRoot($root);
 
         if (!array_key_exists($type, $this->data)) {
             $this->data[$type] = [];
@@ -30,7 +31,7 @@ class StructuredDataBag
         return $typeData;
     }
 
-    public function getType(string $type): Data
+    public function getType(string $type): StructuredData
     {
         if (!isset($this->data[$type])) {
             throw new \InvalidArgumentException(sprintf('The type "%s" does not exist.', $type));
@@ -49,11 +50,11 @@ class StructuredDataBag
         $returnData = [];
 
         foreach ($this->data as $typeName => $dataSet) {
-            /** @var Data $typeData */
+            /** @var StructuredData $typeData */
             foreach ($dataSet as $typeData) {
-                $returnData[] = array_merge([
-                    "@context" => "https://schema.org",
-                ], $typeData->normalize());
+                if ($typeData->isRoot() && $typeData->count() > 0) {
+                    $returnData[] = $typeData->normalize();
+                }
             }
         }
 
