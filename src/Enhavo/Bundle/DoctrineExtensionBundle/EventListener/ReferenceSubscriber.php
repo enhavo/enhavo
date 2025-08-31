@@ -151,8 +151,13 @@ class ReferenceSubscriber implements EventSubscriber
                     ) {
                         $uow->persist($targetEntity);
                         if ($this->isFlush) {
-                            $metadata = $args->getObjectManager()->getClassMetadata(get_class($targetEntity));
-                            $uow->computeChangeSet($metadata, $targetEntity);
+                            // check insert entities that are not computed yet
+                            foreach ($uow->getScheduledEntityInsertions() as $object) {
+                                if (is_countable($uow->getEntityChangeSet($object)) && count($uow->getEntityChangeSet($object)) === 0) {
+                                    $metadata = $args->getObjectManager()->getClassMetadata(get_class($object));
+                                    $uow->computeChangeSet($metadata, $object);
+                                }
+                            }
                         }
                     }
                 }
