@@ -14,6 +14,7 @@ import jexl from "jexl";
 import axios from "axios";
 import {ClientInterface, Transport} from "@enhavo/app/client/ClientInterface";
 import {CollectionInterface} from "@enhavo/app/collection/CollectionInterface";
+import {Frame} from "@enhavo/app/frame/Frame";
 
 export class ListCollection implements CollectionInterface
 {
@@ -146,15 +147,17 @@ export class ListCollection implements CollectionInterface
     {
         const frames = await this.frameManager.getFrames();
 
-        for (let row of this.items) {
-            row.active = false;
-        }
-
         for (let frame of frames) {
-            for (let row of this.items) {
-                if (row.url === frame.url) {
-                    row.active = true;
-                }
+            this.checkActiveRowRecursive(this.items, frame);
+        }
+    }
+
+    private checkActiveRowRecursive(items: CollectionResourceItem[], frame: Frame)
+    {
+        for (let row of items) {
+            row.active = row.url === frame.url;
+            if (row.children) {
+                this.checkActiveRowRecursive(row.children, frame);
             }
         }
     }
