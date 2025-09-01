@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Enhavo\Bundle\ContentBundle\StructuredData;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
@@ -45,6 +54,18 @@ class StructuredData extends Data
                 if ($value->count() > 0) {
                     $data[$key] = $value->normalize();
                 }
+            } elseif (is_iterable($value)) {
+                $normalizedArray = [];
+                foreach ($value as $item) {
+                    if ($item instanceof StructuredData) {
+                        if ($item->count() > 0) {
+                            $normalizedArray[] = $item->normalize();
+                        }
+                    } else {
+                        $normalizedArray[] = $item;
+                    }
+                }
+                $data[$key] = $normalizedArray;
             } else {
                 $data[$key] = $value;
             }
