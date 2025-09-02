@@ -44,6 +44,6 @@ class BaseStructuredDataType extends AbstractType implements StructuredDataTypeI
             return $options['groups'];
         }
 
-        return ['all'];
+        return ['Default'];
     }
 }

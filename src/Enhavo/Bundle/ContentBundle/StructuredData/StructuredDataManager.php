@@ -36,7 +36,7 @@ class StructuredDataManager
     public function buildData(object $model, StructuredDataBag $bag, array|string|null $groups = null): void
     {
         if (null === $groups) {
-            $groups = ['all'];
+            $groups = ['Default'];
         }
 
         /** @var Metadata $metadata */
