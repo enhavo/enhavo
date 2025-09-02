@@ -35,6 +35,10 @@ class StructuredDataManager
 
     public function buildData(object $model, StructuredDataBag $bag, array|string|null $groups = null): void
     {
+        if (null === $groups) {
+            $groups = ['Default'];
+        }
+
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($model);
 
