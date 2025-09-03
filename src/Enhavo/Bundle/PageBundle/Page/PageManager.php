@@ -24,29 +24,24 @@ class PageManager
     ) {
     }
 
-    public function getPagePath($special, $parameters, $referenceType)
+    public function getPagePath($special, $parameters, $referenceType): ?string
     {
         $page = $this->pageRepository->findOneBy([
             'special' => $special,
         ]);
 
         if (!$page instanceof Page) {
-            return $this->getDefaultLink($special);
+            return null;
         }
 
         if (null === $page->getRoute()) {
-            return $this->getDefaultLink($special);
+            return null;
         }
 
         try {
             return $this->router->generate($page->getRoute(), $parameters, $referenceType);
         } catch (RouteNotFoundException $e) {
-            return $this->getDefaultLink($special);
+            return null;
         }
-    }
-
-    private function getDefaultLink($special)
-    {
-        return sprintf('#%s', $special);
     }
 }

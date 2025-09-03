@@ -13,12 +13,13 @@ namespace Enhavo\Bundle\MediaLibraryBundle\GarbageCollection\Voter;
 
 use Enhavo\Bundle\MediaBundle\GarbageCollection\Voter\GarbageCollectionVoterInterface;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
+use Enhavo\Bundle\MediaLibraryBundle\Model\LibraryFileInterface;
 
 class LibraryGarbageCollectionVoter implements GarbageCollectionVoterInterface
 {
     public function vote(FileInterface $file): string
     {
-        if ($file->isLibrary()) {
+        if ($file instanceof LibraryFileInterface && $file->getItem()) {
             return self::VOTE_KEEP;
         }
 
