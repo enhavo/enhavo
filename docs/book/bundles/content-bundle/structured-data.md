@@ -86,5 +86,5 @@ properties:
 :::
 
 Find more examples in the [Structured Data guide](/guides/structured-data/index) or check the references:
-* [Structured Data reference](/reference/structured-data)
-* [Structured Data transformer reference](/reference/structured-data-transformer)
+* [Structured Data reference](/reference/structured-data/index)
+* [Structured Data transformer reference](/reference/structured-data-transformer/index)
