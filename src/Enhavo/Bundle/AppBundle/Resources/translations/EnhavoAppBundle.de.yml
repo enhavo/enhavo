@@ -65,9 +65,9 @@ message:
     confirm: 'Die Resource wird dupliziert. Das aktuelle Formular wird ohne Speichern geschlossen. Wollen Sie wirklich fortfahren?'
     success: 'Das Element wurde erfolgreich dupliziert'
   delete:
-    confirm: 'Warnung: Wollen Sie dieses Doument wirklich löschen?'
+    confirm: 'Warnung: Wollen Sie dieses Dokument wirklich löschen?'
   close:
-    confirm: 'Warning: Sie dieses Doument wirklich schließen? Alle Änderungen gehen verloren'
+    confirm: 'Warning: Sie dieses Dokument wirklich schließen? Alle Änderungen gehen verloren'
   open:
     confirm: 'Wollen Sie diese Aktion wirklich ausführen?'
 tab:
