@@ -17,6 +17,7 @@
 * [Routing](routing/index)
 * [Search](search/index)
 * [Setting](setting/index)
+* [Structured Data](structured-data/index)
 * [Toolbar Widget](toolbar-widget/index)
 * [View](view/index)
 * [Vue Form](vue-form/index)
