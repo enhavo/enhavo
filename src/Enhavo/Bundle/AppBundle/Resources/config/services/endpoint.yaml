@@ -18,6 +18,15 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
+    Enhavo\Bundle\AppBundle\Endpoint\Extension\LocaleEndpointTypeExtension:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint_extension }
+            - { name: container.service_subscriber }
+
     Enhavo\Bundle\AppBundle\Endpoint\Extension\RouterEndpointExtensionType:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
