@@ -67,7 +67,7 @@ message:
   delete:
     confirm: 'Warnung: Wollen Sie dieses Dokument wirklich löschen?'
   close:
-    confirm: 'Warning: Sie dieses Dokument wirklich schließen? Alle Änderungen gehen verloren'
+    confirm: 'Warnung: Wollen Sie dieses Dokument wirklich schließen? Alle Änderungen gehen verloren'
   open:
     confirm: 'Wollen Sie diese Aktion wirklich ausführen?'
 tab:
