@@ -6,10 +6,10 @@
 
     {% if block("canonical_url") %}<link rel="canonical" href="{% block canonical_url %}{% endblock %}" />{% endif %}
     {% if block("meta_description") %}<meta name="description" content="{% block meta_description %}{% endblock %}" />{% endif %}
-    {% if block("og_url") %}<meta name="og:url" content="{% block og_url %}{{ app.request.uri }}{% endblock %}" />{% endif %}
-    {% if block("og_title") %}<meta name="og:title" content="{% block og_title %}{% endblock %}" />{% endif %}
-    {% if block("og_description") %}<meta name="og:description" content="{% block og_description %}{% endblock %}" />{% endif %}
-    {% if block("og_image") %}<meta name="og:image" content="{% block og_image %}{% endblock %}" />{% endif %}
+    {% if block("og_url") %}<meta property="og:url" content="{% block og_url %}{{ app.request.uri }}{% endblock %}" />{% endif %}
+    {% if block("og_title") %}<meta property="og:title" content="{% block og_title %}{% endblock %}" />{% endif %}
+    {% if block("og_description") %}<meta property="og:description" content="{% block og_description %}{% endblock %}" />{% endif %}
+    {% if block("og_image") %}<meta property="og:image" content="{% block og_image %}{% endblock %}" />{% endif %}
     {% if block("robots") %}<meta name="robots" content="{% block robots %}{% endblock %}" />{% endif %}
     {% if block("page_title") %}<title>{% block page_title %}{% endblock %}</title>{% endif %}
 
