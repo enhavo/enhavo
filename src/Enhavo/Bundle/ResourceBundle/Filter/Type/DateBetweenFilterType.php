@@ -25,6 +25,7 @@ class DateBetweenFilterType extends AbstractFilterType
     {
         $data['locale'] = $options['locale'];
         $data['format'] = $options['format'];
+        $data['time'] = $options['time'];
     }
 
     public function buildQuery($options, FilterQuery $query, mixed $value): void
@@ -92,8 +93,9 @@ class DateBetweenFilterType extends AbstractFilterType
             'model' => 'DateBetweenFilter',
             'label_from' => 'filter.date_between.label.from',
             'label_to' => 'filter.date_between.label.to',
-            'locale' => 'de',
+            'locale' => 'en-US',
             'format' => 'dd.MM.yyyy',
+            'time' => false,
         ]);
     }
 

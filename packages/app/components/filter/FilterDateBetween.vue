@@ -2,9 +2,29 @@
     <div class="view-table-filter-search wide view-table-filter">
         <span class="label">{{ data.label }}</span>
         <div class="multi-input-container">
-            <datepicker :typeable="true" :inputFormat="data.format" :locale="data.locale" :placeholder="data.labelFrom" v-model="valueFrom" @update:modelValue="update"></datepicker>
+            <datepicker
+                :format="data.format"
+                :locale="data.locale"
+                :placeholder="data.labelFrom"
+                :enable-time-picker="data.time"
+                :clearable="true"
+                :auto-apply="!data.time"
+                :time-picker-inline="true"
+                v-model="valueFrom"
+                @update:modelValue="update"
+            ></datepicker>
             <div class="separator">-</div>
-            <datepicker :typeable="true" :inputFormat="data.format" :locale="data.locale" :placeholder="data.labelTo" v-model="valueTo" @update:modelValue="update"></datepicker>
+            <datepicker
+                :format="data.format"
+                :locale="data.locale"
+                :placeholder="data.labelTo"
+                :enable-time-picker="data.time"
+                :clearable="true"
+                :auto-apply="!data.time"
+                :time-picker-inline="true"
+                v-model="valueTo"
+                @update:modelValue="update"
+            ></datepicker>
         </div>
     </div>
 </template>
@@ -17,29 +37,33 @@ const props = defineProps<{
     data: DateBetweenFilter
 }>()
 
-let valueFrom: Date = null;
-let valueTo: Date = null;
+const valueFrom = ref<Date>(null);
+const valueTo = ref<Date>(null);
 
 onMounted(() => {
-    valueFrom = toDate(props.data.value.from);
-    valueTo = toDate(props.data.value.to);
+    valueFrom.value = toDate(props.data.value.from);
+    valueTo.value = toDate(props.data.value.to);
 })
 
 const valueFromDate = ref(props.data.value.from);
 const valueToDate = ref(props.data.value.to);
 
 watch(valueFromDate, (newValue: any) => {
-    valueFrom = toDate(newValue);
+    valueFrom.value = toDate(newValue);
 })
 
 watch(valueToDate, (newValue: any) => {
-    valueTo = toDate(newValue);
+    valueTo.value = toDate(newValue);
 })
 
 function update()
 {
-    props.data.value.from = formatDate(valueFrom);
-    props.data.value.to = formatDate(valueTo);
+    if (!props.data.time) {
+        valueFrom.value?.setHours(0, 0, 0, 0);
+        valueTo.value?.setHours(23, 59, 59, 0);
+    }
+    props.data.value.from = formatDate(valueFrom.value);
+    props.data.value.to = formatDate(valueTo.value);
 }
 
 function formatDate(date: Date): string
