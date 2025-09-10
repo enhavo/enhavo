@@ -52,3 +52,59 @@ enhavo_app:
             label: Table
             route: app_table_index
             icon: view_comfy
+<<<<<<< HEAD
+=======
+            label: App
+            items:
+                person:
+                    type: link
+                    label: Person
+                    route: app_admin_person_index
+                    icon: accessibility
+                category:
+                    type: link
+                    label: Category
+                    route: app_admin_category_index
+                    icon: view_comfy
+                table:
+                    type: link
+                    label: Table
+                    route: app_admin_table_index
+                    icon: view_comfy
+                frame_test:
+                    type: link
+                    label: Frame Test
+                    route: app_admin_frame_test
+                    icon: video_label
+                    clear: false
+
+    area:
+        theme:
+            firewall: main
+            options:
+                routes: ['api', 'theme']
+                vue_routes: ['theme']
+                navigation: true
+                locale: true
+        api:
+            path: ^/api/
+        admin_login:
+            path:
+                - /admin/reset-password/.+
+                - /admin/login$
+            options:
+                routes: ['admin_login', 'admin_login_api']
+                vue_routes: ['admin_login']
+                translations: ['javascript']
+        admin:
+            firewall: admin
+            path:
+                - ^/admin/reset-password/.+
+                - ^/admin/login$
+            options:
+                routes: ['admin', 'admin_api']
+                vue_routes: ['admin']
+                translations: ['javascript']
+        admin_api:
+            path: ^/admin/api/
+>>>>>>> 254f9a921 (feat: endpoint locale extension (#2307))
