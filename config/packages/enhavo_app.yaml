@@ -70,6 +70,7 @@ enhavo_app:
                 routes: ['api', 'theme']
                 vue_routes: ['theme']
                 navigation: true
+                locale: true
         api:
             path: ^/api/
         admin_login:
