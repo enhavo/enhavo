@@ -4,4 +4,5 @@ export class DateBetweenFilter extends BetweenFilter
 {
     locale: string;
     format: string;
+    time: boolean;
 }
