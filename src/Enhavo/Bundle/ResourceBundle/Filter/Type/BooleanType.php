@@ -31,8 +31,8 @@ class BooleanType extends AbstractFilterType
     public function createViewData($options, Data $data): void
     {
         if (!$options['checkbox']) {
-            if ('filter-boolean' === $data['component']) {
-                $data['component'] = 'filter-option';
+            if ('filter-checkbox' === $data['component']) {
+                $data['component'] = 'filter-dropdown';
             }
             $data['choices'] = $this->getChoices($options);
         }
