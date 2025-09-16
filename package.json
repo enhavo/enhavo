@@ -27,7 +27,7 @@
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.11",
     "moment": "^2.18.1",
-    "node-sass": "^4.11.0",
+    "node-sass": ">=4.0.0",
     "pako": "^1.0.10",
     "sass-loader": "^7.1.0",
     "select2": "~3.5.1",
@@ -72,7 +72,6 @@
     "gulp-decompress": "^2.0.2",
     "gulp-download": "^0.0.1",
     "gulp-options": "^1.1.1",
-    "gulp-sass": "^4.0.2",
     "webfonts-generator": "^0.4.0",
     "webpack-notifier": "^1.7.0"
   }
