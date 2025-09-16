@@ -12,7 +12,7 @@
     "@symfony/webpack-encore": "0.30.2",
     "copy-webpack-plugin": "^4.5.2",
     "glob": "^7.1.6",
-    "node-sass": "^4.0.0",
+    "node-sass": ">=4.0.0",
     "sass-loader": "^8.0.0",
     "ts-loader": "^5.3",
     "typescript": "^3.1.1",
