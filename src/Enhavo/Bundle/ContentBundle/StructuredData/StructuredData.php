@@ -49,28 +49,23 @@ class StructuredData extends Data
             $data['@type'] = $this->type;
         }
 
-        foreach ($this->data as $key => $value) {
+        return array_merge($data, $this->normalizeData($this->data));
+    }
+
+    private function normalizeData(iterable $data): array
+    {
+        $result = [];
+        foreach ($data as $key => $value) {
             if ($value instanceof StructuredData) {
                 if ($value->count() > 0) {
-                    $data[$key] = $value->normalize();
+                    $result[$key] = $value->normalize();
                 }
             } elseif (is_iterable($value)) {
-                $normalizedArray = [];
-                foreach ($value as $item) {
-                    if ($item instanceof StructuredData) {
-                        if ($item->count() > 0) {
-                            $normalizedArray[] = $item->normalize();
-                        }
-                    } else {
-                        $normalizedArray[] = $item;
-                    }
-                }
-                $data[$key] = $normalizedArray;
+                $result[$key] = $this->normalizeData($value);
             } else {
-                $data[$key] = $value;
+                $result[$key] = $value;
             }
         }
-
-        return $data;
+        return $result;
     }
 }
