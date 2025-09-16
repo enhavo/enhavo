@@ -83,7 +83,7 @@ class TenancyFilterType extends AbstractFilterType
             'label' => 'filter.tenancy.label',
             'translation_domain' => 'EnhavoMultiTenancyBundle',
             'tenantLabelProperty' => 'name',
-            'component' => 'filter-option',
+            'component' => 'filter-dropdown',
         ]);
     }
 
