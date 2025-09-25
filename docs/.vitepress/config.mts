@@ -12,6 +12,9 @@ export default defineConfig({
       { text: 'Reference', link: '/reference/' },
       { text: 'Contribute', link: '/contribute/' },
     ],
+    search: {
+      provider: 'local'
+    },
 
     // sidebar: {
     //   '/guides/': [
