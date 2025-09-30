@@ -49,14 +49,14 @@ enhavo_content:
     structured_data:
         App\Entity\Article:
             class:
-                blog_posting:
+                -
                     type: blog_posting
             properties:
-                title:
+                -
                     blog_posting:
                         type: blog_posting
                         property: headline
-                teaser:
+                -
                     blog_posting:
                         type: blog_posting
                         property: teaser

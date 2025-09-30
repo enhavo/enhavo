@@ -50,7 +50,7 @@ enhavo_content:
     structured_data:
         App\Entity\Article:
             class:
-                corporation_extension:
+                -
                     type: corporation_extension
 ```
 :::

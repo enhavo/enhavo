@@ -29,11 +29,11 @@ enhavo_content:
     structured_data:
         App\Entity\Article:
             class:
-                blog_posting:
+                -
                     type: blog_posting
             properties:
                 title:
-                    blog_posting:
+                    -
                         type: blog_posting
                         property: headline
 ```
@@ -81,11 +81,11 @@ enhavo_content:
     structured_data:
         App\Entity\Article:
             class:
-                blog_posting:
+                -
                     type: blog_posting
             properties:
                 image:
-                    blog_posting:
+                    -
                         type: blog_posting
                         property: image
                         transform: media_url
@@ -144,21 +144,21 @@ enhavo_content:
     structured_data:
         App\Entity\Article:
             class:
-                blog_posting:
+                -
                     type: blog_posting
             properties:
                 author:
-                    model:
+                    -
                         type: model
         App\Entity\Author:
             class:
-                author:
+                -
                     type: author
                     append_type: BlogPosting
                     append_property: author
             methods:
                 name:
-                    author:
+                    -
                         type: author
                         property: name
 ```
@@ -214,19 +214,19 @@ enhavo_content:
     structured_data:
         App\Entity\Article:
             class:
-                blog_posting:
+                -
                     type: blog_posting
             properties:
                 author:
-                    model:
+                    -
                         type: model
         App\Entity\ImageBlock:
             class:
-                image:
+                -
                     type: image
             property:
                 image:
-                    image:
+                    -
                         type: image
                         property: url
                         transform: media_url

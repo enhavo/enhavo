@@ -37,7 +37,7 @@ class StructuredDataProvider implements ProviderInterface
                 continue;
             }
 
-            $classes[$config['type']] = $config;
+            $classes[] = $config;
         }
 
         $metadata->setClasses($classes);
@@ -58,7 +58,7 @@ class StructuredDataProvider implements ProviderInterface
                     $properties[$propertyName] = [];
                 }
 
-                $properties[$propertyName][$config['type']] = $config;
+                $properties[$propertyName][] = $config;
             }
         }
 
@@ -80,7 +80,7 @@ class StructuredDataProvider implements ProviderInterface
                     $methods[$methodName] = [];
                 }
 
-                $methods[$methodName][$config['type']] = $config;
+                $methods[$methodName][] = $config;
             }
         }
 
