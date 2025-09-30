@@ -151,16 +151,17 @@ class Book
 ```
 
 ```yaml [YAML]
-enhavo_resources:
+enhavo_resource:
     duplicate:
         App\Entity\Book:
-            name:
-                type: string
-                postfix: ' Copy!!'
-                group: ['duplicate']
-            chapters:
-                type: model
-                group: ['duplicate']
+            properties:
+                name:
+                    type: string
+                    postfix: ' Copy!!'
+                    group: ['duplicate']
+                chapters:
+                    type: model
+                    group: ['duplicate']
 ```
 
 :::
