@@ -42,7 +42,7 @@ class StructuredDataAttributeDriver implements DriverInterface
                     $properties[$property->getName()] = [];
                 }
 
-                $properties[$property->getName()][$options['type']] = $options;
+                $properties[$property->getName()][] = $options;
             }
         }
 
@@ -54,11 +54,11 @@ class StructuredDataAttributeDriver implements DriverInterface
                 $options = $arguments[1] ?? [];
                 $options['type'] = $arguments[0];
 
-                if (!array_key_exists($method->getName(), $properties)) {
+                if (!array_key_exists($method->getName(), $methods)) {
                     $methods[$method->getName()] = [];
                 }
 
-                $methods[$method->getName()][$options['type']] = $options;
+                $methods[$method->getName()][] = $options;
             }
         }
 
