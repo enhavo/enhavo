@@ -189,30 +189,42 @@ class ReferenceSubscriber implements EventSubscriber
     }
 
     /**
-     * Check the identity map for entities with containing new references and persist them if cascade persists and the
-     * referenced entity is not persists or removed yet. This case happen if an entity received from a repository,
-     * and apply an entity as reference afterward, so a persist call was never triggered at this point
+     * This step ensures that new referenced entities are persisted when a cascade is configured.
+     * It covers the case where a parent entity is already managed (loaded into the identity map or previously persisted),
+     * and later a new, unmanaged entity is assigned to one of its reference fields.
      */
     public function persistEntities(UnitOfWork $uow, ObjectManager $em): void
     {
+        $newEntities = $uow->getScheduledEntityInsertions();
         $identityMap = $uow->getIdentityMap();
 
         foreach ($this->getAllMetadata() as $metadata) {
             if (isset($identityMap[$metadata->getClassName()])) {
                 foreach ($identityMap[$metadata->getClassName()] as $entity) {
-                    foreach ($metadata->getReferences() as $reference) {
-                        if ($reference->hasCascade(Reference::CASCADE_PERSIST)) {
-                            $propertyAccessor = PropertyAccess::createPropertyAccessor();
-                            $targetEntity = $propertyAccessor->getValue($entity, $reference->getProperty());
-                            if (null !== $targetEntity
-                                && !$uow->isInIdentityMap($targetEntity)
-                                && !$uow->isScheduledForDelete($targetEntity)
-                                && !$uow->isScheduledForInsert($targetEntity)
-                            ) {
-                                $em->persist($targetEntity);
-                            }
-                        }
-                    }
+                    $this->checkCascadePersist($uow, $em, $entity, $metadata);
+                }
+            }
+
+            foreach ($newEntities as $entity) {
+                if (get_class($entity) === $metadata->getClassName()) {
+                    $this->checkCascadePersist($uow, $em, $entity, $metadata);
+                }
+            }
+        }
+    }
+
+    private function checkCascadePersist(UnitOfWork $uow, ObjectManager $em, object $entity, Metadata $metadata): void
+    {
+        foreach ($metadata->getReferences() as $reference) {
+            if ($reference->hasCascade(Reference::CASCADE_PERSIST)) {
+                $propertyAccessor = PropertyAccess::createPropertyAccessor();
+                $targetEntity = $propertyAccessor->getValue($entity, $reference->getProperty());
+                if (null !== $targetEntity
+                    && !$uow->isInIdentityMap($targetEntity)
+                    && !$uow->isScheduledForDelete($targetEntity)
+                    && !$uow->isScheduledForInsert($targetEntity)
+                ) {
+                    $em->persist($targetEntity);
                 }
             }
         }
