@@ -2,25 +2,25 @@ enhavo_content:
     structured_data:
         Enhavo\Bundle\ArticleBundle\Entity\Article:
             class:
-                article:
+                -
                     type: article
             properties:
                 title:
-                    article:
+                    -
                         type: article
                         property: headline
                 picture:
-                    article:
+                    -
                         type: article
                         property: image
                         transform: media_url
                         transform_options:
                             format: '%enhavo_article.structured_data.article_image_format%'
                 teaser:
-                    article:
+                    -
                         type: article
                         property: 'description'
                         transform: 'html_text'
                 content:
-                    model:
+                    -
                         type: model
