@@ -57,7 +57,7 @@ class MetadataFactory
 
         $metadata = new $this->metaDataClass($className);
 
-        $hasMetadata = $this->loadMetadata($className, $metadata);
+        $hasMetadata = $this->hasMetadata($className);
 
         $this->metadata[$className] = $hasMetadata || $force ? $metadata : null;
 
@@ -85,6 +85,25 @@ class MetadataFactory
         }
 
         return $hasMetadata;
+    }
+
+    public function hasMetadata($className): bool
+    {
+        if (!array_key_exists($className, $this->loadedData)) {
+            $this->loadedData[$className] = [];
+
+            foreach ($this->drivers as $driver) {
+                $this->loadedData[$className][] = $driver->loadClass($className);
+            }
+        }
+
+        foreach ($this->loadedData[$className] as $normalizedData) {
+            if (false !== $normalizedData) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function addProvider(ProviderInterface $provider): void
