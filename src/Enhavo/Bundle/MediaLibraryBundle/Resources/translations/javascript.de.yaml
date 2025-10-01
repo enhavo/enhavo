@@ -9,3 +9,6 @@ enhavo_media_library:
     select:
         message:
             file_selected: 'Datei(en) ausgewählt'
+    library:
+        label:
+            title: 'Mediathek'

@@ -1,16 +1,26 @@
 enhavo_app:
     edit: 'Edit'
-    create: 'Create'
-    preview: 'Preview'
     auto_save: 'Autosave'
     abort: 'Close'
     cancel: 'Cancel'
     error: 'Error occurred'
     error_404: 'Not found'
     close: 'Close'
+    index:
+        label:
+            title: 'Index  %label%'
+    create:
+        label:
+            title: 'Create  %label%'
+    update:
+        label:
+            title: 'Edit  %label%'
     input:
         message:
             save_success: 'Save successful'
+    preview:
+        label:
+            title: 'Preview  %label%'
     batch:
         label:
             placeholder: 'Choose Batch'

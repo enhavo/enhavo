@@ -136,14 +136,19 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
 
     protected function getRepository($name): EntityRepository
     {
+        $manager = $this->getResourceManager();
+
+        return $manager->getRepository($name);
+    }
+
+    protected function getResourceManager(): ResourceManager
+    {
         if (!$this->container->has(ResourceManager::class)) {
             throw GridException::missingService(ResourceManager::class);
         }
 
         /** @var ResourceManager $actionManager */
-        $manager = $this->container->get(ResourceManager::class);
-
-        return $manager->getRepository($name);
+        return $this->container->get(ResourceManager::class);
     }
 
     /**

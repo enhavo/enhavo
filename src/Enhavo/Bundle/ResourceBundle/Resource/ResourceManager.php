@@ -22,6 +22,7 @@ use Enhavo\Bundle\ResourceBundle\Event\ResourcePreCreateEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePreTransitionEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePreUpdateEvent;
 use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
+use Enhavo\Bundle\TranslationBundle\Entity\Translation;
 use Psr\Container\ContainerInterface;
 use SM\Factory\FactoryInterface as SMFactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -30,6 +31,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\GroupSequence;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ResourceManager
 {
@@ -43,6 +45,7 @@ class ResourceManager
         private readonly ValidatorInterface $validator,
         private readonly DuplicateFactory $duplicateFactory,
         private readonly DeleteHandlerInterface $deleteHandler,
+        private readonly TranslatorInterface $translator,
         private readonly array $resources,
     ) {
         $this->propertyAccessor = new PropertyAccessor();
@@ -127,6 +130,15 @@ class ResourceManager
         }
 
         return null;
+    }
+
+    public function getLabel(string|object $value): ?string
+    {
+        $metadata = $this->getMetadata($value);
+        if ($metadata->getLabel() === null) {
+            return null;
+        }
+        return $this->translator->trans($metadata->getLabel(), [], $metadata->getTranslationDomain());
     }
 
     private function dispatch($event, $eventName): void

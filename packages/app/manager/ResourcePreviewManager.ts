@@ -5,6 +5,8 @@ import {PreviewData} from "@enhavo/app/action/model/PreviewAction";
 import morphdom from 'morphdom';
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {ClientInterface} from "@enhavo/app/client/ClientInterface";
+import {Translator} from "../translation/Translator";
+import {Metadata} from "../model/Metadata";
 
 export class ResourcePreviewManager
 {
@@ -18,12 +20,14 @@ export class ResourcePreviewManager
 
     public actions: ActionInterface[];
     public actionsSecondary: ActionInterface[];
+    public metadata: Metadata;
 
     constructor(
         private readonly actionManager: ActionManager,
         private readonly frameManager: FrameManager,
         private readonly uiManager: UiManager,
         private readonly client: ClientInterface,
+        private translator: Translator,
     ) {
     }
 
@@ -44,10 +48,12 @@ export class ResourcePreviewManager
 
         this.actions = this.actionManager.createActions(data.actions);
         this.actionsSecondary = this.actionManager.createActions(data.actionsSecondary);
+        this.metadata = data.metadata;
 
         this.subscribe();
 
         this.frameManager.loaded();
+        this.frameManager.setLabel(this.translator.trans('enhavo_app.preview.label.title', {label: this.metadata.label}, 'javascript'));
     }
 
     loadDefaults()
@@ -83,6 +89,7 @@ export class ResourcePreviewManager
 
         this.actionsSecondary = [];
         this.frameManager.loaded();
+        this.frameManager.setLabel(this.translator.trans('enhavo_app.preview.label.title', {}, 'javascript'));
     }
 
     private subscribe()

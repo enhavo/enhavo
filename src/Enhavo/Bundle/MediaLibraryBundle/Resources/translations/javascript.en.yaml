@@ -9,3 +9,6 @@ enhavo_media_library:
     select:
         message:
             file_selected: 'File(s) selected'
+    library:
+        label:
+            title: 'Media Library'

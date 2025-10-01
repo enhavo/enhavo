@@ -12,6 +12,8 @@ import {RouteContainer} from "@enhavo/app/routing/RouteContainer";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {ClientInterface} from "@enhavo/app/client/ClientInterface";
+import {Translator} from "@enhavo/app/translation/Translator";
+import {Metadata} from "@enhavo/app/model/Metadata";
 
 export class ResourceIndexManager
 {
@@ -22,6 +24,7 @@ export class ResourceIndexManager
     public batches: BatchInterface[];
     public collection: CollectionInterface;
     public routes: RouteContainer;
+    public metadata: Metadata;
 
     private loadedPromiseResolveCalls: Array<() => void> = [];
     private loaded: boolean = false;
@@ -35,6 +38,7 @@ export class ResourceIndexManager
         private collectionFactory: CollectionFactory,
         private uiManager: UiManager,
         private client: ClientInterface,
+        private translator: Translator,
     ) {
     }
 
@@ -58,6 +62,7 @@ export class ResourceIndexManager
         this.filters = this.filterManager.createFilters(data.filters);
         this.columns = this.columnManager.createColumns(data.columns);
         this.batches = this.batchManager.createBatches(data.batches);
+        this.metadata = data.metadata;
         this.routes = new RouteContainer(data.routes);
         this.collection = this.collectionFactory.create(data.collection.model, data.collection, this.filters, this.columns, this.batches, this.routes);
         this.collection.init();
@@ -68,6 +73,7 @@ export class ResourceIndexManager
         }
 
         this.frameManager.loaded();
+        this.frameManager.setLabel(this.translator.trans('enhavo_app.index.label.title', {label: this.metadata.label}, 'javascript'));
     }
 
     onLoaded(): Promise<void>
