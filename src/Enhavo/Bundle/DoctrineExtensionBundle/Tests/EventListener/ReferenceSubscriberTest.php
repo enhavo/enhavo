@@ -11,7 +11,11 @@
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener;
 
+use Doctrine\ORM\Events;
 use Doctrine\Persistence\Proxy;
+use Doctrine\Tests\ORM\Functional\EntityWithCascadeAssociation;
+use Doctrine\Tests\ORM\Functional\EntityWithUnmappedEntity;
+use Doctrine\Tests\ORM\Functional\PrePersistUnmappedPersistListener;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\ClassNameResolver;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EventListener\ReferenceSubscriber;
@@ -566,6 +570,84 @@ class ReferenceSubscriberTest extends SubscriberTest
 
         $this->em->remove($entityTwo);
         $this->em->flush();
+    }
+
+    public function testPersistWithCascadeDetectedOnFlush()
+    {
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Reference');
+
+        $dependencies = $this->createDependencies([
+            Entity::class => [
+                'reference' => [
+                    'node' => [
+                        'nameField' => 'nodeName',
+                        'idField' => 'nodeId',
+                        'cascade' => ['persist', 'remove'],
+                    ],
+                ],
+            ],
+        ]);
+
+        $subscriber = $this->createInstance($dependencies);
+
+        $this->em->getEventManager()->addEventSubscriber($subscriber);
+        $this->updateSchema();
+
+        $entityOne = new Entity();
+        $entityOne->name = 'one';
+
+        $this->em->persist($entityOne);
+
+        $nodeOne = new NodeEntity();
+        $nodeOne->name = 'one';
+        $entityOne->node = $nodeOne;
+
+        $entityTwo = new Entity();
+        $entityTwo->name = 'two';
+        $nodeOne->entity = $entityTwo;
+
+        $this->em->flush();
+        $this->em->clear();
+
+        $this->assertNotNull($this->em->getRepository(Entity::class)->findOneBy(['name' => 'one']));
+        $this->assertNotNull($this->em->getRepository(Entity::class)->findOneBy(['name' => 'two']));
+    }
+
+    public function testPersistOnFlushWithPrePersistHook(): void
+    {
+        $this->bootstrap(__DIR__.'/../Fixtures/Entity/Reference');
+
+        $dependencies = $this->createDependencies([
+            Entity::class => [
+                'reference' => [
+                    'node' => [
+                        'nameField' => 'nodeName',
+                        'idField' => 'nodeId',
+                        'cascade' => ['persist', 'remove'],
+                    ],
+                ],
+            ],
+        ]);
+
+        $subscriber = $this->createInstance($dependencies);
+
+        $this->em->getEventManager()->addEventSubscriber($subscriber);
+        $this->updateSchema();
+
+
+        $alreadyPersistedNode = new NodeEntity();
+        $this->em->persist($alreadyPersistedNode);
+        $this->em->flush();
+
+        $entityOne = new Entity();
+        $nodeTwo  = new NodeEntity();
+
+        $entityOne->node = $nodeTwo;
+        $alreadyPersistedNode->entity = $entityOne;
+
+        $this->em->flush();
+
+        $this->assertTrue($this->em->getUnitOfWork()->isInIdentityMap($nodeTwo));
     }
 }
 
