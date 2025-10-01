@@ -208,6 +208,13 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
         return $data;
     }
 
+    protected function getMetadataViewData(): array
+    {
+        return [
+            'label' => $this->getResourceManager()->getLabel($this->options['resource'])
+        ];
+    }
+
     public function getResourceName(): string
     {
         return $this->options['resource'];
@@ -228,6 +235,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
             'batches' => $this->getBatchesViewData(),
             'collection' => $this->getCollection()->getViewData($context),
             'routes' => $this->getRoutes(),
+            'metadata' => $this->getMetadataViewData(),
         ];
     }
 

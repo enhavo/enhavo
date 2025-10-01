@@ -169,6 +169,13 @@ class Input extends AbstractInput implements ConfigMergeInterface
         return $data;
     }
 
+    protected function getMetadataViewData(?object $resource): array
+    {
+        return [
+            'label' => $resource ? $this->getResourceManager()->getLabel($resource) : null
+        ];
+    }
+
     public function getViewData(?object $resource = null, array $context = []): array
     {
         return [
@@ -176,6 +183,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
             'actionsSecondary' => $this->getActionsSecondaryViewData($resource),
             'tabs' => $this->getTabsViewData(),
             'resource' => $resource && $resource->getId() ? $this->normalize($resource, null, ['groups' => $this->options['serialization_groups']]) : null,
+            'metadata' => $this->getMetadataViewData($resource),
         ];
     }
 

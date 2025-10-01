@@ -1,8 +1,8 @@
 import {ActionManager} from "@enhavo/app/action/ActionManager";
 import {ActionInterface} from "@enhavo/app/action/ActionInterface";
-import {RouteContainer} from "../routing/RouteContainer";
-import {TabManager} from "../tab/TabManager";
-import {TabInterface} from "../tab/TabInterface";
+import {RouteContainer} from "@enhavo/app/routing/RouteContainer";
+import {TabManager} from "@enhavo/app/tab/TabManager";
+import {TabInterface} from "@enhavo/app/tab/TabInterface";
 import {Form} from "@enhavo/vue-form/model/Form";
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
 import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
@@ -13,6 +13,8 @@ import {VueRouterFactory} from "@enhavo/app/vue/VueRouterFactory";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
 import {ClientInterface, Transport} from "@enhavo/app/client/ClientInterface";
+import {Translator} from "@enhavo/app/translation/Translator";
+import {Metadata} from "@enhavo/app/model/Metadata";
 
 export class ResourceInputManager
 {
@@ -23,6 +25,7 @@ export class ResourceInputManager
     public routes: RouteContainer;
     public form: Form;
     public resource: object;
+    public metadata: Metadata;
 
     private visitors: FormVisitorInterface[] = [];
     private loadedPromiseResolveCalls: Array<() => void> = [];
@@ -37,6 +40,7 @@ export class ResourceInputManager
         private vueRouterFactory: VueRouterFactory,
         private uiManager: UiManager,
         private client: ClientInterface,
+        private translator: Translator,
     ) {
     }
 
@@ -62,15 +66,22 @@ export class ResourceInputManager
         this.routes = new RouteContainer(data.routes);
         this.form = this.formFactory.create(data.form, this.visitors);
         this.tabs = this.tabManager.createTabs(data.tabs);
+        this.metadata = data.metadata;
 
         this.actions = this.actionManager.createActions(data.actions);
         this.actionsSecondary = this.actionManager.createActions(data.actionsSecondary);
-
 
         this.initTab(window.location.href);
         this.updateTabs();
 
         this.frameManager.loaded();
+
+        if (this.resource === null) {
+            this.frameManager.setLabel(this.translator.trans('enhavo_app.create.label.title', {label: this.metadata.label}, 'javascript'));
+        } else {
+            this.frameManager.setLabel(this.translator.trans('enhavo_app.update.label.title', {label: this.metadata.label}, 'javascript'));
+        }
+
         this.loaded = true
         for (let promise of this.loadedPromiseResolveCalls) {
             promise();

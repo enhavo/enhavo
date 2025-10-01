@@ -7,6 +7,7 @@ services:
             - '@validator'
             - '@Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory'
             - '@Enhavo\Bundle\ResourceBundle\Delete\DeleteHandlerInterface'
+            - '@translator'
             - '%enhavo_resources.resources%'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]

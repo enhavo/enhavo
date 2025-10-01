@@ -26,6 +26,7 @@ services:
             - '@enhavo/app/collection/CollectionFactory'
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/client/Client'
+            - '@enhavo/app/translation/Translator'
         tags:
             - { name: vue.service, service: 'resourceIndexManager', reactive: true }
 
@@ -40,6 +41,7 @@ services:
             - '@enhavo/app/vue/VueRouterFactory'
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/client/Client'
+            - '@enhavo/app/translation/Translator'
         tags:
             - { name: vue.service, service: 'resourceInputManager', reactive: true }
 
@@ -51,5 +53,6 @@ services:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/client/Client'
+            - '@enhavo/app/translation/Translator'
         tags:
             - { name: vue.service, service: 'resourcePreviewManager', reactive: true }

@@ -90,6 +90,7 @@ export class MediaLibraryManager
 
         this.loading = false;
         this.frameManager.loaded();
+        this.frameManager.setLabel(this.translator.trans('enhavo_media_library.library.label.title', {}, 'javascript'));
     }
 
     addListener()

@@ -14,6 +14,7 @@ namespace Enhavo\Bundle\ResourceBundle\Input;
 use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ResourceBundle\Action\Action;
 use Enhavo\Bundle\ResourceBundle\Action\ActionManager;
+use Enhavo\Bundle\ResourceBundle\Exception\GridException;
 use Enhavo\Bundle\ResourceBundle\Exception\InputException;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
@@ -92,14 +93,20 @@ abstract class AbstractInput implements InputInterface, ServiceSubscriberInterfa
         return $tabManager->getTabs($configuration, $this);
     }
 
-    protected function getRepository($name): EntityRepository
+    protected function getResourceManager(): ResourceManager
     {
         if (!$this->container->has(ResourceManager::class)) {
-            throw InputException::missingService(ResourceManager::class);
+            throw GridException::missingService(ResourceManager::class);
         }
 
         /** @var ResourceManager $actionManager */
-        $manager = $this->container->get(ResourceManager::class);
+        return $this->container->get(ResourceManager::class);
+    }
+
+    protected function getRepository($name): EntityRepository
+    {
+        /** @var ResourceManager $actionManager */
+        $manager = $this->getResourceManager();
 
         return $manager->getRepository($name);
     }

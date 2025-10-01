@@ -25,6 +25,7 @@ use SM\Factory\FactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ResourceManagerTest extends TestCase
 {
@@ -37,6 +38,7 @@ class ResourceManagerTest extends TestCase
         $dependencies->validator = $this->getMockBuilder(ValidatorInterface::class)->getMock();
         $dependencies->duplicateFactory = $this->getMockBuilder(DuplicateFactory::class)->disableOriginalConstructor()->getMock();
         $dependencies->deleteHandler = $this->getMockBuilder(DeleteHandlerInterface::class)->getMock();
+        $dependencies->translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $dependencies->container = new ContainerMock();
 
         return $dependencies;
@@ -51,6 +53,7 @@ class ResourceManagerTest extends TestCase
             $dependencies->validator,
             $dependencies->duplicateFactory,
             $dependencies->deleteHandler,
+            $dependencies->translator,
             $dependencies->resources,
         );
         $manager->setContainer($dependencies->container);
@@ -133,5 +136,6 @@ class ResourceManagerTestDependencies
     public ContainerInterface|MockObject $container;
     public DuplicateFactory|MockObject $duplicateFactory;
     public DeleteHandlerInterface|MockObject $deleteHandler;
+    public TranslatorInterface|MockObject $translator;
     public array $resources = [];
 }
