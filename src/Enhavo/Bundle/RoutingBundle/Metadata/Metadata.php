@@ -48,7 +48,7 @@ class Metadata extends \Enhavo\Component\Metadata\Metadata
      */
     public function getRouter()
     {
-        return $this->router;
+        return array_values($this->router);
     }
 
     public function addRouter(Router $router)
