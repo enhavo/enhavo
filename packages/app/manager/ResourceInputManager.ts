@@ -60,8 +60,6 @@ export class ResourceInputManager
 
         const data = await transport.response.json();
 
-        console.log(data.metadata);
-
         this.url = data.url;
         this.resource = data.resource;
 
