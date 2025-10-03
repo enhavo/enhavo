@@ -10,9 +10,14 @@ export class Translator
 
     public trans(value: string, parameters: object = null, translationDomain: string = 'messages')
     {
+        if (value === null) {
+            return null;
+        }
+
         if (this.data && this.data.hasOwnProperty(translationDomain) && this.data[translationDomain].hasOwnProperty(value)) {
             value = this.data[translationDomain][value];
         }
+
         return this.replacePlaceholder(value, parameters);
     }
 
@@ -20,7 +25,7 @@ export class Translator
     {
         if (parameters !== null) {
             for (const key in parameters) {
-                if (parameters.hasOwnProperty(key)) {
+                if (parameters.hasOwnProperty(key) && parameters[key] !== null) {
                     value = value.replace(new RegExp('%' + key + '%', 'g'), parameters[key]);
                 }
             }
