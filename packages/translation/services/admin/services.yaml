@@ -4,3 +4,9 @@ services:
         chunk: 'component'
         tags:
             - { name: vue.component, component: 'form-translation' }
+
+    '@enhavo/translation/manager/TranslationManager':
+        import: TranslationManager
+        chunk: 'translation'
+        tags:
+            - { name: vue.service, service: 'translationManager', reactive: true }
