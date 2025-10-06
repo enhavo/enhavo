@@ -1,5 +1,5 @@
 enhavo_translation:
-    enable: false
+    enable: '%env(bool:TRANSLATION_ENABLED)%'
     default_locale: '%locale%'
     locales:
         - 'en'

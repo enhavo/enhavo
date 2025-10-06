@@ -13,7 +13,8 @@ namespace Enhavo\Bundle\TranslationBundle\Form\Type;
 
 use Enhavo\Bundle\TranslationBundle\Form\Transformer\TranslationValueTransformer;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
-use Symfony\Component\Form\AbstractType;
+use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
+use Enhavo\Bundle\VueFormBundle\Form\VueData;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormErrorIterator;
@@ -21,20 +22,14 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class TranslationType extends AbstractType
+class TranslationType extends AbstractVueType
 {
-    /** @var TranslationManager */
-    private $translationManager;
-
-    /**
-     * TranslationType constructor.
-     */
-    public function __construct(TranslationManager $translationManager)
-    {
-        $this->translationManager = $translationManager;
+    public function __construct(
+        private readonly TranslationManager $translationManager
+    ) {
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new TranslationValueTransformer($this->translationManager, $options['translation_data'], $options['translation_property']));
 
@@ -43,7 +38,7 @@ class TranslationType extends AbstractType
         }
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         /** @var FormErrorIterator $errors */
         $errors = $view->vars['errors'];
@@ -69,6 +64,13 @@ class TranslationType extends AbstractType
 
         $view->vars['errors'] = new FormErrorIterator($errors->getForm(), $newErrors);
         $view->vars['translation_locales'] = $this->translationManager->getLocales();
+
+        parent::buildView($view, $form, $options);
+    }
+
+    public function buildVueData(FormView $view, VueData $data, array $options): void
+    {
+        $data->set('translationLocales', $view->vars['translation_locales']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -77,6 +79,7 @@ class TranslationType extends AbstractType
             'error_bubbling' => false,
             'constraints' => [
             ],
+            'row_component' => 'form-translation',
         ]);
 
         $resolver->setRequired([
@@ -85,10 +88,5 @@ class TranslationType extends AbstractType
             'form_options',
             'form_type',
         ]);
-    }
-
-    public function getBlockPrefix()
-    {
-        return 'enhavo_translation_translation';
     }
 }

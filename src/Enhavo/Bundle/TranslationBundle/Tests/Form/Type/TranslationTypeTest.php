@@ -15,6 +15,7 @@ use Enhavo\Bundle\TranslationBundle\EventListener\AccessControlInterface;
 use Enhavo\Bundle\TranslationBundle\Form\Extension\TranslationExtension;
 use Enhavo\Bundle\TranslationBundle\Form\Type\TranslationType;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
+use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -43,6 +44,7 @@ class TranslationTypeTest extends TypeTestCase
 
         return [
             new TranslationExtension($this->translationManager, $this->accessControl),
+            new VueTypeExtension(),
         ];
     }
 
@@ -170,7 +172,6 @@ class TranslationTypeTest extends TypeTestCase
         $this->assertCount(2, $view->vars['errors']);
         $this->assertEquals('(de) Error', $view->vars['errors'][0]->getMessage());
         $this->assertEquals('(en) Normal Error', $view->vars['errors'][1]->getMessage());
-        $this->assertTrue(in_array('enhavo_translation_translation', $view->vars['block_prefixes']));
     }
 }
 

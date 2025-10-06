@@ -1,7 +1,12 @@
 services:
-    '@enhavo/translation/form/loader/TranslationLoader':
-        chunk: 'form'
-        arguments:
-            - '@enhavo/app/frame/FrameEventDispatcher'
+    '@enhavo/translation/components/FormTranslation.vue':
+        static: true
+        chunk: 'component'
         tags:
-            - 'enhavo_app.form'
+            - { name: vue.component, component: 'form-translation' }
+
+    '@enhavo/translation/manager/TranslationManager':
+        import: TranslationManager
+        chunk: 'translation'
+        tags:
+            - { name: vue.service, service: 'translationManager', reactive: true }
