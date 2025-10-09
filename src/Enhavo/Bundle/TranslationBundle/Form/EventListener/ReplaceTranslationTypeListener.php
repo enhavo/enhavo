@@ -20,8 +20,7 @@ use Symfony\Component\Form\FormInterface;
 
 class ReplaceTranslationTypeListener implements EventSubscriberInterface
 {
-    /** @var TranslationManager */
-    private $translationManager;
+    private TranslationManager $translationManager;
 
     /**
      * ResizeTranslationListener constructor.
@@ -31,14 +30,14 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
         $this->translationManager = $translationManager;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             FormEvents::POST_SET_DATA => 'postSetData',
         ];
     }
 
-    public function postSetData(FormEvent $event)
+    public function postSetData(FormEvent $event): void
     {
         $form = $event->getForm();
         $data = $event->getData();
@@ -74,12 +73,15 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
             }
 
             if ($this->translationManager->isTranslatable($data, $property)) {
-                $this->replaceChild($data, $property, $form, $child);
+                $this->replaceWithTranslationField($data, $property, $form, $child);
+
+            } else { // replace all children to keep order as defined in the parent form type
+                $this->replaceWithRegularField($property, $form, $child);
             }
         }
     }
 
-    private function replaceChild($data, string $property, FormInterface $form, FormInterface $child)
+    private function replaceWithTranslationField($data, string $property, FormInterface $form, FormInterface $child): void
     {
         $options = $child->getConfig()->getOptions();
 
@@ -92,5 +94,12 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
             'label' => $options['label'],
             'translation_domain' => $options['translation_domain'],
         ]);
+    }
+
+
+    private function replaceWithRegularField(string $property, FormInterface $form, FormInterface $child): void
+    {
+        $form->remove($property);
+        $form->add($property, get_class($child->getConfig()->getType()->getInnerType()), $child->getConfig()->getOptions());
     }
 }
