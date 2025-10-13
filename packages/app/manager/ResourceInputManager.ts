@@ -178,13 +178,20 @@ export class ResourceInputManager
 
     public async redirect(url: string)
     {
+        const activeTab = this.getActiveTab()?.key;
+        const targetUrl = new URL(url, window.location.origin);
+
+        if (activeTab) {
+            targetUrl.searchParams.set('tab', activeTab);
+        }
+
         await this.vueRouterFactory.getRouter().push({
-            path: url,
-            query: {tab: this.getActiveTab().key}
+            path: targetUrl.pathname,
+            query: Object.fromEntries(targetUrl.searchParams.entries()),
         });
 
         const frame = await this.frameManager.getFrame();
-        frame.url = url;
+        frame.url = targetUrl.toString();
         this.frameManager.save();
     }
 
@@ -255,7 +262,7 @@ export class ResourceInputManager
 
     private updateTabs()
     {
-        for(let tab of this.tabs) {
+        for (let tab of this.tabs) {
             tab.update({
                 form: this.form,
             });
