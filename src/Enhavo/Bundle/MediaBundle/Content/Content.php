@@ -15,11 +15,14 @@ class Content extends AbstractContent
 {
     private $path;
 
-    public function __construct(?string $content = null)
+    public function __construct(?string $content = null, ?string $path = null)
     {
-        $tempPath = tempnam(sys_get_temp_dir(), 'Content');
-        file_put_contents($tempPath, $content ?? '');
-        $this->path = $tempPath;
+        if ($path === null) {
+            $path = tempnam(sys_get_temp_dir(), 'Content');
+        }
+
+        file_put_contents($path, $content ?? '');
+        $this->path = $path;
     }
 
     public function getContent()
@@ -30,12 +33,5 @@ class Content extends AbstractContent
     public function getFilePath()
     {
         return $this->path;
-    }
-
-    public function __destruct()
-    {
-        if (file_exists($this->path)) {
-            unlink($this->path);
-        }
     }
 }
