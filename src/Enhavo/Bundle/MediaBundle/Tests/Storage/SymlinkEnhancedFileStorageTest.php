@@ -79,6 +79,27 @@ class SymlinkEnhancedFileStorageTest extends TestCase
         $this->assertEquals('1', file_get_contents(self::PUBLIC_DIR . '/foobar'));
     }
 
+    public function testGetContent()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->urlGenerator->method('generate')->willReturn('/foobar');
+
+        $instance = $this->createInstance($dependencies);
+
+        $file = new File();
+        $file->setBasename('hello.txt');
+        $file->setContent(new Content('1'));
+
+        $dependencies->storage->saveContent($file);
+
+        $this->assertFalse(file_exists(self::PUBLIC_DIR . '/foobar'));
+
+        $instance->getContent($file);
+
+        $this->assertTrue(file_exists(self::PUBLIC_DIR . '/foobar'));
+        $this->assertEquals('1', file_get_contents(self::PUBLIC_DIR . '/foobar'));
+    }
+
     public function testDeleteContent()
     {
         $dependencies = $this->createDependencies();

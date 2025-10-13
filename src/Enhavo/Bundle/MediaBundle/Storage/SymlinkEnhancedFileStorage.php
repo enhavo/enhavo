@@ -54,7 +54,19 @@ class SymlinkEnhancedFileStorage implements StorageInterface
 
     public function getContent(FormatInterface|FileInterface $file): ContentInterface
     {
-        return $this->storage->getContent($file);
+        $content = $this->storage->getContent($file);
+        $path = $this->getSymlinkPath($file);
+
+        $dir = dirname($path);
+        if (!$this->fs->exists($dir)) {
+            $this->fs->mkdir($dir);
+        }
+
+        if (!$this->fs->exists($path)) {
+            $this->fs->symlink($content->getFilePath(), $path);
+        }
+
+        return $content;
     }
 
     private function getSymlinkPath(FormatInterface|FileInterface $file): string
