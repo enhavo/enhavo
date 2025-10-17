@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\BlockBundle\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\AppBundle\Output\CliOutputLogger;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Symfony\Component\Console\Command\Command;
@@ -22,20 +23,17 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class CleanUpCommand extends Command
 {
     /**
-     * @var BlockManager
-     */
-    private $blockManager;
-
-    /**
      * CleanUpCommand constructor.
      */
-    public function __construct(BlockManager $blockManager)
-    {
+    public function __construct(
+        private BlockManager $blockManager,
+        private EntityManagerInterface $entityManager,
+    ) {
         $this->blockManager = $blockManager;
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('enhavo:block:clean-up')
@@ -44,14 +42,15 @@ class CleanUpCommand extends Command
         ;
     }
 
-    /**
-     * @throws \Exception
-     *
-     * @return int
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $isDryRun = $input->getOption('dry-run');
+
+        // TODO: this is a workaround. in the future we need an interface to take care about the activated filters so that every such command can take care about which filters can stay active and which not
+        $filters = $this->entityManager->getFilters();
+        if ($filters->isEnabled('revision')) {
+            $filters->disable('revision');
+        }
 
         $this->blockManager->cleanUp(new CliOutputLogger(new SymfonyStyle($input, $output)), $isDryRun);
 
