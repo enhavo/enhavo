@@ -2,6 +2,7 @@ services:
     Enhavo\Bundle\BlockBundle\Command\CleanUpCommand:
         arguments:
             - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
+            - '@Doctrine\ORM\EntityManagerInterface'
         tags:
             - { name: console.command }
 
