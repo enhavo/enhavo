@@ -45,4 +45,5 @@ enhavo_resource:
                         groups: ['revision', 'restore' ]
                 formats:
                     type: collection
+                    by_reference: true
                     groups: [ 'duplicate', 'revision', 'restore' ]
