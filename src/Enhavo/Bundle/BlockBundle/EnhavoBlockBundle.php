@@ -15,6 +15,7 @@ use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappi
 use Doctrine\ORM\Mapping\Driver\XmlDriver;
 use Doctrine\Persistence\Mapping\Driver\DefaultFileLocator;
 use Enhavo\Bundle\BlockBundle\Block\Block;
+use Enhavo\Bundle\BlockBundle\Block\BlockTypeInterface;
 use Enhavo\Bundle\BlockBundle\DependencyInjection\CompilerPass\BlockManagerCompilerPass;
 use Enhavo\Bundle\BlockBundle\Factory\BlockFactoryInterface;
 use Enhavo\Component\Type\TypeCompilerPass;
@@ -46,6 +47,10 @@ class EnhavoBlockBundle extends Bundle
 
         $container->registerForAutoconfiguration(BlockFactoryInterface::class)
             ->addTag('enhavo_block.factory')
+        ;
+
+        $container->registerForAutoconfiguration(BlockTypeInterface::class)
+            ->addTag('enhavo_block.block')
         ;
     }
 
