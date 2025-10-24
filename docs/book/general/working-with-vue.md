@@ -66,6 +66,7 @@ To push your defined routes to the browser, first you need to load the file into
 option is optional and can be used to only load several routes later on.
 
 ```yaml
+# config/packages/enhavo_app.yaml
 enhavo_app:
     vue:
         route_providers:
@@ -101,13 +102,12 @@ here.
 ```yaml
 # config/routes/vue.yaml
 vue:
-    resource: ../../assets/theme/vue_routes.json
+    resource: ../assets/theme/vue_routes.json
     prefix: /
     type: vue
     defaults:
         _endpoint:
             type: area
-            area: theme
             routes: ['theme', 'api']
             vue_routes: ['theme']
             template: theme/base.html.twig
