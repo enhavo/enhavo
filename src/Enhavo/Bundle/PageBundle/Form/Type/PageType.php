@@ -35,6 +35,7 @@ class PageType extends AbstractType
         $builder->add('content', BlockNodeType::class, [
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
+            'item_groups' => $options['item_groups'],
         ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
@@ -72,6 +73,7 @@ class PageType extends AbstractType
         $resolver->setDefaults([
             'data_class' => $this->dataClass,
             'routable' => true,
+            'item_groups' => ['content', 'layout'],
         ]);
     }
 
