@@ -48,6 +48,7 @@ class ArticleType extends AbstractType
         $builder->add('content', BlockNodeType::class, [
             'label' => 'form.label.content',
             'translation_domain' => 'EnhavoAppBundle',
+            'item_groups' => $options['item_groups'],
         ]);
 
         $builder->add('thread', ThreadType::class, [
@@ -76,6 +77,7 @@ class ArticleType extends AbstractType
             'data_class' => $this->dataClass,
             'slugable' => true,
             'validation_groups' => ['default'],
+            'item_groups' => ['content'],
         ]);
     }
 
