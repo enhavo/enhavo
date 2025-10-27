@@ -65,6 +65,11 @@ abstract class AbstractNavItemType extends AbstractType implements NavItemTypeIn
         return $this->parent->render($options);
     }
 
+    public function isEnabled(array $options): bool
+    {
+        return $this->parent->isEnabled($options);
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
     }

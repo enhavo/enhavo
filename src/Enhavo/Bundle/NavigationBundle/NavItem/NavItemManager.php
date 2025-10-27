@@ -33,7 +33,13 @@ class NavItemManager
 
     public function getNavItems()
     {
-        return $this->items;
+        $enabledItems = [];
+        foreach ($this->items as $item) {
+            if ($item->isEnabled()) {
+                $enabledItems[] = $item;
+            }
+        }
+        return $enabledItems;
     }
 
     public function getNavItem($name)

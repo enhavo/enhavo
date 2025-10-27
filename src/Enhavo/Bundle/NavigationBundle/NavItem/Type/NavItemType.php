@@ -68,6 +68,11 @@ class NavItemType extends AbstractType implements NavItemTypeInterface
         return '';
     }
 
+    public function isEnabled(array $options): bool
+    {
+        return $options['enabled'];
+    }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
@@ -75,6 +80,7 @@ class NavItemType extends AbstractType implements NavItemTypeInterface
             'template' => null,
             'component' => null,
             'form_options' => [],
+            'enabled' => true,
         ]);
 
         $resolver->setRequired([
