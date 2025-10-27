@@ -57,4 +57,9 @@ class NavItem extends AbstractContainerType
     {
         return $this->type->getTranslationDomain($this->options);
     }
+
+    public function isEnabled(): bool
+    {
+        return $this->type->isEnabled($this->options);
+    }
 }

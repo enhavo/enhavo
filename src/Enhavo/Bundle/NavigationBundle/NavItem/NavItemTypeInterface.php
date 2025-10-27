@@ -32,4 +32,6 @@ interface NavItemTypeInterface extends TypeInterface
     public function getComponent($options);
 
     public function render($options);
+
+    public function isEnabled(array $options): bool;
 }
