@@ -193,13 +193,7 @@ export class MediaForm extends ListForm
         }
 
         let item = <MediaItemForm>this.addItem();
-        for (const property in file) {
-            if (file.hasOwnProperty(property)) {
-                if (item.has(property)) {
-                    item.get(property).value = file[property];
-                }
-            }
-        }
+        this.setFormValues(item, file);
 
         item.file = file;
 
@@ -209,6 +203,21 @@ export class MediaForm extends ListForm
             origin: this
         }), 'change');
 
+    }
+
+    protected setFormValues(form: Form, value: any): void
+    {
+        if (typeof value === 'object' && form.compound) {
+            for (const property in value) {
+                if (value.hasOwnProperty(property)) {
+                    if (form.has(property)) {
+                        this.setFormValues(form.get(property), value[property]);
+                    }
+                }
+            }
+        } else {
+            form.value = value;
+        }
     }
 
     protected checkFile(file: File): boolean
