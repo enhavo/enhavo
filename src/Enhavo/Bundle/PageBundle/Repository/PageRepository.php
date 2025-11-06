@@ -27,6 +27,7 @@ class PageRepository extends ContentRepository
             ->andWhere('p.publicationDate <= :currentDate')
             ->andWhere('p.publishedUntil >= :currentDate OR p.publishedUntil IS NULL')
             ->andWhere('p.special IS NOT NULL')
+            ->andWhere('p.special <> \'\'')
             ->setParameter('currentDate', new \DateTime())
         ;
 
