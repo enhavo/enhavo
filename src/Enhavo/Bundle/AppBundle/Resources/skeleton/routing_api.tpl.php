@@ -17,7 +17,7 @@
             grid: <?php echo $grid_name."\n"; ?>
 
 <?php echo $route_api_prefix; ?>_batch:
-    path: /article/batch
+    path: <?php echo $path_prefix; ?>/batch
     methods: [POST]
     defaults:
         _expose: <?php echo $area; ?>_api

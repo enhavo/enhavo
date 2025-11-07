@@ -159,7 +159,7 @@ class MakeRoutingTest extends TestCase
                 ],
             ],
             'app_admin_api_example_resource_batch' => [
-                'path' => '/article/batch',
+                'path' => '/app/example-resource/batch',
                 'methods' => ['POST'],
                 'defaults' => [
                     '_expose' => 'admin_api',
