@@ -61,7 +61,7 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
 
         if ($file instanceof FileInterface) {
             if ($this->filesystem->exists($path)) {
-                return $file->getContent();
+                return new PathContent($path);
             }
         }
 
