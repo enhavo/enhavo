@@ -30,10 +30,10 @@ class ModelStructuredDataType extends AbstractStructuredDataType
             $value = $context->getPropertyValue();
             if ($value instanceof Collection) {
                 foreach ($value as $item) {
-                    $this->structuredDataManager->buildData($item, $bag);
+                    $this->structuredDataManager->buildData($item, $bag, $options['groups']);
                 }
             } else if ($value !== null) {
-                $this->structuredDataManager->buildData($value, $bag);
+                $this->structuredDataManager->buildData($value, $bag, $options['groups']);
             }
         }
     }
