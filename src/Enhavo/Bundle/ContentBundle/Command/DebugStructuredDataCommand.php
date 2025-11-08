@@ -9,27 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace Enhavo\Bundle\SearchBundle\Command;
+namespace Enhavo\Bundle\ContentBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataManager;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
-use Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider;
-use Enhavo\Bundle\SearchBundle\Index\IndexDataProvider;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/*
- * This command does the reindexing
- */
-class AnalyzeCommand extends Command
+class DebugStructuredDataCommand extends Command
 {
     public function __construct(
-        private IndexDataProvider $indexDataProvider,
-        private FilterDataProvider $filterDataProvider,
-        private EntityManagerInterface $em,
+        private StructuredDataManager $structuredDataManager,
         private ResourceManager $resourceManager,
+        private EntityManagerInterface $em,
     ) {
         parent::__construct();
     }
@@ -37,17 +33,18 @@ class AnalyzeCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('debug:search:analyze')
-            ->setDescription('Check index metadata')
+            ->setName('debug:structured-data')
             ->addArgument('entity', InputArgument::REQUIRED, 'FQCN or resource name')
-            ->addArgument('id', InputArgument::REQUIRED, 'id of the entity')
-        ;
+            ->addArgument('id', InputArgument::REQUIRED, 'Id of entity')
+            ->addOption('groups', null, InputOption::VALUE_REQUIRED, 'Groups comma-separated')
+            ->setDescription('Debug structured data');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $entityName = $input->getArgument('entity');
         $id = $input->getArgument('id');
+        $groups = $input->getOption('groups') ? explode(',', $input->getOption('groups')) : null;
 
         $entity = null;
         if (class_exists($entityName)) {
@@ -66,30 +63,9 @@ class AnalyzeCommand extends Command
             return Command::FAILURE;
         }
 
-        if (null === $entity) {
-            $output->writeln('Entity not found');
-            return Command::FAILURE;
-        }
+        $data = $this->structuredDataManager->getData($entity, $groups);
 
-        $data = $this->indexDataProvider->getIndexData($entity);
-        if (0 === count($data)) {
-            $output->writeln('No data to index');
-        } else {
-            $output->writeln('Data:');
-            foreach ($data as $indexData) {
-                $output->writeln(sprintf('%s: %s', $indexData->getWeight(), $indexData->getValue()));
-            }
-        }
-
-        $filter = $this->filterDataProvider->getFilterData($entity);
-        if (0 === count($filter)) {
-            $output->writeln('No filter to index');
-        } else {
-            $output->writeln('Filter:');
-            foreach ($filter as $filterData) {
-                $output->writeln(sprintf('%s: %s', $filterData->getKey(), $filterData->getValue()));
-            }
-        }
+        $output->writeln(print_r($data, true));
 
         return Command::SUCCESS;
     }
