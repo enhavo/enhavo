@@ -80,6 +80,14 @@ services:
         tags:
             - { name: console.command }
 
+    Enhavo\Bundle\ContentBundle\Command\DebugStructuredDataCommand:
+        arguments:
+            - '@Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataManager'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: console.command }
+
     Enhavo\Bundle\ContentBundle\Factory\VideoFactory:
         public: true
         calls:

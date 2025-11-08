@@ -88,7 +88,7 @@ class ThingStructuredDataType extends AbstractStructuredDataType
             $data = $bag->getType($context->getTypeName());
             $value = $context->getPropertyValue();
 
-            if ($value === null) {
+            if (empty($value)) {
                 return;
             }
 
@@ -96,7 +96,7 @@ class ThingStructuredDataType extends AbstractStructuredDataType
                 $value = $this->transformer->transform($options['transform'], $value, $options['transform_options']);
             }
 
-            if ($value === null) {
+            if (empty($value)) {
                 return;
             }
 

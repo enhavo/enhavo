@@ -88,6 +88,7 @@ services:
             - '@Enhavo\Bundle\SearchBundle\Index\IndexDataProvider'
             - '@Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider'
             - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
         tags:
             - { name: console.command }
 
