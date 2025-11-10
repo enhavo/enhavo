@@ -19,7 +19,7 @@ class PathContent extends AbstractContent
 
     public function __construct($path)
     {
-        $this->path = $path;
+        $this->path = realpath($path);
     }
 
     public function getContent()
