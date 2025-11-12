@@ -161,9 +161,9 @@ class FormatManager
 
     private function saveFormat(FormatInterface $fileFormat): FormatInterface
     {
-        $this->resourceManager->save($fileFormat);
-
         $fileFormat->setChecksum($this->checksumGenerator->getChecksum($fileFormat->getContent()));
+
+        $this->resourceManager->save($fileFormat);
 
         return $fileFormat;
     }
