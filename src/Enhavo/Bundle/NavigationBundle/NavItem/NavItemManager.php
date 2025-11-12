@@ -34,9 +34,9 @@ class NavItemManager
     public function getNavItems()
     {
         $enabledItems = [];
-        foreach ($this->items as $item) {
+        foreach ($this->items as $key => $item) {
             if ($item->isEnabled()) {
-                $enabledItems[] = $item;
+                $enabledItems[$key] = $item;
             }
         }
         return $enabledItems;
