@@ -1,0 +1,8 @@
+Enhavo\Bundle\SearchBundle\Result\Result:
+    attributes:
+        title:
+            groups: ['endpoint', 'endpoint.block']
+        text:
+            groups: ['endpoint', 'endpoint.block']
+        subject:
+            groups: ['endpoint', 'endpoint.block']
