@@ -1,9 +1,5 @@
 <template>
     <div class="translation">
-        <div v-for="child of form.children" :style="{display: showForm(child)}">
-            <form-row :form="child" />
-        </div>
-
         <div class="translation-switcher">
             <div class="translation-switcher-current">{{ translationManager.locale }}</div>
             <div class="translation-switcher-menu">
@@ -14,6 +10,10 @@
                     {{ locale }}
                 </div>
             </div>
+        </div>
+
+        <div v-for="child of form.children" :style="{display: showForm(child)}">
+            <form-row :form="child" />
         </div>
     </div>
 </template>

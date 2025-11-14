@@ -1,9 +1,11 @@
 @use '@enhavo/app/assets/styles/import/variables.scss';
 
 .translation {position: relative;
+  padding-top: 25px;
   .translation-switcher {height:24px; padding:0px 6px; background: variables.$grey1;color: variables.$color2b;min-width:45px;border-radius:10px;font-size: 0.85rem; font-weight: variables.$fontMedium;
-      position: absolute; right: 1px; top: -26px; cursor: pointer; border:1px solid variables.$grey1;transition: all .2s;
-      &:after {font-family: "icon";content: "\f2bc"; position:absolute; right:6px; top:2px;color: variables.$color1}
+      position: absolute; right: 1px; top: 0px;
+      cursor: pointer; border:1px solid variables.$grey1;transition: all .2s;
+      &:after {font-family: "icon";content: "\f2bc"; position:absolute; right:6px; top:-1px;color: variables.$color1}
     .active {display:none;}
     .translation-switcher-current {padding-right:14px;
       img { display: none;
@@ -18,4 +20,6 @@
       .flag-container {padding:3px;line-height:0;}
     }
   }
+
+  + .translation {margin-top:15px;}
 }
