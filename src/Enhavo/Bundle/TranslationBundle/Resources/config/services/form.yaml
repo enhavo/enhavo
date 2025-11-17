@@ -9,6 +9,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
             - '@enhavo_translation.form.access_control'
+            - '@twig.form.renderer'
         tags:
             - { name: form.type_extension }
 
