@@ -21,6 +21,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -52,6 +53,7 @@ class ReplaceTranslationTypeListenerTest extends TypeTestCase
     {
         $dependencies = new ReplaceTranslationTypeListenerTestDependencies();
         $dependencies->translationManager = $this->getMockBuilder(TranslationManager::class)->disableOriginalConstructor()->getMock();
+        $dependencies->formRenderer = $this->getMockBuilder(FormRendererInterface::class)->disableOriginalConstructor()->getMock();
 
         return $dependencies;
     }
@@ -59,7 +61,8 @@ class ReplaceTranslationTypeListenerTest extends TypeTestCase
     protected function createInstance($dependencies): ReplaceTranslationTypeListener
     {
         return new ReplaceTranslationTypeListener(
-            $dependencies->translationManager
+            $dependencies->translationManager,
+            $dependencies->formRenderer,
         );
     }
 
@@ -111,6 +114,7 @@ class ReplaceTranslationTypeListenerTest extends TypeTestCase
 class ReplaceTranslationTypeListenerTestDependencies
 {
     public TranslationManager|MockObject $translationManager;
+    public FormRendererInterface|MockObject $formRenderer;
 }
 
 class TranslatableMockFormType extends AbstractType
