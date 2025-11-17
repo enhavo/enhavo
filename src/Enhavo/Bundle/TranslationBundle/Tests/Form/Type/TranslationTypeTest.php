@@ -21,6 +21,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,6 +31,7 @@ class TranslationTypeTest extends TypeTestCase
     /** @var TranslationManager|MockObject */
     private $translationManager;
     private $accessControl;
+    private $formRenderer;
 
     protected function getExtensions()
     {
@@ -43,7 +45,7 @@ class TranslationTypeTest extends TypeTestCase
         $this->accessControl->method('isAccess')->willReturn(true);
 
         return [
-            new TranslationExtension($this->translationManager, $this->accessControl),
+            new TranslationExtension($this->translationManager, $this->accessControl, $this->formRenderer),
             new VueTypeExtension(),
         ];
     }
@@ -52,6 +54,7 @@ class TranslationTypeTest extends TypeTestCase
     {
         $this->translationManager = $this->getMockBuilder(TranslationManager::class)->disableOriginalConstructor()->getMock();
         $this->accessControl = $this->getMockBuilder(AccessControlInterface::class)->getMock();
+        $this->formRenderer = $this->getMockBuilder(FormRendererInterface::class)->getMock();
         parent::setUp();
     }
 

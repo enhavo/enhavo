@@ -17,17 +17,18 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormRendererInterface;
 
 class ReplaceTranslationTypeListener implements EventSubscriberInterface
 {
-    private TranslationManager $translationManager;
-
     /**
      * ResizeTranslationListener constructor.
      */
-    public function __construct(TranslationManager $translationManager)
+    public function __construct(
+        private TranslationManager $translationManager,
+        private FormRendererInterface $formRenderer
+    )
     {
-        $this->translationManager = $translationManager;
     }
 
     public static function getSubscribedEvents(): array
@@ -84,6 +85,9 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
     private function replaceWithTranslationField($data, string $property, FormInterface $form, FormInterface $child): void
     {
         $options = $child->getConfig()->getOptions();
+        if (null === $options['label']) {
+            $options['label'] = $this->formRenderer->humanize($child->getConfig()->getName());
+        }
 
         $form->remove($property);
         $form->add($property, TranslationType::class, [

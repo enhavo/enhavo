@@ -17,12 +17,14 @@ use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormRendererInterface;
 
 class TranslationExtension extends AbstractTypeExtension
 {
     public function __construct(
         private TranslationManager $translationManager,
         private AccessControlInterface $accessControl,
+        private FormRendererInterface $formRenderer,
     ) {
     }
 
@@ -32,7 +34,7 @@ class TranslationExtension extends AbstractTypeExtension
             return;
         }
 
-        $builder->addEventSubscriber(new ReplaceTranslationTypeListener($this->translationManager));
+        $builder->addEventSubscriber(new ReplaceTranslationTypeListener($this->translationManager, $this->formRenderer));
     }
 
     private function isTranslatable($options)
