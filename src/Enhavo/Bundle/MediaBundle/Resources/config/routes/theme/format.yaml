@@ -4,7 +4,8 @@ enhavo_media_theme_format:
     requirements:
         filename: .+
     defaults:
-        _expose: [theme, admin]
+        extension: ~
+        _expose: [theme]
         _endpoint:
             type: media_format
             permission: ~

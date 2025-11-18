@@ -4,6 +4,7 @@ enhavo_media_theme_file:
     requirements:
         filename: .+
     defaults:
+        extension: ~
         _expose: [theme]
         _endpoint:
             type: media_file
