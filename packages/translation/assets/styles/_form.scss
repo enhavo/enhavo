@@ -1,7 +1,10 @@
 @use '@enhavo/app/assets/styles/import/variables.scss';
 
 .translation {position: relative;
-  padding-top: 25px;
+  padding-top: 15px; margin-top: 15px;
+  &:first-child {
+    margin-top: 0;
+  }
   .translation-switcher {height:24px; padding:0px 6px; background: variables.$grey1;color: variables.$color2b;min-width:45px;border-radius:10px;font-size: 0.85rem; font-weight: variables.$fontMedium;
       position: absolute; right: 1px; top: 0px;
       cursor: pointer; border:1px solid variables.$grey1;transition: all .2s;
@@ -20,6 +23,4 @@
       .flag-container {padding:3px;line-height:0;}
     }
   }
-
-  + .translation {margin-top:15px;}
 }
