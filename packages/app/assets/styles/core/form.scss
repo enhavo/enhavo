@@ -2,7 +2,10 @@
 @use "../import/blueprints";
 
 .form-row {
-    + .form-row {margin-top:15px;}
+    margin-top: 15px;
+    &:first-child {
+      margin-top: 0;
+    }
 
     .form-errors {font-size:0.75rem;line-height:1.3em;color: variables.$color4;padding:3px;}
 
