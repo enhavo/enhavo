@@ -29,8 +29,7 @@ class ThemeUrlGenerator implements UrlGeneratorInterface
         return $this->router->generate('enhavo_media_theme_file', [
             'token' => $file->getToken(),
             'shortChecksum' => $file->getShortChecksum(),
-            'filename' => $file->getFilename(),
-            'extension' => $file->getExtension(),
+            'basename' => $file->getBasename(),
         ], $referenceType);
     }
 
@@ -41,9 +40,8 @@ class ThemeUrlGenerator implements UrlGeneratorInterface
         return $this->router->generate('enhavo_media_theme_format', [
             'token' => $file->getToken(),
             'shortChecksum' => $file->getShortChecksum(),
-            'filename' => $file->getFilename(),
+            'basename' => $file->getFilename().($formatEntity->getExtension() ? '.'.$formatEntity->getExtension() : ''),
             'format' => $format,
-            'extension' => $formatEntity->getExtension(),
         ], $referenceType);
     }
 }
