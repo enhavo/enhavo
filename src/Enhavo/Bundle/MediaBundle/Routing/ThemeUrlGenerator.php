@@ -29,21 +29,17 @@ class ThemeUrlGenerator implements UrlGeneratorInterface
         return $this->router->generate('enhavo_media_theme_file', [
             'token' => $file->getToken(),
             'shortChecksum' => $file->getShortChecksum(),
-            'filename' => $file->getFilename(),
-            'extension' => $file->getExtension(),
+            'basename' => $file->getBasename(),
         ], $referenceType);
     }
 
     public function generateFormat(FileInterface $file, string $format, $referenceType = SymfonyUrlGenerator::ABSOLUTE_PATH): string
     {
-        $formatEntity = $this->formatManager->getFormat($file, $format);
-
         return $this->router->generate('enhavo_media_theme_format', [
             'token' => $file->getToken(),
             'shortChecksum' => $file->getShortChecksum(),
-            'filename' => $file->getFilename(),
+            'basename' => $file->getBasename(),
             'format' => $format,
-            'extension' => $formatEntity->getExtension(),
         ], $referenceType);
     }
 }
