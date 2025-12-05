@@ -1,8 +1,8 @@
 enhavo_media_theme_format:
-    path: /media/format/{token}/{format}/{shortChecksum}/{filename}.{extension}
+    path: /media/format/{token}/{format}/{shortChecksum}/{basename}
     methods: [GET]
     requirements:
-        filename: .+
+        basename: .+
     defaults:
         extension: ~
         _expose: [theme]
@@ -11,5 +11,5 @@ enhavo_media_theme_format:
             permission: ~
             repository_arguments:
                 - token: expr:request.get("token")
-                  filename: expr:request.get("filename")
+                  filename: 'expr:pathinfo(request.get("basename"),8)'
                   shortChecksum: expr:request.get("shortChecksum")

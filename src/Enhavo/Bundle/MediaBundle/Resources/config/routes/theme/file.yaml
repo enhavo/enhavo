@@ -1,8 +1,8 @@
 enhavo_media_theme_file:
-    path:  /media/file/{token}/{shortChecksum}/{filename}.{extension}
+    path:  /media/file/{token}/{shortChecksum}/{basename}
     methods: [GET]
     requirements:
-        filename: .+
+        basename: .+
     defaults:
         extension: ~
         _expose: [theme]
@@ -11,6 +11,6 @@ enhavo_media_theme_file:
             permission: ~
             repository_arguments:
                 - token: expr:request.get("token")
-                  filename: expr:request.get("filename")
-                  extension: expr:request.get("extension")
+                  filename: 'expr:pathinfo(request.get("basename"),8)'
+                  extension: 'expr:pathinfo(request.get("basename"),4)'
                   shortChecksum: expr:request.get("shortChecksum")
