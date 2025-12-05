@@ -35,12 +35,10 @@ class ThemeUrlGenerator implements UrlGeneratorInterface
 
     public function generateFormat(FileInterface $file, string $format, $referenceType = SymfonyUrlGenerator::ABSOLUTE_PATH): string
     {
-        $formatEntity = $this->formatManager->getFormat($file, $format);
-
         return $this->router->generate('enhavo_media_theme_format', [
             'token' => $file->getToken(),
             'shortChecksum' => $file->getShortChecksum(),
-            'basename' => $file->getFilename().($formatEntity->getExtension() ? '.'.$formatEntity->getExtension() : ''),
+            'basename' => $file->getBasename(),
             'format' => $format,
         ], $referenceType);
     }
