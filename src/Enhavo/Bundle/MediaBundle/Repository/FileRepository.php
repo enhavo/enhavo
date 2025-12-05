@@ -53,9 +53,16 @@ class FileRepository extends EntityRepository
 
         foreach ($properties as $property) {
             if (array_key_exists($property, $criteria)) {
-                $qb
-                    ->andWhere(sprintf('f.%s = :%s', $property, $property))
-                    ->setParameter($property, $criteria[$property]);
+                if (empty($criteria[$property])) {
+                    $qb
+                        ->andWhere(sprintf('f.%s IS NULL OR f.%s = :_emptyString', $property, $property))
+                        ->setParameter('_emptyString', '')
+                    ;
+                } else {
+                    $qb
+                        ->andWhere(sprintf('f.%s = :%s', $property, $property))
+                        ->setParameter($property, $criteria[$property]);
+                }
             }
         }
 

@@ -41,8 +41,7 @@ class MediaTwigExtension extends AbstractExtension
             return $this->twigRouter->generate('enhavo_media_theme_format', [
                 'token' => $file['token'],
                 'shortChecksum' => $file['shortChecksum'],
-                'filename' => $file['filename'],
-                'extension' => $file['extension'],
+                'basename' => $file['basename'],
                 'format' => $format,
             ], $referenceType);
         }
@@ -50,8 +49,7 @@ class MediaTwigExtension extends AbstractExtension
         return $this->twigRouter->generate('enhavo_media_theme_file', [
             'token' => $file['token'],
             'shortChecksum' => $file['shortChecksum'],
-            'filename' => $file['filename'],
-            'extension' => $file['extension'],
+            'basename' => $file['basename'],
         ], $referenceType);
     }
 

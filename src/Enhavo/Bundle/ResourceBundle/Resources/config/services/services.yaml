@@ -17,6 +17,10 @@ services:
     Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface:
         alias: Enhavo\Bundle\ResourceBundle\RouteResolver\RouteNameRouteResolver
 
+    Enhavo\Bundle\ResourceBundle\ExpressionLanguage\PathInfoExpressionFunctionProvider:
+        tags:
+            - { name: enhavo_resource.expression_language_function_provider }
+
     Enhavo\Bundle\ResourceBundle\ExpressionLanguage\RouteResolverExpressionFunctionProvider:
         arguments:
             - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
