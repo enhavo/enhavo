@@ -43,7 +43,7 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
         $storedItems = [];
         foreach ($request->files as $file) {
             $uploadedFiles = is_array($file) ? $file : [$file];
-            /** @var $uploadedFile UploadedFile */
+            /** @var UploadedFile $uploadedFile */
             foreach ($uploadedFiles as $uploadedFile) {
                 try {
                     $errors = $this->getErrors($uploadedFile);

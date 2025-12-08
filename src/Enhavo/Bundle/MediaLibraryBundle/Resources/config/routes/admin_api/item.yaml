@@ -69,6 +69,17 @@ enhavo_media_library_admin_api_upload:
         _endpoint:
             type: media_library_upload
 
+enhavo_media_library_admin_api_replace:
+    path: /item/replace/{id}
+    methods:
+        - POST
+    defaults:
+        replace: true
+        _expose: admin_api
+        _endpoint:
+            type: media_library_upload
+
+
 enhavo_media_library_admin_api_select:
     path: /item/select
     methods:

@@ -82,6 +82,9 @@ enhavo_resource:
                     route_parameters:
                         token: expr:resource.getFile().getToken()
                         disposition: attachment
+                replace:
+                    type: media_library_replace
+                    enabled: 'expr:resource && resource.getId()'
             tabs:
                 main:
                     label: null

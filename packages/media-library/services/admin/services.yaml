@@ -34,6 +34,12 @@ services:
         tags:
             - 'enhavo_app.action'
 
+    '@enhavo/media-library/action/MediaLibraryReplaceAction':
+        import: MediaLibraryReplaceAction
+        chunk: 'action'
+        tags:
+            - 'enhavo_app.action'
+
     '@enhavo/media-library/action/MediaLibraryOpenSelectAction':
         import: MediaLibraryOpenSelectAction
         chunk: 'action'

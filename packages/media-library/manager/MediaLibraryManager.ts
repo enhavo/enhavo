@@ -32,7 +32,7 @@ export class MediaLibraryManager
     public maxUploadSize: number;
 
     public dragOver: boolean = false;
-    public uploadElement: HTMLElement
+    public uploadElement: HTMLInputElement;
     public uploads: FileUpload[] = [];
     public highlight: boolean = false;
 
@@ -104,11 +104,21 @@ export class MediaLibraryManager
         });
     }
 
-    change(event: any)
+    changeUpload(event: any)
     {
-        this.uploadFiles(event.target.files).then(() => {
+        this.upload(event.target.files, this.uploadUrl).then(() => {
             $(this.uploadElement).val('');
         });
+    }
+
+    upload(files: [], url: string): Promise
+    {
+        return this.uploadFiles(files, url);
+    }
+
+    replace(file: any, url: string): Promise
+    {
+        return this.uploadFiles([file], url);
     }
 
     drop(event: any)
@@ -116,7 +126,7 @@ export class MediaLibraryManager
         this.dragOver = false;
         this.highlight = false;
 
-        this.uploadFiles(event.dataTransfer.files);
+        this.uploadFiles(event.dataTransfer.files, this.uploadUrl);
     }
 
     dragover()
@@ -135,14 +145,14 @@ export class MediaLibraryManager
         this.highlight = false;
     }
 
-    private uploadFiles(files: []): Promise<void>
+    private uploadFiles(files: [], url: string): Promise<void>
     {
         this.flashMessenger.notice('Upload '+files.length+' files');
 
         let uploads = [];
 
         for (let file of files) {
-            uploads.push(this.uploadFile(file));
+            uploads.push(this.uploadFile(file, url));
         }
 
         return new Promise((resolve) => {
@@ -163,7 +173,7 @@ export class MediaLibraryManager
         })
     }
 
-    private uploadFile(file: File): Promise<boolean>
+    private uploadFile(file: File, url: string): Promise<boolean>
     {
         return new Promise((resolve) => {
             if (!this.checkFile(file)) {
@@ -184,7 +194,7 @@ export class MediaLibraryManager
             let data = new FormData();
             data.append('files', file);
 
-            axios.post(this.uploadUrl, data, {
+            axios.post(url, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
