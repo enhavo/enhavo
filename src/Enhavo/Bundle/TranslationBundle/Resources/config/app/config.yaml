@@ -28,4 +28,4 @@ enhavo_doctrine_extension:
                 object:
                     idField: refId
                     nameField: class
-                    cascade: ['persist', 'remove']
+                    cascade: ['persist']
