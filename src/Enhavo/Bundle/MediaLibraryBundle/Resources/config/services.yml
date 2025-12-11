@@ -3,9 +3,10 @@ services:
         public: true
         arguments:
             - '%enhavo_media_library.content_type%'
-            - '@enhavo_media_library.item.repository'
+            - '@enhavo_media_library.item.factory'
             - '@enhavo_taxonomy.term.repository'
             - '@translator'
+            - '@doctrine.orm.entity_manager'
 
     Enhavo\Bundle\MediaLibraryBundle\EventListener\ContentTypeSubscriber:
         arguments:
@@ -82,6 +83,13 @@ services:
         tags:
             - { name: enhavo_resource.action }
 
+    Enhavo\Bundle\MediaLibraryBundle\Action\MediaLibraryReplaceActionType:
+        arguments:
+            - '@router'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
+        tags:
+            - { name: enhavo_resource.action }
+
     Enhavo\Bundle\MediaLibraryBundle\Action\MediaLibrarySelectActionType:
         tags:
             - { name: enhavo_resource.action }
@@ -116,9 +124,10 @@ services:
     Enhavo\Bundle\MediaLibraryBundle\Endpoint\MediaLibraryUploadEndpointType:
         arguments:
             - '@enhavo_media.file.factory'
-            - '@enhavo_media_library.item.factory'
+            - '@enhavo_media_library.item.repository'
             - '@validator'
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+            - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
             - '%enhavo_media_library.constraints%'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]

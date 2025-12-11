@@ -37,6 +37,10 @@ services:
     '@enhavo/media-library/action/MediaLibraryReplaceAction':
         import: MediaLibraryReplaceAction
         chunk: 'action'
+        arguments:
+            - '@enhavo/media-library/manager/MediaLibraryManager'
+            - '@enhavo/app/manager/ResourceInputManager'
+            - '@enhavo/app/ui/UiManager'
         tags:
             - 'enhavo_app.action'
 

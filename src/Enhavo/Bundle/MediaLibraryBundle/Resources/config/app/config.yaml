@@ -56,8 +56,10 @@ enhavo_app:
 
 enhavo_media_library:
     constraints:
-        -   Enhavo\Bundle\MediaLibraryBundle\Validator\Constraints\UniqueBasename: ~
-        -   Enhavo\Bundle\MediaLibraryBundle\Validator\Constraints\UniqueChecksum: ~
+        -   Enhavo\Bundle\MediaLibraryBundle\Validator\Constraints\UniqueBasename:
+                groups: [ 'media_upload' ]
+        -   Enhavo\Bundle\MediaLibraryBundle\Validator\Constraints\UniqueChecksum:
+                groups: [ 'media_upload', 'media_replace' ]
     content_type:
         audio:
             label: 'media_library.content_type.audio'

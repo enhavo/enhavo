@@ -13,6 +13,7 @@ enhavo_media_admin_api_file_replace:
         _expose: admin_api
         _endpoint:
             type: media_file_replace
+            validation_groups: [ media_replace ]
 
 enhavo_media_admin_api_file_upload:
     path:  /file/upload

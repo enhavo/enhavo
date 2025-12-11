@@ -147,7 +147,7 @@ export class MediaLibraryManager
 
     private uploadFiles(files: [], url: string): Promise<void>
     {
-        this.flashMessenger.notice('Upload '+files.length+' files');
+        this.flashMessenger.notice('Uploading ' + files.length + ' files');
 
         let uploads = [];
 
@@ -164,8 +164,7 @@ export class MediaLibraryManager
                     }
                 }
                 if (uploadedFiles > 0) {
-                    this.flashMessenger.success(uploadedFiles +' Files uploaded');
-                    this.collection.load();
+                    this.flashMessenger.success(uploadedFiles + ' files uploaded');
                     this.dispatchCollectionUpdate();
                 }
                 resolve();
@@ -307,7 +306,8 @@ export class FileUpload
 
 export class UpdateMediaCollectionEvent extends Event
 {
-    constructor() {
+    constructor()
+    {
         super('update_media_collection');
     }
 }

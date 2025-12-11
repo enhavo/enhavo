@@ -12,9 +12,6 @@
 <script setup lang="ts">
 import {MediaLibraryReplaceAction} from "@enhavo/media-library/action/MediaLibraryReplaceAction";
 import {inject, onMounted} from "vue";
-import $ from "jquery";
-import {MediaLibraryManager} from "../../manager/MediaLibraryManager";
-const manager = inject<MediaLibraryManager>('mediaLibraryManager');
 
 const props = defineProps<{
     data: MediaLibraryReplaceAction,
@@ -36,9 +33,7 @@ function execute(event: Event)
 
 function changeReplace()
 {
-    manager.replace(props.data.replaceElement.files[0], props.data.replaceUrl).then(() => {
-        $(props.data.replaceElement).val('');
-    });
+    props.data.replaceFile();
 }
 
 onMounted(() => {

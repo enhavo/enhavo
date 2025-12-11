@@ -28,11 +28,11 @@ export class MediaLibraryCollection extends TableCollection
                     this.multiple = !!updatedFrame.parameters['multiple'];
                 }
             }, 100);
-
-            this.frameManager.on('update_media_collection', () => {
-                this.load();
-            })
         }
+
+        this.frameManager.on('update_media_collection', () => {
+            this.load();
+        });
     }
 
     async open(row: CollectionResourceItem)

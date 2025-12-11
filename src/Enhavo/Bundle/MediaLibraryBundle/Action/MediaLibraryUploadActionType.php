@@ -23,6 +23,7 @@ class MediaLibraryUploadActionType extends AbstractActionType
             'label' => 'media_library.label.upload',
             'translation_domain' => 'EnhavoMediaLibraryBundle',
             'model' => 'MediaLibraryUploadAction',
+            'permission' => 'ROLE_ENHAVO_MEDIA_FILE_CREATE',
         ]);
     }
 
