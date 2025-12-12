@@ -22,7 +22,6 @@ enhavo_doctrine_extension:
                     idField: refId
                     nameField: class
 
-
         Enhavo\Bundle\TranslationBundle\Entity\TranslationFile:
             reference:
                 object:

@@ -1,0 +1,37 @@
+services:
+    Enhavo\Bundle\TranslationBundle\Endpoint\Type\TranslateResourceEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+            - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
+            - '@Symfony\Component\Routing\Generator\UrlGeneratorInterface'
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\TranslationBundle\Command\DebugTranslationCommand:
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\TranslationBundle\Command\AutoTranslateCommand:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\TranslationBundle\Client\DeeplTranslationClient:
+        arguments:
+            - '@http_client'
+            - '%enhavo_translation.translation_client.deepl.api_key%'
+            - '%enhavo_translation.translation_client.deepl.glossary_id%'
+
+    Enhavo\Bundle\TranslationBundle\Action\TranslateActionType:
+        tags:
+            - { name: enhavo_resource.action }

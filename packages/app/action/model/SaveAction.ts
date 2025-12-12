@@ -25,7 +25,7 @@ export class SaveAction extends AbstractAction
     {
         this.uiManager.loading(true);
 
-        const transport = await this.resourceInputManager.save(null, true);
+        const transport = await this.resourceInputManager.save(this.url, true);
         this.uiManager.loading(false);
 
         if (!transport.ok || !transport.response.ok) {

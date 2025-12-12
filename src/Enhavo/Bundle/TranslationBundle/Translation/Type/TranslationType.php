@@ -32,13 +32,21 @@ class TranslationType extends AbstractType implements TranslationTypeInterface
 
     public function translate($object, string $property, string $locale, array $options): void
     {
+
     }
 
     public function detach($object, string $property, string $locale, array $options)
     {
+
     }
 
     public function delete($object, string $property): void
     {
+
+    }
+
+    public function autoTranslate($object, string $property, string $locale, array $options): void
+    {
+
     }
 }

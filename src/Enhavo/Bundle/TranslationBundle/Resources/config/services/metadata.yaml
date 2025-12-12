@@ -10,6 +10,7 @@ services:
             - 'Enhavo\Bundle\TranslationBundle\Metadata\Metadata'
         calls:
             - [addDriver, ['@Enhavo\Component\Metadata\Driver\ConfigurationDriver[Translation]']]
+            - [addDriver, ['@Enhavo\Bundle\TranslationBundle\Metadata\AttributeDriver']]
             - [addProvider, ['@Enhavo\Bundle\TranslationBundle\Metadata\Provider\PropertyNodeProvider']]
 
     Enhavo\Component\Metadata\Driver\ConfigurationDriver[Translation]:
@@ -18,3 +19,5 @@ services:
             - '%enhavo_translation.metadata%'
 
     Enhavo\Bundle\TranslationBundle\Metadata\Provider\PropertyNodeProvider:
+
+    Enhavo\Bundle\TranslationBundle\Metadata\AttributeDriver:

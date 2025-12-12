@@ -9,7 +9,6 @@ services:
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '@Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface'
             - '%enhavo_translation.enable%'
-            - '@Symfony\Component\HttpFoundation\RequestStack'
 
     Enhavo\Bundle\TranslationBundle\Translation\Type\TranslationType:
         arguments:
@@ -20,6 +19,14 @@ services:
     Enhavo\Bundle\TranslationBundle\Translation\Type\TextTranslationType:
         arguments:
             - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
+            - '@Enhavo\Bundle\TranslationBundle\Client\TranslationClientInterface'
+            - '%enhavo_translation.default_locale%'
+        tags:
+            - { name: enhavo_translation.translation }
+
+    Enhavo\Bundle\TranslationBundle\Translation\Type\ModelTranslationType:
+        calls:
+            - [setTranslationManager, ['@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager']]
         tags:
             - { name: enhavo_translation.translation }
 

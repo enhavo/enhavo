@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\DependencyInjection;
 
+use Enhavo\Bundle\TranslationBundle\Client\DeeplTranslationClient;
 use Enhavo\Bundle\TranslationBundle\Locale\ConfigurationLocaleProvider;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -65,6 +66,20 @@ class Configuration implements ConfigurationInterface
                             ->arrayNode('properties')
                                 ->useAttributeAsKey('name')
                                 ->prototype('variable')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+            ->children()
+                ->arrayNode('translation_client')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('client')->defaultValue(DeeplTranslationClient::class)->end()
+                        ->arrayNode('deepl')
+                            ->children()
+                                ->scalarNode('api_key')->end()
+                                ->scalarNode('glossary_id')->end()
                             ->end()
                         ->end()
                     ->end()

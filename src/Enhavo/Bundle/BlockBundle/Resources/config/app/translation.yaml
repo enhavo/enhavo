@@ -37,3 +37,8 @@ enhavo_translation:
             properties:
                 title:
                     type: text
+
+        Enhavo\Bundle\BlockBundle\Entity\Node:
+            properties:
+                block:
+                    type: model
