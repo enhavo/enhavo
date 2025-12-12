@@ -46,7 +46,9 @@ class MediaLibraryManager
         $usedFiles = $item->getUsedFiles();
 
         $oldFile->setChecksum($file->getChecksum());
+        $oldFile->setToken($file->getToken());
         $oldFile->setContent($file->getContent());
+
         if ($oldFile instanceof File) {
             $formats = $oldFile->getFormats();
             foreach ($formats as $format) {
@@ -55,6 +57,7 @@ class MediaLibraryManager
         }
         foreach ($usedFiles as $usedFile) {
             $usedFile->setChecksum($file->getChecksum());
+            $usedFile->setToken($file->getToken());
             $usedFile->setContent($file->getContent());
             if ($usedFile instanceof File) {
                 $formats = $usedFile->getFormats();

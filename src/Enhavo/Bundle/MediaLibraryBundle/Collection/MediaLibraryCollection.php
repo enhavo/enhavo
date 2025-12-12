@@ -40,7 +40,7 @@ class MediaLibraryCollection extends TableCollection
         $file = $resource->getFile();
 
         $item = parent::createItem($resource, $context);
-        $item['previewImageUrl'] = $this->urlGenerator->generateFormat($file, 'enhavoMediaLibraryThumb').'?v='.md5($file->getContent()->getFilePath());
+        $item['previewImageUrl'] = $this->urlGenerator->generateFormat($file, 'enhavoMediaLibraryThumb');
         $item['icon'] = $this->mediaLibraryManager->getContentTypeIcon($resource->getContentType());
         $item['label'] = $file->getBasename();
         $item['suffix'] = $file->getExtension();
