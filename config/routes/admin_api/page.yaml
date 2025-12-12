@@ -1,0 +1,8 @@
+enhavo_page_admin_api_translate:
+    path: /page/translate/resource/{id}
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: translate_resource
+            resource: enhavo_page.page

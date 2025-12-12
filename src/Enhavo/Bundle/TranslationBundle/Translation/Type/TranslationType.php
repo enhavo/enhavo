@@ -45,6 +45,11 @@ class TranslationType extends AbstractType implements TranslationTypeInterface
 
     }
 
+    public function isFormTranslatable($object, string $property, array $options): bool
+    {
+        return true;
+    }
+
     public function autoTranslate($object, string $property, string $locale, array $options): void
     {
 

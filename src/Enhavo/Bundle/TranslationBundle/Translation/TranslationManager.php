@@ -70,6 +70,27 @@ class TranslationManager
         return null !== $metadata->getProperty($property);
     }
 
+    public function isFormTranslatable(object $data, string $property)
+    {
+        /** @var Metadata $metadata */
+        $metadata = $this->metadataRepository->getMetadata($data);
+        if ($metadata === null) {
+            return false;
+        }
+
+        $propertyNode = $metadata->getProperty($property);
+        if ($propertyNode === null) {
+            return false;
+        }
+
+        /** @var Translation $translation */
+        $translation = $this->factory->create(array_merge([
+            'type' => $propertyNode->getType(),
+        ], $propertyNode->getOptions()));
+
+        return $translation->isFormTranslatable($data, $property);
+    }
+
     public function getLocales()
     {
         return $this->localeProvider->getLocales();

@@ -14,6 +14,7 @@ namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class ModelTranslationType extends AbstractTranslationType
 {
@@ -56,7 +57,20 @@ class ModelTranslationType extends AbstractTranslationType
 
     public function autoTranslate($object, string $property, string $locale, array $options): void
     {
-        $this->translationManager->applyAutoTranslation($object, $property, $locale);
+        $propertyAccessor = PropertyAccess::createPropertyAccessor();
+        $value = $propertyAccessor->getValue($object, $property);
+        if (is_iterable($value)) {
+            foreach ($value as $item) {
+                $this->translationManager->applyAutoTranslation($item, $locale);
+            }
+        } elseif (is_object($value)) {
+            $this->translationManager->applyAutoTranslation($value, $locale);
+        }
+    }
+
+    public function isFormTranslatable($object, string $property, array $options): bool
+    {
+        return false;
     }
 
     public static function getName(): ?string

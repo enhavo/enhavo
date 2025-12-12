@@ -73,7 +73,7 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
                 continue;
             }
 
-            if ($this->translationManager->isTranslatable($data, $property)) {
+            if ($this->translationManager->isFormTranslatable($data, $property)) {
                 $this->replaceWithTranslationField($data, $property, $form, $child);
 
             } else { // replace all children to keep order as defined in the parent form type

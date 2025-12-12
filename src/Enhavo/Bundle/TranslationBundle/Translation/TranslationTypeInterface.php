@@ -28,4 +28,6 @@ interface TranslationTypeInterface extends TypeInterface
     public function delete($object, string $property);
 
     public function autoTranslate($object, string $property, string $locale, array $options): void;
+
+    public function isFormTranslatable($object, string $property, array $options): bool;
 }
