@@ -1,6 +1,5 @@
 import axios, {CancelTokenSource} from "axios";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
-import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 import {Router} from "@enhavo/app/routing/Router";
 import {Translator} from "@enhavo/app/translation/Translator";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
@@ -45,7 +44,6 @@ export class MediaLibraryManager
     public routes: RouteContainer;
     
     public constructor(
-        private readonly eventDispatcher: FrameEventDispatcher,
         private readonly frameManager: FrameManager,
         private readonly flashMessenger: FlashMessenger,
         private readonly router: Router,
