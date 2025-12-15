@@ -68,7 +68,7 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
                         return;
                     }
 
-                    if (true === $options['replace']) {
+                    if ($options['replace']) {
                         /** @var ItemInterface $item */
                         $item = $this->itemRepository->find($request->get('id'));
                         $this->mediaLibraryManager->replaceFile($item, $file);
