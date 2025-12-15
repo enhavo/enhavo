@@ -64,6 +64,9 @@ class TranslationTypeTest extends TypeTestCase
         $this->translationManager->method('isTranslatable')->willReturnCallback(function ($dataClass) {
             return $dataClass instanceof MockTranslationModel || MockTranslationModel::class === $dataClass;
         });
+        $this->translationManager->method('isFormTranslatable')->willReturnCallback(function ($dataClass, $property) {
+            return ($dataClass instanceof MockTranslationModel || MockTranslationModel::class === $dataClass) && $property === 'text';
+        });
         $this->translationManager->method('getLocales')->willReturn(['en', 'de']);
         $this->translationManager->method('getDefaultLocale')->willReturn('en');
         $this->translationManager->method('getTranslations')->willReturnCallback(function ($data, $property) {
@@ -96,6 +99,9 @@ class TranslationTypeTest extends TypeTestCase
         $this->translationManager->method('isTranslatable')->willReturnCallback(function ($dataClass) {
             return $dataClass instanceof MockTranslationModel || MockTranslationModel::class === $dataClass;
         });
+        $this->translationManager->method('isFormTranslatable')->willReturnCallback(function ($dataClass, $property) {
+            return ($dataClass instanceof MockTranslationModel || MockTranslationModel::class === $dataClass) && $property === 'text';
+        });
         $this->translationManager->method('getLocales')->willReturn(['en', 'de']);
         $this->translationManager->method('getDefaultLocale')->willReturn('en');
         $this->translationManager->method('getTranslations')->willReturnCallback(function ($data, $property) {
@@ -127,6 +133,9 @@ class TranslationTypeTest extends TypeTestCase
         $this->translationManager->method('isEnabled')->willReturn(true);
         $this->translationManager->method('isTranslatable')->willReturnCallback(function ($dataClass) {
             return $dataClass instanceof MockTranslationModel || MockTranslationModel::class === $dataClass;
+        });
+        $this->translationManager->method('isFormTranslatable')->willReturnCallback(function ($dataClass, $property) {
+            return ($dataClass instanceof MockTranslationModel || MockTranslationModel::class === $dataClass) && $property === 'text';
         });
         $this->translationManager->method('getLocales')->willReturn(['en', 'de']);
         $this->translationManager->method('getDefaultLocale')->willReturn('en');
