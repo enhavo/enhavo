@@ -9,6 +9,7 @@ media_library:
         id: 'ID'
         title: 'Title'
         upload: 'Upload'
+        replace: 'Replace'
         select: 'Select'
     filter:
         label:

@@ -10,7 +10,6 @@ import {FormVisitorInterface} from "@enhavo/vue-form/form/FormVisitor";
 import {Theme} from "@enhavo/vue-form/form/Theme";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {VueRouterFactory} from "@enhavo/app/vue/VueRouterFactory";
-import {UiManager} from "@enhavo/app/ui/UiManager";
 import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
 import {ClientInterface, Transport} from "@enhavo/app/client/ClientInterface";
 import {Translator} from "@enhavo/app/translation/Translator";
@@ -38,7 +37,6 @@ export class ResourceInputManager
         private formFactory: FormFactory,
         private frameManager: FrameManager,
         private vueRouterFactory: VueRouterFactory,
-        private uiManager: UiManager,
         private client: ClientInterface,
         private translator: Translator,
     ) {
@@ -134,21 +132,27 @@ export class ResourceInputManager
 
     private async doSave(url: string, morph: boolean  = false): Promise<Transport>
     {
-        this.form.morphStart();
-
         const transport = await this.sendForm(url);
 
         if (!transport.ok || !transport.response.ok && transport.response.status !== 400) {
             return transport;
         }
 
-        const data = await transport.response.json();
+        await this.handleResponse(transport.response, morph);
+
+        return transport;
+    }
+
+    public async handleResponse(response: Response, morph: boolean  = false): Promise<void>
+    {
+        const data = await response.json();
 
         this.url = data.url;
         this.resource = data.resource;
         this.routes = new RouteContainer(data.routes);
 
         if (morph) {
+            this.form.morphStart();
             let newForm = this.formFactory.create(data.form, this.visitors);
             this.form.morphMerge(newForm);
             this.form.morphFinish();
@@ -172,8 +176,6 @@ export class ResourceInputManager
         if (data.redirect) {
             await this.redirect(data.redirect);
         }
-
-        return transport;
     }
 
     public async redirect(url: string)

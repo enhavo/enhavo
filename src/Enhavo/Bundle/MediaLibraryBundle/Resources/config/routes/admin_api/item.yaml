@@ -50,6 +50,17 @@ enhavo_media_library_admin_api_item_delete:
             type: resource_delete
             input: enhavo_media_library.item
 
+enhavo_media_library_admin_api_item_replace:
+    path: /item/replace/{id}
+    methods:
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: media_library_upload
+            replace: true
+            validation_groups: [ media_replace ]
+
 enhavo_media_library_admin_api_item_batch:
     path: /item/batch
     methods:

@@ -34,3 +34,9 @@ services:
         chunk: 'component'
         tags:
             - { name: vue.component, component: 'filter-media-library-checkbox' }
+
+    '@enhavo/media-library/components/action/ActionMediaLibraryReplace.vue':
+        static: true
+        chunk: 'component'
+        tags:
+            - { name: vue.component, component: 'action-media-library-replace' }

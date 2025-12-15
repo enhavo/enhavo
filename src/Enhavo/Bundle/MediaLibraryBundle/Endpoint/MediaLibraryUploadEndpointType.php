@@ -16,11 +16,13 @@ use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
+use Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager;
 use Enhavo\Bundle\MediaLibraryBundle\Model\ItemInterface;
-use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
+use Enhavo\Bundle\MediaLibraryBundle\Repository\ItemRepository;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -28,9 +30,10 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
 {
     public function __construct(
         private readonly FileFactory $fileFactory,
-        private readonly FactoryInterface $itemFactory,
+        private readonly ItemRepository $itemRepository,
         private readonly ValidatorInterface $validator,
         private readonly ResourceManager $resourceManager,
+        private readonly MediaLibraryManager $mediaLibraryManager,
         private readonly array $constraints,
     ) {
     }
@@ -40,10 +43,10 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
         $data['success'] = true;
         $data['errors'] = [];
 
-        $storedItems = [];
+        $storedFiles = [];
         foreach ($request->files as $file) {
             $uploadedFiles = is_array($file) ? $file : [$file];
-            /** @var $uploadedFile UploadedFile */
+            /** @var UploadedFile $uploadedFile */
             foreach ($uploadedFiles as $uploadedFile) {
                 try {
                     $errors = $this->getErrors($uploadedFile);
@@ -56,7 +59,7 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
                     }
 
                     $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
-                    $errors = $this->getErrors($file, $this->constraints);
+                    $errors = $this->getErrors($file, $this->constraints, $options['validation_groups']);
                     if (count($errors)) {
                         $data['success'] = false;
                         $data['errors'] = $errors;
@@ -65,14 +68,18 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
                         return;
                     }
 
-                    /** @var ItemInterface $item */
-                    $item = $this->itemFactory->createNew();
-                    $item->setFile($file);
-                    $file->setGarbage(false);
+                    if ($options['replace']) {
+                        /** @var ItemInterface $item */
+                        $item = $this->itemRepository->find($request->get('id'));
+                        $this->mediaLibraryManager->replaceFile($item, $file);
+                    } else {
+                        $item = $this->mediaLibraryManager->createItem($file);
+                    }
+
                     $this->resourceManager->save($item);
-                    $storedItems[] = $file;
+                    $storedFiles[] = $file;
                 } catch (StorageException $exception) {
-                    foreach ($storedItems as $item) {
+                    foreach ($storedFiles as $item) {
                         $this->resourceManager->delete($item);
                     }
                 }
@@ -80,10 +87,10 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
         }
     }
 
-    private function getErrors(mixed $value, $constraints = []): array
+    private function getErrors(mixed $value, $constraints = [], array $validationGroups = []): array
     {
         $result = [];
-        $errors = $this->validator->validate($value, $this->createConstraints($constraints));
+        $errors = $this->validator->validate($value, $this->createConstraints($constraints), $validationGroups);
         /** @var ConstraintViolation $error */
         foreach ($errors as $error) {
             $result[] = $error->getMessage();
@@ -105,6 +112,14 @@ class MediaLibraryUploadEndpointType extends AbstractEndpointType
         }
 
         return $data;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'replace' => false,
+            'validation_groups' => ['media_upload'],
+        ]);
     }
 
     public static function getName(): ?string

@@ -22,7 +22,6 @@ use Enhavo\Bundle\ResourceBundle\Event\ResourcePreCreateEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePreTransitionEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePreUpdateEvent;
 use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
-use Enhavo\Bundle\TranslationBundle\Entity\Translation;
 use Psr\Container\ContainerInterface;
 use SM\Factory\FactoryInterface as SMFactoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -135,9 +134,10 @@ class ResourceManager
     public function getLabel(string|object $value): ?string
     {
         $metadata = $this->getMetadata($value);
-        if ($metadata->getLabel() === null) {
+        if (null === $metadata->getLabel()) {
             return null;
         }
+
         return $this->translator->trans($metadata->getLabel(), [], $metadata->getTranslationDomain());
     }
 

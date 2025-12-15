@@ -72,6 +72,9 @@ class ItemType extends AbstractType
                 'translation_domain' => 'EnhavoMediaLibraryBundle',
                 'mapped' => false,
                 'data' => $urlValue,
+                'attr' => [
+                    'readonly' => true,
+                ],
             ]);
         });
     }

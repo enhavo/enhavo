@@ -10,7 +10,7 @@
         <modal-stack></modal-stack>
         <action-bar :primary="manager.actions" :secondary="manager.actionsSecondary"></action-bar>
 
-        <input v-show="false" v-once :ref="(el) => manager.uploadElement = el as HTMLElement" multiple type="file" @change.prevent="change"/>
+        <input v-show="false" v-once :ref="(el) => manager.uploadElement = el as HTMLElement" multiple type="file" @change.prevent="changeUpload"/>
 
         <div class="media-library-overlay" v-if="!manager.loading">
             <div class="inner-content">
@@ -101,9 +101,9 @@ function applyFilter()
     manager.collection.load();
 }
 
-function change(event)
+function changeUpload(event)
 {
-    manager.change(event);
+    manager.changeUpload(event);
 }
 
 function batchExecuted()

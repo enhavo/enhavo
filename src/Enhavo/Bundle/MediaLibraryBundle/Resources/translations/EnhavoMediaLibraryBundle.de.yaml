@@ -9,6 +9,7 @@ media_library:
         id: 'ID'
         title: 'Titel'
         upload: 'Hochladen'
+        replace: 'Ersetzen'
         select: 'Auswählen'
     filter:
         label:

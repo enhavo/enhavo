@@ -28,8 +28,8 @@ class MediaLibraryCollection extends TableCollection
         FilterQueryFactory $filterQueryFactory,
         RequestStack $requestStack,
         RouterInterface $router,
-        private MediaLibraryManager $mediaLibraryManager,
-        private UrlGeneratorInterface $urlGenerator,
+        private readonly MediaLibraryManager $mediaLibraryManager,
+        private readonly UrlGeneratorInterface $urlGenerator,
     ) {
         parent::__construct($expressionLanguage, $filterQueryFactory, $requestStack, $router);
     }
@@ -40,12 +40,12 @@ class MediaLibraryCollection extends TableCollection
         $file = $resource->getFile();
 
         $item = parent::createItem($resource, $context);
-        $item['previewImageUrl'] = $this->urlGenerator->generateFormat($resource->getFile(), 'enhavoMediaLibraryThumb');
+        $item['previewImageUrl'] = $this->urlGenerator->generateFormat($file, 'enhavoMediaLibraryThumb');
         $item['icon'] = $this->mediaLibraryManager->getContentTypeIcon($resource->getContentType());
         $item['label'] = $file->getBasename();
         $item['suffix'] = $file->getExtension();
         $item['type'] = $resource->getContentType();
-        $item['date'] = $file->getCreatedAt() ? $resource->getFile()->getCreatedAt()->format('Y-m-d') : '';
+        $item['date'] = $file->getCreatedAt() ? $file->getCreatedAt()->format('Y-m-d') : '';
 
         return $item;
     }

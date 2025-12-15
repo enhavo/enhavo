@@ -3,7 +3,6 @@ services:
         chunk: 'media-library'
         import: MediaLibraryManager
         arguments:
-            - '@enhavo/app/frame/FrameEventDispatcher'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/routing/Router'
@@ -31,6 +30,17 @@ services:
         chunk: 'action'
         arguments:
             - '@enhavo/media-library/manager/MediaLibraryManager'
+        tags:
+            - 'enhavo_app.action'
+
+    '@enhavo/media-library/action/MediaLibraryReplaceAction':
+        import: MediaLibraryReplaceAction
+        chunk: 'action'
+        arguments:
+            - '@enhavo/media-library/manager/MediaLibraryManager'
+            - '@enhavo/app/manager/ResourceInputManager'
+            - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
         tags:
             - 'enhavo_app.action'
 
