@@ -11,25 +11,31 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation\Type;
 
+use Enhavo\Bundle\TranslationBundle\Client\TranslationClientInterface;
 use Enhavo\Bundle\TranslationBundle\Translation\Type\TextTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator;
+use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextTranslationTypeTest extends TestCase
 {
-    private function createDependencies()
+    private function createDependencies(): TextTranslationTypeDependencies
     {
-        /** @var TextTranslator|MockObject $textTranslator */
-        $textTranslator = $this->getMockBuilder(TextTranslator::class)->disableOriginalConstructor()->getMock();
-
-        return $textTranslator;
+        $dependencies = new TextTranslationTypeDependencies();
+        $dependencies->translator = $this->getMockBuilder(TextTranslator::class)->disableOriginalConstructor()->getMock();
+        $dependencies->translationClient = $this->getMockBuilder(TranslationClientInterface::class)->getMock();
+        return $dependencies;
     }
 
-    private function createInstance($textTranslator)
+    private function createInstance(TextTranslationTypeDependencies $dependencies)
     {
-        return new TextTranslationType($textTranslator);
+        return new TextTranslationType(
+            $dependencies->translator,
+            $dependencies->translationClient,
+            $dependencies->defaultLanguage,
+        );
     }
 
     public function testGetName()
@@ -39,81 +45,92 @@ class TextTranslationTypeTest extends TestCase
 
     public function testSetTranslation()
     {
-        $textTranslator = $this->createDependencies();
-        $textTranslator->expects($this->once())->method('setTranslation')->willReturnCallback(function ($data, $property, $locale, $value): void {
+        $dependencies = $this->createDependencies();
+        $dependencies->translator->expects($this->once())->method('setTranslation')->willReturnCallback(function ($data, $property, $locale, $value): void {
             $this->assertTrue(is_object($data));
             $this->assertEquals('name', $property);
             $this->assertEquals('en', $locale);
             $this->assertEquals('value', $value);
         });
 
-        $type = $this->createInstance($textTranslator);
+        $type = $this->createInstance($dependencies);
         $type->setTranslation(['option' => 'value'], new \stdClass(), 'name', 'en', 'value');
     }
 
     public function testGetTranslation()
     {
-        $textTranslator = $this->createDependencies();
-        $textTranslator->expects($this->once())->method('getTranslation')->willReturn('Something');
+        $dependencies = $this->createDependencies();
+        $dependencies->translator->expects($this->once())->method('getTranslation')->willReturn('Something');
 
-        $type = $this->createInstance($textTranslator);
+        $type = $this->createInstance($dependencies);
         $this->assertEquals('Something', $type->getTranslation([], new \stdClass(), 'text', 'de'));
     }
 
     public function testGetDefaultValue()
     {
-        $textTranslator = $this->createDependencies();
-        $textTranslator->expects($this->once())->method('getDefaultValue')->willReturn('Something');
+        $dependencies = $this->createDependencies();
+        $dependencies->translator->expects($this->once())->method('getDefaultValue')->willReturn('Something');
 
-        $type = $this->createInstance($textTranslator);
+        $type = $this->createInstance($dependencies);
         $this->assertEquals('Something', $type->getDefaultValue([], new \stdClass(), 'text'));
     }
 
     public function testTranslate()
     {
-        $routeTranslator = $this->createDependencies();
-        $routeTranslator->expects($this->once())->method('translate');
+        $dependencies = $this->createDependencies();
+        $dependencies->translator->expects($this->once())->method('translate');
 
         $data = new \stdClass();
 
-        $type = $this->createInstance($routeTranslator);
+        $type = $this->createInstance($dependencies);
 
         $type->translate($data, 'field', 'de', []);
     }
 
     public function testDetach()
     {
-        $routeTranslator = $this->createDependencies();
-        $routeTranslator->expects($this->once())->method('detach');
+        $dependencies = $this->createDependencies();
+        $dependencies->translator->expects($this->once())->method('detach');
 
         $data = new \stdClass();
 
-        $type = $this->createInstance($routeTranslator);
+        $type = $this->createInstance($dependencies);
 
         $type->detach($data, 'field', 'de', []);
     }
 
     public function testDelete()
     {
-        $routeTranslator = $this->createDependencies();
-        $routeTranslator->expects($this->once())->method('delete');
+        $dependencies = $this->createDependencies();
+        $dependencies->translator->expects($this->once())->method('delete');
 
         $data = new \stdClass();
 
-        $type = $this->createInstance($routeTranslator);
+        $type = $this->createInstance($dependencies);
 
         $type->delete($data, 'field');
     }
 
     public function testConfigureOptions()
     {
-        $textTranslator = $this->createDependencies();
+        $dependencies = $this->createDependencies();
         $resolver = new OptionsResolver();
 
-        $type = $this->createInstance($textTranslator);
+        $type = $this->createInstance($dependencies);
 
         $type->configureOptions($resolver);
 
-        $this->assertEquals(['allow_fallback'], $resolver->getDefinedOptions());
+        $this->assertEquals([
+            'allow_fallback',
+            'html',
+            'overwrite',
+        ], $resolver->getDefinedOptions());
     }
+}
+
+class TextTranslationTypeDependencies
+{
+    public TranslatorInterface|MockObject|null $translator = null;
+    public TranslationClientInterface|MockObject|null $translationClient = null;
+    public ?string $defaultLanguage = null;
 }

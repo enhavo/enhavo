@@ -11,21 +11,24 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
+use Enhavo\Bundle\TranslationBundle\Client\TranslationClientInterface;
 use Enhavo\Bundle\TranslationBundle\Translation\AbstractTranslationType;
 use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 class TextTranslationType extends AbstractTranslationType
 {
-    /** @var TranslatorInterface */
-    protected $translator;
+    private PropertyAccessor $propertyAccessor;
 
-    /**
-     * TextTranslationType constructor.
-     */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(
+        private TranslatorInterface $translator,
+        private TranslationClientInterface $translationClient,
+        private ?string $defaultLanguage,
+    )
     {
-        $this->translator = $translator;
+        $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
     public function translate($object, string $property, string $locale, array $options): void
@@ -58,6 +61,20 @@ class TextTranslationType extends AbstractTranslationType
         return $this->translator->getDefaultValue($data, $property);
     }
 
+    public function autoTranslate($object, string $property, string $locale, array $options): void
+    {
+        $value = $this->propertyAccessor->getValue($object, $property);
+        $translatedValue = $this->translator->getTranslation($object, $property, $locale);
+
+        if ($value && (empty($translatedValue) || $options['overwrite'])) {
+            $translatedValue = $this->translationClient->translate($value, $this->defaultLanguage, $locale, [
+                'html' => $options['html'],
+            ]);
+
+            $this->translator->setTranslation($object, $property, $locale, $translatedValue);
+        }
+    }
+
     public static function getName(): ?string
     {
         return 'text';
@@ -67,6 +84,8 @@ class TextTranslationType extends AbstractTranslationType
     {
         $resolver->setDefaults([
             'allow_fallback' => false,
+            'html' => false,
+            'overwrite' => false,
         ]);
     }
 }

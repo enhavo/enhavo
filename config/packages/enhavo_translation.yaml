@@ -5,3 +5,6 @@ enhavo_translation:
         - 'en'
         - 'de'
         - 'fr'
+    translation_client:
+        deepl:
+            api_key: '%env(DEEPL_API_KEY)%'

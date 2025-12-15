@@ -49,6 +49,16 @@ abstract class AbstractTranslationType extends AbstractType implements Translati
         return $this->parent->getDefaultValue($options, $data, $property);
     }
 
+    public function autoTranslate($object, string $property, string $locale, array $options): void
+    {
+
+    }
+
+    public function isFormTranslatable($object, string $property, array $options): bool
+    {
+        return $this->parent->isFormTranslatable($object, $property, $options);
+    }
+
     public static function getParentType(): ?string
     {
         return TranslationType::class;

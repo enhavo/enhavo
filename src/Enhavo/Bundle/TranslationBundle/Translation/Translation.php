@@ -48,4 +48,14 @@ class Translation extends AbstractContainerType
     {
         $this->type->delete($data, $property);
     }
+
+    public function autoTranslate($object, string $property, string $locale): void
+    {
+        $this->type->autoTranslate($object, $property, $locale, $this->options);
+    }
+
+    public function isFormTranslatable($object, string $property): bool
+    {
+        return $this->type->isFormTranslatable($object, $property, $this->options);
+    }
 }

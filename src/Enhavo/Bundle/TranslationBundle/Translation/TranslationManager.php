@@ -22,64 +22,25 @@ use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Component\Type\FactoryInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class TranslationManager
 {
-    /** @var MetadataRepository */
-    private $metadataRepository;
-
-    /** @var FactoryInterface */
-    private $factory;
-
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var LocaleResolverInterface */
-    private $localeResolver;
-
-    /** @var EntityResolverInterface */
-    private $entityResolver;
-
-    /** @var EntityResolverInterface */
-    private $localeProvider;
-
-    /** @var bool */
-    private $enabled;
-
-    /** @var RequestStack */
-    private $requestStack;
-
-    /** @var bool|null */
-    private $cachedTranslation;
-
-    /** @var Translation[][] */
-    private $translation = [];
+    private array $translation = [];
 
     /** @var string[] */
-    private $translatedLocale;
+    private array $translatedLocale;
 
-    /** @var NameTransformer */
-    private $nameTransformer;
+    private NameTransformer $nameTransformer;
 
     public function __construct(
-        MetadataRepository $metadataRepository,
-        FactoryInterface $factory,
-        EntityManagerInterface $entityManager,
-        LocaleResolverInterface $localeResolver,
-        EntityResolverInterface $entityResolver,
-        LocaleProviderInterface $localeProvider,
-        $enabled,
-        RequestStack $requestStack,
+        private readonly MetadataRepository $metadataRepository,
+        private readonly FactoryInterface $factory,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly LocaleResolverInterface $localeResolver,
+        private readonly EntityResolverInterface $entityResolver,
+        private readonly LocaleProviderInterface $localeProvider,
+        private $enabled,
     ) {
-        $this->metadataRepository = $metadataRepository;
-        $this->factory = $factory;
-        $this->entityManager = $entityManager;
-        $this->localeResolver = $localeResolver;
-        $this->entityResolver = $entityResolver;
-        $this->localeProvider = $localeProvider;
-        $this->enabled = $enabled;
-        $this->requestStack = $requestStack;
         $this->translatedLocale = [];
         $this->nameTransformer = new NameTransformer();
     }
@@ -107,6 +68,27 @@ class TranslationManager
         $metadata = $this->metadataRepository->getMetadata($data);
 
         return null !== $metadata->getProperty($property);
+    }
+
+    public function isFormTranslatable(object $data, string $property)
+    {
+        /** @var Metadata $metadata */
+        $metadata = $this->metadataRepository->getMetadata($data);
+        if ($metadata === null) {
+            return false;
+        }
+
+        $propertyNode = $metadata->getProperty($property);
+        if ($propertyNode === null) {
+            return false;
+        }
+
+        /** @var Translation $translation */
+        $translation = $this->factory->create(array_merge([
+            'type' => $propertyNode->getType(),
+        ], $propertyNode->getOptions()));
+
+        return $translation->isFormTranslatable($data, $property);
     }
 
     public function getLocales()
@@ -302,5 +284,21 @@ class TranslationManager
         }
 
         return null;
+    }
+
+    public function applyAutoTranslation($data, $locale, string $property = null)
+    {
+        /** @var Metadata $metadata */
+        $metadata = $this->metadataRepository->getMetadata($data);
+        $properties = $metadata->getProperties();
+        foreach ($properties as $propertyName => $propertyNode) {
+            if ($property === null || $propertyName === $property) {
+                /** @var Translation $translation */
+                $translation = $this->factory->create(array_merge([
+                    'type' => $propertyNode->getType(),
+                ], $propertyNode->getOptions()));
+                $translation->autoTranslate($data, $propertyName, $locale);
+            }
+        }
     }
 }

@@ -36,6 +36,9 @@ class EnhavoTranslationExtension extends Extension implements PrependExtensionIn
         $container->setParameter('enhavo_translation.translator.default_access', $config['translator']['default_access']);
         $container->setParameter('enhavo_translation.form.default_access', $config['form']['default_access']);
         $container->setParameter('enhavo_translation.provider', $config['provider']);
+        $container->setParameter('enhavo_translation.translation_client.client', $config['translation_client']['client']);
+        $container->setParameter('enhavo_translation.translation_client.deepl.api_key', $config['translation_client']['deepl']['api_key'] ?? null);
+        $container->setParameter('enhavo_translation.translation_client.deepl.glossary_id', $config['translation_client']['deepl']['glossary_id'] ?? null);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services/translator.yaml');
@@ -43,6 +46,7 @@ class EnhavoTranslationExtension extends Extension implements PrependExtensionIn
         $loader->load('services/generator.yaml');
         $loader->load('services/form.yaml');
         $loader->load('services/metadata.yaml');
+        $loader->load('services/general.yaml');
     }
 
     protected function prependFiles(): array

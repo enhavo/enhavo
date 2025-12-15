@@ -77,7 +77,10 @@ class ReplaceTranslationTypeListenerTest extends TypeTestCase
 
     public function testPostSetDataTranslatable()
     {
-        $this->dependencies->translationManager->expects($this->exactly(3))->method('isTranslatable')->willReturnCallback(function ($data, $property) {
+        $this->dependencies->translationManager->expects($this->exactly(1))->method('isTranslatable')->willReturnCallback(function ($data, $property) {
+            return true;
+        });
+        $this->dependencies->translationManager->expects($this->exactly(2))->method('isFormTranslatable')->willReturnCallback(function ($data, $property) {
             if (!$property) {
                 return true;
             }

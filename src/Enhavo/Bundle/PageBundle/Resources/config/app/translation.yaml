@@ -6,3 +6,10 @@ enhavo_routing:
                     type: locale_prefix
                     property: title
                     generate_translations: false
+
+enhavo_translation:
+    metadata:
+        Enhavo\Bundle\PageBundle\Entity\Page:
+            properties:
+                content:
+                    type: model
