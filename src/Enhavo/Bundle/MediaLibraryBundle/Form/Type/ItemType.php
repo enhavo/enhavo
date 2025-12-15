@@ -73,7 +73,7 @@ class ItemType extends AbstractType
                 'mapped' => false,
                 'data' => $urlValue,
                 'attr' => [
-                    'readonly' => 'readlony',
+                    'readonly' => 'readonly',
                 ],
             ]);
         });
