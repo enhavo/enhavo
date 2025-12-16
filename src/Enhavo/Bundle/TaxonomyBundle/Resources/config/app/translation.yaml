@@ -1,4 +1,8 @@
-Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy:
-    properties:
-        name:
-        text:
+enhavo_translation:
+    metadata:
+        Enhavo\Bundle\TaxonomyBundle\Entity\Term:
+            properties:
+                name:
+                    type: text
+                text:
+                    type: text

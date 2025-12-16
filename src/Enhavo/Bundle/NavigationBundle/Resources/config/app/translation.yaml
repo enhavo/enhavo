@@ -5,13 +5,18 @@ enhavo_translation:
                 link:
                     type: slug
                     allow_fallback: true
-#        Enhavo\Bundle\NavigationBundle\Entity\Navigation:
-#            properties:
-#                name:
-#                    type: text
-#                    allow_fallback: true
+
+        Enhavo\Bundle\NavigationBundle\Entity\Navigation:
+            properties:
+                nodes:
+                    type: model
+
         Enhavo\Bundle\NavigationBundle\Entity\Node:
             properties:
                 label:
                     type: text
                     allow_fallback: true
+                children:
+                    type: model
+                subject:
+                    type: model
