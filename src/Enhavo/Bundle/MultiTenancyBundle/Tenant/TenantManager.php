@@ -58,11 +58,11 @@ class TenantManager
 
     public function disableDoctrineFilter()
     {
-        $this->entityManager->getFilters()->disable('tenant');
+        $this->entityManager->getFilters()->suspend('tenant');
     }
 
     public function enableDoctrineFilter()
     {
-        $this->entityManager->getFilters()->enable('tenant');
+        $this->entityManager->getFilters()->restore('tenant');
     }
 }
