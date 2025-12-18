@@ -1,25 +1,25 @@
 @use "../import/variables";
 @use "../import/blueprints";
 
-.filter-bar {display:flex;margin-bottom:40px;flex-direction:column;gap:4px;
+.filter-bar {display:flex;margin-bottom:40px;margin-top:-30px;flex-direction:column;gap:4px;
   .filter-buttons {margin-top:10px;display:flex;gap:10px;
-    .apply-button {@extend %iconButton;width:auto;height:auto;padding:8px 12px;border-radius:10px;line-height:1.3em;
+    .apply-button {@extend %iconButton;width:auto;height:auto;padding:7px 12px 8px 12px;border-radius:10px;line-height:1.3em;
       i {line-height:inherit;}
     }
-    .reset-button {@extend %iconButton;width:auto;height:auto;padding:8px 12px;border-radius:10px;line-height:1.3em;
+    .reset-button {@extend %iconButton;width:auto;height:auto;padding:7px 12px 8px 12px;border-radius:10px;line-height:1.3em;
       i {line-height:inherit;}
     }
   }
-  .filters {display:flex;gap:20px 40px;flex-wrap:wrap;align-items:flex-start;padding:15px;border:1px solid variables.$grey5;
+  .filters {display:flex;gap:20px 40px;flex-wrap:wrap;align-items:flex-start;padding:15px;border:1px solid variables.$grey5;border-radius:5px;
     .filter {display:flex;gap:12px;align-items:flex-start;
-      .deactivate {cursor:pointer;background:variables.$color6;padding:2px 5px;border-radius:3px;
+      .deactivate {cursor:pointer;background:variables.$color6;padding:2px 5px 1px 5px;border-radius:50%;margin-top:-6px;scale:0.75;
         &:hover {background:variables.$color6b;}
       }
     }
   }
   .view-table-filter {
     &.filter-headline { width: 100%; padding-left: 0; font-weight: 600; font-size: 0.875rem; line-height: 1.1em; }
-    .label { display: block; font-size:0.85rem;line-height:1.1em;margin-bottom:1px; }
+    .label { display: block; font-size:0.85rem;line-height:1.1em;margin-bottom:2px; }
     input[type="text"] {@extend %textfield;
       &.has-value {border-color: variables.$color1;}
     }
@@ -37,13 +37,6 @@
 
 .grid {padding:50px 30px;}
 
-@media screen and (max-width:1200px) {
-  .filter-bar {
-    .view-table-filter { width: 50%;
-      &.wide { width: 100%; }
-    }
-  }
-}
 @media screen and (max-width:768px) {
   .filter-bar {
     .view-table-filter { width: 100%;

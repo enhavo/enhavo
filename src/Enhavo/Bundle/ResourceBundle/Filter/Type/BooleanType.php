@@ -52,11 +52,11 @@ class BooleanType extends AbstractFilterType
     {
         return [
             [
-                'label' => $this->translator->trans($options['label_true'], [], $options['translation_domain']),
+                'label' => $this->translator->trans($options['label_true'], [], $options['choice_translation_domain']),
                 'code' => self::VALUE_TRUE,
             ],
             [
-                'label' => $this->translator->trans($options['label_false'], [], $options['translation_domain']),
+                'label' => $this->translator->trans($options['label_false'], [], $options['choice_translation_domain']),
                 'code' => self::VALUE_FALSE,
             ],
         ];
@@ -99,6 +99,7 @@ class BooleanType extends AbstractFilterType
             'label_true' => 'filter.boolean.label_true',
             'label_false' => 'filter.boolean.label_false',
             'translation_domain' => 'EnhavoResourceBundle',
+            'choice_translation_domain' => 'EnhavoResourceBundle',
             'initial_value' => null,
         ]);
 
