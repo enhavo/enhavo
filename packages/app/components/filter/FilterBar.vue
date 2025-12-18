@@ -4,12 +4,12 @@
         <div class="filters">
             <template v-for="filter in filterManager.getActiveFilters(filters)">
                 <div class="filter">
-                    <div @click="deactivateFilter(filter)" class="deactivate"><i class="icon icon-close"></i></div>
                     <component
                         :is="filter.component"
                         :data="filter"
                         @apply="apply()"
                     ></component>
+                    <div @click="deactivateFilter(filter)" class="deactivate"><i class="icon icon-close"></i></div>
                 </div>
             </template>
         </div>

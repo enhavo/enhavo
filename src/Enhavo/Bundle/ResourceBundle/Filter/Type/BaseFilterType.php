@@ -32,6 +32,7 @@ class BaseFilterType extends AbstractType implements FilterTypeInterface
         $data->set('component', $options['component']);
         $data->set('model', $options['model']);
         $data->set('label', $this->translator->trans($options['label'], [], $options['translation_domain']));
+        $data->set('active', $options['initial_active']);
     }
 
     public function buildQuery($options, FilterQuery $query, mixed $value): void
@@ -52,12 +53,13 @@ class BaseFilterType extends AbstractType implements FilterTypeInterface
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'enabled' => true,
             'permission' => null,
             'translation_domain' => null,
+            'initial_active' => false,
         ]);
 
         $resolver->setRequired('component');

@@ -12,6 +12,14 @@ enhavo_resource:
             actions:
                 filter:
                     type: filter
+            filters:
+                label:
+                    type: text
+                    property: label
+                    label: setting.label.setting
+                    translation_domain: EnhavoSettingBundle
+                    initial_active: true
+
             routes:
                 list_parameters:
                     group: expr:request.get("group")
