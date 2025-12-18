@@ -140,11 +140,11 @@ use Doctrine\Common\Collections\Collection;
 
 class Book
 {
-    #[Duplicate('string', ['postfix' => ' Copy!!', 'group' => ['duplicate']])]
+    #[Duplicate('string', ['postfix' => ' Copy!!', 'groups' => ['duplicate']])]
     private ?string $name = null;
 
     #[Duplicate('model', [
-        'group' => ['duplicate']
+        'groups' => ['duplicate']
     ])]
     private Collection $chapters = null;
 }
@@ -169,7 +169,7 @@ enhavo_resource:
 Use the manager to duplicate a resource. The returned resource is not saved yet. Use the `save` method to make it persistent.
 
 ```php
-$otherBook = $this->resourceManager->duplicate($book, null, ['group' => 'duplicate']);
+$otherBook = $this->resourceManager->duplicate($book, null, ['groups' => 'duplicate']);
 $this->resourceManager->save($otherBook);
 ```
 
@@ -177,7 +177,7 @@ It is also possible to duplicate a resource into a target resource. The referenc
 but the values will be changed to the one from the source resource.
 
 ```php
-$target = $this->resourceManager->duplicate($source, $target, ['group' => 'duplicate']);
+$target = $this->resourceManager->duplicate($source, $target, ['groups' => 'duplicate']);
 ````
 
 On the [duplicate reference section](/reference/duplicate/index), you can find the possible duplicate types.

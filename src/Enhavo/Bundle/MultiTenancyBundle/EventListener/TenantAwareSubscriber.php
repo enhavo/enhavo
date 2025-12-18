@@ -38,7 +38,9 @@ class TenantAwareSubscriber implements EventSubscriberInterface
     {
         $resource = $event->getSubject();
         if ($resource instanceof TenantAwareInterface) {
-            $resource->setTenant($this->manager->getTenant()->getKey());
+            if ($resource->getTenant() == null) {
+                $resource->setTenant($this->manager->getTenant()->getKey());
+            }
         }
     }
 }
