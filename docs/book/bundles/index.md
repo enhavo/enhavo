@@ -12,6 +12,7 @@
 * [Doctrine Extension](/book/bundles/doctrine-extension-bundle/index)
 * [Form](/book/bundles/form-bundle/index)
 * [Media](/book/bundles/media-bundle/index)
+* [Media Library](/book/bundles/media-library-bundle/index)
 * [Newsletter](/book/bundles/newsletter-bundle/index)
 * [Page](/book/bundles/page-bundle/index)
 * [Redirect](/book/bundles/redirect-bundle/index)

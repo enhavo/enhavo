@@ -8,3 +8,5 @@ enhavo_translation:
                     type: slug
                 picture:
                     type: file
+                content:
+                    type: model
