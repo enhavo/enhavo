@@ -1,0 +1,8 @@
+{
+  "name": "basics",
+  "engineVersion": "v0.19.8",
+  "sdk": {
+    "source": "php"
+  },
+  "source": ".dagger"
+}
