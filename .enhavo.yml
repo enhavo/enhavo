@@ -39,6 +39,9 @@ subtrees:
         url: 'git@github.com:enhavo/EnhavoDashboardBundle.git'
         prefix: src/Enhavo/Bundle/DashboardBundle
         package: enhavo/dashboard-bundle
+    FrameworkBundle:
+        repository: 'git@github.com:enhavo/FrameworkBundle.git'
+        path: src/Enhavo/Bundle/FrameworkBundle
     FormBundle:
         url: 'git@github.com:enhavo/EnhavoFormBundle.git'
         prefix: src/Enhavo/Bundle/FormBundle

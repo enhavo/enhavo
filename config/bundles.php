@@ -20,6 +20,7 @@ return [
     Enhavo\Bundle\MediaLibraryBundle\EnhavoMediaLibraryBundle::class => ['all' => true],
     Enhavo\Bundle\SearchBundle\EnhavoSearchBundle::class => ['all' => true],
     Enhavo\Bundle\FormBundle\EnhavoFormBundle::class => ['all' => true],
+    Enhavo\Bundle\FrameworkBundle\EnhavoFrameworkBundle::class => ['all' => true],
     Enhavo\Bundle\DashboardBundle\EnhavoDashboardBundle::class => ['all' => true],
     Enhavo\Bundle\ArticleBundle\EnhavoArticleBundle::class => ['all' => true],
     Enhavo\Bundle\PageBundle\EnhavoPageBundle::class => ['all' => true],
