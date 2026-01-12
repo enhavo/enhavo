@@ -39,7 +39,7 @@ class PageVueRouteProviderType extends AbstractVueRouteProviderType implements V
         return $this->parent->getRoute($options, $groups);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'resource_key' => 'enhavo_page.page',

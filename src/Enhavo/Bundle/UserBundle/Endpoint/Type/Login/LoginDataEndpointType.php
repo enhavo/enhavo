@@ -31,7 +31,7 @@ class LoginDataEndpointType extends AbstractEndpointType
         if ($this->isGranted('ROLE_USER')) {
             $configuration = $this->provider->getLoginConfiguration();
             $url = $this->generateUrl($configuration->getRedirectRoute());
-            if ('html' === $request->get('_format')) {
+            if ('html' === $request->query->get('_format')) {
                 $context->setResponse(new RedirectResponse($url));
 
                 return;

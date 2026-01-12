@@ -46,7 +46,7 @@ class ElasticInstallCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($this->elasticManager->existsInstallation()) {
             while (true) {

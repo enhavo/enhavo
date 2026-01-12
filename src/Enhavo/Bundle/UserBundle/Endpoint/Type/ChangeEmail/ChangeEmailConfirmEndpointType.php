@@ -38,8 +38,8 @@ class ChangeEmailConfirmEndpointType extends AbstractFormEndpointType
 
     protected function init($options, Request $request, Data $data, Context $context): void
     {
-        $token = $request->get('token');
-        $user = $this->userRepository->findByConfirmationToken($request->get('token'));
+        $token = $request->query->get('token');
+        $user = $this->userRepository->findByConfirmationToken($request->query->get('token'));
 
         $context->set('targetUser', $user);
         $data->set('token', $token);

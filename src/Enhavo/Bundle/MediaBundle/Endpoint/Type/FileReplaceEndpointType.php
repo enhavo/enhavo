@@ -64,7 +64,7 @@ class FileReplaceEndpointType extends AbstractEndpointType
 
     private function getFileByToken(Request $request): FileInterface
     {
-        $token = $request->get('token');
+        $token = $request->query->get('token');
 
         $file = $this->fileRepository->findOneBy([
             'token' => $token,

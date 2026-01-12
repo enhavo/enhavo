@@ -17,8 +17,6 @@ services:
         arguments:
             - '%enhavo_app.form_themes%'
             - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
-        calls:
-            - [ setContainer, ['@service_container']]
         tags:
             - { name: twig.extension }
 
@@ -43,14 +41,6 @@ services:
             - '@enhavo_app.widget.widget_manager'
             - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
             - '@twig'
-        calls:
-            - [ setContainer, ['@service_container']]
-        tags:
-            - { name: twig.extension }
-
-    Enhavo\Bundle\AppBundle\Twig\RouteExtension:
-        calls:
-            - [ setContainer, ['@service_container']]
         tags:
             - { name: twig.extension }
 

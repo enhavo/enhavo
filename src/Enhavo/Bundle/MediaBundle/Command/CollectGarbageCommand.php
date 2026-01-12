@@ -39,7 +39,7 @@ class CollectGarbageCommand extends Command
         }
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $limit = $input->getOption('limit');
         $dryRun = false;

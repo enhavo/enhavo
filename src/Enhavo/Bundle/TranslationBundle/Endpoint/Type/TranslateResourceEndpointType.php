@@ -30,7 +30,7 @@ class TranslateResourceEndpointType extends AbstractEndpointType
         $metadata = $this->resourceManager->getMetadata($options['resource']);
         $repository = $this->resourceManager->getRepository($options['resource']);
 
-        $id = intval($request->get('id'));
+        $id = intval($request->query->get('id'));
         if (!$id) {
             $context->setStatusCode(404);
             return;
@@ -60,7 +60,7 @@ class TranslateResourceEndpointType extends AbstractEndpointType
         $context->setResponse(new RedirectResponse($url));
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
             'resource',

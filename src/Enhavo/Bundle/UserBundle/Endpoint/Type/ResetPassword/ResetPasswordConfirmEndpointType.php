@@ -38,7 +38,7 @@ class ResetPasswordConfirmEndpointType extends AbstractFormEndpointType
 
     protected function init($options, Request $request, Data $data, Context $context): void
     {
-        $token = $request->get('token');
+        $token = $request->query->get('token');
         $user = $this->userRepository->findByConfirmationToken($token);
 
         if (null === $user) {

@@ -106,7 +106,7 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
         $form->add('conditional', $type, $formOptions);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $prototypes = $form->getConfig()->getAttribute('prototypes');
         foreach ($prototypes as $key => $prototype) {
@@ -118,7 +118,7 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
         parent::buildView($view, $form, $options);
     }
 
-    public function buildVueData(FormView $view, VueData $data, array $options)
+    public function buildVueData(FormView $view, VueData $data, array $options): void
     {
         $prototypes = $view->vars['prototypes'];
         $prototypesData = [];
@@ -133,7 +133,7 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
         $data->set('prototypes', $prototypesData);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'entry_types_options' => [],
@@ -146,7 +146,7 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
         $resolver->setRequired('entry_type_resolver');
     }
 
-    public function mapDataToForms($viewData, \Traversable $forms)
+    public function mapDataToForms($viewData, \Traversable $forms): void
     {
         if (null === $viewData) {
             return;
@@ -175,7 +175,7 @@ class ConditionalType extends AbstractVueType implements DataMapperInterface
         $conditionalForm->setData($viewData);
     }
 
-    public function mapFormsToData(\Traversable $forms, &$viewData)
+    public function mapFormsToData(\Traversable $forms, &$viewData): void
     {
         $forms = iterator_to_array($forms);
         $viewData = $forms['conditional']->getData();

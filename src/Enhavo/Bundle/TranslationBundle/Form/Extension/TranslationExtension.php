@@ -28,7 +28,7 @@ class TranslationExtension extends AbstractTypeExtension
     ) {
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if (!$this->isTranslatable($options)) {
             return;

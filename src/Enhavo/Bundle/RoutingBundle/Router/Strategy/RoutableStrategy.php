@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RoutableStrategy extends AbstractStrategy
 {
-    private Router $router;
+    private ?Router $router = null;
 
     public function setRouter(Router $router): void
     {

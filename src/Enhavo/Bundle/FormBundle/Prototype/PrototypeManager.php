@@ -110,7 +110,7 @@ class PrototypeManager
         return $data;
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr']['data-prototype-full-name'] = $view->vars['full_name'];
     }

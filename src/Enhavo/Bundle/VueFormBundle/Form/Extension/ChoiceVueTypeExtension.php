@@ -26,7 +26,7 @@ class ChoiceVueTypeExtension extends AbstractVueTypeExtension
     ) {
     }
 
-    public function buildVueData(FormView $view, VueData $data, array $options)
+    public function buildVueData(FormView $view, VueData $data, array $options): void
     {
         $data['expanded'] = $view->vars['expanded'];
         $data['multiple'] = $view->vars['multiple'];
@@ -60,7 +60,7 @@ class ChoiceVueTypeExtension extends AbstractVueTypeExtension
         return $data;
     }
 
-    public function finishVueData(FormView $view, VueData $data, array $options)
+    public function finishVueData(FormView $view, VueData $data, array $options): void
     {
         if ($options['expanded']) {
             foreach ($view as $childView) {
@@ -75,7 +75,7 @@ class ChoiceVueTypeExtension extends AbstractVueTypeExtension
         $data->set('fullName', $view->vars['full_name']);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'component' => 'form-choice',

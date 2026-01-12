@@ -34,7 +34,7 @@ class DebugTemplateCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $templateName = $input->getArgument('template');
         $template = $this->templateResolver->resolve($templateName);

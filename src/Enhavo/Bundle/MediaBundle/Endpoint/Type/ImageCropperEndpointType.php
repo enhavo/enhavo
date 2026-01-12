@@ -174,8 +174,8 @@ class ImageCropperEndpointType extends AbstractEndpointType
 
     private function getFormat($options, Request $request): FormatInterface
     {
-        $token = $request->get('token');
-        $format = $request->get('format');
+        $token = $request->query->get('token');
+        $format = $request->query->get('format');
 
         $file = $this->fileRepository->findOneBy([
             'token' => $token,

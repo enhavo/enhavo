@@ -35,7 +35,7 @@ class TranslationValueTransformer implements DataTransformerInterface
         $this->data = $data;
     }
 
-    public function transform($value)
+    public function transform($value): mixed
     {
         $data = [$this->translationManager->getDefaultLocale() => $value];
 
@@ -47,7 +47,7 @@ class TranslationValueTransformer implements DataTransformerInterface
         return $data;
     }
 
-    public function reverseTransform($value)
+    public function reverseTransform($value): mixed
     {
         $data = $value;
         foreach ($data as $locale => $value) {

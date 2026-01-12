@@ -9,7 +9,7 @@
         <field name="extension" length="255" nullable="true" />
         <field name="order" type="integer" column="`order`" nullable="true" />
         <field name="filename" length="255" nullable="true" />
-        <field name="parameters" type="array" nullable="true" />
+        <field name="parameters" type="json" nullable="true" />
         <field name="token" nullable="true" />
         <field name="checksum" nullable="true" />
         <field name="garbage" type="boolean" />

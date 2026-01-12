@@ -35,9 +35,8 @@ use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
 abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
 {
-    protected array $options;
-
-    protected ContainerInterface $container;
+    protected array $options = [];
+    protected ?ContainerInterface $container = null;
 
     public function setOptions($options): void
     {

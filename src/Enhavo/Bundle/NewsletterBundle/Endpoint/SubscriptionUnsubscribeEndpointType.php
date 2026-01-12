@@ -28,8 +28,8 @@ class SubscriptionUnsubscribeEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
-        $type = $request->get('type');
-        $token = urldecode($request->get('token'));
+        $type = $request->query->get('type');
+        $token = urldecode($request->query->get('token'));
         $subscription = $this->subscriptionManager->getSubscription($type);
         $strategy = $subscription->getStrategy();
         $subscriber = $this->subscriptionManager->createModel($subscription->getModel());

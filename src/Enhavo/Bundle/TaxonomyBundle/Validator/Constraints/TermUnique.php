@@ -21,7 +21,7 @@ class TermUnique extends Constraint
     /**
      * @return string
      */
-    public function getTargets()
+    public function getTargets(): array|string
     {
         return self::CLASS_CONSTRAINT;
     }

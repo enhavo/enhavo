@@ -28,8 +28,8 @@ class SwitchTenantEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
-        $tenantKey = $request->get('tenant');
-        $redirect = $request->get('redirect');
+        $tenantKey = $request->query->get('tenant');
+        $redirect = $request->query->get('redirect');
 
         $tenant = $this->tenantManager->getTenant($tenantKey);
         if (!$tenant) {

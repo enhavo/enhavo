@@ -42,7 +42,7 @@ class LoginEndpointType extends AbstractFormEndpointType
         if ($this->tokenStorage->getToken()) {
             $redirect = $this->getSuccessRedirect($request);
 
-            if ('html' === $request->get('_format')) {
+            if ('html' === $request->query->get('_format')) {
                 $context->setResponse(new RedirectResponse($redirect));
             } else {
                 $data->set('redirect', $redirect);
@@ -74,7 +74,7 @@ class LoginEndpointType extends AbstractFormEndpointType
     {
         $firewallName = $this->firewallMap->getFirewallConfig($request)->getName();
 
-        $targetPath = $request->get('redirect') ?? $this->getTargetPath($request->getSession(), $firewallName);
+        $targetPath = $request->query->get('redirect') ?? $this->getTargetPath($request->getSession(), $firewallName);
         $this->removeTargetPath($request->getSession(), $firewallName);
         $request->getSession()->set('_security.credentials', null);
 
@@ -88,10 +88,10 @@ class LoginEndpointType extends AbstractFormEndpointType
 
     protected function handleFailed($options, Request $request, Data $data, Context $context, FormInterface $form): void
     {
-        $failurePath = $request->get('failureRedirect');
+        $failurePath = $request->query->get('failureRedirect');
 
         if ($failurePath) {
-            if ('html' === $request->get('_format')) {
+            if ('html' === $request->query->get('_format')) {
                 $context->setResponse(new RedirectResponse($failurePath));
             } else {
                 $data->set('redirect', $failurePath);

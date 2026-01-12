@@ -12,7 +12,6 @@
 namespace Enhavo\Bundle\NewsletterBundle\Twig;
 
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -22,8 +21,6 @@ use Twig\TwigFunction;
 
 class SubscribeFormRenderer extends AbstractExtension
 {
-    use ContainerAwareTrait;
-
     /** @var SubscriptionManager */
     private $subscriptionManager;
 

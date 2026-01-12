@@ -19,21 +19,21 @@ abstract class AbstractVueType extends AbstractType
 {
     use VueDataHelperTrait;
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $this->buildVueData($view, $this->getVueData($view), $options);
     }
 
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         $this->finishVueData($view, $this->getVueData($view), $options);
     }
 
-    public function buildVueData(FormView $view, VueData $data, array $options)
+    public function buildVueData(FormView $view, VueData $data, array $options): void
     {
     }
 
-    public function finishVueData(FormView $view, VueData $data, array $options)
+    public function finishVueData(FormView $view, VueData $data, array $options): void
     {
     }
 }

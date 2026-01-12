@@ -35,7 +35,7 @@ class PageEndpointType extends AbstractEndpointType
         $resource = $options['resource'];
 
         if (null === $resource) {
-            $id = intval($request->get('id'));
+            $id = intval($request->attributes->get('id'));
             $resource = $this->repository->find($id);
         }
 
@@ -71,7 +71,7 @@ class PageEndpointType extends AbstractEndpointType
         return AreaEndpointType::class;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'preview' => false,

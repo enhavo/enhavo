@@ -14,14 +14,11 @@ namespace Enhavo\Bundle\TemplateBundle\Template;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\TemplateBundle\Entity\ResourceBlock;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TemplateManager
 {
-    use ContainerAwareTrait;
-
     /**
      * @var Template[]
      */

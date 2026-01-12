@@ -27,7 +27,7 @@ class FormVueTypeExtension extends AbstractVueTypeExtension
     ) {
     }
 
-    public function buildVueData(FormView $view, VueData $data, array $options)
+    public function buildVueData(FormView $view, VueData $data, array $options): void
     {
         $data['name'] = (string) $view->vars['name'];
         $data['value'] = $this->normalizer->normalize($view->vars['value'], null, ['groups' => ['vue-form']]);
@@ -48,7 +48,7 @@ class FormVueTypeExtension extends AbstractVueTypeExtension
         $data['errors'] = $errors;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'row_component' => 'form-row',

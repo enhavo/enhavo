@@ -14,6 +14,7 @@ namespace Enhavo\Bundle\ResourceBundle\Authorization;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use \Symfony\Component\Security\Core\Authorization\Voter\Vote;
 
 class PermissionVoter implements VoterInterface
 {
@@ -22,7 +23,7 @@ class PermissionVoter implements VoterInterface
     ) {
     }
 
-    public function vote(TokenInterface $token, mixed $subject, array $attributes): int
+    public function vote(TokenInterface $token, mixed $subject, array $attributes, ?Vote $vote = null): int
     {
         if (isset($attributes[0]) && $attributes[0] instanceof Permission) {
             return $this->accessDecisionManager->decide($token, [$this->getRole($attributes[0])]);

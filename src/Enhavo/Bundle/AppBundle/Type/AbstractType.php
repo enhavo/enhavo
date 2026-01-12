@@ -13,13 +13,10 @@ namespace Enhavo\Bundle\AppBundle\Type;
 
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 use Enhavo\Bundle\AppBundle\Exception\TypeOptionException;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-abstract class AbstractType implements ContainerAwareInterface, TypeInterface
+abstract class AbstractType implements TypeInterface
 {
-    use ContainerAwareTrait;
 
     /**
      * Return the value the given property and object.

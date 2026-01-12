@@ -79,7 +79,7 @@ class VueRouterRouteLoader extends FileLoader
         return $path;
     }
 
-    public function supports(mixed $resource, ?string $type = null)
+    public function supports(mixed $resource, ?string $type = null): bool
     {
         if ('vue' === $type) {
             return true;

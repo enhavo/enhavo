@@ -27,7 +27,7 @@ class PolyCollectionVueTypeExtension extends AbstractVueTypeExtension
     ) {
     }
 
-    public function buildVueData(FormView $view, VueData $data, array $options)
+    public function buildVueData(FormView $view, VueData $data, array $options): void
     {
         $data['allowDelete'] = $view->vars['allow_delete'];
         $data['allowAdd'] = $view->vars['allow_add'];
@@ -83,7 +83,7 @@ class PolyCollectionVueTypeExtension extends AbstractVueTypeExtension
         return $data;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'component' => 'form-poly-collection',

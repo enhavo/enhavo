@@ -44,7 +44,7 @@ class AnalyzeCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $entityName = $input->getArgument('entity');
         $id = $input->getArgument('id');

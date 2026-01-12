@@ -24,7 +24,7 @@ class TemplateType extends AbstractWidgetType
         return $options['parameters'];
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $optionsResolver): void
     {
         $optionsResolver->setDefaults([
             'parameters' => [],

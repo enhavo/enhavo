@@ -118,7 +118,7 @@ enhavo_user:
             firewalls: [admin]
 
             reset_password_request:
-                template: admin/user/reset-password/request.html.twig
+                template: theme/user/reset-password/request.html.twig
                 mail:
                     template: mail/security/reset-password.html.twig
                     subject: reset_password.mail.subject
@@ -130,7 +130,7 @@ enhavo_user:
                      options: []
 
             reset_password_confirm:
-                template: admin/user/reset-password/confirm.html.twig
+                template: theme/user/reset-password/confirm.html.twig
                 auto_login: true
                 redirect_route: enhavo_app_admin_index
                 form:

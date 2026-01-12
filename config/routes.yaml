@@ -8,7 +8,7 @@ admin_api:
 
 app:
     resource: ../src/App/Controller
-    type: annotation
+    type: attribute
 
 endpoint:
     resource: ../src/App/Endpoint

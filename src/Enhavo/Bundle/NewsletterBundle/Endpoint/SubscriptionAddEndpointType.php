@@ -30,7 +30,7 @@ class SubscriptionAddEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
-        $type = $request->get('type');
+        $type = $request->query->get('type');
         $subscription = $this->subscriptionManager->getSubscription($type);
         $subscriber = $this->subscriptionManager->createModel($subscription->getModel());
         $subscriber->setSubscription($type);

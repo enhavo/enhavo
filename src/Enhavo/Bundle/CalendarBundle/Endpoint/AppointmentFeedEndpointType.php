@@ -32,8 +32,8 @@ class AppointmentFeedEndpointType extends AbstractEndpointType
             return;
         }
 
-        $startDate = new \DateTime($request->get('start'));
-        $endDate = new \DateTime($request->get('end'));
+        $startDate = new \DateTime($request->query->get('start'));
+        $endDate = new \DateTime($request->query->get('end'));
 
         $normalizedAppointments = $this->appointmentProvider
             ->getNormalizedAppointments($startDate, $endDate);

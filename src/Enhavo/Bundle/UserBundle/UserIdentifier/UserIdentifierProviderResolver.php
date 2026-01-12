@@ -12,17 +12,23 @@
 namespace Enhavo\Bundle\UserBundle\UserIdentifier;
 
 use Enhavo\Bundle\UserBundle\Exception\UserIdentifierException;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserIdentifierProviderResolver
 {
-    use ContainerAwareTrait;
+    private ?ContainerInterface $container = null;
 
     public function __construct(
         private array $userIdentifiers,
     ) {
     }
+
+    public function setContainer(ContainerInterface $container): void
+    {
+        $this->container = $container;
+    }
+
 
     public function getProvider(UserInterface $user): UserIdentifierProviderInterface
     {

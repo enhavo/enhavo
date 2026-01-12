@@ -31,7 +31,7 @@ class DateType extends AbstractType
         $this->defaultDateTimePickerConfig = $defaultDateTimePickerConfig;
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if (array_key_exists('data-date-picker', $options['attr'])) {
             $view->vars['attr']['data-date-picker'] = $options['config'];
@@ -57,7 +57,7 @@ class DateType extends AbstractType
      *
      * @param OptionsResolver $resolver the resolver for the options
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'widget' => 'single_text',

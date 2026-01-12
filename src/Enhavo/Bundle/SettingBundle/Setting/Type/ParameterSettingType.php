@@ -12,13 +12,10 @@
 namespace Enhavo\Bundle\SettingBundle\Setting\Type;
 
 use Enhavo\Bundle\SettingBundle\Setting\AbstractSettingType;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ParameterSettingType extends AbstractSettingType
 {
-    use ContainerAwareTrait;
-
     public function init(array $options, $key = null)
     {
         // nothing to do here

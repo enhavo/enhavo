@@ -19,7 +19,7 @@
         <field name="lastFailedLoginAttempt" type="datetime" nullable="true" />
         <field name="lastLogin" type="datetime" nullable="true" />
         <field name="failedLoginAttempts" type="integer" nullable="true" />
-        <field name="roles" type="array" nullable="true" />
+        <field name="roles" type="json" nullable="true" />
         <field name="apiToken" length="255" nullable="true" />
         <field name="apiAccess" type="boolean" nullable="true" />
         <field name="apiTokenCreatedAt" type="datetime" nullable="true" />

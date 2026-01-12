@@ -49,7 +49,7 @@ class SubscriberType extends AbstractType
         ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['action'] = $options['action'] ?
             $options['action'] : $this->router->generate($options['route'], ['type' => $options['subscription']]);

@@ -25,7 +25,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class EntityTypeExtension extends AbstractTypeExtension
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['multiple'] && $options['sortable']) {
             $propertyAccessor = PropertyAccess::createPropertyAccessor();
@@ -57,7 +57,7 @@ class EntityTypeExtension extends AbstractTypeExtension
         }
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if ($options['multiple'] && $options['sortable']) {
             $view->vars['attr']['data-select2-options'] = json_encode([
@@ -70,7 +70,7 @@ class EntityTypeExtension extends AbstractTypeExtension
         $view->vars['multiple'] = $options['multiple'];
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'list' => false,

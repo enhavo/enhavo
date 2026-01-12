@@ -39,7 +39,7 @@ class ImportCommand extends Command
             ->setDescription('import');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->manager->import();
 

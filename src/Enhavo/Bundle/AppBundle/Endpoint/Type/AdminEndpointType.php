@@ -25,7 +25,7 @@ class AdminEndpointType extends AbstractEndpointType
         $data->set('props', $options['props']);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'template' => '/admin/base.html.twig',

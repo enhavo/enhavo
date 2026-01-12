@@ -31,14 +31,14 @@ class ActionExtension extends AbstractTypeExtension
         $this->actionManager = $actionManager;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'actions' => [],
         ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $actions = $options['actions'];
         if (!empty($actions)) {

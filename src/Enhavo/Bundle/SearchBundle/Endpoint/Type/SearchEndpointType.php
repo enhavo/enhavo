@@ -33,8 +33,8 @@ class SearchEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
-        $term = $request->get('q', '');
-        $page = $request->get('page', 1);
+        $term = $request->query->get('q', '');
+        $page = $request->query->get('page', 1);
 
         $filter = new Filter();
         $filter->setTerm($term);

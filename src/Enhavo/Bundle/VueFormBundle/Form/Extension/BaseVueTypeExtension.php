@@ -25,7 +25,7 @@ class BaseVueTypeExtension extends AbstractVueTypeExtension
     ) {
     }
 
-    public function buildVueData(FormView $view, VueData $data, array $options)
+    public function buildVueData(FormView $view, VueData $data, array $options): void
     {
         $data['disabled'] = $view->vars['disabled'];
 

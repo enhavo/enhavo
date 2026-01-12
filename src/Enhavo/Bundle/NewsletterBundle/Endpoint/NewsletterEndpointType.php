@@ -38,7 +38,7 @@ class NewsletterEndpointType extends AbstractEndpointType
         $resource = $options['resource'];
 
         if (null === $resource) {
-            $findValue = $request->get($options['find_by']);
+            $findValue = $request->query->get($options['find_by']);
             $resource = $this->repository->findOneBy([
                 $options['find_by'] => $findValue,
             ]);
@@ -48,7 +48,7 @@ class NewsletterEndpointType extends AbstractEndpointType
             throw $this->createNotFoundException();
         }
 
-        $token = $request->get('token');
+        $token = $request->query->get('token');
         if ($token) {
             $receiver = $this->receiverRepository->findOneBy([
                 'token' => $token,

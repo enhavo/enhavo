@@ -13,12 +13,11 @@ namespace Enhavo\Component\Type;
 
 use Enhavo\Component\Type\Exception\TypeNotFoundException;
 use Enhavo\Component\Type\Exception\TypeNotValidException;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Psr\Container\ContainerInterface;
 
 class Registry implements RegistryInterface
 {
-    use ContainerAwareTrait;
-
+    private ?ContainerInterface $container;
     private string $namespace;
 
     /** @var RegistryEntry[] */
@@ -30,6 +29,11 @@ class Registry implements RegistryInterface
     public function __construct(string $namespace)
     {
         $this->namespace = $namespace;
+    }
+
+    public function setContainer(?ContainerInterface $container): void
+    {
+        $this->container = $container;
     }
 
     public function register(string $class, string $id)

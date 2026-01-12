@@ -48,7 +48,7 @@ class VueRouteEndpointExtensionType extends AbstractEndpointTypeExtension
         return [ViewEndpointType::class];
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'vue_routes' => null,

@@ -16,36 +16,27 @@ services:
 
     Enhavo\Bundle\RoutingBundle\Router\Strategy\AdminStrategy:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'admin' }
 
     Enhavo\Bundle\RoutingBundle\Router\Strategy\IdStrategy:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'id' }
 
     Enhavo\Bundle\RoutingBundle\Router\Strategy\SlugStrategy:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'slug' }
 
     Enhavo\Bundle\RoutingBundle\Router\Strategy\SlugIdStrategy:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'slug_id' }
 
     Enhavo\Bundle\RoutingBundle\Router\Strategy\RoutableStrategy:
         public: true
         calls:
-            - [setContainer, ['@service_container']]
             - [setRouter, ['@enhavo_routing.router']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'routable' }
@@ -54,7 +45,5 @@ services:
         public: true
         arguments:
             - '@router'
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.strategy', alias: 'route' }

@@ -40,7 +40,7 @@ class SearchCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $term = $input->getArgument('term');
         $fuzzy = $input->getOption('fuzzy');

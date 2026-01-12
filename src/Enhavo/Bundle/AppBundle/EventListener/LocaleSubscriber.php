@@ -12,15 +12,12 @@
 namespace Enhavo\Bundle\AppBundle\EventListener;
 
 use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class LocaleSubscriber implements EventSubscriberInterface
 {
-    use ContainerAwareTrait;
-
     /**
      * @var LocaleResolverInterface
      */

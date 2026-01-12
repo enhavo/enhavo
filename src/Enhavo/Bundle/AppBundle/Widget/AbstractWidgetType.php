@@ -25,7 +25,7 @@ abstract class AbstractWidgetType extends AbstractType implements WidgetTypeInte
         return $options['template'];
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $optionsResolver): void
     {
         $optionsResolver->setDefaults([
             'template' => null,

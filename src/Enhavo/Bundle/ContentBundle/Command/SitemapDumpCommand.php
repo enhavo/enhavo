@@ -47,7 +47,7 @@ class SitemapDumpCommand extends Command
             ->setDescription('Dump the sitemap');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Creating sitemap.xml ...');
 

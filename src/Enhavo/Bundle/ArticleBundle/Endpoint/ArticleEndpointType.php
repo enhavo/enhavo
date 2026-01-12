@@ -40,7 +40,7 @@ class ArticleEndpointType extends AbstractEndpointType
         $resource = $options['resource'];
 
         if (null === $resource) {
-            $findValue = $request->get($options['find_by']);
+            $findValue = $request->attributes->get($options['find_by']);
             $resource = $this->repository->findOneBy([
                 $options['find_by'] => $findValue,
             ]);
@@ -85,7 +85,7 @@ class ArticleEndpointType extends AbstractEndpointType
         return AreaEndpointType::class;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'preview' => false,

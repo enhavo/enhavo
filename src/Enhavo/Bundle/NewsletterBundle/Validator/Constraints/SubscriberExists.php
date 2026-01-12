@@ -23,7 +23,7 @@ class SubscriberExists extends Constraint
     /**
      * @return string
      */
-    public function getTargets()
+    public function getTargets(): array|string
     {
         return self::CLASS_CONSTRAINT;
     }
@@ -31,7 +31,7 @@ class SubscriberExists extends Constraint
     /**
      * @return string
      */
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return 'subscriber_exists';
     }

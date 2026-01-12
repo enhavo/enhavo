@@ -73,7 +73,7 @@ class TwigRouter implements RouterInterface
         return (bool) $this->routes->get($name);
     }
 
-    public function setContext(RequestContext $context)
+    public function setContext(RequestContext $context): void
     {
         $this->context = $context;
     }

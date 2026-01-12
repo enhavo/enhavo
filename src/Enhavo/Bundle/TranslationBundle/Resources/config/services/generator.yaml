@@ -6,8 +6,6 @@ services:
             - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
             - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
             - '@enhavo_routing.route.factory'
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.generator', alias: 'locale_prefix' }
 
@@ -18,7 +16,5 @@ services:
             - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
             - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
             - '@doctrine.orm.entity_manager'
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.generator', alias: 'translation_slug' }

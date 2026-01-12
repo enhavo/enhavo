@@ -103,7 +103,7 @@ class MainType implements EndpointTypeInterface
     {
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
     }
 }

@@ -30,8 +30,8 @@ class SubscriptionActivateEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
-        $type = $request->get('type');
-        $token = $request->get('token');
+        $type = $request->query->get('type');
+        $token = $request->query->get('token');
         $subscription = $this->subscriptionManager->getSubscription($type);
         $strategy = $subscription->getStrategy();
 

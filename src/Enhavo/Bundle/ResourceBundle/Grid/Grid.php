@@ -41,19 +41,21 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
                 'class' => TableCollection::class,
             ],
             'component' => 'grid-grid',
-            'routes' => function (OptionsResolver $resolver): void {
-                $resolver->setDefaults([
-                    'list' => $this->resolveRoute('list'),
-                    'list_parameters' => [],
-                    'batch' => $this->resolveRoute('batch'),
-                    'batch_parameters' => [],
-                    'open' => $this->resolveRoute('update', ['api' => false]),
-                    'open_parameters' => [
-                        'id' => 'expr:resource.getId()',
-                    ],
-                ]);
-            },
         ]);
+
+
+        $resolver->setOptions('routes', function (OptionsResolver $routesResolver): void {
+            $routesResolver->setDefaults([
+                'list' => $this->resolveRoute('list'),
+                'list_parameters' => [],
+                'batch' => $this->resolveRoute('batch'),
+                'batch_parameters' => [],
+                'open' => $this->resolveRoute('update', ['api' => false]),
+                'open_parameters' => [
+                    'id' => 'expr:resource.getId()',
+                ],
+            ]);
+        });
 
         $resolver->setRequired('resource');
     }

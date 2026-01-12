@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormView;
 
 class UuidType extends AbstractVueType
 {
-    public function buildVueData(FormView $view, VueData $data, array $options)
+    public function buildVueData(FormView $view, VueData $data, array $options): void
     {
         $data['uuid'] = true;
     }

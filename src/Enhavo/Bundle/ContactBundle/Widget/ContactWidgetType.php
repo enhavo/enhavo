@@ -49,7 +49,7 @@ class ContactWidgetType extends AbstractWidgetType
         ];
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $optionsResolver): void
     {
         parent::configureOptions($optionsResolver);
 

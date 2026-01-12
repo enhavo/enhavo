@@ -59,7 +59,7 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
 
     abstract protected function getForm(): FormInterface;
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'template' => 'theme/form/form.html.twig',

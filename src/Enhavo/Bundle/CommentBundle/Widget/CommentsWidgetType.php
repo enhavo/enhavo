@@ -82,7 +82,7 @@ class CommentsWidgetType extends AbstractWidgetType
         return $options['subject'];
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $optionsResolver): void
     {
         $optionsResolver->setDefaults([
             'template' => 'theme/widget/comment/comments.html.twig',

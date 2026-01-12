@@ -28,7 +28,7 @@ class NewsletterStatsEndpointType extends AbstractEndpointType
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
         /** @var NewsletterInterface $newsletter */
-        $newsletter = $this->repository->find($request->get('id'));
+        $newsletter = $this->repository->find($request->query->get('id'));
 
         if (null === $newsletter) {
             throw $this->createNotFoundException();
