@@ -66,7 +66,8 @@ class TextTranslationType extends AbstractTranslationType
         $value = $this->propertyAccessor->getValue($object, $property);
         $translatedValue = $this->translator->getTranslation($object, $property, $locale);
 
-        if ($value && (empty($translatedValue) || $options['overwrite'])) {
+        $isEmpty = $options['html'] ? empty(strip_tags($translatedValue)) : empty($translatedValue);
+        if ($value && $isEmpty || $options['overwrite']) {
             $translatedValue = $this->translationClient->translate($value, $this->defaultLanguage, $locale, [
                 'html' => $options['html'],
             ]);
