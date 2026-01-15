@@ -15,7 +15,7 @@ class DeeplTranslationClient implements TranslationClientInterface
     {
     }
 
-    public function translate(string $text, string $sourceLanguage, string $targetLanguage, array $options = []): string
+    public function translate(string $text, string $sourceLanguage, string $targetLanguage, array $options = []): ?string
     {
         $options = $this->getOptions($options);
 

@@ -32,6 +32,16 @@ services:
             - '%enhavo_translation.translation_client.deepl.api_key%'
             - '%enhavo_translation.translation_client.deepl.glossary_id%'
 
+    Enhavo\Bundle\TranslationBundle\Client\ChainTranslationClient:
+        arguments:
+            - '%enhavo_translation.translation_client.chain.clients%'
+
+    Enhavo\Bundle\TranslationBundle\Client\UrlTranslationClient:
+        arguments:
+            - '@enhavo_routing.route.repository'
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '%enhavo_translation.translation_client.url.domains%'
+
     Enhavo\Bundle\TranslationBundle\Action\TranslateActionType:
         tags:
             - { name: enhavo_resource.action }
