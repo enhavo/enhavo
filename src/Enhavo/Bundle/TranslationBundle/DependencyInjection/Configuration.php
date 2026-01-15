@@ -11,7 +11,9 @@
 
 namespace Enhavo\Bundle\TranslationBundle\DependencyInjection;
 
+use Enhavo\Bundle\TranslationBundle\Client\ChainTranslationClient;
 use Enhavo\Bundle\TranslationBundle\Client\DeeplTranslationClient;
+use Enhavo\Bundle\TranslationBundle\Client\UrlTranslationClient;
 use Enhavo\Bundle\TranslationBundle\Locale\ConfigurationLocaleProvider;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -75,11 +77,25 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('translation_client')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('client')->defaultValue(DeeplTranslationClient::class)->end()
+                        ->scalarNode('client')->defaultValue(ChainTranslationClient::class)->end()
                         ->arrayNode('deepl')
                             ->children()
                                 ->scalarNode('api_key')->end()
                                 ->scalarNode('glossary_id')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('url')
+                            ->children()
+                                ->arrayNode('domains')
+                                    ->scalarPrototype()->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('chain')
+                            ->children()
+                                ->arrayNode('clients')
+                                    ->scalarPrototype()->end()
+                                ->end()
                             ->end()
                         ->end()
                     ->end()

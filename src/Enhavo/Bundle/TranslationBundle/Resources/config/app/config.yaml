@@ -8,6 +8,11 @@ enhavo_translation:
         default_access: true
         access_control:
             - '#^/admin/.+#'
+    translation_client:
+        chain:
+            clients:
+                - Enhavo\Bundle\TranslationBundle\Client\DeeplTranslationClient
+                - Enhavo\Bundle\TranslationBundle\Client\UrlTranslationClient
 
 enhavo_app:
     locale_resolver: Enhavo\Bundle\TranslationBundle\Locale\LocalePathResolver
