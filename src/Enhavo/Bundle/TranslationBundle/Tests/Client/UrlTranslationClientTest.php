@@ -14,7 +14,6 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\Client;
 use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\TranslationBundle\Client\UrlTranslationClient;
-use Enhavo\Bundle\TranslationBundle\Client\TranslationClientInterface;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -72,7 +71,9 @@ class UrlTranslationClientTest extends TestCase
         $instance = $this->createInstance($dependencies);
 
         $text = 'Lorem ipsum dolor sit amet, <a href="http://domain.tld/test">consectetur</a> adipiscing elit';
-        $translatedText = $instance->translate($text, 'de', 'en');
+        $translatedText = $instance->translate($text, 'de', 'en', [
+            'html' => true,
+        ]);
 
         $this->assertEquals('Lorem ipsum dolor sit amet, <a href="/en/test">consectetur</a> adipiscing elit', $translatedText);
     }
@@ -84,7 +85,9 @@ class UrlTranslationClientTest extends TestCase
         $instance = $this->createInstance($dependencies);
 
         $text = 'Lorem ipsum dolor sit amet, <a href="/test">consectetur</a> adipiscing elit';
-        $translatedText = $instance->translate($text, 'de', 'en');
+        $translatedText = $instance->translate($text, 'de', 'en', [
+            'html' => true,
+        ]);
 
         $this->assertEquals('Lorem ipsum dolor sit amet, <a href="/en/test">consectetur</a> adipiscing elit', $translatedText);
     }
@@ -96,7 +99,9 @@ class UrlTranslationClientTest extends TestCase
         $instance = $this->createInstance($dependencies);
 
         $text = 'Lorem ipsum dolor sit amet, <a href="http://domain.tld2/test">consectetur</a> adipiscing elit';
-        $translatedText = $instance->translate($text, 'de', 'en');
+        $translatedText = $instance->translate($text, 'de', 'en', [
+            'html' => true,
+        ]);
 
         $this->assertEquals('Lorem ipsum dolor sit amet, <a href="http://domain.tld2/test">consectetur</a> adipiscing elit', $translatedText);
     }
@@ -111,13 +116,28 @@ class UrlTranslationClientTest extends TestCase
             'Lorem ipsum dolor sit amet, <a href="http://domain.tld/test">consectetur</a> adipiscing elit' .
             'Lorem ipsum dolor sit amet, <a href="http://domain.tld/test">consectetur</a> adipiscing elit';
 
-        $translatedText = $instance->translate($text, 'de', 'en');
+        $translatedText = $instance->translate($text, 'de', 'en', [
+            'html' => true,
+        ]);
 
         $expectedText = 'Lorem ipsum dolor sit amet, <a href="/en/test">consectetur</a> adipiscing elit' .
             'Lorem ipsum dolor sit amet, <a href="/en/test">consectetur</a> adipiscing elit' .
             'Lorem ipsum dolor sit amet, <a href="/en/test">consectetur</a> adipiscing elit';
 
         $this->assertEquals($expectedText, $translatedText);
+    }
+
+    public function testKeepHtml()
+    {
+        $dependencies = $this->createDependencies();
+        $this->configureDependencies($dependencies);
+        $instance = $this->createInstance($dependencies);
+
+        $text = '<p>lorem ipsum <strong>dolor</strong>&nbsp;</p>';
+        $translatedText = $instance->translate($text, 'de', 'en', [
+            'html' => true,
+        ]);
+        $this->assertEquals($text, $translatedText);
     }
 }
 
