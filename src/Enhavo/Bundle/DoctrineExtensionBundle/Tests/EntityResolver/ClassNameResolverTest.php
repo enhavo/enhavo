@@ -13,7 +13,6 @@ namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EntityResolver;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Proxy\Proxy;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\ClassNameResolver;
 use PHPUnit\Framework\TestCase;
 
@@ -38,7 +37,6 @@ class ClassNameResolverTest extends TestCase
         $resolver = $this->createInstance($dependencies);
 
         $this->assertEquals(ClassNameResolverEntityDummy::class, $resolver->getName(new ClassNameResolverEntityDummy()));
-        $this->assertEquals(ClassNameResolverEntityDummy::class, $resolver->getName(new ClassNameResolverEntityProxyDummy()));
         $this->assertEquals(ClassNameResolverEntityDummy::class, $resolver->getName(ClassNameResolverEntityDummy::class));
     }
 
@@ -60,7 +58,7 @@ class ClassNameResolverTest extends TestCase
 
 class ClassNameResolverDependencies
 {
-    /** @var EntityManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var EntityManagerInterface|\PHPUnit\Framework\MockObject\ */
     public $em;
 }
 
@@ -71,40 +69,5 @@ class ClassNameResolverEntityDummy
     public function __construct($id = null)
     {
         $this->id = $id;
-    }
-}
-
-class ClassNameResolverEntityProxyDummy extends ClassNameResolverEntityDummy implements Proxy
-{
-    public function __load()
-    {
-    }
-
-    public function __isInitialized()
-    {
-    }
-
-    public function __setInitialized($initialized)
-    {
-    }
-
-    public function __setInitializer(?\Closure $initializer = null)
-    {
-    }
-
-    public function __getInitializer()
-    {
-    }
-
-    public function __setCloner(?\Closure $cloner = null)
-    {
-    }
-
-    public function __getCloner()
-    {
-    }
-
-    public function __getLazyProperties()
-    {
     }
 }

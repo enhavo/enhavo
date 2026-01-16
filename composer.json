@@ -72,6 +72,7 @@
     "symfony/uid": "^7.4",
     "symfony/ux-twig-component": "^2.6",
     "symfony/validator": "^7.4",
+    "symfony/var-exporter": "^7.4",
     "symfony/web-link": "^7.4",
     "symfony/yaml": "^7.4",
     "tecnickcom/tcpdf": "^6.2",

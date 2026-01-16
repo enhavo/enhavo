@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EventListener;
 
+use Doctrine\DBAL\Driver\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Tools\SchemaTool;
@@ -22,6 +23,8 @@ use Enhavo\Component\Metadata\MetadataFactory;
 use Enhavo\Component\Metadata\MetadataRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Finder\Finder;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Tools\DsnParser;
 
 abstract class SubscriberTest extends TestCase
 {
@@ -39,8 +42,12 @@ abstract class SubscriberTest extends TestCase
         }
 
         $config = ORMSetup::createAttributeMetadataConfiguration([$entityDir], true, __DIR__.'/../Fixtures/Proxy');
-        $conn = ['url' => 'sqlite:///:memory:'];
-        $this->em = EntityManager::create($conn, $config);
+
+        $dsnParser = new DsnParser();
+        $connectionParams = $dsnParser->parse('pdo-sqlite:///:memory:');
+        $conn = DriverManager::getConnection($connectionParams);
+
+        $this->em = new EntityManager($conn, $config);
     }
 
     protected function updateSchema()
@@ -66,7 +73,7 @@ abstract class SubscriberTest extends TestCase
 
     protected function getTableNames()
     {
-        $tables = $this->em->getConnection()->query('SELECT name FROM sqlite_master WHERE type =\'table\' AND name NOT LIKE \'sqlite_%\';')->fetchAll();
+        $tables = $this->em->getConnection()->executeQuery('SELECT name FROM sqlite_master WHERE type =\'table\' AND name NOT LIKE \'sqlite_%\';')->fetchAllAssociative();
         $tableNames = [];
         foreach ($tables as $table) {
             $tableNames[] = $table['name'];

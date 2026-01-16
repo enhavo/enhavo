@@ -20,21 +20,21 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\Routing\RouterInterface;
 
 class RoutableStrategyTest extends TestCase
 {
     private function createDependencies()
     {
         $dependencies = new RoutableStrategyDependencies();
-        $dependencies->router = $this->getMockBuilder(Router::class)->disableOriginalConstructor()->getMock();
+        $dependencies->router = $this->getMockBuilder(RouterInterface::class)->disableOriginalConstructor()->getMock();
 
         return $dependencies;
     }
 
     private function createInstance(RoutableStrategyDependencies $dependencies)
     {
-        $instance = new RoutableStrategy();
-        $instance->setRouter($dependencies->router);
+        $instance = new RoutableStrategy($dependencies->router);
 
         return $instance;
     }
@@ -43,8 +43,8 @@ class RoutableStrategyTest extends TestCase
     {
         $dependencies = $this->createDependencies();
 
-        $dependencies->router->method('generate')->willReturnCallback(function (Route $route) {
-            return $route->getStaticPrefix();
+        $dependencies->router->method('generate')->willReturnCallback(function ($name) {
+            return '/servus';
         });
 
         $mock = new RouteContentMock();
@@ -85,7 +85,7 @@ class RoutableStrategyTest extends TestCase
     {
         $dependencies = $this->createDependencies();
 
-        $dependencies->router->method('generate')->willReturnCallback(function (Route $route): void {
+        $dependencies->router->method('generate')->willReturnCallback(function (string $name): void {
             throw new RouteNotFoundException();
         });
 
@@ -108,7 +108,7 @@ class RoutableStrategyTest extends TestCase
     {
         $dependencies = $this->createDependencies();
 
-        $dependencies->router->method('generate')->willReturnCallback(function (Route $route): void {
+        $dependencies->router->method('generate')->willReturnCallback(function (string $name): void {
             throw new RouteNotFoundException();
         });
 
@@ -133,6 +133,5 @@ class RoutableStrategyTest extends TestCase
 
 class RoutableStrategyDependencies
 {
-    /** @var MockObject|Router */
-    public $router;
+    public MockObject|RouterInterface $router;
 }

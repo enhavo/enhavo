@@ -16,6 +16,7 @@ use Enhavo\Bundle\UserBundle\Configuration\Login\LoginConfiguration;
 use Enhavo\Bundle\UserBundle\Security\EntryPoint\FormAuthenticationEntryPoint;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,7 @@ class FormAuthenticationEntryPointTest extends TestCase
     {
         $dependencies = new FormAuthenticationEntryPointDependencies();
         $dependencies->request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
-        $dependencies->request->query = new ParameterBag();
+        $dependencies->request->query = new InputBag();
         $dependencies->router = $this->getMockBuilder(RouterInterface::class)->getMock();
         $dependencies->router->method('generate')->willReturnCallback(function ($route) {
             return $route.'.generated';

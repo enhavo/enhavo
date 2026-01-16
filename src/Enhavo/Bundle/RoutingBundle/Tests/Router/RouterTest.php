@@ -70,8 +70,7 @@ class RouterTest extends TestCase
             return $route.'-'.$parameters['id'];
         });
         $dependencies->container->method('get')->willReturn($dependencies->router);
-        $strategy = new IdStrategy();
-        $strategy->setContainer($dependencies->container);
+        $strategy = new IdStrategy($dependencies->router);
 
         $dependencies->collector->method('getType')->willReturn($strategy);
         $router = $this->createInstance($dependencies);
@@ -96,8 +95,7 @@ class RouterTest extends TestCase
             return $route.'-'.$parameters['slug'];
         });
         $dependencies->container->method('get')->willReturn($dependencies->router);
-        $strategy = new SlugStrategy();
-        $strategy->setContainer($dependencies->container);
+        $strategy = new SlugStrategy($dependencies->router);
 
         $dependencies->collector->method('getType')->willReturn($strategy);
         $router = $this->createInstance($dependencies);
@@ -123,8 +121,7 @@ class RouterTest extends TestCase
             return $route.'-'.$parameters['id'].'-'.$parameters['slug'];
         });
         $dependencies->container->method('get')->willReturn($dependencies->router);
-        $strategy = new SlugIdStrategy();
-        $strategy->setContainer($dependencies->container);
+        $strategy = new SlugIdStrategy($dependencies->router);
 
         $dependencies->collector->method('getType')->willReturn($strategy);
         $router = $this->createInstance($dependencies);

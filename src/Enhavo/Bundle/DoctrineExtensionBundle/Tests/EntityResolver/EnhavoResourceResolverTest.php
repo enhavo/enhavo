@@ -12,7 +12,6 @@
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests\EntityResolver;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Proxy\Proxy;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EnhavoResourceResolver;
 use Enhavo\Bundle\DoctrineExtensionBundle\Exception\ResolveException;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
@@ -56,7 +55,6 @@ class EnhavoResourceResolverTest extends TestCase
         $resolver = $this->createInstance($dependencies);
 
         $this->assertEquals('app.entity', $resolver->getName(new EnhavoResourceResolverEntityDummy()));
-        $this->assertEquals('app.entity', $resolver->getName(new EnhavoResourceResolverEntityProxyDummy()));
         $this->assertEquals('app.entity', $resolver->getName(EnhavoResourceResolverEntityDummy::class));
     }
 
@@ -115,37 +113,3 @@ class EnhavoResourceResolverEntityDummy
 {
 }
 
-class EnhavoResourceResolverEntityProxyDummy extends EnhavoResourceResolverEntityDummy implements Proxy
-{
-    public function __setInitialized($initialized)
-    {
-    }
-
-    public function __setInitializer(?\Closure $initializer = null)
-    {
-    }
-
-    public function __getInitializer()
-    {
-    }
-
-    public function __setCloner(?\Closure $cloner = null)
-    {
-    }
-
-    public function __getCloner()
-    {
-    }
-
-    public function __getLazyProperties()
-    {
-    }
-
-    public function __load()
-    {
-    }
-
-    public function __isInitialized()
-    {
-    }
-}

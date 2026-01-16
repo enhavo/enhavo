@@ -14,7 +14,8 @@
   "require": {
     "php": "^8.2",
     "enhavo/metadata": "^0.15",
-    "doctrine/orm": "^2.20.6"
+    "doctrine/orm": "^2.20.6",
+    "symfony/var-exporter": "^7.4"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\DoctrineExtensionBundle\\": "" }

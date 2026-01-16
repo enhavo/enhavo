@@ -11,7 +11,6 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Duplicate;
 
-use Doctrine\Common\Proxy\Proxy;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Metadata\Metadata;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Component\Type\FactoryInterface;
@@ -44,12 +43,6 @@ class DuplicateFactory
         }
 
         $sourceClass = get_class($source);
-        if ($source instanceof Proxy) {
-            $sourceClass = get_parent_class($source);
-            if (!$source->__isInitialized()) {
-                $source->__load();
-            }
-        }
 
         $target = $target ?? new ($sourceClass);
 

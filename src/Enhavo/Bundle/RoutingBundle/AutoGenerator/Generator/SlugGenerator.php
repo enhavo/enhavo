@@ -65,7 +65,7 @@ class SlugGenerator extends AbstractGenerator
         return $baseSlug.'-'.$postfixCount;
     }
 
-    protected function slugExists($slug, $resource, $options)
+    protected function slugExists($slug, $resource, $options): bool
     {
         $queryBuilder = $this->entityManager->createQueryBuilder();
         $queryBuilder->select('COUNT(r.id) AS nr')
@@ -81,7 +81,7 @@ class SlugGenerator extends AbstractGenerator
         return $queryBuilder->getQuery()->getResult()[0]['nr'] > 0;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([

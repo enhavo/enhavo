@@ -14,16 +14,23 @@ namespace Enhavo\Bundle\RoutingBundle\Router\Strategy;
 use Enhavo\Bundle\RoutingBundle\Router\AbstractStrategy;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class SlugIdStrategy extends AbstractStrategy
 {
+    public function __construct(
+        private RouterInterface $router,
+    )
+    {
+    }
+
     public function generate($resource, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $options = [])
     {
         $id = $this->getProperty($resource, $options['id_property']);
         $slug = $this->getProperty($resource, $options['slug_property']);
         $parameters = array_merge($parameters, ['id' => $id, 'slug' => $slug]);
 
-        return $this->getRouter()->generate($options['route'], $parameters, $referenceType);
+        return $this->router->generate($options['route'], $parameters, $referenceType);
     }
 
     public function getType()
@@ -31,7 +38,7 @@ class SlugIdStrategy extends AbstractStrategy
         return 'slug_id';
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $optionsResolver): void
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([

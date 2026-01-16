@@ -12,7 +12,11 @@
 namespace Enhavo\Bundle\ResourceBundle\Tests\Grid;
 
 use Enhavo\Bundle\ResourceBundle\Grid\Grid;
+use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GridTest extends TestCase
@@ -20,7 +24,9 @@ class GridTest extends TestCase
     public function createDependencies()
     {
         $dependencies = new GridDependencies();
-
+        $dependencies->routeResolver = $this->createMock(RouteResolverInterface::class);
+        $dependencies->container = new Container();
+        $dependencies->container->set(RouteResolverInterface::class, $dependencies->routeResolver);
         return $dependencies;
     }
 
@@ -28,6 +34,8 @@ class GridTest extends TestCase
     {
         $instance = new Grid(
         );
+
+        $instance->setContainer($dependencies->container);
 
         return $instance;
     }
@@ -49,5 +57,6 @@ class GridTest extends TestCase
 
 class GridDependencies
 {
-
+    public ContainerInterface|MockObject $container;
+    public RouteResolverInterface|MockObject $routeResolver;
 }

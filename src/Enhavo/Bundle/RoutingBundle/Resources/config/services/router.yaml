@@ -21,23 +21,29 @@ services:
 
     Enhavo\Bundle\RoutingBundle\Router\Strategy\IdStrategy:
         public: true
+        arguments:
+            - '@router'
         tags:
             - { name: 'enhavo_route.strategy', alias: 'id' }
 
     Enhavo\Bundle\RoutingBundle\Router\Strategy\SlugStrategy:
         public: true
+        arguments:
+            - '@router'
         tags:
             - { name: 'enhavo_route.strategy', alias: 'slug' }
 
     Enhavo\Bundle\RoutingBundle\Router\Strategy\SlugIdStrategy:
         public: true
+        arguments:
+            - '@router'
         tags:
             - { name: 'enhavo_route.strategy', alias: 'slug_id' }
 
     Enhavo\Bundle\RoutingBundle\Router\Strategy\RoutableStrategy:
         public: true
-        calls:
-            - [setRouter, ['@enhavo_routing.router']]
+        arguments:
+            - '@router'
         tags:
             - { name: 'enhavo_route.strategy', alias: 'routable' }
 

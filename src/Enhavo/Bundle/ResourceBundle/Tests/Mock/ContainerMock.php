@@ -19,7 +19,7 @@ class ContainerMock implements ContainerInterface
     public array $parameters = [];
     public bool $initialized = true;
 
-    public function set(string $id, ?object $service)
+    public function set(string $id, ?object $service): void
     {
         $this->services[$id] = $service;
     }
@@ -39,7 +39,7 @@ class ContainerMock implements ContainerInterface
         return $this->initialized;
     }
 
-    public function getParameter(string $name)
+    public function getParameter(string $name): \UnitEnum|float|int|bool|array|string|null
     {
         return $this->parameters[$name];
     }

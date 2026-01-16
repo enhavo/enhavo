@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\FormBundle\Tests\Twig;
 
+use Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter;
 use Enhavo\Bundle\FormBundle\Formatter\HtmlSanitizer;
 use Enhavo\Bundle\FormBundle\Twig\FormatExtension;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +25,7 @@ class HtmlSanitizerTest extends TestCase
             return $value;
         });
 
-        $extension = new FormatExtension($sanitizer, []);
+        $extension = new FormatExtension($sanitizer, [], new CurrencyFormatter());
 
         $this->assertEquals(
             '<h1>Test</h1>',

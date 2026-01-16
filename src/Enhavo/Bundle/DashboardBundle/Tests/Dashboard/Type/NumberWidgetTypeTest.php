@@ -53,7 +53,7 @@ class NumberWidgetTypeTest extends TestCase
 
             return null;
         });
-        $dependencies->repository->method('findBy')->willReturn(543);
+        $dependencies->repository->method('findBy')->willReturn([543]);
 
         $widget = new DashboardWidget($this->createInstance($dependencies), [], [
             'label' => 'Test',
@@ -63,7 +63,7 @@ class NumberWidgetTypeTest extends TestCase
         ]);
 
         $data = $widget->createViewData();
-        $this->assertEquals(543, $data['value']);
+        $this->assertEquals(1, $data['value']);
     }
 
     public function testRepositoryOverContainer()
@@ -78,7 +78,7 @@ class NumberWidgetTypeTest extends TestCase
 
             return null;
         });
-        $dependencies->repository->method('findBy')->willReturn(543);
+        $dependencies->repository->method('findBy')->willReturn([543]);
 
         $widget = new DashboardWidget($this->createInstance($dependencies), [], [
             'label' => 'Test',
@@ -88,7 +88,7 @@ class NumberWidgetTypeTest extends TestCase
         ]);
 
         $data = $widget->createViewData();
-        $this->assertEquals(543, $data['value']);
+        $this->assertEquals(1, $data['value']);
     }
 }
 
