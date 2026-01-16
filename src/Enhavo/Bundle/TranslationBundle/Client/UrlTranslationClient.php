@@ -20,7 +20,7 @@ class UrlTranslationClient implements TranslationClientInterface
     {
         $options = $this->getOptions($options);
 
-        if ($options['ignore_urls']) {
+        if (!$options['html'] || $options['ignore_urls']) {
             return $text;
         }
 
@@ -81,7 +81,8 @@ class UrlTranslationClient implements TranslationClientInterface
         $resolver = new OptionsResolver();
         $resolver->setIgnoreUndefined();
         $resolver->setDefaults([
-            'ignore_urls' => false
+            'ignore_urls' => false,
+            'html' => false,
         ]);
         return $resolver->resolve($options);
     }
