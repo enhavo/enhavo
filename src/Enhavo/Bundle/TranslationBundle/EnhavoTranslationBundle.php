@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\TranslationBundle;
 
 use Enhavo\Bundle\AppBundle\Type\TypeCompilerPass;
+use Enhavo\Bundle\TranslationBundle\DependencyInjection\Compiler\ChainTranslationClientCompilerPass;
 use Enhavo\Bundle\TranslationBundle\DependencyInjection\Compiler\LocaleProviderAliasCompilerPass;
 use Enhavo\Bundle\TranslationBundle\DependencyInjection\Compiler\TranslationClientAliasCompilerPass;
 use Enhavo\Bundle\TranslationBundle\Translation\Translation;
@@ -32,5 +33,6 @@ class EnhavoTranslationBundle extends Bundle
 
         $container->addCompilerPass(new LocaleProviderAliasCompilerPass());
         $container->addCompilerPass(new TranslationClientAliasCompilerPass());
+        $container->addCompilerPass(new ChainTranslationClientCompilerPass());
     }
 }
