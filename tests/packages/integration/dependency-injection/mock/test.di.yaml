@@ -1,0 +1,4 @@
+services:
+    TestManager:
+        from: "./TestManager"
+        import: TestManager
