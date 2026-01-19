@@ -77,10 +77,8 @@ class ReplaceTranslationTypeListenerTest extends TypeTestCase
 
     public function testPostSetDataTranslatable()
     {
-        $this->dependencies->translationManager->expects($this->exactly(1))->method('isTranslatable')->willReturnCallback(function ($data, $property) {
-            return true;
-        });
-        $this->dependencies->translationManager->expects($this->exactly(2))->method('isFormTranslatable')->willReturnCallback(function ($data, $property) {
+        $this->dependencies->translationManager->expects($this->never())->method('isTranslatable');
+        $this->dependencies->translationManager->expects($this->exactly(3))->method('isFormTranslatable')->willReturnCallback(function ($data, $property) {
             if (!$property) {
                 return true;
             }
@@ -91,7 +89,7 @@ class ReplaceTranslationTypeListenerTest extends TypeTestCase
             'de', 'en',
         ]);
         $this->dependencies->translationManager->method('getTranslations')->willReturnCallback(function ($data, $property) {
-            if ($property === 'name') {
+            if ('name' === $property) {
                 return [
                     'de' => new Translation(),
                     'en' => new Translation(),
@@ -125,7 +123,6 @@ class TranslatableMockFormType extends AbstractType
     public function __construct(
         private ReplaceTranslationTypeListener $listener,
     ) {
-
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
