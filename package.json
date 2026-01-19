@@ -15,7 +15,8 @@
     "theme:di": "node ./assets/node_modules/@enhavo/dependency-injection/bin/dependency-injection.js --file assets/theme/container.di.yaml",
     "build": "vite build --config assets/admin/vite.config.js && vite build --config assets/theme/vite.config.js",
     "clean": "rm -rf ./node_modules/.vite && rm -rf ./public/build/admin && rm -rf ./public/build/theme",
-    "test": "vitest"
+    "test:unit": "vitest -r tests/packages/unit -c ./vitest.unit.js",
+    "test:integration": "vitest -r tests/packages/integration -c ./vitest.integration.js "
   },
   "workspaces": [
     "packages/*"
@@ -42,12 +43,15 @@
     "@types/uuid": "^3.4.4",
     "@types/vue-select": "^2.5.0",
     "@vitejs/plugin-vue": "^4.4.1",
+    "@vitest/browser-playwright": "^4.0.17",
     "acorn": "^7.3.1",
     "dotenv": "^16.4.5",
-    "vite": "^5.1.0",
+    "jsdom": "^27.4.0",
+    "playwright": "^1.57.0",
+    "vite": "^7.3.0",
     "vite-plugin-live-reload": "^3.0.2",
     "vitepress": "^1.5.0",
-    "vitest": "^2.1.4"
+    "vitest": "^4.0.0"
   },
   "engines": {
     "node": ">=20.11.0"

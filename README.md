@@ -70,7 +70,8 @@ Make your changes and run the tests.
 ```bash
 $ bin/phpunit
 $ bin/behat
-$ yarn test
+$ yarn test:unit
+$ yarn test:integration
 ```
 
 **Testing stack**

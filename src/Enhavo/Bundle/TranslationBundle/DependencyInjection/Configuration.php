@@ -12,8 +12,6 @@
 namespace Enhavo\Bundle\TranslationBundle\DependencyInjection;
 
 use Enhavo\Bundle\TranslationBundle\Client\ChainTranslationClient;
-use Enhavo\Bundle\TranslationBundle\Client\DeeplTranslationClient;
-use Enhavo\Bundle\TranslationBundle\Client\UrlTranslationClient;
 use Enhavo\Bundle\TranslationBundle\Locale\ConfigurationLocaleProvider;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
