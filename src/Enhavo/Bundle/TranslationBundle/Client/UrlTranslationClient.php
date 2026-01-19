@@ -20,7 +20,7 @@ class UrlTranslationClient implements TranslationClientInterface
     {
         $options = $this->getOptions($options);
 
-        if ($options['ignore_urls']) {
+        if (!$options['html'] || $options['ignore_urls']) {
             return $text;
         }
 
@@ -31,6 +31,10 @@ class UrlTranslationClient implements TranslationClientInterface
 
             if (str_starts_with($url, '/') || $this->containsDomain($url)) {
                 $path = $this->getPath($url);
+
+                if ($path === null) {
+                    return $matches[0];
+                }
 
                 $routes = $this->routeRepository->findBy(['staticPrefix' => $path], null, 1);
                 if (count($routes) > 0) {
@@ -47,7 +51,7 @@ class UrlTranslationClient implements TranslationClientInterface
         }, $text);
     }
 
-    private function getPath(string $link): string
+    private function getPath(string $link): ?string
     {
         if (str_starts_with($link, '/')) {
             return $link;
@@ -55,7 +59,10 @@ class UrlTranslationClient implements TranslationClientInterface
 
         $pattern = '~https?://[^/]+(/[^"]*)~i';
         preg_match($pattern, $link, $matches);
-        return $matches[1];
+        if (isset($matches[1])) {
+            return $matches[1];
+        }
+        return null;
     }
 
     private function containsDomain($url): bool
@@ -74,7 +81,8 @@ class UrlTranslationClient implements TranslationClientInterface
         $resolver = new OptionsResolver();
         $resolver->setIgnoreUndefined();
         $resolver->setDefaults([
-            'ignore_urls' => false
+            'ignore_urls' => false,
+            'html' => false,
         ]);
         return $resolver->resolve($options);
     }
