@@ -76,15 +76,19 @@ enhavo_resource:
             form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\ItemType
             form_options: {  }
             actions:
+                update:
+                    type: media_library_update
+                    enabled: 'expr:resource && resource.getId()'
+                replace:
+                    type: media_library_replace
+                    enabled: 'expr:resource && resource.getId()'
                 download:
                     type: download
                     route: enhavo_media_admin_api_file
                     route_parameters:
                         token: expr:resource.getFile().getToken()
                         disposition: attachment
-                replace:
-                    type: media_library_replace
-                    enabled: 'expr:resource && resource.getId()'
+
             tabs:
                 main:
                     label: null

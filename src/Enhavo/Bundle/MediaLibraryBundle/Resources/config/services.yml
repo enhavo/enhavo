@@ -90,6 +90,10 @@ services:
         tags:
             - { name: enhavo_resource.action }
 
+    Enhavo\Bundle\MediaLibraryBundle\Action\MediaLibraryUpdateActionType:
+        tags:
+            - { name: enhavo_resource.action }
+
     Enhavo\Bundle\MediaLibraryBundle\Action\MediaLibrarySelectActionType:
         tags:
             - { name: enhavo_resource.action }
@@ -145,6 +149,16 @@ services:
         tags:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
+
+    Enhavo\Bundle\MediaLibraryBundle\Endpoint\MediaLibraryUpdateEndpointType:
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
 
     Enhavo\Bundle\MediaLibraryBundle\Batch\Type\MediaLibrarySelectBatchType:
         tags:
