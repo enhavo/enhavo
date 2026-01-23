@@ -90,7 +90,9 @@ services:
         tags:
             - { name: enhavo_resource.action }
 
-    Enhavo\Bundle\MediaLibraryBundle\Action\MediaLibraryUpdateActionType:
+    Enhavo\Bundle\MediaLibraryBundle\Action\MediaLibraryApplyActionType:
+        arguments:
+            - '@router'
         tags:
             - { name: enhavo_resource.action }
 
@@ -150,8 +152,9 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
-    Enhavo\Bundle\MediaLibraryBundle\Endpoint\MediaLibraryUpdateEndpointType:
+    Enhavo\Bundle\MediaLibraryBundle\Endpoint\MediaLibraryApplyEndpointType:
         arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
             - '@doctrine.orm.entity_manager'
         calls:
             - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]

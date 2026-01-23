@@ -38,19 +38,18 @@ enhavo_media_library_admin_api_item_update:
     defaults:
         _expose: admin_api
         _endpoint:
-            type: media_library_update
+            type: resource_update
             input: enhavo_media_library.item
 
-enhavo_media_library_admin_api_item_meta:
-    path: '/item/meta/{id}'
+enhavo_media_library_admin_api_item_apply:
+    path: '/item/apply/{id}'
     methods:
         - POST
     defaults:
         _expose: admin_api
         _endpoint:
-            type: media_library_update
+            type: media_library_apply
             input: enhavo_media_library.item
-            update_all: true
 
 enhavo_media_library_admin_api_item_delete:
     path: '/item/delete/{id}'

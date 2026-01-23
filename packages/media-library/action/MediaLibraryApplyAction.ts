@@ -6,9 +6,10 @@ import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 import {Translator} from "@enhavo/app/translation/Translator";
 import {InputChangedEvent, ResourceInputManager} from "@enhavo/app/manager/ResourceInputManager";
 
-export class MediaLibraryUpdateAction extends AbstractAction
+export class MediaLibraryApplyAction extends AbstractAction
 {
-    public url: string;
+    public updateUrl: string;
+    public applyUrl: string;
     public token: string;
 
     public confirmMessage: string;
@@ -28,33 +29,43 @@ export class MediaLibraryUpdateAction extends AbstractAction
 
     async execute(): Promise<void>
     {
-        this.uiManager.confirm({
+        const accept = await this.uiManager.confirm({
             message: this.confirmMessage,
             denyLabel: this.confirmLabelCancel,
             acceptLabel: this.confirmLabelOk,
-        }).then((accept: boolean) => {
-            if (accept) {
-                this.doExecute();
-            }
         });
+
+        if (accept) {
+            await this.doExecute();
+        }
     }
 
     private async doExecute(): Promise<void>
     {
         this.uiManager.loading(true);
 
-        const transport = await this.resourceInputManager.save(this.url, true);
-        this.uiManager.loading(false);
-
+        let transport = await this.resourceInputManager.save(this.updateUrl, true);
         if (!transport.ok || !transport.response.ok) {
             await this.client.handleError(transport, {
                 confirm: true,
                 validation: true,
             });
-            return;
+        } else {
+            this.flashMessenger.add(this.translator.trans('enhavo_app.input.message.save_success', {}, 'javascript'));
+
+            transport = await this.resourceInputManager.sendForm(this.applyUrl);
+            if (!transport.ok || !transport.response.ok) {
+                await this.client.handleError(transport, {
+                    confirm: true,
+                    validation: true,
+                });
+            } else {
+                this.flashMessenger.add(this.translator.trans('enhavo_media_library.input.message.apply_success', {}, 'javascript'));
+                this.frameManager.dispatch(new InputChangedEvent(this.resourceInputManager.resource));
+            }
         }
 
-        this.flashMessenger.add(this.translator.trans('enhavo_app.input.message.save_success', {}, 'javascript'));
-        this.frameManager.dispatch(new InputChangedEvent(this.resourceInputManager.resource));
+        this.uiManager.loading(false);
     }
+
 }

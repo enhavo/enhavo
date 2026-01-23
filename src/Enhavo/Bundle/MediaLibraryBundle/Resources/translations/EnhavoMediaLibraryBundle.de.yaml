@@ -15,7 +15,7 @@ media_library:
         update: Überschreiben
     message:
         update:
-            confirm: \"Dateiname\", "Alt" und "Title" aller mit dieser Datei verknüpften Datensätze werden hiermit aktualisiert. Wollen sie fortfahren?
+            confirm: \"Dateiname\", "Alt" und "Title" aller mit dieser Datei verknüpften Datensätze werden hiermit übernommen. Wollen sie fortfahren?
     filter:
         label:
             unused: Nicht verwendet

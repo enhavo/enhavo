@@ -15,7 +15,7 @@ media_library:
         update: Update
     message:
         update:
-            confirm: This will update "Filname", "Alt" and "Title" in all datasets linked to this file. Do you want to continue?
+            confirm: This will apply "Filname", "Alt" and "Title" to all datasets linked with this file. Do you want to continue?
     filter:
         label:
             unused: Unused
