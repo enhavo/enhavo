@@ -64,6 +64,7 @@ services:
             - '@event_dispatcher'
             - '@form.factory'
             - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
+            - '@security.token_storage'
             - '%enhavo_user.user.model.class%'
 
     Enhavo\Bundle\UserBundle\Security\Authentication\ApiTokenAuthenticator:
