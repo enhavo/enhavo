@@ -41,8 +41,6 @@ class LoginType extends AbstractType
             'translation_domain' => 'EnhavoUserBundle',
         ]);
 
-        $builder->add('csrfToken', HiddenType::class);
-
         $builder->add('rememberMe', CheckboxType::class, [
             'label' => 'security.login.remember_me',
             'translation_domain' => 'EnhavoUserBundle',
@@ -58,7 +56,9 @@ class LoginType extends AbstractType
             'identifier_label' => 'security.login.email',
             'identifier_translation_domain' => 'EnhavoUserBundle',
             'data_class' => Credentials::class,
-            'csrf_protection' => false,
+            'csrf_protection' => true,
+            'csrf_token_id' => 'authenticate',
+            'csrf_field_name' => 'csrfToken',
             'constraints' => [new CredentialsValid()],
         ]);
     }
