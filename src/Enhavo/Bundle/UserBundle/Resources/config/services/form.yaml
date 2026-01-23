@@ -56,7 +56,6 @@ services:
     Enhavo\Bundle\UserBundle\Form\EventListener\CredentialsEventSubscriber:
         arguments:
             - '@request_stack'
-            - '@security.csrf.token_manager'
 
     Enhavo\Bundle\UserBundle\Form\Extension\CsrfDisableFormTypeExtension:
         arguments:

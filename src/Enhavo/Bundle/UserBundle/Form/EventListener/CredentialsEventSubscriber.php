@@ -22,7 +22,6 @@ class CredentialsEventSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private RequestStack $requestStack,
-        private CsrfTokenManager $tokenManager,
     ) {
     }
 
@@ -30,6 +29,7 @@ class CredentialsEventSubscriber implements EventSubscriberInterface
     {
         return [
             FormEvents::PRE_SET_DATA => 'onPreSetData',
+            FormEvents::PRE_SUBMIT=> ['onPreSubmit', 100], // must be called before CsrfValidationListener
         ];
     }
 
@@ -44,11 +44,20 @@ class CredentialsEventSubscriber implements EventSubscriberInterface
             $credentials = new $dataClass();
         }
 
-        $credentials->setCsrfToken($this->getCsrfToken());
         $credentials->setUserIdentifier($this->getUserIdentifier());
         $credentials->setRememberMe($this->isRememberMe());
 
         $event->setData($credentials);
+    }
+
+    public function onPreSubmit(FormEvent $event): void
+    {
+        // map token to data
+        $data = $event->getForm()->getData();
+        $submittedData = $event->getData();
+        if (isset($submittedData['csrfToken']) && $data) {
+            $data->setCsrfToken($submittedData['csrfToken']);
+        }
     }
 
     private function getUserIdentifier(): string
@@ -65,10 +74,5 @@ class CredentialsEventSubscriber implements EventSubscriberInterface
         $credentials = $this->requestStack->getSession()->get('_security.credentials', null);
 
         return null !== $credentials && $credentials->isRememberMe();
-    }
-
-    private function getCsrfToken(): string
-    {
-        return $this->tokenManager->getToken('authenticate')->getValue();
     }
 }

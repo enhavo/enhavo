@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
@@ -33,6 +34,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 /**
@@ -49,6 +51,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         private readonly EventDispatcherInterface $eventDispatcher,
         private readonly FormFactoryInterface $formFactory,
         private readonly FactoryInterface $endpointFactory,
+        private readonly TokenStorageInterface $tokenStorage,
         string $className,
     ) {
     }
@@ -73,6 +76,12 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
         $rememberMeBadge = new RememberMeBadge();
         $credentials->isRememberMe() ? $rememberMeBadge->enable() : $rememberMeBadge->disable();
+
+        // check if user is already authenticated
+        $user = $this->tokenStorage->getToken()?->getUser();
+        if ($user instanceof UserInterface && $user->getUserIdentifier() === $credentials->getUserIdentifier()) {
+            return new SelfValidatingPassport(new UserBadge($user->getUserIdentifier()), [$rememberMeBadge]);
+        }
 
         $tokenBadge = new CsrfTokenBadge('authenticate', $credentials->getCsrfToken());
 
