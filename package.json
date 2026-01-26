@@ -21,6 +21,9 @@
   "workspaces": [
     "packages/*"
   ],
+  "dependencies": {
+    "jquery": "^3.4.0"
+  },
   "devDependencies": {
     "@types/async": "^2.4.1",
     "@types/axios": "^0.14.0",

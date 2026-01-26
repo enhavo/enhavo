@@ -1,12 +1,12 @@
 services:
     '@enhavo/app/vue/VueRegistry':
-        chunk: 'vue'
+        chunk: 'app'
         arguments:
             - 'string:app'
 
     '@enhavo/app/vue/VueRouterFactory':
         import: VueRouterFactory
-        chunk: 'vue'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/vue/VueFactory'
             - 'param:vue_routes'

@@ -1,12 +1,15 @@
 import sha1 from 'sha1';
-import Tag from '@enhavo/dependency-injection/container/Tag.js';
+import path from "path";
+import { pathToFileURL, fileURLToPath } from 'node:url';
+import fs from "fs";
 
 export default class Definition
 {
     /**
      * @param {string} name
+     * @param {string} context
      */
-    constructor(name)
+    constructor(name, context)
     {
         this.name = name;
         this.arguments = [];
@@ -29,6 +32,7 @@ export default class Definition
         this.init = false;
         this.factory = null;
         this.factoryMethod = null;
+        this._context = context;
     }
 
     getName() {
@@ -245,6 +249,44 @@ export default class Definition
 
     getFactoryMethod() {
         return this.factoryMethod;
+    }
+
+    getPath() {
+        let filepath = this.name;
+        if (this.from !== null) {
+            filepath = this.from;
+        }
+
+        try {
+            if (filepath.startsWith('.')) {
+                return this._resolveWithExtension(fileURLToPath(import.meta.resolve(path.resolve(this._context, filepath))));
+            } else {
+                return this._resolveWithExtension(fileURLToPath(import.meta.resolve(filepath)));
+            }
+        } catch (e) {
+        }
+
+        throw 'File does not exist. Trying to find "'+filepath+'" in "'+this._context+'"';
+    }
+
+    _resolveWithExtension(path) {
+        if (fs.existsSync(path)) {
+            return path;
+        }
+
+        const dir = path.substring(0, path.lastIndexOf('/'));
+        const base = path.substring(path.lastIndexOf('/') + 1);
+
+        if (fs.existsSync(dir)) {
+            const files = fs.readdirSync(dir);
+            for (const file of files) {
+                if (file === base || file.startsWith(base + '.')) {
+                    return dir + '/' + file;
+                }
+            }
+        }
+
+        throw 'Not exists';
     }
 }
 

@@ -1,7 +1,7 @@
 services:
     '@enhavo/media/resolver/FileResolver':
         import: FileResolver
-        chunk: 'util'
+        chunk: 'media'
         arguments:
             - '@enhavo/app/routing/Router'
             - ["enhavo_media_admin_api_file", "enhavo_media_theme_file"]

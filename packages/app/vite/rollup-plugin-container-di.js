@@ -8,6 +8,9 @@ const defaults = {
     transform: null,
     extensions: ['.di.yaml'],
     enableChunks: true,
+    manualChunks: function (id, { getModuleInfo }) {
+        return null
+    }
 };
 
 export default function (opts = {}) {
@@ -53,28 +56,30 @@ export default function (opts = {}) {
                 return outputOptions;
             }
 
-            const chunks = {};
+            let chunkMap = {};
             for (let definition of builder.getDefinitions()) {
-                let chunkName = definition.chunckName;
-                if (chunkName) {
-                    if (!chunks[chunkName]) {
-                        chunks[chunkName] = [];
-                    }
-                    chunks[chunkName].push(definition.from ? definition.from : definition.name);
+                if (definition.getChunkName()) {
+                    chunkMap[definition.getPath()] = definition.getChunkName();
                 }
             }
 
-            if (options.manualChunks && typeof options.manualChunks === 'object') {
-                for (const [chunkName, chunkList] of Object.entries(options.manualChunks)) {
-                    if (!chunks[chunkName]) {
-                        chunks[chunkName] = [];
-                    }
-                    chunks[chunkName].push(...chunkList);
+            outputOptions.manualChunks = function(id, info) {
+                if (id.includes('container.di')) {
+                    return 'container'
                 }
-            }
 
-            outputOptions.manualChunks = chunks;
+                if (chunkMap[id]) {
+                    return chunkMap[id];
+                }
+
+                if (typeof options.manualChunks === 'function') {
+                    return options.manualChunks(id, info)
+                }
+
+                return null;
+            };
+
             return outputOptions;
-        }
+        },
     };
 }
