@@ -1,59 +1,64 @@
 media_library:
     form_extension:
         button:
-            label: 'Open Library'
+            label: Open Library
     label:
         media_library: Media Library
-        library: 'File'
-        tag: 'Tag'
-        id: 'ID'
-        title: 'Title'
-        upload: 'Upload'
-        replace: 'Replace'
-        select: 'Select'
+        library: File
+        tag: Tag
+        id: ID
+        title: Title
+        upload: Upload
+        replace: Replace
+        select: Select
+        cancel: Cancel
+        update: Update
+    message:
+        update:
+            confirm: This will apply "Filname", "Alt" and "Title" to all datasets linked with this file. Do you want to continue?
     filter:
         label:
             unused: Unused
     form:
         label:
-            create_tag: 'Create tag'
-            filename: "Filename"
-            url: "Url"
-            content_type: "Content type"
-            tags: "Tags"
+            create_tag: Create tag
+            filename: Filename
+            url: Url
+            content_type: Content type
+            tags: Tags
     column:
         label:
-            filename: 'Name'
-            extension: 'Suffix'
-            content_type: 'Type'
-            created_at: 'Date'
+            filename: Name
+            extension: Suffix
+            content_type: Type
+            created_at: Date
     role:
         file:
             label:
-                index: 'Media-Library-File list'
-                create: 'Media-Library-File create'
-                update: 'Media-Library-File update'
-                delete: 'Media-Library-File delete'
+                index: Media-Library-File list
+                create: Media-Library-File create
+                update: Media-Library-File update
+                delete: Media-Library-File delete
         item:
             label:
-                index: 'Media-Library-Item list'
-                create: 'Media-Library-Item create'
-                update: 'Media-Library-Item update'
-                delete: 'Media-Library-Item delete'
+                index: Media-Library-Item list
+                create: Media-Library-Item create
+                update: Media-Library-Item update
+                delete: Media-Library-Item delete
         tag:
             label:
-                index: 'Media-Library-Tag list'
-                create: 'Media-Library-Tag create'
-                update: 'Media-Library-Tag update'
-                delete: 'Media-Library-Tag delete'
+                index: Media-Library-Tag list
+                create: Media-Library-Tag create
+                update: Media-Library-Tag update
+                delete: Media-Library-Tag delete
     content_type:
-        audio: 'Audio'
-        archive: 'Archive'
-        document: 'Document'
-        text: 'Text'
-        image: 'Image'
-        video: 'Video'
+        audio: Audio
+        archive: Archive
+        document: Document
+        text: Text
+        image: Image
+        video: Video
 upload:
     error:
-        unique_basename: The filename "basename" already exists
-        unique_checksum: The file already exists with name "basename"
+        unique_basename: The filename basename already exists
+        unique_checksum: The file already exists with name basename

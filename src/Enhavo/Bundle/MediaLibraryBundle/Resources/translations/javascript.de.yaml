@@ -1,14 +1,17 @@
 enhavo_media_library:
-    tags: 'Tags'
-    content_types: 'Dateitypen'
+    tags: Tags
+    content_types: Dateitypen
     upload:
         success:
-            message: 'Datei erfolgreich hinzugefügt.'
+            message: Datei erfolgreich hinzugefügt.
         fail:
-            message: 'Upload fehlgeschlagen. Vielleicht ist die Datei zu groß.'
+            message: Upload fehlgeschlagen. Vielleicht ist die Datei zu groß.
     select:
         message:
-            file_selected: 'Datei(en) ausgewählt'
+            file_selected: Datei(en) ausgewählt
     library:
         label:
-            title: 'Mediathek'
+            title: Mediathek
+    input:
+        message:
+            apply_success: Übernahme erfolgreich
