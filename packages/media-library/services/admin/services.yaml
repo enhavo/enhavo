@@ -62,6 +62,19 @@ services:
         tags:
             - 'enhavo_app.action'
 
+    '@enhavo/media-library/action/MediaLibraryApplyAction':
+        import: MediaLibraryApplyAction
+        chunk: 'action'
+        arguments:
+            - '@enhavo/app/frame/FrameManager'
+            - '@enhavo/app/ui/UiManager'
+            - '@enhavo/app/manager/ResourceInputManager'
+            - '@enhavo/app/flash-message/FlashMessenger'
+            - '@enhavo/app/translation/Translator'
+            - '@enhavo/app/client/Client'
+        tags:
+            - { name: 'enhavo_app.action', class: 'MediaLibraryApplyAction' }
+
     '@enhavo/media-library/collection/MediaLibraryCollection':
         import: MediaLibraryCollection
         chunk: index
