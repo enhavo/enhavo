@@ -1,58 +1,63 @@
 media_library:
     form_extension:
         button:
-            label: 'Mediathek öffnen'
+            label: Mediathek öffnen
     label:
         media_library: Mediathek
-        library: 'Dateien'
-        tag: 'Tags'
-        id: 'ID'
-        title: 'Titel'
-        upload: 'Hochladen'
-        replace: 'Ersetzen'
-        select: 'Auswählen'
+        library: Dateien
+        tag: Tags
+        id: ID
+        title: Titel
+        upload: Hochladen
+        replace: Ersetzen
+        select: Auswählen
+        cancel: Abbrechen
+        update: Überschreiben
+    message:
+        update:
+            confirm: \"Dateiname\", "Alt" und "Title" aller mit dieser Datei verknüpften Datensätze werden hiermit übernommen. Wollen sie fortfahren?
     filter:
         label:
             unused: Nicht verwendet
     form:
         label:
-            create_tag: 'Tag erstellen'
-            filename: 'Dateiname'
-            url: 'Url'
-            content_type: 'Dateityp'
-            tags: 'Tags'
+            create_tag: Tag erstellen
+            filename: Dateiname
+            url: Url
+            content_type: Dateityp
+            tags: Tags
     column:
         label:
-            filename: 'Name'
-            extension: 'Suffix'
-            content_type: 'Dateityp'
-            created_at: 'Datum'
+            filename: Name
+            extension: Suffix
+            content_type: Dateityp
+            created_at: Datum
     role:
         file:
             label:
-                index: 'Media-Library-File list'
-                create: 'Media-Library-File create'
-                update: 'Media-Library-File update'
-                delete: 'Media-Library-File delete'
+                index: Media-Library-File list
+                create: Media-Library-File create
+                update: Media-Library-File update
+                delete: Media-Library-File delete
         item:
             label:
-                index: 'Media-Library-Item list'
-                create: 'Media-Library-Item create'
-                update: 'Media-Library-Item update'
-                delete: 'Media-Library-Item delete'
+                index: Media-Library-Item list
+                create: Media-Library-Item create
+                update: Media-Library-Item update
+                delete: Media-Library-Item delete
         tag:
             label:
-                index: 'Media-Library-Tag list'
-                create: 'Media-Library-Tag create'
-                update: 'Media-Library-Tag update'
-                delete: 'Media-Library-Tag delete'
+                index: Media-Library-Tag list
+                create: Media-Library-Tag create
+                update: Media-Library-Tag update
+                delete: Media-Library-Tag delete
     content_type:
-        audio: 'Audio'
-        archive: 'Archiv'
-        document: 'Dokument'
-        text: 'Text'
-        image: 'Bild'
-        video: 'Video'
+        audio: Audio
+        archive: Archiv
+        document: Dokument
+        text: Text
+        image: Bild
+        video: Video
 upload:
     error:
         unique_basename: Der Dateiname "basename" wird bereits verwendet

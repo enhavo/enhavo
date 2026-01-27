@@ -1,14 +1,17 @@
 enhavo_media_library:
-    tags: 'Tags'
-    content_types: 'Content Types'
+    tags: Tags
+    content_types: Content Types
     upload:
         success:
-            message: 'File upload successful.'
+            message: File upload successful.
         fail:
-            message: 'Upload failed. Maybe the file is too large.'
+            message: Upload failed. Maybe the file is too large.
     select:
         message:
-            file_selected: 'File(s) selected'
+            file_selected: File(s) selected
     library:
         label:
-            title: 'Media Library'
+            title: Media Library
+    input:
+        message:
+            apply_success: Apply successful
