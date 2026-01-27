@@ -9,6 +9,7 @@ services:
 
     '@enhavo/media/form/model/MediaForm':
         import: MediaForm
+        chunk: 'media'
         arguments:
             - '@enhavo/vue-form/form/FormFactory'
             - '@enhavo/app/action/ActionManager'
@@ -17,6 +18,7 @@ services:
 
     '@enhavo/media/form/model/MediaItemForm':
         import: MediaItemForm
+        chunk: 'media'
         arguments:
             - '@enhavo/media/resolver/FileResolver'
             - '@enhavo/app/action/ActionManager'

@@ -1,5 +1,6 @@
 services:
     '@enhavo/newsletter/stats/StatsApp':
+        chunk: 'newsletter'
         arguments:
             - 'param:data.resource'
             - '@enhavo/app/frame/FrameManager'
@@ -7,6 +8,7 @@ services:
             - '@enhavo/app/vue/VueRegistry'
 
     '@enhavo/newsletter/components/stats/IndexComponent.vue':
+        chunk: 'newsletter'
         static: true
 
     '@enhavo/newsletter/action/NewsletterSendAction':
