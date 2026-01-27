@@ -10,5 +10,8 @@
   },
   "dependencies": {
     "@enhavo/app": "^0.15"
+  },
+  "peerDependencies": {
+    "jquery": "^3.7.1"
   }
 }

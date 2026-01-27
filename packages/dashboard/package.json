@@ -12,5 +12,8 @@
     "@enhavo/app": "^0.15",
     "chart.js": "^2.4.0",
     "lodash": "^4.17.11"
+  },
+  "peerDependencies": {
+    "jquery": "^3.7.1"
   }
 }

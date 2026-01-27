@@ -36,5 +36,9 @@
     "select2": "^4.0.13",
     "sortablejs": "^1.10.2",
     "vuedraggable": "^4.1.0"
+  },
+  "peerDependencies": {
+    "jquery": "^3.7.1",
+    "vue": "^3.2.31"
   }
 }

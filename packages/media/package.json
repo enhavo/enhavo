@@ -15,5 +15,8 @@
     "blueimp-file-upload": "^9.22.1",
     "cropperjs": "~1.2.2",
     "lodash": "^4.17.11"
+  },
+  "peerDependencies": {
+    "jquery": "^3.7.1"
   }
 }
