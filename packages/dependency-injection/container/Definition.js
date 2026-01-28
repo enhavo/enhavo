@@ -259,8 +259,6 @@ export default class Definition
 
         if (filepath.startsWith('.')) {
             return path.resolve(this._context, filepath)
-        } else if(filepath.startsWith('/')) {
-            return filepath;
         }
 
         return filepath;
