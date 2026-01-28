@@ -104,12 +104,12 @@ export default class Loader
         }
     }
 
-    _buildFilepath(filepath, cwd, keepModulePath = false) {
+    _buildFilepath(filepath, cwd) {
         if (filepath.startsWith('.')) {
             return path.resolve(cwd, filepath)
         } else if(filepath.startsWith('/')) {
             return filepath;
-        } else if(!keepModulePath) {
+        } else {
             let subPath = cwd;
             let beforePath = null;
             while(subPath !== beforePath) {
@@ -129,7 +129,6 @@ export default class Loader
             }
             return null;
         }
-        return filepath;
     }
 
     _checkGlobDirExists(path) {
@@ -168,7 +167,7 @@ export default class Loader
                     service = {};
                 }
 
-                let definition = new Definition(name);
+                let definition = new Definition(name, cwd);
                 this._checkArguments(service, definition);
                 this._checkTags(service, definition);
                 this._checkCalls(service, definition);
@@ -213,7 +212,7 @@ export default class Loader
      * @param {string} cwd
      */
     _checkSettings(service, definition, cwd) {
-        service.from ? definition.setFrom(this._buildFilepath(service.from, cwd, true)) : null;
+        service.from ? definition.setFrom(service.from) : null;
         service.import ? definition.setImport(service.import) : null;
         service.init ? definition.setInit(service.init) : null;
         service.mode ? definition.setMode(service.mode) : null;
@@ -232,7 +231,6 @@ export default class Loader
     /**
      * @param {object} service
      * @param {Definition} definition
-     * @param {string} cwd
      */
     _checkCalls(service, definition) {
         if (service.calls) {

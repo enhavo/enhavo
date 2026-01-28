@@ -1,7 +1,7 @@
 services:
     '@enhavo/translation/components/FormTranslation.vue':
         static: true
-        chunk: 'component'
+        chunk: 'translation'
         tags:
             - { name: vue.component, component: 'form-translation' }
 

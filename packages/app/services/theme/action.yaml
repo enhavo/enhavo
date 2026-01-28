@@ -4,7 +4,7 @@ services:
 
     '@enhavo/app/action/ActionManager':
         import: ActionManager
-        chunk: 'action'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/action/ActionFactory'
         tags:

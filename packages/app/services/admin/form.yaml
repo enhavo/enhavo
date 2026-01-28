@@ -1,6 +1,6 @@
 services:
     '@enhavo/app/form/FormApp':
-        chunk: 'form'
+        chunk: 'app'
         arguments:
             - 'param:data'
             - '@enhavo/app/frame/FrameEventDispatcher'
@@ -11,10 +11,10 @@ services:
             - '@enhavo/app/form/Form'
 
     '@enhavo/app/form/FormRegistry':
-        chunk: 'form'
+        chunk: 'app'
 
     '@enhavo/app/form/Form':
-        chunk: 'form'
+        chunk: 'app'
         arguments:
             - 'param:data'
             - '@enhavo/app/form/FormRegistry'
@@ -25,6 +25,6 @@ services:
 
     '@enhavo/app/form/visitor/AdminFormVisitor':
         import: AdminFormVisitor
-        chunk: 'form'
+        chunk: 'app'
         tags:
             - { name: enhavo_app.admin.form_visitor }

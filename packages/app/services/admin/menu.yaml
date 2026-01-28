@@ -1,11 +1,11 @@
 services:
     '@enhavo/app/menu/MenuItemFactory':
         import: MenuItemFactory
-        chunk: 'factory'
+        chunk: 'app'
 
     '@enhavo/app/menu/MenuManager':
         import: MenuManager
-        chunk: 'main'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/menu/MenuItemFactory'
         tags:
@@ -13,7 +13,7 @@ services:
 
     '@enhavo/app/menu/model/BaseMenuItem':
         import: BaseMenuItem
-        chunk: 'main'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/frame/FrameStack'
             - '@enhavo/app/frame/FrameManager'
@@ -22,7 +22,7 @@ services:
 
     '@enhavo/app/menu/model/ListMenuItem':
         import: ListMenuItem
-        chunk: 'main'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/menu/MenuManager'
         tags:
@@ -30,6 +30,6 @@ services:
 
     '@enhavo/app/menu/model/DropdownMenuItem':
         import: DropdownMenuItem
-        chunk: 'main'
+        chunk: 'app'
         tags:
             - { name: 'enhavo_app.menu_item' }

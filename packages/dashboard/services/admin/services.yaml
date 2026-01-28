@@ -39,12 +39,12 @@ services:
 
     '@enhavo/dashboard/components/DashboardIndex.vue':
         static: true
-        chunk: 'component'
+        chunk: 'dashboard'
         tags:
             - { name: vue.component, component: 'dashboard-index' }
 
     '@enhavo/dashboard/components/DashboardWidgetNumber.vue':
         static: true
-        chunk: 'component'
+        chunk: 'dashboard'
         tags:
             - { name: vue.component, component: 'dashboard-widget-number' }
