@@ -14,6 +14,7 @@ compiler_pass:
     vue_components:
         path: '@enhavo/app/compiler-pass/vue-components.js'
         dir: './components'
+        chunkName: 'admin'
         priority: 40
 
 services:

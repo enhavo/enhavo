@@ -48,7 +48,7 @@ export default async function (opts = {}) {
                 chunkMap = {};
                 for (let definition of builder.getDefinitions()) {
                     if (definition.getChunkName()) {
-                        let module = await this.resolve(definition.getFrom());
+                        let module = await this.resolve(definition.getFromPath());
                         if (module) {
                             chunkMap[module.id] = definition.getChunkName();
                         }
@@ -75,7 +75,7 @@ export default async function (opts = {}) {
                     return 'container'
                 }
 
-                if (chunkMap[id]) {
+                if (chunkMap !== null && chunkMap[id]) {
                     return chunkMap[id];
                 }
 
