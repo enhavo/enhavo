@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "jquery": "~3.4.1",
+    "popper.js": "^1.16.0",
     "slick-carousel": "^1.8.1"
+  },
+  "peerDependencies": {
+    "jquery": "^3.7.1"
   }
 }

@@ -86,7 +86,7 @@ export default class Compiler
         let content = '';
         content += `async load_`+definition.getHash()+`() {\n`;
         content += `return await import(\n`;
-        content += `"`+definition.getFrom()+`");\n`;
+        content += `"`+definition.getFromPath()+`");\n`;
         content += `}\n`;
         return content;
     }

@@ -1,6 +1,6 @@
 services:
     '@enhavo/form/form/model/PolyCollectionForm':
-        chunk: 'vue'
+        chunk: 'form'
         import: PolyCollectionForm
         arguments:
             - '@enhavo/vue-form/form/FormFactory'
@@ -8,7 +8,7 @@ services:
             - { name: form.model }
 
     '@enhavo/form/form/model/ListForm':
-        chunk: 'vue'
+        chunk: 'form'
         import: ListForm
         arguments:
             - '@enhavo/vue-form/form/FormFactory'
@@ -16,7 +16,7 @@ services:
             - { name: form.model }
 
     '@enhavo/form/form/model/WysiwygForm':
-        chunk: 'vue'
+        chunk: 'form'
         import: WysiwygForm
         arguments:
             - '@enhavo/form/wysiwyg/WysiwygConfigRegistry'
@@ -24,13 +24,13 @@ services:
             - { name: form.model }
 
     '@enhavo/form/form/model/PositionForm':
-        chunk: 'vue'
+        chunk: 'form'
         import: PositionForm
         tags:
             - { name: form.model }
 
     '@enhavo/form/form/model/ConditionalForm':
-        chunk: 'vue'
+        chunk: 'form'
         import: ConditionalForm
         arguments:
             - '@enhavo/vue-form/form/FormFactory'
@@ -38,13 +38,13 @@ services:
             - { name: form.model }
 
     '@enhavo/form/form/model/DateTimeForm':
-        chunk: 'vue'
+        chunk: 'form'
         import: DateTimeForm
         tags:
             - { name: form.model }
 
     '@enhavo/form/form/model/ChoiceTreeForm':
-        chunk: 'vue'
+        chunk: 'form'
         import: ChoiceTreeForm
         tags:
             - { name: form.model }

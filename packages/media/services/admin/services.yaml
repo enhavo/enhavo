@@ -4,7 +4,7 @@ imports:
 services:
     '@enhavo/media/manager/ImageCropperManager':
         import: ImageCropperManager
-        chunk: 'image-cropper'
+        chunk: 'media'
         arguments:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/action/ActionManager'
@@ -16,19 +16,19 @@ services:
 
     '@enhavo/media/components/MediaImageCropper.vue':
         static: true
-        chunk: 'component'
+        chunk: 'media'
         tags:
             - { name: vue.component, component: 'media-image-cropper' }
 
     '@enhavo/media/controllers/MediaStyleController':
-        chunk: controller
+        chunk: 'media'
         static: true
         tags:
             - { name: stimulus.controller, key: 'media-style' }
 
     '@enhavo/media/action/MediaCropAction':
         import: MediaCropAction
-        chunk: 'image-cropper'
+        chunk: 'media'
         arguments:
             - '@enhavo/media/manager/ImageCropperManager'
         tags:
@@ -36,7 +36,7 @@ services:
 
     '@enhavo/media/action/MediaDownloadAction':
         import: MediaDownloadAction
-        chunk: 'action'
+        chunk: 'media'
         arguments:
             - '@enhavo/media/resolver/FileResolver'
         tags:
@@ -44,7 +44,7 @@ services:
 
     '@enhavo/media/action/MediaFormatAction':
         import: MediaFormatAction
-        chunk: 'action'
+        chunk: 'media'
         arguments:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/routing/Router'

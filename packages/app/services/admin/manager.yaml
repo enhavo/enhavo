@@ -1,6 +1,6 @@
 services:
     '@enhavo/app/manager/MainManager':
-        chunk: 'main'
+        chunk: 'app'
         import: MainManager
         arguments:
             - '@enhavo/app/frame/FrameStackSubscriber'
@@ -16,7 +16,7 @@ services:
 
     '@enhavo/app/manager/ResourceIndexManager':
         import: ResourceIndexManager
-        chunk: index
+        chunk: 'app'
         arguments:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/action/ActionManager'
@@ -32,7 +32,7 @@ services:
 
     '@enhavo/app/manager/ResourceInputManager':
         import: ResourceInputManager
-        chunk: 'input'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/tab/TabManager'
@@ -46,7 +46,7 @@ services:
 
     '@enhavo/app/manager/ResourcePreviewManager':
         import: ResourcePreviewManager
-        chunk: 'preview'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/frame/FrameManager'

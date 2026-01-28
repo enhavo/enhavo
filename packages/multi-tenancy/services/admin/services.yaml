@@ -1,6 +1,6 @@
 services:
     '@enhavo/multi-tenancy/menu/SwitchTenantMenuItem':
         import: SwitchTenantMenuItem
-        chunk: 'main'
+        chunk: 'multi-tenancy'
         tags:
             - { name: 'enhavo_app.menu_item' }
