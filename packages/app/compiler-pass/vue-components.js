@@ -50,7 +50,7 @@ export default function(builder, options, context)
 
     for (let file of files) {
         let componentName = componentNameFromPath(file.fullPath);
-        let definition = new Definition('vue-component.'+componentName);
+        let definition = new Definition('vue-component.'+componentName, context);
         definition.setStatic(true);
         definition.setFrom('./'+file.buildPath);
         if (options.chunkName) {

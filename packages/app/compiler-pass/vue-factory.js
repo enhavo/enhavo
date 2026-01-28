@@ -4,9 +4,9 @@ import Tag from "@enhavo/dependency-injection/container/Tag.js"
 import Call from "@enhavo/dependency-injection/container/Call.js"
 
 
-function createVueFactoryDefinition(builder)
+function createVueFactoryDefinition(builder, context)
 {
-    let definition = new Definition('@enhavo/app/vue/VueFactory');
+    let definition = new Definition('@enhavo/app/vue/VueFactory', context);
     definition.setFrom('@enhavo/app/vue/VueFactory');
     definition.setImport('VueFactory');
     definition.setChunkName('vue')
@@ -21,7 +21,7 @@ function createVueFactoryDefinition(builder)
 
 export default function(builder, options, context)
 {
-    let factory = createVueFactoryDefinition(builder);
+    let factory = createVueFactoryDefinition(builder, context);
 
     let componentDefinitions = builder.getDefinitionsByTagName('vue.component');
     for (let definition of componentDefinitions) {

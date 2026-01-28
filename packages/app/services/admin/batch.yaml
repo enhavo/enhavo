@@ -1,11 +1,11 @@
 services:
     '@enhavo/app/batch/BatchFactory':
         import: BatchFactory
-        chunk: 'factory'
+        chunk: 'app'
 
     '@enhavo/app/batch/BatchManager':
         import: BatchManager
-        chunk: index
+        chunk: 'app'
         arguments:
             - '@enhavo/app/batch/BatchFactory'
         tags:
@@ -13,7 +13,7 @@ services:
 
     '@enhavo/app/batch/model/UrlBatch':
         import: UrlBatch
-        chunk: index
+        chunk: 'app'
         arguments:
             - '@enhavo/app/translation/Translator'
             - '@enhavo/app/flash-message/FlashMessenger'
@@ -23,7 +23,7 @@ services:
 
     '@enhavo/app/batch/model/ModalBatch':
         import: ModalBatch
-        chunk: index
+        chunk: 'app'
         arguments:
             - '@enhavo/app/modal/ModalManager'
         tags:
@@ -31,7 +31,7 @@ services:
 
     '@enhavo/app/batch/model/FormBatch':
         import: FormBatch
-        chunk: index
+        chunk: 'app'
         arguments:
             - '@enhavo/app/translation/Translator'
             - '@enhavo/app/frame/FrameManager'

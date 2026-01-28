@@ -1,12 +1,15 @@
 import sha1 from 'sha1';
-import Tag from '@enhavo/dependency-injection/container/Tag.js';
+import path from "path";
+import { pathToFileURL, fileURLToPath } from 'node:url';
+import fs from "fs";
 
 export default class Definition
 {
     /**
      * @param {string} name
+     * @param {string} context
      */
-    constructor(name)
+    constructor(name, context)
     {
         this.name = name;
         this.arguments = [];
@@ -29,6 +32,7 @@ export default class Definition
         this.init = false;
         this.factory = null;
         this.factoryMethod = null;
+        this._context = context;
     }
 
     getName() {
@@ -245,6 +249,21 @@ export default class Definition
 
     getFactoryMethod() {
         return this.factoryMethod;
+    }
+
+    getFromPath() {
+        let filepath = this.name;
+        if (this.from !== null) {
+            filepath = this.from;
+        }
+
+        if (filepath.startsWith('.')) {
+            return path.resolve(this._context, filepath)
+        } else if(filepath.startsWith('/')) {
+            return filepath;
+        }
+
+        return filepath;
     }
 }
 

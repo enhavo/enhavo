@@ -12,6 +12,9 @@
   "engines": {
     "node": ">=20.11.0"
   },
+  "peerDependencies": {
+    "jquery": "^3.7.1"
+  },
   "dependencies": {
     "@enhavo/core": "^0.15",
     "@hotwired/stimulus": "^3.0.1",
@@ -26,10 +29,10 @@
     "fantasticon": "^3.0.0",
     "html-entities": "^2.5.2",
     "jexl": "^2.1.1",
-    "jquery": "^3.4.1",
     "lodash": "^4.17.11",
     "morphdom": "^2.7.4",
     "pako": "^1.0.10",
+    "popper.js": "^1.16.0",
     "uuid": "^3.3.2",
     "vue": "^3.2.31",
     "vue-router": "^4.2.5",

@@ -1,7 +1,7 @@
 services:
     '@enhavo/app/frame/FrameStack':
         import: FrameStack
-        chunk: 'frame'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/frame/FrameEventDispatcher'
         tags:
@@ -9,7 +9,7 @@ services:
 
     '@enhavo/app/frame/FrameStackSubscriber':
         import: FrameStackSubscriber
-        chunk: 'frame'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/frame/FrameEventDispatcher'
             - '@enhavo/app/frame/FrameStack'
@@ -18,11 +18,11 @@ services:
 
     '@enhavo/app/frame/FrameEventDispatcher':
         import: FrameEventDispatcher
-        chunk: 'frame'
+        chunk: 'app'
 
     '@enhavo/app/frame/FrameManager':
         import: FrameManager
-        chunk: 'frame'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/frame/FrameEventDispatcher'
         tags:
@@ -30,7 +30,7 @@ services:
 
     '@enhavo/app/frame/FrameArrangeManager':
          import: FrameArrangeManager
-         chunk: 'frame'
+         chunk: 'app'
          arguments:
              - '@enhavo/app/frame/FrameStack'
              - '@enhavo/app/menu/MenuManager'
@@ -39,7 +39,7 @@ services:
 
     '@enhavo/app/frame/FrameStateManager':
         import: FrameStateManager
-        chunk: 'frame'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/frame/FrameStack'
             - '@enhavo/app/frame/FrameArrangeManager'

@@ -1,7 +1,7 @@
 services:
     '@enhavo/app/flash-message/FlashMessenger':
         import: FlashMessenger
-        chunk: 'flash-message'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/frame/FrameManager'
         tags:
