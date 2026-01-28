@@ -13,12 +13,13 @@ const defaults = {
     }
 };
 
-export default function (opts = {}) {
+export default async function (opts = {}) {
     const options = Object.assign({}, defaults, opts);
     const { extensions } = options;
     const filter = createFilter(options.include, options.exclude);
 
     let builder = new ContainerBuilder;
+    let chunkMap = null;
 
     return {
         name: 'container-di',
@@ -26,7 +27,7 @@ export default function (opts = {}) {
             if (!extensions.some((ext) => id.toLowerCase().endsWith(ext))) return null;
             if (!filter(id)) return null;
 
-
+            // load and compile container
             if (!builder.isPrepared()) {
                 let loader = new Loader();
                 loader.loadFile(id, builder)
@@ -42,6 +43,19 @@ export default function (opts = {}) {
             let compiler = new Compiler;
             let resultData = compiler.compile(builder);
 
+            // generate chunk map
+            if (chunkMap === null && options.enableChunks) {
+                chunkMap = {};
+                for (let definition of builder.getDefinitions()) {
+                    if (definition.getChunkName()) {
+                        let module = await this.resolve(definition.getFrom());
+                        if (module) {
+                            chunkMap[module.id] = definition.getChunkName();
+                        }
+                    }
+                }
+            }
+
             return {
                 code: resultData,
                 map: null,
@@ -56,14 +70,7 @@ export default function (opts = {}) {
                 return outputOptions;
             }
 
-            let chunkMap = {};
-            for (let definition of builder.getDefinitions()) {
-                if (definition.getChunkName()) {
-                    chunkMap[definition.getPath()] = definition.getChunkName();
-                }
-            }
-
-            outputOptions.manualChunks = function(id, info) {
+            outputOptions.manualChunks = (id, info) => {
                 if (id.includes('container.di')) {
                     return 'container'
                 }

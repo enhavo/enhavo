@@ -251,42 +251,19 @@ export default class Definition
         return this.factoryMethod;
     }
 
-    getPath() {
+    getFromPath() {
         let filepath = this.name;
         if (this.from !== null) {
             filepath = this.from;
         }
 
-        try {
-            if (filepath.startsWith('.')) {
-                return this._resolveWithExtension(fileURLToPath(import.meta.resolve(path.resolve(this._context, filepath))));
-            } else {
-                return this._resolveWithExtension(fileURLToPath(import.meta.resolve(filepath)));
-            }
-        } catch (e) {
+        if (filepath.startsWith('.')) {
+            return path.resolve(this._context, filepath)
+        } else if(filepath.startsWith('/')) {
+            return filepath;
         }
 
-        throw 'File does not exist. Trying to find "'+filepath+'" in "'+this._context+'"';
-    }
-
-    _resolveWithExtension(path) {
-        if (fs.existsSync(path)) {
-            return path;
-        }
-
-        const dir = path.substring(0, path.lastIndexOf('/'));
-        const base = path.substring(path.lastIndexOf('/') + 1);
-
-        if (fs.existsSync(dir)) {
-            const files = fs.readdirSync(dir);
-            for (const file of files) {
-                if (file === base || file.startsWith(base + '.')) {
-                    return dir + '/' + file;
-                }
-            }
-        }
-
-        throw 'Not exists';
+        return filepath;
     }
 }
 
