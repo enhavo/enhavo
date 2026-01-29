@@ -12,13 +12,13 @@
     }
   ],
   "require": {
-    "php": "^8.2",
+    "php": "^8.4",
     "enhavo/app-bundle": "^0.15",
     "enhavo/content-bundle": "^0.15",
     "enhavo/block-bundle": "^0.15",
     "enhavo/form-bundle": "^0.15",
     "johngrogg/ics-parser": "^2.0",
-    "symfony/http-client": "^8.0",
+    "symfony/http-client": "^7.4",
     "simshaun/recurr": "^2.2"
   },
   "autoload": {

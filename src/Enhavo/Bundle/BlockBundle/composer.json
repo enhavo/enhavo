@@ -12,12 +12,12 @@
     }
   ],
   "require": {
-    "php": "^8.2",
+    "php": "^8.4",
     "enhavo/app-bundle": "^0.15",
     "enhavo/doctrine-extension-bundle": "^0.15",
     "enhavo/form-bundle": "^0.15",
     "enhavo/media-bundle": "^0.15",
-    "symfony/uid": "^8.0"
+    "symfony/uid": "^7.4"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\BlockBundle\\": "" }

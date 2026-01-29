@@ -12,14 +12,14 @@
     }
   ],
   "require": {
-    "php": "^8.2",
+    "php": "^8.4",
     "enhavo/app-bundle": "^0.15",
     "enhavo/doctrine-extension-bundle": "^0.15",
     "enhavo/form-bundle": "^0.15",
     "enhavo/metadata": "^0.15",
     "enhavo/routing-bundle": "^0.15",
     "league/uri-components": "^2.4",
-    "symfony/options-resolver": "^6.4"
+    "symfony/options-resolver": "^7.4"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\TranslationBundle\\": "" }
