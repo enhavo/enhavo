@@ -15,7 +15,7 @@ jobs:
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 8.2
+                    php-version: 8.4
                     ini-values: date.timezone=Europe/Warsaw, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=32531, opcache.interned_strings_buffer=8, opcache.validate_timestamps=0, opcache.save_comments=1, opcache.fast_shutdown=0
                     extensions: intl, gd, opcache, mysql, pdo_mysql, :xdebug
                     tools: symfony
@@ -88,7 +88,7 @@ jobs:
         name: "PHPUnit on php ${{ matrix.php-versions }}"
         strategy:
             matrix:
-                php-versions: ['8.2', '8.3']
+                php-versions: ['8.4', '8.5']
             fail-fast: false
         steps:
             -   name: Checkout
@@ -132,7 +132,7 @@ jobs:
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 8.2
+                    php-version: 8.4
                     ini-values: date.timezone=Europe/Warsaw, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=32531, opcache.interned_strings_buffer=8, opcache.validate_timestamps=0, opcache.save_comments=1, opcache.fast_shutdown=0
                     extensions: intl, gd, opcache, mysql, pdo_mysql, :xdebug
                     coverage: none
@@ -178,7 +178,7 @@ jobs:
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 8.2
+                    php-version: 8.4
                     ini-values: date.timezone=Europe/Warsaw, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=32531, opcache.interned_strings_buffer=8, opcache.validate_timestamps=0, opcache.save_comments=1, opcache.fast_shutdown=0
                     extensions: intl, gd, opcache, mysql, pdo_mysql, :xdebug
                     coverage: none
@@ -238,8 +238,5 @@ jobs:
             -   name: Install dependencies
                 run: yarn install
 
-#            -   name: Run mocha
-#                run: bin/mocha
-#
-#            -   name: Run karma
-#                run: bin/karma
+            -   name: Run unit tests
+                run:  yarn test:unit --run
