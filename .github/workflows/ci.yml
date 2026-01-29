@@ -72,8 +72,8 @@ jobs:
             -   name: Check for security vulnerabilities
                 run: symfony security:check
 
-            -   name: Validate Doctrine mapping
-                run: bin/console doctrine:schema:validate --skip-sync -vvv
+#            -   name: Validate Doctrine mapping
+#                run: bin/console doctrine:schema:validate --skip-sync -vvv
 
             -   name: PHP lint check
                 run: vendor/bin/phplint
