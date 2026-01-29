@@ -31,9 +31,9 @@ class ViewEndpointType extends AbstractEndpointType
 
     public function getResponse($options, Request $request, Data $data, Context $context): Response
     {
-        if ('json' === $request->get('_format')) {
+        if ('json' === $request->attributes->get('_format')) {
             return $this->parent->getResponse($options, $request, $data, $context);
-        } elseif (!$request->get('_format') || 'html' === $request->get('_format')) {
+        } elseif (!$request->query->get('_format') || 'html' === $request->query->get('_format')) {
             if (null === $options['template'] && !$context->has('template')) {
                 throw new \Exception('If format is html, then a template need to be provided over the configuration or context');
             }

@@ -25,7 +25,7 @@ class DocumentationController extends AbstractController
 
     public function indexAction(Request $request): Response
     {
-        $section = $request->get('section', DocumentationCollector::DEFAULT);
+        $section = $request->query->get('section', DocumentationCollector::DEFAULT);
 
         if (!$this->documentationCollector->hasSection($section)) {
             throw $this->createNotFoundException();

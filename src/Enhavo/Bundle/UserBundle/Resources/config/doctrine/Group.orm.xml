@@ -6,7 +6,7 @@
         </id>
 
         <field name="name" nullable="true" />
-        <field name="roles" type="array" nullable="true" />
+        <field name="roles" type="json" nullable="true" />
 
         <many-to-many field="users" target-entity="Enhavo\Bundle\UserBundle\Model\UserInterface" mapped-by="groups" />
     </entity>

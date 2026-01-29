@@ -12,9 +12,9 @@
     }
   ],
   "require": {
-    "php": "^8.2",
+    "php": "^8.4",
     "enhavo/app-bundle": "^0.15",
-    "league/uri": "^6.4"
+    "league/uri": "^7.4"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\ContentBundle\\": "" }

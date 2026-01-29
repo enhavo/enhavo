@@ -62,9 +62,6 @@ services:
         arguments:
             - '@Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager'
             - '@twig'
-
-        calls:
-            - [setContainer, [ '@service_container' ] ]
         tags:
             - { name: twig.extension }
 

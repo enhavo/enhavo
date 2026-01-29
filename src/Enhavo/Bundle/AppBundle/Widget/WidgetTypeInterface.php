@@ -18,7 +18,7 @@ interface WidgetTypeInterface extends TypeInterface
 {
     public function createViewData(array $options, $resource = null);
 
-    public function configureOptions(OptionsResolver $optionsResolver);
+    public function configureOptions(OptionsResolver $optionsResolver): void;
 
     public function getTemplate($options);
 }

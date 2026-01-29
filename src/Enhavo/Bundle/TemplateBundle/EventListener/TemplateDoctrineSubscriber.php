@@ -12,21 +12,26 @@
 namespace Enhavo\Bundle\TemplateBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Enhavo\Bundle\TemplateBundle\Entity\Template;
 use Enhavo\Bundle\TemplateBundle\Template\TemplateManager;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Psr\Container\ContainerInterface;
 
 class TemplateDoctrineSubscriber implements EventSubscriber
 {
-    use ContainerAwareTrait;
+    private ?ContainerInterface $container = null;
 
     public function getSubscribedEvents()
     {
         return [
             Events::postLoad,
         ];
+    }
+
+    public function setContainer(?ContainerInterface $container): void
+    {
+        $this->container = $container;
     }
 
     public function postLoad(LifecycleEventArgs $args)

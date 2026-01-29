@@ -28,7 +28,7 @@ class VueRoutesEndpointType extends AbstractEndpointType
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
         if ($request->query->has('path')) {
-            $path = $request->get('path');
+            $path = $request->query->get('path');
             $route = $this->provider->getRoute($path, $options['groups']);
             if (null === $route) {
                 $data->set('vue_routes', []);
@@ -41,7 +41,7 @@ class VueRoutesEndpointType extends AbstractEndpointType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'groups' => null,

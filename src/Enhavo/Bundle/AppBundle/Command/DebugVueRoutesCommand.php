@@ -37,7 +37,7 @@ class DebugVueRoutesCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $group = $input->getArgument('group');
         $routes = $this->provider->getRoutes($group);

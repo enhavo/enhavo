@@ -20,7 +20,7 @@ use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Component\Metadata\MetadataRepository;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Psr\Container\ContainerInterface;
 
 /**
  * Class DoctrineTranslatorSubscriber
@@ -33,7 +33,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
  */
 class DoctrineTranslationSubscriber implements EventSubscriber
 {
-    use ContainerAwareTrait;
+    private ?ContainerInterface $container = null;
 
     public function __construct(
         private AccessControl $accessControl,
@@ -50,6 +50,11 @@ class DoctrineTranslationSubscriber implements EventSubscriber
             'preFlush',
             'postFlush',
         ];
+    }
+
+    public function setContainer(?ContainerInterface $container): void
+    {
+        $this->container = $container;
     }
 
     /**

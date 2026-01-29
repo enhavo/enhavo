@@ -34,7 +34,7 @@ class VerificationConfirmEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
-        $csrfToken = $request->get('csrfToken');
+        $csrfToken = $request->query->get('csrfToken');
         $configuration = $this->provider->getVerificationRequestConfiguration();
 
         /** @var UserInterface $user */

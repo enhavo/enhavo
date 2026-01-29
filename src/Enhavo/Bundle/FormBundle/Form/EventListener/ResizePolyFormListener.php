@@ -70,9 +70,9 @@ class ResizePolyFormListener extends ResizeFormListener
         PrototypeManager $prototypeManager,
         $storageName,
         $entryKeys = [],
-        array $options = [],
-        $allowAdd = false,
-        $allowDelete = false,
+        private array $options = [],
+        private $allowAdd = false,
+        private $allowDelete = false,
         $typeFieldName = '_key',
         $entryTypeResolver = null,
     ) {
@@ -117,7 +117,6 @@ class ResizePolyFormListener extends ResizeFormListener
             return call_user_func($this->entryTypeResolver, $entryData);
         } elseif (is_object($entryData)) {
             $class = get_class($entryData);
-            $class = ClassUtils::getRealClass($class);
 
             if (array_key_exists($class, $this->classMap)) {
                 return $this->classMap[$class];
@@ -146,7 +145,7 @@ class ResizePolyFormListener extends ResizeFormListener
         return $data[$this->typeFieldName];
     }
 
-    public function preSetData(FormEvent $event)
+    public function preSetData(FormEvent $event): void
     {
         $form = $event->getForm();
         $data = $event->getData();
@@ -176,7 +175,7 @@ class ResizePolyFormListener extends ResizeFormListener
         }
     }
 
-    public function preSubmit(FormEvent $event)
+    public function preSubmit(FormEvent $event): void
     {
         $form = $event->getForm();
         $data = $event->getData();

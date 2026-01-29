@@ -15,15 +15,11 @@ services:
         public: true
         arguments:
             - '@enhavo_routing.route.repository'
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.generator', alias: 'prefix' }
 
     Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\GuessPrefixGenerator:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.generator', alias: 'guess' }
 
@@ -31,14 +27,10 @@ services:
         public: true
         arguments:
             - '@doctrine.orm.entity_manager'
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.generator', alias: 'slug' }
 
     Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\HierarchyPrefixGenerator:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.generator', alias: 'hierarchy_prefix' }

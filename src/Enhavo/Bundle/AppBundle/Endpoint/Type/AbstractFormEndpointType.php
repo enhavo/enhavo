@@ -42,7 +42,7 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
 
                 $url = $this->getRedirectUrl($options, $request, $data, $context, $form);
                 if ($url) {
-                    if ('html' === $request->get('_format')) {
+                    if ('html' === $request->query->get('_format')) {
                         $context->setResponse($this->redirect($url));
 
                         return;

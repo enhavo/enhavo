@@ -12,7 +12,7 @@
     }
   ],
   "require": {
-    "php": "^8.2",
+    "php": "^8.4",
     "enhavo/app-bundle": "^0.15",
     "enhavo/content-bundle": "^0.15",
     "enhavo/block-bundle": "^0.15",

@@ -37,7 +37,7 @@ class DebugSearchCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $searchTerm = $input->getArgument('searchTerm');
         $includeVarchar = $input->getOption('includeVarchar', false);

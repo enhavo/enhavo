@@ -30,7 +30,7 @@ class Basics
     {
         return dag()
             ->container()
-            ->from('php:8.3-cli-alpine')
+            ->from('php:8.4-cli-alpine')
             ->withExec(['apk', 'add', '--no-cache', 'libzip-dev', 'zip'])
             ->withExec(['docker-php-ext-install', 'zip', 'exif'])
             ->withFile(
@@ -39,7 +39,7 @@ class Basics
             )
             ->withMountedDirectory('/app', $this->source)
             ->withWorkdir('/app')
-            ->withExec(['composer', 'install'])
+            ->withExec(['composer', 'update'])
         ;
     }
 
@@ -58,7 +58,7 @@ class Basics
     {
         return dag()
             ->container()
-            ->from('php:8.3-cli-alpine')
+            ->from('php:8.4-cli-alpine')
             ->withMountedDirectory('/app', $this->source)
             ->withWorkdir('/app')
             ->withExec(['curl', '-sLO', 'https://github.com/enhavo/enhavo-cli/releases/latest/download/enhavo.phar'])

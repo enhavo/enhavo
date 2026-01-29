@@ -51,7 +51,7 @@ trait FileContentTrait
                 stream_copy_to_stream($fileStream, $outputStream);
             });
             $response->headers->set('Content-Type', $file->getMimeType());
-        } elseif ('attachment' === $request->get('disposition')) {
+        } elseif ('attachment' === $request->query->get('disposition')) {
             $response = new FileResponse($file);
             $response->headers->set('Content-Type', 'application/octet-stream');
             $response->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $file->getBasename()));

@@ -19,8 +19,6 @@ services:
             - '%enhavo_template.template%'
             - '@doctrine.orm.entity_manager'
             - '@translator'
-        calls:
-            - [setContainer, ['@service_container']]
 
     Enhavo\Bundle\TemplateBundle\Controller\TemplateController:
         arguments:
@@ -42,8 +40,6 @@ services:
         public: true
         arguments:
             - '@enhavo_template.template.repository'
-        calls:
-            - [ setContainer, ['@service_container']]
         tags:
             - { name: enhavo_route.strategy, alias: 'template' }
 
@@ -55,7 +51,5 @@ services:
             - '@enhavo_template.template.factory'
             - '@enhavo_template.template.repository'
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
-        calls:
-            - [ setContainer, ['@service_container']]
         tags:
             - { name: enhavo.init, alias: 'template' }

@@ -37,13 +37,13 @@ class TemplateFileEndpointType extends AbstractEndpointType
 
     public function getResponse($options, Request $request, Data $data, Context $context): Response
     {
-        $checksum = $request->get('shortChecksum');
+        $checksum = $request->query->get('shortChecksum');
         if (!$checksum) {
             throw new NotFoundHttpException();
         }
 
         $path = null;
-        $formatName = $request->get('format');
+        $formatName = $request->query->get('format');
         if ($formatName) {
             $path = $this->searchFile($this->dataPath.'/format/'.$formatName, $checksum);
         }
@@ -52,7 +52,7 @@ class TemplateFileEndpointType extends AbstractEndpointType
             $path = $this->searchFile($this->dataPath.'/file', $checksum);
 
             if ($path && $formatName) {
-                $path = $this->generateFormat($path, $formatName, $checksum, $request->get('extension'));
+                $path = $this->generateFormat($path, $formatName, $checksum, $request->query->get('extension'));
             }
         }
 

@@ -28,7 +28,7 @@ class NavigationWidgetType extends AbstractWidgetType
         ]);
 
         $request = $this->container->get('request_stack')->getCurrentRequest();
-        $route = $request->get('_route');
+        $route = $request->query->get('_route');
 
         return [
             'navigation' => $navigation,
@@ -36,7 +36,7 @@ class NavigationWidgetType extends AbstractWidgetType
         ];
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $optionsResolver): void
     {
         parent::configureOptions($optionsResolver);
 

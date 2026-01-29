@@ -19,12 +19,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NumberVueTypeExtension extends AbstractVueTypeExtension
 {
-    public function buildVueData(FormView $view, VueData $data, array $options)
+    public function buildVueData(FormView $view, VueData $data, array $options): void
     {
         $data['type'] = 'number';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'component' => 'form-simple',

@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AutoSuggestType extends AbstractType
 {
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['route'] = $options['route'];
         $view->vars['suggestions'] = array_values(array_unique($options['suggestions']));
@@ -35,7 +35,7 @@ class AutoSuggestType extends AbstractType
         return 'auto_suggest';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'route' => null,

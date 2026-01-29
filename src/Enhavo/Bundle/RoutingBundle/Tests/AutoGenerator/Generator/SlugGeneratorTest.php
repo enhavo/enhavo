@@ -13,6 +13,7 @@ namespace Enhavo\Bundle\RoutingBundle\Tests\AutoGenerator\Generator;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\SlugGenerator;
 use Enhavo\Bundle\RoutingBundle\Tests\Mock\SluggableMock;
@@ -36,10 +37,8 @@ class SlugGeneratorTest extends TestCase
         $dependencies->queryBuilder->method('orWhere')->willReturnSelf();
         $dependencies->queryBuilder->method('setParameter')->willReturnSelf();
 
-        $dependencies->query = $this->getMockBuilder(AbstractQuery::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getResult'])
-            ->getMockForAbstractClass();
+        $dependencies->query = $this->getMockBuilder(Query::class)->disableOriginalConstructor()->getMock();
+
         $dependencies->queryBuilder->method('getQuery')->willReturn($dependencies->query);
 
         return $dependencies;
@@ -102,11 +101,10 @@ class SlugGeneratorTest extends TestCase
         $dependencies = $this->createDependencies();
         $dependencies->em->method('createQueryBuilder')->willReturn($dependencies->queryBuilder);
 
-        $stack = [0, 1];
-        $dependencies->query->method('getResult')->willReturnCallback(function () use (&$stack) {
-            $value = array_pop($stack);
+        $count = 1;
+        $dependencies->query->method('getResult')->willReturnCallback(function () use (&$count) {
+            return [0 => ['nr' => $count--]];
 
-            return [0 => ['nr' => $value]];
         });
 
         $instance = $this->createInstance($dependencies);

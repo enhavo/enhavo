@@ -29,13 +29,13 @@ class ArticleListEndpointType extends AbstractEndpointType
     {
         $categories = $this->getCategoriesByRequest($request);
         $tags = $this->getTagsByRequest($request);
-        $pagination = $request->get('pagination', true);
-        $limit = $request->get('limit', 10);
+        $pagination = $request->query->get('pagination', true);
+        $limit = $request->query->get('limit', 10);
 
         $articles = $this->repository->findByCategoriesAndTags($categories, $tags, $pagination, $limit);
 
         if ($articles instanceof Pagerfanta) {
-            $page = $request->get('page', 1);
+            $page = $request->query->get('page', 1);
             $articles->setCurrentPage($page);
         }
 

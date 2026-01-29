@@ -40,7 +40,7 @@ class InitCommand extends Command
             ->setDescription('Initialize enhavo');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->manager->init($output);
 

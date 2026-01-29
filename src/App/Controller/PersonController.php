@@ -34,7 +34,7 @@ class PersonController extends AbstractController
 
     public function exportAction(Request $request)
     {
-        $response = new Response(sprintf('Export Data (%s %s)', $request->get('from'), $request->get('to')));
+        $response = new Response(sprintf('Export Data (%s %s)', $request->query->get('from'), $request->query->get('to')));
         $response->headers->set('Content-Disposition', 'attachment; filename="export.txt"');
 
         return $response;

@@ -42,7 +42,7 @@ class DebugEndpointTemplateCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $filter = new TemplateEndpointFilter(
             $input->getArgument('search'),

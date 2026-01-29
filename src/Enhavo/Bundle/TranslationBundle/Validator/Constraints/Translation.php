@@ -18,12 +18,12 @@ class Translation extends Constraint
     public $constraints;
     public $validateDefaultValue = false;
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return TranslationValidator::class;
     }
 
-    public function getTargets()
+    public function getTargets(): array|string
     {
         return self::PROPERTY_CONSTRAINT;
     }

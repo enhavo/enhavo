@@ -27,7 +27,7 @@ class PageChoiceType extends AbstractType
         $this->dataClass = $dataClass;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'class' => $this->dataClass,

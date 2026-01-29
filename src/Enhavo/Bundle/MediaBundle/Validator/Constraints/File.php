@@ -13,7 +13,7 @@ namespace Enhavo\Bundle\MediaBundle\Validator\Constraints;
 
 class File extends \Symfony\Component\Validator\Constraints\File
 {
-    public function getTargets()
+    public function getTargets(): array|string
     {
         return self::CLASS_CONSTRAINT;
     }

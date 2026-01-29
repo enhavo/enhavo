@@ -24,7 +24,7 @@ class PaginationWidgetType extends AbstractWidgetType
         $pageParameter = $options['page_parameter'];
         if (null === $options['route']) {
             $request = $this->container->get('request_stack')->getCurrentRequest();
-            $route = $request->get('_route');
+            $route = $request->attributes->get('_route');
             $routeParameters = $options['routeParameters'];
             foreach ($request->query as $key => $value) {
                 if ($key != $pageParameter) {
@@ -49,7 +49,7 @@ class PaginationWidgetType extends AbstractWidgetType
         ];
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $optionsResolver): void
     {
         parent::configureOptions($optionsResolver);
 

@@ -25,7 +25,7 @@ class ThemeVueTypeExtension extends AbstractVueTypeExtension
     ) {
     }
 
-    public function finishVueData(FormView $view, VueData $data, array $options)
+    public function finishVueData(FormView $view, VueData $data, array $options): void
     {
         if (array_key_exists($options['component_theme'], $this->mappings)) {
             $this->changeValues($view, $data, $options['component_theme']);

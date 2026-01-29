@@ -12,8 +12,8 @@
     }
   ],
   "require": {
-    "php": "^8.2",
-    "symfony/form": "^6.4"
+    "php": "^8.4",
+    "symfony/form": "^7.4"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\VueFormBundle\\": "" }

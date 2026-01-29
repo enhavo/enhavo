@@ -21,8 +21,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class MetadataCommand extends Command
 {
-    use ContainerAwareTrait;
-
     protected function configure()
     {
         $this
@@ -31,7 +29,7 @@ class MetadataCommand extends Command
             ->addArgument('yamlPath', InputArgument::REQUIRED, 'Path to the search.yaml file');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $yamlPath = $input->getArgument('yamlPath');
 

@@ -18,7 +18,6 @@ doctrine:
             collate: utf8mb4_unicode_ci
         url: '%env(resolve:DATABASE_URL)%'
     orm:
-        auto_generate_proxy_classes: true
         auto_mapping: true
         mappings:
             App:
@@ -31,7 +30,6 @@ doctrine:
 when@prod:
     doctrine:
         orm:
-            auto_generate_proxy_classes: false
             metadata_cache_driver:
                 type: service
                 id: doctrine.system_cache_provider

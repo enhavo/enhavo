@@ -33,7 +33,7 @@ class AppointmentEndpointType extends AbstractEndpointType
         $resource = $options['resource'];
 
         if (null === $resource) {
-            $findValue = $request->get($options['find_by']);
+            $findValue = $request->attributes->get($options['find_by']);
             $resource = $this->repository->findOneBy([
                 $options['find_by'] => $findValue,
             ]);

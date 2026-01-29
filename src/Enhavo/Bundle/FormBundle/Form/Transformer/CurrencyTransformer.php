@@ -27,13 +27,13 @@ class CurrencyTransformer implements DataTransformerInterface
         $this->currencyFormatter = $currencyFormatter;
     }
 
-    public function transform($currencyAsInt)
+    public function transform($currencyAsInt): mixed
     {
         // int -> text
         return $this->currencyFormatter->getCurrency($currencyAsInt, null);
     }
 
-    public function reverseTransform($currencyAsString)
+    public function reverseTransform($currencyAsString): mixed
     {
         // text -> int
         return $this->currencyFormatter->getInt($currencyAsString);

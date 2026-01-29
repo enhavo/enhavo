@@ -42,7 +42,7 @@ class AutoSuggestEntityType extends AbstractType
         ));
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['route'] = $options['route'];
         $view->vars['suggestions'] = [];
@@ -77,7 +77,7 @@ class AutoSuggestEntityType extends AbstractType
         return 'auto_suggest';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'query_builder' => null,

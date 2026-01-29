@@ -20,7 +20,8 @@ class RouteStrategy extends AbstractStrategy
 {
     public function __construct(
         private RouterInterface $router,
-    ) {
+    )
+    {
     }
 
     public function generate($resource, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $options = []): string

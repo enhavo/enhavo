@@ -19,14 +19,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChoiceTypeExtension extends AbstractTypeExtension
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'list' => false,
         ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['list'] = $options['list'];
     }

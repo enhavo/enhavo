@@ -12,13 +12,9 @@
 namespace Enhavo\Bundle\NavigationBundle\NavItem;
 
 use Enhavo\Component\Type\Factory;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class NavItemManager
 {
-    use ContainerAwareTrait;
-
     /**
      * @var NavItem[]
      */

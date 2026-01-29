@@ -25,6 +25,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\InputBag;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,7 +72,7 @@ class FormLoginAuthenticatorTest extends TestCase
 
         $dependencies->request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
         $dependencies->request->attributes = new ParameterBag();
-        $dependencies->request->request = new ParameterBag();
+        $dependencies->request->request = new InputBag();
         $dependencies->request->attributes->set('_config', 'config');
         $dependencies->session = $this->getMockBuilder(Session::class)->getMock();
         $dependencies->session->method('get')->willReturnCallback(function ($key) {

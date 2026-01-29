@@ -29,7 +29,7 @@ class PendingSubscriberActiveEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
-        $id = $request->get('id');
+        $id = $request->query->get('id');
 
         $pendingSubscriber = $this->pendingManager->find($id);
         if (!$pendingSubscriber) {

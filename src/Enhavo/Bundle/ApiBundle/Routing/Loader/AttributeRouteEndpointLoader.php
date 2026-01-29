@@ -39,7 +39,7 @@ class AttributeRouteEndpointLoader extends AttributeClassLoader
         }
 
         $globals = $this->resetGlobals();
-        foreach ($this->getAnnotations($class) as $annot) {
+        foreach ($this->getAttributes($class) as $annot) {
             $this->addRoute($collection, $annot, $globals, $class, $class->getMethod('handleRequest'));
         }
 
@@ -64,21 +64,21 @@ class AttributeRouteEndpointLoader extends AttributeClassLoader
         ];
     }
 
-    private function getAnnotations(object $reflection): iterable
+    private function getAttributes(object $reflection): iterable
     {
-        foreach ($reflection->getAttributes($this->routeAnnotationClass, \ReflectionAttribute::IS_INSTANCEOF) as $attribute) {
+        foreach ($reflection->getAttributes(\Symfony\Component\Routing\Attribute\Route::class, \ReflectionAttribute::IS_INSTANCEOF) as $attribute) {
             yield $attribute->newInstance();
         }
     }
 
-    protected function configureRoute(Route $route, \ReflectionClass $class, \ReflectionMethod $method, object $annot): void
+    protected function configureRoute(Route $route, \ReflectionClass $class, \ReflectionMethod $method, object $attr): void
     {
         $route->setDefault('_endpoint', [
             'type' => $class->getName(),
         ]);
     }
 
-    protected function getDefaultRouteName(\ReflectionClass $class, \ReflectionMethod $method): array|string|null
+    protected function getDefaultRouteName(\ReflectionClass $class, \ReflectionMethod $method): string
     {
         $name = preg_replace('/(bundle|controller)_/', '_', parent::getDefaultRouteName($class, $method));
 

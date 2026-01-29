@@ -102,7 +102,7 @@ class FileVueRouteProviderType extends AbstractType implements VueRouteProviderT
         return 'file';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'prefix' => null,

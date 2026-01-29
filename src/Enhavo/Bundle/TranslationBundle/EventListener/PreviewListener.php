@@ -29,7 +29,7 @@ class PreviewListener
     public function onInitPreview(PreviewEvent $event)
     {
         $request = $event->getRequest();
-        $locale = $request->get('locale');
+        $locale = $request->query->get('locale');
         $this->localeResolver->setLocale($locale);
     }
 }

@@ -31,7 +31,7 @@ class RoutesEndpointType extends AbstractEndpointType
         $data->set('routes', $this->normalize($routesCollection, null, ['groups' => 'endpoint']));
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'groups' => null,

@@ -45,7 +45,7 @@ class PageVoter implements VoterInterface
     public function match(Page $page)
     {
         $request = $this->getRequest();
-        $routeName = $request->get('_route');
+        $routeName = $request->query->get('_route');
 
         $pageRouteName = null;
         $pageRoute = $page->getRoute();

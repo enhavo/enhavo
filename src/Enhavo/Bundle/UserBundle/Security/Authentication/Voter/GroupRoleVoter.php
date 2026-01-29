@@ -14,13 +14,14 @@ namespace Enhavo\Bundle\UserBundle\Security\Authentication\Voter;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 
 /**
  * @author gseidel
  */
 class GroupRoleVoter implements VoterInterface
 {
-    public function vote(TokenInterface $token, mixed $subject, array $attributes): int
+    public function vote(TokenInterface $token, mixed $subject, array $attributes, ?Vote $vote = null): int
     {
         $user = $token->getUser();
         if ($user instanceof User) {

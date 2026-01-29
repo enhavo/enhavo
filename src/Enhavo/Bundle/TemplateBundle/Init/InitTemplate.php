@@ -19,12 +19,9 @@ use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\TemplateBundle\Entity\Template;
 use Enhavo\Bundle\TemplateBundle\Template\TemplateManager;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 class InitTemplate implements InitInterface
 {
-    use ContainerAwareTrait;
-
     /**
      * @var EntityManagerInterface
      */

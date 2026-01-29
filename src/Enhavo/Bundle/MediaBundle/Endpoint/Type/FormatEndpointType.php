@@ -61,7 +61,7 @@ class FormatEndpointType extends AbstractEndpointType
             throw $this->createAccessDeniedException();
         }
 
-        $formatName = $request->get('format');
+        $formatName = $request->query->get('format');
         $format = $this->mediaManager->getFormat($file, $formatName);
 
         return $format;

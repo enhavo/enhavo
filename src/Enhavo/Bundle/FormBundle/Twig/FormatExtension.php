@@ -13,7 +13,6 @@ namespace Enhavo\Bundle\FormBundle\Twig;
 
 use Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter;
 use Enhavo\Bundle\FormBundle\Formatter\HtmlSanitizer;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -23,14 +22,13 @@ use Twig\TwigFunction;
  */
 class FormatExtension extends AbstractExtension
 {
-    use ContainerAwareTrait;
-
     /**
      * FormatExtension constructor.
      */
     public function __construct(
         private readonly HtmlSanitizer $sanitizer,
         private readonly array $htmlSanitizerConfig,
+        private readonly CurrencyFormatter $currencyFormatter,
     ) {
     }
 
@@ -52,9 +50,7 @@ class FormatExtension extends AbstractExtension
 
     public function formatCurrency($value, $currency = 'Euro', $position = 'right')
     {
-        $currencyFormatter = $this->container->get(CurrencyFormatter::class);
-
-        return $currencyFormatter->getCurrency($value, $currency, $position);
+        return $this->currencyFormatter->getCurrency($value, $currency, $position);
     }
 
     public function formatHeadline($value, $class = '', array $attributes = [])

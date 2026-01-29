@@ -12,8 +12,8 @@
     }
   ],
   "require": {
-    "php": "^8.2",
-    "symfony/serializer": "^6.4"
+    "php": "^8.4",
+    "symfony/serializer": "^7.4"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\ApiBundle\\": "" }

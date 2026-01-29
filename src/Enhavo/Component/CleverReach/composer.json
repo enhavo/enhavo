@@ -16,9 +16,9 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^7.4",
         "ext-json": "*",
-        "symfony/http-client": "^6.4",
+        "symfony/http-client": "^7.4",
         "psr/log": "^1|^2|^3"
     },
     "autoload": {

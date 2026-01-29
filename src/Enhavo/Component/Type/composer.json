@@ -12,8 +12,8 @@
     }
   ],
   "require": {
-    "php": "^8.2",
-    "symfony/dependency-injection": "^6.4"
+    "php": "^8.4",
+    "symfony/dependency-injection": "^7.4"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Component\\Type\\": "" }

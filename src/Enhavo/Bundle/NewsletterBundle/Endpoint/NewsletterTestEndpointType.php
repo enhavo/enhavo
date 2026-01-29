@@ -36,8 +36,8 @@ class NewsletterTestEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
-        if ($request->get('id')) {
-            $newsletter = $this->repository->find($request->get('id'));
+        if ($request->query->get('id')) {
+            $newsletter = $this->repository->find($request->query->get('id'));
             if (null === $newsletter) {
                 throw $this->createNotFoundException();
             }
@@ -51,7 +51,7 @@ class NewsletterTestEndpointType extends AbstractEndpointType
         $form->setData($newsletter);
 
         $submittedFormData = [];
-        parse_str($request->get('form'), $submittedFormData);
+        parse_str($request->query->get('form'), $submittedFormData);
         $form->submit(isset($submittedFormData[$form->getName()]) ? $submittedFormData[$form->getName()] : []);
 
         $emailForm = $this->createForm(NewsletterEmailType::class);

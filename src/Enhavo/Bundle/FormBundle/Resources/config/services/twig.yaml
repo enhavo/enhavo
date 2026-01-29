@@ -17,7 +17,6 @@ services:
         arguments:
             - '@Enhavo\Bundle\FormBundle\Formatter\HtmlSanitizer'
             - '%enhavo_form.html_sanitizer.config%'
-        calls:
-            - [setContainer, ['@service_container']]
+            - '@Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter'
         tags:
             - { name: twig.extension }

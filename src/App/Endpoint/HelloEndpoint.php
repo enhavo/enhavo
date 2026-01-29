@@ -45,7 +45,7 @@ class HelloEndpoint extends AbstractEndpointType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'template' => 'theme/endpoint/hello.html.twig',

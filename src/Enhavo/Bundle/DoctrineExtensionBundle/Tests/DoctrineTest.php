@@ -11,6 +11,8 @@
 
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Tests;
 
+use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Tools\DsnParser;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
 use Doctrine\ORM\Tools\SchemaTool;
@@ -53,8 +55,12 @@ abstract class DoctrineTest extends TestCase
         }
 
         $config = ORMSetup::createAttributeMetadataConfiguration([$this->entityDir], true, $this->proxyDir ?? $this->proxyDir);
-        $conn = ['url' => 'sqlite:///:memory:'];
-        $this->em = EntityManager::create($conn, $config);
+
+        $dsnParser = new DsnParser();
+        $connectionParams = $dsnParser->parse('pdo-sqlite:///:memory:');
+        $conn = DriverManager::getConnection($connectionParams);
+
+        $this->em = new EntityManager($conn, $config);
     }
 
     protected function updateSchema()

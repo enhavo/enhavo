@@ -13,35 +13,18 @@ namespace Enhavo\Bundle\AppBundle\Twig;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\AppBundle\Widget\WidgetManager;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class WidgetExtension extends AbstractExtension
 {
-    use ContainerAwareTrait;
-
-    /**
-     * @var WidgetManager
-     */
-    private $widgetManager;
-
-    /**
-     * @var TemplateResolver
-     */
-    private $templateResolver;
-
-    /**
-     * @var Environment
-     */
-    private $twigEnvironment;
-
-    public function __construct(WidgetManager $widgetManager, TemplateResolver $templateResolver, Environment $twigEnvironment)
+    public function __construct(
+        private WidgetManager $widgetManager,
+        private TemplateResolver $templateResolver,
+        private Environment $twigEnvironment,
+    )
     {
-        $this->widgetManager = $widgetManager;
-        $this->templateResolver = $templateResolver;
-        $this->twigEnvironment = $twigEnvironment;
     }
 
     public function getFunctions()

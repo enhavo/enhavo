@@ -39,7 +39,7 @@ class RevisionAwareRestoreType extends AbstractEndpointType
 
         $repository = $this->resourceManager->getRepository($options['resource']);
 
-        $id = intval($request->get('id'));
+        $id = intval($request->query->get('id'));
         $resource = $repository->find($id);
 
         if (!$resource instanceof AbstractRevisionAware) {

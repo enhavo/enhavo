@@ -12,7 +12,6 @@
 namespace Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Proxy\Proxy;
 
 class ClassNameResolver implements EntityResolverInterface
 {
@@ -33,10 +32,6 @@ class ClassNameResolver implements EntityResolverInterface
             return $entity;
         }
         $className = get_class($entity);
-        if ($entity instanceof Proxy) {
-            $className = get_parent_class($entity);
-        }
-
         return $className;
     }
 

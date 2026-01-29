@@ -14,10 +14,11 @@ namespace Enhavo\Bundle\AppBundle\Security\Authentication\Voter;
 use Enhavo\Bundle\UserBundle\Model\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 
 class SuperAdminVoter implements VoterInterface
 {
-    public function vote(TokenInterface $token, mixed $subject, array $attributes): int
+    public function vote(TokenInterface $token, mixed $subject, array $attributes, ?Vote $vote = null): int
     {
         if (is_string($attributes[0]) && str_starts_with($attributes[0], 'ROLE_')) {
             if ($token->getUser() instanceof User && in_array('ROLE_SUPER_ADMIN', $token->getUser()->getRoles())) {

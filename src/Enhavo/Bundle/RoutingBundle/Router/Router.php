@@ -11,7 +11,6 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Router;
 
-use Doctrine\Common\Proxy\Proxy;
 use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
 use Enhavo\Bundle\RoutingBundle\Exception\UrlResolverException;
 use Enhavo\Bundle\RoutingBundle\Metadata\Metadata;
@@ -59,9 +58,6 @@ class Router
         }
 
         $className = get_class($resource);
-        if ($resource instanceof Proxy) {
-            $className = get_parent_class($resource);
-        }
 
         throw new UrlResolverException(sprintf('Can\'t resolve route for class "%s" and type "%s". Maybe you need to add to router configuration', $className, $type));
     }

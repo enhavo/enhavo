@@ -18,14 +18,14 @@ use Enhavo\Bundle\RoutingBundle\Router\Router;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class RoutableStrategy extends AbstractStrategy
 {
-    private Router $router;
-
-    public function setRouter(Router $router): void
+    public function __construct(
+        private RouterInterface $router,
+    )
     {
-        $this->router = $router;
     }
 
     public function generate($resource, $parameters = [], $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH, $options = [])
@@ -38,7 +38,7 @@ class RoutableStrategy extends AbstractStrategy
         }
 
         try {
-            return $this->router->generate($route, $parameters, $referenceType);
+            return $this->router->generate($route->getName(), $parameters, $referenceType);
         } catch (RouteNotFoundException|UrlResolverException $e) {
             if ($options['error']) {
                 throw new UrlResolverException($e->getMessage());
@@ -53,7 +53,7 @@ class RoutableStrategy extends AbstractStrategy
         return 'routable';
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $optionsResolver): void
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([

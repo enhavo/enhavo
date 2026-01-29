@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EntityTreeType extends AbstractType
 {
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $choices = $view->vars['choices'];
         $builder = new EntityTreeChoiceBuilder($options['parent_property']);
@@ -29,7 +29,7 @@ class EntityTreeType extends AbstractType
         $view->vars['children_container_class'] = $options['children_container_class'];
     }
 
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         $builder = $view->vars['choice_tree_builder'];
         if ($builder instanceof EntityTreeChoiceBuilder) {
@@ -40,7 +40,7 @@ class EntityTreeType extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'parent_property' => 'parent',

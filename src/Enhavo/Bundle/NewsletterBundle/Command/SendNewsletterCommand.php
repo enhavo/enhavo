@@ -42,7 +42,7 @@ class SendNewsletterCommand extends Command
             ->addOption('limit', null, InputOption::VALUE_REQUIRED, 'The number of emails that should be sent at max', null);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if (!$this->lock()) {
             $output->writeln('Skip sending.. Command is already running in another process.');

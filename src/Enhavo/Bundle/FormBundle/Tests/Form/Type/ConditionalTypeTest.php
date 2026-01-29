@@ -270,7 +270,7 @@ class CarType extends AbstractType
         $builder->add('motor', TextType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('data_class', Car::class);
     }
@@ -283,7 +283,7 @@ class BikeType extends AbstractType
         $builder->add('pedals', TextType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('data_class', Bike::class);
     }

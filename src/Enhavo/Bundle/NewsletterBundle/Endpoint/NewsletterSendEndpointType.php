@@ -30,7 +30,7 @@ class NewsletterSendEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
-        $newsletter = $this->repository->find($request->get('id'));
+        $newsletter = $this->repository->find($request->query->get('id'));
 
         if (null === $newsletter) {
             throw $this->createNotFoundException();

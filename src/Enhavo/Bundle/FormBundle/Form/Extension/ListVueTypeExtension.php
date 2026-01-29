@@ -26,13 +26,13 @@ class ListVueTypeExtension extends AbstractVueTypeExtension
     ) {
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
         $this->getVueData($view)->set('itemComponent', $options['item_component']);
     }
 
-    public function buildVueData(FormView $view, VueData $data, array $options)
+    public function buildVueData(FormView $view, VueData $data, array $options): void
     {
         $data['border'] = $view->vars['border'];
         $data['sortable'] = $view->vars['sortable'];
@@ -48,7 +48,7 @@ class ListVueTypeExtension extends AbstractVueTypeExtension
         $data['onDelete'] = null;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'component' => 'form-list',

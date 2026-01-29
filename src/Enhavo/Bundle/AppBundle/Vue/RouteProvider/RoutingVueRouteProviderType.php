@@ -108,7 +108,7 @@ class RoutingVueRouteProviderType extends AbstractType implements VueRouteProvid
         return 'routing';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'groups' => true,

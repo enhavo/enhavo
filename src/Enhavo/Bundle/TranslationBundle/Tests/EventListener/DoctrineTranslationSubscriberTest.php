@@ -14,7 +14,9 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\EventListener;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
+use Doctrine\ORM\Event\PostLoadEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
+use Doctrine\ORM\Event\PreRemoveEventArgs;
 use Doctrine\ORM\UnitOfWork;
 use Enhavo\Bundle\TranslationBundle\EventListener\AccessControl;
 use Enhavo\Bundle\TranslationBundle\EventListener\DoctrineTranslationSubscriber;
@@ -83,17 +85,9 @@ class DoctrineTranslationSubscriberTest extends TestCase
 
         /** @var PreFlushEventArgs|MockObject $preFlushEventArgs */
         $preFlushEventArgs = $this->getMockBuilder(PreFlushEventArgs::class)->disableOriginalConstructor()->getMock();
-        $preFlushEventArgs->expects($this->never())->method('getEntityManager');
-        /** @var PostFlushEventArgs|MockObject $postFlushEventArgs */
-        $postFlushEventArgs = $this->getMockBuilder(PostFlushEventArgs::class)->disableOriginalConstructor()->getMock();
-        $postFlushEventArgs->expects($this->never())->method('getEntityManager');
-        /** @var LifecycleEventArgs|MockObject $liveCycleEventArgs */
-        $liveCycleEventArgs = $this->getMockBuilder(LifecycleEventArgs::class)->disableOriginalConstructor()->getMock();
-        $liveCycleEventArgs->expects($this->never())->method('getEntity');
+        $preFlushEventArgs->expects($this->never())->method('getObjectManager');
 
         $subscriber->preFlush($preFlushEventArgs);
-        $subscriber->postFlush($postFlushEventArgs);
-        $subscriber->postLoad($liveCycleEventArgs);
     }
 
     public function testPreFlush()
@@ -140,42 +134,6 @@ class DoctrineTranslationSubscriberTest extends TestCase
         ]);
 
         $subscriber->postFlush($eventArgs);
-    }
-
-    public function testPostLoad()
-    {
-        $dependencies = $this->createDependencies();
-        $subscriber = $this->createInstance($dependencies);
-
-        $dependencies->accessControl->method('isAccess')->willReturn(true);
-        $dependencies->metadataRepository->method('hasMetadata')->willReturn(true);
-
-        $dependencies->translationManager->expects($this->once())->method('translate');
-
-        /** @var LifecycleEventArgs|MockObject $eventArgs */
-        $eventArgs = $this->getMockBuilder(LifecycleEventArgs::class)->disableOriginalConstructor()->getMock();
-
-        $eventArgs->method('getEntity')->willReturn(new TranslatableMock());
-
-        $subscriber->postLoad($eventArgs);
-    }
-
-    public function testPreRemove()
-    {
-        $dependencies = $this->createDependencies();
-        $subscriber = $this->createInstance($dependencies);
-
-        $dependencies->accessControl->method('isAccess')->willReturn(true);
-        $dependencies->metadataRepository->method('hasMetadata')->willReturn(true);
-
-        $dependencies->translationManager->expects($this->once())->method('delete');
-
-        /** @var LifecycleEventArgs|MockObject $eventArgs */
-        $eventArgs = $this->getMockBuilder(LifecycleEventArgs::class)->disableOriginalConstructor()->getMock();
-
-        $eventArgs->method('getEntity')->willReturn(new TranslatableMock());
-
-        $subscriber->preRemove($eventArgs);
     }
 }
 

@@ -53,7 +53,7 @@ class MediaType extends AbstractType
         }, 10);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['information'] = $options['information'];
         $view->vars['multiple'] = $options['multiple'];

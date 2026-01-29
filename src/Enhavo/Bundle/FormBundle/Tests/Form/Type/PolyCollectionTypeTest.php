@@ -357,7 +357,7 @@ class UuidType extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'uuid_field' => false,
@@ -412,7 +412,7 @@ class ContainerDataType extends AbstractType
         $builder->add('data', $options['type']);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(['type']);
     }

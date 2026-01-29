@@ -23,12 +23,12 @@ class AppointmentDate extends Constraint
 {
     public $datesDoNotMatch = 'appointment.validator.error.dates';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return 'valid_appointment_date';
     }
 
-    public function getTargets()
+    public function getTargets(): array|string
     {
         return self::CLASS_CONSTRAINT;
     }

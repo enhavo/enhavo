@@ -12,7 +12,6 @@
 namespace Enhavo\Bundle\AppBundle\Twig;
 
 use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -21,25 +20,14 @@ use Twig\TwigFunction;
  */
 class TemplateExtension extends AbstractExtension
 {
-    use ContainerAwareTrait;
-
-    /**
-     * @var string[]
-     */
-    private $formThemes;
-
-    /**
-     * @var TemplateResolver
-     */
-    private $templateResolver;
-
     /**
      * TemplateExtension constructor.
      */
-    public function __construct(array $formThemes, TemplateResolver $templateResolver)
+    public function __construct(
+        private array $formThemes,
+        private TemplateResolver $templateResolver
+    )
     {
-        $this->formThemes = $formThemes;
-        $this->templateResolver = $templateResolver;
     }
 
     public function getFunctions()

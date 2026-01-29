@@ -22,7 +22,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('enhavo_api');
         $rootNode = $treeBuilder->getRootNode();
@@ -32,7 +32,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    private function addDocumentationNode(NodeDefinition $node)
+    private function addDocumentationNode(NodeDefinition $node): void
     {
         $prototype = $node
             ->children()
@@ -48,7 +48,7 @@ class Configuration implements ConfigurationInterface
         $this->addSectionMetadata($prototype);
     }
 
-    private function addSectionMetadata(NodeDefinition $node)
+    private function addSectionMetadata(NodeDefinition $node): void
     {
         $node
             ->children()

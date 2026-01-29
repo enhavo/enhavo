@@ -30,7 +30,7 @@ class TrackingTrackEndpointType extends AbstractEndpointType
 
     public function handleRequest($options, Request $request, Data $data, Context $context): void
     {
-        $token = $request->get('token');
+        $token = $request->query->get('token');
 
         /** @var Receiver $receiver */
         $receiver = $this->receiverRepository->findOneBy([

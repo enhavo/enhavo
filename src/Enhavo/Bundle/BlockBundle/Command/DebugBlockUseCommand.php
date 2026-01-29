@@ -62,7 +62,7 @@ class DebugBlockUseCommand extends Command
      *
      * @return int|void|null
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $type = $input->getArgument('type');
         $id = $input->getArgument('id');

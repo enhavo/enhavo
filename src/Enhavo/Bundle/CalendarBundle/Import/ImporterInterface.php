@@ -45,10 +45,4 @@ interface ImporterInterface
      *               returns type prefix, eg. 'facebook_'
      */
     public function getPrefix();
-
-    /**
-     * @param ContainerInterface $container
-     *                                      Is set by the ImportManager
-     */
-    public function setContainer(ContainerInterface $container);
 }
