@@ -53,7 +53,7 @@ class TenantSlugStrategy extends AbstractStrategy
         return 'tenancy_aware_slug';
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $optionsResolver): void
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([

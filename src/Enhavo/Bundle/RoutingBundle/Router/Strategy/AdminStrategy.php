@@ -50,7 +50,7 @@ class AdminStrategy extends AbstractStrategy
         return 'admin';
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $optionsResolver): void
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setDefaults([

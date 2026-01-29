@@ -51,7 +51,7 @@ class TemplateStrategy extends AbstractStrategy
         return 'template';
     }
 
-    public function configureOptions(OptionsResolver $optionsResolver)
+    public function configureOptions(OptionsResolver $optionsResolver): void
     {
         parent::configureOptions($optionsResolver);
         $optionsResolver->setRequired([
