@@ -12,7 +12,7 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Maker;
 
 use Enhavo\Bundle\AppBundle\Maker\MakeRouting;
-use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
+use Enhavo\Bundle\FrameworkBundle\Maker\MakerUtil;
 use Enhavo\Bundle\ResourceBundle\Tests\Maker\GeneratorHelper;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

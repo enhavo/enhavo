@@ -9,7 +9,7 @@ services:
     Enhavo\Bundle\BlockBundle\Maker\MakeBlock:
         arguments:
             - '@kernel'
-            - '@enhavo_app.maker.util'
+            - '@Enhavo\Bundle\FrameworkBundle\Maker\MakerUtil'
             - '@twig'
             - '@filesystem'
         tags:

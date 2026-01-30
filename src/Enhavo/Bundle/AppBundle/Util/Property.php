@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Enhavo\Component\Type;
+namespace Enhavo\Bundle\AppBundle\Util;
 
 use Enhavo\Bundle\AppBundle\Exception\PropertyNotExistsException;
 

@@ -12,8 +12,8 @@
 namespace Enhavo\Bundle\UserBundle\Endpoint\Type\Delete;
 
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
-use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Type\AreaEndpointType;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

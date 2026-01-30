@@ -1,0 +1,35 @@
+{
+  "name": "enhavo/framework-bundle",
+  "type": "symfony-bundle",
+  "description": "EnhavoFrameworkBundle",
+  "keywords": ["framework"],
+  "homepage": "https://enhavo.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gs@weareindeed.com"
+    }
+  ],
+  "require": {
+    "php": "^8.4",
+    "enhavo/vue-form-bundle": "^0.15",
+    "enhavo/type": "^0.15",
+    "enhavo/api-bundle": "^0.15",
+    "nikic/php-parser": "^5.0",
+    "symfony/console": "^7.4",
+    "symfony/expression-language": "^7.4",
+    "symfony/filesystem": "^7.4",
+    "symfony/form": "^7.4",
+    "symfony/framework-bundle": "^7.4",
+    "symfony/monolog-bundle": "^3.1",
+    "symfony/serializer": "^7.4",
+    "symfony/mailer": "^7.4",
+    "symfony/translation": "^7.4",
+    "symfony/yaml": "^7.4",
+    "twig/twig": "^3.14"
+  },
+  "autoload": {
+    "psr-4": { "Enhavo\\Bundle\\FrameworkBundle\\": "" }
+  }
+}

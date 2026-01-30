@@ -11,9 +11,9 @@
 
 namespace Enhavo\Bundle\PageBundle\Vue;
 
-use Enhavo\Bundle\AppBundle\Vue\RouteProvider\AbstractVueRouteProviderType;
-use Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRoute;
-use Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRouteProviderTypeInterface;
+use Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\AbstractVueRouteProviderType;
+use Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\VueRoute;
+use Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\VueRouteProviderTypeInterface;
 use Enhavo\Bundle\RoutingBundle\Vue\RoutingVueRouteProviderType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

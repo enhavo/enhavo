@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EnhavoVueFormBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->registerForAutoconfiguration(VueFormAwareInterface::class)
             ->addMethodCall('setVueForm', [new Reference(VueForm::class)])

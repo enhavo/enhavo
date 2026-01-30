@@ -12,10 +12,10 @@
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Newsletter;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
-use Enhavo\Bundle\AppBundle\Mailer\Message;
-use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
-use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\FrameworkBundle\Mailer\MailerManager;
+use Enhavo\Bundle\FrameworkBundle\Mailer\Message;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolver;
+use Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Content\Content;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;

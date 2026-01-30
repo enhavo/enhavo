@@ -2,9 +2,9 @@ services:
     Enhavo\Bundle\UserBundle\User\UserManager:
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
+            - '@Enhavo\Bundle\FrameworkBundle\Mailer\MailerManager'
             - '@Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver'
-            - '@enhavo_app.util.secure_url_token_generator'
+            - '@Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface'
             - '@translator'
             - '@security.user_password_hasher'
             - '@router'

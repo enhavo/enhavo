@@ -11,10 +11,10 @@
 
 namespace Enhavo\Bundle\CommentBundle\Comment\Strategy;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\CommentBundle\Comment\PublishStrategyInterface;
 use Enhavo\Bundle\CommentBundle\Model\CommentInterface;
 use Enhavo\Bundle\CommentBundle\Repository\CommentRepository;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolver;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;

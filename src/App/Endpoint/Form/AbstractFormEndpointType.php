@@ -14,7 +14,7 @@ namespace App\Endpoint\Form;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Type\AreaEndpointType;
 use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -1,0 +1,2 @@
+services:
+    Enhavo\Bundle\FrameworkBundle\Init\InitManager:

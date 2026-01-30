@@ -14,7 +14,7 @@ namespace App\Endpoint;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\ViewEndpointType;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Type\ViewEndpointType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Annotation\Route;

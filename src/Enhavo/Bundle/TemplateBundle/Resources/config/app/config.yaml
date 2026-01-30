@@ -1,9 +1,11 @@
-enhavo_app:
+enhavo_framework:
     template_paths:
         enhavo_template:
             path: '@EnhavoTemplateBundle/Resources/views'
             alias: EnhavoTemplate
-            priority: 10
+            priority: 1
+
+enhavo_app:
     roles:
         enhavo_template_template_index:
             role: ROLE_ENHAVO_TEMPLATE_TEMPLATE_INDEX

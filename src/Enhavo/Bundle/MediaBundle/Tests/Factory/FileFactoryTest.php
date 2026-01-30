@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Tests\Factory;
 
-use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Entity\File;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;

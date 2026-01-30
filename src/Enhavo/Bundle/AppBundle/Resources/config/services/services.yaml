@@ -14,60 +14,9 @@ services:
         tags:
             - { name: security.voter }
 
-    enhavo.sorting_manager:
-        class: Enhavo\Bundle\AppBundle\Controller\SortingManager
-        arguments:
-            - '@doctrine.orm.entity_manager'
-
-    enhavo_app.util.secure_url_token_generator:
-        class: Enhavo\Bundle\AppBundle\Util\SecureUrlTokenGenerator
-
-    enhavo_app.translation.translation_dumper:
-        public: true
-        class: Enhavo\Bundle\AppBundle\Translation\TranslationDumper
-        arguments:
-            - []
-
-    Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface:
-        alias: enhavo_app.util.secure_url_token_generator
-
-    Enhavo\Bundle\AppBundle\Template\TemplateResolver:
-        arguments:
-            - '@kernel'
-            - '@filesystem'
-            - '%enhavo_app.template_paths%'
-            - '%twig.default_path%'
-            - '%kernel.project_dir%/assets/theme'
-
     Enhavo\Bundle\AppBundle\Security\ExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 300 }
-
-    enhavo.error_handler.html:
-        class: Enhavo\Bundle\AppBundle\ErrorRenderer\EnhavoErrorRenderer
-        decorates: twig.error_renderer.html
-        arguments:
-            - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
-            - '@request_stack'
-            - '@enhavo.error_handler.html.inner'
-            - '%kernel.debug%'
-
-    Enhavo\Bundle\AppBundle\Mailer\MailerManager:
-        public: true
-        arguments:
-            - '@mailer.mailer'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
-            - '@twig'
-            - '%enhavo_app.mailer.defaults%'
-            - '%enhavo_app.mailer.mails%'
-            - '%enhavo_app.mailer.model%'
-            - '@translator'
-
-    Enhavo\Bundle\AppBundle\EventListener\ComponentSubscriber:
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
-        tags:
-            - { name: kernel.event_subscriber }
 
     Enhavo\Bundle\AppBundle\EventListener\TimestampableSubscriber:
         tags:
@@ -85,66 +34,20 @@ services:
         tags:
             - { name: enhavo_api.data_normalizer }
 
-    Enhavo\Bundle\AppBundle\Routing\ExposeRouteCollector:
-        arguments:
-            - '@router'
-        tags:
-            - { name: enhavo_app.route_collector }
-
-    enhavo_app.route_collector:
-        class:  Enhavo\Bundle\AppBundle\Routing\ChainRouteCollector
-
-    Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface:
-        alias: enhavo_app.route_collector
-
-
-    Enhavo\Bundle\AppBundle\Routing\Loader\VueRouterRouteLoader:
-        arguments:
-            - '@file_locator'
-        tags:
-            - { name: routing.loader }
-
-    Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRouteProviderInterface:
-        alias: Enhavo\Bundle\AppBundle\Vue\RouteProvider\ChainVueRouteProvider
-
-    Enhavo\Bundle\AppBundle\Vue\RouteProvider\ChainVueRouteProvider:
-        arguments:
-            - '%enhavo_app.vue.route_providers%'
-            - '@Enhavo\Component\Type\FactoryInterface[VueRouteProvider]'
-
-    Enhavo\Bundle\AppBundle\Vue\RouteProvider\FileVueRouteProviderType:
-        arguments:
-            - '%kernel.project_dir%'
-        tags:
-            - { name: 'enhavo_app.vue_route_provider' }
-
-    Enhavo\Bundle\AppBundle\Vue\RouteProvider\RoutingVueRouteProviderType:
-        arguments:
-            - '@router'
-        tags:
-            - { name: 'enhavo_app.vue_route_provider' }
-
-    Enhavo\Bundle\AppBundle\Profiler\TemplateEndpointDataCollector:
-        arguments:
-            - '@Enhavo\Bundle\ApiBundle\Profiler\EndpointDataCollector'
-            - '@router'
-        tags:
-            - { name: data_collector, id: 'template_endpoint', priority: 90 }
-
-    Enhavo\Bundle\AppBundle\Vite\ViteManager:
-        arguments:
-            - '%enhavo_app.vite.builds%'
-            - '%kernel.project_dir%/public'
-
-    Enhavo\Bundle\AppBundle\Vite\ViteAssetPackage:
-        arguments:
-            - '@Enhavo\Bundle\AppBundle\Vite\ViteManager'
-            - '%enhavo_app.vite.builds%'
-        tags:
-            - { name: assets.package, package: vite }
-
     Enhavo\Bundle\AppBundle\Form\ThemeVueTypeExtension:
         arguments:
             - '%enhavo_app.form_mapping%'
         tags:
             - { name: 'form.type_extension', priority: 0 }
+
+    Enhavo\Bundle\AppBundle\Maker\MakeRouting:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Maker\MakerUtil'
+        tags:
+            - { name: 'maker.command' }
+
+    Enhavo\Bundle\AppBundle\Maker\MakeMenu:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Maker\MakerUtil'
+        tags:
+            - { name: 'maker.command' }

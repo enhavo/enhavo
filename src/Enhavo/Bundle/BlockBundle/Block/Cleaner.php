@@ -12,12 +12,12 @@
 namespace Enhavo\Bundle\BlockBundle\Block;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Output\ChainOutputLogger;
-use Enhavo\Bundle\AppBundle\Output\OutputLoggerInterface;
 use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
+use Enhavo\Bundle\FrameworkBundle\Output\ChainOutputLogger;
+use Enhavo\Bundle\FrameworkBundle\Output\OutputLoggerInterface;
 use Monolog\Level;
 
 class Cleaner

@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Engine;
 
-use Enhavo\Bundle\AppBundle\Output\OutputLoggerInterface;
+use Enhavo\Bundle\FrameworkBundle\Output\OutputLoggerInterface;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Engine\Result\ResultSummary;
 use Enhavo\Bundle\SearchBundle\Result\Result;

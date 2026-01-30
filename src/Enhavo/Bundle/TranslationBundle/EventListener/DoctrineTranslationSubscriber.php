@@ -16,7 +16,7 @@ use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Doctrine\Persistence\Proxy;
-use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
+use Enhavo\Bundle\FrameworkBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Component\Metadata\MetadataRepository;

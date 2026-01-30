@@ -11,8 +11,8 @@
 
 namespace Enhavo\Bundle\MediaLibraryBundle\Media;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\MediaBundle\Extension\ExtensionInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 

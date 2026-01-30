@@ -11,8 +11,8 @@
 
 namespace Enhavo\Bundle\PageBundle\Routing;
 
-use Enhavo\Bundle\AppBundle\Routing\RouteCollectorInterface;
-use Enhavo\Bundle\AppBundle\Routing\RouteCollectorTrait;
+use Enhavo\Bundle\FrameworkBundle\Routing\RouteCollectorInterface;
+use Enhavo\Bundle\FrameworkBundle\Routing\RouteCollectorTrait;
 use Enhavo\Bundle\PageBundle\Repository\PageRepository;
 use Enhavo\Bundle\RoutingBundle\Router\Router;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;

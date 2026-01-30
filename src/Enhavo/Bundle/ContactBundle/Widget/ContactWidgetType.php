@@ -11,9 +11,9 @@
 
 namespace Enhavo\Bundle\ContactBundle\Widget;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
 use Enhavo\Bundle\ContactBundle\Contact\ContactManager;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolver;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContactWidgetType extends AbstractWidgetType

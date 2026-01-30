@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\FormBundle\Prototype;
 
-use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;

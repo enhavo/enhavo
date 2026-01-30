@@ -1,4 +1,4 @@
-enhavo_app:
+enhavo_framework:
     template_paths:
         enhavo_contact:
             path: '@EnhavoContactBundle/Resources/views'

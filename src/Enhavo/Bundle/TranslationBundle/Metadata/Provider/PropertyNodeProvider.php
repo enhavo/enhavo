@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Metadata\Provider;
 
-use Enhavo\Bundle\AppBundle\Util\NameTransformer;
+use Enhavo\Bundle\FrameworkBundle\Util\NameTransformer;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;
 use Enhavo\Bundle\TranslationBundle\Metadata\PropertyNode;
 use Enhavo\Component\Metadata\Exception\ProviderException;

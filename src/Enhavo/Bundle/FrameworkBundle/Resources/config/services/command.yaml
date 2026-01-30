@@ -1,0 +1,33 @@
+services:
+    Enhavo\Bundle\FrameworkBundle\Command\InitCommand:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Init\InitManager'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\FrameworkBundle\Command\EmailSendCommand:
+        arguments:
+            - '@mailer'
+            - '%enhavo_framework.mailer.defaults%'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\FrameworkBundle\Command\DebugEndpointTemplateCommand:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Endpoint\Template\TemplateEndpointCollector'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\FrameworkBundle\Command\DebugTemplateCommand:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface'
+        tags:
+            - { name: console.command }
+
+    Enhavo\Bundle\FrameworkBundle\Command\DebugVueRoutesCommand:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\VueRouteProviderInterface'
+            - '@serializer'
+        tags:
+            - { name: console.command }
+

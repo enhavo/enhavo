@@ -1,0 +1,151 @@
+services:
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Type\ViewEndpointType:
+        arguments:
+            - '@twig'
+            - '@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface'
+        tags:
+            - { name: enhavo_api.endpoint }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Type\TemplateEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Endpoint\Template\Loader'
+            - '@Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator'
+            - '@Enhavo\Bundle\FrameworkBundle\Twig\TwigRouter'
+            - '@Enhavo\Bundle\FrameworkBundle\Routing\RouteCollectorInterface'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Extension\LocaleEndpointTypeExtension:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Locale\LocaleResolverInterface'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint_extension }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Extension\RouterEndpointExtensionType:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Twig\TwigRouter'
+            - '@Enhavo\Bundle\FrameworkBundle\Routing\RouteCollectorInterface'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint_extension }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Type\AreaEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Area\AreaResolverInterface'
+            - '@twig'
+            - '%enhavo_framework.areas%'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Type\VueRoutesEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\VueRouteProviderInterface'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Type\RoutesEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Routing\RouteCollectorInterface'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
+    enhavo_app.endpoint.template_expression_language:
+        class: Symfony\Component\ExpressionLanguage\ExpressionLanguage
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator:
+        arguments:
+            - '@enhavo_app.endpoint.template_expression_language'
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Template\Loader:
+        arguments:
+            - '%kernel.project_dir%/data'
+            - '@Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator'
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Template\TemplateEndpointCollector:
+        arguments:
+            - '@router'
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\LoremIpsumGenerator:
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\LoadFunctionProvider:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Endpoint\Template\Loader'
+        tags:
+            - { name: enhavo_app.endpoint.expression_language }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\LoremIpsumFunctionProvider:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\LoremIpsumGenerator'
+        tags:
+            - { name: enhavo_app.endpoint.expression_language }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\RefFunctionProvider:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Endpoint\Template\Loader'
+        tags:
+            - { name: enhavo_app.endpoint.expression_language }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\UrlFunctionProvider:
+        arguments:
+            - '%enhavo_framework.endpoint.template_url_prefix%'
+        tags:
+            - { name: enhavo_app.endpoint.expression_language }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\GetContentFunctionProvider:
+        arguments:
+            - '%kernel.project_dir%/data'
+        tags:
+            - { name: enhavo_app.endpoint.expression_language }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\RenderFunctionProvider:
+        arguments:
+            - '@twig'
+            - '@Enhavo\Bundle\FrameworkBundle\Endpoint\Template\Loader'
+        tags:
+            - { name: enhavo_app.endpoint.expression_language }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Extension\VueRouteEndpointExtensionType:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\VueRouteProviderInterface'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint_extension }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Extension\TranslationEndpointExtensionType:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Translation\TranslationDumper'
+            - '@enhavo_framework.locale_resolver'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint_extension }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Type\ErrorEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface'
+            - '@twig'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }

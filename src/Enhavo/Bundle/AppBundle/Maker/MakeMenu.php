@@ -11,7 +11,8 @@
 
 namespace Enhavo\Bundle\AppBundle\Maker;
 
-use Enhavo\Bundle\AppBundle\Util\NameTransformer;
+use Enhavo\Bundle\FrameworkBundle\Maker\MakerUtil;
+use Enhavo\Bundle\FrameworkBundle\Util\NameTransformer;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
 use Symfony\Bundle\MakerBundle\Generator;

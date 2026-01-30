@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Template;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolver;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;

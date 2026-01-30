@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Util;
 
-use Enhavo\Bundle\AppBundle\Util\ArrayUtil;
+use Enhavo\Bundle\FrameworkBundle\Util\ArrayUtil;
 use PHPUnit\Framework\TestCase;
 
 class ArrayUtilTest extends TestCase

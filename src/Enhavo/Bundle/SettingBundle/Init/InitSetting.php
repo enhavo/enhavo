@@ -12,8 +12,8 @@
 namespace Enhavo\Bundle\SettingBundle\Init;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Init\InitInterface;
-use Enhavo\Bundle\AppBundle\Init\Output;
+use Enhavo\Bundle\FrameworkBundle\Init\InitInterface;
+use Enhavo\Bundle\FrameworkBundle\Init\Output;
 use Enhavo\Bundle\SettingBundle\Entity\Setting;
 use Enhavo\Bundle\SettingBundle\Setting\SettingManager;
 

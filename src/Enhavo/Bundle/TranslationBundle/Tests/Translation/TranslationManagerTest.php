@@ -12,8 +12,8 @@
 namespace Enhavo\Bundle\TranslationBundle\Tests\Translation;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
+use Enhavo\Bundle\FrameworkBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata;

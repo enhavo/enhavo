@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\RoutingBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

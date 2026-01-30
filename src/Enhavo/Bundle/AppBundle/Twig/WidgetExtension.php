@@ -11,8 +11,8 @@
 
 namespace Enhavo\Bundle\AppBundle\Twig;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\AppBundle\Widget\WidgetManager;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolver;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;

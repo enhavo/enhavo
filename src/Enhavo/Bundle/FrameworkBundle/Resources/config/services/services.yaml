@@ -1,1 +1,100 @@
 services:
+    Enhavo\Bundle\FrameworkBundle\Util\SecureUrlTokenGenerator:
+
+    Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface:
+        alias: Enhavo\Bundle\FrameworkBundle\Util\SecureUrlTokenGenerator
+
+    Enhavo\Bundle\FrameworkBundle\Template\TemplateResolver:
+        arguments:
+            - '@kernel'
+            - '@filesystem'
+            - '%enhavo_framework.template_paths%'
+            - '%twig.default_path%'
+            - '%kernel.project_dir%/assets/theme'
+
+    Enhavo\Bundle\FrameworkBundle\Mailer\MailerManager:
+        public: true
+        arguments:
+            - '@mailer.mailer'
+            - '@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface'
+            - '@twig'
+            - '%enhavo_framework.mailer.defaults%'
+            - '%enhavo_framework.mailer.mails%'
+            - '%enhavo_framework.mailer.model%'
+            - '@translator'
+
+    Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\VueRouteProviderInterface:
+        alias: Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\ChainVueRouteProvider
+
+    Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\ChainVueRouteProvider:
+        arguments:
+            - '%enhavo_framework.vue.route_providers%'
+            - '@Enhavo\Component\Type\FactoryInterface[VueRouteProvider]'
+
+    Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\FileVueRouteProviderType:
+        arguments:
+            - '%kernel.project_dir%'
+        tags:
+            - { name: 'enhavo_app.vue_route_provider' }
+
+    Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\RoutingVueRouteProviderType:
+        arguments:
+            - '@router'
+        tags:
+            - { name: 'enhavo_app.vue_route_provider' }
+
+    Enhavo\Bundle\FrameworkBundle\Profiler\TemplateEndpointDataCollector:
+        arguments:
+            - '@Enhavo\Bundle\ApiBundle\Profiler\EndpointDataCollector'
+            - '@router'
+        tags:
+            - { name: data_collector, id: 'template_endpoint', priority: 90 }
+
+    Enhavo\Bundle\FrameworkBundle\Vite\ViteManager:
+        arguments:
+            - '%enhavo_framework.vite.builds%'
+            - '%kernel.project_dir%/public'
+
+    Enhavo\Bundle\FrameworkBundle\Vite\ViteAssetPackage:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Vite\ViteManager'
+            - '%enhavo_framework.vite.builds%'
+        tags:
+            - { name: assets.package, package: vite }
+
+    enhavo.error_handler.html:
+        class: Enhavo\Bundle\FrameworkBundle\ErrorRenderer\EnhavoErrorRenderer
+        decorates: twig.error_renderer.html
+        arguments:
+            - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
+            - '@request_stack'
+            - '@enhavo.error_handler.html.inner'
+            - '%kernel.debug%'
+                
+    Enhavo\Bundle\FrameworkBundle\EventListener\ComponentSubscriber:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\FrameworkBundle\Routing\ExposeRouteCollector:
+        arguments:
+            - '@router'
+        tags:
+            - { name: enhavo_framework.route_collector }
+
+    enhavo_framework.route_collector:
+        class: Enhavo\Bundle\FrameworkBundle\Routing\ChainRouteCollector
+
+    Enhavo\Bundle\FrameworkBundle\Routing\RouteCollectorInterface:
+        alias: enhavo_framework.route_collector
+
+    Enhavo\Bundle\FrameworkBundle\Routing\Loader\VueRouterRouteLoader:
+        arguments:
+            - '@file_locator'
+        tags:
+            - { name: routing.loader }
+
+    Enhavo\Bundle\FrameworkBundle\Translation\TranslationDumper:
+        arguments:
+            - [] # pass empty array, this will be replaced by TranslationDumperCompilerPass

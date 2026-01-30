@@ -14,7 +14,7 @@ services:
         public: true
         arguments:
             - '@Enhavo\Bundle\ContactBundle\Contact\ContactManager'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
+            - '@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface'
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -29,10 +29,10 @@ services:
         public: true
         arguments:
             - '%enhavo_contact.forms%'
-            - '%enhavo_app.mailer.defaults%'
+            - '%enhavo_framework.mailer.defaults%'
             - '@form.factory'
-            - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
+            - '@Enhavo\Bundle\FrameworkBundle\Mailer\MailerManager'
+            - '@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface'
 
     Enhavo\Bundle\ContactBundle\Controller\ContactController:
         public: true
@@ -40,7 +40,7 @@ services:
             - '@Enhavo\Bundle\ContactBundle\Contact\ContactManager'
         calls:
             - [ setContainer, [ '@service_container' ] ]
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
 
     Enhavo\Bundle\ContactBundle\Block\ContactBlockType:
         tags:

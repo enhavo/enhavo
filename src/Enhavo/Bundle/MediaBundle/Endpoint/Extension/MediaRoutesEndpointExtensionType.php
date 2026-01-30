@@ -14,8 +14,8 @@ namespace Enhavo\Bundle\MediaBundle\Endpoint\Extension;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointTypeExtension;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\TemplateEndpointType;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Type\TemplateEndpointType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

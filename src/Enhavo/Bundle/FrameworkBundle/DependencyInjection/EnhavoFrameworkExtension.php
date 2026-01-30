@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\FrameworkBundle\DependencyInjection;
 
+
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -30,8 +31,27 @@ class EnhavoFrameworkExtension extends Extension implements PrependExtensionInte
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('enhavo_framework.mailer.mails', $config['mailer']['mails']);
+        $container->setParameter('enhavo_framework.mailer.defaults', $config['mailer']['defaults']);
+        $container->setParameter('enhavo_framework.mailer.model', $config['mailer']['model']);
+        $container->setParameter('enhavo_framework.template_paths', $config['template_paths']);
+        $container->setParameter('enhavo_framework.locale', $config['locale']);
+        $container->setParameter('enhavo_framework.locale_resolver', $config['locale_resolver']);
+        $container->setParameter('enhavo_framework.vue.route_providers', $config['vue']['route_providers'] ?? []);
+        $container->setParameter('enhavo_framework.endpoint.template_url_prefix', $config['endpoint']['template_url_prefix'] ?? null);
+        $container->setParameter('enhavo_framework.areas', $config['area'] ?? []);
+        $container->setParameter('enhavo_framework.vite.builds', $config['vite']['builds'] ?? []);
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+
+        $loader->load('services/area.yaml');
         $loader->load('services/services.yaml');
+        $loader->load('services/endpoint.yaml');
+        $loader->load('services/init.yaml');
+        $loader->load('services/locale.yaml');
+        $loader->load('services/command.yaml');
+        $loader->load('services/maker.yaml');
+        $loader->load('services/twig.yaml');
     }
 
     public function prepend(ContainerBuilder $container)

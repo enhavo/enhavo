@@ -1,0 +1,81 @@
+enhavo_framework:
+    mailer:
+        defaults:
+            from: '%env(resolve:MAILER_FROM)%'
+            name: '%env(resolve:MAILER_NAME)%'
+            to: '%env(resolve:MAILER_TO)%'
+    area:
+        theme:
+            firewall: main
+            options:
+                routes: ['api', 'theme']
+                vue_routes: ['theme']
+                navigation: true
+                locale: true
+        api:
+            path: ^/api/
+        admin_login:
+            path:
+                - /admin/reset-password/.+
+                - /admin/login$
+            options:
+                routes: ['admin_login', 'admin_login_api']
+                vue_routes: ['admin_login']
+                translations: ['javascript']
+        admin:
+            firewall: admin
+            path:
+                - ^/admin/reset-password/.+
+                - ^/admin/login$
+            options:
+                routes: ['admin', 'admin_api']
+                vue_routes: ['admin']
+                translations: ['javascript']
+        admin_api:
+            path: ^/admin/api/
+    vite:
+        builds:
+            admin:
+                port: '%env(VITE_ADMIN_PORT)%'
+                manifest: '%kernel.project_dir%/public/build/admin/.vite/manifest.json'
+                base: '/build/admin'
+            theme:
+                port: '%env(VITE_THEME_PORT)%'
+                manifest: '%kernel.project_dir%/public/build/theme/.vite/manifest.json'
+                base: '/build/theme'
+    vue:
+        route_providers:
+            theme:
+                type: file
+                path: assets/theme/routes.json
+                groups: ['theme']
+            page:
+                type: page
+                component: page
+                groups: ['theme']
+            article:
+                type: article
+                component: article
+                groups: ['theme']
+            template:
+                type: file
+                path: assets/theme/routes.json
+                prefix: /template
+                groups: ['template']
+            routing:
+                type: routing
+
+when@template:
+    enhavo_framework:
+        vue:
+            route_providers:
+                template:
+                    type: file
+                    path: assets/theme/routes.json
+                    groups: ['template']
+
+
+when@prod:
+    enhavo_framework:
+        vite:
+            mode: build

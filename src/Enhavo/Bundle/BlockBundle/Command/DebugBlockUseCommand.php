@@ -12,11 +12,11 @@
 namespace Enhavo\Bundle\BlockBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Output\CliOutputLogger;
-use Enhavo\Bundle\AppBundle\Output\OutputLoggerInterface;
 use Enhavo\Bundle\BlockBundle\Block\Block;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
+use Enhavo\Bundle\FrameworkBundle\Output\CliOutputLogger;
+use Enhavo\Bundle\FrameworkBundle\Output\OutputLoggerInterface;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

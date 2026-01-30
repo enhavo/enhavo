@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Newsletter;
 
-use Enhavo\Bundle\AppBundle\Util\NameTransformer;
+use Enhavo\Bundle\FrameworkBundle\Util\NameTransformer;
 
 class ParameterParser implements ParameterParserInterface
 {

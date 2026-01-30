@@ -8,12 +8,14 @@ doctrine:
         resolve_target_entities:
             Enhavo\Bundle\PageBundle\Model\PageInterface: Enhavo\Bundle\PageBundle\Entity\Page
 
-enhavo_app:
+enhavo_framework:
     template_paths:
         enhavo_page:
             path: '@EnhavoPageBundle/Resources/views'
             alias: EnhavoPage
             priority: 10
+
+enhavo_app:
     roles:
         page_index:
             role: ROLE_ENHAVO_PAGE_PAGE_INDEX

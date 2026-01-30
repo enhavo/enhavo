@@ -13,9 +13,9 @@ namespace Enhavo\Bundle\BlockBundle\Normalizer;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Normalizer\AbstractDataNormalizer;
-use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolver;
 
 class NodeDataNormalizer extends AbstractDataNormalizer
 {

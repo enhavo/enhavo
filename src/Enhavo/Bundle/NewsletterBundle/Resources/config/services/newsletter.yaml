@@ -17,11 +17,11 @@ services:
         public: true
         arguments:
           - '@doctrine.orm.entity_manager'
-          - '@Enhavo\Bundle\AppBundle\Mailer\MailerManager'
-          - '@enhavo_app.util.secure_url_token_generator'
+          - '@Enhavo\Bundle\FrameworkBundle\Mailer\MailerManager'
+          - '@Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface'
           - '@logger'
           - '@twig'
-          - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
+          - '@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface'
           - '@Enhavo\Bundle\NewsletterBundle\Newsletter\ParameterParser'
           - '@enhavo_newsletter.newsletter.provider'
           - '@serializer'

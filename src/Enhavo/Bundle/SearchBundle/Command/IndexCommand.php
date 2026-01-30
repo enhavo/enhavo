@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Command;
 
-use Enhavo\Bundle\AppBundle\Output\CliOutputLogger;
+use Enhavo\Bundle\FrameworkBundle\Output\CliOutputLogger;
 use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

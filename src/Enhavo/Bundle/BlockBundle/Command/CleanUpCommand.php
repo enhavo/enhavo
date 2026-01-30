@@ -12,8 +12,8 @@
 namespace Enhavo\Bundle\BlockBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Output\CliOutputLogger;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
+use Enhavo\Bundle\FrameworkBundle\Output\CliOutputLogger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

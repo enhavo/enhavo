@@ -4,7 +4,7 @@ doctrine:
             Enhavo\Bundle\MediaBundle\Model\FileInterface: Enhavo\Bundle\MediaBundle\Entity\File
             Enhavo\Bundle\MediaBundle\Model\FormatInterface: Enhavo\Bundle\MediaBundle\Entity\Format
 
-enhavo_app:
+enhavo_framework:
     template_paths:
         enhavo_media:
             path: '@EnhavoMediaBundle/Resources/views'

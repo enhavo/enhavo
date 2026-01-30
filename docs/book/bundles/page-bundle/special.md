@@ -70,7 +70,7 @@ special pages as normalized data.
 namespace App\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\ViewEndpointType;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Type\ViewEndpointType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MyEndpointType extends AbstractEndpointType
@@ -117,4 +117,3 @@ enhavo_app:
 ### Error pages
 
 If a page is annotated with `error_default`, `error_403` or `error_404` then this page will be shown instead of the default error.
-

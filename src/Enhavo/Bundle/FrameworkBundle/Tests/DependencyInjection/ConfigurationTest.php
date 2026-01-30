@@ -1,0 +1,127 @@
+<?php
+
+/*
+ * This file is part of the enhavo package.
+ *
+ * (c) WE ARE INDEED GmbH
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Enhavo\Bundle\FrameworkBundle\Tests\DependencyInjection;
+
+use Enhavo\Bundle\FrameworkBundle\DependencyInjection\Configuration;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Config\Definition\Processor;
+
+class ConfigurationTest extends TestCase
+{
+    private function process(Configuration $configuration, array $configs)
+    {
+        $processor = new Processor();
+
+        return $processor->processConfiguration($configuration, $configs);
+    }
+
+    public function testMailerMailsMerge()
+    {
+        $a = [
+            'mailer' => [
+                'mails' => [
+                    'default' => [
+                        'from' => 'default_from',
+                        'name' => 'default_name',
+                        'to' => 'default_to',
+                        'subject' => 'default_subject',
+                        'template' => 'default_template',
+                        'translation_domain' => null,
+                    ],
+                ],
+            ],
+        ];
+
+        $b = [
+            'mailer' => [
+                'mails' => [
+                    'other' => [
+                        'from' => 'other_from',
+                        'name' => 'other_name',
+                        'to' => 'other_to',
+                        'subject' => 'other_subject',
+                        'template' => 'other_template',
+                        'translation_domain' => 'other_domain',
+                    ],
+                ],
+            ],
+        ];
+
+        $configuration = new Configuration();
+        $config = $this->process($configuration, [$a, $b]);
+
+        $this->assertEquals([
+            'default' => [
+                'from' => 'default_from',
+                'name' => 'default_name',
+                'to' => 'default_to',
+                'cc' => null,
+                'bcc' => null,
+                'subject' => 'default_subject',
+                'template' => 'default_template',
+                'content_type' => 'text/plain',
+                'translation_domain' => null,
+            ],
+            'other' => [
+                'from' => 'other_from',
+                'name' => 'other_name',
+                'to' => 'other_to',
+                'cc' => null,
+                'bcc' => null,
+                'subject' => 'other_subject',
+                'template' => 'other_template',
+                'content_type' => 'text/plain',
+                'translation_domain' => 'other_domain',
+            ],
+        ], $config['mailer']['mails']);
+    }
+
+    public function testAreaMerge()
+    {
+        $a = [
+            'area' => [
+                'theme' => [
+                    'firewall' => 'main',
+                    'options' => [
+                        'navigation' => ['main'],
+                        'routes' => ['theme'],
+                    ],
+                ],
+            ],
+        ];
+
+        $b = [
+            'area' => [
+                'theme' => [
+                    'firewall' => 'main',
+                    'options' => [
+                        'navigation' => ['footer'],
+                    ],
+                ],
+            ],
+        ];
+
+        $configuration = new Configuration();
+        $config = $this->process($configuration, [$a, $b]);
+
+        $this->assertEquals([
+            'theme' => [
+                'firewall' => 'main',
+                'path' => null,
+                'options' => [
+                    'navigation' => ['footer'],
+                    'routes' => ['theme'],
+                ],
+            ],
+        ], $config['area']);
+    }
+}

@@ -5,7 +5,7 @@ services:
             - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
             - '@Enhavo\Component\Type\FactoryInterface[Translation]'
             - '@doctrine.orm.entity_manager'
-            - '@enhavo_app.locale_resolver'
+            - '@enhavo_framework.locale_resolver'
             - '@Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface'
             - '@Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface'
             - '%enhavo_translation.enable%'

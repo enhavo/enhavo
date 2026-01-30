@@ -16,7 +16,7 @@ use Enhavo\Bundle\ApiBundle\Documentation\Model\Method;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Type\AreaEndpointType;
 use Enhavo\Bundle\PageBundle\Model\PageInterface;
 use Enhavo\Bundle\PageBundle\Repository\PageRepository;
 use Symfony\Component\HttpFoundation\Request;

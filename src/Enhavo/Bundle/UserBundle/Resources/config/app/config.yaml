@@ -159,13 +159,14 @@ doctrine:
                 is_bundle: true
                 prefix: Enhavo\Bundle\UserBundle\Model
 
-enhavo_app:
+enhavo_framework:
     template_paths:
         enhavo_user:
             path: '@EnhavoUserBundle/Resources/views'
             alias: EnhavoUser
             priority: 10
 
+enhavo_app:
     roles:
         enhavo_user_user_index:
             role: ROLE_ENHAVO_USER_USER_INDEX

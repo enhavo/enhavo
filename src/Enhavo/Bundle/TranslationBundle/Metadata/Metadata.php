@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Metadata;
 
-use Enhavo\Bundle\AppBundle\Util\NameTransformer;
+use Enhavo\Bundle\FrameworkBundle\Util\NameTransformer;
 
 class Metadata extends \Enhavo\Component\Metadata\Metadata
 {
