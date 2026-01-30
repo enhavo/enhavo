@@ -1,0 +1,11 @@
+/public/bundles/
+/public/build/*
+!/public/build/.gitignore
+/public/videos
+/public/js
+/public/css
+/public/sitemap.xml
+/.env.local
+/.env.*.local
+/var/
+/node_modules
