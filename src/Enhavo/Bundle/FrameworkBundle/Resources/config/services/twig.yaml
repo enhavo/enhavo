@@ -1,0 +1,33 @@
+services:
+    Enhavo\Bundle\FrameworkBundle\Twig\TemplateExtension:
+        arguments:
+            - '%enhavo_app.form_themes%'
+            - '@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface'
+        tags:
+            - { name: twig.extension }
+
+    Enhavo\Bundle\FrameworkBundle\Twig\SplObjectExtension:
+        tags:
+            - { name: twig.extension }
+
+    Enhavo\Bundle\FrameworkBundle\Twig\RouterExtension:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Twig\TwigRouter'
+        tags:
+            - { name: twig.extension }
+
+    Enhavo\Bundle\FrameworkBundle\Twig\LocaleExtension:
+        arguments:
+            - '@enhavo_framework.locale_resolver'
+        tags:
+            - { name: twig.extension }
+
+    Enhavo\Bundle\FrameworkBundle\Twig\TwigRouter:
+        arguments:
+            - '@request_stack'
+
+    Enhavo\Bundle\FrameworkBundle\Twig\ViteExtension:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Vite\ViteManager'
+        tags:
+            - { name: twig.extension }

@@ -5,7 +5,7 @@ framework:
     session:
         cookie_lifetime: 25920000
 
-enhavo_app:
+enhavo_framework:
     locale: "%locale%"
     template_paths:
         enhavo_app:

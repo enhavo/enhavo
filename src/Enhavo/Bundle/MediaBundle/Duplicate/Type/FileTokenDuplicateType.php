@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Duplicate\Type;
 
-use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateType;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;

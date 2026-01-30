@@ -11,11 +11,11 @@
 
 namespace Enhavo\Bundle\BlockBundle\Maker;
 
-use Enhavo\Bundle\AppBundle\Maker\MakerUtil;
-use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\DoctrineOrmYaml;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\FormType;
 use Enhavo\Bundle\BlockBundle\Maker\Generator\PhpClass;
+use Enhavo\Bundle\FrameworkBundle\Maker\MakerUtil;
+use Enhavo\Bundle\FrameworkBundle\Util\NameTransformer;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\KernelInterface;

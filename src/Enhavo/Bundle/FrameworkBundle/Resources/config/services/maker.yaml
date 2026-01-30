@@ -1,0 +1,15 @@
+services:
+    Enhavo\Bundle\FrameworkBundle\Maker\Test\InsideBundleTestClassResolver:
+        arguments:
+            - '%kernel.project_dir%'
+
+    Enhavo\Bundle\FrameworkBundle\Maker\MakerUtil:
+        arguments:
+            - '@kernel'
+
+    Enhavo\Bundle\FrameworkBundle\Maker\MakeTest:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Maker\MakerUtil'
+            - '@Enhavo\Bundle\FrameworkBundle\Maker\Test\InsideBundleTestClassResolver'
+        tags:
+            - { name: 'maker.command' }

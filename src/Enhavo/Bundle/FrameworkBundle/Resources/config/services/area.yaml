@@ -1,0 +1,28 @@
+services:
+    Enhavo\Bundle\FrameworkBundle\Area\AreaResolverInterface:
+        alias: Enhavo\Bundle\FrameworkBundle\Area\ChainAreaResolver
+
+    Enhavo\Bundle\FrameworkBundle\Area\ChainAreaResolver:
+        calls:
+            - [addResolver, ['@Enhavo\Bundle\FrameworkBundle\Area\FirewallAreaResolver', 20]]
+            - [addResolver, ['@Enhavo\Bundle\FrameworkBundle\Area\PathAreaResolver', 30]]
+            - [addResolver, ['@Enhavo\Bundle\FrameworkBundle\Area\RequestAreaResolver', 50]]
+
+    Enhavo\Bundle\FrameworkBundle\Area\FirewallAreaResolver:
+        arguments:
+            - '@security.firewall.map'
+            - '@request_stack'
+            - '%enhavo_framework.areas%'
+
+    Enhavo\Bundle\FrameworkBundle\Area\PathAreaResolver:
+        arguments:
+            - '@request_stack'
+            - '%enhavo_framework.areas%'
+
+    Enhavo\Bundle\FrameworkBundle\Area\RequestAreaResolver:
+        arguments:
+            - '@request_stack'
+
+    Enhavo\Bundle\UserBundle\Configuration\RequestConfigKeyProvider:
+        arguments:
+            - '@request_stack'

@@ -12,10 +12,10 @@
 namespace Enhavo\Bundle\UserBundle\Tests\User;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Mailer\Defaults;
-use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
-use Enhavo\Bundle\AppBundle\Mailer\Message;
-use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\FrameworkBundle\Mailer\Defaults;
+use Enhavo\Bundle\FrameworkBundle\Mailer\MailerManager;
+use Enhavo\Bundle\FrameworkBundle\Mailer\Message;
+use Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailConfirmConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationConfirmConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\Registration\RegistrationRegisterConfiguration;

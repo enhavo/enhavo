@@ -8,12 +8,14 @@ enhavo_newsletter:
                 label: newsletter.label.default
                 translation_domain: EnhavoNewsletterBundle
 
-enhavo_app:
+enhavo_framework:
     template_paths:
         enhavo_newsletter:
             path: '@EnhavoNewsletterBundle/Resources/views'
             alias: EnhavoNewsletter
             priority: 10
+
+enhavo_app:
     roles:
         enhavo_newsletter_local_subscriber_index:
             role: ROLE_ENHAVO_NEWSLETTER_LOCAL_SUBSCRIBER_INDEX

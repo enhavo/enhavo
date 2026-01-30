@@ -12,9 +12,9 @@
 namespace Enhavo\Bundle\TranslationBundle\Translation;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
-use Enhavo\Bundle\AppBundle\Util\NameTransformer;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
+use Enhavo\Bundle\FrameworkBundle\Locale\LocaleResolverInterface;
+use Enhavo\Bundle\FrameworkBundle\Util\NameTransformer;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation as TranslationEntity;
 use Enhavo\Bundle\TranslationBundle\Exception\TranslationException;
 use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;

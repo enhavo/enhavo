@@ -59,10 +59,10 @@ services:
         arguments:
             - '@mailer.mailer'
             - '@twig'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
+            - '@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface'
             - '@translator'
             - '@enhavo_comment.comment.repository'
-            - '%enhavo_app.mailer.defaults%'
+            - '%enhavo_framework.mailer.defaults%'
 
     Enhavo\Bundle\CommentBundle\Action\CommentsActionType:
         arguments:

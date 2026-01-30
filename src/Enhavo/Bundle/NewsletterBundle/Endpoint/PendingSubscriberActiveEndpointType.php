@@ -14,7 +14,7 @@ namespace Enhavo\Bundle\NewsletterBundle\Endpoint;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Type\AreaEndpointType;
 use Enhavo\Bundle\NewsletterBundle\Pending\PendingSubscriberManager;
 use Enhavo\Bundle\NewsletterBundle\Subscription\SubscriptionManager;
 use Symfony\Component\HttpFoundation\Request;

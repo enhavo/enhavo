@@ -70,7 +70,7 @@ services:
 
     Enhavo\Bundle\MediaBundle\Twig\MediaTwigExtension:
         arguments:
-            - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
+            - '@Enhavo\Bundle\FrameworkBundle\Twig\TwigRouter'
         tags:
             - { name: twig.extension }
 
@@ -96,7 +96,7 @@ services:
         class: '%enhavo_media.file.factory.class%'
         arguments:
             - '%enhavo_media.file.model.class%'
-            - '@enhavo_app.util.secure_url_token_generator'
+            - '@Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface'
             - '@Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface'
             - '@http_client'
 
@@ -133,7 +133,7 @@ services:
 
     Enhavo\Bundle\MediaBundle\Endpoint\Extension\MediaRoutesEndpointExtensionType:
         arguments:
-            - '@Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator'
+            - '@Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
@@ -184,6 +184,6 @@ services:
 
     Enhavo\Bundle\MediaBundle\Duplicate\Type\FileTokenDuplicateType:
         arguments:
-            - '@enhavo_app.util.secure_url_token_generator'
+            - '@Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface'
         tags:
             - { name: enhavo_resource.duplicate }

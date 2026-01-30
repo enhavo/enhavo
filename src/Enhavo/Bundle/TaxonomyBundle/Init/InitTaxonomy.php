@@ -13,8 +13,8 @@ namespace Enhavo\Bundle\TaxonomyBundle\Init;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Enhavo\Bundle\AppBundle\Init\InitInterface;
-use Enhavo\Bundle\AppBundle\Init\Output;
+use Enhavo\Bundle\FrameworkBundle\Init\InitInterface;
+use Enhavo\Bundle\FrameworkBundle\Init\Output;
 use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 use Enhavo\Bundle\TaxonomyBundle\Entity\Taxonomy;
 

@@ -12,9 +12,9 @@
 namespace Enhavo\Bundle\RoutingBundle\Vue;
 
 use Doctrine\ORM\AbstractQuery;
-use Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueProviderTypeHelperTrait;
-use Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRoute;
-use Enhavo\Bundle\AppBundle\Vue\RouteProvider\VueRouteProviderTypeInterface;
+use Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\VueProviderTypeHelperTrait;
+use Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\VueRoute;
+use Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\VueRouteProviderTypeInterface;
 use Enhavo\Bundle\RoutingBundle\Repository\RouteRepository;
 use Enhavo\Component\Type\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;

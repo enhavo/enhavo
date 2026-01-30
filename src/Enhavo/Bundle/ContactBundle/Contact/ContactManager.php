@@ -11,9 +11,9 @@
 
 namespace Enhavo\Bundle\ContactBundle\Contact;
 
-use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
-use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
 use Enhavo\Bundle\ContactBundle\Model\ContactInterface;
+use Enhavo\Bundle\FrameworkBundle\Mailer\MailerManager;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolver;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class ContactManager

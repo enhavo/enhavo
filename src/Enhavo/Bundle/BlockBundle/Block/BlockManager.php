@@ -11,12 +11,12 @@
 
 namespace Enhavo\Bundle\BlockBundle\Block;
 
-use Enhavo\Bundle\AppBundle\Output\OutputLoggerInterface;
 use Enhavo\Bundle\BlockBundle\Factory\BlockFactory;
 use Enhavo\Bundle\BlockBundle\Factory\BlockFactoryInterface;
 use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\Util\AssociationFinder;
+use Enhavo\Bundle\FrameworkBundle\Output\OutputLoggerInterface;
 use Enhavo\Component\Type\FactoryInterface;
 use Psr\Container\ContainerInterface;
 

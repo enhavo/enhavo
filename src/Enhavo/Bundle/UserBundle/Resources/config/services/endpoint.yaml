@@ -4,7 +4,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
         calls:
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -18,7 +18,7 @@ services:
             - '@enhavo_user.user.repository'
         calls:
 #            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -28,7 +28,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
         calls:
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -41,7 +41,7 @@ services:
             - '@translator'
         calls:
 #            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -55,7 +55,7 @@ services:
             - '@translator'
         calls:
 #            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -69,7 +69,7 @@ services:
             - '@translator'
         calls:
 #            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -79,7 +79,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
         calls:
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -93,7 +93,7 @@ services:
             - '@translator'
         calls:
 #            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -104,7 +104,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
         calls:
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -116,7 +116,7 @@ services:
             - '@enhavo_user.user.manager'
             - '@enhavo_user.user.repository'
         calls:
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -126,7 +126,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
         calls:
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -139,7 +139,7 @@ services:
             - '@enhavo_user.user.factory'
         calls:
 #            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -149,7 +149,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
         calls:
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -163,7 +163,7 @@ services:
             - '@translator'
         calls:
 #            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -173,7 +173,7 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
         calls:
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -187,7 +187,7 @@ services:
             - '@translator'
         calls:
 #            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -200,7 +200,7 @@ services:
             - '@security.token_storage'
         calls:
 #            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -216,7 +216,7 @@ services:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@enhavo_user.user.manager'
         calls:
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }
@@ -228,7 +228,7 @@ services:
             - '@enhavo_user.user.manager'
             - '@enhavo_user.user.repository'
         calls:
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
             - [setContainer, [ '@Psr\Container\ContainerInterface' ]]
         tags:
             - { name: enhavo_api.endpoint }

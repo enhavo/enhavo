@@ -14,9 +14,9 @@ namespace Enhavo\Bundle\CalendarBundle\Endpoint;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
 use Enhavo\Bundle\CalendarBundle\Model\AppointmentInterface;
 use Enhavo\Bundle\CalendarBundle\Repository\AppointmentRepository;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Type\AreaEndpointType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

@@ -22,7 +22,6 @@ services:
         tags:
             - { name: enhavo_app.toolbar_widget }
 
-
     Enhavo\Bundle\AppBundle\Toolbar\Type\NewWindowToolbarWidgetType:
         arguments:
             - '@translator'

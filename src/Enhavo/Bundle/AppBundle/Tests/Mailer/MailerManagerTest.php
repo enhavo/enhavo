@@ -12,10 +12,10 @@
 namespace Enhavo\Bundle\AppBundle\Tests\Mailer;
 
 use Enhavo\Bundle\AppBundle\Exception\MailNotFoundException;
-use Enhavo\Bundle\AppBundle\Mailer\Attachment;
-use Enhavo\Bundle\AppBundle\Mailer\MailerManager;
-use Enhavo\Bundle\AppBundle\Mailer\Message;
-use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
+use Enhavo\Bundle\FrameworkBundle\Mailer\Attachment;
+use Enhavo\Bundle\FrameworkBundle\Mailer\MailerManager;
+use Enhavo\Bundle\FrameworkBundle\Mailer\Message;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolver;
 use Enhavo\Bundle\ResourceBundle\Tests\Mock\TranslatorMock;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

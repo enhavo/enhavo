@@ -13,9 +13,9 @@ namespace Enhavo\Bundle\UserBundle\Endpoint\Type\Login;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\AbstractFormEndpointType;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
-use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Type\AbstractFormEndpointType;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Type\AreaEndpointType;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\Form\FormInterface;

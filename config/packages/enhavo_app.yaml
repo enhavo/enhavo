@@ -1,10 +1,4 @@
 enhavo_app:
-    mailer:
-        defaults:
-            from: '%env(resolve:MAILER_FROM)%'
-            name: '%env(resolve:MAILER_NAME)%'
-            to: '%env(resolve:MAILER_TO)%'
-
     menu:
         tenant:
             type: switch_tenant
@@ -62,33 +56,3 @@ enhavo_app:
                     route: app_admin_frame_test
                     icon: video_label
                     clear: false
-
-    area:
-        theme:
-            firewall: main
-            options:
-                routes: ['api', 'theme']
-                vue_routes: ['theme']
-                navigation: true
-                locale: true
-        api:
-            path: ^/api/
-        admin_login:
-            path:
-                - /admin/reset-password/.+
-                - /admin/login$
-            options:
-                routes: ['admin_login', 'admin_login_api']
-                vue_routes: ['admin_login']
-                translations: ['javascript']
-        admin:
-            firewall: admin
-            path:
-                - ^/admin/reset-password/.+
-                - ^/admin/login$
-            options:
-                routes: ['admin', 'admin_api']
-                vue_routes: ['admin']
-                translations: ['javascript']
-        admin_api:
-            path: ^/admin/api/

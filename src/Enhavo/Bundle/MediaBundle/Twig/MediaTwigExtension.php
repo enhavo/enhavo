@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\MediaBundle\Twig;
 
-use Enhavo\Bundle\AppBundle\Twig\TwigRouter;
+use Enhavo\Bundle\FrameworkBundle\Twig\TwigRouter;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;

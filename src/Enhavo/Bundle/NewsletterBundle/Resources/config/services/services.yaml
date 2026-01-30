@@ -56,7 +56,7 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@enhavo_newsletter.pending_subscriber.factory'
-            - '@enhavo_app.util.secure_url_token_generator'
+            - '@Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface'
 
     Enhavo\Bundle\NewsletterBundle\Twig\SubscribeFormRenderer:
         arguments:

@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Tests\EventListener;
 
-use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
+use Enhavo\Bundle\FrameworkBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\TranslationBundle\EventListener\AccessControl;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

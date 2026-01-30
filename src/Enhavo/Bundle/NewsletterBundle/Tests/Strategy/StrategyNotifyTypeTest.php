@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\NewsletterBundle\Tests\Strategy;
 
-use Enhavo\Bundle\AppBundle\Mailer\Message;
+use Enhavo\Bundle\FrameworkBundle\Mailer\Message;
 use Enhavo\Bundle\NewsletterBundle\Event\SubscriberEvent;
 use Enhavo\Bundle\NewsletterBundle\Model\SubscriberInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;

@@ -31,7 +31,7 @@ services:
     Enhavo\Bundle\BlockBundle\Normalizer\NodeDataNormalizer:
         arguments:
             - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
-            - '@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface'
+            - '@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface'
         tags:
             - { name: enhavo_api.data_normalizer }
 

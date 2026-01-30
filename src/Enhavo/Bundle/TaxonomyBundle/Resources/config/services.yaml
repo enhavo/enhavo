@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\TaxonomyBundle\Maker\MakeTaxonomy:
         arguments:
-            - '@enhavo_app.maker.util'
+            - '@Enhavo\Bundle\FrameworkBundle\Maker\MakerUtil'
         tags:
             - { name: 'maker.command' }
 

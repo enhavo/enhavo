@@ -13,7 +13,7 @@ namespace Enhavo\Bundle\NavigationBundle\Normalizer;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Normalizer\AbstractDataNormalizer;
-use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\NavigationBundle\Model\NodeInterface;
 use Enhavo\Bundle\NavigationBundle\Navigation\NavigationManager;
 use Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager;

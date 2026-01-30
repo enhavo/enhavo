@@ -12,8 +12,8 @@
 namespace Enhavo\Bundle\TemplateBundle\Init;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Enhavo\Bundle\AppBundle\Init\InitInterface;
-use Enhavo\Bundle\AppBundle\Init\Output;
+use Enhavo\Bundle\FrameworkBundle\Init\InitInterface;
+use Enhavo\Bundle\FrameworkBundle\Init\Output;
 use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Enhavo\Bundle\ResourceBundle\Repository\EntityRepository;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;

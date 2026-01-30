@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Locale;
 
-use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
+use Enhavo\Bundle\FrameworkBundle\Locale\LocaleResolverInterface;
 use League\Uri\Components\HierarchicalPath;
 use Symfony\Component\HttpFoundation\RequestStack;
 

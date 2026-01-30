@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\TemplateBundle\Controller;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\TemplateBundle\Entity\Template;
 use Enhavo\Bundle\TemplateBundle\Template\TemplateManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

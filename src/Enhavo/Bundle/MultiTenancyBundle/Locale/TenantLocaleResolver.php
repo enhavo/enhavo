@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\MultiTenancyBundle\Locale;
 
-use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
+use Enhavo\Bundle\FrameworkBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\MultiTenancyBundle\Resolver\ResolverInterface;
 
 class TenantLocaleResolver implements LocaleResolverInterface

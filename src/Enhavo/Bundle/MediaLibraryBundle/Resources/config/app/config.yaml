@@ -1,9 +1,11 @@
-enhavo_app:
+enhavo_framework:
     template_paths:
         enhavo_media_library:
             alias: EnhavoMediaLibrary
             path: '@EnhavoMediaLibraryBundle/Resources/views'
             priority: 10
+
+enhavo_app:
     roles:
         enhavo_media_library_file_index:
             role: ROLE_ENHAVO_MEDIA_LIBRARY_FILE_INDEX

@@ -15,7 +15,7 @@ services:
 
     Enhavo\Bundle\PageBundle\Twig\PagePathExtension:
         arguments:
-            - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
+            - '@Enhavo\Bundle\FrameworkBundle\Twig\TwigRouter'
         tags:
             - { name: twig.extension }
 
@@ -79,7 +79,7 @@ services:
             - '@enhavo_page.page.repository'
             - '@enhavo_routing.router'
         tags:
-            - { name: enhavo_app.route_collector }
+            - { name: enhavo_framework.route_collector }
 
     Enhavo\Bundle\PageBundle\Vue\PageVueRouteProviderType:
         tags:

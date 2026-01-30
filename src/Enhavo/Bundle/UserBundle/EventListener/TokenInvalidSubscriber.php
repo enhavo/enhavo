@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\UserBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Template\TemplateResolver;
+use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolver;
 use Enhavo\Bundle\UserBundle\Exception\TokenInvalidException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;

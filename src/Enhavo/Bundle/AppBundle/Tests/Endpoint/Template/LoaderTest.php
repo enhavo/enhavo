@@ -11,8 +11,8 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Endpoint\Template;
 
-use Enhavo\Bundle\AppBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator;
-use Enhavo\Bundle\AppBundle\Endpoint\Template\Loader;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Template\ExpressionLanguage\TemplateExpressionLanguageEvaluator;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Template\Loader;
 use PHPUnit\Framework\TestCase;
 
 class LoaderTest extends TestCase

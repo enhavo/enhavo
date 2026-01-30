@@ -89,7 +89,7 @@ services:
             - '@Enhavo\Bundle\NavigationBundle\Navigation\NavigationManager'
             - '@Enhavo\Bundle\NavigationBundle\NavItem\NavItemManager'
         calls:
-            - [setTemplateResolver, ['@Enhavo\Bundle\AppBundle\Template\TemplateResolverInterface']]
+            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
         tags:
             - { name: enhavo_api.data_normalizer }
 
