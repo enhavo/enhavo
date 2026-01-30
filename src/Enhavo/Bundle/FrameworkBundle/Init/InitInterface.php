@@ -11,9 +11,7 @@
 
 namespace Enhavo\Bundle\FrameworkBundle\Init;
 
-use Enhavo\Bundle\AppBundle\Type\TypeInterface;
-
-interface InitInterface extends TypeInterface
+interface InitInterface
 {
     public function init(Output $io);
 }

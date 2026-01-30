@@ -11,7 +11,6 @@
 
 namespace Enhavo\Bundle\FrameworkBundle\Init;
 
-use Enhavo\Bundle\AppBundle\Type\CollectorInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class InitManager

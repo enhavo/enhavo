@@ -57,7 +57,7 @@ class MakeTest extends AbstractMaker
 
         $generator->generateClass(
             $testFqcl,
-            $this->util->getRealpath('@EnhavoAppBundle/Resources/skeleton/Test.tpl.php'),
+            $this->util->getRealpath('@EnhavoFrameworkBundle/Resources/skeleton/Test.tpl.php'),
             [
                 'classAnalyzer' => $classAnalyzer,
                 'classResolver' => $this->testClassResolver,

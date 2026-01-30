@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\AppBundle\Tests\Mailer;
 
-use Enhavo\Bundle\AppBundle\Exception\MailNotFoundException;
+use Enhavo\Bundle\FrameworkBundle\Exception\MailNotFoundException;
 use Enhavo\Bundle\FrameworkBundle\Mailer\Attachment;
 use Enhavo\Bundle\FrameworkBundle\Mailer\MailerManager;
 use Enhavo\Bundle\FrameworkBundle\Mailer\Message;

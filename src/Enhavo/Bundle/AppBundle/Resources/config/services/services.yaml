@@ -14,12 +14,6 @@ services:
         tags:
             - { name: security.voter }
 
-    enhavo_app.translation.translation_dumper:
-        public: true
-        class: Enhavo\Bundle\AppBundle\Translation\TranslationDumper
-        arguments:
-            - []
-
     Enhavo\Bundle\AppBundle\Security\ExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 300 }

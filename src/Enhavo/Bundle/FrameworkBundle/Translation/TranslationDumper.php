@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Enhavo\Bundle\AppBundle\Translation;
+namespace Enhavo\Bundle\FrameworkBundle\Translation;
 
 use Symfony\Component\Translation\Loader\LoaderInterface;
 

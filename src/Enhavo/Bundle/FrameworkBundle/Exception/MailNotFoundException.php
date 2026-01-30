@@ -9,8 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Enhavo\Bundle\AppBundle\Exception;
+namespace Enhavo\Bundle\FrameworkBundle\Exception;
 
-class MailAttachmentException extends \InvalidArgumentException
+class MailNotFoundException extends \Exception
 {
 }

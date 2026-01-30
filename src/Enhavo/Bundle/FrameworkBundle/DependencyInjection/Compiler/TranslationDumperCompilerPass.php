@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\FrameworkBundle\DependencyInjection\Compiler;
 
+use Enhavo\Bundle\FrameworkBundle\Translation\TranslationDumper;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Exception\OutOfBoundsException;
@@ -18,7 +19,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class TranslationDumperCompilerPass implements CompilerPassInterface
 {
-    public const SERVICE = 'enhavo_app.translation.translation_dumper';
+    public const SERVICE = TranslationDumper::class;
 
     public function process(ContainerBuilder $container)
     {

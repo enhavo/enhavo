@@ -94,3 +94,7 @@ services:
             - '@file_locator'
         tags:
             - { name: routing.loader }
+
+    Enhavo\Bundle\FrameworkBundle\Translation\TranslationDumper:
+        arguments:
+            - [] # pass empty array, this will be replaced by TranslationDumperCompilerPass

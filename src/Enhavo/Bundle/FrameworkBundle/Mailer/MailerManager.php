@@ -11,8 +11,8 @@
 
 namespace Enhavo\Bundle\FrameworkBundle\Mailer;
 
-use Enhavo\Bundle\AppBundle\Exception\MailAttachmentException;
-use Enhavo\Bundle\AppBundle\Exception\MailNotFoundException;
+use Enhavo\Bundle\FrameworkBundle\Exception\MailAttachmentException;
+use Enhavo\Bundle\FrameworkBundle\Exception\MailNotFoundException;
 use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolver;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Mailer\MailerInterface;

@@ -132,10 +132,20 @@ services:
 
     Enhavo\Bundle\FrameworkBundle\Endpoint\Extension\TranslationEndpointExtensionType:
         arguments:
-            - '@enhavo_app.translation.translation_dumper'
+            - '@Enhavo\Bundle\FrameworkBundle\Translation\TranslationDumper'
             - '@enhavo_framework.locale_resolver'
         calls:
             - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
         tags:
             - { name: enhavo_api.endpoint_extension }
+            - { name: container.service_subscriber }
+
+    Enhavo\Bundle\FrameworkBundle\Endpoint\Type\ErrorEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface'
+            - '@twig'
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+        tags:
+            - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }

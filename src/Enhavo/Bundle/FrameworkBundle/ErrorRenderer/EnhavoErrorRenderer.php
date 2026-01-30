@@ -12,7 +12,7 @@
 namespace Enhavo\Bundle\FrameworkBundle\ErrorRenderer;
 
 use Enhavo\Bundle\ApiBundle\Endpoint\Endpoint;
-use Enhavo\Bundle\AppBundle\Endpoint\Type\ErrorEndpointType;
+use Enhavo\Bundle\FrameworkBundle\Endpoint\Type\ErrorEndpointType;
 use Enhavo\Component\Type\FactoryInterface;
 use Symfony\Bridge\Twig\ErrorRenderer\TwigErrorRenderer;
 use Symfony\Component\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
