@@ -1,0 +1,15 @@
+admin:
+    prefix: /admin
+    resource: routes/admin/*
+
+admin_api:
+    prefix: /admin/api
+    resource: routes/admin_api/*
+
+app:
+    resource: ../src/Controller
+    type: attribute
+
+endpoint:
+    resource: ../src/Endpoint
+    type: endpoint
