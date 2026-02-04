@@ -13,7 +13,7 @@
   ],
   "require": {
     "php": "^8.4",
-    "enhavo/metadata": "^0.15",
+    "enhavo/metadata": "^0.16",
     "doctrine/orm": "^2.20.6",
     "symfony/var-exporter": "^7.4"
   },

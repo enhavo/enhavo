@@ -13,9 +13,8 @@
   ],
   "require": {
     "php": "^8.4",
-    "enhavo/vue-form-bundle": "^0.15",
-    "enhavo/type": "^0.15",
-    "enhavo/api-bundle": "^0.15",
+    "enhavo/type": "^0.16",
+    "enhavo/api-bundle": "^0.16",
     "nikic/php-parser": "^5.0",
     "symfony/console": "^7.4",
     "symfony/expression-language": "^7.4",

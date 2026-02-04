@@ -13,8 +13,8 @@
   ],
   "require": {
     "php": "^8.4",
-    "enhavo/app-bundle": "^0.15",
-    "enhavo/form-bundle": "^0.15",
+    "enhavo/app-bundle": "^0.16",
+    "enhavo/form-bundle": "^0.16",
     "symfony/security-bundle": "^7.4",
     "symfony/password-hasher": "^7.4",
     "laminas/laminas-stdlib": "^3.2"

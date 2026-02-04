@@ -14,9 +14,9 @@
   "require": {
     "ext-zip": "*",
     "php": "^8.4",
-    "enhavo/app-bundle": "^0.15",
-    "enhavo/doctrine-extension-bundle": "^0.15",
-    "enhavo/metadata": "^0.15",
+    "enhavo/app-bundle": "^0.16",
+    "enhavo/doctrine-extension-bundle": "^0.16",
+    "enhavo/metadata": "^0.16",
     "ruflin/elastica": "^7.1"
   },
   "autoload": {

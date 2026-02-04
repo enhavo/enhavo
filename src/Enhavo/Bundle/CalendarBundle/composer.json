@@ -13,10 +13,10 @@
   ],
   "require": {
     "php": "^8.4",
-    "enhavo/app-bundle": "^0.15",
-    "enhavo/content-bundle": "^0.15",
-    "enhavo/block-bundle": "^0.15",
-    "enhavo/form-bundle": "^0.15",
+    "enhavo/app-bundle": "^0.16",
+    "enhavo/content-bundle": "^0.16",
+    "enhavo/block-bundle": "^0.16",
+    "enhavo/form-bundle": "^0.16",
     "johngrogg/ics-parser": "^2.0",
     "symfony/http-client": "^7.4",
     "simshaun/recurr": "^2.2"

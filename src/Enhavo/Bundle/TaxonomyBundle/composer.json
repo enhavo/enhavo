@@ -13,9 +13,9 @@
   ],
   "require": {
     "php": "^8.4",
-    "enhavo/app-bundle": "^0.15",
-    "enhavo/form-bundle": "^0.15",
-    "enhavo/routing-bundle": "^0.15"
+    "enhavo/app-bundle": "^0.16",
+    "enhavo/form-bundle": "^0.16",
+    "enhavo/routing-bundle": "^0.16"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\TaxonomyBundle\\": "" }
