@@ -15,6 +15,7 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
+use Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface;
 use Enhavo\Bundle\ResourceBundle\Input\Input;
 use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
@@ -27,7 +28,7 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
     public function __construct(
         private readonly InputFactory $inputFactory,
         private readonly ResourceManager $resourceManager,
-        private readonly VueForm $vueForm,
+        private readonly FormNormalizerInterface $formNormalizer,
     ) {
     }
 
@@ -62,7 +63,7 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
             }
 
             $formFields = $request->query->get('form-fields') ? explode(',', $request->query->get('form-fields')) : null;
-            $data->set('form', $this->vueForm->createData($form->createView(), $formFields));
+            $data->set('form', $this->formNormalizer->normalize($form, ['fields' => $formFields]));
             $data->set('url', $request->getPathInfo());
         }
 

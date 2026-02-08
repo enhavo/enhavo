@@ -14,6 +14,7 @@
   "require": {
     "php": "^8.4",
     "enhavo/api-bundle": "^0.16",
+    "symfony/security-csrf": "^7.4",
     "pagerfanta/doctrine-orm-adapter": "^4.2",
     "winzou/state-machine-bundle": "^0.6.2"
   },
