@@ -15,7 +15,7 @@ use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\ResourceBundle\Batch\Batch;
 use Enhavo\Bundle\ResourceBundle\Batch\Type\FormBatchType;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
-use Enhavo\Bundle\VueFormBundle\Form\VueForm;
+use Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -27,7 +27,7 @@ class FormBatchTypeTest extends TestCase
         $dependencies = new FormBatchTypeDependencies();
         $dependencies->formFactory = $this->getMockBuilder(FormFactoryInterface::class)->getMock();
         $dependencies->repository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
-        $dependencies->vueForm = $this->getMockBuilder(VueForm::class)->disableOriginalConstructor()->getMock();
+        $dependencies->formNormalizer = $this->getMockBuilder(FormNormalizerInterface::class)->getMock();
         $dependencies->expressionLanguage = new ResourceExpressionLanguage();
 
         return $dependencies;
@@ -36,7 +36,7 @@ class FormBatchTypeTest extends TestCase
     private function createInstance(FormBatchTypeDependencies $dependencies): FormBatchType
     {
         return new FormBatchType(
-            $dependencies->vueForm,
+            $dependencies->formNormalizer,
             $dependencies->formFactory,
             $dependencies->expressionLanguage,
         );
@@ -45,7 +45,7 @@ class FormBatchTypeTest extends TestCase
     public function testViewData()
     {
         $dependencies = $this->createDependencies();
-        $dependencies->vueForm->method('createData')->willReturn(['form' => 'data']);
+        $dependencies->formNormalizer->method('normalize')->willReturn(['form' => 'data']);
 
         $type = $this->createInstance($dependencies);
 
@@ -62,7 +62,7 @@ class FormBatchTypeTest extends TestCase
 class FormBatchTypeDependencies
 {
     public EntityRepository|MockObject $repository;
-    public VueForm|MockObject $vueForm;
+    public FormNormalizerInterface|MockObject $formNormalizer;
     public FormFactoryInterface|MockObject $formFactory;
     public ResourceExpressionLanguage|MockObject $expressionLanguage;
 }
