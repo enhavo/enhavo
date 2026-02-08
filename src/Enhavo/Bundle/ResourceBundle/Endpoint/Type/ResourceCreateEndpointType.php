@@ -16,11 +16,11 @@ use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
+use Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface;
 use Enhavo\Bundle\ResourceBundle\Input\Input;
 use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface;
-use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,7 +29,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
     public function __construct(
         private readonly InputFactory $inputFactory,
         private readonly ResourceManager $resourceManager,
-        private readonly VueForm $vueForm,
+        private readonly FormNormalizerInterface $formNormalizer,
         private readonly RouteResolverInterface $routeResolver,
         private readonly ResourceExpressionLanguage $expressionLanguage,
     ) {
@@ -83,8 +83,13 @@ class ResourceCreateEndpointType extends AbstractEndpointType
                 }
             }
 
+<<<<<<< HEAD
             $formFields = $request->get('form-fields') ? explode(',', $request->get('form-fields')) : null;
             $data->set('form', $this->vueForm->createData($form->createView(), $formFields));
+=======
+            $formFields = $request->query->get('form-fields') ? explode(',', $request->query->get('form-fields')) : null;
+            $data->set('form', $this->formNormalizer->createData($form->createView(), $formFields));
+>>>>>>> 8775f4b60 (feat: add form normalizer (#2378))
         }
 
         $viewData = $input->getViewData($resource);

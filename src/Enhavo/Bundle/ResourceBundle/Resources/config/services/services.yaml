@@ -102,3 +102,7 @@ services:
     Enhavo\Bundle\ResourceBundle\Security\CsrfChecker:
         arguments:
             - '%form.type_extension.csrf.enabled%'
+
+    Enhavo\Bundle\ResourceBundle\Form\FormNormalizer:
+        arguments:
+            - '@serializer'
