@@ -30,7 +30,7 @@ services:
 
     Enhavo\Bundle\ResourceBundle\Batch\Type\FormBatchType:
         arguments:
-            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+            - '@Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface'
             - '@form.factory'
             - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
         tags:

@@ -19,6 +19,7 @@ use Enhavo\Bundle\ResourceBundle\Column\Column;
 use Enhavo\Bundle\ResourceBundle\Column\ColumnTypeInterface;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\CollectionCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\DeleteHandlerCompilerPass;
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\FormNormalizerCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\GridCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\InputCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\RequestHandlerCompilerPass;
@@ -49,6 +50,7 @@ class EnhavoResourceBundle extends Bundle
         $container->addCompilerPass(new ResourceExpressionCompilerPass());
         $container->addCompilerPass(new DeleteHandlerCompilerPass());
         $container->addCompilerPass(new RequestHandlerCompilerPass());
+        $container->addCompilerPass(new FormNormalizerCompilerPass());
 
         $container->addCompilerPass(new TypeCompilerPass('Action', 'enhavo_resource.action', Action::class));
         $container->addCompilerPass(new TypeCompilerPass('Batch', 'enhavo_resource.batch', Batch::class));
