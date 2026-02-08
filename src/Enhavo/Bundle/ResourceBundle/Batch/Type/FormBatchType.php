@@ -14,14 +14,14 @@ namespace Enhavo\Bundle\ResourceBundle\Batch\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Batch\AbstractBatchType;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
-use Enhavo\Bundle\ResourceBundle\Form\FormNormalizer;
+use Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FormBatchType extends AbstractBatchType
 {
     public function __construct(
-        private readonly FormNormalizer $formNormalizer,
+        private readonly FormNormalizerInterface $formNormalizer,
         private readonly FormFactoryInterface $formFactory,
         private readonly ResourceExpressionLanguage $expressionLanguage,
     ) {
