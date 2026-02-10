@@ -101,6 +101,6 @@ class TemplateEndpointDataCollector extends AbstractDataCollector
 
     public static function getTemplate(): ?string
     {
-        return '@EnhavoApp/profiler/template_endpoint.html.twig';
+        return '@EnhavoFramework/profiler/template_endpoint.html.twig';
     }
 }

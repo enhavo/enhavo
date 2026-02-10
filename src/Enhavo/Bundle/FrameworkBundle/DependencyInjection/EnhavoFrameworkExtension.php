@@ -31,7 +31,7 @@ class EnhavoFrameworkExtension extends Extension implements PrependExtensionInte
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('enhavo_framework.mailer.mails', $config['mailer']['mails']);
+        $container->setParameter('enhavo_framework.mailer.mails', $config['mailer']['mails'] ?? []);
         $container->setParameter('enhavo_framework.mailer.defaults', $config['mailer']['defaults']);
         $container->setParameter('enhavo_framework.mailer.model', $config['mailer']['model']);
         $container->setParameter('enhavo_framework.template_paths', $config['template_paths']);

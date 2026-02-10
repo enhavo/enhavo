@@ -26,6 +26,7 @@
     "symfony/mailer": "^7.4",
     "symfony/translation": "^7.4",
     "symfony/yaml": "^7.4",
+    "symfony/http-client": "^7.4",
     "twig/twig": "^3.14"
   },
   "autoload": {

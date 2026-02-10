@@ -1,7 +1,6 @@
 services:
     Enhavo\Bundle\FrameworkBundle\Twig\TemplateExtension:
         arguments:
-            - '%enhavo_app.form_themes%'
             - '@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface'
         tags:
             - { name: twig.extension }

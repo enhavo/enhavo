@@ -11,20 +11,20 @@
 
 namespace Enhavo\Bundle\FrameworkBundle\Area;
 
-use Laminas\Stdlib\PriorityQueue;
+use Enhavo\Bundle\FrameworkBundle\Util\PriorityCollection;
 
 class ChainAreaResolver implements AreaResolverInterface
 {
-    private PriorityQueue $resolvers;
+    private PriorityCollection $resolvers;
 
     public function __construct()
     {
-        $this->resolvers = new PriorityQueue();
+        $this->resolvers = new PriorityCollection();
     }
 
     public function addResolver(AreaResolverInterface $resolver, int $priority = 10): void
     {
-        $this->resolvers->insert($resolver, $priority);
+        $this->resolvers->add($resolver, $priority);
     }
 
     public function resolve(): ?string

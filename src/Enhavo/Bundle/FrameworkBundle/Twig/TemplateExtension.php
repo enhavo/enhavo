@@ -24,7 +24,6 @@ class TemplateExtension extends AbstractExtension
      * TemplateExtension constructor.
      */
     public function __construct(
-        private array $formThemes,
         private TemplateResolver $templateResolver
     )
     {
@@ -34,14 +33,8 @@ class TemplateExtension extends AbstractExtension
     {
         return [
             new TwigFunction('template', [$this, 'getTemplate']),
-            new TwigFunction('form_themes', [$this, 'getFormThemes']),
             new TwigFunction('create_array', [$this, 'createArray']),
         ];
-    }
-
-    public function getFormThemes()
-    {
-        return $this->formThemes;
     }
 
     /**

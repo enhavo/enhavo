@@ -6,7 +6,7 @@ admin_api:
     prefix: /admin/api
     resource: routes/admin_api/*
 
-app:
+controller:
     resource: ../src/Controller
     type: attribute
 

@@ -34,7 +34,7 @@ class ViteExtension extends AbstractExtension
         ];
     }
 
-    public function getJSTags(string $entrypoint, string $build): string
+    public function getJSTags(string $entrypoint, string $build = 'default'): string
     {
         $output = [];
         foreach ($this->viteManager->getJSFiles($entrypoint, $build) as $file) {
@@ -44,7 +44,7 @@ class ViteExtension extends AbstractExtension
         return implode("\n", $output);
     }
 
-    public function getJSPreloadTags(string $entrypoint, string $build): string
+    public function getJSPreloadTags(string $entrypoint, string $build = 'default'): string
     {
         $output = [];
         foreach ($this->viteManager->getJSPreloadFiles($entrypoint, $build) as $file) {
@@ -54,7 +54,7 @@ class ViteExtension extends AbstractExtension
         return implode("\n", $output);
     }
 
-    public function getCSSTags(string $entrypoint, string $build): string
+    public function getCSSTags(string $entrypoint, string $build = 'default'): string
     {
         $output = [];
         foreach ($this->viteManager->getCSSFiles($entrypoint, $build) as $file) {
@@ -64,17 +64,17 @@ class ViteExtension extends AbstractExtension
         return implode("\n", $output);
     }
 
-    public function getJSFiles(string $entrypoint, string $build): array
+    public function getJSFiles(string $entrypoint, string $build = 'default'): array
     {
         return $this->viteManager->getJSFiles($entrypoint, $build);
     }
 
-    public function getJSPreloadFiles(string $entrypoint, string $build): array
+    public function getJSPreloadFiles(string $entrypoint, string $build = 'default'): array
     {
         return $this->viteManager->getJSPreloadFiles($entrypoint, $build);
     }
 
-    public function getCSSFiles(string $entrypoint, string $build): array
+    public function getCSSFiles(string $entrypoint, string $build = 'default'): array
     {
         return $this->viteManager->getCSSFiles($entrypoint, $build);
     }

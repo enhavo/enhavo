@@ -79,13 +79,13 @@ class ResourceCompilerPass implements CompilerPassInterface
 
     private function addResourceParameter($key, $resource, ContainerBuilder $container): void
     {
-        if (!$container->hasParameter('enhavo_resources.resources')) {
-            $container->setParameter('enhavo_resources.resources', []);
+        if (!$container->hasParameter('enhavo_resource.resources')) {
+            $container->setParameter('enhavo_resource.resources', []);
         }
 
-        $resources = $container->getParameter('enhavo_resources.resources');
+        $resources = $container->getParameter('enhavo_resource.resources');
         $resources[$key] = $resource;
-        $container->setParameter('enhavo_resources.resources', $resources);
+        $container->setParameter('enhavo_resource.resources', $resources);
     }
 
     private function addRepositoryBindings($name, $repositoryClass, ContainerBuilder $container): void

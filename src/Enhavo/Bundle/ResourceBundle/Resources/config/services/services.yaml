@@ -8,7 +8,7 @@ services:
             - '@Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory'
             - '@Enhavo\Bundle\ResourceBundle\Delete\DeleteHandlerInterface'
             - '@translator'
-            - '%enhavo_resources.resources%'
+            - '%enhavo_resource.resources%'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
 
