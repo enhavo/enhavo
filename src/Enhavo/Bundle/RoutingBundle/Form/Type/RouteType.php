@@ -20,12 +20,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RouteType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('path', TextType::class);
+        $builder->add('path', TextType::class, [
+            'label' => false,
+        ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'label' => 'label.url',
@@ -45,7 +47,7 @@ class RouteType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'enhavo_route';
     }
