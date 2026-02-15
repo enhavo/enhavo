@@ -25,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('title', TextType::class, [
             'label' => 'form.label.title',
@@ -90,15 +90,15 @@ class ContentType extends AbstractType
         ]);
 
         if ($options['slugable']) {
-            $builder->add('slug', SlugType::class, []);
+            $builder->add('slug', SlugType::class);
         }
 
         if ($options['routable']) {
-            $builder->add('route', RouteType::class, []);
+            $builder->add('route', RouteType::class);
         }
 
         if ($options['router']) {
-            $builder->add('router_route', RouterType::class, []);
+            $builder->add('router_route', RouterType::class);
         }
     }
 
@@ -111,7 +111,7 @@ class ContentType extends AbstractType
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'enhavo_content_content';
     }
