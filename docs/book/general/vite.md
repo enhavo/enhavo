@@ -11,10 +11,10 @@ Add a build config to the vite configuration.
 enhavo_app:
     vite:
         builds:
-            admin:
+            default:
                 port: '%env(VITE_ADMIN_PORT)%'
-                manifest: '%kernel.project_dir%/public/build/admin/.vite/manifest.json'
-                base: '/build/admin' 
+                manifest: '%kernel.project_dir%/public/build/.vite/manifest.json'
+                base: '/build' 
 ```
 
 You may find the values in your `vite.config.js`.
@@ -78,3 +78,70 @@ use the file from the vite dev server, if it is available.
 <img src="{{ asset('/build/theme/images/logo.png', 'vite') }}" />
 ```
 
+## Load entrypoint
+
+Several functions like `vite_css_tags`, `vite_js_tags`, `vite_js_preload_tags` where added to twig, to load an entrypoint, wheater in dev or build mode.
+
+```twig
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {{ vite_css_tags('entrypoints/app.ts') }}
+    </head>
+    <body>
+        {{ vite_js_tags('entrypoints/app.ts') }}
+        {{ vite_js_preload_tags('entrypoints/app.ts') }}
+    </body>
+</html>
+```
+
+
+## Multiple builds
+
+If your application has multiple separate frontends, for example an admin panel and a public theme, you can configure
+multiple vite builds. Each build has its own configuration, dev server port, and output directory. This allows you
+to run separate vite instances for each frontend during development.
+
+Define multiple builds in your configuration by giving each build a unique name:
+
+```yaml
+enhavo_app:
+    vite:
+        builds:
+            admin:
+                port: '%env(VITE_ADMIN_PORT)%'
+                manifest: '%kernel.project_dir%/public/build/admin/.vite/manifest.json'
+                base: '/build/admin'
+            theme:
+                port: '%env(VITE_THEME_PORT)%'
+                manifest: '%kernel.project_dir%/public/build/theme/.vite/manifest.json'
+                base: '/build/theme'
+```
+
+Each build should have its own `vite.config.js` with a matching output directory:
+
+```js
+build: {
+    outDir: '../public/build/theme',
+}
+```
+
+When loading entrypoints in twig, pass the build name as the second argument to specify which build to use:
+
+```twig
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {{ vite_css_tags('entrypoints/app.ts', 'theme') }}
+    </head>
+    <body>
+        {{ vite_js_tags('entrypoints/app.ts', 'theme') }}
+        {{ vite_js_preload_tags('entrypoints/app.ts', 'theme') }}
+    </body>
+</html>
+```
+
+::: tip Build names
+If you omit the build name in the twig functions, the `default` build will be used. Make sure to name one of
+your builds `default` if you want to use this shorthand, or always specify the build name explicitly.
+:::

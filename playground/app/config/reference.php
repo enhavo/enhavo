@@ -2090,6 +2090,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     }>,
  *     grids?: array<string, mixed>,
  *     inputs?: array<string, mixed>,
+ *     form?: array{
+ *         normalizer?: scalar|Param|null, // Default: "Enhavo\\Bundle\\ResourceBundle\\Form\\VueFormNormalizer"
+ *     },
  * }
  * @psalm-type EnhavoRevisionConfig = array{
  *     doctrine_filter?: array{

@@ -21,7 +21,7 @@ class ResourceManagerCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $resources = $container->getParameter('enhavo_resources.resources');
+        $resources = $container->getParameter('enhavo_resource.resources');
 
         $resourceManager = $container->findDefinition(ResourceManager::class);
 

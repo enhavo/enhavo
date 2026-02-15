@@ -122,16 +122,17 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('mailer')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('model')->defaultValue(Message::class)->end()
                         ->arrayNode('defaults')
+                            ->addDefaultsIfNotSet()
                             ->children()
                                 ->scalarNode('from')->defaultValue(null)->end()
                                 ->scalarNode('name')->defaultValue(null)->end()
                                 ->scalarNode('to')->defaultValue(null)->end()
                             ->end()
                         ->end()
-
                         ->arrayNode('mails')
                             ->useAttributeAsKey('key')
                             ->prototype('array')

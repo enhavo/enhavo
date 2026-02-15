@@ -12,7 +12,7 @@
 namespace Enhavo\Bundle\ApiBundle\Normalizer;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
-use Laminas\Stdlib\PriorityQueue;
+use Enhavo\Bundle\FrameworkBundle\Util\PriorityCollection;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
@@ -22,12 +22,12 @@ class DataNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
     use NormalizerAwareTrait;
 
-    private readonly PriorityQueue $normalizers;
+    private readonly PriorityCollection $normalizers;
     private ?ContainerInterface $container = null;
 
     public function __construct()
     {
-        $this->normalizers = new PriorityQueue();
+        $this->normalizers = new PriorityCollection();
     }
 
     public function setContainer(ContainerInterface $container): void
@@ -37,7 +37,7 @@ class DataNormalizer implements NormalizerInterface, NormalizerAwareInterface
 
     public function register($class, $priority = 10): void
     {
-        $this->normalizers->insert($class, $priority);
+        $this->normalizers->add($class, $priority);
     }
 
     public function normalize(mixed $object, ?string $format = null, array $context = []): array

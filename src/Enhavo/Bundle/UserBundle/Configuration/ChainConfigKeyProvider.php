@@ -11,20 +11,20 @@
 
 namespace Enhavo\Bundle\UserBundle\Configuration;
 
-use Laminas\Stdlib\PriorityQueue;
+use Enhavo\Bundle\FrameworkBundle\Util\PriorityCollection;
 
 class ChainConfigKeyProvider implements ConfigKeyProviderInterface
 {
-    private PriorityQueue $providers;
+    private PriorityCollection $providers;
 
     public function __construct()
     {
-        $this->providers = new PriorityQueue();
+        $this->providers = new PriorityCollection();
     }
 
     public function addConfigKeyProvider(ConfigKeyProviderInterface $provider, int $priority = 10)
     {
-        $this->providers->insert($provider, $priority);
+        $this->providers->add($provider, $priority);
     }
 
     public function getConfigKey(): ?string

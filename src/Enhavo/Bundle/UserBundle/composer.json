@@ -16,8 +16,7 @@
     "enhavo/app-bundle": "^0.16",
     "enhavo/form-bundle": "^0.16",
     "symfony/security-bundle": "^7.4",
-    "symfony/password-hasher": "^7.4",
-    "laminas/laminas-stdlib": "^3.2"
+    "symfony/password-hasher": "^7.4"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\UserBundle\\": "" }

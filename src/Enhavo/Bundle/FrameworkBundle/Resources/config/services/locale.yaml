@@ -7,7 +7,7 @@ services:
 
     Enhavo\Bundle\FrameworkBundle\Locale\FixLocaleResolver:
         arguments:
-            - '%enhavo_app.locale%'
+            - '%enhavo_framework.locale%'
 
     Enhavo\Bundle\FrameworkBundle\Locale\RequestLocaleResolver:
         arguments:
