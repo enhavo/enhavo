@@ -180,6 +180,7 @@ export class ResourceInputManager
 
     public async redirect(url: string)
     {
+        this.url = url;
         const activeTab = this.getActiveTab()?.key;
         const targetUrl = new URL(url, window.location.origin);
 
