@@ -13,6 +13,7 @@ import {Event} from "../../frame/FrameEventDispatcher";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 import {Translator} from "@enhavo/app/translation/Translator";
 import {ClientInterface, Transport} from "@enhavo/app/client/ClientInterface";
+import {UrlUtil} from "../../util/UrlUtil";
 
 
 export class TableCollection implements CollectionInterface
@@ -168,7 +169,7 @@ export class TableCollection implements CollectionInterface
 
         for (let frame of frames) {
             for (let row of this.rows) {
-                if (row.url === frame.url) {
+                if (UrlUtil.contains(row.url, frame.url)) {
                     row.active = true;
                 }
             }

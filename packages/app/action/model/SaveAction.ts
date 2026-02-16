@@ -5,6 +5,7 @@ import {UiManager} from "@enhavo/app/ui/UiManager";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 import {Translator} from "@enhavo/app/translation/Translator";
 import {ClientInterface} from "@enhavo/app/client/ClientInterface";
+import {ActionInterface} from "../ActionInterface";
 
 export class SaveAction extends AbstractAction
 {
@@ -38,5 +39,10 @@ export class SaveAction extends AbstractAction
 
         this.flashMessenger.add(this.translator.trans('enhavo_app.input.message.save_success', {}, 'javascript'));
         this.frameManager.dispatch(new InputChangedEvent(this.resourceInputManager.resource));
+    }
+
+    morph(source: SaveAction)
+    {
+        this.url = source.url;
     }
 }
