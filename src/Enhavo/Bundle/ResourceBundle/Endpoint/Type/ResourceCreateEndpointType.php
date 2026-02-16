@@ -84,7 +84,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
             }
 
             $formFields = $request->query->get('form-fields') ? explode(',', $request->query->get('form-fields')) : null;
-            $data->set('form', $this->formNormalizer->createData($form->createView(), $formFields));
+            $data->set('form', $this->formNormalizer->normalize($form, ['fields' => $formFields]));
         }
 
         $viewData = $input->getViewData($resource);

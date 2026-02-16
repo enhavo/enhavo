@@ -160,7 +160,7 @@ class ResizePolyFormListener extends ResizeFormListener
             throw new UnexpectedTypeException($data, 'array or (\Traversable and \ArrayAccess)');
         }
 
-        // First remove all rows
+        // First, remove all rows
         foreach ($form as $name => $child) {
             $form->remove($name);
         }

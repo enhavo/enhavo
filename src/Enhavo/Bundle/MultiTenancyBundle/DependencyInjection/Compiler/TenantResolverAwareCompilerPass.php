@@ -20,7 +20,7 @@ class TenantResolverAwareCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $resources = $container->getParameter('enhavo_resources.resources');
+        $resources = $container->getParameter('enhavo_resource.resources');
         foreach ($resources as $resourceName => $resourceConfig) {
             $this->injectIfImplements($resourceConfig, $resourceName, 'controller', $container);
             $this->injectIfImplements($resourceConfig, $resourceName, 'factory', $container);
