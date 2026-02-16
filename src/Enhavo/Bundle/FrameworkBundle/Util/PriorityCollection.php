@@ -15,6 +15,9 @@ class PriorityCollection implements \Countable, \Iterator
             'data'     => $data,
             'priority' => $priority,
         ];
+
+        usort($this->items, fn($a, $b) => $b['priority'] <=> $a['priority']);
+
         return $this;
     }
 
