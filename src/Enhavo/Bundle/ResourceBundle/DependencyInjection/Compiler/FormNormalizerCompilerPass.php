@@ -30,9 +30,8 @@ class FormNormalizerCompilerPass implements CompilerPassInterface
     {
         if (class_exists('Enhavo\Bundle\VueFormBundle\Form\VueForm')) {
             $definition = new Definition(VueFormNormalizer::class);
-            $definition->setClass(VueFormNormalizer::class);
             $definition->addArgument(new Reference('Enhavo\Bundle\VueFormBundle\Form\VueForm'));
-            $container->addDefinitions([$definition]);
+            $container->addDefinitions([VueFormNormalizer::class => $definition]);
         }
     }
 }
