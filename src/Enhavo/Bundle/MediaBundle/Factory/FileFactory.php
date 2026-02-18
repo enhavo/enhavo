@@ -140,7 +140,7 @@ class FileFactory extends Factory
         }
 
         if (null === $filename) {
-            $contentDisposition = $headers['content-disposition'];
+            $contentDisposition = $headers['content-disposition'] ?? null;
             if (!empty($contentDisposition)) {
                 if (preg_match('/.*?filename="(.+?)"/', $contentDisposition[0], $matches)) {
                     $filename = $matches[1];
