@@ -80,6 +80,7 @@ jobs:
 
             -   name: Check docs
                 run: |
+                    corepack enable
                     yarn install
                     yarn docs:build
 
@@ -236,7 +237,7 @@ jobs:
                     node-version: "20.x"
 
             -   name: Install dependencies
-                run: yarn install
+                run: corepack enable && yarn install
 
             -   name: Run unit tests
                 run:  yarn test:unit --run
