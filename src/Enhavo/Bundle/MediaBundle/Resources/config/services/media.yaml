@@ -71,6 +71,7 @@ services:
     Enhavo\Bundle\MediaBundle\Twig\MediaTwigExtension:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
+            - '@enhavo_media.media.format_manager'
         tags:
             - { name: twig.extension }
 

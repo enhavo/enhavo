@@ -45,6 +45,14 @@ class TextImageFilter extends AbstractFilter
         $this->setMimeType($file, 'image/png');
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function predictExtension(?string $originalExtension, FilterSetting $setting): ?string
+    {
+        return 'png';
+    }
+
     public function getType()
     {
         return 'text_image';

@@ -96,6 +96,14 @@ class ImageCompressionFilter extends AbstractFilter
         return $optimizer;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function predictExtension(?string $originalExtension, FilterSetting $setting): ?string
+    {
+        return $originalExtension;
+    }
+
     public function getType()
     {
         return 'image_compression';
