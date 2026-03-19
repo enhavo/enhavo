@@ -28,7 +28,7 @@ export default class DataLoader
                 .replace(/&lt;/g, '<')
                 .replace(/&gt;/g, '>')
                 .replace(/&quot;/g, '"')
-                .replace(/&#39;/g, "'");
+                .replace(/&#0?39;/g, "'");
             let data = JSON.parse(textData);
             this.container.setParameter(this.parameter, data)
         }
