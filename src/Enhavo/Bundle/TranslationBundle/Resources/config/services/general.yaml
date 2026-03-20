@@ -45,3 +45,11 @@ services:
     Enhavo\Bundle\TranslationBundle\Action\TranslateActionType:
         tags:
             - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\TranslationBundle\EventListener\TranslationRouteSoftDeleteListener:
+        arguments:
+            - '@Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface'
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
+        tags:
+            - { name: kernel.event_subscriber }

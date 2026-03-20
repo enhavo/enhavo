@@ -58,6 +58,9 @@ class SoftDeleteListener implements EventSubscriberInterface
             if (isset($parameters['route_static_prefix'])) {
                 $resource->getRoute()->setStaticPrefix($parameters['route_static_prefix']);
             }
+            unset($parameters['route_condition']);
+            unset($parameters['route_static_prefix']);
+            $resource->setRevisionParameters($parameters);
         }
     }
 }
