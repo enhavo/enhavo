@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
@@ -45,6 +46,12 @@ class ResourceIndexEndpointType extends AbstractEndpointType
         ]);
 
         $resolver->setRequired('grid');
+    }
+
+    public function describe($options, Path $path)
+    {
+        $path->method('get')
+            ->response()
     }
 
     public static function getName(): ?string

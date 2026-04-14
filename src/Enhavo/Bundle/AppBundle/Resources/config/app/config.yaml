@@ -5,6 +5,11 @@ framework:
     session:
         cookie_lifetime: 25920000
 
+enhavo_api:
+    documentation:
+        section:
+            admin:
+
 enhavo_framework:
     locale: "%locale%"
     template_paths:

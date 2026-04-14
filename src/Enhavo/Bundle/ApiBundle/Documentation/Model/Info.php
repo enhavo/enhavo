@@ -11,42 +11,26 @@
 
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model;
 
-class Info
+class Info extends Node
 {
-    public function __construct(
-        private array &$info,
-        private Documentation $parent,
-    ) {
-    }
-
     public function title($value): self
     {
-        $this->info['title'] = $value;
+        $this->data['title'] = $value;
 
         return $this;
     }
 
     public function description($value): self
     {
-        $this->info['description'] = $value;
+        $this->data['description'] = $value;
 
         return $this;
     }
 
     public function version($value): self
     {
-        $this->info['version'] = $value;
+        $this->data['version'] = $value;
 
-        return $this;
-    }
-
-    public function end(): Documentation
-    {
-        return $this->parent;
-    }
-
-    public function getDocumentation(): Info
-    {
         return $this;
     }
 }

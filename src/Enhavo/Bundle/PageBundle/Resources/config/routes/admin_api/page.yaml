@@ -3,6 +3,7 @@ enhavo_page_admin_api_page_index:
     methods: [GET]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_index
             grid: enhavo_page.page

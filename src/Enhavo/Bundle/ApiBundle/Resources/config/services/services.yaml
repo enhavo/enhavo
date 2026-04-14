@@ -54,3 +54,11 @@ services:
     Enhavo\Bundle\ApiBundle\Normalizer\DataDataNormalizer:
         tags:
             - { name: enhavo_api.data_normalizer }
+
+
+    Enhavo\Bundle\ApiBundle\Command\CreateDocsCommand:
+        arguments:
+            - '@Enhavo\Bundle\ApiBundle\Documentation\DocumentationCollector'
+            - '@filesystem'
+        tags:
+            - { name: console.command }

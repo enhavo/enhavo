@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model;
 
-class Method
+class Method extends Node
 {
     public const GET = 'get';
     public const PUT = 'put';
@@ -22,62 +22,57 @@ class Method
     public const PATCH = 'patch';
     public const TRACE = 'trace';
 
-    public function __construct(
-        private array &$method,
-        private Path $parent,
-    ) {
-    }
 
     public function ref($ref): self
     {
-        $this->method['$ref'] = $ref;
+        $this->data['$ref'] = $ref;
 
         return $this;
     }
 
     public function description($description): self
     {
-        $this->method['description'] = $description;
+        $this->data['description'] = $description;
 
         return $this;
     }
 
     public function summary($summary): self
     {
-        $this->method['summary'] = $summary;
+        $this->data['summary'] = $summary;
 
         return $this;
     }
 
     public function operationId($operationId): self
     {
-        $this->method['operationId'] = $operationId;
+        $this->data['operationId'] = $operationId;
 
         return $this;
     }
 
     public function response($code): Response
     {
-        if (!isset($this->method['responses'])) {
-            $this->method['responses'] = [];
+        if (!isset($this->data['responses'])) {
+            $this->data['responses'] = [];
         }
 
-        if (!array_key_exists($code, $this->method['responses'])) {
-            $this->method['responses'][$code] = [];
+        if (!array_key_exists($code, $this->data['responses'])) {
+            $this->data['responses'][$code] = [];
         }
 
-        return new Response($this->method['responses'][$code], $this);
+        return new Response($this->data['responses'][$code], $this);
     }
 
     public function parameter($name): Parameter
     {
-        if (!array_key_exists('parameters', $this->method)) {
-            $this->method['parameters'] = [];
+        if (!array_key_exists('parameters', $this->data)) {
+            $this->data['parameters'] = [];
         }
 
-        foreach ($this->method['parameters'] as $key => $parameter) {
+        foreach ($this->data['parameters'] as $key => $parameter) {
             if ($parameter['name'] === $name) {
-                return new Parameter($this->method['parameters'][$key], $this);
+                return new Parameter($this->data['parameters'][$key], $this);
             }
         }
 
@@ -85,18 +80,8 @@ class Method
             'name' => $name,
         ];
 
-        $this->method['parameters'][] = &$parameter;
+        $this->data['parameters'][] = &$parameter;
 
         return new Parameter($parameter, $this);
-    }
-
-    public function end(): Path
-    {
-        return $this->parent;
-    }
-
-    public function getDocumentation(): Documentation
-    {
-        return $this->parent->getDocumentation();
     }
 }
