@@ -20,6 +20,7 @@ use Enhavo\Bundle\ResourceBundle\Column\ColumnTypeInterface;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\CollectionCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\DeleteHandlerCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\FormNormalizerCompilerPass;
+use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\FormTypeDescribeCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\GridCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\InputCompilerPass;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Compiler\RequestHandlerCompilerPass;
@@ -31,6 +32,7 @@ use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionFunctionPr
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionVariableProviderInterface;
 use Enhavo\Bundle\ResourceBundle\Filter\Filter;
 use Enhavo\Bundle\ResourceBundle\Filter\FilterTypeInterface;
+use Enhavo\Bundle\ResourceBundle\Form\FormTypeDescriberInterface;
 use Enhavo\Bundle\ResourceBundle\Tab\Tab;
 use Enhavo\Bundle\ResourceBundle\Tab\TabTypeInterface;
 use Enhavo\Component\Type\TypeCompilerPass;
@@ -51,6 +53,7 @@ class EnhavoResourceBundle extends Bundle
         $container->addCompilerPass(new DeleteHandlerCompilerPass());
         $container->addCompilerPass(new RequestHandlerCompilerPass());
         $container->addCompilerPass(new FormNormalizerCompilerPass());
+        $container->addCompilerPass(new FormTypeDescribeCompilerPass());
 
         $container->addCompilerPass(new TypeCompilerPass('Action', 'enhavo_resource.action', Action::class));
         $container->addCompilerPass(new TypeCompilerPass('Batch', 'enhavo_resource.batch', Batch::class));
@@ -86,5 +89,9 @@ class EnhavoResourceBundle extends Bundle
         $container
             ->registerForAutoconfiguration(ResourceExpressionVariableProviderInterface::class)
             ->addTag('enhavo_resource.expression_language_variable_provider');
+
+        $container
+            ->registerForAutoconfiguration(FormTypeDescriberInterface::class)
+            ->addTag('enhavo_resource.form_type_describe');
     }
 }

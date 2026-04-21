@@ -24,6 +24,7 @@ services:
             - '@Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface'
             - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
             - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
+            - '@Enhavo\Bundle\ResourceBundle\Form\FormDescriberInterface'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
@@ -35,6 +36,7 @@ services:
             - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
             - '@Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface'
+            - '@Enhavo\Bundle\ResourceBundle\Form\FormDescriberInterface'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:

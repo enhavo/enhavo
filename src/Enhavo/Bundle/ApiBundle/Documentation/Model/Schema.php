@@ -11,7 +11,10 @@
 
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model;
 
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Type\ArrayType;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Type\BooleanType;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Type\IntegerType;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Type\NumberType;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Type\ObjectType;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Type\StringType;
 
@@ -48,6 +51,27 @@ class Schema extends Node
         $this->reset();
 
         return new IntegerType($this->data, $this);
+    }
+
+    public function number(): NumberType
+    {
+        $this->reset();
+
+        return new NumberType($this->data, $this);
+    }
+
+    public function boolean(): BooleanType
+    {
+        $this->reset();
+
+        return new BooleanType($this->data, $this);
+    }
+
+    public function array(): ArrayType
+    {
+        $this->reset();
+
+        return new ArrayType($this->data, $this);
     }
 
     private function reset()

@@ -17,14 +17,14 @@ use Enhavo\Bundle\ApiBundle\Documentation\Model\Schema;
 /**
  * @method ObjectType|Schema end()
  */
-class StringType extends Node
+class NumberType extends Node
 {
     public function __construct(
         array &$data,
-              $parent,
+        $parent,
     ) {
         parent::__construct($data, $parent);
-        $this->data['type'] = 'string';
+        $this->data['type'] = 'number';
     }
 
     public function format(string $value): self
@@ -34,30 +34,23 @@ class StringType extends Node
         return $this;
     }
 
+    public function minimum(float $value): self
+    {
+        $this->data['minimum'] = $value;
+
+        return $this;
+    }
+
+    public function maximum(float $value): self
+    {
+        $this->data['maximum'] = $value;
+
+        return $this;
+    }
+
     public function enum(array $values): self
     {
         $this->data['enum'] = $values;
-
-        return $this;
-    }
-
-    public function minLength(int $value): self
-    {
-        $this->data['minLength'] = $value;
-
-        return $this;
-    }
-
-    public function maxLength(int $value): self
-    {
-        $this->data['maxLength'] = $value;
-
-        return $this;
-    }
-
-    public function pattern(string $value): self
-    {
-        $this->data['pattern'] = $value;
 
         return $this;
     }

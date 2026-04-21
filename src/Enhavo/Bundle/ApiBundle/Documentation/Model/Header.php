@@ -11,16 +11,9 @@
 
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model;
 
-class Parameter extends Node
+class Header extends Node
 {
-    public function in($in): self
-    {
-        $this->data['in'] = $in;
-
-        return $this;
-    }
-
-    public function description(?string $description): self
+    public function description($description): self
     {
         $this->data['description'] = $description;
 
@@ -34,16 +27,9 @@ class Parameter extends Node
         return $this;
     }
 
-    public function deprecated(bool $value): self
+    public function deprecated(bool $value = true): self
     {
         $this->data['deprecated'] = $value;
-
-        return $this;
-    }
-
-    public function allowEmptyValue(bool $value): self
-    {
-        $this->data['allowEmptyValue'] = $value;
 
         return $this;
     }

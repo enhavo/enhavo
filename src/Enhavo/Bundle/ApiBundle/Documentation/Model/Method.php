@@ -11,6 +11,8 @@
 
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model;
 
+
+
 class Method extends Node
 {
     public const GET = 'get';
@@ -83,5 +85,39 @@ class Method extends Node
         $this->data['parameters'][] = &$parameter;
 
         return new Parameter($parameter, $this);
+    }
+
+    public function requestBody(): RequestBody
+    {
+        if (!array_key_exists('requestBody', $this->data)) {
+            $this->data['requestBody'] = [];
+        }
+
+        return new RequestBody($this->data['requestBody'], $this);
+    }
+
+    public function tags(array $tags): self
+    {
+        $this->data['tags'] = $tags;
+
+        return $this;
+    }
+
+    public function deprecated(bool $deprecated = true): self
+    {
+        $this->data['deprecated'] = $deprecated;
+
+        return $this;
+    }
+
+    public function security(array $requirement): self
+    {
+        if (!array_key_exists('security', $this->data)) {
+            $this->data['security'] = [];
+        }
+
+        $this->data['security'][] = $requirement;
+
+        return $this;
     }
 }

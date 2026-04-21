@@ -11,11 +11,24 @@
 
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model;
 
-class Response extends Node
+
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Type\ObjectType;
+
+/**
+ * @method Path end()
+ */
+class RequestBody extends Node
 {
     public function description($description): self
     {
         $this->data['description'] = $description;
+
+        return $this;
+    }
+
+    public function required(bool $required = true): self
+    {
+        $this->data['required'] = $required;
 
         return $this;
     }
@@ -31,18 +44,5 @@ class Response extends Node
         }
 
         return new Content($this->data['content'][$mimeType], $this);
-    }
-
-    public function header($name): Header
-    {
-        if (!array_key_exists('headers', $this->data)) {
-            $this->data['headers'] = [];
-        }
-
-        if (!array_key_exists($name, $this->data['headers'])) {
-            $this->data['headers'][$name] = [];
-        }
-
-        return new Header($this->data['headers'][$name], $this);
     }
 }

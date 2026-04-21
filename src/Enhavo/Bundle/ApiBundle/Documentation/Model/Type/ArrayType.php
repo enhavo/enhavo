@@ -17,47 +17,42 @@ use Enhavo\Bundle\ApiBundle\Documentation\Model\Schema;
 /**
  * @method ObjectType|Schema end()
  */
-class StringType extends Node
+class ArrayType extends Node
 {
     public function __construct(
         array &$data,
               $parent,
     ) {
         parent::__construct($data, $parent);
-        $this->data['type'] = 'string';
+        $this->data['type'] = 'array';
     }
 
-    public function format(string $value): self
+    public function items(): Schema
     {
-        $this->data['format'] = $value;
+        if (!array_key_exists('items', $this->data)) {
+            $this->data['items'] = [];
+        }
+
+        return new Schema($this->data['items'], $this);
+    }
+
+    public function minItems(int $value): self
+    {
+        $this->data['minItems'] = $value;
 
         return $this;
     }
 
-    public function enum(array $values): self
+    public function maxItems(int $value): self
     {
-        $this->data['enum'] = $values;
+        $this->data['maxItems'] = $value;
 
         return $this;
     }
 
-    public function minLength(int $value): self
+    public function uniqueItems(bool $value = true): self
     {
-        $this->data['minLength'] = $value;
-
-        return $this;
-    }
-
-    public function maxLength(int $value): self
-    {
-        $this->data['maxLength'] = $value;
-
-        return $this;
-    }
-
-    public function pattern(string $value): self
-    {
-        $this->data['pattern'] = $value;
+        $this->data['uniqueItems'] = $value;
 
         return $this;
     }

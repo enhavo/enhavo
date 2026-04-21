@@ -33,4 +33,29 @@ class Info extends Node
 
         return $this;
     }
+
+    public function termsOfService($value): self
+    {
+        $this->data['termsOfService'] = $value;
+
+        return $this;
+    }
+
+    public function contact(): Contact
+    {
+        if (!array_key_exists('contact', $this->data)) {
+            $this->data['contact'] = [];
+        }
+
+        return new Contact($this->data['contact'], $this);
+    }
+
+    public function license(): License
+    {
+        if (!array_key_exists('license', $this->data)) {
+            $this->data['license'] = [];
+        }
+
+        return new License($this->data['license'], $this);
+    }
 }

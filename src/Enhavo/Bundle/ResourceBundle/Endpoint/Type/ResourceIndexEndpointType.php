@@ -50,8 +50,19 @@ class ResourceIndexEndpointType extends AbstractEndpointType
 
     public function describe($options, Path $path)
     {
-        $path->method('get')
-            ->response()
+        /** @var Grid $grid */
+        $grid = $this->gridFactory->create($options['grid']);
+
+        $path
+            ->method('get')
+                ->tags([$grid->getResourceName()])
+                ->response('200')
+                    ->description('Data')
+                    ->content()
+                        ->schema()
+                            ->object()
+                                ->property('columns', 'object')
+        ;
     }
 
     public static function getName(): ?string

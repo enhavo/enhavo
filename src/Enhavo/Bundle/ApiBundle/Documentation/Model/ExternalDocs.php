@@ -11,12 +11,19 @@
 
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model;
 
-class Property
+class ExternalDocs extends Node
 {
-    public const OBJECT = 'object';
-    public const STRING = 'string';
-    public const INTEGER = 'integer';
-    public const NUMBER = 'number';
-    public const BOOLEAN = 'boolean';
-    public const ARRAY = 'array';
+    public function description($description): self
+    {
+        $this->data['description'] = $description;
+
+        return $this;
+    }
+
+    public function url($url): self
+    {
+        $this->data['url'] = $url;
+
+        return $this;
+    }
 }

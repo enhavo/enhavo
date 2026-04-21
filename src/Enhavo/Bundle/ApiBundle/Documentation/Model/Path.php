@@ -13,9 +13,11 @@ namespace Enhavo\Bundle\ApiBundle\Documentation\Model;
 
 class Path extends Node
 {
-    public function description($description)
+    public function description($description): self
     {
         $this->data['description'] = $description;
+
+        return $this;
     }
 
     public function summary($summary): self
