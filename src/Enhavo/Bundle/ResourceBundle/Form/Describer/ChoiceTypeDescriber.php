@@ -12,9 +12,8 @@ class ChoiceTypeDescriber implements FormTypeDescriberInterface
     public function describe($options, FormTypeInterface $form, Schema $schema)
     {
         $choices = $options['choices'];
-
         $schema->string()
-            ->enum(array_values($choices));
+            ->enum(is_array($choices) ? array_values($choices) : []);
     }
 
     public static function getFormTypes(): array

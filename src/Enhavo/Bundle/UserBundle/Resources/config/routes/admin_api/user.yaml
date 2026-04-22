@@ -4,6 +4,7 @@ enhavo_user_admin_api_user_index:
         - GET
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_index
             grid: enhavo_user.user
@@ -15,6 +16,7 @@ enhavo_user_admin_api_user_list:
         - POST
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_list
             grid: enhavo_user.user
@@ -26,6 +28,7 @@ enhavo_user_admin_api_user_create:
         - POST
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_create
             input: enhavo_user.user.create
@@ -37,6 +40,7 @@ enhavo_user_admin_api_user_update:
         - POST
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_update
             input: enhavo_user.user.update
@@ -46,6 +50,7 @@ enhavo_user_admin_api_user_delete:
     methods: [DELETE, POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_delete
             input: enhavo_user.user.update
@@ -55,6 +60,7 @@ enhavo_user_admin_api_user_batch:
     methods: [POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_batch
             grid: enhavo_user.batch
@@ -64,6 +70,7 @@ enhavo_user_admin_api_user_auto_complete:
     methods: [GET]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: auto_complete
             resource: enhavo_user.user
