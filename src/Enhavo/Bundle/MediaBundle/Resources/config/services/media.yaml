@@ -187,3 +187,7 @@ services:
             - '@Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface'
         tags:
             - { name: enhavo_resource.duplicate }
+
+    Enhavo\Bundle\MediaBundle\Documentation\MediaFileDescriber:
+        tags:
+            - { name: enhavo_api.documentation_describer }

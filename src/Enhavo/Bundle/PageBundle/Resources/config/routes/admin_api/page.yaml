@@ -3,6 +3,7 @@ enhavo_page_admin_api_page_index:
     methods: [GET]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_index
             grid: enhavo_page.page
@@ -12,6 +13,7 @@ enhavo_page_admin_api_page_list:
     methods: [GET,POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_list
             grid: enhavo_page.page
@@ -21,6 +23,7 @@ enhavo_page_admin_api_page_create:
     methods: [GET, POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_create
             input: enhavo_page.page
@@ -30,6 +33,7 @@ enhavo_page_admin_api_page_update:
     methods: [GET, POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_update
             input: enhavo_page.page
@@ -39,6 +43,7 @@ enhavo_page_admin_api_page_delete:
     methods: [DELETE, POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_delete
             input: enhavo_page.page
@@ -48,6 +53,7 @@ enhavo_page_admin_api_page_batch:
     methods: [POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_batch
             grid: enhavo_page.page
@@ -57,6 +63,7 @@ enhavo_page_admin_api_page_duplicate:
     methods: [POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_duplicate
             input: enhavo_page.page
@@ -66,6 +73,7 @@ enhavo_page_admin_api_page_preview:
     methods: [GET, POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _area: theme
         _endpoint:
             type: preview
@@ -76,10 +84,10 @@ enhavo_page_admin_api_page_preview:
                 preview: true
 
 enhavo_page_admin_api_page_auto_complete:
-    options:
-        expose: true
     path: /page/auto-complete
     defaults:
+        _expose: admin_api
+        _describe: admin
         _endpoint:
             type: auto_complete
             resource: enhavo_page.page

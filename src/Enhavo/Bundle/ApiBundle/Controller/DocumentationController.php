@@ -11,30 +11,38 @@
 
 namespace Enhavo\Bundle\ApiBundle\Controller;
 
-use Enhavo\Bundle\ApiBundle\Documentation\DocumentationCollector;
+use Enhavo\Bundle\ApiBundle\Documentation\DocumentationGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DocumentationController extends AbstractController
 {
     public function __construct(
-        private DocumentationCollector $documentationCollector,
+        private DocumentationGenerator $documentationCollector,
     ) {
     }
 
     public function indexAction(Request $request): Response
     {
-        $section = $request->query->get('section', DocumentationCollector::DEFAULT);
+        $url = $this->generateUrl($request->attributes->get('data_route'));
+
+        return $this->render('@EnhavoApi/docs.html.twig', [
+            'url' => $url,
+        ]);
+    }
+
+    public function dataAction(Request $request): Response
+    {
+        $section = $request->attributes->get('section', DocumentationGenerator::SECTION_DEFAULT);
 
         if (!$this->documentationCollector->hasSection($section)) {
             throw $this->createNotFoundException();
         }
 
-        $data = $this->documentationCollector->collect($section);
+        $data = $this->documentationCollector->generate($section);
 
-        return $this->render('@EnhavoApi/docs.html.twig', [
-            'data' => $data,
-        ]);
+        return new JsonResponse($data);
     }
 }
