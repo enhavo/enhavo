@@ -15,11 +15,6 @@ use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-/**
- * This is the class that validates and merges configuration from your app/config files
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
- */
 class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
@@ -34,34 +29,23 @@ class Configuration implements ConfigurationInterface
 
     private function addDocumentationNode(NodeDefinition $node)
     {
-        $prototype = $node
+        $node
             ->children()
                 ->arrayNode('documentation')
                     ->children()
                         ->arrayNode('section')
-                            ->useAttributeAsKey('key')
-                            ->prototype('array')
-                                ->addDefaultsIfNotSet()
-
-        ;
-
-        $this->addSectionMetadata($prototype);
-    }
-
-    private function addSectionMetadata(NodeDefinition $node)
-    {
-        $node
-            ->children()
-                ->scalarNode('version')->defaultValue('3.0.0')->end()
-                ->arrayNode('info')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('title')->defaultValue(null)->end()
-                        ->scalarNode('description')->defaultValue(null)->end()
-                        ->scalarNode('version')->defaultValue(null)->end()
+                            ->useAttributeAsKey('name')
+                            ->arrayPrototype()
+                                ->useAttributeAsKey('class')
+                                ->arrayPrototype()
+                                    ->normalizeKeys(false)
+                                    ->variablePrototype()->end()
+                                ->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
-            ->end()
+             ->end()
         ;
     }
 }

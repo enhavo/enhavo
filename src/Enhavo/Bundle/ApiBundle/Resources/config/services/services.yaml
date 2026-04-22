@@ -1,7 +1,7 @@
 services:
     Enhavo\Bundle\ApiBundle\Controller\DocumentationController:
         arguments:
-            - '@Enhavo\Bundle\ApiBundle\Documentation\DocumentationCollector'
+            - '@Enhavo\Bundle\ApiBundle\Documentation\DocumentationGenerator'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
@@ -25,12 +25,21 @@ services:
         arguments:
             - '%kernel.environment%'
 
-    Enhavo\Bundle\ApiBundle\Documentation\DocumentationCollector:
+    Enhavo\Bundle\ApiBundle\Documentation\DocumentationGenerator:
+        arguments:
+            - '%enhavo_api.documentation%'
+
+    Enhavo\Bundle\ApiBundle\Documentation\InfoDescriber:
+        tags:
+            - { name: enhavo_api.documentation_describer}
+
+    Enhavo\Bundle\ApiBundle\Documentation\RouteDescriber:
         arguments:
             - '@router'
-            - '%enhavo_api.documentation%'
         calls:
-            - [setEndpointFactory, ['@Enhavo\Component\Type\FactoryInterface[Endpoint]']]
+            - [ setEndpointFactory, [ '@Enhavo\Component\Type\FactoryInterface[Endpoint]' ] ]
+        tags:
+            - { name: enhavo_api.documentation_describer}
 
     Enhavo\Bundle\ApiBundle\Normalizer\DataNormalizer:
         tags:
@@ -54,3 +63,11 @@ services:
     Enhavo\Bundle\ApiBundle\Normalizer\DataDataNormalizer:
         tags:
             - { name: enhavo_api.data_normalizer }
+
+
+    Enhavo\Bundle\ApiBundle\Command\CreateDocsCommand:
+        arguments:
+            - '@Enhavo\Bundle\ApiBundle\Documentation\DocumentationGenerator'
+            - '@filesystem'
+        tags:
+            - { name: console.command }

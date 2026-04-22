@@ -15,5 +15,8 @@ class Property
 {
     public const OBJECT = 'object';
     public const STRING = 'string';
-    public const INTGEGER = 'integer';
+    public const INTEGER = 'integer';
+    public const NUMBER = 'number';
+    public const BOOLEAN = 'boolean';
+    public const ARRAY = 'array';
 }

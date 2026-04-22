@@ -12,10 +12,12 @@
 namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
+use Enhavo\Bundle\ResourceBundle\Form\FormDescriber;
 use Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface;
 use Enhavo\Bundle\ResourceBundle\Input\Input;
 use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
@@ -32,6 +34,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
         private readonly FormNormalizerInterface $formNormalizer,
         private readonly RouteResolverInterface $routeResolver,
         private readonly ResourceExpressionLanguage $expressionLanguage,
+        private readonly FormDescriber $formDescriber,
     ) {
     }
 
@@ -102,6 +105,70 @@ class ResourceCreateEndpointType extends AbstractEndpointType
         ]);
 
         $resolver->setRequired('input');
+    }
+
+    public function describe($options, Path $path): void
+    {
+        /** @var Input $input */
+        $input = $this->inputFactory->create($options['input']);
+        $form = $input->createForm();
+        $schemaName = str_replace('\\', '', $form->getConfig()->getType()->getInnerType()::class);
+
+        $this->formDescriber->describe($form, $path->getDocumentation()->components()->schema($schemaName));
+
+        $path->method('get')
+            ->tags([$input->getResourceName()])
+            ->parameter('form-fields')
+                ->in('query')
+                ->description('Comma separated list of form fields')
+                ->schema()
+                    ->string()->end()
+                ->end()
+            ->end()
+            ->response('200')
+                ->description('Data')
+                ->content()
+                    ->schema()
+                        ->object()
+                            ->property('actions', 'array')->items()->object()->end()->end()->end()
+                            ->property('actionsSecondary', 'array')->items()->object()->end()->end()->end()
+                            ->property('form', 'object')->end()
+                            ->property('metadata', 'object')->end()
+                            ->property('resource', 'object')->end()
+                            ->property('tabs', 'object')->end()
+                            ->property('url', 'string')->end()
+        ;
+
+        $path->method('post')
+            ->tags([$input->getResourceName()])
+            ->parameter('form-fields')
+                ->in('query')
+                ->description('Comma separated list of form fields')
+                ->schema()
+                    ->string()->end()
+                ->end()
+            ->end()
+            ->requestBody()
+                ->content()
+                    ->schema()
+                        ->ref(sprintf('#/components/schemas/%s', $schemaName))
+                    ->end()
+                ->end()
+            ->end()
+            ->response('201')
+                ->description('Resource created')
+                ->content()
+                    ->schema()
+                        ->object()
+                            ->property('actions', 'array')->items()->object()->end()->end()->end()
+                            ->property('actionsSecondary', 'array')->items()->object()->end()->end()->end()
+                            ->property('form', 'object')->end()
+                            ->property('metadata', 'object')->end()
+                            ->property('resource', 'object')->end()
+                            ->property('tabs', 'object')->end()
+                            ->property('url', 'string')->end()
+                            ->property('redirect', 'string')->end()
+        ;
     }
 
     public static function getName(): ?string

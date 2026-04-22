@@ -11,10 +11,10 @@ enhavo_search:
 
         Enhavo\Bundle\BlockBundle\Model\Block\BlockquoteBlock:
             index:
-                blockquote:
+                text:
                     type: text
                     weight: 8
-                    property: blockquote
+                    property: text
 
         Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock:
             index:

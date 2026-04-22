@@ -4,6 +4,7 @@ enhavo_redirect_admin_api_redirect_index:
         - GET
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_index
             grid: enhavo_redirect.redirect
@@ -15,6 +16,7 @@ enhavo_redirect_admin_api_redirect_list:
         - POST
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_list
             grid: enhavo_redirect.redirect
@@ -26,6 +28,7 @@ enhavo_redirect_admin_api_redirect_create:
         - POST
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_create
             input: enhavo_redirect.redirect
@@ -37,6 +40,7 @@ enhavo_redirect_admin_api_redirect_update:
         - POST
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_update
             input: enhavo_redirect.redirect
@@ -46,6 +50,7 @@ enhavo_redirect_admin_api_redirect_delete:
     methods: [DELETE, POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_delete
             input: enhavo_redirect.redirect
@@ -55,6 +60,7 @@ enhavo_redirect_admin_api_redirect_batch:
     methods: [POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_batch
             grid: enhavo_redirect.redirect

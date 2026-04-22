@@ -11,66 +11,73 @@
 
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model;
 
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Type\ArrayType;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Type\BooleanType;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Type\IntegerType;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Type\NumberType;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Type\ObjectType;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Type\StringType;
 
-class Schema
+class Schema extends Node
 {
-    public function __construct(
-        private array &$schema,
-        private $parent,
-    ) {
-    }
-
     public function ref($ref): self
     {
         $this->reset();
-        $this->schema['$ref'] = $ref;
+        $this->data['$ref'] = $ref;
 
         return $this;
     }
 
     public function object(): ObjectType
     {
-        if (isset($this->schema['type']) && 'object' === $this->schema['type']) {
-            return new ObjectType($this->schema, $this);
+        if (isset($this->data['type']) && 'object' === $this->data['type']) {
+            return new ObjectType($this->data, $this);
         }
 
         $this->reset();
 
-        return new ObjectType($this->schema, $this);
+        return new ObjectType($this->data, $this);
     }
 
     public function string(): StringType
     {
         $this->reset();
 
-        return new StringType($this->schema, $this);
+        return new StringType($this->data, $this);
     }
 
     public function integer(): IntegerType
     {
         $this->reset();
 
-        return new IntegerType($this->schema, $this);
+        return new IntegerType($this->data, $this);
+    }
+
+    public function number(): NumberType
+    {
+        $this->reset();
+
+        return new NumberType($this->data, $this);
+    }
+
+    public function boolean(): BooleanType
+    {
+        $this->reset();
+
+        return new BooleanType($this->data, $this);
+    }
+
+    public function array(): ArrayType
+    {
+        $this->reset();
+
+        return new ArrayType($this->data, $this);
     }
 
     private function reset()
     {
-        foreach ($this->schema as $key => $value) {
-            unset($this->schema[$key]);
+        foreach ($this->data as $key => $value) {
+            unset($this->data[$key]);
         }
-    }
-
-    /** @return Content */
-    public function end(): mixed
-    {
-        return $this->parent;
-    }
-
-    public function getDocumentation(): Documentation
-    {
-        return $this->parent->getDocumentation();
     }
 }

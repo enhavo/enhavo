@@ -5,6 +5,16 @@ framework:
     session:
         cookie_lifetime: 25920000
 
+enhavo_api:
+    documentation:
+        section:
+            admin:
+                Enhavo\Bundle\ApiBundle\Documentation\RouteDescriber:
+                    section: admin
+                Enhavo\Bundle\ApiBundle\Documentation\InfoDescriber:
+                    title: 'Admin'
+                    description: 'Admin api documentation'
+
 enhavo_app:
     locale: "%locale%"
     template_paths:

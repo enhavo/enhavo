@@ -1,21 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    {% block stylesheets %}
-        {{ vite_css_tags('entrypoints/application.js', 'admin') }}
-    {% endblock %}
+    <meta charset="UTF-8">
+    <title>API Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.17.14/swagger-ui.css">
+    <style>
+        html, body { margin: 0; padding: 0; background: #fafafa; }
+        #swagger-ui { max-width: 1460px; margin: 0 auto; }
+        .swagger-ui .topbar { display: none; }
+    </style>
 </head>
-
 <body>
-    <div id="myDomId"></div>
+<div id="swagger-ui"></div>
 
-    <div data-controller="documentation" data-documentation-data-value="{{ data|json_encode|e }}">
-        <div data-documentation-target="node"></div>
-    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.17.14/swagger-ui-bundle.js"></script>
+<script>
+    window.onload = function () {
+        window.ui = SwaggerUIBundle({
+            url: "{{ url }}",
+            dom_id: '#swagger-ui',
+            deepLinking: true,
+            presets: [SwaggerUIBundle.presets.apis],
+            plugins: [SwaggerUIBundle.plugins.DownloadUrl],
+            validatorUrl: null,
 
-    {% block javascripts %}
-        {{ vite_js_tags('entrypoints/application.js', 'admin') }}
-        {{ vite_js_preload_tags('entrypoints/application.js', 'admin') }}
-    {% endblock %}
+            defaultModelsExpandDepth: 1,
+            defaultModelExpandDepth: 3,
+            docExpansion: 'list'
+        });
+    };
+</script>
 </body>
 </html>

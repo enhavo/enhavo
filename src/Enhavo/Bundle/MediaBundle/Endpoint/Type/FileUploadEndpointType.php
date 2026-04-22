@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\MediaBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\MediaBundle\Exception\StorageException;
@@ -65,6 +66,50 @@ class FileUploadEndpointType extends AbstractEndpointType
         }
 
         $context->setResponse($this->createFileResponse($storedFiles));
+    }
+
+    public function describe($options, Path $path): void
+    {
+        $path->method('post')
+            ->tags(['enhavo_media.file'])
+            ->requestBody()
+                ->required()
+                ->content('multipart/form-data')
+                    ->schema()
+                        ->object()
+                            ->property('files', 'array')
+                                ->items()
+                                    ->string()->format('binary')->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+            ->response('200')
+                ->description('Uploaded files')
+                ->content()
+                    ->schema()
+                        ->array()
+                            ->items()
+                                ->ref('#/components/schemas/MediaFile')
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+            ->response('400')
+                ->description('Validation error')
+                ->content()
+                    ->schema()
+                        ->object()
+                            ->property('success', 'boolean')->end()
+                            ->property('errors', 'array')
+                                ->items()
+                                    ->string()->end()
+                                ->end()
+                            ->end()
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
