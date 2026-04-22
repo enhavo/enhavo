@@ -166,6 +166,12 @@ enhavo_framework:
             alias: EnhavoUser
             priority: 10
 
+enhavo_api:
+    documentation:
+        section:
+            admin:
+                Enhavo\Bundle\UserBundle\Documentation\AuthorizationTokenDescriber: ~
+
 enhavo_app:
     roles:
         enhavo_user_user_index:

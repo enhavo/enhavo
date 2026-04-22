@@ -11,6 +11,12 @@ enhavo_framework:
             alias: EnhavoMedia
             priority: 10
 
+enhavo_api:
+    documentation:
+        section:
+            admin:
+                Enhavo\Bundle\MediaBundle\Documentation\MediaFileDescriber: ~
+
 enhavo_media:
     formats:
         enhavoTableThumb:

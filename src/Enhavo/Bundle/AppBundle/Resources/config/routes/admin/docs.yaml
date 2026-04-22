@@ -1,0 +1,11 @@
+enhavo_app_admin_docs:
+    path: /docs
+    defaults:
+        _controller: Enhavo\Bundle\ApiBundle\Controller\DocumentationController::indexAction
+        data_route: enhavo_app_admin_docs_data
+
+enhavo_app_admin_docs_data:
+    path: /docs/data
+    defaults:
+        _controller: Enhavo\Bundle\ApiBundle\Controller\DocumentationController::dataAction
+        section: admin

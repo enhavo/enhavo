@@ -27,7 +27,7 @@ class Parameter extends Node
         return $this;
     }
 
-    public function required(bool $value): self
+    public function required(bool $value = true): self
     {
         $this->data['required'] = $value;
 

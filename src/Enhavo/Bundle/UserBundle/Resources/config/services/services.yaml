@@ -89,6 +89,10 @@ services:
         calls:
             - [setContainer, ['@service_container']]
 
+    Enhavo\Bundle\UserBundle\Documentation\AuthorizationTokenDescriber:
+        tags:
+            - { name: enhavo_api.documentation_describer }
+
     Enhavo\Bundle\UserBundle\UserIdentifier\EmailUserIdentifierProvider:
         public: true
 

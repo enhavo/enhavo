@@ -2,7 +2,7 @@
 
 namespace Enhavo\Bundle\ApiBundle\Command;
 
-use Enhavo\Bundle\ApiBundle\Documentation\DocumentationCollector;
+use Enhavo\Bundle\ApiBundle\Documentation\DocumentationGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,7 +14,7 @@ use Symfony\Component\Yaml\Yaml;
 class CreateDocsCommand extends Command
 {
     public function __construct(
-        private DocumentationCollector $documentationCollector,
+        private DocumentationGenerator $documentationGenerator,
         private Filesystem $fs,
     ) {
         parent::__construct();
@@ -26,7 +26,7 @@ class CreateDocsCommand extends Command
             ->setName('enhavo:api:create-docs')
             ->setDescription('Create open api documentation')
             ->addArgument('output', InputArgument::REQUIRED, 'Output path')
-            ->addArgument('section', InputArgument::OPTIONAL, 'Section', DocumentationCollector::DEFAULT)
+            ->addArgument('section', InputArgument::OPTIONAL, 'Section', DocumentationGenerator::SECTION_DEFAULT)
             ->addOption('dry-run', 'd', InputOption::VALUE_NONE, 'perform a dry run, don\'t change anything')
         ;
     }
@@ -35,13 +35,13 @@ class CreateDocsCommand extends Command
     {
         $section = $input->getArgument('section');
 
-        if (!$this->documentationCollector->hasSection($section)) {
+        if (!$this->documentationGenerator->hasSection($section)) {
             $output->writeln("Section '{$section}' does not exist");
             return Command::FAILURE;
         }
 
         $outputPath = $input->getArgument('output');
-        $data = $this->documentationCollector->collect($section);
+        $data = $this->documentationGenerator->generate($section);
         $yaml = new Yaml();
         $this->fs->dumpFile($outputPath, $yaml->dump($data, PHP_INT_MAX));
 
