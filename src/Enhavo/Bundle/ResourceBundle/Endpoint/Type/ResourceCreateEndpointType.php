@@ -35,6 +35,8 @@ class ResourceCreateEndpointType extends AbstractEndpointType
         private readonly RouteResolverInterface $routeResolver,
         private readonly ResourceExpressionLanguage $expressionLanguage,
         private readonly FormDescriber $formDescriber,
+        private readonly FormNormalizerInterface $formErrorNormalizer,
+        private readonly FormNormalizerInterface $formDataNormalizer,
     ) {
     }
 
@@ -81,7 +83,9 @@ class ResourceCreateEndpointType extends AbstractEndpointType
                     if ($redirectRoute) {
                         $data->set('redirect', $this->generateUrl($redirectRoute, $redirectRouteParameters));
                     }
+                    $data->set('data', $this->formDataNormalizer->normalize($form));
                 } else {
+                    $data->set('errors', $this->formErrorNormalizer->normalize($form));
                     $context->setStatusCode(400);
                 }
             }
@@ -151,7 +155,9 @@ class ResourceCreateEndpointType extends AbstractEndpointType
             ->requestBody()
                 ->content()
                     ->schema()
-                        ->ref(sprintf('#/components/schemas/%s', $schemaName))
+                        ->object()
+                            ->property('data', 'object')->ref(sprintf('#/components/schemas/%s', $schemaName))->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()

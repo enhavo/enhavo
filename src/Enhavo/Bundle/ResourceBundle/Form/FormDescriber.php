@@ -23,7 +23,18 @@ class FormDescriber implements FormDescriberInterface
             return;
         }
 
+        $parentType = $form->getConfig()->getType()->getParent();
+        while ($parentType != null) {
+            $parentInnerType = $parentType->getInnerType();
+            if (is_a($parentInnerType, FormTypeDescribeAwareInterface::class)) {
+                $parentInnerType->describe($form->getConfig()->getOptions(), $type, $schema);
+                return;
+            }
+            $parentType = $parentType->getParent();
+        }
+
         foreach (array_keys($this->container->getProvidedServices()) as $serviceName) {
+            /** @var FormTypeDescriberInterface $serviceName */
             $types = $serviceName::getFormTypes();
             foreach ($types as $findType) {
                 if (is_a($type, $findType)) {
@@ -47,12 +58,10 @@ class FormDescriber implements FormDescriberInterface
         if ($form->getConfig()->getCompound()) {
             $object = $schema->object();
             foreach ($form as $property => $child) {
-                if ($child->getConfig()->getCompound()) {
-                    $this->describe($child, $object->property($property, 'schema'));
-                } else {
-                    $object->property($property, 'string');
-                }
+                $this->describe($child, $object->property($property, 'schema'));
             }
+        } else {
+            $schema->string();
         }
     }
 }
