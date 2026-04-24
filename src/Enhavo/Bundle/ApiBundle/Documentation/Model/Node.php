@@ -19,7 +19,7 @@ class Node
     ) {
     }
 
-    public function set($data): void
+    public function set($data): self
     {
         foreach ($this->data as $key => $value) {
             unset($this->data[$key]);
@@ -28,6 +28,17 @@ class Node
         foreach ($data as $key => $value) {
             $this->data[$key] = $value;
         }
+
+        return $this;
+    }
+
+    public function add($data): self
+    {
+        foreach ($data as $key => $value) {
+            $this->data[$key] = $value;
+        }
+
+        return $this;
     }
 
     public function get(): array
