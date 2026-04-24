@@ -194,7 +194,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
                 'validation_groups' => $this->options['validation_groups'],
             ];
 
-            return $this->container->get('form.factory')->create($this->options['form'], $data, array_merge($options, $this->options['form_options']));
+            return $this->container->get('form.factory')->createNamed('data', $this->options['form'], $data, array_merge($options, $this->options['form_options']));
         }
 
         return null;

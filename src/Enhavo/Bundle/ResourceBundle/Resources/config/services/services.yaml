@@ -103,6 +103,10 @@ services:
         arguments:
             - '%form.type_extension.csrf.enabled%'
 
+    Enhavo\Bundle\ResourceBundle\Form\FormErrorNormalizer: ~
+
+    Enhavo\Bundle\ResourceBundle\Form\FormViewDataNormalizer: ~
+
     Enhavo\Bundle\ResourceBundle\Form\FormNormalizer:
         arguments:
             - '@serializer'
@@ -111,6 +115,10 @@ services:
 
     Enhavo\Bundle\ResourceBundle\Form\FormDescriberInterface:
         alias: Enhavo\Bundle\ResourceBundle\Form\FormDescriber
+
+    Enhavo\Bundle\ResourceBundle\Form\Describer\EntityTypeDescriber:
+        tags:
+            - { name: 'enhavo_resource.form_type_describer' }
 
     Enhavo\Bundle\ResourceBundle\Form\Describer\ChoiceTypeDescriber:
         tags:

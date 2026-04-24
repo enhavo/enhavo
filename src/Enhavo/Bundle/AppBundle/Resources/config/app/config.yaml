@@ -9,11 +9,11 @@ enhavo_api:
     documentation:
         section:
             admin:
-                Enhavo\Bundle\ApiBundle\Documentation\RouteDescriber:
-                    section: admin
                 Enhavo\Bundle\ApiBundle\Documentation\InfoDescriber:
                     title: 'Admin'
                     description: 'Admin api documentation'
+                Enhavo\Bundle\ApiBundle\Documentation\RouteDescriber:
+                    section: admin
 enhavo_framework:
     locale: "%locale%"
     template_paths:
