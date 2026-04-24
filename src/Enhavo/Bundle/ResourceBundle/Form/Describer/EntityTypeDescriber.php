@@ -3,8 +3,8 @@
 namespace Enhavo\Bundle\ResourceBundle\Form\Describer;
 
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Schema;
-use Enhavo\Bundle\ResourceBundle\Filter\Type\EntityType;
 use Enhavo\Bundle\ResourceBundle\Form\FormTypeDescriberInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormTypeInterface;
 
 class EntityTypeDescriber implements FormTypeDescriberInterface

@@ -213,7 +213,7 @@ class AutoCompleteEntityType extends AbstractType implements FormTypeDescribeAwa
         return 'enhavo_auto_complete_entity';
     }
 
-    public function describe($options, FormTypeInterface $form, Schema $schema)
+    public function describe($options, FormTypeInterface $form, Schema $schema): void
     {
         if ($options['multiple']) {
             $schema->array()->items()->string()->description('Id');
