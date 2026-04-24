@@ -41,6 +41,10 @@ services:
         tags:
             - { name: enhavo_api.documentation_describer}
 
+    Enhavo\Bundle\ApiBundle\Documentation\ServersDescriber:
+        tags:
+            - { name: enhavo_api.documentation_describer}
+
     Enhavo\Bundle\ApiBundle\Normalizer\DataNormalizer:
         tags:
             - { name: serializer.normalizer }
