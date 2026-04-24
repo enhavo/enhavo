@@ -79,6 +79,6 @@ class DateType extends AbstractType implements FormTypeDescribeAwareInterface
 
     public function describe($options, FormTypeInterface $form, Schema $schema)
     {
-        $schema->string()->description(sprintf('Format: %s', $options['format']));
+        $schema->string()->format($options['format']);
     }
 }
