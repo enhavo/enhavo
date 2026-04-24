@@ -9,13 +9,17 @@ enhavo_api:
     documentation:
         section:
             admin:
-                Enhavo\Bundle\ApiBundle\Documentation\RouteDescriber:
-                    section: admin
                 Enhavo\Bundle\ApiBundle\Documentation\InfoDescriber:
                     title: 'Admin'
                     description: 'Admin api documentation'
+<<<<<<< HEAD
 
 enhavo_app:
+=======
+                Enhavo\Bundle\ApiBundle\Documentation\RouteDescriber:
+                    section: admin
+enhavo_framework:
+>>>>>>> fb7bd9f43 (feat: improve resource api (#2407))
     locale: "%locale%"
     template_paths:
         enhavo_app:

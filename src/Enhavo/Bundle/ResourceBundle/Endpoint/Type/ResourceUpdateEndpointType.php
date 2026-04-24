@@ -32,6 +32,8 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
         private readonly ResourceManager $resourceManager,
         private readonly FormNormalizerInterface $formNormalizer,
         private readonly FormDescriber $formDescriber,
+        private readonly FormNormalizerInterface $formErrorNormalizer,
+        private readonly FormNormalizerInterface $formDataNormalizer,
     ) {
     }
 
@@ -61,12 +63,14 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
                     $context->setStatusCode(200);
                     $form = $input->createForm($resource);
                 } else {
+                    $data->set('errors', $this->formErrorNormalizer->normalize($form));
                     $context->setStatusCode(400);
                 }
             }
 
             $formFields = $request->query->get('form-fields') ? explode(',', $request->query->get('form-fields')) : null;
             $data->set('form', $this->formNormalizer->normalize($form, ['fields' => $formFields]));
+            $data->set('data', $this->formDataNormalizer->normalize($form));
             $data->set('url', $request->getPathInfo());
         }
 
@@ -143,7 +147,9 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
             ->requestBody()
                 ->content()
                     ->schema()
-                        ->ref(sprintf('#/components/schemas/%s', $schemaName))
+                        ->object()
+                            ->property('data', 'object')->ref(sprintf('#/components/schemas/%s', $schemaName))->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()

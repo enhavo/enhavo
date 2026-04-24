@@ -5,6 +5,7 @@ namespace Enhavo\Bundle\ResourceBundle\Form;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Schema;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 class FormDescriber implements FormDescriberInterface
 {
@@ -17,42 +18,53 @@ class FormDescriber implements FormDescriberInterface
 
     public function describe(FormInterface $form, Schema $schema): void
     {
-        $type = $form->getConfig()->getType()->getInnerType();
-        if (is_a($type, FormTypeDescribeAwareInterface::class)) {
-            $type->describe($form->getConfig()->getOptions(), $type, $schema);
+        $innerType = $form->getConfig()->getType()->getInnerType();
+        $options = $form->getConfig()->getOptions();
+
+        if ($this->describeByFormType($options, $innerType, $schema)) {
             return;
         }
 
-        foreach (array_keys($this->container->getProvidedServices()) as $serviceName) {
-            $types = $serviceName::getFormTypes();
-            foreach ($types as $findType) {
-                if (is_a($type, $findType)) {
-                    $describeType = $this->container->get($serviceName);
-                    $describeType->describe($form->getConfig()->getOptions(), $type, $schema);
-                    return;
-                }
+        $parentType = $form->getConfig()->getType()->getParent();
+        while ($parentType != null) {
+            $innerType = $parentType->getInnerType();
 
-                $parentType = $form->getConfig()->getType()->getParent();
-                while ($parentType != null) {
-                    if (is_a($parentType->getInnerType(), $findType)) {
-                        $describeType = $this->container->get($serviceName);
-                        $describeType->describe($form->getConfig()->getOptions(), $type, $schema);
-                        return;
-                    }
-                    $parentType = $parentType->getParent();
-                }
+            if ($this->describeByFormType($options, $innerType, $schema)) {
+                return;
             }
+
+            $parentType = $parentType->getParent();
         }
 
         if ($form->getConfig()->getCompound()) {
             $object = $schema->object();
             foreach ($form as $property => $child) {
-                if ($child->getConfig()->getCompound()) {
-                    $this->describe($child, $object->property($property, 'schema'));
-                } else {
-                    $object->property($property, 'string');
+                $this->describe($child, $object->property($property, 'schema'));
+            }
+        } else {
+            $schema->string();
+        }
+    }
+
+    private function describeByFormType(array $options, FormTypeInterface $type, Schema $schema): bool
+    {
+        foreach (array_keys($this->container->getProvidedServices()) as $serviceName) {
+            /** @var FormTypeDescriberInterface $serviceName */
+            $types = $serviceName::getFormTypes();
+            foreach ($types as $findType) {
+                if (is_a($type, $findType)) {
+                    $describeType = $this->container->get($serviceName);
+                    $describeType->describe($options, $type, $schema);
+                    return true;
                 }
             }
         }
+
+        if (is_a($type, FormTypeDescribeAwareInterface::class)) {
+            $type->describe($options, $type, $schema);
+            return true;
+        }
+
+        return false;
     }
 }
