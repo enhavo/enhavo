@@ -58,7 +58,7 @@ export class AbstractColumn implements ColumnInterface
                 .join(',');
             const argsDef = argsStr ? `let ${argsStr};` : '';
 
-            return eval(`${argsDef}${code}`);
+            return (0, eval)(`${argsDef}${code}`);
         }.call(args);
     }
 }
