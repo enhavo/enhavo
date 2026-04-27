@@ -2,3 +2,4 @@ enhavo_api:
     documentation:
         section:
             default:
+                Enhavo\Bundle\ApiBundle\Documentation\RouteDescriber: ~
