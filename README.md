@@ -38,7 +38,7 @@ If you are a github user, you can star our project.
 
 ----------------------
 
-If you want to contribute code, you need to run the main repository. Make sure you have installed `composer` and `yarn` on 
+If you want to contribute code, you need to run the main repository. Make sure you have installed `composer` and `corepack enable` on 
 your local machine. Fork and clone the repo and add a ``.env.local`` file containing your database credentials.
 
 ```
@@ -69,7 +69,6 @@ Make your changes and run the tests.
 
 ```bash
 $ bin/phpunit
-$ bin/behat
 $ yarn test:unit
 $ yarn test:integration
 ```
@@ -85,6 +84,10 @@ Depending on what you are going to test, choose the right tool.
 [**** Database ****][**** PHP File ****][**** JS File ****][**** Browser ****]
 ```
 
+----------------------
+
+To set up an application to access via browser, check the playground directory, 
+there you can find different setup examples to run and test a full application.
 
 Documentation
 -------------

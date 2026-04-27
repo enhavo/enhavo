@@ -134,3 +134,45 @@ Symfony.
     <form-help :form="form.get('property')" />
 </template>
 ```
+
+
+### Client Dependency Injection
+
+The `FormFactory` is registered as a dependency injection service and can be injected
+into your own services. In the service definition file, you can reference it
+by its service id `@enhavo/vue-form/form/FormFactory`.
+
+```yaml
+# assets/container.di.yaml
+services:
+    MyService:
+        from: './MyService'
+        import: MyService
+        arguments:
+            - '@enhavo/vue-form/form/FormFactory'
+```
+
+```ts
+import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
+import {Form} from "@enhavo/vue-form/model/Form";
+
+export class MyService
+{
+    public form: Form|null = null;
+    
+    constructor(
+        private formFactory: FormFactory
+    ) {
+    }
+
+    load()
+    {
+        fetch('path/to/controller/action')
+            .then((response) => response.json())
+            .then((data) => {
+                this.form = this.formFactory.create(data.form);
+                // use form ...
+            });
+    }
+}
+```
