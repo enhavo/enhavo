@@ -28,10 +28,14 @@ enhavo_setting:
 
         app.text:
             type: text
+            group: text
 
         app.html:
             type: text
+            label: Text
             wysiwyg: true
+            group: text
 
         app.postcode:
             type: string
+            group: text

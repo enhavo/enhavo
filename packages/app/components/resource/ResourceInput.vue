@@ -38,14 +38,23 @@ import {TabInterface} from "../../tab/TabInterface";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {Frame} from "@enhavo/app/frame/Frame";
 import {Router} from "@enhavo/app/routing/Router";
+import {HtmlEntities} from "../../util/HtmlEntities";
+import {ExpressionLanguage} from "../../expression-language/ExpressionLanguage";
 
 const manager = inject<ResourceInputManager>('resourceInputManager');
 const frameManager = inject<FrameManager>('frameManager');
 const router = inject<Router>('router');
 const route = useRoute();
+const expressionLanguage = inject<ExpressionLanguage>('expressionLanguage');
 
+let parameters = { id: route.params.id as number };
+if (route.meta.api_parameters) {
+    parameters = expressionLanguage.evaluateObject(HtmlEntities.encodeObject(route.meta.api_parameters as Object), {
+        route: route
+    });
+}
 
-manager.load(generateUrl(route.meta.api as string, route.params.id as number));
+manager.load(router.generate(route.meta.api as string, parameters));
 
 async function selectTab(tab: TabInterface)
 {
@@ -65,14 +74,5 @@ onMounted( async () => {
         }
     });
 })
-
-function generateUrl(route: string, id: number = null): string
-{
-    let parameters = {};
-    if (route) {
-        parameters['id'] = id;
-    }
-    return router.generate(route, parameters);
-}
 
 </script>
