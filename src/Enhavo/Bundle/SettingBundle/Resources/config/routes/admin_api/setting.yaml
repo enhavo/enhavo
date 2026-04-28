@@ -41,6 +41,17 @@ enhavo_setting_admin_api_setting_update:
             type: resource_update
             input: enhavo_setting.setting
 
+enhavo_setting_admin_api_setting_key_update:
+    path: '/setting/update/key/{key}'
+    methods:
+        - GET
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: resource_update
+            input: enhavo_setting.setting_key
+
 enhavo_setting_admin_api_setting_delete:
     path: '/setting/delete/{id}'
     methods: [DELETE, POST]

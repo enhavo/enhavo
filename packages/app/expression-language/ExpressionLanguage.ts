@@ -56,19 +56,10 @@ export class ExpressionLanguage
         })
     }
 
-    private evaluateExpression(code: string, args: object = {})
+    private evaluateExpression(code: string, args: Record<string, any> = {})
     {
-        // Call is used to define where "this" within the evaluated code should reference.
-        // eval does not accept the likes of eval.call(...) or eval.apply(...) and cannot
-        // be an arrow function
-        return function evaluateEval() {
-            // Create an args definition list e.g. "arg1 = this.arg1, arg2 = this.arg2"
-            const argsStr = Object.keys(args)
-                .map(key => `${key} = this.${key}`)
-                .join(',');
-            const argsDef = argsStr ? `let ${argsStr};` : '';
-
-            return (0, eval)(`${argsDef}${code}`);
-        }.call(args);
+        const keys = Object.keys(args);
+        const values = keys.map(k => args[k]);
+        return new Function(...keys, `return ${code};`)(...values);
     }
 }
