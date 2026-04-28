@@ -9,12 +9,11 @@ services:
             - { name: enhavo_app.menu }
 
     Enhavo\Bundle\SettingBundle\Init\InitSetting:
-        public: true
         arguments:
             - '@doctrine.orm.default_entity_manager'
             - '@Enhavo\Bundle\SettingBundle\Setting\SettingManager'
         tags:
-            - { name: enhavo.init, alias: 'setting' }
+            - { name: enhavo_framework.init }
 
     enhavo_setting.form.setting:
         class: Enhavo\Bundle\SettingBundle\Form\Type\SettingType

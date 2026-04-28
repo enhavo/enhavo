@@ -26,7 +26,6 @@ class SettingMenu extends AbstractMenuType
             'route' => 'enhavo_setting_admin_setting_index',
             'permission' => 'ROLE_ENHAVO_SETTING_SETTING_INDEX',
             'group' => null,
-            'setting' => null,
             'key' => null,
         ]);
 
@@ -34,15 +33,17 @@ class SettingMenu extends AbstractMenuType
             if ($options['group']) {
                 return array_merge(['group' => $options['group']], $value);
             } elseif ($options['key']) {
-                return array_merge(['key' => $options['setting']], $value);
+                return array_merge(['key' => $options['key']], $value);
             }
 
             return $value;
         });
 
         $resolver->setNormalizer('route', function ($options, $value) {
-            if ($options['setting']) {
-                return 'enhavo_setting_setting_edit';
+            if ($options['group']) {
+                return 'enhavo_setting_admin_setting_index';
+            } elseif ($options['key']) {
+                return 'enhavo_setting_admin_setting_key_update';
             }
 
             return $value;

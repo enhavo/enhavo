@@ -36,3 +36,17 @@ enhavo_setting_admin_setting_update:
         _endpoint:
             type: admin
 
+enhavo_setting_admin_setting_key_update:
+    path: /setting/update/key
+    defaults:
+        _expose: admin
+        _vue:
+            component: resource-input
+            groups: admin
+            meta:
+                api: enhavo_setting_admin_api_setting_key_update
+                api_parameters:
+                    key: expr:query.get("key")
+        _endpoint:
+            type: admin
+

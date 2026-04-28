@@ -22,11 +22,11 @@ enhavo_resource:
 
             routes:
                 list_parameters:
-                    group: expr:request.get("group")
+                    group: expr:request.query.get("group")
             resource: enhavo_setting.setting
             collection:
                 criteria:
-                    group: expr:request.get("group")
+                    group: expr:request.query.get("group")
             columns:
                 label:
                     type: text
@@ -39,6 +39,7 @@ enhavo_resource:
                     label: setting.label.value
                     translation_domain: EnhavoSettingBundle
                     width: 6
+
     inputs:
         enhavo_setting.setting:
             extends: enhavo_resource.input
@@ -55,3 +56,13 @@ enhavo_resource:
                     arrangement: |
                         name
                         value.value
+
+        enhavo_setting.setting_key:
+            extends: enhavo_setting.setting
+            repository_method: findOneByKey
+            repository_arguments:
+                - 'expr:request.attributes.get("key")'
+            actions:
+                save:
+                    type: save
+                    route: enhavo_setting_admin_api_setting_update

@@ -12,16 +12,24 @@
 namespace Enhavo\Bundle\FrameworkBundle\Init;
 
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 
 class InitManager
 {
-    public function init(OutputInterface $output)
+    private ?ServiceLocator $container = null;
+
+    public function setContainer(ServiceLocator $container): void
+    {
+        $this->container = $container;
+    }
+
+    public function init(OutputInterface $output): void
     {
         $io = new Output($output);
         /** @var InitInterface $initializer */
-//        foreach ($this->collector->getTypes() as $initializer) {
-//            $io->writeln('Initializer');
-//            $initializer->init($io);
-//        }
+        foreach ($this->container as $key => $service) {
+            $io->writeln(sprintf('<info>%s</info>', $key));
+            $service->init($io);
+        }
     }
 }

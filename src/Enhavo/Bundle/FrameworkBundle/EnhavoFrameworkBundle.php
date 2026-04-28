@@ -11,6 +11,8 @@
 
 namespace Enhavo\Bundle\FrameworkBundle;
 
+use Enhavo\Bundle\FrameworkBundle\DependencyInjection\Compiler\InitCompilerPass;
+use Enhavo\Bundle\FrameworkBundle\Init\InitInterface;
 use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface;
 use Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\RouteProvider;
 use Enhavo\Component\Type\TypeCompilerPass;
@@ -41,12 +43,18 @@ class EnhavoFrameworkBundle extends Bundle
 
         $container->addCompilerPass(new TemplateExpressionLanguageCompilerPass());
 
+        $container->addCompilerPass(new InitCompilerPass());
+
         $container->registerForAutoconfiguration(VueRouteProviderTypeInterface::class)
             ->addTag('enhavo_app.vue_route_provider')
         ;
 
         $container->registerForAutoconfiguration(RouteCollectorInterface::class)
             ->addTag('enhavo_framework.route_collector')
+        ;
+
+        $container->registerForAutoconfiguration(InitInterface::class)
+            ->addTag('enhavo_framework.init')
         ;
 
         $container->registerForAutoconfiguration(TemplateResolverAwareInterface::class)

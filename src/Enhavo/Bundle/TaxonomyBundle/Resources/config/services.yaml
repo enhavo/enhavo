@@ -39,14 +39,13 @@ services:
             - { name: form.type }
 
     Enhavo\Bundle\TaxonomyBundle\Init\InitTaxonomy:
-        public: true
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@enhavo_taxonomy.taxonomy.repository'
             - '@enhavo_taxonomy.taxonomy.factory'
             - '%enhavo_taxonomy.taxonomies%'
         tags:
-            - { name: 'enhavo.init', alias: 'taxonomy'}
+            - { name: enhavo_framework.init }
 
     enhavo_taxonomy.term.factory:
         public: true

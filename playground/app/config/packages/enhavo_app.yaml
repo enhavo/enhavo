@@ -56,3 +56,11 @@ enhavo_app:
                     route: app_admin_frame_test
                     icon: video_label
                     clear: false
+                settings_key:
+                    label: Setting Boolean
+                    type: setting
+                    key: app.boolean
+                settings_text:
+                    label: Setting Text
+                    type: setting
+                    group: text
