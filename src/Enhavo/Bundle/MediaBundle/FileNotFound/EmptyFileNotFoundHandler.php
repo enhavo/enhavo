@@ -17,7 +17,7 @@ use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Model\FormatInterface;
 use Enhavo\Bundle\MediaBundle\Storage\StorageInterface;
 
-class ReturnEmptyFileNotFoundHandler implements FileNotFoundHandlerInterface
+class EmptyFileNotFoundHandler implements FileNotFoundHandlerInterface
 {
     public function handleSave(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
     {
