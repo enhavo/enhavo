@@ -15,6 +15,10 @@ services:
         tags:
             - { name: enhavo_media.file_not_found_handler }
 
+    Enhavo\Bundle\MediaBundle\FileNotFound\ReturnEmptyFileNotFoundHandler:
+        tags:
+            - { name: enhavo_media.file_not_found_handler }
+
     Enhavo\Bundle\MediaBundle\FileNotFound\ChainFileNotFoundHandler:
         tags:
             - { name: enhavo_media.file_not_found_handler }
