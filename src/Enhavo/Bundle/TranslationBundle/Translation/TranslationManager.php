@@ -297,7 +297,9 @@ class TranslationManager
                 $translation = $this->factory->create(array_merge([
                     'type' => $propertyNode->getType(),
                 ], $propertyNode->getOptions()));
-                $translation->autoTranslate($data, $propertyName, $locale);
+                if ($translation->isAllowAutoTranslate($data, $propertyName)) {
+                    $translation->autoTranslate($data, $propertyName, $locale);
+                }
             }
         }
     }

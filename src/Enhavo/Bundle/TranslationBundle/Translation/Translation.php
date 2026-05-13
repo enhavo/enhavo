@@ -58,4 +58,9 @@ class Translation extends AbstractContainerType
     {
         return $this->type->isFormTranslatable($object, $property, $this->options);
     }
+
+    public function isAllowAutoTranslate($object, string $property): bool
+    {
+        return $this->type->isAllowAutoTranslate($object, $property, $this->options);
+    }
 }
