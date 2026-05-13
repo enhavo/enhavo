@@ -13,6 +13,7 @@ namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationTypeInterface;
 use Enhavo\Component\Type\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TranslationType extends AbstractType implements TranslationTypeInterface
 {
