@@ -26,7 +26,7 @@ class EmptyFileNotFoundHandler implements FileNotFoundHandlerInterface
 
     public function handleLoad(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
     {
-        $file->setContent(new Content('', ''));
+        $file->setContent(new Content('', null));
     }
 
     public function handleDelete(FormatInterface|FileInterface $file, StorageInterface $storage, FileNotFoundException $exception, array $parameters = []): void
