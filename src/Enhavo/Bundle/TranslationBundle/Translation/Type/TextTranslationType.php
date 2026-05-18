@@ -60,13 +60,11 @@ class TextTranslationType extends AbstractTranslationType
         return $this->translator->getDefaultValue($data, $property);
     }
 
-    public function isAllowAutoTranslate($object, string $property, array $options): bool
-    {
-        return $options['allow_auto_translate'];
-    }
-
     public function autoTranslate($object, string $property, string $locale, array $options): void
     {
+        if (!$options['allow_auto_translate']) {
+            return;
+        }
         $value = $this->propertyAccessor->getValue($object, $property);
         $translatedValue = $this->translator->getTranslation($object, $property, $locale);
 
