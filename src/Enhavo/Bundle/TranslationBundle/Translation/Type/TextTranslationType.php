@@ -26,8 +26,7 @@ class TextTranslationType extends AbstractTranslationType
         private TranslatorInterface $translator,
         private TranslationClientInterface $translationClient,
         private ?string $defaultLanguage,
-    )
-    {
+    ) {
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
