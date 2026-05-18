@@ -61,6 +61,11 @@ class TextTranslationType extends AbstractTranslationType
         return $this->translator->getDefaultValue($data, $property);
     }
 
+    public function isAllowAutoTranslate($object, string $property, array $options): bool
+    {
+        return $options['allow_auto_translate'];
+    }
+
     public function autoTranslate($object, string $property, string $locale, array $options): void
     {
         $value = $this->propertyAccessor->getValue($object, $property);
@@ -81,10 +86,11 @@ class TextTranslationType extends AbstractTranslationType
         return 'text';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'allow_fallback' => false,
+            'allow_auto_translate' => true,
             'html' => false,
             'overwrite' => false,
         ]);
