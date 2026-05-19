@@ -13,7 +13,6 @@ namespace Enhavo\Bundle\TranslationBundle\Translation\Type;
 
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationTypeInterface;
 use Enhavo\Component\Type\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TranslationType extends AbstractType implements TranslationTypeInterface
 {
@@ -51,14 +50,8 @@ class TranslationType extends AbstractType implements TranslationTypeInterface
         return true;
     }
 
-    public function isAllowAutoTranslate($object, string $property, array $options): bool
-    {
-        return true;
-    }
-
     public function autoTranslate($object, string $property, string $locale, array $options): void
     {
 
     }
-
 }

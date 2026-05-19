@@ -58,5 +58,4 @@ class Translation extends AbstractContainerType
     {
         return $this->type->isFormTranslatable($object, $property, $this->options);
     }
-
 }
