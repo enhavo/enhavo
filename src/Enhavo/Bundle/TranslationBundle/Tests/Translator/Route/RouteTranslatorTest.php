@@ -56,19 +56,22 @@ class RouteTranslatorTest extends TestCase
         $dependencies = $this->createDependencies();
         $translator = $this->createInstance($dependencies);
 
-        /** @var RouteInterface|MockObject $route */
-        $route = $this->getMockBuilder(RouteInterface::class)->getMock();
+        $route = new Route();
+        $route->setName('route-test');
+        $route->setStaticPrefix('/test');
 
         $entity = new TranslatableMock();
 
-        $dependencies->repository->method('findTranslationRoute')->willReturnCallback(function ($class, $id, $property, $locale) use ($route) {
+        $dependencies->repository->method('findTranslationRoutes')->willReturnCallback(function ($class, $id, $property = null, $locale = null) use ($route) {
             if (null === $id) {
-                return null;
+                return [];
             }
             $translation = new TranslationRoute();
             $translation->setRoute($route);
+            $translation->setProperty('route');
+            $translation->setLocale('fr');
 
-            return $translation;
+            return [$translation];
         });
 
         $translator->setTranslation($entity, 'route', 'fr', $route);
@@ -85,16 +88,13 @@ class RouteTranslatorTest extends TestCase
         /** @var RouteInterface|MockObject $route */
         $route = new Route();
         $route->setName('route-a');
+        $route->setStaticPrefix('/route-a');
         /** @var RouteInterface|MockObject $route */
         $route2 = new Route();
         $route2->setName('route-b');
+        $route2->setStaticPrefix('/route-b');
 
-        $dependencies->repository->method('findTranslationRoute')->willReturnCallback(function ($entity, $property, $locale) use ($route) {
-            $translation = new TranslationRoute();
-            $translation->setRoute($route);
-
-            return $translation;
-        });
+        $dependencies->repository->method('findTranslationRoutes')->willReturn([]);
 
         $entity = new TranslatableMock();
 
@@ -121,12 +121,12 @@ class RouteTranslatorTest extends TestCase
         /** @var RouteInterface|MockObject $route */
         $route = $this->getMockBuilder(RouteInterface::class)->getMock();
 
-        $dependencies->repository->method('findTranslationRoute')->willReturnCallback(function ($entity, $property, $locale) use ($route) {
-            $translation = new TranslationRoute();
-            $translation->setRoute($route);
+        $translation = new TranslationRoute();
+        $translation->setRoute($route);
+        $translation->setProperty('route');
+        $translation->setLocale('fr');
 
-            return $translation;
-        });
+        $dependencies->repository->method('findTranslationRoutes')->willReturn([$translation]);
 
         $entity = new TranslatableMock();
 

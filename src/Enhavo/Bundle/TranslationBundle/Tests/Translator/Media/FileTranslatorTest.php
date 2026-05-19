@@ -116,12 +116,12 @@ class FileTranslatorTest extends TestCase
         /** @var FileInterface|MockObject $file */
         $file = $this->getMockBuilder(FileInterface::class)->getMock();
 
-        $dependencies->repository->method('findOneBy')->willReturnCallback(function () use ($file) {
-            $translation = new TranslationFile();
-            $translation->setFile($file);
+        $translation = new TranslationFile();
+        $translation->setFile($file);
+        $translation->setProperty('file');
+        $translation->setLocale('fr');
 
-            return $translation;
-        });
+        $dependencies->repository->method('findBy')->willReturn([$translation]);
 
         $entity = new TranslatableMock();
 
