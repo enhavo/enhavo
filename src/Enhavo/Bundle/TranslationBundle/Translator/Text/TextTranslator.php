@@ -21,50 +21,6 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  */
 class TextTranslator extends AbstractTranslator
 {
-    public function setTranslation($entity, $property, $locale, $value): void
-    {
-        if ($locale == $this->localeProvider->getDefaultLocale()) {
-            return;
-        }
-
-        $translation = $this->buffer->load($entity, $property, $locale);
-        if ($translation instanceof Translation) {
-            $translation->setTranslation($value);
-
-            return;
-        }
-
-        $translation = $this->load($entity, $property, $locale);
-        if (null === $translation) {
-            $translation = $this->createTranslation($entity, $property, $locale, $value);
-        } else {
-            $translation->setTranslation($value);
-        }
-
-        $this->buffer->store($entity, $property, $locale, $translation);
-    }
-
-    public function getTranslation($entity, $property, $locale): ?string
-    {
-        if ($locale == $this->localeProvider->getDefaultLocale()) {
-            return null;
-        }
-
-        $translation = $this->buffer->load($entity, $property, $locale);
-        if (null !== $translation) {
-            return $translation->getTranslation();
-        }
-
-        $translation = $this->load($entity, $property, $locale);
-        if (null !== $translation) {
-            $this->buffer->store($entity, $property, $locale, $translation);
-
-            return $translation->getTranslation();
-        }
-
-        return null;
-    }
-
     public function translate($entity, string $property, string $locale, array $options)
     {
         // translation data is stored inside the object
@@ -94,33 +50,53 @@ class TextTranslator extends AbstractTranslator
         parent::detach($entity, $property, $locale, $options);
     }
 
-    private function createTranslation($entity, $property, $locale, $data): Translation
+    protected function createTranslation($entity, $property, $locale, $value): Translation
     {
         $translation = new Translation();
         $translation->setObject($entity);
         $translation->setProperty($property);
         $translation->setLocale($locale);
-        $translation->setTranslation($data);
+        $translation->setTranslation($value);
         $this->entityManager->persist($translation);
 
         return $translation;
     }
 
-    private function load($entity, $property, $locale): ?Translation
+    protected function updateTranslation($translation, $value): void
     {
-        /** @var Translation $translation */
-        $translation = $this->getRepository()->findOneBy([
+        if ($translation instanceof Translation) {
+            $translation->setTranslation($value);
+            return;
+        }
+
+        throw new \InvalidArgumentException('Must be of type: ' . Translation::class);
+    }
+
+    public function findTranslations($entity, ?string $property = null): array
+    {
+        $parameters = [
             'class' => $this->entityResolver->getName($entity),
             'refId' => $entity->getId(),
-            'property' => $property,
-            'locale' => $locale,
-        ]);
+        ];
 
-        return $translation;
+        if ($property !== null) {
+            $parameters['property'] = $property;
+        }
+
+        return $this->getRepository()->findBy($parameters);
     }
 
     public function getRepository(): EntityRepository
     {
         return $this->entityManager->getRepository(Translation::class);
+    }
+
+    protected function getTranslationValue($translation)
+    {
+        if ($translation instanceof Translation) {
+            return $translation->getTranslation();
+        }
+
+        throw new \InvalidArgumentException('Must be of type: ' . Translation::class);
     }
 }

@@ -15,6 +15,12 @@ class DataMap
 {
     private $map = [];
 
+    public function exists($entity)
+    {
+        $oid = spl_object_hash($entity);
+        return array_key_exists($oid, $this->map);
+    }
+
     public function store($entity, $property, $locale, $data)
     {
         $oid = spl_object_hash($entity);
