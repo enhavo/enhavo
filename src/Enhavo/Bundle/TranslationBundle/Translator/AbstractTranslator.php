@@ -108,6 +108,10 @@ abstract class AbstractTranslator implements TranslatorInterface
 
     private function loadBuffer($entity): void
     {
+        if ($entity->getId() === null) {
+            return;
+        }
+
         if ($this->buffer->exists($entity)) {
             return;
         }

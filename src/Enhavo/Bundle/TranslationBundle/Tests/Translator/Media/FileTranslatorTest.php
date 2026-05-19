@@ -124,6 +124,7 @@ class FileTranslatorTest extends TestCase
         $dependencies->repository->method('findBy')->willReturn([$translation]);
 
         $entity = new TranslatableMock();
+        $entity->id = 1;
 
         $this->assertEquals($file,
             $translator->getTranslation($entity, 'file', 'fr')
