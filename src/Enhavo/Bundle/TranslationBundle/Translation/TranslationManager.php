@@ -286,7 +286,7 @@ class TranslationManager
         return null;
     }
 
-    public function applyAutoTranslation($data, $locale, string $property = null)
+    public function applyAutoTranslation($data, $locale, ?string $property = null): void
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($data);
