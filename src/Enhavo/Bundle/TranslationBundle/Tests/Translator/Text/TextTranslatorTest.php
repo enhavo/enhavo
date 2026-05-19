@@ -78,6 +78,7 @@ class TextTranslatorTest extends TestCase
         $dependencies->repository->method('findBy')->willReturn([$translation]);
 
         $entity = new TranslatableMock();
+        $entity->id = 1;
         $translator->getTranslation($entity, 'name', 'fr');
 
         $this->assertEquals('translated,,name,fr', $translator->getTranslation($entity, 'name', 'fr'));
@@ -95,6 +96,8 @@ class TextTranslatorTest extends TestCase
         $dependencies->repository->method('findBy')->willReturn([$translation]);
 
         $entity = new TranslatableMock();
+        $entity->id = 1;
+
         $translator->setTranslation($entity, 'name', 'fr', 'bingobongo');
 
         $this->assertEquals('translated,,name,fr', $translator->getTranslation($entity, 'name', 'fr'));

@@ -129,6 +129,7 @@ class RouteTranslatorTest extends TestCase
         $dependencies->repository->method('findTranslationRoutes')->willReturn([$translation]);
 
         $entity = new TranslatableMock();
+        $entity->id = 1;
 
         $this->assertEquals($route,
             $translator->getTranslation($entity, 'route', 'fr')
