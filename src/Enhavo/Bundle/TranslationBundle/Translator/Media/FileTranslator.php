@@ -12,7 +12,6 @@
 namespace Enhavo\Bundle\TranslationBundle\Translator\Media;
 
 use Doctrine\ORM\EntityRepository;
-use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\TranslationBundle\Entity\TranslationFile;
 use Enhavo\Bundle\TranslationBundle\Translator\AbstractTranslator;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -22,50 +21,6 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  */
 class FileTranslator extends AbstractTranslator
 {
-    public function setTranslation($entity, $property, $locale, $value): void
-    {
-        if ($locale == $this->localeProvider->getDefaultLocale()) {
-            return;
-        }
-
-        $translation = $this->buffer->load($entity, $property, $locale);
-        if ($translation instanceof TranslationFile) {
-            $translation->setFile($value);
-
-            return;
-        }
-
-        $translation = $this->load($entity, $property, $locale);
-        if (null === $translation) {
-            $translation = $this->createTranslationFile($entity, $property, $locale, $value);
-        } else {
-            $translation->setFile($value);
-        }
-
-        $this->buffer->store($entity, $property, $locale, $translation);
-    }
-
-    public function getTranslation($entity, $property, $locale): ?FileInterface
-    {
-        if ($locale == $this->localeProvider->getDefaultLocale()) {
-            return null;
-        }
-
-        $translation = $this->buffer->load($entity, $property, $locale);
-        if (null !== $translation) {
-            return $translation->getFile();
-        }
-
-        $translation = $this->load($entity, $property, $locale);
-        if (null !== $translation) {
-            $this->buffer->store($entity, $property, $locale, $translation);
-
-            return $translation->getFile();
-        }
-
-        return null;
-    }
-
     public function translate($entity, string $property, string $locale, array $options)
     {
         // translation data is stored inside the object
@@ -95,29 +50,49 @@ class FileTranslator extends AbstractTranslator
         parent::detach($entity, $property, $locale, $options);
     }
 
-    private function createTranslationFile($entity, $property, $locale, $data): TranslationFile
+    protected function createTranslation($entity, $property, $locale, $value): ?object
     {
         $translation = new TranslationFile();
         $translation->setObject($entity);
         $translation->setProperty($property);
         $translation->setLocale($locale);
-        $translation->setFile($data);
+        $translation->setFile($value);
         $this->entityManager->persist($translation);
 
         return $translation;
     }
 
-    private function load($entity, $property, $locale): ?TranslationFile
+    protected function updateTranslation($translation, $value): void
     {
-        /** @var TranslationFile $translation */
-        $translation = $this->getRepository()->findOneBy([
+        if ($translation instanceof TranslationFile) {
+            $translation->setFile($value);
+            return;
+        }
+
+        throw new \InvalidArgumentException('Must be of type: ' . TranslationFile::class);
+    }
+
+    protected function getTranslationValue($translation)
+    {
+        if ($translation instanceof TranslationFile) {
+            return $translation->getFile();
+        }
+
+        throw new \InvalidArgumentException('Must be of type: ' . TranslationFile::class);
+    }
+
+    public function findTranslations($entity, ?string $property = null): array
+    {
+        $parameters = [
             'class' => $this->entityResolver->getName($entity),
             'refId' => $entity->getId(),
-            'property' => $property,
-            'locale' => $locale,
-        ]);
+        ];
 
-        return $translation;
+        if ($property !== null) {
+            $parameters['property'] = $property;
+        }
+
+        return $this->getRepository()->findBy($parameters);
     }
 
     public function getRepository(): EntityRepository

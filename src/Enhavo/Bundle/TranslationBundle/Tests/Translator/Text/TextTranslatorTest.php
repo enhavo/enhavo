@@ -71,14 +71,11 @@ class TextTranslatorTest extends TestCase
         $dependencies = $this->createDependencies();
         $translator = $this->createInstance($dependencies);
         $translation = $this->getMockBuilder(Translation::class)->getMock();
+        $translation->method('getProperty')->willReturn('name');
+        $translation->method('getLocale')->willReturn('fr');
+        $translation->method('getTranslation')->willReturn('translated,,name,fr');
 
-        $dependencies->repository->method('findOneBy')->willReturnCallback(function (array $params) use ($translation) {
-            $params['class'] = 'translated';
-            $paramstring = implode(',', $params);
-            $translation->method('getTranslation')->willReturn($paramstring);
-
-            return $translation;
-        });
+        $dependencies->repository->method('findBy')->willReturn([$translation]);
 
         $entity = new TranslatableMock();
         $translator->getTranslation($entity, 'name', 'fr');
@@ -91,14 +88,11 @@ class TextTranslatorTest extends TestCase
         $dependencies = $this->createDependencies();
         $translator = $this->createInstance($dependencies);
         $translation = $this->getMockBuilder(Translation::class)->getMock();
+        $translation->method('getProperty')->willReturn('name');
+        $translation->method('getLocale')->willReturn('fr');
+        $translation->method('getTranslation')->willReturn('translated,,name,fr');
 
-        $dependencies->repository->method('findOneBy')->willReturnCallback(function (array $params) use ($translation) {
-            $params['class'] = 'translated';
-            $paramstring = implode(',', $params);
-            $translation->method('getTranslation')->willReturn($paramstring);
-
-            return $translation;
-        });
+        $dependencies->repository->method('findBy')->willReturn([$translation]);
 
         $entity = new TranslatableMock();
         $translator->setTranslation($entity, 'name', 'fr', 'bingobongo');
