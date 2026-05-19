@@ -50,6 +50,8 @@ class TextTranslatorTest extends TestCase
     public function testSetTranslation()
     {
         $dependencies = $this->createDependencies();
+        $dependencies->repository->method('findBy')->willReturn([]);
+
         $translator = $this->createInstance($dependencies);
 
         $entity = new TranslatableMock();
@@ -115,6 +117,8 @@ class TextTranslatorTest extends TestCase
     {
         $dependencies = $this->createDependencies();
         $translator = $this->createInstance($dependencies);
+
+        $dependencies->repository->method('findBy')->willReturn([]);
 
         $entity = new TranslatableMock();
         $entity->setName('spanish');

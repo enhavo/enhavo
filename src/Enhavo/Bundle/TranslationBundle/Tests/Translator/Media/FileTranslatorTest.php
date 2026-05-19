@@ -52,6 +52,8 @@ class FileTranslatorTest extends TestCase
     public function testSetTranslation()
     {
         $dependencies = $this->createDependencies();
+        $dependencies->repository->method('findBy')->willReturn([]);
+
         $translator = $this->createInstance($dependencies);
 
         /** @var FileInterface|MockObject $file */
@@ -75,6 +77,7 @@ class FileTranslatorTest extends TestCase
     public function testResetTranslation()
     {
         $dependencies = $this->createDependencies();
+        $dependencies->repository->method('findBy')->willReturn([]);
         $translator = $this->createInstance($dependencies);
 
         /** @var FileInterface|MockObject $file */
@@ -133,6 +136,8 @@ class FileTranslatorTest extends TestCase
     public function testGetTranslationMissing()
     {
         $dependencies = $this->createDependencies();
+        $dependencies->repository->method('findBy')->willReturn([]);
+
         $translator = $this->createInstance($dependencies);
 
         $entity = new TranslatableMock();
@@ -160,7 +165,9 @@ class FileTranslatorTest extends TestCase
     public function testTranslate()
     {
         $dependencies = $this->createDependencies();
+        $dependencies->repository->method('findBy')->willReturn([]);
         $translator = $this->createInstance($dependencies);
+
 
         /** @var FileInterface|MockObject $file */
         $file = new File();
@@ -180,6 +187,8 @@ class FileTranslatorTest extends TestCase
     public function testDetach()
     {
         $dependencies = $this->createDependencies();
+        $dependencies->repository->method('findBy')->willReturn([]);
+
         $translator = $this->createInstance($dependencies);
 
         /** @var FileInterface|MockObject $file */
