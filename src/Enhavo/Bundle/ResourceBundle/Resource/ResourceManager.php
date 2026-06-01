@@ -132,7 +132,7 @@ class ResourceManager
         return null;
     }
 
-    public function getClass(object $value): string
+    private function getClass(object $value): string
     {
         if ($value instanceof Proxy) {
             return get_parent_class($value);
