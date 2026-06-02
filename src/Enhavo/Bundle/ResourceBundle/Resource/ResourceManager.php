@@ -13,6 +13,7 @@ namespace Enhavo\Bundle\ResourceBundle\Resource;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\Persistence\Proxy;
 use Enhavo\Bundle\ResourceBundle\Delete\DeleteHandlerInterface;
 use Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory;
 use Enhavo\Bundle\ResourceBundle\Event\ResourcePostCreateEvent;
@@ -122,13 +123,22 @@ class ResourceManager
         foreach ($this->resources as $key => $config) {
             if (is_string($value) && $key === $value
                 || is_string($value) && $config['classes']['model'] === $value
-                || is_object($value) && $config['classes']['model'] === get_class($value)
+                || is_object($value) && $config['classes']['model'] === $this->getClass($value)
             ) {
                 return new Metadata($key, $config);
             }
         }
 
         return null;
+    }
+
+    private function getClass(object $value): string
+    {
+        if ($value instanceof Proxy) {
+            return get_parent_class($value);
+        }
+
+        return get_class($value);
     }
 
     public function getLabel(string|object $value): ?string
