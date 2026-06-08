@@ -63,7 +63,7 @@ enhavo_user_admin_api_user_batch:
         _describe: admin
         _endpoint:
             type: resource_batch
-            grid: enhavo_user.batch
+            grid: enhavo_user.user
 
 enhavo_user_admin_api_user_auto_complete:
     path: '/user/auto-complete'
