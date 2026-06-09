@@ -21,7 +21,6 @@ use Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface;
 use Enhavo\Bundle\ResourceBundle\Input\Input;
 use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
-use Enhavo\Bundle\VueFormBundle\Form\VueForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -48,7 +47,7 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
             throw $this->createNotFoundException();
         }
 
-        $this->denyAccessUnlessGranted(new Permission($input->getResourceName(), $options['permission']), $resource);
+        $this->denyAccessUnlessGranted($input->getPermission($options['permission']), $resource);
 
         $form = $input->createForm($resource);
         if ($form) {

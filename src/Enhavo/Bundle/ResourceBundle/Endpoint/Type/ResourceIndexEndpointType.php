@@ -33,7 +33,7 @@ class ResourceIndexEndpointType extends AbstractEndpointType
         /** @var Grid $grid */
         $grid = $this->gridFactory->create($options['grid']);
 
-        $this->denyAccessUnlessGranted(new Permission($grid->getResourceName(), $options['permission']));
+        $this->denyAccessUnlessGranted($grid->getPermission($options['permission']));
 
         $viewData = $grid->getViewData();
         $data->add($viewData);
