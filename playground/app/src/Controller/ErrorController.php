@@ -12,7 +12,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/error')]
 class ErrorController extends AbstractController
@@ -20,7 +20,7 @@ class ErrorController extends AbstractController
     #[Route('/default')]
     public function showDefaultAction()
     {
-        throw new RuntimeException();
+        throw new \RuntimeException();
     }
 
     #[Route('/404')]
