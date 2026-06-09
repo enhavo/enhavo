@@ -1,33 +1,38 @@
 file:
-  label:
-    file: "Datei"
+    label:
+        file: "Datei"
 
 media:
-  label:
-    drop_hint: "Ziehen Sie Dateien aus Ihrem Datei-Explorer / Finder auf diese Fläche."
-  form:
     label:
-      title: "Titel"
-      alt_tag: "Alt-Tag"
-      filename: "Dateiname"
-      slug: "Slug"
-      download: "Herunterladen"
-    message:
-      upload_error: "Fehler beim hochladen der Datei"
-    action:
-        format: 'Format'
-        download: 'Download'
-        upload: 'Upload'
-  image_cropper:
-    action:
-      open_image_cropper: "Bild bearbeiten"
-      submit: "Anwenden"
-    label:
-      image_cropper: "Bild zuschneiden"
-      tooltip_move: "Bild bewegen"
-      tooltip_cropframe: "Rahmen ziehen"
-      tooltip_zoom_in: "Einzoomen"
-      tooltip_zoom_out: "Auszoomen"
-      tooltip_reset: "Zurücksetzen"
-    message:
-      save: 'Erfolgreich gespeichert'
+        drop_hint: "Ziehen Sie Dateien aus Ihrem Datei-Explorer / Finder auf diese Fläche."
+    form:
+        label:
+            title: "Titel"
+            alt_tag: "Alt-Tag"
+            filename: "Dateiname"
+            slug: "Slug"
+            download: "Herunterladen"
+        message:
+            upload_error: "Fehler beim hochladen der Datei"
+        action:
+            format: 'Format'
+            download: 'Download'
+            upload: 'Upload'
+    image_cropper:
+        action:
+            open_image_cropper: "Bild bearbeiten"
+            submit: "Anwenden"
+        label:
+            image_cropper: "Bild zuschneiden"
+            tooltip_move: "Bild bewegen"
+            tooltip_cropframe: "Rahmen ziehen"
+            tooltip_zoom_in: "Einzoomen"
+            tooltip_zoom_out: "Auszoomen"
+            tooltip_reset: "Zurücksetzen"
+        message:
+            save: 'Erfolgreich gespeichert'
+        role:
+            file:
+                label:
+                    show: 'Datei anzeigen'
+                    create: 'Datei erstellen'
