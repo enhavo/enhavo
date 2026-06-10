@@ -6,7 +6,11 @@ enhavo_resource:
                 repository_arguments:
                     - 'article_category'
             permission: ROLE_ENHAVO_ARTICLE_CATEGORY_INDEX
-
+            actions:
+                create:
+                    type: create
+                    permission: 'expr:permission("enhavo_article.category", "create")'
+                    route: 'expr:resolve_route("create", {api: false})'
     inputs:
         enhavo_article.category:
             extends: enhavo_taxonomy.term

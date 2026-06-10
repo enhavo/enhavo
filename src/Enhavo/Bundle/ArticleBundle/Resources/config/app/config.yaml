@@ -115,18 +115,3 @@ enhavo_comment:
     subjects:
         Enhavo\Bundle\ArticleBundle\Entity\Article:
             title_property: title
-
-security:
-    role_hierarchy:
-        ROLE_ENHAVO_TAXONOMY_TAXONOMY_INDEX:
-            - ROLE_ENHAVO_ARTICLE_CATEGORY_INDEX
-            - ROLE_ENHAVO_ARTICLE_TAG_INDEX
-        ROLE_ENHAVO_TAXONOMY_TAXONOMY_CREATE:
-            - ROLE_ENHAVO_ARTICLE_CATEGORY_CREATE
-            - ROLE_ENHAVO_ARTICLE_TAG_CREATE
-        ROLE_ENHAVO_TAXONOMY_TAXONOMY_UPDATE:
-            - ROLE_ENHAVO_ARTICLE_CATEGORY_UPDATE
-            - ROLE_ENHAVO_ARTICLE_TAG_UPDATE
-        ROLE_ENHAVO_TAXONOMY_TAXONOMY_DELETE:
-            - ROLE_ENHAVO_ARTICLE_CATEGORY_DELETE
-            - ROLE_ENHAVO_ARTICLE_TAG_DELETE

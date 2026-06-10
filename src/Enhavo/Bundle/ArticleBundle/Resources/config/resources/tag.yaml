@@ -6,7 +6,11 @@ enhavo_resource:
                 repository_arguments:
                     - 'article_tag'
             permission: ROLE_ENHAVO_ARTICLE_TAG_INDEX
-
+            actions:
+                create:
+                    type: create
+                    permission: 'expr:permission("enhavo_article.tag", "create")'
+                    route: 'expr:resolve_route("create", {api: false})'
     inputs:
         enhavo_article.tag:
             extends: enhavo_taxonomy.term

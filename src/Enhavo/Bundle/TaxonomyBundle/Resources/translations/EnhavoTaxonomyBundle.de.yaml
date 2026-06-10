@@ -1,13 +1,20 @@
 taxonomy:
-  role:
+    role:
+        taxonomy:
+            label:
+                index: 'Taxonomy anzeigen'
+                update: 'Taxonomy bearbeiten'
+                create: 'Taxonomy erstellen'
+                delete: 'Taxonomy löschen'
+        term:
+            label:
+                index: 'Taxonomy-Term anzeigen'
+                update: 'Taxonomy-Term bearbeiten'
+                create: 'Taxonomy-Term erstellen'
+                delete: 'Taxonomy-Term löschen'
     label:
-      index: 'Taxonomy anzeigen'
-      update: 'Taxonomy bearbeiten'
-      create: 'Taxonomy erstellen'
-      delete: 'Taxonomy löschen'
-  label:
-    id: 'ID'
-    taxonomy: 'Kategorie'
+        id: 'ID'
+        taxonomy: 'Kategorie'
 term:
     label:
         name: 'Name'
