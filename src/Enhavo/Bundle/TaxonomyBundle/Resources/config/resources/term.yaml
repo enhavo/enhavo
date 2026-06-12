@@ -13,7 +13,7 @@ enhavo_resource:
             actions:
                 create:
                     type: create
-                    permission: 'expr:permission("enhavo_taxonomy.term", "create")'
+                    permission: ROLE_ENHAVO_TAXONOMY_TERM_CREATE
                     route: 'expr:resolve_route("create", {api: false})'
             filters:
                 name:

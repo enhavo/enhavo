@@ -13,7 +13,7 @@ enhavo_resource:
             actions:
                 create:
                     type: create
-                    permission: 'expr:permission("enhavo_newsletter.group", "create")'
+                    permission: ROLE_ENHAVO_NEWSLETTER_GROUP_CREATE
                     route: 'expr:resolve_route("create", {api: false})'
             columns:
                 name:
@@ -35,6 +35,7 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
+                    permission: ROLE_ENHAVO_NEWSLETTER_GROUP_DELETE
     inputs:
         enhavo_newsletter.group:
             extends: enhavo_resource.input

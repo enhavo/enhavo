@@ -6,6 +6,7 @@ doctrine:
 
 enhavo_app:
     roles:
+        # this is deprecated as permissions are now assigned with intended use (such as article_tag/category.
         enhavo_taxonomy_taxonomy_index:
             role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_INDEX
             label: taxonomy.role.taxonomy.label.index
@@ -22,6 +23,7 @@ enhavo_app:
             role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_DELETE
             label: taxonomy.role.taxonomy.label.delete
             translation_domain: EnhavoTaxonomyBundle
+        # here instead of the former taxonomy_taxonomy (so that project based term usage can be handled via "Taxonomy-Term")
         enhavo_taxonomy_term_index:
             role: ROLE_ENHAVO_TAXONOMY_TERM_INDEX
             label: taxonomy.role.term.label.index

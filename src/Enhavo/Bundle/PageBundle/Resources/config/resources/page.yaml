@@ -12,7 +12,7 @@ enhavo_resource:
             actions:
                 create:
                     type: create
-                    permission: 'expr:permission("enhavo_page.page", "create")'
+                    permission: ROLE_ENHAVO_PAGE_PAGE_CREATE
                     route: 'expr:resolve_route("create", {api: false})'
             resource: enhavo_page.page
             collection:
@@ -61,10 +61,10 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
-                    permission: 'expr:permission("enhavo_page.page", "delete")'
+                    permission: ROLE_ENHAVO_PAGE_PAGE_DELETE
                 publish:
                     type: publish
-                    permission: 'expr:permission("enhavo_page.page", "delete")'
+                    permission: ROLE_ENHAVO_PAGE_PAGE_UPDATE
 
     inputs:
         enhavo_page.page:

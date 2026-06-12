@@ -45,6 +45,7 @@ enhavo_resource:
                 delete:
                     type: delete
                     enabled: "expr:request.query.get('mode') !== 'select'"
+                    permission: ROLE_ENHAVO_MEDIA_LIBRARY_ITEM_DELETE
                 select:
                     type: Enhavo\Bundle\MediaLibraryBundle\Batch\Type\MediaLibrarySelectBatchType
                     enabled: "expr:request.query.get('mode') === 'select'"

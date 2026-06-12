@@ -9,14 +9,14 @@ enhavo_resource:
             actions:
                 create:
                     type: create
-                    permission: 'expr:permission("enhavo_article.category", "create")'
+                    permission: ROLE_ENHAVO_ARTICLE_CATEGORY_CREATE
                     route: 'expr:resolve_route("create", {api: false})'
     inputs:
         enhavo_article.category:
             extends: enhavo_taxonomy.term
             factory_arguments:
                 - 'article_category'
-            permission: ROLE_ENHAVO_ARTICLE_CATEGORY_UPDATE
+            permission: ROLE_ENHAVO_ARTICLE_CATEGORY_INDEX
             actions:
                 save:
                     type: save
@@ -25,4 +25,4 @@ enhavo_resource:
                 delete:
                     type: delete
                     enabled: expr:resource && resource.getId()
-                    permission: expr:permission("enhavo_article.category", "delete")
+                    permission: ROLE_ENHAVO_ARTICLE_CATEGORY_DELETE
