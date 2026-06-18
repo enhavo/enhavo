@@ -45,7 +45,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
         /** @var Input $input */
         $input = $this->inputFactory->create($options['input']);
 
-        $this->denyAccessUnlessGranted(new Permission($input->getResourceName(), $options['permission']));
+        $this->denyAccessUnlessGranted($input->getPermission($options['permission']));
 
         $resource = $input->createResource();
 

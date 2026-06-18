@@ -1,44 +1,57 @@
 article:
-  role:
+    role:
+        article:
+            label:
+                index: 'Artikel anzeigen'
+                update: 'Artikel bearbeiten'
+                create: 'Artikel erstellen'
+                delete: 'Artikel löschen'
+        category:
+            label:
+                index: 'Artikel-Kategorie anzeigen'
+                update: 'Artikel-Kategorie bearbeiten'
+                create: 'Artikel-Kategorie erstellen'
+                delete: 'Artikel-Kategorie löschen'
+        tag:
+            label:
+                index: 'Artikel-Tag anzeigen'
+                update: 'Artikel-Tag bearbeiten'
+                create: 'Artikel-Tag erstellen'
+                delete: 'Artikel-Tag löschen'
+    form:
+        label:
+            page_title: 'Seitentitel'
+            public: 'Öffentlich'
+            social_media: 'Social Media'
+            priority: 'Priorität'
+            change_frequency: 'Änderungsfrequenz'
+            publication_date: 'Erscheinungsdatum'
+            create_tag: 'Tag erstellen'
+            text_left: 'Position'
+            text_left_left: 'Text|Bild'
+            text_left_right: 'Bild|Text'
+            layout: 'Layout'
     label:
-      index: 'Artikel anzeigen'
-      update: 'Artikel bearbeiten'
-      create: 'Artikel erstellen'
-      delete: 'Artikel löschen'
-  form:
-    label:
-      page_title: 'Seitentitel'
-      public: 'Öffentlich'
-      social_media: 'Social Media'
-      priority: 'Priorität'
-      change_frequency: 'Änderungsfrequenz'
-      publication_date: 'Erscheinungsdatum'
-      create_tag: 'Tag erstellen'
-      text_left: 'Position'
-      text_left_left: 'Text|Bild'
-      text_left_right: 'Bild|Text'
-      layout: 'Layout'
-  label:
-    article: 'Artikel'
-    article_list: 'Artikel Liste'
-    article_teaser: 'Artikel Teaser'
-    comments: 'Kommentare'
-    pagination: 'Seiten'
-    limit: 'Anzahl pro Seite'
-    category: 'Kategorie'
-    tag: 'Tag'
-    teaser: 'Teaser'
-    content: 'Inhalt'
-    meta: 'Meta'
-    preview: 'Vorschau'
-    id: 'ID'
-    title: 'Titel'
-    assigned: 'Zugeordnet'
-    public: 'Öffentlich'
-    publicationDate: 'Erscheinungsdatum'
-  batch:
-    action:
-      publish: 'Veröffentlichen'
-    message:
-      confirm:
-        publish: 'Wollen sie wirklich alle ausgewählten Artikel veröffentlichen?'
+        article: 'Artikel'
+        article_list: 'Artikel Liste'
+        article_teaser: 'Artikel Teaser'
+        comments: 'Kommentare'
+        pagination: 'Seiten'
+        limit: 'Anzahl pro Seite'
+        category: 'Kategorie'
+        tag: 'Tag'
+        teaser: 'Teaser'
+        content: 'Inhalt'
+        meta: 'Meta'
+        preview: 'Vorschau'
+        id: 'ID'
+        title: 'Titel'
+        assigned: 'Zugeordnet'
+        public: 'Öffentlich'
+        publicationDate: 'Erscheinungsdatum'
+    batch:
+        action:
+            publish: 'Veröffentlichen'
+        message:
+            confirm:
+                publish: 'Wollen sie wirklich alle ausgewählten Artikel veröffentlichen?'

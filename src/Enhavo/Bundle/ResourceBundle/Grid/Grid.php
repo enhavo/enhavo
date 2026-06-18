@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Grid;
 
+use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
 use Enhavo\Bundle\ResourceBundle\Batch\Batch;
 use Enhavo\Bundle\ResourceBundle\Collection\CollectionInterface;
 use Enhavo\Bundle\ResourceBundle\Collection\ResourceItems;
@@ -41,6 +42,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
                 'class' => TableCollection::class,
             ],
             'component' => 'grid-grid',
+<<<<<<< HEAD
             'routes' => function (OptionsResolver $resolver): void {
                 $resolver->setDefaults([
                     'list' => $this->resolveRoute('list'),
@@ -55,6 +57,24 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
             },
         ]);
 
+=======
+            'permission' => null,
+        ]);
+
+        $resolver->setOptions('routes', function (OptionsResolver $routesResolver): void {
+            $routesResolver->setDefaults([
+                'list' => $this->resolveRoute('list'),
+                'list_parameters' => [],
+                'batch' => $this->resolveRoute('batch'),
+                'batch_parameters' => [],
+                'open' => $this->resolveRoute('update', ['api' => false]),
+                'open_parameters' => [
+                    'id' => 'expr:resource.getId()',
+                ],
+            ]);
+        });
+
+>>>>>>> c1b414173 (Fix roles structure (#2431))
         $resolver->setRequired('resource');
     }
 
@@ -218,6 +238,17 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
     public function getResourceName(): string
     {
         return $this->options['resource'];
+    }
+
+    public function getPermission(string $action): mixed
+    {
+        if ($this->options['permission']) {
+            return $this->evaluate($this->options['permission'], [
+                'action' => $action,
+                'grid' => $this,
+            ]);
+        }
+        return new Permission($this->getResourceName(), $action);
     }
 
     public function getItems(array $context = []): ResourceItems

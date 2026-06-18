@@ -47,7 +47,7 @@ class ResourceDuplicateEndpointType extends AbstractEndpointType
             throw $this->createNotFoundException();
         }
 
-        $this->denyAccessUnlessGranted(new Permission($input->getResourceName(), $options['permission']), $resource);
+        $this->denyAccessUnlessGranted($input->getPermission($options['permission']), $resource);
 
         if ($this->csrfChecker->isEnabled() && !$this->csrfTokenManager->isTokenValid(new CsrfToken('resource_duplicate', $request->getPayload()->get('token')))) {
             $context->setStatusCode(400);

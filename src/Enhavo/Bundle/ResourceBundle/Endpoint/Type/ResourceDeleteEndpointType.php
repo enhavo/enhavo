@@ -41,7 +41,7 @@ class ResourceDeleteEndpointType extends AbstractEndpointType
         $input = $this->inputFactory->create($options['input']);
         $resource = $input->getResource();
 
-        $this->denyAccessUnlessGranted(new Permission($input->getResourceName(), $options['permission']), $resource);
+        $this->denyAccessUnlessGranted($input->getPermission($options['permission']), $resource);
 
         if (null === $resource) {
             throw $this->createNotFoundException();

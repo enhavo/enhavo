@@ -10,7 +10,11 @@ enhavo_resource:
         enhavo_user.group:
             extends: enhavo_resource.grid
             resource: enhavo_user.group
-            actions: {  }
+            actions:
+                create:
+                    type: create
+                    permission: ROLE_ENHAVO_USER_GROUP_CREATE
+                    route: 'expr:resolve_route("create", {api: false})'
             filters:
                 title:
                     type: text
@@ -27,6 +31,7 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
+                    permission: ROLE_ENHAVO_USER_GROUP_DELETE
 
     inputs:
         enhavo_user.group:

@@ -9,6 +9,11 @@ enhavo_resource:
         enhavo_calendar.appointment:
             extends: enhavo_resource.grid
             resource: enhavo_calendar.appointment
+            actions:
+                create:
+                    type: create
+                    permission: ROLE_ENHAVO_CALENDAR_APPOINTMENT_CREATE
+                    route: 'expr:resolve_route("create", {api: false})'
             filters:
                 title:
                     type: text
@@ -31,6 +36,7 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
+                    permission: ROLE_ENHAVO_CALENDAR_APPOINTMENT_DELETE
     inputs:
         enhavo_calendar.appointment:
             extends: enhavo_resource.input

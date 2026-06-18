@@ -38,20 +38,55 @@ enhavo_app:
     roles:
         enhavo_article_article_index:
             role: ROLE_ENHAVO_ARTICLE_ARTICLE_INDEX
-            label: article.role.label.index
+            label: article.role.article.label.index
             translation_domain: EnhavoArticleBundle
         enhavo_article_article_create:
             role: ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE
-            label: article.role.label.create
+            label: article.role.article.label.create
             translation_domain: EnhavoArticleBundle
         enhavo_article_article_update:
             role: ROLE_ENHAVO_ARTICLE_ARTICLE_UPDATE
-            label: article.role.label.update
+            label: article.role.article.label.update
             translation_domain: EnhavoArticleBundle
         enhavo_article_article_delete:
             role: ROLE_ENHAVO_ARTICLE_ARTICLE_DELETE
-            label: article.role.label.delete
+            label: article.role.article.label.delete
             translation_domain: EnhavoArticleBundle
+
+        enhavo_article_category_index:
+            role: ROLE_ENHAVO_ARTICLE_CATEGORY_INDEX
+            label: article.role.category.label.index
+            translation_domain: EnhavoArticleBundle
+        enhavo_article_category_create:
+            role: ROLE_ENHAVO_ARTICLE_CATEGORY_CREATE
+            label: article.role.category.label.create
+            translation_domain: EnhavoArticleBundle
+        enhavo_article_category_update:
+            role: ROLE_ENHAVO_ARTICLE_CATEGORY_UPDATE
+            label: article.role.category.label.update
+            translation_domain: EnhavoArticleBundle
+        enhavo_article_category_delete:
+            role: ROLE_ENHAVO_ARTICLE_CATEGORY_DELETE
+            label: article.role.category.label.delete
+            translation_domain: EnhavoArticleBundle
+
+        enhavo_article_tag_index:
+            role: ROLE_ENHAVO_ARTICLE_TAG_INDEX
+            label: article.role.tag.label.index
+            translation_domain: EnhavoArticleBundle
+        enhavo_article_tag_create:
+            role: ROLE_ENHAVO_ARTICLE_TAG_CREATE
+            label: article.role.tag.label.create
+            translation_domain: EnhavoArticleBundle
+        enhavo_article_tag_update:
+            role: ROLE_ENHAVO_ARTICLE_TAG_UPDATE
+            label: article.role.tag.label.update
+            translation_domain: EnhavoArticleBundle
+        enhavo_article_tag_delete:
+            role: ROLE_ENHAVO_ARTICLE_TAG_DELETE
+            label: article.role.tag.label.delete
+            translation_domain: EnhavoArticleBundle
+
 
 enhavo_taxonomy:
     taxonomies:
