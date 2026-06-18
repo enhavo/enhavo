@@ -1,78 +1,73 @@
 pull_request_rules:
-    -   name: backport 0.9
-        conditions:
-            - label=backport-0.9
-        actions:
-            backport:
-                branches:
-                    - "0.9"
+  - name: backport 0.9
+    conditions:
+      - label=backport-0.9
+    actions:
+      backport:
+        branches:
+          - "0.9"
 
-    -   name: backport 0.8
-        conditions:
-            - label=backport-0.8
-        actions:
-            backport:
-                branches:
-                    - "0.8"
+  - name: backport 0.8
+    conditions:
+      - label=backport-0.8
+    actions:
+      backport:
+        branches:
+          - "0.8"
 
-    -   name: backport 0.10
-        conditions:
-            - label=backport-0.10
-        actions:
-            backport:
-                branches:
-                    - "0.10"
+  - name: backport 0.10
+    conditions:
+      - label=backport-0.10
+    actions:
+      backport:
+        branches:
+          - "0.10"
 
-    -   name: backport 0.11
-        conditions:
-            - label=backport-0.11
-        actions:
-            backport:
-                branches:
-                    - "0.11"
+  - name: backport 0.11
+    conditions:
+      - label=backport-0.11
+    actions:
+      backport:
+        branches:
+          - "0.11"
 
-    -   name: backport 0.12
-        conditions:
-            - label=backport-0.12
-        actions:
-            backport:
-                branches:
-                    - "0.12"
+  - name: backport 0.12
+    conditions:
+      - label=backport-0.12
+    actions:
+      backport:
+        branches:
+          - "0.12"
 
-    -   name: backport 0.13
-        conditions:
-            - label=backport-0.13
-        actions:
-            backport:
-                branches:
-                    - "0.13"
+  - name: backport 0.13
+    conditions:
+      - label=backport-0.13
+    actions:
+      backport:
+        branches:
+          - "0.13"
 
-    -   name: backport 0.14
-        conditions:
-            - label=backport-0.14
-        actions:
-            backport:
-                branches:
-                    - "0.14"
+  - name: backport 0.14
+    conditions:
+      - label=backport-0.14
+    actions:
+      backport:
+        branches:
+          - "0.14"
 
-    -   name: backport 0.15
-        conditions:
-            - label=backport-0.15
-        actions:
-            backport:
-                branches:
-                    - "0.15"
+  - name: backport 0.15
+    conditions:
+      - label=backport-0.15
+    actions:
+      backport:
+        branches:
+          - "0.15"
 
-    -   name: backport 0.16
-        conditions:
-            - label=backport-0.16
-        actions:
-            backport:
-                branches:
-                    - "0.16"
+  - name: backport 0.16
+    conditions:
+      - label=backport-0.16
+    actions:
+      backport:
+        branches:
+          - "0.16"
 
-    -   name: delete head branch after merge
-        conditions:
-            - merged
-        actions:
-            delete_head_branch:
