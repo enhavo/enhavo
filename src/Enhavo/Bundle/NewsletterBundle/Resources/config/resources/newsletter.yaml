@@ -9,7 +9,11 @@ enhavo_resource:
         enhavo_newsletter.newsletter:
             extends: enhavo_resource.grid
             resource: enhavo_newsletter.newsletter
-            actions: {  }
+            actions:
+                create:
+                    type: create
+                    permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_CREATE
+                    route: 'expr:resolve_route("create", {api: false})'
             filters:
                 subject:
                     type: text
@@ -39,6 +43,7 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
+                    permission: ROLE_ENHAVO_NEWSLETTER_NEWSLETTER_DELETE
                 newsletter_send:
                     type: newsletter_send
                 newsletter_send_test:

@@ -11,6 +11,11 @@ enhavo_resource:
         enhavo_user.user:
             extends: enhavo_resource.grid
             resource: enhavo_user.user
+            actions:
+                create:
+                    type: create
+                    permission: ROLE_ENHAVO_USER_USER_CREATE
+                    route: 'expr:resolve_route("create", {api: false})'
             filters:
                 username:
                     type: text
@@ -42,6 +47,7 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
+                    permission: ROLE_ENHAVO_USER_USER_DELETE
 
     inputs:
         enhavo_user.user.create:

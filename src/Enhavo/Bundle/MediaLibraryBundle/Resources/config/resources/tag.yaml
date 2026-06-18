@@ -5,10 +5,28 @@ enhavo_resource:
             collection:
                 repository_arguments:
                     - 'media_library_tag'
-
-
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_INDEX
+            actions:
+                create:
+                    type: create
+                    permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_CREATE
+                    route: 'expr:resolve_route("create", {api: false})'
+            batches:
+                delete:
+                    type: delete
+                    permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_DELETE
     inputs:
         enhavo_media_library.tag:
             extends: enhavo_taxonomy.term
             factory_arguments:
                 - 'media_library_tag'
+            permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_INDEX
+            actions:
+                save:
+                    type: save
+                    permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_CREATE
+            actions_secondary:
+                delete:
+                    type: delete
+                    enabled: expr:resource && resource.getId()
+                    permission: ROLE_ENHAVO_MEDIA_LIBRARY_TAG_DELETE

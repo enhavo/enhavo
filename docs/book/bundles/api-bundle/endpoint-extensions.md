@@ -19,7 +19,7 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class SectionEndpointType extends AbstractEndpointType
 {
@@ -105,4 +105,3 @@ public function handleRequest($options, Request $request, Data $data, Context $c
 This is often useful if you retrieve an object from e.g. a repository and then normalize it. If you pass it also to the context,
 then the next extensions don't have to retrieve it again. This may increase performance as well. 
 :::
-

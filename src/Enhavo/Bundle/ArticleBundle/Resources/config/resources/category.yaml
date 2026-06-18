@@ -5,9 +5,24 @@ enhavo_resource:
             collection:
                 repository_arguments:
                     - 'article_category'
-
+            permission: ROLE_ENHAVO_ARTICLE_CATEGORY_INDEX
+            actions:
+                create:
+                    type: create
+                    permission: ROLE_ENHAVO_ARTICLE_CATEGORY_CREATE
+                    route: 'expr:resolve_route("create", {api: false})'
     inputs:
         enhavo_article.category:
             extends: enhavo_taxonomy.term
             factory_arguments:
                 - 'article_category'
+            permission: ROLE_ENHAVO_ARTICLE_CATEGORY_INDEX
+            actions:
+                save:
+                    type: save
+                    permission: ROLE_ENHAVO_ARTICLE_CATEGORY_CREATE
+            actions_secondary:
+                delete:
+                    type: delete
+                    enabled: expr:resource && resource.getId()
+                    permission: ROLE_ENHAVO_ARTICLE_CATEGORY_DELETE

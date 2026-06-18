@@ -1,33 +1,38 @@
 file:
-  label:
-    file: "File"
+    label:
+        file: "File"
 
 media:
-  label:
-    drop_hint: "Drag files from your file explorer onto this area."
-  form:
     label:
-      title: "Title"
-      alt_tag: "Alt-Tag"
-      filename: "Filename"
-      slug: "Slug"
-      download: "Download"
-    message:
-      upload_error: "Error with file upload"
-    action:
-        format: 'Format'
-        download: 'Download'
-        upload: 'Upload'
-  image_cropper:
-    action:
-      open_image_cropper: "Edit image"
-      submit: "Apply"
-    label:
-      image_cropper: "Image cropper"
-      tooltip_move: "Move"
-      tooltip_cropframe: "Crop"
-      tooltip_zoom_in: "Zoom in"
-      tooltip_zoom_out: "Zoom out"
-      tooltip_reset: "Reset"
-    message:
-      save: 'Save successful'
+        drop_hint: "Drag files from your file explorer onto this area."
+    form:
+        label:
+            title: "Title"
+            alt_tag: "Alt-Tag"
+            filename: "Filename"
+            slug: "Slug"
+            download: "Download"
+        message:
+            upload_error: "Error with file upload"
+        action:
+            format: 'Format'
+            download: 'Download'
+            upload: 'Upload'
+    image_cropper:
+        action:
+            open_image_cropper: "Edit image"
+            submit: "Apply"
+        label:
+            image_cropper: "Image cropper"
+            tooltip_move: "Move"
+            tooltip_cropframe: "Crop"
+            tooltip_zoom_in: "Zoom in"
+            tooltip_zoom_out: "Zoom out"
+            tooltip_reset: "Reset"
+        message:
+            save: 'Save successful'
+    role:
+        file:
+            label:
+                show: 'File show'
+                create: 'File create'

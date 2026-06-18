@@ -14,7 +14,7 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/book/{slug}', name: 'app_book', defaults: ['_format' => 'html'])]
 class BookEndpointType extends AbstractEndpointType
@@ -170,5 +170,3 @@ app_other_book:
             type: App\Endpoint\BookEndpointType
             description: false
 ```
-
-

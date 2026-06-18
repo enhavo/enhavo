@@ -1,16 +1,23 @@
 taxonomy:
-  role:
+    role:
+        taxonomy:
+            label:
+                index: 'Taxonomy list'
+                update: 'Taxonomy update'
+                create: 'Taxonomy create'
+                delete: 'Taxonomy delete'
+        term:
+            label:
+                index: 'Taxonomy-Term list'
+                update: 'Taxonomy-Term update'
+                create: 'Taxonomy-Term create'
+                delete: 'Taxonomy-Term delete'
     label:
-      index: 'Taxonomy list'
-      update: 'Taxonomy update'
-      create: 'Taxonomy create'
-      delete: 'Taxonomy delete'
-  label:
-    id: 'ID'
-    taxonomy: 'Taxonomy'
+        id: 'ID'
+        taxonomy: 'Taxonomy'
 term:
-  label:
-    name: 'Name'
-    validation:
-      term_unique:
-        message: 'An element with this name already exists.'
+    label:
+        name: 'Name'
+        validation:
+            term_unique:
+                message: 'An element with this name already exists.'

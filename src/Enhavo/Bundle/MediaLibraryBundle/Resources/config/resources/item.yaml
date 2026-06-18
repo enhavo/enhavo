@@ -11,7 +11,7 @@ enhavo_resource:
             actions:
                 select:
                     type: media_library_select
-                    enabled: "expr:request.get('mode') === 'select'"
+                    enabled: "expr:request.query.get('mode') === 'select'"
                 upload:
                     type: media_library_upload
             collection:
@@ -44,10 +44,11 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
-                    enabled: "expr:request.get('mode') !== 'select'"
+                    enabled: "expr:request.query.get('mode') !== 'select'"
+                    permission: ROLE_ENHAVO_MEDIA_LIBRARY_ITEM_DELETE
                 select:
                     type: Enhavo\Bundle\MediaLibraryBundle\Batch\Type\MediaLibrarySelectBatchType
-                    enabled: "expr:request.get('mode') === 'select'"
+                    enabled: "expr:request.query.get('mode') === 'select'"
             columns:
                 name:
                     type: multiple_property
