@@ -43,6 +43,7 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
+                    permission: ROLE_ENHAVO_NEWSLETTER_PENDING_SUBSCRIBER_DELETE
     inputs:
         enhavo_newsletter.pending_subscriber:
             extends: enhavo_resource.input

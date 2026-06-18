@@ -10,7 +10,11 @@ enhavo_resource:
         enhavo_redirect.redirect:
             extends: enhavo_resource.grid
             resource: enhavo_redirect.redirect
-            actions: {  }
+            actions:
+                create:
+                    type: create
+                    permission: ROLE_ENHAVO_REDIRECT_REDIRECT_CREATE
+                    route: 'expr:resolve_route("create", {api: false})'
             filters:
                 from:
                     type: text
@@ -52,6 +56,7 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
+                    permission: ROLE_ENHAVO_REDIRECT_REDIRECT_DELETE
     inputs:
         enhavo_redirect.redirect:
             extends: enhavo_resource.input

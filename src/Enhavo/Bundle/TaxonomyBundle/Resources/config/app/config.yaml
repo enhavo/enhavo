@@ -6,24 +6,56 @@ doctrine:
 
 enhavo_app:
     roles:
+        # this is deprecated as permissions are now assigned with intended use (such as article_tag/category.
         enhavo_taxonomy_taxonomy_index:
             role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_INDEX
-            label: taxonomy.role.label.index
+            label: taxonomy.role.taxonomy.label.index
             translation_domain: EnhavoTaxonomyBundle
         enhavo_taxonomy_taxonomy_create:
             role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_CREATE
-            label: taxonomy.role.label.create
+            label: taxonomy.role.taxonomy.label.create
             translation_domain: EnhavoTaxonomyBundle
         enhavo_taxonomy_taxonomy_update:
             role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_UPDATE
-            label: taxonomy.role.label.update
+            label: taxonomy.role.taxonomy.label.update
             translation_domain: EnhavoTaxonomyBundle
         enhavo_taxonomy_taxonomy_delete:
             role: ROLE_ENHAVO_TAXONOMY_TAXONOMY_DELETE
-            label: taxonomy.role.label.delete
+            label: taxonomy.role.taxonomy.label.delete
+            translation_domain: EnhavoTaxonomyBundle
+        # here instead of the former taxonomy_taxonomy (so that project based term usage can be handled via "Taxonomy-Term")
+        enhavo_taxonomy_term_index:
+            role: ROLE_ENHAVO_TAXONOMY_TERM_INDEX
+            label: taxonomy.role.term.label.index
+            translation_domain: EnhavoTaxonomyBundle
+        enhavo_taxonomy_term_create:
+            role: ROLE_ENHAVO_TAXONOMY_TERM_CREATE
+            label: taxonomy.role.term.label.create
+            translation_domain: EnhavoTaxonomyBundle
+        enhavo_taxonomy_term_update:
+            role: ROLE_ENHAVO_TAXONOMY_TERM_UPDATE
+            label: taxonomy.role.term.label.update
+            translation_domain: EnhavoTaxonomyBundle
+        enhavo_taxonomy_term_delete:
+            role: ROLE_ENHAVO_TAXONOMY_TERM_DELETE
+            label: taxonomy.role.term.label.delete
             translation_domain: EnhavoTaxonomyBundle
 
-security:
+security: # this was added for BC. it does only matter if there are user_groups for users with taxonomy taxonomy permission enabled
     role_hierarchy:
+        ROLE_ENHAVO_TAXONOMY_TAXONOMY_INDEX:
+            - ROLE_ENHAVO_ARTICLE_CATEGORY_INDEX
+            - ROLE_ENHAVO_ARTICLE_TAG_INDEX
+            - ROLE_ENHAVO_TAXONOMY_TERM_INDEX
+        ROLE_ENHAVO_TAXONOMY_TAXONOMY_CREATE:
+            - ROLE_ENHAVO_ARTICLE_CATEGORY_CREATE
+            - ROLE_ENHAVO_ARTICLE_TAG_CREATE
+            - ROLE_ENHAVO_TAXONOMY_TERM_CREATE
         ROLE_ENHAVO_TAXONOMY_TAXONOMY_UPDATE:
-            ROLE_ENHAVO_TAXONOMY_COLLECTION_UPDATE:
+            - ROLE_ENHAVO_ARTICLE_CATEGORY_UPDATE
+            - ROLE_ENHAVO_ARTICLE_TAG_UPDATE
+            - ROLE_ENHAVO_TAXONOMY_TERM_UPDATE
+        ROLE_ENHAVO_TAXONOMY_TAXONOMY_DELETE:
+            - ROLE_ENHAVO_ARTICLE_CATEGORY_DELETE
+            - ROLE_ENHAVO_ARTICLE_TAG_DELETE
+            - ROLE_ENHAVO_TAXONOMY_TERM_DELETE

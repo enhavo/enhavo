@@ -14,7 +14,7 @@ enhavo_resource:
             actions:
                 create:
                     type: create
-                    permission: 'expr:permission("enhavo_article.article", "create")'
+                    permission: ROLE_ENHAVO_ARTICLE_ARTICLE_CREATE
                     route: 'expr:resolve_route("create", {api: false})'
             filters:
                 title:
@@ -61,10 +61,10 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
-                    permission: 'expr:permission("enhavo_article.article", "delete")'
+                    permission: ROLE_ENHAVO_ARTICLE_ARTICLE_DELETE
                 publish:
                     type: publish
-                    permission: 'expr:permission("enhavo_article.article", "update")'
+                    permission: ROLE_ENHAVO_ARTICLE_ARTICLE_UPDATE
 
     inputs:
         enhavo_article.article:

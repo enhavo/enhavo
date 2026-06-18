@@ -17,7 +17,7 @@ use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\FrameworkBundle\Endpoint\Type\ViewEndpointType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/setting', name: 'app_theme_setting', defaults: ['_format' => 'json'])]
 class SettingEndpoint extends AbstractEndpointType

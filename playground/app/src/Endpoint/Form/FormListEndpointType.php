@@ -15,7 +15,7 @@ use App\Form\Type\Form\ItemsType;
 use Enhavo\Bundle\FormBundle\Form\Type\ListType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/form/list', name: 'app_form_list')]
 class FormListEndpointType extends AbstractFormEndpointType

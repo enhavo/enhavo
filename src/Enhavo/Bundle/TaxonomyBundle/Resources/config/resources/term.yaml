@@ -10,6 +10,11 @@ enhavo_resource:
         enhavo_taxonomy.term_table:
             extends: enhavo_resource.grid
             resource: enhavo_taxonomy.term
+            actions:
+                create:
+                    type: create
+                    permission: ROLE_ENHAVO_TAXONOMY_TERM_CREATE
+                    route: 'expr:resolve_route("create", {api: false})'
             filters:
                 name:
                     type: text

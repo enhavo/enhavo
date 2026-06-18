@@ -43,7 +43,7 @@ class MediaLibraryApplyEndpointType extends AbstractEndpointType
             throw $this->createNotFoundException();
         }
 
-        $this->denyAccessUnlessGranted(new Permission($input->getResourceName(), $options['permission']), $resource);
+        $this->denyAccessUnlessGranted($input->getPermission($options['permission']), $resource);
 
         /** @var LibraryFileInterface $file */
         $file = $resource->getFile();

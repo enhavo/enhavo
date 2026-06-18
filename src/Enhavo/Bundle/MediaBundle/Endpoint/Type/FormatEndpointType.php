@@ -72,7 +72,7 @@ class FormatEndpointType extends AbstractEndpointType
         $resolver->setDefaults([
             'repository_method' => 'findFileBy',
             'repository_arguments' => [
-                ['token' => 'expr:request.get("token")'],
+                ['token' => 'expr:request.query.get("token")'],
             ],
             'filename_test' => true,
             'permission' => 'ROLE_ENHAVO_MEDIA_FILE_SHOW',

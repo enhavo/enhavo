@@ -1,44 +1,57 @@
 article:
-  role:
+    role:
+        article:
+            label:
+                index: 'Article list'
+                update: 'Article update'
+                create: 'Article create'
+                delete: 'Article delete'
+        category:
+            label:
+                index: 'Article-Category list'
+                update: 'Article-Category update'
+                create: 'Article-Category create'
+                delete: 'Article-Category delete'
+        tag:
+            label:
+                index: 'Article-Tag list'
+                update: 'Article-Tag update'
+                create: 'Article-Tag create'
+                delete: 'Article-Tag delete'
+    form:
+        label:
+            page_title: 'Pagetitle'
+            public: 'Public'
+            social_media: 'Social Media'
+            priority: 'Priority'
+            change_frequency: 'Change frequency'
+            publication_date: 'Publication date'
+            create_tag: 'Create tag'
+            text_left: 'Position'
+            text_left_left: 'Text|Picture'
+            text_left_right: 'Picture|Text'
+            layout: 'Layout'
     label:
-      index: 'Article list'
-      update: 'Article update'
-      create: 'Article create'
-      delete: 'Article delete'
-  form:
-    label:
-      page_title: 'Pagetitle'
-      public: 'Public'
-      social_media: 'Social Media'
-      priority: 'Priority'
-      change_frequency: 'Change frequency'
-      publication_date: 'Publication date'
-      create_tag: 'Create tag'
-      text_left: 'Position'
-      text_left_left: 'Text|Picture'
-      text_left_right: 'Picture|Text'
-      layout: 'Layout'
-  label:
-    article: 'Article'
-    article_list: 'Article List'
-    article_teaser: 'Article Teaser'
-    comments: 'Comments'
-    pagination: 'Pagination'
-    limit: 'Limit per Page'
-    category: 'Category'
-    tag: 'Tag'
-    teaser: 'Teaser'
-    content: 'Content'
-    meta: 'Meta'
-    preview: 'Preview'
-    id: 'ID'
-    title: 'Title'
-    assigned: 'Assigned'
-    public: 'Public'
-    publicationDate: 'Publication date'
-  batch:
-    action:
-      publish: 'Publish'
-    message:
-      confirm:
-        publish: 'Do you really want to publish all selected articles?'
+        article: 'Article'
+        article_list: 'Article List'
+        article_teaser: 'Article Teaser'
+        comments: 'Comments'
+        pagination: 'Pagination'
+        limit: 'Limit per Page'
+        category: 'Category'
+        tag: 'Tag'
+        teaser: 'Teaser'
+        content: 'Content'
+        meta: 'Meta'
+        preview: 'Preview'
+        id: 'ID'
+        title: 'Title'
+        assigned: 'Assigned'
+        public: 'Public'
+        publicationDate: 'Publication date'
+    batch:
+        action:
+            publish: 'Publish'
+        message:
+            confirm:
+                publish: 'Do you really want to publish all selected articles?'
