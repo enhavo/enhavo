@@ -30,7 +30,7 @@ class RouteValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
-        if (!preg_match('#^/[/a-z0-9-_%]*#', $value->getStaticPrefix())) {
+        if (!preg_match('#^/[/a-z0-9-_%]*$#', $value->getStaticPrefix())) {
             $this->context->buildViolation($constraint->urlValidation)
                 ->setParameter('%string%', $value->getStaticPrefix())
                 ->addViolation();
