@@ -10,6 +10,15 @@ enhavo_app:
             path: '@EnhavoMediaBundle/Resources/views'
             alias: EnhavoMedia
             priority: 10
+    roles:
+        enhavo_media_file_show:
+            role: ROLE_ENHAVO_MEDIA_FILE_SHOW
+            label: media.role.file.label.show
+            translation_domain: EnhavoMediaBundle
+        enhavo_media_file_create:
+            role: ROLE_ENHAVO_MEDIA_FILE_CREATE
+            label: media.role.file.label.create
+            translation_domain: EnhavoMediaBundle
 
 enhavo_api:
     documentation:
@@ -35,14 +44,3 @@ enhavo_media:
                     type: media_download
                 format:
                     type: media_format
-
-enhavo_app:
-    roles:
-        enhavo_media_file_show:
-            role: ROLE_ENHAVO_MEDIA_FILE_SHOW
-            label: media.role.file.label.show
-            translation_domain: EnhavoMediaBundle
-        enhavo_media_file_create:
-            role: ROLE_ENHAVO_MEDIA_FILE_CREATE
-            label: media.role.file.label.create
-            translation_domain: EnhavoMediaBundle

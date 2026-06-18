@@ -48,7 +48,7 @@ services:
 
     Enhavo\Bundle\TranslationBundle\EventListener\TranslationRouteSoftDeleteListener:
         arguments:
-            - '@Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface'
+            - '@Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface'
             - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
             - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
         tags:
