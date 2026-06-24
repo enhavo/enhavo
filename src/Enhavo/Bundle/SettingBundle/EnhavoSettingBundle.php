@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\SettingBundle;
 
 use Enhavo\Bundle\SettingBundle\Setting\Setting;
+use Enhavo\Bundle\SettingBundle\Setting\SettingTypeInterface;
 use Enhavo\Component\Type\TypeCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -25,5 +26,9 @@ class EnhavoSettingBundle extends Bundle
         $container->addCompilerPass(
             new TypeCompilerPass('Setting', 'enhavo_setting.setting', Setting::class)
         );
+
+        $container->registerForAutoconfiguration(SettingTypeInterface::class)
+            ->addTag('enhavo_setting.setting')
+        ;
     }
 }
