@@ -1,11 +1,11 @@
 # Vue form bundle
 
-
 <!--@include: ./installation.md -->
 <!--@include: ./configuration.md -->
 <!--@include: ./how-it-works.md -->
 <!--@include: ./listener.md -->
 <!--@include: ./visitors.md -->
+<!--@include: ./controller.md -->
 
 ## Further Reading
 
