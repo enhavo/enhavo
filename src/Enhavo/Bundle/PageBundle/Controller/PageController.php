@@ -26,13 +26,13 @@ class PageController extends AbstractController
     ) {
     }
 
-    public function showResourceAction(Request $request, Page $contentDocument, bool $preview): Response
+    public function showResourceAction(Request $request, Page $contentDocument): Response
     {
         /** @var Endpoint $endpoint */
         $endpoint = $this->endpointFactory->create([
             'type' => PageEndpointType::class,
             'resource' => $contentDocument,
-            'preview' => $preview,
+            'preview' => $request->query->get('preview'),
         ]);
 
         return $endpoint->getResponse($request);
