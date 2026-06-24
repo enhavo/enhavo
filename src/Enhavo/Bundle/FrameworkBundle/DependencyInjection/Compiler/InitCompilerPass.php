@@ -24,13 +24,13 @@ class InitCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        $gridFactory = $container->findDefinition(InitManager::class);
+        $initManager = $container->findDefinition(InitManager::class);
 
         $services = [];
         foreach ($container->findTaggedServiceIds('enhavo_framework.init') as $id => $tag) {
             $services[$id] = new Reference($id);
         }
 
-        $gridFactory->addMethodCall('setContainer', [ServiceLocatorTagPass::register($container, $services)]);
+        $initManager->addMethodCall('setContainer', [ServiceLocatorTagPass::register($container, $services)]);
     }
 }

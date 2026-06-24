@@ -20,7 +20,7 @@
     "label": "Vorschau",
     "confirm": false,
     "confirm_on_change": true,
-    "confirm_message": "Warning: Sie dieses Doument wirklich schlie\u00dfen? Alle \u00c4nderungen gehen verloren",
+    "confirm_message": "Warnung: Sie dieses Dokument wirklich schlie\u00dfen? Alle \u00c4nderungen gehen verloren",
     "confirm_label_ok": "Ok",
     "confirm_label_cancel": "Abbrechen",
     "url": "\/admin\/enhavo\/app\/resource\/preview",
