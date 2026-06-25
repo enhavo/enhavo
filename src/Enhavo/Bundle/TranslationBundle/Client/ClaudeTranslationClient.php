@@ -13,6 +13,8 @@ class ClaudeTranslationClient implements TranslationClientInterface
         private readonly ?string $apiKey,
         private readonly ?string $version = null,
         private readonly ?string $context = null,
+        private readonly int $timeout = 600,
+        private readonly int $maxTokens = 4096,
     )
     {
     }
@@ -59,13 +61,13 @@ class ClaudeTranslationClient implements TranslationClientInterface
             ],
             'json' => [
                 'model' => 'claude-haiku-4-5-20251001',
-                'max_tokens' => 4096,
+                'max_tokens' => $this->maxTokens,
                 'system' => $systemPrompt,
                 'messages' => [
                     ['role' => 'user', 'content' => $text],
                 ],
             ],
-            'timeout' => 30,
+            'timeout' => $this->timeout,
         ]);
 
         $data = $response->toArray();

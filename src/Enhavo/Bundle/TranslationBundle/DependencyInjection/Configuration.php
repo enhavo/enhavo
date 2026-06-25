@@ -88,6 +88,8 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('api_key')->end()
                                 ->scalarNode('version')->end()
                                 ->scalarNode('context')->end()
+                                ->scalarNode('timeout')->defaultValue(600)->end()
+                                ->scalarNode('max_tokens')->defaultValue(4096)->end()
                             ->end()
                         ->end()
                         ->arrayNode('url')

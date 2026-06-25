@@ -43,6 +43,8 @@ class EnhavoTranslationExtension extends Extension implements PrependExtensionIn
         $container->setParameter('enhavo_translation.translation_client.claude.api_key', $config['translation_client']['claude']['api_key'] ?? null);
         $container->setParameter('enhavo_translation.translation_client.claude.version', $config['translation_client']['claude']['version'] ?? null);
         $container->setParameter('enhavo_translation.translation_client.claude.context', $config['translation_client']['claude']['context'] ?? null);
+        $container->setParameter('enhavo_translation.translation_client.claude.timeout', $config['translation_client']['claude']['timeout'] ?? null);
+        $container->setParameter('enhavo_translation.translation_client.claude.max_tokens', $config['translation_client']['claude']['max_tokens'] ?? null);
         $container->setParameter('enhavo_translation.translation_client.url.domains', $config['translation_client']['url']['domains'] ?? []);
         $container->setParameter('enhavo_translation.translation_client.chain.clients', $config['translation_client']['chain']['clients'] ?? []);
 
