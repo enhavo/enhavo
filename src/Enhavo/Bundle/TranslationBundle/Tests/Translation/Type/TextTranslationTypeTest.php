@@ -125,6 +125,7 @@ class TextTranslationTypeTest extends TestCase
             'allow_auto_translate',
             'html',
             'overwrite',
+            'context_groups',
         ], $resolver->getDefinedOptions());
     }
 }

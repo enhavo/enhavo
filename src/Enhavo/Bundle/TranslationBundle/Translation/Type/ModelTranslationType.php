@@ -55,16 +55,16 @@ class ModelTranslationType extends AbstractTranslationType
 
     }
 
-    public function autoTranslate($object, string $property, string $locale, array $options): void
+    public function autoTranslate($object, string $property, string $locale, mixed $context, array $options): void
     {
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
         $value = $propertyAccessor->getValue($object, $property);
         if (is_iterable($value)) {
             foreach ($value as $item) {
-                $this->translationManager->applyAutoTranslation($item, $locale);
+                $this->translationManager->applyAutoTranslation($item, $locale, null, $context);
             }
         } elseif (is_object($value)) {
-            $this->translationManager->applyAutoTranslation($value, $locale);
+            $this->translationManager->applyAutoTranslation($value, $locale, null, $context);
         }
     }
 

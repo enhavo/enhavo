@@ -9,8 +9,10 @@ class DeeplTranslationClient implements TranslationClientInterface
 {
     public function __construct(
         private HttpClientInterface $client,
+        private readonly ContextHelper $contextHelper,
         private readonly ?string $apiKey,
         private readonly ?string $glossaryId = null,
+        private readonly ?string $context = null,
     )
     {
     }
@@ -33,6 +35,10 @@ class DeeplTranslationClient implements TranslationClientInterface
             $parameters['tag_handling'] = 'html';
         }
 
+        if ($options['context'] || $this->context) {
+            $parameters['context'] = $this->context . '.' . $this->contextHelper->getText($options['context'], $options['context_groups']);
+        }
+
         $response = $this->client->request('POST', 'https://api.deepl.com/v2/translate', [
             'headers' => [
                 'Authorization' => 'DeepL-Auth-Key ' . $this->apiKey,
@@ -53,6 +59,8 @@ class DeeplTranslationClient implements TranslationClientInterface
         $resolver->setDefaults([
             'glossary_id' => $this->glossaryId,
             'html' => false,
+            'context' => null,
+            'context_groups' => [],
         ]);
         return $resolver->resolve($options);
     }
