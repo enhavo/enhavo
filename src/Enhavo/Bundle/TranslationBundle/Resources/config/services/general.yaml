@@ -33,7 +33,9 @@ services:
             - '%enhavo_translation.translation_client.claude.api_key%'
             - '%enhavo_translation.translation_client.claude.version%'
             - '%enhavo_translation.translation_client.claude.context%'
-
+            - '%enhavo_translation.translation_client.claude.timeout%'
+            - '%enhavo_translation.translation_client.claude.max_tokens%'
+            -
     Enhavo\Bundle\TranslationBundle\Client\DeeplTranslationClient:
         arguments:
             - '@http_client'
