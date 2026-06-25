@@ -10,6 +10,9 @@ class TranslateActionType extends AbstractActionType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->remove('route');
+        $resolver->setRequired('route');
+
         $resolver->setDefaults([
             'icon' => 'translate',
             'label' => 'action.label.translate',

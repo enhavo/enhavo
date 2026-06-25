@@ -50,7 +50,7 @@ class TranslationType extends AbstractType implements TranslationTypeInterface
         return true;
     }
 
-    public function autoTranslate($object, string $property, string $locale, array $options): void
+    public function autoTranslate($object, string $property, string $locale, mixed $context, array $options): void
     {
 
     }

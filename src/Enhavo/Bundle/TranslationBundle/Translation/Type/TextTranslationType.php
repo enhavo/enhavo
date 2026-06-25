@@ -17,6 +17,7 @@ use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class TextTranslationType extends AbstractTranslationType
 {
@@ -60,7 +61,7 @@ class TextTranslationType extends AbstractTranslationType
         return $this->translator->getDefaultValue($data, $property);
     }
 
-    public function autoTranslate($object, string $property, string $locale, array $options): void
+    public function autoTranslate($object, string $property, string $locale, mixed $context, array $options): void
     {
         if (!$options['allow_auto_translate']) {
             return;
@@ -72,6 +73,8 @@ class TextTranslationType extends AbstractTranslationType
         if ($value && $isEmpty || $options['overwrite']) {
             $translatedValue = $this->translationClient->translate($value, $this->defaultLanguage, $locale, [
                 'html' => $options['html'],
+                'context' => $context,
+                'context_groups' => $options['context_groups'],
             ]);
 
             $this->translator->setTranslation($object, $property, $locale, $translatedValue);
@@ -90,6 +93,7 @@ class TextTranslationType extends AbstractTranslationType
             'allow_auto_translate' => true,
             'html' => false,
             'overwrite' => false,
+            'context_groups' => ['endpoint', 'translation_context'],
         ]);
     }
 }
