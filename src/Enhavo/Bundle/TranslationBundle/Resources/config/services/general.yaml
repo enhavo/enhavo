@@ -26,11 +26,21 @@ services:
         tags:
             - { name: console.command }
 
+    Enhavo\Bundle\TranslationBundle\Client\ClaudeTranslationClient:
+        arguments:
+            - '@http_client'
+            - '@Enhavo\Bundle\TranslationBundle\Client\ContextHelper'
+            - '%enhavo_translation.translation_client.claude.api_key%'
+            - '%enhavo_translation.translation_client.claude.version%'
+            - '%enhavo_translation.translation_client.claude.context%'
+
     Enhavo\Bundle\TranslationBundle\Client\DeeplTranslationClient:
         arguments:
             - '@http_client'
+            - '@Enhavo\Bundle\TranslationBundle\Client\ContextHelper'
             - '%enhavo_translation.translation_client.deepl.api_key%'
             - '%enhavo_translation.translation_client.deepl.glossary_id%'
+            - '%enhavo_translation.translation_client.deepl.context%'
 
     Enhavo\Bundle\TranslationBundle\Client\ChainTranslationClient:
         arguments:
@@ -53,3 +63,7 @@ services:
             - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
         tags:
             - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\TranslationBundle\Client\ContextHelper:
+        arguments:
+            - '@serializer'
