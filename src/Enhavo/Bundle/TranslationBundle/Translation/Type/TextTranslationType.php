@@ -17,7 +17,6 @@ use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class TextTranslationType extends AbstractTranslationType
 {

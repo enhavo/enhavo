@@ -15,8 +15,7 @@ enhavo_routing:
         Enhavo\Bundle\ArticleBundle\Entity\Article:
             router:
                 default:
-                    type: template
-                    template: article
+                    type: routable
                 view:
                     type: id
                     route: enhavo_article_article_update

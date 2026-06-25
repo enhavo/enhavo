@@ -1527,14 +1527,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     }>
  * @psalm-type EnhavoApiConfig = array{
  *     documentation?: array{
- *         section?: array<string, array{ // Default: []
- *             version?: scalar|Param|null, // Default: "3.0.0"
- *             info?: array{
- *                 title?: scalar|Param|null, // Default: null
- *                 description?: scalar|Param|null, // Default: null
- *                 version?: scalar|Param|null, // Default: null
- *             },
- *         }>,
+ *         section?: array<string, array<string, list<mixed>>>,
  *     },
  * }
  * @psalm-type EnhavoAppConfig = array{
@@ -2134,6 +2127,12 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         deepl?: array{
  *             api_key?: scalar|Param|null,
  *             glossary_id?: scalar|Param|null,
+ *             context?: scalar|Param|null,
+ *         },
+ *         claude?: array{
+ *             api_key?: scalar|Param|null,
+ *             version?: scalar|Param|null,
+ *             context?: scalar|Param|null,
  *         },
  *         url?: array{
  *             domains?: list<scalar|Param|null>,
