@@ -1,0 +1,7 @@
+enhavo_resource:
+    inputs:
+        enhavo_article.article:
+            actions:
+                translate:
+                    type: translate
+                    route: enhavo_article_admin_api_article_translate_resource

@@ -1,0 +1,7 @@
+enhavo_article_admin_api_article_translate_resource:
+    path: /article/translate/resource
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: translate_resource
+            resource: enhavo_article.article
