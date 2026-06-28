@@ -13,7 +13,7 @@
   ],
   "require": {
     "php": "^8.4",
-    "doctrine/orm": "^2.14",
+    "doctrine/orm": "^3.6",
     "enhavo/app-bundle": "^0.16",
     "enhavo/doctrine-extension-bundle": "^0.16",
     "spatie/image-optimizer": "^1.0",

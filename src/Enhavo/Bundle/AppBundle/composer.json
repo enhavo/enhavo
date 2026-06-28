@@ -17,7 +17,7 @@
     "ext-json": "*",
     "ext-zlib": "*",
     "babdev/pagerfanta-bundle": "^3.8",
-    "doctrine/orm": "^2.13",
+    "doctrine/orm": "^3.6",
     "doctrine/collections": "^1.8",
     "doctrine/dbal": "^3.6",
     "enhavo/vue-form-bundle": "^0.16",
