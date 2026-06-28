@@ -17,9 +17,9 @@
     "enhavo/content-bundle": "^0.16",
     "enhavo/block-bundle": "^0.16",
     "enhavo/form-bundle": "^0.16",
-    "johngrogg/ics-parser": "^2.0",
+    "johngrogg/ics-parser": "^2.2",
     "symfony/http-client": "^7.4",
-    "simshaun/recurr": "^2.2"
+    "simshaun/recurr": "^6.0"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\CalendarBundle\\": "" }

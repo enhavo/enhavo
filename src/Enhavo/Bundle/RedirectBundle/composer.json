@@ -16,7 +16,7 @@
     "enhavo/app-bundle": "^0.16",
     "enhavo/routing-bundle": "^0.16",
     "enhavo/form-bundle": "^0.16",
-    "league/uri": "^7.4"
+    "league/uri": "^6.4"
   },
   "autoload": {
     "psr-4": { "Enhavo\\Bundle\\RedirectBundle\\": "" }

@@ -16,7 +16,7 @@
     "ext-ctype": "*",
     "ext-json": "*",
     "ext-zlib": "*",
-    "babdev/pagerfanta-bundle": "^3.8",
+    "babdev/pagerfanta-bundle": "^4.6",
     "doctrine/orm": "^3.6",
     "enhavo/vue-form-bundle": "^0.16",
     "enhavo/type": "^0.16",
