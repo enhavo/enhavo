@@ -20,7 +20,7 @@ class VideoUrl extends Constraint
 {
     public $message = 'Please choose a youtube or vimeo video!';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return 'video_url';
     }

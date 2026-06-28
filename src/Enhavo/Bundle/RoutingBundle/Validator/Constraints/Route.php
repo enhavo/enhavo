@@ -19,7 +19,7 @@ class Route extends Constraint
 
     public $urlValidation = 'The url "%string%" is not a valid url.';
 
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return 'route';
     }
