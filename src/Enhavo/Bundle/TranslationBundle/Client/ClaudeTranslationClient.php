@@ -8,11 +8,12 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class ClaudeTranslationClient implements TranslationClientInterface
 {
     public function __construct(
-        private HttpClientInterface $client,
-        private readonly ContextHelper $contextHelper,
+        private readonly HttpClientInterface $client,
+        private readonly ContextNormalizer $contextNormalizer,
+        private readonly ContextProviderInterface $contextProvider,
         private readonly ?string $apiKey,
         private readonly ?string $version = null,
-        private readonly ?string $context = null,
+        private readonly ?string $model = null,
         private readonly int $timeout = 600,
         private readonly int $maxTokens = 4096,
     )
@@ -35,7 +36,7 @@ class ClaudeTranslationClient implements TranslationClientInterface
             $mainPrompt .= ' The text contains HTML markup. Preserve all HTML tags exactly as they are and only translate the text content.';
         }
 
-        if ($options['context'] || $this->context) {
+        if ($options['context'] || $this->contextProvider->getText() || count($this->contextProvider->getFiles()) > 0) {
             $mainPrompt .= 'Use the context for terminology and tone. Output only the translation.';
         }
 
@@ -44,12 +45,28 @@ class ClaudeTranslationClient implements TranslationClientInterface
             'text' => $mainPrompt,
         ];
 
-        if ($options['context'] || $this->context) {
-            $contextParts = array_filter([$this->context, $this->contextHelper->getText($options['context'], $options['context_groups'])]);
-            $contextPrompt = sprintf(' Context: %s.', implode('. ', $contextParts));
+        if ($options['context']) {
+            $contextParts = array_filter([$this->contextNormalizer->getText($options['context'], $options['context_groups'])]);
+            $contextPrompt = sprintf('Context: %s.', implode('. ', $contextParts));
             $systemPrompt[] = [
                 'type' => 'text',
                 'text' => $contextPrompt,
+                'cache_control' => ['type' => 'ephemeral'],
+            ];
+        }
+
+        if ($this->contextProvider->getText()) {
+            $systemPrompt[] = [
+                'type' => 'text',
+                'text' => $this->contextProvider->getText(),
+                'cache_control' => ['type' => 'ephemeral'],
+            ];
+        }
+
+        foreach ($this->contextProvider->getFiles() as $file) {
+            $systemPrompt[] = [
+                'type' => 'text',
+                'text' => sprintf('A document "%s" with content: %s', $file->getBasename(), $file->getContent()->getContent()),
                 'cache_control' => ['type' => 'ephemeral'],
             ];
         }
@@ -60,7 +77,7 @@ class ClaudeTranslationClient implements TranslationClientInterface
                 'anthropic-version' => $this->version ?? '2023-06-01',
             ],
             'json' => [
-                'model' => 'claude-haiku-4-5-20251001',
+                'model' => $this->model ?? 'claude-haiku-4-5-20251001',
                 'max_tokens' => $this->maxTokens,
                 'system' => $systemPrompt,
                 'messages' => [
