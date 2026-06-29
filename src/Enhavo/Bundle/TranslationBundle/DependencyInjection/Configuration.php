@@ -12,12 +12,7 @@
 namespace Enhavo\Bundle\TranslationBundle\DependencyInjection;
 
 use Enhavo\Bundle\TranslationBundle\Client\ChainTranslationClient;
-<<<<<<< HEAD
-use Enhavo\Bundle\TranslationBundle\Client\DeeplTranslationClient;
-use Enhavo\Bundle\TranslationBundle\Client\UrlTranslationClient;
-=======
 use Enhavo\Bundle\TranslationBundle\Client\ConfigContextProvider;
->>>>>>> 87fe7f220 (feat: add files option for translation context (#2443))
 use Enhavo\Bundle\TranslationBundle\Locale\ConfigurationLocaleProvider;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
