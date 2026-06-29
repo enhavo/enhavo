@@ -37,12 +37,14 @@ class EnhavoTranslationExtension extends Extension implements PrependExtensionIn
         $container->setParameter('enhavo_translation.form.default_access', $config['form']['default_access']);
         $container->setParameter('enhavo_translation.provider', $config['provider']);
         $container->setParameter('enhavo_translation.translation_client.client', $config['translation_client']['client']);
+        $container->setParameter('enhavo_translation.translation_client.context.provider', $config['translation_client']['context']['provider'] ?? null);
+        $container->setParameter('enhavo_translation.translation_client.context.text', $config['translation_client']['context']['text'] ?? null);
+        $container->setParameter('enhavo_translation.translation_client.context.files', $config['translation_client']['context']['files'] ?? []);
         $container->setParameter('enhavo_translation.translation_client.deepl.api_key', $config['translation_client']['deepl']['api_key'] ?? null);
         $container->setParameter('enhavo_translation.translation_client.deepl.glossary_id', $config['translation_client']['deepl']['glossary_id'] ?? null);
-        $container->setParameter('enhavo_translation.translation_client.deepl.context', $config['translation_client']['deepl']['context'] ?? null);
         $container->setParameter('enhavo_translation.translation_client.claude.api_key', $config['translation_client']['claude']['api_key'] ?? null);
         $container->setParameter('enhavo_translation.translation_client.claude.version', $config['translation_client']['claude']['version'] ?? null);
-        $container->setParameter('enhavo_translation.translation_client.claude.context', $config['translation_client']['claude']['context'] ?? null);
+        $container->setParameter('enhavo_translation.translation_client.claude.model', $config['translation_client']['claude']['model'] ?? null);
         $container->setParameter('enhavo_translation.translation_client.claude.timeout', $config['translation_client']['claude']['timeout'] ?? null);
         $container->setParameter('enhavo_translation.translation_client.claude.max_tokens', $config['translation_client']['claude']['max_tokens'] ?? null);
         $container->setParameter('enhavo_translation.translation_client.url.domains', $config['translation_client']['url']['domains'] ?? []);

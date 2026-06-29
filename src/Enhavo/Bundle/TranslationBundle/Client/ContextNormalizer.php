@@ -4,7 +4,7 @@ namespace Enhavo\Bundle\TranslationBundle\Client;
 
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class ContextHelper
+class ContextNormalizer
 {
     private array $textContextCache = [];
     private array $arrayContextCache = [];
@@ -18,7 +18,9 @@ class ContextHelper
     public function getText(mixed $context, array $groups = []): ?string
     {
         $contextData = null;
-        if (is_object($context)) {
+        if (is_string($context)) {
+            return $context;
+        } else if (is_object($context)) {
             $cacheKey = spl_object_hash($context) . join(',', $groups);
             if ($this->textContextCache[$cacheKey] ?? false) {
                 $contextData = $this->textContextCache[$cacheKey];

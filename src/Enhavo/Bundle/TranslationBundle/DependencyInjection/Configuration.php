@@ -12,8 +12,12 @@
 namespace Enhavo\Bundle\TranslationBundle\DependencyInjection;
 
 use Enhavo\Bundle\TranslationBundle\Client\ChainTranslationClient;
+<<<<<<< HEAD
 use Enhavo\Bundle\TranslationBundle\Client\DeeplTranslationClient;
 use Enhavo\Bundle\TranslationBundle\Client\UrlTranslationClient;
+=======
+use Enhavo\Bundle\TranslationBundle\Client\ConfigContextProvider;
+>>>>>>> 87fe7f220 (feat: add files option for translation context (#2443))
 use Enhavo\Bundle\TranslationBundle\Locale\ConfigurationLocaleProvider;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -78,18 +82,27 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('client')->defaultValue(ChainTranslationClient::class)->end()
+                        ->arrayNode('context')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('provider')->defaultValue(ConfigContextProvider::class)->end()
+                                ->scalarNode('text')->end()
+                                ->arrayNode('files')
+                                    ->scalarPrototype()->end()
+                                ->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('deepl')
                             ->children()
                                 ->scalarNode('api_key')->end()
                                 ->scalarNode('glossary_id')->end()
-                                ->scalarNode('context')->end()
                             ->end()
                         ->end()
                         ->arrayNode('claude')
                             ->children()
                                 ->scalarNode('api_key')->end()
                                 ->scalarNode('version')->end()
-                                ->scalarNode('context')->end()
+                                ->scalarNode('model')->end()
                                 ->scalarNode('timeout')->defaultValue(600)->end()
                                 ->scalarNode('max_tokens')->defaultValue(4096)->end()
                             ->end()
