@@ -9,10 +9,10 @@ class DeeplTranslationClient implements TranslationClientInterface
 {
     public function __construct(
         private HttpClientInterface $client,
-        private readonly ContextHelper $contextHelper,
+        private readonly ContextNormalizer $contextNormalizer,
+        private readonly ContextProviderInterface $contextProvider,
         private readonly ?string $apiKey,
         private readonly ?string $glossaryId = null,
-        private readonly ?string $context = null,
     )
     {
     }
@@ -35,8 +35,8 @@ class DeeplTranslationClient implements TranslationClientInterface
             $parameters['tag_handling'] = 'html';
         }
 
-        if ($options['context'] || $this->context) {
-            $parameters['context'] = $this->context . '.' . $this->contextHelper->getText($options['context'], $options['context_groups']);
+        if ($options['context'] || $this->contextProvider->getText()) {
+            $parameters['context'] = $this->contextProvider->getText() . '.' . $this->contextNormalizer->getText($options['context'], $options['context_groups']);
         }
 
         $response = $this->client->request('POST', 'https://api.deepl.com/v2/translate', [
