@@ -71,6 +71,7 @@ services:
     Enhavo\Bundle\MediaBundle\Twig\MediaTwigExtension:
         arguments:
             - '@Enhavo\Bundle\AppBundle\Twig\TwigRouter'
+            - '@enhavo_media.media.format_manager'
         tags:
             - { name: twig.extension }
 
@@ -187,3 +188,7 @@ services:
             - '@enhavo_app.util.secure_url_token_generator'
         tags:
             - { name: enhavo_resource.duplicate }
+
+    Enhavo\Bundle\MediaBundle\Documentation\MediaFileDescriber:
+        tags:
+            - { name: enhavo_api.documentation_describer }

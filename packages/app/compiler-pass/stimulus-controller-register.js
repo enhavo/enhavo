@@ -18,10 +18,12 @@ function toKebapCase(value)
  * @param {string} filepath
  * @param {string} definitionName
  * @param {ContainerBuilder} builder
+ * @param {string} chunkName
+ * @param {string} context
  */
-function addControllerToBuilder(key, filepath, definitionName, builder, chunkName)
+function addControllerToBuilder(key, filepath, definitionName, builder, chunkName, context)
 {
-    let definition = new Definition(definitionName);
+    let definition = new Definition(definitionName, context);
     definition.setStatic(true);
     definition.setFrom(filepath);
     definition.addTag(new Tag('stimulus.controller', {key: key}))
@@ -66,6 +68,6 @@ export default function(builder, options, context)
         let key = toKebapCase(filename.replace('Controller', ''));
         let definitionName = prefix + filename;
         let filepath = path.resolve(controllerPath, file);
-        addControllerToBuilder(key, filepath, definitionName, builder, chunkName);
+        addControllerToBuilder(key, filepath, definitionName, builder, chunkName, controllerPath);
     }
 };

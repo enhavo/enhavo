@@ -7,6 +7,6 @@ compiler_pass:
 
 services:
     '@hotwired/stimulus/Application':
-        chunk: 'stimulus'
+        chunk: 'app'
         from: '@hotwired/stimulus'
         import: Application

@@ -26,12 +26,54 @@ services:
         tags:
             - { name: console.command }
 
+    Enhavo\Bundle\TranslationBundle\Client\ClaudeTranslationClient:
+        arguments:
+            - '@http_client'
+            - '@Enhavo\Bundle\TranslationBundle\Client\ContextNormalizer'
+            - '@Enhavo\Bundle\TranslationBundle\Client\ContextProviderInterface'
+            - '%enhavo_translation.translation_client.claude.api_key%'
+            - '%enhavo_translation.translation_client.claude.version%'
+            - '%enhavo_translation.translation_client.claude.model%'
+            - '%enhavo_translation.translation_client.claude.timeout%'
+            - '%enhavo_translation.translation_client.claude.max_tokens%'
+            -
     Enhavo\Bundle\TranslationBundle\Client\DeeplTranslationClient:
         arguments:
             - '@http_client'
+            - '@Enhavo\Bundle\TranslationBundle\Client\ContextNormalizer'
+            - '@Enhavo\Bundle\TranslationBundle\Client\ContextProviderInterface'
             - '%enhavo_translation.translation_client.deepl.api_key%'
             - '%enhavo_translation.translation_client.deepl.glossary_id%'
+
+    Enhavo\Bundle\TranslationBundle\Client\ChainTranslationClient:
+        arguments:
+            - '%enhavo_translation.translation_client.chain.clients%'
+
+    Enhavo\Bundle\TranslationBundle\Client\UrlTranslationClient:
+        arguments:
+            - '@enhavo_routing.route.repository'
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '%enhavo_translation.translation_client.url.domains%'
 
     Enhavo\Bundle\TranslationBundle\Action\TranslateActionType:
         tags:
             - { name: enhavo_resource.action }
+
+    Enhavo\Bundle\TranslationBundle\EventListener\TranslationRouteSoftDeleteListener:
+        arguments:
+            - '@Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface'
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\TranslationBundle\Client\ConfigContextProvider:
+        arguments:
+            - '%enhavo_translation.translation_client.context.text%'
+            - '%enhavo_translation.translation_client.context.files%'
+            - '%kernel.project_dir%'
+            - '@enhavo_media.file.factory'
+
+    Enhavo\Bundle\TranslationBundle\Client\ContextNormalizer:
+        arguments:
+            - '@serializer'

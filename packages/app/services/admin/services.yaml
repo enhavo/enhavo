@@ -51,11 +51,11 @@ compiler_pass:
         path: '@enhavo/app/compiler-pass/client-error-handler-register.js'
 services:
     '@enhavo/core/Router':
-        chunk: 'util'
+        chunk: 'app'
         calls:
             - [setRoutingData, ['param:routes']]
 
     '@enhavo/core/Translator':
-        chunk: 'util'
+        chunk: 'app'
         calls:
             - [setData, ['param:translations']]

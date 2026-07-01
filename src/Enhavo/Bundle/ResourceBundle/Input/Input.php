@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Input;
 
 use Enhavo\Bundle\ResourceBundle\Action\Action;
+use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
 use Enhavo\Bundle\ResourceBundle\DependencyInjection\Merge\ConfigMergeInterface;
 use Enhavo\Bundle\ResourceBundle\Tab\Tab;
 use Symfony\Component\Form\FormInterface;
@@ -42,6 +43,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
             ],
             'serialization_groups' => ['endpoint', 'endpoint.admin'],
             'validation_groups' => ['default'],
+            'permission' => null,
         ]);
 
         $resolver->setRequired('resource');
@@ -128,6 +130,17 @@ class Input extends AbstractInput implements ConfigMergeInterface
         return $this->options['resource'];
     }
 
+    public function getPermission(string $action): mixed
+    {
+        if ($this->options['permission']) {
+            return $this->evaluate($this->options['permission'], [
+                'action' => $action,
+                'input' => $this,
+            ]);
+        }
+        return new Permission($this->getResourceName(), $action);
+    }
+
     public function getResource(array $context = []): ?object
     {
         if (null !== $this->resource) {
@@ -194,7 +207,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
                 'validation_groups' => $this->options['validation_groups'],
             ];
 
-            return $this->container->get('form.factory')->create($this->options['form'], $data, array_merge($options, $this->options['form_options']));
+            return $this->container->get('form.factory')->createNamed('data', $this->options['form'], $data, array_merge($options, $this->options['form_options']));
         }
 
         return null;

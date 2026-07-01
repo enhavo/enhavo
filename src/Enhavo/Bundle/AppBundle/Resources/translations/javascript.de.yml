@@ -17,7 +17,7 @@ enhavo_app:
             title: 'Bearbeiten'
     input:
         message:
-            save_success: 'Save successful'
+            save_success: 'Speichern erfolgreich'
     preview:
         label:
             title: 'Vorschau'

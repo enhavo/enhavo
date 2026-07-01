@@ -17,6 +17,7 @@ use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class TextTranslationType extends AbstractTranslationType
 {
@@ -26,8 +27,7 @@ class TextTranslationType extends AbstractTranslationType
         private TranslatorInterface $translator,
         private TranslationClientInterface $translationClient,
         private ?string $defaultLanguage,
-    )
-    {
+    ) {
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
     }
 
@@ -61,14 +61,20 @@ class TextTranslationType extends AbstractTranslationType
         return $this->translator->getDefaultValue($data, $property);
     }
 
-    public function autoTranslate($object, string $property, string $locale, array $options): void
+    public function autoTranslate($object, string $property, string $locale, mixed $context, array $options): void
     {
+        if (!$options['allow_auto_translate']) {
+            return;
+        }
         $value = $this->propertyAccessor->getValue($object, $property);
         $translatedValue = $this->translator->getTranslation($object, $property, $locale);
 
-        if ($value && (empty($translatedValue) || $options['overwrite'])) {
+        $isEmpty = $options['html'] ? empty(strip_tags($translatedValue)) : empty($translatedValue);
+        if ($value && $isEmpty || $options['overwrite']) {
             $translatedValue = $this->translationClient->translate($value, $this->defaultLanguage, $locale, [
                 'html' => $options['html'],
+                'context' => $context,
+                'context_groups' => $options['context_groups'],
             ]);
 
             $this->translator->setTranslation($object, $property, $locale, $translatedValue);
@@ -80,12 +86,14 @@ class TextTranslationType extends AbstractTranslationType
         return 'text';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'allow_fallback' => false,
+            'allow_auto_translate' => true,
             'html' => false,
             'overwrite' => false,
+            'context_groups' => ['endpoint', 'translation_context'],
         ]);
     }
 }

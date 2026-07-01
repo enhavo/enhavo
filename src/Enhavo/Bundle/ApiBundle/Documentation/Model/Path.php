@@ -11,35 +11,31 @@
 
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model;
 
-class Path
+class Path extends Node
 {
-    public function __construct(
-        private array &$path,
-        private Documentation $parent,
-    ) {
-    }
-
-    public function description($description)
+    public function description($description): self
     {
-        $this->path['description'] = $description;
+        $this->data['description'] = $description;
+
+        return $this;
     }
 
     public function summary($summary): self
     {
-        $this->path['summary'] = $summary;
+        $this->data['summary'] = $summary;
 
         return $this;
     }
 
     public function parameter($name): Parameter
     {
-        if (!array_key_exists('parameters', $this->path)) {
-            $this->path['parameters'] = [];
+        if (!array_key_exists('parameters', $this->data)) {
+            $this->data['parameters'] = [];
         }
 
-        foreach ($this->path['parameters'] as $key => $parameter) {
+        foreach ($this->data['parameters'] as $key => $parameter) {
             if ($parameter['name'] === $name) {
-                return new Parameter($this->path['parameters'][$key], $this);
+                return new Parameter($this->data['parameters'][$key], $this);
             }
         }
 
@@ -47,27 +43,17 @@ class Path
             'name' => $name,
         ];
 
-        $this->path['parameters'][] = &$parameter;
+        $this->data['parameters'][] = &$parameter;
 
         return new Parameter($parameter, $this);
     }
 
     public function method(string $verb): Method
     {
-        if (!array_key_exists($verb, $this->path)) {
-            $this->path[$verb] = [];
+        if (!array_key_exists($verb, $this->data)) {
+            $this->data[$verb] = [];
         }
 
-        return new Method($this->path[$verb], $this);
-    }
-
-    public function end(): Documentation
-    {
-        return $this->parent;
-    }
-
-    public function getDocumentation(): Documentation
-    {
-        return $this->parent->getDocumentation();
+        return new Method($this->data[$verb], $this);
     }
 }

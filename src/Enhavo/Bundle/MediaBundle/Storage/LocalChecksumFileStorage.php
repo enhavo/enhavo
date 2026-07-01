@@ -65,7 +65,7 @@ class LocalChecksumFileStorage implements StorageInterface, StorageChecksumInter
             }
         }
 
-        $this->filesystem->dumpFile($path, $file->getContent()->getContent());
+        $this->filesystem->copy($file->getContent()->getFilePath(), $path);
 
         return new PathContent($path);
     }

@@ -41,6 +41,16 @@ enhavo_media_library_admin_api_item_update:
             type: resource_update
             input: enhavo_media_library.item
 
+enhavo_media_library_admin_api_item_apply:
+    path: '/item/apply/{id}'
+    methods:
+        - POST
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: media_library_apply
+            input: enhavo_media_library.item
+
 enhavo_media_library_admin_api_item_delete:
     path: '/item/delete/{id}'
     methods: [DELETE, POST]

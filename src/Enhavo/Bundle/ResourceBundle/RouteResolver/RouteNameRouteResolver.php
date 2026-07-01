@@ -34,16 +34,19 @@ class RouteNameRouteResolver implements RouteResolverInterface
                     foreach ($parts as $key => $part) {
                         if ('api' === $part) {
                             unset($parts[$key]);
+                            $parts = array_values($parts);
                             break;
                         }
                     }
                 }
 
-                array_pop($parts);
-                $parts[] = $name;
-                $newRouteName = implode('_', $parts);
-                if (null !== $this->router->getRouteCollection()->get($newRouteName)) {
-                    return $newRouteName;
+                while (count($parts) > 0) {
+                    array_pop($parts);
+                    $candidate = array_merge($parts, [$name]);
+                    $newRouteName = implode('_', $candidate);
+                    if (null !== $this->router->getRouteCollection()->get($newRouteName)) {
+                        return $newRouteName;
+                    }
                 }
             }
         }

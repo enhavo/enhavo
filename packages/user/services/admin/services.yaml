@@ -1,6 +1,6 @@
 services:
     '@enhavo/user/manager/UserManager':
-        chunk: user
+        chunk: 'user'
         import: UserManager
         arguments:
             - '@enhavo/app/routing/Router'
@@ -10,54 +10,54 @@ services:
 
     '@enhavo/user/components/form/FormUserGroupPermission.vue':
         static: true
-        chunk: 'component'
+        chunk: 'user'
         tags:
             - { name: vue.component, component: 'form-user-group-permission' }
 
     '@enhavo/user/components/UserApp.vue':
         static: true
-        chunk: 'component'
+        chunk: 'user'
         tags:
             - { name: vue.component, component: 'user-app'}
 
     '@enhavo/user/components/UserLogin.vue':
         static: true
-        chunk: 'component'
+        chunk: 'user'
         tags:
             - { name: vue.component, component: 'user-login' }
 
     '@enhavo/user/components/reset-password/UserResetPasswordRequest.vue':
         static: true
-        chunk: 'component'
+        chunk: 'user'
         tags:
             - { name: vue.component, component: 'user-reset-password-request' }
 
     '@enhavo/user/components/reset-password/UserResetPasswordConfirm.vue':
         static: true
-        chunk: 'component'
+        chunk: 'user'
         tags:
             - { name: vue.component, component: 'user-reset-password-confirm' }
 
     '@enhavo/user/components/reset-password/UserResetPasswordCheck.vue':
         static: true
-        chunk: 'component'
+        chunk: 'user'
         tags:
             - { name: vue.component, component: 'user-reset-password-check' }
 
     '@enhavo/user/components/reset-password/UserResetPasswordFinish.vue':
         static: true
-        chunk: 'component'
+        chunk: 'user'
         tags:
             - { name: vue.component, component: 'user-reset-password-finish' }
 
     '@enhavo/user/components/UserUnauthenticated.vue':
         static: true
-        chunk: 'component'
+        chunk: 'user'
         tags:
             - { name: vue.component, component: 'user-unauthenticated' }
 
     '@enhavo/user/controllers/UserController':
-        chunk: user
+        chunk: 'user'
         static: true
         tags:
             - { name: stimulus.controller, key: 'user' }
@@ -72,7 +72,7 @@ services:
 
     '@enhavo/user/client/UnauthorizedErrorHandler':
         import: UnauthorizedErrorHandler
-        chunk: 'util'
+        chunk: 'user'
         arguments:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'
@@ -83,7 +83,7 @@ services:
 
     '@enhavo/user/client/UnauthenticatedErrorHandler':
         import: UnauthenticatedErrorHandler
-        chunk: 'util'
+        chunk: 'user'
         arguments:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'

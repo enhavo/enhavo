@@ -30,6 +30,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
@@ -51,6 +52,7 @@ class FormLoginAuthenticatorTest extends TestCase
             $dependencies->eventDispatcher,
             $dependencies->formFactory,
             $dependencies->endpointFactory,
+            $dependencies->tokenStorage,
             $className,
         );
     }
@@ -78,6 +80,7 @@ class FormLoginAuthenticatorTest extends TestCase
         $dependencies->request->method('getSession')->willReturn($dependencies->session);
         $dependencies->formFactory = $this->getMockBuilder(FormFactoryInterface::class)->getMock();
         $dependencies->form = $this->getMockBuilder(Form::class)->disableOriginalConstructor()->getMock();
+        $dependencies->tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->getMock();
 
         return $dependencies;
     }
@@ -277,4 +280,7 @@ class FormLoginAuthenticatorTestDependencies
 
     /** @var Form|MockObject */
     public $form;
+
+    /** @var TokenStorageInterface|MockObject */
+    public $tokenStorage;
 }

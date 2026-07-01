@@ -16,6 +16,7 @@ use Enhavo\Bundle\ResourceBundle\Factory\FactoryInterface;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\RevisionBundle\Entity\Archive;
 use Enhavo\Bundle\RevisionBundle\Entity\Bin;
+use Enhavo\Bundle\RevisionBundle\Event\ResourcePostSoftDeleteEvent;
 use Enhavo\Bundle\RevisionBundle\Event\ResourcePostUndeleteEvent;
 use Enhavo\Bundle\RevisionBundle\Event\ResourcePreSoftDeleteEvent;
 use Enhavo\Bundle\RevisionBundle\Event\ResourcePreUndeleteEvent;
@@ -104,7 +105,7 @@ class RevisionManager
 
         $this->eventDispatcher->dispatch(new ResourcePreSoftDeleteEvent($subject), 'enhavo_resource.pre_soft_delete');
         $this->em->flush();
-        $this->eventDispatcher->dispatch(new ResourcePreSoftDeleteEvent($subject), 'enhavo_resource.post_soft_delete');
+        $this->eventDispatcher->dispatch(new ResourcePostSoftDeleteEvent($subject), 'enhavo_resource.post_soft_delete');
     }
 
     public function undelete(RevisionInterface $subject): void

@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
@@ -40,7 +41,7 @@ class ResourceDeleteEndpointType extends AbstractEndpointType
         $input = $this->inputFactory->create($options['input']);
         $resource = $input->getResource();
 
-        $this->denyAccessUnlessGranted(new Permission($input->getResourceName(), $options['permission']), $resource);
+        $this->denyAccessUnlessGranted($input->getPermission($options['permission']), $resource);
 
         if (null === $resource) {
             throw $this->createNotFoundException();
@@ -65,6 +66,30 @@ class ResourceDeleteEndpointType extends AbstractEndpointType
 
         $resolver->setRequired('input');
     }
+
+    public function describe($options, Path $path): void
+    {
+        /** @var Input $input */
+        $input = $this->inputFactory->create($options['input']);
+
+        $path->method('post')
+            ->tags([$input->getResourceName()])
+            ->parameter('id')
+                ->in('path')
+                ->description('Id of resource')
+                ->required(true)
+                ->schema()
+                    ->string()->end()
+                ->end()
+            ->end()
+            ->response('200')
+                ->description('Delete resource')
+                ->content()
+                    ->schema()
+                        ->object()
+        ;
+    }
+
 
     public static function getName(): ?string
     {

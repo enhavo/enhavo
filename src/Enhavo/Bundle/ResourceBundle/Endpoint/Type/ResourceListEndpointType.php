@@ -35,7 +35,7 @@ class ResourceListEndpointType extends AbstractEndpointType
         /** @var Grid $grid */
         $grid = $this->gridFactory->create($options['grid']);
 
-        $this->denyAccessUnlessGranted(new Permission($grid->getResourceName(), $options['permission']));
+        $this->denyAccessUnlessGranted($grid->getPermission($options['permission']));
 
         if ($request->isMethod(Request::METHOD_POST) && $this->hasAction($request)) {
             $grid->handleAction($request->getPayload()->get('action'), $request->getPayload()->all());

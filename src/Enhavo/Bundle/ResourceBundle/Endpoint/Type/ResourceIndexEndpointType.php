@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Endpoint\Type;
 
 use Enhavo\Bundle\ApiBundle\Data\Data;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Path;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
@@ -32,7 +33,7 @@ class ResourceIndexEndpointType extends AbstractEndpointType
         /** @var Grid $grid */
         $grid = $this->gridFactory->create($options['grid']);
 
-        $this->denyAccessUnlessGranted(new Permission($grid->getResourceName(), $options['permission']));
+        $this->denyAccessUnlessGranted($grid->getPermission($options['permission']));
 
         $viewData = $grid->getViewData();
         $data->add($viewData);
@@ -45,6 +46,23 @@ class ResourceIndexEndpointType extends AbstractEndpointType
         ]);
 
         $resolver->setRequired('grid');
+    }
+
+    public function describe($options, Path $path)
+    {
+        /** @var Grid $grid */
+        $grid = $this->gridFactory->create($options['grid']);
+
+        $path
+            ->method('get')
+                ->tags([$grid->getResourceName()])
+                ->response('200')
+                    ->description('Data')
+                    ->content()
+                        ->schema()
+                            ->object()
+                                ->property('columns', 'object')
+        ;
     }
 
     public static function getName(): ?string

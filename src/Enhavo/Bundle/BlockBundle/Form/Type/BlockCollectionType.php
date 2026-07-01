@@ -11,19 +11,26 @@
 
 namespace Enhavo\Bundle\BlockBundle\Form\Type;
 
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Schema;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Entity\Node;
 use Enhavo\Bundle\BlockBundle\Model\CustomNameInterface;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
 use Enhavo\Bundle\FormBundle\Form\Type\PolyCollectionType;
+use Enhavo\Bundle\ResourceBundle\Form\FormDescriberInterface;
+use Enhavo\Bundle\ResourceBundle\Form\FormTypeDescribeAwareInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BlockCollectionType extends AbstractType
+class BlockCollectionType extends AbstractType implements FormTypeDescribeAwareInterface
 {
     public function __construct(
         private readonly BlockManager $blockManager,
+        private readonly FormDescriberInterface $formDescriber,
+        private readonly FormFactoryInterface $formFactory,
     ) {
     }
 
@@ -135,5 +142,47 @@ class BlockCollectionType extends AbstractType
     public function getBlockPrefix()
     {
         return 'enhavo_block_blocks';
+    }
+
+    public function describe($options, FormTypeInterface $form, Schema $schema)
+    {
+        $entryTypeOptions = $options['entry_types_options'];
+
+        $allowedKeys = null;
+        if (null !== $options['entry_type_filter']) {
+            $allowedKeys = call_user_func($options['entry_type_filter'], array_keys($entryTypeOptions), $this);
+        }
+
+        $typeNames = [];
+        foreach ($entryTypeOptions as $key => $entryTypeOption) {
+            if ($allowedKeys !== null && !in_array($key, $allowedKeys)) {
+                continue;
+            }
+            $entryType = $entryTypeOption['block_type'];
+            $schemaName = str_replace('\\', '', $entryType);
+            $typeNames[$key] = sprintf('#/components/schemas/%s', $schemaName);
+            if ($schema->getDocumentation()->components()->hasSchema($schemaName)) {
+                continue;
+            }
+            $entryForm = $this->formFactory->create($entryType, null, []);
+            $formSchema = $schema->getDocumentation()->components()->schema($schemaName);
+            $this->formDescriber->describe($entryForm, $formSchema);
+        }
+
+        $object = $schema->array()->items()->object();
+
+        $object
+            ->property('position', 'number')->end()
+            ->property('uuid', 'string')->end()
+            ->property('name', 'string')
+                ->description('Name need to match block key, check discriminator of block')
+            ->end()
+        ;
+
+        $blockObject = $object->property('block', 'object');
+        foreach ($typeNames as $typeName) {
+            $blockObject->oneOf()->ref($typeName);
+        }
+        $blockObject->discriminator('name', $typeNames);
     }
 }

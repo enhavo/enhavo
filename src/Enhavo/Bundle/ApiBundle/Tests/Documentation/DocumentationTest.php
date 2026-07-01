@@ -46,7 +46,7 @@ class DocumentationTest extends TestCase
                                 ->object()
                                     ->property('test', Property::STRING)->end()
                                     ->property('children', Property::OBJECT)
-                                        ->property('size', Property::INTGEGER)->end()
+                                        ->property('size', Property::INTEGER)->end()
                                     ->end()
                                 ->end()
                             ->end()

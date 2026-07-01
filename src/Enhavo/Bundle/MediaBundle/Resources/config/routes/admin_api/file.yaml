@@ -11,6 +11,7 @@ enhavo_media_admin_api_file_replace:
     methods: [GET]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: media_file_replace
             validation_groups: [ media_replace ]
@@ -20,5 +21,6 @@ enhavo_media_admin_api_file_upload:
     methods: [POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: media_file_upload

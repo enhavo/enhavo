@@ -14,10 +14,13 @@ namespace Enhavo\Bundle\FormBundle\Form\Type;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Schema;
+use Enhavo\Bundle\ResourceBundle\Form\FormTypeDescribeAwareInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +28,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class AutoCompleteEntityType extends AbstractType
+class AutoCompleteEntityType extends AbstractType implements FormTypeDescribeAwareInterface
 {
     public function __construct(
         private readonly RouterInterface $router,
@@ -208,5 +211,14 @@ class AutoCompleteEntityType extends AbstractType
     public function getBlockPrefix()
     {
         return 'enhavo_auto_complete_entity';
+    }
+
+    public function describe($options, FormTypeInterface $form, Schema $schema): void
+    {
+        if ($options['multiple']) {
+            $schema->array()->items()->string()->description('Id');
+        } else {
+            $schema->string()->description('Id');
+        }
     }
 }

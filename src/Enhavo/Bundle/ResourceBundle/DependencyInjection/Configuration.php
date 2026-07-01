@@ -12,6 +12,8 @@
 namespace Enhavo\Bundle\ResourceBundle\DependencyInjection;
 
 use Enhavo\Bundle\ResourceBundle\Delete\DoctrineDeleteHandler;
+use Enhavo\Bundle\ResourceBundle\Form\FormNormalizer;
+use Enhavo\Bundle\ResourceBundle\Form\VueFormNormalizer;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -27,6 +29,7 @@ class Configuration implements ConfigurationInterface
         $this->addDuplicateSection($rootNode);
         $this->addGridSection($rootNode);
         $this->addInputSection($rootNode);
+        $this->addFormSection($rootNode);
 
         return $treeBuilder;
     }
@@ -104,6 +107,22 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('inputs')
                     ->useAttributeAsKey('name')
                     ->variablePrototype()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addFormSection(ArrayNodeDefinition $node): void
+    {
+        $normalizerService = class_exists('Enhavo\Bundle\VueFormBundle\Form\VueForm') ? VueFormNormalizer::class : FormNormalizer::class;
+
+        $node
+            ->children()
+                ->arrayNode('form')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('normalizer')->defaultValue($normalizerService)->end()
+                    ->end()
                 ->end()
             ->end()
         ;

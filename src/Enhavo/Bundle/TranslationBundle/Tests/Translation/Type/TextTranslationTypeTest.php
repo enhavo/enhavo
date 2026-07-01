@@ -122,8 +122,10 @@ class TextTranslationTypeTest extends TestCase
 
         $this->assertEquals([
             'allow_fallback',
+            'allow_auto_translate',
             'html',
             'overwrite',
+            'context_groups',
         ], $resolver->getDefinedOptions());
     }
 }

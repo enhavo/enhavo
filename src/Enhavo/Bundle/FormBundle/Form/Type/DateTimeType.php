@@ -11,12 +11,15 @@
 
 namespace Enhavo\Bundle\FormBundle\Form\Type;
 
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Schema;
+use Enhavo\Bundle\ResourceBundle\Form\FormTypeDescribeAwareInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DateTimeType extends AbstractType
+class DateTimeType extends AbstractType implements FormTypeDescribeAwareInterface
 {
     /**
      * @var array|null
@@ -71,5 +74,10 @@ class DateTimeType extends AbstractType
                 'autocomplete' => 'off',
             ],
         ]);
+    }
+
+    public function describe($options, FormTypeInterface $form, Schema $schema)
+    {
+        $schema->string()->format($options['format']);
     }
 }

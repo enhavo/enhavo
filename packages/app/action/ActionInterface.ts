@@ -1,6 +1,5 @@
 import { ComponentAwareInterface } from "@enhavo/app/model/ComponentAwareInterface";
 import { ModelAwareInterface } from "@enhavo/app/model/ModelAwareInterface";
-import {Action} from "@hotwired/stimulus/dist/types/core/action";
 
 export interface ActionInterface extends ComponentAwareInterface, ModelAwareInterface
 {

@@ -51,5 +51,7 @@ services:
     Enhavo\Bundle\BlockBundle\Form\Type\BlockCollectionType:
         arguments:
             - '@Enhavo\Bundle\BlockBundle\Block\BlockManager'
+            - '@Enhavo\Bundle\ResourceBundle\Form\FormDescriberInterface'
+            - '@form.factory'
         tags:
             - { name: form.type }

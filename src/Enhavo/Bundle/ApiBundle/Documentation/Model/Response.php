@@ -11,41 +11,38 @@
 
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model;
 
-class Response
+class Response extends Node
 {
-    public function __construct(
-        private array &$response,
-        private Method $parent,
-    ) {
-    }
-
     public function description($description): self
     {
-        $this->method['description'] = $description;
+        $this->data['description'] = $description;
 
         return $this;
     }
 
     public function content($mimeType = 'application/json'): Content
     {
-        if (!array_key_exists('content', $this->response)) {
-            $this->response['content'] = [];
+        if (!array_key_exists('content', $this->data)) {
+            $this->data['content'] = [];
         }
 
-        if (!array_key_exists($mimeType, $this->response['content'])) {
-            $this->response['content'][$mimeType] = [];
+        if (!array_key_exists($mimeType, $this->data['content'])) {
+            $this->data['content'][$mimeType] = [];
         }
 
-        return new Content($this->response['content'][$mimeType], $this);
+        return new Content($this->data['content'][$mimeType], $this);
     }
 
-    public function end(): Method
+    public function header($name): Header
     {
-        return $this->parent;
-    }
+        if (!array_key_exists('headers', $this->data)) {
+            $this->data['headers'] = [];
+        }
 
-    public function getDocumentation(): Documentation
-    {
-        return $this->parent->getDocumentation();
+        if (!array_key_exists($name, $this->data['headers'])) {
+            $this->data['headers'][$name] = [];
+        }
+
+        return new Header($this->data['headers'][$name], $this);
     }
 }

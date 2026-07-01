@@ -50,12 +50,12 @@ class TranslateResourceEndpointType extends AbstractEndpointType
             if ($this->translationManager->getDefaultLocale() === $locale) {
                 continue;
             }
-            $this->translationManager->applyAutoTranslation($resource, $locale);
+            $this->translationManager->applyAutoTranslation($resource, $locale, null, $resource);
         }
 
         $this->resourceManager->save($resource);
 
-        $updateRoute = $this->routeResolver->getRoute('update', ['api' => true]);
+        $updateRoute = $options['update_route'] ?? $this->routeResolver->getRoute('update', ['api' => true]);
         $url = $this->urlGenerator->generate($updateRoute, ['id' => $id]);
         $context->setResponse(new RedirectResponse($url));
     }
@@ -68,6 +68,7 @@ class TranslateResourceEndpointType extends AbstractEndpointType
 
         $resolver->setDefaults([
             'permission' => null,
+            'update_route' => null,
         ]);
     }
 

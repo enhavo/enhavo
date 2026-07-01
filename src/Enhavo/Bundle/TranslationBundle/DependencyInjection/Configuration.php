@@ -11,7 +11,8 @@
 
 namespace Enhavo\Bundle\TranslationBundle\DependencyInjection;
 
-use Enhavo\Bundle\TranslationBundle\Client\DeeplTranslationClient;
+use Enhavo\Bundle\TranslationBundle\Client\ChainTranslationClient;
+use Enhavo\Bundle\TranslationBundle\Client\ConfigContextProvider;
 use Enhavo\Bundle\TranslationBundle\Locale\ConfigurationLocaleProvider;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -75,11 +76,46 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('translation_client')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('client')->defaultValue(DeeplTranslationClient::class)->end()
+                        ->scalarNode('client')->defaultValue(ChainTranslationClient::class)->end()
+                        ->arrayNode('context')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('provider')->defaultValue(ConfigContextProvider::class)->end()
+                                ->scalarNode('text')->end()
+                                ->arrayNode('files')
+                                    ->scalarPrototype()->end()
+                                ->end()
+                            ->end()
+                        ->end()
                         ->arrayNode('deepl')
                             ->children()
                                 ->scalarNode('api_key')->end()
                                 ->scalarNode('glossary_id')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('claude')
+                            ->children()
+                                ->scalarNode('api_key')->end()
+                                ->scalarNode('version')->end()
+                                ->scalarNode('model')->end()
+                                ->scalarNode('timeout')->defaultValue(600)->end()
+                                ->scalarNode('max_tokens')->defaultValue(4096)->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('url')
+                            ->children()
+                                ->arrayNode('domains')
+                                    ->performNoDeepMerging()
+                                    ->scalarPrototype()->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('chain')
+                            ->children()
+                                ->arrayNode('clients')
+                                    ->performNoDeepMerging()
+                                    ->scalarPrototype()->end()
+                                ->end()
                             ->end()
                         ->end()
                     ->end()

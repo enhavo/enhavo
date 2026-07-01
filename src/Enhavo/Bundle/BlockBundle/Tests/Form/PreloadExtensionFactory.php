@@ -13,7 +13,9 @@ namespace Enhavo\Bundle\BlockBundle\Tests\Form;
 
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\BlockBundle\Form\Type\BlockCollectionType;
+use Enhavo\Bundle\ResourceBundle\Form\FormDescriberInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\PreloadedExtension;
 
 class PreloadExtensionFactory
@@ -23,6 +25,9 @@ class PreloadExtensionFactory
         $blockManager = $testCase->getMockBuilder(BlockManager::class)->disableOriginalConstructor()->getMock();
         $blockManager->method('getBlocks')->willReturn($blocks);
 
-        return new PreloadedExtension([new BlockCollectionType($blockManager)], []);
+        $formDescriber = $testCase->getMockBuilder(FormDescriberInterface::class)->getMock();
+        $formFactory = $testCase->getMockBuilder(FormFactoryInterface::class)->getMock();
+
+        return new PreloadedExtension([new BlockCollectionType($blockManager, $formDescriber, $formFactory)], []);
     }
 }

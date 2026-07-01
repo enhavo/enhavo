@@ -25,7 +25,7 @@ class MetaTabType extends AbstractTabType
             'arrangement' => [
                 'page_title',
                 'slug',
-                'route.path',
+                'route',
                 'meta_description',
                 'canonicalUrl',
                 'noIndex',

@@ -286,7 +286,7 @@ class TranslationManager
         return null;
     }
 
-    public function applyAutoTranslation($data, $locale, string $property = null)
+    public function applyAutoTranslation($data, $locale, ?string $property = null, mixed $context = null): void
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($data);
@@ -297,7 +297,7 @@ class TranslationManager
                 $translation = $this->factory->create(array_merge([
                     'type' => $propertyNode->getType(),
                 ], $propertyNode->getOptions()));
-                $translation->autoTranslate($data, $propertyName, $locale);
+                $translation->autoTranslate($data, $propertyName, $locale, $context);
             }
         }
     }

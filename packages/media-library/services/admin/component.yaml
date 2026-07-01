@@ -1,42 +1,42 @@
 services:
     '@enhavo/media-library/components/media-library/MediaLibrary.vue':
         static: true
-        chunk: 'component'
+        chunk: 'media-library'
         tags:
             - { name: vue.component, component: 'media-library' }
 
     '@enhavo/media-library/components/collection/CollectionMediaLibrary.vue':
         static: true
-        chunk: 'component'
+        chunk: 'media-library'
         tags:
             - { name: vue.component, component: 'collection-media-library' }
 
     '@enhavo/media-library/components/collection/CollectionMediaLibraryThumbnail.vue':
         static: true
-        chunk: 'component'
+        chunk: 'media-library'
         tags:
             - { name: vue.component, component: 'collection-media-library-thumbnail' }
 
     '@enhavo/media-library/components/filter/FilterMediaLibrarySearch.vue':
         static: true
-        chunk: 'component'
+        chunk: 'media-library'
         tags:
             - { name: vue.component, component: 'filter-media-library-search' }
 
     '@enhavo/media-library/components/filter/FilterMediaLibraryChoice.vue':
         static: true
-        chunk: 'component'
+        chunk: 'media-library'
         tags:
             - { name: vue.component, component: 'filter-media-library-choice' }
 
     '@enhavo/media-library/components/filter/FilterMediaLibraryCheckbox.vue':
         static: true
-        chunk: 'component'
+        chunk: 'media-library'
         tags:
             - { name: vue.component, component: 'filter-media-library-checkbox' }
 
     '@enhavo/media-library/components/action/ActionMediaLibraryReplace.vue':
         static: true
-        chunk: 'component'
+        chunk: 'media-library'
         tags:
             - { name: vue.component, component: 'action-media-library-replace' }

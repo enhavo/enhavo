@@ -9,7 +9,7 @@ compiler_pass:
 
 services:
     '@enhavo/form/controllers/FormStyleController':
-        chunk: controller
+        chunk: 'form'
         static: true
         tags:
             - { name: stimulus.controller, key: 'form-style' }

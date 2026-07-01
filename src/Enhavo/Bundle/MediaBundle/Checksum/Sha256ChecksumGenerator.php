@@ -17,6 +17,6 @@ class Sha256ChecksumGenerator implements ChecksumGeneratorInterface
 {
     public function getChecksum(ContentInterface $content): string
     {
-        return hash('sha256', $content->getContent());
+        return hash_file('sha256', $content->getFilePath());
     }
 }

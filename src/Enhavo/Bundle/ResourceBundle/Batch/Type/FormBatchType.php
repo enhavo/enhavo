@@ -14,14 +14,14 @@ namespace Enhavo\Bundle\ResourceBundle\Batch\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Batch\AbstractBatchType;
 use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
-use Enhavo\Bundle\VueFormBundle\Form\VueForm;
+use Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FormBatchType extends AbstractBatchType
 {
     public function __construct(
-        private readonly VueForm $vueForm,
+        private readonly FormNormalizerInterface $formNormalizer,
         private readonly FormFactoryInterface $formFactory,
         private readonly ResourceExpressionLanguage $expressionLanguage,
     ) {
@@ -34,7 +34,7 @@ class FormBatchType extends AbstractBatchType
             $this->expressionLanguage->evaluateArray($options['form_options']),
         );
 
-        $data['form'] = $this->vueForm->createData($form->createView());
+        $data['form'] = $this->formNormalizer->normalize($form);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

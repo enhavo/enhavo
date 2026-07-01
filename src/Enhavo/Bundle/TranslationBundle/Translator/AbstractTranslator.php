@@ -12,35 +12,64 @@
 namespace Enhavo\Bundle\TranslationBundle\Translator;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 abstract class AbstractTranslator implements TranslatorInterface
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    protected DataMap $buffer;
+    protected DataMap $originalData;
 
-    /** @var EntityResolverInterface */
-    protected $entityResolver;
+    /** @var array<string, array> */
+    protected array $translationCache = [];
 
-    /** @var DataMap */
-    protected $buffer;
-
-    /** @var DataMap */
-    protected $originalData;
-
-    /** @var LocaleProviderInterface */
-    protected $localeProvider;
-
-    public function __construct(EntityManagerInterface $entityManager, EntityResolverInterface $entityResolver, LocaleProviderInterface $localeProvider)
+    public function __construct(
+        protected EntityManagerInterface $entityManager,
+        protected EntityResolverInterface $entityResolver,
+        protected LocaleProviderInterface $localeProvider
+    )
     {
-        $this->entityManager = $entityManager;
-        $this->localeProvider = $localeProvider;
-        $this->entityResolver = $entityResolver;
-
         $this->buffer = new DataMap();
         $this->originalData = new DataMap();
+    }
+
+    public function setTranslation($entity, $property, $locale, $value): void
+    {
+        if ($locale == $this->localeProvider->getDefaultLocale()) {
+            return;
+        }
+
+        $this->loadBuffer($entity);
+
+        $translation = $this->buffer->load($entity, $property, $locale);
+
+        if ($translation === null) {
+            $translation = $this->createTranslation($entity, $property, $locale, $value);
+            if ($translation) {
+                $this->buffer->store($entity, $property, $locale, $translation);
+            }
+        } else {
+            $this->updateTranslation($translation, $value);
+        }
+    }
+
+    public function getTranslation($entity, $property, $locale): mixed
+    {
+        if ($locale == $this->localeProvider->getDefaultLocale()) {
+            return null;
+        }
+
+        $this->loadBuffer($entity);
+
+        $translation = $this->buffer->load($entity, $property, $locale);
+
+        if ($translation === null) {
+            return null;
+        }
+
+        return $this->getTranslationValue($translation);
     }
 
     public function detach($entity, string $property, string $locale, array $options)
@@ -68,16 +97,39 @@ abstract class AbstractTranslator implements TranslatorInterface
         return $originalValue;
     }
 
-    public function delete($entity, string $property)
+    public function delete($entity, string $property): void
     {
-        $translations = $this->getRepository()->findBy([
-            'class' => $this->entityResolver->getName($entity),
-            'property' => $property,
-            'refId' => $entity->getId(),
-        ]);
+        $translations = $this->findTranslations($entity, $property);
 
         foreach ($translations as $translation) {
             $this->entityManager->remove($translation);
         }
     }
+
+    private function loadBuffer($entity): void
+    {
+        if ($entity->getId() === null) {
+            return;
+        }
+
+        if ($this->buffer->exists($entity)) {
+            return;
+        }
+
+        $translations = $this->findTranslations($entity);
+
+        foreach ($translations as $translation) {
+            $this->buffer->store($entity, $translation->getProperty(), $translation->getLocale(), $translation);
+        }
+    }
+
+    abstract public function getRepository(): EntityRepository;
+
+    abstract protected function createTranslation($entity, $property, $locale, $value): ?object;
+
+    abstract protected function updateTranslation($translation, $value);
+
+    abstract protected function getTranslationValue($translation);
+
+    abstract protected function findTranslations($entity, ?string $property = null): iterable;
 }

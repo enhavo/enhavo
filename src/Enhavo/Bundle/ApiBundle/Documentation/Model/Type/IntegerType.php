@@ -11,15 +11,19 @@
 
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model\Type;
 
-use Enhavo\Bundle\ApiBundle\Documentation\Model\Documentation;
+use Enhavo\Bundle\ApiBundle\Documentation\Model\Node;
 use Enhavo\Bundle\ApiBundle\Documentation\Model\Schema;
 
-class IntegerType
+/**
+ * @method ObjectType|Schema end()
+ */
+class IntegerType extends Node
 {
     public function __construct(
-        private array &$data,
-        private $parent,
+        array &$data,
+              $parent,
     ) {
+        parent::__construct($data, $parent);
         $this->data['type'] = 'integer';
     }
 
@@ -44,14 +48,31 @@ class IntegerType
         return $this;
     }
 
-    /** @return ObjectType|Schema */
-    public function end()
+    public function enum(array $values): self
     {
-        return $this->parent;
+        $this->data['enum'] = $values;
+
+        return $this;
     }
 
-    public function getDocumentation(): Documentation
+    public function description(string $value): self
     {
-        return $this->parent->getDocumentation();
+        $this->data['description'] = $value;
+
+        return $this;
+    }
+
+    public function nullable(bool $value = true): self
+    {
+        $this->data['nullable'] = $value;
+
+        return $this;
+    }
+
+    public function example($value): self
+    {
+        $this->data['example'] = $value;
+
+        return $this;
     }
 }

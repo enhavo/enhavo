@@ -22,43 +22,32 @@ use Enhavo\Bundle\TranslationBundle\Entity\TranslationRoute;
  */
 class TranslationRouteRepository extends EntityRepository
 {
-    public function findTranslationRoute($class, $id, $property, $locale): ?TranslationRoute
-    {
-        $translationRoute = $this->createQueryBuilder('tr')
-            ->join('tr.route', 'r')
-            ->andWhere('r.contentClass = :class')
-            ->andWhere('r.contentId = :id')
-            ->andWhere('tr.locale = :locale')
-            ->andWhere('tr.property = :property')
-            ->setParameter('class', $class)
-            ->setParameter('id', $id)
-            ->setParameter('property', $property)
-            ->setParameter('locale', $locale)
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getResult();
-
-        if ($translationRoute) {
-            return $translationRoute[0];
-        }
-
-        return null;
-    }
-
     /**
      * @return array|TranslationRoute[]
      */
-    public function findTranslationRoutes($class, $id): array
+    public function findTranslationRoutes($class, $id, ?string $property = null, ?string $locale = null): array
     {
-        $translationRoutes = $this->createQueryBuilder('tr')
+        $qb = $this->createQueryBuilder('tr')
             ->join('tr.route', 'r')
             ->andWhere('r.contentClass = :class')
             ->andWhere('r.contentId = :id')
             ->setParameter('class', $class)
             ->setParameter('id', $id)
-            ->getQuery()
-            ->getResult();
+        ;
 
-        return $translationRoutes;
+        if ($locale !== null) {
+            $qb->andWhere('tr.locale = :locale');
+            $qb->setParameter('locale', $locale);
+        }
+
+        if ($property !== null) {
+            $qb->andWhere('tr.property = :property');
+            $qb->setParameter('property', $property);
+        }
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }

@@ -1,11 +1,11 @@
 services:
     '@enhavo/app/client/Client':
         import: Client
-        chunk: 'util'
+        chunk: 'app'
 
     '@enhavo/app/client/DefaultErrorHandler':
         import: DefaultErrorHandler
-        chunk: 'util'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'
@@ -16,7 +16,7 @@ services:
 
     '@enhavo/app/client/ValidationErrorHandler':
         import: ValidationErrorHandler
-        chunk: 'util'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/translation/Translator'
@@ -25,7 +25,7 @@ services:
 
     '@enhavo/app/client/NotFoundErrorHandler':
         import: NotFoundErrorHandler
-        chunk: 'util'
+        chunk: 'app'
         arguments:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'
@@ -36,6 +36,6 @@ services:
 
     '@enhavo/app/client/AbortableErrorHandler':
         import: AbortableErrorHandler
-        chunk: 'util'
+        chunk: 'app'
         tags:
             - { name: enhavo_app.client_error_handler, priority: 30 }

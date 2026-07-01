@@ -58,9 +58,18 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
             $data = new $dataClass();
         }
 
-        if (!$this->translationManager->isTranslatable($data)) {
+        $isTranslatable = false;
+        foreach ($form->all() as $property => $child) {
+            if ($this->translationManager->isFormTranslatable($data, $property)) {
+                $isTranslatable = true;
+                break;
+            }
+        }
+
+        if (!$isTranslatable) {
             return;
         }
+
 
         // To prevent side effects we only setData in the form if necessary
         if ($setData) {
@@ -68,12 +77,9 @@ class ReplaceTranslationTypeListener implements EventSubscriberInterface
         }
 
         foreach ($form->all() as $property => $child) {
-            // prevent reapply
-            if (TranslationType::class === get_class($child->getConfig()->getType()->getInnerType())) {
-                continue;
-            }
-
-            if ($this->translationManager->isFormTranslatable($data, $property)) {
+            if ($this->translationManager->isFormTranslatable($data, $property)
+                && !(TranslationType::class === get_class($child->getConfig()->getType()->getInnerType()))
+            ) {
                 $this->replaceWithTranslationField($data, $property, $form, $child);
 
             } else { // replace all children to keep order as defined in the parent form type

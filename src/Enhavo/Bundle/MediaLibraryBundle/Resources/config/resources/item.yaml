@@ -11,7 +11,7 @@ enhavo_resource:
             actions:
                 select:
                     type: media_library_select
-                    enabled: "expr:request.get('mode') === 'select'"
+                    enabled: "expr:request.query.get('mode') === 'select'"
                 upload:
                     type: media_library_upload
             collection:
@@ -44,10 +44,11 @@ enhavo_resource:
             batches:
                 delete:
                     type: delete
-                    enabled: "expr:request.get('mode') !== 'select'"
+                    enabled: "expr:request.query.get('mode') !== 'select'"
+                    permission: ROLE_ENHAVO_MEDIA_LIBRARY_ITEM_DELETE
                 select:
                     type: Enhavo\Bundle\MediaLibraryBundle\Batch\Type\MediaLibrarySelectBatchType
-                    enabled: "expr:request.get('mode') === 'select'"
+                    enabled: "expr:request.query.get('mode') === 'select'"
             columns:
                 name:
                     type: multiple_property
@@ -76,15 +77,21 @@ enhavo_resource:
             form: Enhavo\Bundle\MediaLibraryBundle\Form\Type\ItemType
             form_options: {  }
             actions:
+                apply:
+                    type: media_library_apply
+                    update_route: enhavo_media_library_admin_api_item_update
+                    apply_route: enhavo_media_library_admin_api_item_apply
+                    enabled: 'expr:resource && resource.getId()'
+                replace:
+                    type: media_library_replace
+                    enabled: 'expr:resource && resource.getId()'
                 download:
                     type: download
                     route: enhavo_media_admin_api_file
                     route_parameters:
                         token: expr:resource.getFile().getToken()
                         disposition: attachment
-                replace:
-                    type: media_library_replace
-                    enabled: 'expr:resource && resource.getId()'
+
             tabs:
                 main:
                     label: null

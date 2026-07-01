@@ -3,6 +3,7 @@ enhavo_article_admin_api_article_index:
     methods: [GET]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_index
             grid: enhavo_article.article
@@ -12,6 +13,7 @@ enhavo_article_admin_api_article_list:
     methods: [GET,POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_list
             grid: enhavo_article.article
@@ -21,6 +23,7 @@ enhavo_article_admin_api_article_create:
     methods: [GET, POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_create
             input: enhavo_article.article
@@ -30,6 +33,7 @@ enhavo_article_admin_api_article_update:
     methods: [GET, POST, PATCH]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_update
             input: enhavo_article.article
@@ -39,6 +43,7 @@ enhavo_article_admin_api_article_delete:
     methods: [DELETE, POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_delete
             input: enhavo_article.article
@@ -48,6 +53,7 @@ enhavo_article_admin_api_article_batch:
     methods: [POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_batch
             grid: enhavo_article.article
@@ -57,6 +63,7 @@ enhavo_article_admin_api_article_duplicate:
     methods: [POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_duplicate
             input: enhavo_article.article
@@ -66,6 +73,7 @@ enhavo_article_admin_api_article_preview:
     methods: [GET, POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _area: theme
         _endpoint:
             type: preview
@@ -81,6 +89,7 @@ enhavo_article_admin_api_article_auto_complete:
     path: /article/article/article/auto-complete
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: auto_complete
             resource: enhavo_article.article

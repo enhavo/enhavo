@@ -17,6 +17,6 @@ class Md5ChecksumGenerator implements ChecksumGeneratorInterface
 {
     public function getChecksum(ContentInterface $content): string
     {
-        return md5($content->getContent());
+        return hash_file('md5', $content->getContent());
     }
 }

@@ -44,6 +44,7 @@ class EnhavoResourceExtension extends Extension implements PrependExtensionInter
         $container->setParameter('enhavo_resource.duplicate', $config['duplicate']);
         $container->setParameter('enhavo_resource.resources', $config['resources']);
         $container->setParameter('enhavo_resource.delete.handler', $config['delete']['handler']);
+        $container->setParameter('enhavo_resource.form.normalizer', $config['form']['normalizer']);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 

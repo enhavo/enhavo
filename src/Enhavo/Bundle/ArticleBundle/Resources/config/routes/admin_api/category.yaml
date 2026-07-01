@@ -3,6 +3,7 @@ enhavo_article_admin_api_category_index:
     methods: [GET]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_index
             grid: enhavo_article.category
@@ -12,6 +13,7 @@ enhavo_article_admin_api_category_list:
     methods: [GET,POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_list
             grid: enhavo_article.category
@@ -21,6 +23,7 @@ enhavo_article_admin_api_category_create:
     methods: [GET, POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_create
             input: enhavo_article.category
@@ -30,6 +33,7 @@ enhavo_article_admin_api_category_update:
     methods: [GET, POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_update
             input: enhavo_article.category
@@ -39,6 +43,7 @@ enhavo_article_admin_api_category_delete:
     methods: [DELETE, POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_delete
             input: enhavo_article.category
@@ -48,6 +53,7 @@ enhavo_article_admin_api_category_batch:
     methods: [POST]
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: resource_batch
             grid: enhavo_article.category
@@ -58,6 +64,7 @@ enhavo_article_admin_api_category_auto_complete:
     path: /category/auto-complete
     defaults:
         _expose: admin_api
+        _describe: admin
         _endpoint:
             type: term_auto_complete
             taxonomy: article_category

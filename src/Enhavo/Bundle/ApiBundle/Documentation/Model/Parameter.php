@@ -11,57 +11,49 @@
 
 namespace Enhavo\Bundle\ApiBundle\Documentation\Model;
 
-class Parameter
+class Parameter extends Node
 {
-    public function __construct(
-        private array &$parameter,
-        private $parent,
-    ) {
-    }
-
     public function in($in): self
     {
-        $this->parameter['in'] = $in;
+        $this->data['in'] = $in;
 
         return $this;
     }
 
     public function description(?string $description): self
     {
-        $this->parameter['description'] = $description;
+        $this->data['description'] = $description;
 
         return $this;
     }
 
-    public function required(bool $value): self
+    public function required(bool $value = true): self
     {
-        $this->parameter['required'] = $value;
+        $this->data['required'] = $value;
 
         return $this;
     }
 
     public function deprecated(bool $value): self
     {
-        $this->parameter['deprecated'] = $value;
+        $this->data['deprecated'] = $value;
 
         return $this;
     }
 
     public function allowEmptyValue(bool $value): self
     {
-        $this->parameter['allowEmptyValue'] = $value;
+        $this->data['allowEmptyValue'] = $value;
 
         return $this;
     }
 
-    /** @return Path|Method */
-    public function end(): mixed
+    public function schema(): Schema
     {
-        return $this->parent;
-    }
+        if (!array_key_exists('schema', $this->data)) {
+            $this->data['schema'] = [];
+        }
 
-    public function getDocumentation(): Documentation
-    {
-        return $this->parent->getDocumentation();
+        return new Schema($this->data['schema'], $this);
     }
 }

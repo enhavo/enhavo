@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\ApiBundle;
 
 use Enhavo\Bundle\ApiBundle\DependencyInjection\CompilerPass\DataNormalizerCompilerPass;
+use Enhavo\Bundle\ApiBundle\DependencyInjection\CompilerPass\DocumentationDescriberCompilerPass;
 use Enhavo\Bundle\ApiBundle\Endpoint\Endpoint;
 use Enhavo\Bundle\ApiBundle\Endpoint\EndpointFactoryAwareInterface;
 use Enhavo\Bundle\ApiBundle\Endpoint\EndpointTypeExtensionInterface;
@@ -36,6 +37,7 @@ class EnhavoApiBundle extends Bundle
         );
 
         $container->addCompilerPass(new DataNormalizerCompilerPass());
+        $container->addCompilerPass(new DocumentationDescriberCompilerPass());
 
         $container->registerForAutoconfiguration(EndpointTypeInterface::class)
             ->addTag('enhavo_api.endpoint')
@@ -51,6 +53,10 @@ class EnhavoApiBundle extends Bundle
 
         $container->registerForAutoconfiguration(DataNormalizerInterface::class)
             ->addTag('enhavo_api.data_normalizer')
+        ;
+
+        $container->registerForAutoconfiguration(DocumentationDescriberCompilerPass::class)
+            ->addTag('enhavo_api.documentation_describer')
         ;
     }
 }
