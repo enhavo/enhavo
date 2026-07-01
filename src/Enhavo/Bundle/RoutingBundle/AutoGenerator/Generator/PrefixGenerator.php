@@ -81,7 +81,9 @@ class PrefixGenerator extends AbstractGenerator
 
     private function createPrefix(array $properties, $resource, array $options)
     {
-        return $options['unique'] ? $this->getUniqueUrl($properties, $resource, $options) : $this->format($properties, $options);
+        $prefix = $options['unique'] ? $this->getUniqueUrl($properties, $resource, $options) : $this->format($properties, $options);
+
+        return substr($prefix, 0, $options['max_length']);
     }
 
     protected function format(array $properties, array $options)
@@ -171,6 +173,7 @@ class PrefixGenerator extends AbstractGenerator
             'unique' => true,
             'unique_property' => null,
             'date_format' => 'Y-m-d',
+            'max_length' => 255,
         ]);
         $resolver->setRequired([
             'properties',
