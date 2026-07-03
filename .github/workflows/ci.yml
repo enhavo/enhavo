@@ -73,7 +73,7 @@ jobs:
                 run: symfony security:check
 
             -   name: Validate Doctrine mapping
-                run: bin/console doctrine:schema:validate --skip-sync -vvv
+                run: cd playground/app && bin/console doctrine:schema:validate --skip-sync -vvv
 
             -   name: PHP lint check
                 run: vendor/bin/phplint
