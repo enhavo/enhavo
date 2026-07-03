@@ -12,12 +12,17 @@
 namespace Enhavo\Bundle\MediaBundle\Command;
 
 use Enhavo\Bundle\MediaBundle\GarbageCollection\GarbageCollectorInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 
+#[AsCommand(
+    name: 'enhavo:media:collect-garbage',
+    description: 'Run garbage collector for media files',
+)]
 class CollectGarbageCommand extends Command
 {
     public function __construct(
@@ -29,8 +34,6 @@ class CollectGarbageCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:media:collect-garbage')
-            ->setDescription('Run garbage collector for media files')
             ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Override limit of items per run. 0 or negative values for unlimited.')
         ;
 

@@ -12,10 +12,15 @@
 namespace Enhavo\Bundle\CalendarBundle\Command;
 
 use Enhavo\Bundle\CalendarBundle\Import\ImportManager;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'enhavo:calendar:import',
+    description: 'import',
+)]
 class ImportCommand extends Command
 {
     /**
@@ -32,12 +37,6 @@ class ImportCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
-    {
-        $this
-            ->setName('enhavo:calendar:import')
-            ->setDescription('import');
-    }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

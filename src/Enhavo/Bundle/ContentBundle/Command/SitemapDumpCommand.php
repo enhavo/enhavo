@@ -12,11 +12,16 @@
 namespace Enhavo\Bundle\ContentBundle\Command;
 
 use Enhavo\Bundle\ContentBundle\Sitemap\SitemapGenerator;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
+#[AsCommand(
+    name: 'enhavo:sitemap:dump',
+    description: 'Dump the sitemap',
+)]
 class SitemapDumpCommand extends Command
 {
     /** @var SitemapGenerator */
@@ -40,12 +45,6 @@ class SitemapDumpCommand extends Command
         $this->projectDir = $projectDir;
     }
 
-    protected function configure()
-    {
-        $this
-            ->setName('enhavo:sitemap:dump')
-            ->setDescription('Dump the sitemap');
-    }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

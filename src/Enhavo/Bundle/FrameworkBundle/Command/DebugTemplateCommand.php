@@ -12,11 +12,16 @@
 namespace Enhavo\Bundle\FrameworkBundle\Command;
 
 use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'debug:template',
+    description: 'Show resolved template',
+)]
 class DebugTemplateCommand extends Command
 {
     public function __construct(
@@ -28,8 +33,6 @@ class DebugTemplateCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('debug:template')
-            ->setDescription('Show resolved template')
             ->addArgument('template', InputArgument::REQUIRED, 'To resolved template')
         ;
     }

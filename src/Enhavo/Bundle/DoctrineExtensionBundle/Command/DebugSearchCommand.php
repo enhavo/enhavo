@@ -12,12 +12,17 @@
 namespace Enhavo\Bundle\DoctrineExtensionBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'debug:doctrine:search',
+    description: 'Perform sql LIKE search in all text fields of all entities',
+)]
 class DebugSearchCommand extends Command
 {
     public function __construct(
@@ -29,8 +34,6 @@ class DebugSearchCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('debug:doctrine:search')
-            ->setDescription('Perform sql LIKE search in all text fields of all entities')
             ->addArgument('searchTerm', InputArgument::REQUIRED, 'Search term in sql LIKE search syntax (use % as wildcard)')
             ->addOption('includeVarchar', null, InputOption::VALUE_NONE, 'Include VARCHAR fields, not only TEXT fields')
             ->addOption('excludeTables', null, InputOption::VALUE_REQUIRED, 'Comma separated list of table names to exclude')

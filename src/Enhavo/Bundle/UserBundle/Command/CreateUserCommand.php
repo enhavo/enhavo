@@ -17,6 +17,7 @@ use Enhavo\Bundle\UserBundle\Model\UserInterface;
 use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\User\UserManager;
 use Enhavo\Bundle\UserBundle\UserIdentifier\UserIdentifierProviderResolver;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,9 +30,12 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
  *
  * @property $userFactory UserFactory
  */
+#[AsCommand(
+    name: 'enhavo:user:create',
+    description: 'Create a user.',
+)]
 class CreateUserCommand extends AbstractUserCommand
 {
-    protected static $defaultName = 'enhavo:user:create';
 
     public function __construct(
         UserManager $userManager,
@@ -51,8 +55,6 @@ class CreateUserCommand extends AbstractUserCommand
         $definitions[] = new InputOption('disable', null, InputOption::VALUE_NONE, 'Disable user');
 
         $this
-            ->setName('enhavo:user:create')
-            ->setDescription('Create a user.')
             ->setDefinition($definitions)
             ->setHelp(<<<'EOT'
 The <info>enhavo:user:create</info> command creates a user:

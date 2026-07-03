@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\FrameworkBundle\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,6 +20,10 @@ use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
+#[AsCommand(
+    name: 'enhavo:email:send',
+    description: 'Debug command for testing email dispatch',
+)]
 class EmailSendCommand extends Command
 {
     public function __construct(
@@ -31,8 +36,6 @@ class EmailSendCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:email:send')
-            ->setDescription('Debug command for testing email dispatch')
             ->addArgument('from', InputArgument::OPTIONAL, 'From')
             ->addArgument('to', InputArgument::OPTIONAL, 'To')
             ->addArgument('subject', InputArgument::OPTIONAL, 'Subject')

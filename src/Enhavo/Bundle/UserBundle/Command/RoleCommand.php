@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,10 +19,12 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
+#[AsCommand(
+    name: 'enhavo:user:role',
+    description: 'Add or remove role of a user.',
+)]
 class RoleCommand extends AbstractUserCommand
 {
-    protected static $defaultName = 'enhavo:user:role';
-
     protected function configure()
     {
         $definitions = $this->getPropertyDefinitions();
@@ -29,8 +32,6 @@ class RoleCommand extends AbstractUserCommand
         $definitions[] = new InputOption('remove', null, InputOption::VALUE_NONE, 'Remove role');
 
         $this
-            ->setName('enhavo:user:role')
-            ->setDescription('Add or remove role of a user.')
             ->setDefinition($definitions)
             ->setHelp(<<<'EOT'
 The <info>enhavo:user:role</info> command adding and remove a role:

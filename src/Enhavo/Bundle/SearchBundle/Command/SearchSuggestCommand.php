@@ -13,10 +13,15 @@ namespace Enhavo\Bundle\SearchBundle\Command;
 
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'enhavo:search:suggest',
+    description: 'Search suggestion',
+)]
 class SearchSuggestCommand extends Command
 {
     public function __construct(
@@ -28,8 +33,6 @@ class SearchSuggestCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:search:suggest')
-            ->setDescription('Search suggestion')
             ->addArgument('term')
         ;
     }

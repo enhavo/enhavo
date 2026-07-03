@@ -17,6 +17,7 @@ use Enhavo\Bundle\MediaBundle\Media\MediaManager;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\MediaBundle\Repository\FileRepository;
 use Enhavo\Bundle\MediaBundle\Repository\FormatRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -24,6 +25,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
+#[AsCommand(
+    name: 'enhavo:media:clean-up',
+    description: 'Clean up unused media files',
+)]
 class CleanUpCommand extends Command
 {
     /**
@@ -46,8 +51,6 @@ class CleanUpCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:media:clean-up')
-            ->setDescription('Clean up unused media files')
             ->addOption('dry-run', 'd', InputOption::VALUE_NONE, 'perform a dry run, don\'t change anything')
         ;
     }

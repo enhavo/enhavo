@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\SearchBundle\Filter\FilterDataProvider;
 use Enhavo\Bundle\SearchBundle\Index\IndexDataProvider;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,6 +24,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /*
  * This command does the reindexing
  */
+#[AsCommand(
+    name: 'debug:search:analyze',
+    description: 'Check index metadata',
+)]
 class AnalyzeCommand extends Command
 {
     public function __construct(
@@ -37,8 +42,6 @@ class AnalyzeCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('debug:search:analyze')
-            ->setDescription('Check index metadata')
             ->addArgument('entity', InputArgument::REQUIRED, 'FQCN or resource name')
             ->addArgument('id', InputArgument::REQUIRED, 'id of the entity')
         ;

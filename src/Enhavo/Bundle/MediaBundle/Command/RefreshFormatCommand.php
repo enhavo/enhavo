@@ -15,19 +15,22 @@ use Doctrine\ORM\EntityRepository;
 use Enhavo\Bundle\MediaBundle\Entity\Format;
 use Enhavo\Bundle\MediaBundle\Exception\FormatException;
 use Enhavo\Bundle\MediaBundle\Media\FormatManager;
-use Enhavo\Bundle\MediaBundle\Media\MediaManager;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'enhavo:media:refresh-format',
+    description: 'Recreate Format',
+)]
 class RefreshFormatCommand extends Command
 {
     public function __construct(
         private EntityRepository $formatRepository,
         private EntityRepository $fileRepository,
-        private MediaManager $mediaManager,
         private FormatManager $formatManager,
     ) {
         parent::__construct();
@@ -36,8 +39,6 @@ class RefreshFormatCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:media:refresh-format')
-            ->setDescription('Recreate Format')
             ->addOption('format', 'format', InputOption::VALUE_OPTIONAL, 'format to refresh')
             ->addOption('id', 'id', InputOption::VALUE_OPTIONAL, 'refresh only id')
         ;

@@ -18,12 +18,17 @@ use Enhavo\Bundle\BlockBundle\Model\BlockInterface;
 use Enhavo\Bundle\FrameworkBundle\Output\CliOutputLogger;
 use Enhavo\Bundle\FrameworkBundle\Output\OutputLoggerInterface;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'debug:block',
+    description: 'Find root resource of all blocks, all blocks of one type or one specific block',
+)]
 class DebugBlockUseCommand extends Command
 {
     /** @var EntityManagerInterface */
@@ -51,8 +56,6 @@ class DebugBlockUseCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('debug:block')
-            ->setDescription('Find root resource of all blocks, all blocks of one type or one specific block')
             ->addArgument('type', InputArgument::OPTIONAL, '(Optional) block type to search for')
             ->addArgument('id', InputArgument::OPTIONAL, '(Optional) id of specific block');
     }

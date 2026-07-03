@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\ApiBundle\Command;
 
 use Enhavo\Bundle\ApiBundle\Documentation\DocumentationGenerator;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,6 +12,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 
+#[AsCommand(
+    name: 'enhavo:api:create-docs',
+    description: 'Create open api documentation',
+)]
 class CreateDocsCommand extends Command
 {
     public function __construct(
@@ -23,8 +28,6 @@ class CreateDocsCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('enhavo:api:create-docs')
-            ->setDescription('Create open api documentation')
             ->addArgument('output', InputArgument::REQUIRED, 'Output path')
             ->addArgument('section', InputArgument::OPTIONAL, 'Section', DocumentationGenerator::SECTION_DEFAULT)
             ->addOption('dry-run', 'd', InputOption::VALUE_NONE, 'perform a dry run, don\'t change anything')

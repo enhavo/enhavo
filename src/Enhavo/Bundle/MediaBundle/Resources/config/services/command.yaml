@@ -21,7 +21,6 @@ services:
         arguments:
             - '@enhavo_media.format.repository'
             - '@enhavo_media.file.repository'
-            - '@enhavo_media.media.media_manager'
             - '@enhavo_media.media.format_manager'
         tags:
             - { name: console.command }
