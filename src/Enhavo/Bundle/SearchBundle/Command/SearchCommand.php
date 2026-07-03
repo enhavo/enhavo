@@ -14,6 +14,7 @@ namespace Enhavo\Bundle\SearchBundle\Command;
 use Enhavo\Bundle\SearchBundle\Engine\Filter\Filter;
 use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
 use Enhavo\Bundle\SearchBundle\Result\ResultConverter;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,6 +22,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /*
  * This command does the reindexing
  */
+#[AsCommand(
+    name: 'enhavo:search',
+    description: 'Search',
+)]
 class SearchCommand extends Command
 {
     public function __construct(
@@ -33,8 +38,6 @@ class SearchCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:search')
-            ->setDescription('Search')
             ->addArgument('term')
             ->addOption('fuzzy', 'f')
         ;

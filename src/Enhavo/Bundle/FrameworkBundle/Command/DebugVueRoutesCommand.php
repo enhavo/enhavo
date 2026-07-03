@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\FrameworkBundle\Command;
 
 use Enhavo\Bundle\FrameworkBundle\Vue\RouteProvider\VueRouteProviderInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,6 +20,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Yaml\Yaml;
 
+#[AsCommand(
+    name: 'debug:vue-routes',
+    description: 'Show vue routes',
+)]
 class DebugVueRoutesCommand extends Command
 {
     public function __construct(
@@ -31,8 +36,6 @@ class DebugVueRoutesCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('debug:vue-routes')
-            ->setDescription('Show vue routes')
             ->addArgument('group', InputArgument::OPTIONAL, 'group')
         ;
     }

@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\SearchBundle\Command;
 
 use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -19,6 +20,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 /*
  * This command does the reindexing
  */
+#[AsCommand(
+    name: 'enhavo:search:init',
+    description: 'Runs search init',
+)]
 class InitCommand extends Command
 {
     public function __construct(
@@ -30,8 +35,6 @@ class InitCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:search:init')
-            ->setDescription('Runs search init')
             ->addOption('force', 'f')
         ;
     }

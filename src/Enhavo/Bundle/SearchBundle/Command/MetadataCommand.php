@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\SearchBundle\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,13 +20,15 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Yaml\Yaml;
 
+#[AsCommand(
+    name: 'enhavo:search:metadata',
+    description: 'Checks the metadata',
+)]
 class MetadataCommand extends Command
 {
     protected function configure()
     {
         $this
-            ->setName('enhavo:search:metadata')
-            ->setDescription('Checks the metadata')
             ->addArgument('yamlPath', InputArgument::REQUIRED, 'Path to the search.yaml file');
     }
 

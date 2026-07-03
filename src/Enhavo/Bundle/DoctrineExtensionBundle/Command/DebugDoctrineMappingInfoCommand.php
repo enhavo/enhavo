@@ -13,11 +13,16 @@ namespace Enhavo\Bundle\DoctrineExtensionBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'debug:doctrine:mapping',
+    description: 'Show mapping infos of an entity',
+)]
 class DebugDoctrineMappingInfoCommand extends Command
 {
     public function __construct(
@@ -29,9 +34,7 @@ class DebugDoctrineMappingInfoCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('debug:doctrine:mapping')
             ->addArgument('name', InputArgument::REQUIRED, 'FQCN of the entity')
-            ->setDescription('Show mapping infos of an entity')
         ;
     }
 

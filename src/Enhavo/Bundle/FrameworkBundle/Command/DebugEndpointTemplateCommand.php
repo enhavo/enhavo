@@ -13,6 +13,7 @@ namespace Enhavo\Bundle\FrameworkBundle\Command;
 
 use Enhavo\Bundle\FrameworkBundle\Endpoint\Template\TemplateEndpointCollector;
 use Enhavo\Bundle\FrameworkBundle\Endpoint\Template\TemplateEndpointFilter;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -20,6 +21,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'debug:endpoint:template',
+    description: 'Show all template endpoints',
+)]
 class DebugEndpointTemplateCommand extends Command
 {
     public function __construct(
@@ -31,8 +36,6 @@ class DebugEndpointTemplateCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('debug:endpoint:template')
-            ->setDescription('Show all template endpoints')
             ->addArgument('search', InputArgument::OPTIONAL, 'Fulltext search')
             ->addOption('template', null, InputOption::VALUE_REQUIRED, 'Template name')
             ->addOption('path', null, InputOption::VALUE_REQUIRED, 'Route path')

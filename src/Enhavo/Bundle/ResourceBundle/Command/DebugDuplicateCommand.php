@@ -13,12 +13,17 @@ namespace Enhavo\Bundle\ResourceBundle\Command;
 
 use Enhavo\Bundle\ResourceBundle\Duplicate\Metadata\Metadata;
 use Enhavo\Component\Metadata\MetadataRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
 
+#[AsCommand(
+    name: 'debug:duplicate',
+    description: 'Show duplicate infos of class',
+)]
 class DebugDuplicateCommand extends Command
 {
     public function __construct(
@@ -30,9 +35,7 @@ class DebugDuplicateCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('debug:duplicate')
             ->addArgument('name', InputArgument::REQUIRED, 'FQCN')
-            ->setDescription('Show duplicate infos of class')
         ;
     }
 

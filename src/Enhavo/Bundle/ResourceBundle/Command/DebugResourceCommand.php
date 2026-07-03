@@ -11,12 +11,17 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
 
+#[AsCommand(
+    name: 'debug:resource',
+    description: 'Show all resources',
+)]
 class DebugResourceCommand extends Command
 {
     public function __construct(
@@ -28,9 +33,7 @@ class DebugResourceCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('debug:resource')
             ->addArgument('name', InputArgument::OPTIONAL, 'Name of the resource')
-            ->setDescription('Show all resources')
         ;
     }
 

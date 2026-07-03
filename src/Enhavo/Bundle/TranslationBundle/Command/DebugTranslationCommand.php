@@ -14,12 +14,17 @@ namespace Enhavo\Bundle\TranslationBundle\Command;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Metadata\Metadata;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Component\Metadata\MetadataRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
 
+#[AsCommand(
+    name: 'debug:translation',
+    description: 'Show translation metadata of a class',
+)]
 class DebugTranslationCommand extends Command
 {
     public function __construct(
@@ -32,9 +37,7 @@ class DebugTranslationCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('debug:translation')
             ->addArgument('name', InputArgument::REQUIRED, 'FQCN or resource name')
-            ->setDescription('Show translation metadata of a class')
         ;
     }
 

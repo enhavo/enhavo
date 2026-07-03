@@ -13,6 +13,7 @@ namespace Enhavo\Bundle\SearchBundle\Command;
 
 use Enhavo\Bundle\FrameworkBundle\Output\CliOutputLogger;
 use Enhavo\Bundle\SearchBundle\Engine\SearchEngineInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,6 +24,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /*
  * This command does the reindexing
  */
+#[AsCommand(
+    name: 'enhavo:search:index',
+    description: 'Runs search (re)index',
+)]
 class IndexCommand extends Command
 {
     public function __construct(
@@ -34,10 +39,8 @@ class IndexCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:search:index')
             ->addArgument('class', InputArgument::OPTIONAL, 'Class to index')
             ->addOption('force', 'f', InputOption::VALUE_NONE, 'Ignore errors')
-            ->setDescription('Runs search (re)index')
         ;
     }
 

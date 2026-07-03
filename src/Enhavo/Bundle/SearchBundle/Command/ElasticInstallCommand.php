@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\SearchBundle\Command;
 
 use Enhavo\Bundle\SearchBundle\Elastic\ElasticManager;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,6 +20,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
+#[AsCommand(
+    name: 'enhavo:search:elastic:install',
+    description: 'Install elastic search locally',
+)]
 class ElasticInstallCommand extends Command
 {
     /** @var ElasticManager */
@@ -40,8 +45,6 @@ class ElasticInstallCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:search:elastic:install')
-            ->setDescription('Install elastic search locally')
             ->addArgument('version', InputArgument::OPTIONAL, 'Elasticsearch version', $this->version)
         ;
     }

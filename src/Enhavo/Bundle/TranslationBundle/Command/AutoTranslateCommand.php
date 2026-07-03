@@ -14,11 +14,16 @@ namespace Enhavo\Bundle\TranslationBundle\Command;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'translation:auto-translate',
+    description: 'Auto translate entity',
+)]
 class AutoTranslateCommand extends Command
 {
     public function __construct(
@@ -32,8 +37,6 @@ class AutoTranslateCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('translation:auto-translate')
-            ->setDescription('Auto translate entity')
             ->addArgument('entity', InputArgument::REQUIRED, 'FQCN or resource name')
             ->addArgument('id', InputArgument::REQUIRED, 'id of the entity')
             ->addArgument('locale', InputArgument::REQUIRED, 'locale')

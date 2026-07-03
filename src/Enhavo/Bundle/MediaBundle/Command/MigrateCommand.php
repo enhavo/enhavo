@@ -14,6 +14,7 @@ namespace Enhavo\Bundle\MediaBundle\Command;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,6 +22,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
+#[AsCommand(
+    name: 'enhavo:media:migrate',
+    description: 'Migrate to checksum storage',
+)]
 class MigrateCommand extends Command
 {
     public function __construct(
@@ -31,13 +36,6 @@ class MigrateCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
-    {
-        $this
-            ->setName('enhavo:media:migrate')
-            ->setDescription('Migrate to checksum storage')
-        ;
-    }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

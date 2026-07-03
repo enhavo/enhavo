@@ -16,12 +16,17 @@ use Enhavo\Bundle\NewsletterBundle\Entity\Newsletter;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\NewsletterBundle\Newsletter\NewsletterManager;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Command\LockableTrait;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'enhavo:newsletter:send',
+    description: 'sends a newsletters to its connected receiver',
+)]
 class SendNewsletterCommand extends Command
 {
     use LockableTrait;
@@ -37,8 +42,6 @@ class SendNewsletterCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('enhavo:newsletter:send')
-            ->setDescription('sends a newsletters to its connected receiver')
             ->addOption('limit', null, InputOption::VALUE_REQUIRED, 'The number of emails that should be sent at max', null);
     }
 

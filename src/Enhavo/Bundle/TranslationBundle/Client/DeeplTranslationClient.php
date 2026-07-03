@@ -35,8 +35,22 @@ class DeeplTranslationClient implements TranslationClientInterface
             $parameters['tag_handling'] = 'html';
         }
 
-        if ($options['context'] || $this->contextProvider->getText()) {
-            $parameters['context'] = $this->contextProvider->getText() . '.' . $this->contextNormalizer->getText($options['context'], $options['context_groups']);
+        $context = [];
+
+        if ($options['context']) {
+            $context[] = sprintf('Context: %s.', $this->contextNormalizer->getText($options['context'], $options['context_groups']));
+        }
+
+        if ($this->contextProvider->getText()) {
+            $context[] = $this->contextProvider->getText();
+        }
+
+        foreach ($this->contextProvider->getFiles() as $file) {
+            $context[] = sprintf('A document "%s" with content: %s', $file->getBasename(), $file->getContent()->getContent());
+        }
+
+        if (count($context)) {
+            $parameters['context'] = implode('. ', $context);
         }
 
         $response = $this->client->request('POST', 'https://api.deepl.com/v2/translate', [

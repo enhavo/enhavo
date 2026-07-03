@@ -11,23 +11,24 @@
 
 namespace Enhavo\Bundle\UserBundle\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'enhavo:user:change-password',
+    description: 'Change the password of a user.',
+)]
 class ChangePasswordCommand extends AbstractUserCommand
 {
-    protected static $defaultName = 'enhavo:user:change-password';
-
     protected function configure()
     {
         $definitions = $this->getPropertyDefinitions();
         $definitions[] = new InputArgument('password', InputArgument::REQUIRED, 'The password');
 
         $this
-            ->setName('enhavo:user:change-password')
-            ->setDescription('Change the password of a user.')
             ->setDefinition($definitions)
             ->setHelp(<<<'EOT'
 The <info>enhavo:user:change-password</info> command changes the password of a user:

@@ -28,13 +28,22 @@ class BlockManager
     private array $blocks = [];
 
     public function __construct(
-        FactoryInterface $factory,
+        private readonly FactoryInterface $factory,
         private readonly AssociationFinder $associationFinder,
         private readonly Cleaner $cleaner,
-        $configurations,
+        private readonly array $configurations,
     ) {
-        foreach ($configurations as $name => $options) {
-            $this->blocks[$name] = $factory->create($options);
+
+    }
+
+    private function initBlocks(): void
+    {
+        if (count($this->blocks) > 0) {
+            return;
+        }
+
+        foreach ($this->configurations as $name => $options) {
+            $this->blocks[$name] = $this->factory->create($options);
         }
     }
 
@@ -45,11 +54,13 @@ class BlockManager
 
     public function getBlocks(): array
     {
+        $this->initBlocks();
         return $this->blocks;
     }
 
     public function getBlock($name): Block
     {
+        $this->initBlocks();
         return $this->blocks[$name];
     }
 

@@ -16,6 +16,7 @@
     "enhavo/app-bundle": "^0.16",
     "enhavo/doctrine-extension-bundle": "^0.16",
     "enhavo/form-bundle": "^0.16",
+    "enhavo/media-bundle": "^0.16",
     "enhavo/metadata": "^0.16",
     "enhavo/routing-bundle": "^0.16",
     "league/uri-components": "^2.4",

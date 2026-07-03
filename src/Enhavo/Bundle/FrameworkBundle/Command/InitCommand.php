@@ -13,10 +13,15 @@ namespace Enhavo\Bundle\FrameworkBundle\Command;
 
 use Enhavo\Bundle\CalendarBundle\Import\ImportManager;
 use Enhavo\Bundle\FrameworkBundle\Init\InitManager;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'enhavo:init',
+    description: 'Initialize enhavo',
+)]
 class InitCommand extends Command
 {
     /**
@@ -33,12 +38,6 @@ class InitCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
-    {
-        $this
-            ->setName('enhavo:init')
-            ->setDescription('Initialize enhavo');
-    }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

@@ -14,12 +14,17 @@ namespace Enhavo\Bundle\BlockBundle\Command;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\BlockBundle\Block\BlockManager;
 use Enhavo\Bundle\FrameworkBundle\Output\CliOutputLogger;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'enhavo:block:clean-up',
+    description: 'Clean up orphaned containers and container blocks',
+)]
 class CleanUpCommand extends Command
 {
     /**
@@ -36,8 +41,6 @@ class CleanUpCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('enhavo:block:clean-up')
-            ->setDescription('Clean up orphaned containers and container blocks')
             ->addOption('dry-run', 'd', InputOption::VALUE_NONE, 'perform a dry run, don\'t change anything')
         ;
     }
