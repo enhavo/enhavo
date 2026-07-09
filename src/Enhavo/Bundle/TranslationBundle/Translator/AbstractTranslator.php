@@ -45,7 +45,7 @@ abstract class AbstractTranslator implements TranslatorInterface
         $this->setTranslation($entity, $property, $locale, $translationValue);
         $accessor->setValue($entity, $property, $originalValue);
 
-        $this->originalData->delete($entity);
+        $this->originalData->delete($entity, $property, $locale);
     }
 
     public function getDefaultValue($entity, string $property)

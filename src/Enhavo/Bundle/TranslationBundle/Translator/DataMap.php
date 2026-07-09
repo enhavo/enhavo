@@ -43,10 +43,26 @@ class DataMap
         return null;
     }
 
-    public function delete($entity)
+    public function delete($entity, $property, $locale)
     {
         $oid = spl_object_hash($entity);
-        if (isset($this->map[$oid])) {
+        if (!isset($this->map[$oid])) {
+            return null;
+        }
+
+        $deleteKey = null;
+        foreach ($this->map[$oid] as $key => $entry) {
+            if ($entry->getProperty() === $property && $entry->getLocale() === $locale) {
+                $deleteKey = $key;
+                break;
+            }
+        }
+
+        if ($deleteKey !== null) {
+            unset($this->map[$oid][$deleteKey]);
+        }
+
+        if (count($this->map[$oid]) === 0) {
             unset($this->map[$oid]);
         }
     }
