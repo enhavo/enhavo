@@ -35,6 +35,31 @@ class DataMapTest extends TestCase
         $this->assertEquals('testPropValueFr2', $data);
     }
 
+    public function testDeleteMultipleProperties()
+    {
+        $map = $this->createInstance();
+
+        $entity = new \stdClass();
+        $map->store($entity, 'propertyA', 'fr', 'valueA-fr');
+        $map->store($entity, 'propertyA', 'de', 'valueA-de');
+        $map->store($entity, 'propertyB', 'fr', 'valueB-fr');
+
+        $map->delete($entity, 'propertyA', 'fr');
+        $this->assertNull($map->load($entity, 'propertyA', 'fr'));
+        $this->assertEquals('valueA-de', $map->load($entity, 'propertyA', 'de'));
+        $this->assertEquals('valueB-fr', $map->load($entity, 'propertyB', 'fr'));
+        $this->assertTrue($map->exists($entity));
+
+        $map->delete($entity, 'propertyA', 'de');
+        $this->assertNull($map->load($entity, 'propertyA', 'de'));
+        $this->assertEquals('valueB-fr', $map->load($entity, 'propertyB', 'fr'));
+        $this->assertTrue($map->exists($entity));
+
+        $map->delete($entity, 'propertyB', 'fr');
+        $this->assertNull($map->load($entity, 'propertyB', 'fr'));
+        $this->assertFalse($map->exists($entity));
+    }
+
     public function testNotFound()
     {
         $map = $this->createInstance();
@@ -47,3 +72,4 @@ class DataMapTest extends TestCase
         $this->assertNull($data);
     }
 }
+
