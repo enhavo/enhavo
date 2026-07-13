@@ -20,11 +20,11 @@ class PrefixGeneratorExtendTest extends PrefixGenerator
      */
     private $resource;
 
-    protected function existsPrefix($prefix, $resource, array $options): bool
+    protected function getExistsCallback($resource, array $options): ?callable
     {
         $this->resource = $resource;
 
-        return parent::existsPrefix($prefix, $resource, $options);
+        return parent::getExistsCallback($resource, $options);
     }
 
     public function getResource(): object

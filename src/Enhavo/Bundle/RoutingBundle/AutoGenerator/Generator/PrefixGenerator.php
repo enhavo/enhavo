@@ -11,29 +11,22 @@
 
 namespace Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
 
-use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryInterface;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\AbstractGenerator;
-use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
+use Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PrefixGenerator extends AbstractGenerator
 {
-    /**
-     * @var FilterRepositoryInterface
-     */
-    private $routeRepository;
-
-    public function __construct($routeRepository)
-    {
-        $this->routeRepository = $routeRepository;
+    public function __construct(
+        private UniquePrefixGenerator $uniquePrefixGenerator,
+    ) {
     }
 
     public function generate($resource, $options = [])
     {
         $properties = $this->getSlugifiedProperties($resource, $options);
         if (count($properties)) {
-            /** @var RouteInterface $route */
             $route = $this->getProperty($resource, $options['route_property']);
             if (!$options['overwrite'] && $route->getStaticPrefix()) {
                 return;
@@ -42,13 +35,41 @@ class PrefixGenerator extends AbstractGenerator
         }
     }
 
-    protected function existsPrefix($prefix, $resource, array $options): bool
+    protected function getExistsCallback($resource, array $options): ?callable
     {
-        $results = $this->routeRepository->findBy([
-            'staticPrefix' => $prefix,
-        ]);
+        return null;
+    }
 
-        return count($results);
+    private function createPrefix(array $properties, $resource, array $options): string
+    {
+        if (!$options['unique']) {
+            return $this->cut($this->format($properties, $options), $options['max_length']);
+        }
+
+        $exists = $this->getExistsCallback($resource, $options);
+
+        if ($options['unique_property']) {
+            return $this->createUniquePropertyPrefix($properties, $options, $exists);
+        }
+
+        return $this->uniquePrefixGenerator->generate($properties, $resource, [
+            'format' => $options['format'],
+            'max_length' => $options['max_length'],
+            'exists' => $exists,
+        ]);
+    }
+
+    private function createUniquePropertyPrefix(array $properties, array $options, ?callable $exists): string
+    {
+        $this->checkUniqueProperty($properties, $options);
+
+        $isFirstTry = true;
+        while ($this->uniquePrefixGenerator->exists($this->cut($this->format($properties, $options), $options['max_length']), ['exists' => $exists])) {
+            $properties = $this->increaseProperties($properties, $options, $isFirstTry);
+            $isFirstTry = false;
+        }
+
+        return $this->cut($this->format($properties, $options), $options['max_length']);
     }
 
     private function getSlugifiedProperties($resource, $options)
@@ -79,14 +100,7 @@ class PrefixGenerator extends AbstractGenerator
         return Slugifier::slugify(strip_tags($input));
     }
 
-    private function createPrefix(array $properties, $resource, array $options)
-    {
-        $prefix = $options['unique'] ? $this->getUniqueUrl($properties, $resource, $options) : $this->format($properties, $options);
-
-        return substr($prefix, 0, $options['max_length']);
-    }
-
-    protected function format(array $properties, array $options)
+    private function format(array $properties, array $options)
     {
         if ($options['format']) {
             $string = $options['format'];
@@ -100,27 +114,9 @@ class PrefixGenerator extends AbstractGenerator
         return sprintf('/%s', join('-', $properties));
     }
 
-    private function getUniqueUrl(array $properties, $resource, array $options): string
+    private function cut(string $prefix, int $maxLength): string
     {
-        if ($options['unique_property']) {
-            $this->checkUniqueProperty($properties, $options);
-            $isFirstTry = true;
-            while ($this->existsPrefix($this->format($properties, $options), $resource, $options)) {
-                $properties = $this->increaseProperties($properties, $options, $isFirstTry);
-                $isFirstTry = false;
-            }
-
-            return $this->format($properties, $options);
-        }
-
-        $string = $this->format($properties, $options);
-        $isFirstTry = true;
-        while ($this->existsPrefix($string, $resource, $options)) {
-            $string = $this->increaseString($string, $isFirstTry);
-            $isFirstTry = false;
-        }
-
-        return $string;
+        return substr($prefix, 0, max(0, $maxLength));
     }
 
     private function checkUniqueProperty($properties, $options)

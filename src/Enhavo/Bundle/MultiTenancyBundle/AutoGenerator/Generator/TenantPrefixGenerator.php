@@ -12,37 +12,21 @@
 namespace Enhavo\Bundle\MultiTenancyBundle\AutoGenerator\Generator;
 
 use Enhavo\Bundle\MultiTenancyBundle\Resolver\ResolverInterface;
-use Enhavo\Bundle\ResourceBundle\Repository\FilterRepositoryInterface;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\PrefixGenerator;
+use Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator;
 
 class TenantPrefixGenerator extends PrefixGenerator
 {
-    /**
-     * @var FilterRepositoryInterface
-     */
-    private $routeRepository;
-
-    /**
-     * @var ResolverInterface
-     */
-    private $resolver;
-
-    public function __construct($routeRepository, ResolverInterface $resolver)
-    {
-        parent::__construct($routeRepository);
-        $this->routeRepository = $routeRepository;
-        $this->resolver = $resolver;
+    public function __construct(
+        UniquePrefixGenerator $uniquePrefixGenerator,
+        private ResolverInterface $resolver,
+    ) {
+        parent::__construct($uniquePrefixGenerator);
     }
 
-    protected function existsPrefix($prefix, $resource, array $options): bool
+    protected function getExistsCallback($resource, array $options): ?callable
     {
-        $tenant = $this->resolver->getTenant();
-        $results = $this->routeRepository->findBy([
-            'staticPrefix' => $prefix,
-            'tenant' => $tenant,
-        ]);
-
-        return count($results);
+        return fn () => ['tenant' => $this->resolver->getTenant()];
     }
 
     public function getType()

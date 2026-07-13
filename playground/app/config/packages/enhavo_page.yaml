@@ -13,3 +13,5 @@ enhavo_page:
         error_404:
             label: page.label.error_page_404
             translation_domain: EnhavoPageBundle
+    revision:
+        enabled: false
