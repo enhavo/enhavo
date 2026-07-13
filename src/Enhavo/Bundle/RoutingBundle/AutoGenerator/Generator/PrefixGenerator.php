@@ -37,16 +37,12 @@ class PrefixGenerator extends AbstractGenerator
 
     private function createPrefix(array $properties, $resource, array $options): string
     {
-        if (!$options['unique']) {
-            return $this->cut($this->format($properties, $options), $options['max_length']);
-        }
-
         return $this->createUniquePrefix($properties, $resource, $options);
     }
 
     protected function createUniquePrefix(array $properties, $resource, array $options): string
     {
-        return $this->uniquePrefixGenerator->generate($properties, $resource, [
+        return $this->uniquePrefixGenerator->generate($properties, [
             'format' => $options['format'],
             'max_length' => $options['max_length'],
         ]);
@@ -62,22 +58,20 @@ class PrefixGenerator extends AbstractGenerator
         }
 
         foreach ($properties as $property) {
-            $slug = $this->getSlug($this->getProperty($resource, $property), $options);
-            if ($slug) {
-                $result[$property] = $slug;
+            $part = $this->getProperty($resource, $property);
+
+            if ($part instanceof \DateTimeInterface) {
+                $part = $part->format($options['date_format']);
+            }
+
+            $part = strip_tags($part);
+
+            if ($part) {
+                $result[$property] = $part;
             }
         }
 
         return $result;
-    }
-
-    private function getSlug($input, $options)
-    {
-        if ($input instanceof \DateTimeInterface) {
-            $input = $input->format($options['date_format']);
-        }
-
-        return Slugifier::slugify(strip_tags($input));
     }
 
     private function format(array $properties, array $options)
@@ -106,7 +100,6 @@ class PrefixGenerator extends AbstractGenerator
             'route_property' => 'route',
             'overwrite' => false,
             'format' => null,
-            'unique' => true,
             'date_format' => 'Y-m-d',
             'max_length' => 255,
         ]);

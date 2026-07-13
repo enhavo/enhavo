@@ -45,8 +45,7 @@ class HierarchyPrefixGenerator extends AbstractGenerator
         }
         $slugs[] = Slugifier::slugify(strip_tags($this->getProperty($resource, $options['prefix_property'])));
 
-        $route->setStaticPrefix($this->uniquePrefixGenerator->generate(['path' => '/'.implode('/', $slugs)], $resource, [
-            'format' => '{path}',
+        $route->setStaticPrefix($this->uniquePrefixGenerator->generate($slugs, [
             'max_length' => $options['max_length'],
         ]));
     }

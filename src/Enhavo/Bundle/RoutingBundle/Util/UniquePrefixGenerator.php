@@ -3,6 +3,7 @@
 namespace Enhavo\Bundle\RoutingBundle\Util;
 
 use Enhavo\Bundle\RoutingBundle\Repository\RouteRepository;
+use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UniquePrefixGenerator
@@ -13,13 +14,19 @@ class UniquePrefixGenerator
     {
     }
 
-    public function generate(array $properties, $resource, array $options = []): string
+    public function generate(array $parts, array $options = []): string
     {
         $options = $this->resolveOptions($options);
 
+        if ($options['slugify']) {
+            foreach ($parts as $key => $part) {
+                $parts[$key] = Slugifier::slugify($part);
+            }
+        }
+
         $counter = 0;
         do {
-            $prefix = $this->build($properties, $options, $counter);
+            $prefix = $this->build($parts, $options, $counter);
             ++$counter;
         } while ($this->exists($prefix, $options));
 
@@ -30,7 +37,7 @@ class UniquePrefixGenerator
     {
         $criteria = ['staticPrefix' => $prefix];
         if (is_callable($options['exists'])) {
-            $criteria = array_merge($criteria, ($options['exists'])());
+            return ($options['exists'])($this->routeRepository, $prefix);
         }
 
         return count($this->routeRepository->findBy($criteria)) > 0;
@@ -60,7 +67,7 @@ class UniquePrefixGenerator
             return $prefix;
         }
 
-        return sprintf('/%s', implode('-', $properties));
+        return sprintf('/%s', implode($options['separator'], $properties));
     }
 
     private function cut(string $prefix, int $maxLength): string
@@ -80,9 +87,11 @@ class UniquePrefixGenerator
     {
         $resolver->setDefaults([
             'format' => null,
-            'unique' => true,
             'max_length' => 255,
             'exists' => null,
+            'unique_key' => null,
+            'separator' => '/',
+            'slugify' => true,
         ]);
         $resolver->setAllowedTypes('exists', ['null', 'callable']);
     }

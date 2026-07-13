@@ -53,9 +53,9 @@ class LocalePrefixGenerator extends AbstractGenerator
             }
 
             if ($options['default_prefix_locale']) {
-                $route->setStaticPrefix($this->createPrefix($value, $resource, $options, $locale));
+                $route->setStaticPrefix($this->createPrefix($value, $options, $locale));
             } else {
-                $route->setStaticPrefix($this->createPrefix($value, $resource, $options));
+                $route->setStaticPrefix($this->createPrefix($value, $options));
             }
         }
     }
@@ -80,9 +80,9 @@ class LocalePrefixGenerator extends AbstractGenerator
 
             if (null !== $value) {
                 if ($options['translation_prefix_locale']) {
-                    $route->setStaticPrefix($this->createPrefix($value, $resource, $options, $locale));
+                    $route->setStaticPrefix($this->createPrefix($value, $options, $locale));
                 } else {
-                    $route->setStaticPrefix($this->createPrefix($value, $resource, $options));
+                    $route->setStaticPrefix($this->createPrefix($value, $options));
                 }
 
                 $this->routeTranslator->setTranslation($resource, $options['route_property'], $locale, $route);
@@ -90,17 +90,17 @@ class LocalePrefixGenerator extends AbstractGenerator
         }
     }
 
-    private function createPrefix($value, $resource, $options, ?string $locale = null): string
+    private function createPrefix($value, $options, ?string $locale = null): string
     {
         if (null !== $locale) {
-            $properties = ['locale' => $locale, 'value' => Slugifier::slugify($value)];
+            $properties = ['locale' => $locale, 'value' => $value];
             $format = '/{locale}/{value}';
         } else {
-            $properties = ['value' => Slugifier::slugify($value)];
+            $properties = ['value' => $value];
             $format = '/{value}';
         }
 
-        return $this->uniquePrefixGenerator->generate($properties, $resource, [
+        return $this->uniquePrefixGenerator->generate($properties, [
             'format' => $format,
             'max_length' => $options['max_length'],
         ]);
