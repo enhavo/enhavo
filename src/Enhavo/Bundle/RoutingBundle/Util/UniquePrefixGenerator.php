@@ -21,17 +21,12 @@ class UniquePrefixGenerator
         do {
             $prefix = $this->build($properties, $options, $counter);
             ++$counter;
-        } while ($this->doExists($prefix, $options));
+        } while ($this->exists($prefix, $options));
 
         return $prefix;
     }
 
-    public function exists(string $prefix, array $options = []): bool
-    {
-        return $this->doExists($prefix, $this->resolveOptions($options));
-    }
-
-    private function doExists(string $prefix, array $options): bool
+    private function exists(string $prefix, array $options): bool
     {
         $criteria = ['staticPrefix' => $prefix];
         if (is_callable($options['exists'])) {

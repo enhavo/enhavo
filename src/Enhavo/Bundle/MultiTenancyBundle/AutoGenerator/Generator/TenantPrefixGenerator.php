@@ -24,9 +24,13 @@ class TenantPrefixGenerator extends PrefixGenerator
         parent::__construct($uniquePrefixGenerator);
     }
 
-    protected function getExistsCallback($resource, array $options): ?callable
+    protected function createUniquePrefix(array $properties, $resource, array $options): string
     {
-        return fn () => ['tenant' => $this->resolver->getTenant()];
+        return $this->uniquePrefixGenerator->generate($properties, $resource, [
+            'format' => $options['format'],
+            'max_length' => $options['max_length'],
+            'exists' => fn () => ['tenant' => $this->resolver->getTenant()],
+        ]);
     }
 
     public function getType()

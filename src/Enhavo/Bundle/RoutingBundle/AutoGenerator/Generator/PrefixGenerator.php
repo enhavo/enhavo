@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class PrefixGenerator extends AbstractGenerator
 {
     public function __construct(
-        private UniquePrefixGenerator $uniquePrefixGenerator,
+        protected UniquePrefixGenerator $uniquePrefixGenerator,
     ) {
     }
 
@@ -35,41 +35,21 @@ class PrefixGenerator extends AbstractGenerator
         }
     }
 
-    protected function getExistsCallback($resource, array $options): ?callable
-    {
-        return null;
-    }
-
     private function createPrefix(array $properties, $resource, array $options): string
     {
         if (!$options['unique']) {
             return $this->cut($this->format($properties, $options), $options['max_length']);
         }
 
-        $exists = $this->getExistsCallback($resource, $options);
+        return $this->createUniquePrefix($properties, $resource, $options);
+    }
 
-        if ($options['unique_property']) {
-            return $this->createUniquePropertyPrefix($properties, $options, $exists);
-        }
-
+    protected function createUniquePrefix(array $properties, $resource, array $options): string
+    {
         return $this->uniquePrefixGenerator->generate($properties, $resource, [
             'format' => $options['format'],
             'max_length' => $options['max_length'],
-            'exists' => $exists,
         ]);
-    }
-
-    private function createUniquePropertyPrefix(array $properties, array $options, ?callable $exists): string
-    {
-        $this->checkUniqueProperty($properties, $options);
-
-        $isFirstTry = true;
-        while ($this->uniquePrefixGenerator->exists($this->cut($this->format($properties, $options), $options['max_length']), ['exists' => $exists])) {
-            $properties = $this->increaseProperties($properties, $options, $isFirstTry);
-            $isFirstTry = false;
-        }
-
-        return $this->cut($this->format($properties, $options), $options['max_length']);
     }
 
     private function getSlugifiedProperties($resource, $options)
@@ -119,46 +99,6 @@ class PrefixGenerator extends AbstractGenerator
         return substr($prefix, 0, max(0, $maxLength));
     }
 
-    private function checkUniqueProperty($properties, $options)
-    {
-        if (!isset($properties[$options['unique_property']])) {
-            throw new \InvalidArgumentException(sprintf('The unique_property option "%s" don\'t exists in option properties. Available properties are "%s"', $options['unique_property'], is_array($options['properties']) ? join(',', $options['properties']) : $options['properties']));
-        }
-    }
-
-    private function increaseProperties($properties, $options, $isFirstTry)
-    {
-        $uniqueProperty = $this->getUniqueProperty($properties, $options);
-        $string = $properties[$uniqueProperty];
-
-        $properties[$this->getUniqueProperty($properties, $options)] = $this->increaseString($string, $isFirstTry);
-
-        return $properties;
-    }
-
-    private function increaseString($string, $isFirstTry)
-    {
-        if (!$isFirstTry) {
-            $isMatch = preg_match('/^(.*)-([0-9]+)$/', $string, $matches);
-            if ($isMatch && isset($matches[1]) && isset($matches[2])) {
-                $string = sprintf('%s-%u', $matches[1], intval($matches[2]) + 1);
-
-                return $string;
-            }
-        }
-
-        return sprintf('%s-1', $string);
-    }
-
-    private function getUniqueProperty($properties, $options)
-    {
-        if ($options['unique_property']) {
-            return $options['unique_property'];
-        }
-
-        return array_key_last($properties);
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
@@ -167,7 +107,6 @@ class PrefixGenerator extends AbstractGenerator
             'overwrite' => false,
             'format' => null,
             'unique' => true,
-            'unique_property' => null,
             'date_format' => 'Y-m-d',
             'max_length' => 255,
         ]);
