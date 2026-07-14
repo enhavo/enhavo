@@ -6,12 +6,9 @@ services:
             - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
             - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
             - '@enhavo_routing.route.factory'
-<<<<<<< HEAD
+            - '@Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator'
         calls:
             - [setContainer, ['@service_container']]
-=======
-            - '@Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator'
->>>>>>> 300507037 (fix: Add a max_length option and cut the prefix at that length. (#2446))
         tags:
             - { name: 'enhavo_route.generator', alias: 'locale_prefix' }
 

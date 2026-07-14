@@ -18,13 +18,9 @@ services:
     Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\PrefixGenerator:
         public: true
         arguments:
-<<<<<<< HEAD
-            - '@enhavo_routing.route.repository'
+            - '@Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator'
         calls:
             - [setContainer, ['@service_container']]
-=======
-            - '@Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator'
->>>>>>> 300507037 (fix: Add a max_length option and cut the prefix at that length. (#2446))
         tags:
             - { name: 'enhavo_route.generator', alias: 'prefix' }
 
@@ -46,12 +42,9 @@ services:
 
     Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\HierarchyPrefixGenerator:
         public: true
-<<<<<<< HEAD
-        calls:
-            - [setContainer, ['@service_container']]
-=======
         arguments:
             - '@Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator'
->>>>>>> 300507037 (fix: Add a max_length option and cut the prefix at that length. (#2446))
+        calls:
+            - [setContainer, ['@service_container']]
         tags:
             - { name: 'enhavo_route.generator', alias: 'hierarchy_prefix' }
