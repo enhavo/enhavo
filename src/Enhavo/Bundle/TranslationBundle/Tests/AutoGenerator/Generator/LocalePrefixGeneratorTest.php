@@ -13,6 +13,8 @@ namespace AutoGenerator\Generator;
 
 use Enhavo\Bundle\RoutingBundle\Entity\Route;
 use Enhavo\Bundle\RoutingBundle\Factory\RouteFactory;
+use Enhavo\Bundle\RoutingBundle\Repository\RouteRepository;
+use Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator;
 use Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator\LocalePrefixGenerator;
 use Enhavo\Bundle\TranslationBundle\Tests\Mocks\RouteableMock;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
@@ -34,6 +36,10 @@ class LocalePrefixGeneratorTest extends TestCase
         $dependencies->routeFactory = $this->getMockBuilder(RouteFactory::class)->getMock();
         $dependencies->routeFactory->method('createNew')->willReturn(new Route());
 
+        $repository = $this->getMockBuilder(RouteRepository::class)->disableOriginalConstructor()->getMock();
+        $repository->method('findBy')->willReturn([]);
+        $dependencies->uniquePrefixGenerator = new UniquePrefixGenerator($repository);
+
         return $dependencies;
     }
 
@@ -43,7 +49,8 @@ class LocalePrefixGeneratorTest extends TestCase
             $dependencies->translationManager,
             $dependencies->routeTranslator,
             $dependencies->textTranslator,
-            $dependencies->routeFactory
+            $dependencies->routeFactory,
+            $dependencies->uniquePrefixGenerator
         );
     }
 
@@ -63,6 +70,7 @@ class LocalePrefixGeneratorTest extends TestCase
             'generate_translations',
             'default_prefix_locale',
             'translation_prefix_locale',
+            'max_length'
         ];
         sort($options);
         sort($assert);
@@ -88,6 +96,7 @@ class LocalePrefixGeneratorTest extends TestCase
             'generate_translations' => false,
             'default_prefix_locale' => false,
             'translation_prefix_locale' => false,
+            'max_length' => 255
         ]);
         $route = $entity->getRoute();
         $this->assertEquals('/harry', $route->getStaticPrefix());
@@ -100,6 +109,7 @@ class LocalePrefixGeneratorTest extends TestCase
             'generate_translations' => false,
             'default_prefix_locale' => true,
             'translation_prefix_locale' => false,
+            'max_length' => 255
         ]);
 
         $this->assertEquals('/pl/harry', $route->getStaticPrefix());
@@ -112,6 +122,7 @@ class LocalePrefixGeneratorTest extends TestCase
             'generate_translations' => false,
             'default_prefix_locale' => false,
             'translation_prefix_locale' => false,
+            'max_length' => 255
         ]);
 
         $this->assertEquals('/pl/harry', $route->getStaticPrefix());
@@ -150,6 +161,7 @@ class LocalePrefixGeneratorTest extends TestCase
             'generate_translations' => true,
             'default_prefix_locale' => false,
             'translation_prefix_locale' => false,
+            'max_length' => 255
         ]);
     }
 
@@ -186,6 +198,7 @@ class LocalePrefixGeneratorTest extends TestCase
             'generate_translations' => true,
             'default_prefix_locale' => false,
             'translation_prefix_locale' => true,
+            'max_length' => 255
         ]);
     }
 
@@ -226,6 +239,7 @@ class LocalePrefixGeneratorTest extends TestCase
             'default_prefix_locale' => false,
             'translation_prefix_locale' => true,
             'allow_fallback' => true,
+            'max_length' => 255
         ]);
     }
 
@@ -261,6 +275,7 @@ class LocalePrefixGeneratorTest extends TestCase
             'default_prefix_locale' => false,
             'translation_prefix_locale' => false,
             'allow_fallback' => true,
+            'max_length' => 255
         ]);
     }
 
@@ -283,4 +298,6 @@ class LocalePrefixGeneratorTestDependencies
     public $textTranslator;
     /** @var RouteFactory|MockObject */
     public $routeFactory;
+    /** @var UniquePrefixGenerator|MockObject */
+    public $uniquePrefixGenerator;
 }

@@ -13,10 +13,16 @@ namespace Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator;
 
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\AbstractGenerator;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
+use Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class HierarchyPrefixGenerator extends AbstractGenerator
 {
+    public function __construct(
+        private UniquePrefixGenerator $uniquePrefixGenerator,
+    ) {
+    }
+
     public function generate($resource, $options = [])
     {
         $route = $this->getProperty($resource, $options['route_property']);
@@ -38,7 +44,10 @@ class HierarchyPrefixGenerator extends AbstractGenerator
             $slugs[] = Slugifier::slugify(strip_tags($this->getProperty($parent, $options['prefix_property'])));
         }
         $slugs[] = Slugifier::slugify(strip_tags($this->getProperty($resource, $options['prefix_property'])));
-        $route->setStaticPrefix('/'.implode('/', $slugs));
+
+        $route->setStaticPrefix($this->uniquePrefixGenerator->generate($slugs, [
+            'max_length' => $options['max_length'],
+        ]));
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -48,6 +57,7 @@ class HierarchyPrefixGenerator extends AbstractGenerator
             'route_property' => 'route',
             'overwrite' => false,
             'parent_property' => 'parent',
+            'max_length' => 255,
         ]);
         $resolver->setRequired([
             'prefix_property',
