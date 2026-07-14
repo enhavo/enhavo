@@ -11,7 +11,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\EventListener;
 
-use Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
 use Enhavo\Bundle\RevisionBundle\Model\RevisionInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
