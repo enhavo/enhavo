@@ -6,6 +6,7 @@ services:
             - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
             - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
             - '@enhavo_routing.route.factory'
+            - '@Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator'
         tags:
             - { name: 'enhavo_route.generator', alias: 'locale_prefix' }
 
