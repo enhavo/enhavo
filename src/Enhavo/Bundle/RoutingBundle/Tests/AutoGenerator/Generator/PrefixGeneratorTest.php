@@ -59,6 +59,20 @@ class PrefixGeneratorTest extends TestCase
         $this->assertEquals('/this-is-a-title', $resource->getRoute()->getStaticPrefix());
     }
 
+    public function testUnique()
+    {
+        $repository = $this->createRepository(['/this-is-a-title', '/this-is-a-title-1']);
+        $resource = $this->createResource();
+
+        $generator = new Generator(new PrefixGenerator(new UniquePrefixGenerator($repository)), [
+            'properties' => 'title',
+        ], $resource);
+
+        $generator->generate();
+
+        $this->assertEquals('/this-is-a-title-2', $resource->getRoute()->getStaticPrefix());
+    }
+
     public function testMultipleProperty()
     {
         $repository = $this->createRepository();
