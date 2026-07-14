@@ -105,7 +105,7 @@ class PrefixGeneratorTest extends TestCase
 
     public function testMultiple()
     {
-        $repository = $this->createRepository(['/this-is-a-title-my-subtitle']);
+        $repository = $this->createRepository(['/this-is-a-title/my-subtitle']);
         $resource = $this->createResource();
 
         $generator = new Generator(new PrefixGenerator(new UniquePrefixGenerator($repository)), [
@@ -114,7 +114,7 @@ class PrefixGeneratorTest extends TestCase
 
         $generator->generate();
 
-        $this->assertEquals('/this-is-a-title/my-subtitle', $resource->getRoute()->getStaticPrefix());
+        $this->assertEquals('/this-is-a-title/my-subtitle-1', $resource->getRoute()->getStaticPrefix());
     }
 
     public function testMultipleWithFormat()
