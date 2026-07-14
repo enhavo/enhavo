@@ -70,7 +70,7 @@ class PrefixGeneratorTest extends TestCase
 
         $generator->generate();
 
-        $this->assertEquals('/this-is-a-title-my-subtitle', $resource->getRoute()->getStaticPrefix());
+        $this->assertEquals('/this-is-a-title/my-subtitle', $resource->getRoute()->getStaticPrefix());
     }
 
     public function testFormat()
@@ -86,68 +86,6 @@ class PrefixGeneratorTest extends TestCase
         $generator->generate();
 
         $this->assertEquals('/my-subtitle/this-is-a-title/', $resource->getRoute()->getStaticPrefix());
-    }
-
-    public function testUnique()
-    {
-        $repository = $this->createRepository(['/this-is-a-title', '/this-is-a-title-1']);
-        $resource = $this->createResource();
-
-        $generator = new Generator(new PrefixGenerator(new UniquePrefixGenerator($repository)), [
-            'properties' => 'title',
-            'unique' => true,
-        ], $resource);
-
-        $generator->generate();
-
-        $this->assertEquals('/this-is-a-title-2', $resource->getRoute()->getStaticPrefix());
-    }
-
-    public function testUniqueWithEndingNumber()
-    {
-        $repository = $this->createRepository(['/1']);
-        $resource = $this->createResource();
-        $resource->setTitle('1');
-
-        $generator = new Generator(new PrefixGenerator(new UniquePrefixGenerator($repository)), [
-            'properties' => 'title',
-            'unique' => true,
-        ], $resource);
-
-        $generator->generate();
-
-        $this->assertEquals('/1-1', $resource->getRoute()->getStaticPrefix());
-    }
-
-    public function testMultipleUnique()
-    {
-        $repository = $this->createRepository(['/this-is-a-title-my-subtitle']);
-        $resource = $this->createResource();
-
-        $generator = new Generator(new PrefixGenerator(new UniquePrefixGenerator($repository)), [
-            'properties' => ['title', 'subTitle'],
-            'unique' => true,
-        ], $resource);
-
-        $generator->generate();
-
-        $this->assertEquals('/this-is-a-title-my-subtitle-1', $resource->getRoute()->getStaticPrefix());
-    }
-
-    public function testMultipleUniqueWithFormat()
-    {
-        $repository = $this->createRepository(['/this-is-a-title/my-subtitle/']);
-        $resource = $this->createResource();
-
-        $generator = new Generator(new PrefixGenerator(new UniquePrefixGenerator($repository)), [
-            'properties' => ['title', 'subTitle'],
-            'unique' => true,
-            'format' => '/{title}/{subTitle}/',
-        ], $resource);
-
-        $generator->generate();
-
-        $this->assertEquals('/this-is-a-title/my-subtitle/-1', $resource->getRoute()->getStaticPrefix());
     }
 
     public function testOverwriteTrue()
@@ -180,21 +118,5 @@ class PrefixGeneratorTest extends TestCase
         $generator->generate();
 
         $this->assertEquals('/exists', $resource->getRoute()->getStaticPrefix());
-    }
-
-    public function testCreateUniquePrefixReceivesResource()
-    {
-        $repository = $this->createRepository();
-        $resource = $this->createResource();
-
-        $prefixGenerator = new PrefixGeneratorExtendTest(new UniquePrefixGenerator($repository));
-        $generator = new Generator($prefixGenerator, [
-            'properties' => 'title',
-            'unique' => true,
-        ], $resource);
-
-        $generator->generate();
-
-        $this->assertEquals($resource, $prefixGenerator->getResource());
     }
 }

@@ -25,7 +25,7 @@ class PrefixGenerator extends AbstractGenerator
 
     public function generate($resource, $options = [])
     {
-        $properties = $this->getSlugifiedProperties($resource, $options);
+        $properties = $this->getProperties($resource, $options);
         if (count($properties)) {
             $route = $this->getProperty($resource, $options['route_property']);
             if (!$options['overwrite'] && $route->getStaticPrefix()) {
@@ -35,12 +35,7 @@ class PrefixGenerator extends AbstractGenerator
         }
     }
 
-    private function createPrefix(array $properties, $resource, array $options): string
-    {
-        return $this->createUniquePrefix($properties, $resource, $options);
-    }
-
-    protected function createUniquePrefix(array $properties, $resource, array $options): string
+    protected function createPrefix(array $properties, $resource, array $options): string
     {
         return $this->uniquePrefixGenerator->generate($properties, [
             'format' => $options['format'],
@@ -48,7 +43,7 @@ class PrefixGenerator extends AbstractGenerator
         ]);
     }
 
-    private function getSlugifiedProperties($resource, $options)
+    private function getProperties($resource, $options): array
     {
         $result = [];
 
@@ -72,25 +67,6 @@ class PrefixGenerator extends AbstractGenerator
         }
 
         return $result;
-    }
-
-    private function format(array $properties, array $options)
-    {
-        if ($options['format']) {
-            $string = $options['format'];
-            foreach ($properties as $key => $value) {
-                $string = str_replace(sprintf('{%s}', $key), $value, $string);
-            }
-
-            return $string;
-        }
-
-        return sprintf('/%s', join('-', $properties));
-    }
-
-    private function cut(string $prefix, int $maxLength): string
-    {
-        return substr($prefix, 0, max(0, $maxLength));
     }
 
     public function configureOptions(OptionsResolver $resolver)

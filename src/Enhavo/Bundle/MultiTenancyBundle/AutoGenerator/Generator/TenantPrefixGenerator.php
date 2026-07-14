@@ -25,7 +25,7 @@ class TenantPrefixGenerator extends PrefixGenerator
         parent::__construct($uniquePrefixGenerator);
     }
 
-    protected function createUniquePrefix(array $properties, $resource, array $options): string
+    protected function createPrefix(array $properties, $resource, array $options): string
     {
         return $this->uniquePrefixGenerator->generate($properties, [
             'format' => $options['format'],
