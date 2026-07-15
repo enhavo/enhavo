@@ -115,7 +115,9 @@ class ViteManager
             $url = $this->getHost($build).$this->getBase($build).$file;
             $response = $client->request('GET', $url);
 
-            return in_array($response->getStatusCode(), [200, 500]);
+            // close connection, vite server was available
+            $response->cancel();
+            return true;
         } catch (TransportException $e) {
             return false;
         }
