@@ -25,6 +25,7 @@ export default defineConfig({
             'html-entities',
             'expression-language/lib/index',
             'vue-routes',
+            'cropperjs',
         ],
     },
     plugins: [
