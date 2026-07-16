@@ -11,10 +11,14 @@ services:
             - '@service_container'
             - 'AutoGenerator'
 
+    Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator:
+        arguments:
+            - '@enhavo_routing.route.repository'
+
     Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\PrefixGenerator:
         public: true
         arguments:
-            - '@enhavo_routing.route.repository'
+            - '@Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator'
         calls:
             - [setContainer, ['@service_container']]
         tags:
@@ -38,6 +42,8 @@ services:
 
     Enhavo\Bundle\RoutingBundle\AutoGenerator\Generator\HierarchyPrefixGenerator:
         public: true
+        arguments:
+            - '@Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator'
         calls:
             - [setContainer, ['@service_container']]
         tags:

@@ -14,6 +14,7 @@ namespace Enhavo\Bundle\TranslationBundle\AutoGenerator\Generator;
 use Enhavo\Bundle\RoutingBundle\AutoGenerator\AbstractGenerator;
 use Enhavo\Bundle\RoutingBundle\Factory\RouteFactory;
 use Enhavo\Bundle\RoutingBundle\Slugifier\Slugifier;
+use Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Bundle\TranslationBundle\Translator\TranslatorInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,6 +26,7 @@ class LocalePrefixGenerator extends AbstractGenerator
         private TranslatorInterface $routeTranslator,
         private TranslatorInterface $textTranslator,
         private RouteFactory $routeFactory,
+        private UniquePrefixGenerator $uniquePrefixGenerator,
     ) {
     }
 
@@ -43,7 +45,7 @@ class LocalePrefixGenerator extends AbstractGenerator
     {
         $locale = $this->translationManager->getDefaultLocale();
 
-        $value = $value = $this->getProperty($resource, $options['property']);
+        $value = $this->getProperty($resource, $options['property']);
         if (null !== $value) {
             $route = $this->getProperty($resource, $options['route_property']);
             if (!$options['overwrite'] && $route->getStaticPrefix()) {
@@ -51,9 +53,9 @@ class LocalePrefixGenerator extends AbstractGenerator
             }
 
             if ($options['default_prefix_locale']) {
-                $route->setStaticPrefix($this->createLocalePrefix($locale, $value));
+                $route->setStaticPrefix($this->createPrefix($value, $options, $locale));
             } else {
-                $route->setStaticPrefix($this->createPrefix($value));
+                $route->setStaticPrefix($this->createPrefix($value, $options));
             }
         }
     }
@@ -78,9 +80,9 @@ class LocalePrefixGenerator extends AbstractGenerator
 
             if (null !== $value) {
                 if ($options['translation_prefix_locale']) {
-                    $route->setStaticPrefix($this->createLocalePrefix($locale, $value));
+                    $route->setStaticPrefix($this->createPrefix($value, $options, $locale));
                 } else {
-                    $route->setStaticPrefix($this->createPrefix($value));
+                    $route->setStaticPrefix($this->createPrefix($value, $options));
                 }
 
                 $this->routeTranslator->setTranslation($resource, $options['route_property'], $locale, $route);
@@ -88,14 +90,20 @@ class LocalePrefixGenerator extends AbstractGenerator
         }
     }
 
-    private function createPrefix($value)
+    private function createPrefix($value, $options, ?string $locale = null): string
     {
-        return sprintf('/%s', Slugifier::slugify($value));
-    }
+        if (null !== $locale) {
+            $properties = ['locale' => $locale, 'value' => $value];
+            $format = '/{locale}/{value}';
+        } else {
+            $properties = ['value' => $value];
+            $format = '/{value}';
+        }
 
-    private function createLocalePrefix($locale, $value)
-    {
-        return sprintf('/%s/%s', $locale, Slugifier::slugify($value));
+        return $this->uniquePrefixGenerator->generate($properties, [
+            'format' => $format,
+            'max_length' => $options['max_length'],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -108,6 +116,7 @@ class LocalePrefixGenerator extends AbstractGenerator
             'generate_translations' => true,
             'default_prefix_locale' => true,
             'translation_prefix_locale' => true,
+            'max_length' => 255,
         ]);
         $resolver->setRequired('property');
     }

@@ -6,6 +6,7 @@ services:
             - '@Enhavo\Bundle\TranslationBundle\Translator\Route\RouteTranslator'
             - '@Enhavo\Bundle\TranslationBundle\Translator\Text\TextTranslator'
             - '@enhavo_routing.route.factory'
+            - '@Enhavo\Bundle\RoutingBundle\Util\UniquePrefixGenerator'
         calls:
             - [setContainer, ['@service_container']]
         tags:
