@@ -5,7 +5,6 @@ enhavo_routing:
                 prefix:
                     type: locale_prefix
                     property: title
-                    generate_translations: false
 
 enhavo_translation:
     metadata:
