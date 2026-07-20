@@ -115,8 +115,8 @@ class ViteManager
             $url = $this->getHost($build).$this->getBase($build).$file;
             $response = $client->request('GET', $url);
 
-            // close connection, vite server was available
-            $response->cancel();
+            // need to read stream to trigger transport exception in some cases
+            $response->getStatusCode();
             return true;
         } catch (TransportException $e) {
             return false;
