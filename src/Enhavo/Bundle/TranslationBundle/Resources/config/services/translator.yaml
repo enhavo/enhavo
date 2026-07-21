@@ -18,6 +18,7 @@ services:
             - '@enhavo_translation.translation.access_control'
             - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
             - '@enhavo_app.locale_resolver'
+            - '%enhavo_translation.enable_doctrine%'
         calls:
             - [setContainer, ['@service_container']]
         tags:

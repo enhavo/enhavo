@@ -28,6 +28,8 @@ class EnhavoTranslationExtension extends Extension implements PrependExtensionIn
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('enhavo_translation.enable', $config['enable']);
+        $container->setParameter('enhavo_translation.enable_serialization', $config['enable_serialization']);
+        $container->setParameter('enhavo_translation.enable_doctrine', $config['enable_doctrine']);
         $container->setParameter('enhavo_translation.default_locale', $config['default_locale']);
         $container->setParameter('enhavo_translation.locales', $config['locales']);
         $container->setParameter('enhavo_translation.metadata', $config['metadata']);
