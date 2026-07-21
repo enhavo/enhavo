@@ -1,5 +1,7 @@
 enhavo_translation:
     enable: '%env(bool:TRANSLATION_ENABLED)%'
+    enable_doctrine: false
+    enable_serialization: true
     default_locale: '%locale%'
     locales:
         - 'en'
