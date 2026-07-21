@@ -7,57 +7,41 @@ services:
 
     Enhavo\Bundle\MediaBundle\Filter\Filter\ImageFilter:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: image }
 
     Enhavo\Bundle\MediaBundle\Filter\Filter\BackgroundFilter:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: background }
 
     Enhavo\Bundle\MediaBundle\Filter\Filter\PDFImageFilter:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: pdf_image }
 
     Enhavo\Bundle\MediaBundle\Filter\Filter\TextImageFilter:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: text_image }
 
     Enhavo\Bundle\MediaBundle\Filter\Filter\VideoImageFilter:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: video_image }
 
     Enhavo\Bundle\MediaBundle\Filter\Filter\ImageCompressionFilter:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: image_compression }
 
     Enhavo\Bundle\MediaBundle\Filter\Filter\ImageBlurFilter:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: image_blur }
 
     Enhavo\Bundle\MediaBundle\Filter\Filter\ImageZoomFilter:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: image_zoom }
 
@@ -65,8 +49,6 @@ services:
         public: true
         arguments:
             - '@enhavo_media.media.format_manager'
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: parent }
 
@@ -74,7 +56,5 @@ services:
         public: true
         arguments:
             - '@enhavo_media.media.format_manager'
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.media_filter, alias: mimetype }

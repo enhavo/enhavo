@@ -10,6 +10,6 @@ enhavo_media_theme_format:
             type: media_format
             permission: ~
             repository_arguments:
-                - token: expr:request.query.get("token")
-                  filename: 'expr:pathinfo(request.query.get("basename"),8)'
-                  shortChecksum: expr:request.query.get("shortChecksum")
+                - token: expr:request.attributes.get("token")
+                  filename: 'expr:pathinfo(request.attributes.get("basename"),8)'
+                  shortChecksum: expr:request.attributes.get("shortChecksum")

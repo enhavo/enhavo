@@ -61,7 +61,7 @@ class FormatEndpointType extends AbstractEndpointType
             throw $this->createAccessDeniedException();
         }
 
-        $formatName = $request->query->get('format');
+        $formatName = $request->attributes->get('format');
         $format = $this->mediaManager->getFormat($file, $formatName);
 
         return $format;
@@ -72,7 +72,7 @@ class FormatEndpointType extends AbstractEndpointType
         $resolver->setDefaults([
             'repository_method' => 'findFileBy',
             'repository_arguments' => [
-                ['token' => 'expr:request.query.get("token")'],
+                ['token' => 'expr:request.attributes.get("token")'],
             ],
             'filename_test' => true,
             'permission' => 'ROLE_ENHAVO_MEDIA_FILE_SHOW',
