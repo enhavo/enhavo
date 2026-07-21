@@ -41,10 +41,6 @@ class StructuredData extends Data
     public function normalize(): array
     {
         $data = [];
-        if ($this->root) {
-            $data['@context'] = 'http://schema.org';
-        }
-
         if ($this->type) {
             $data['@type'] = $this->type;
         }

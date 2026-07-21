@@ -45,7 +45,7 @@ class EntityTransformer implements DataTransformerInterface
         $this->factory = $factory;
     }
 
-    public function transform($entity)
+    public function transform($entity): mixed
     {
         if (null === $entity) {
             return '';
@@ -56,7 +56,7 @@ class EntityTransformer implements DataTransformerInterface
         return $propertyAccessor->getValue($entity, $this->property);
     }
 
-    public function reverseTransform($string)
+    public function reverseTransform($string): mixed
     {
         if ('' === trim($string)) {
             return null;
