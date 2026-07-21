@@ -39,6 +39,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
         private AccessControl $accessControl,
         private MetadataRepository $metadataRepository,
         private LocaleResolverInterface $localeResolver,
+        private bool $enabled,
     ) {
     }
 
@@ -64,7 +65,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
      */
     public function preFlush(PreFlushEventArgs $event)
     {
-        if (!$this->accessControl->isAccess()) {
+        if (!$this->enabled || !$this->accessControl->isAccess()) {
             return;
         }
 
@@ -93,7 +94,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
      */
     public function postFlush(PostFlushEventArgs $args)
     {
-        if (!$this->accessControl->isAccess()) {
+        if (!$this->enabled || !$this->accessControl->isAccess()) {
             return;
         }
 
@@ -127,7 +128,7 @@ class DoctrineTranslationSubscriber implements EventSubscriber
      */
     public function postLoad(LifecycleEventArgs $args)
     {
-        if (!$this->accessControl->isAccess()) {
+        if (!$this->enabled || !$this->accessControl->isAccess()) {
             return;
         }
 

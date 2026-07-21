@@ -1,0 +1,6 @@
+enhavo_routing:
+    classes:
+        Enhavo\Bundle\PageBundle\Entity\Page:
+            router:
+                default:
+                    type: translation_route

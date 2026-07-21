@@ -35,6 +35,8 @@ class Configuration implements ConfigurationInterface
             ->end()
             ->children()
                 ->scalarNode('enable')->defaultValue(false)->end()
+                ->scalarNode('enable_serialization')->defaultValue(false)->end()
+                ->scalarNode('enable_doctrine')->defaultValue(true)->end()
                 ->arrayNode('translator')
                     ->children()
                         ->scalarNode('default_access')->defaultValue(true)->end()
