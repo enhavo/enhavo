@@ -17,7 +17,12 @@ services:
         arguments:
             - '@enhavo_translation.translation.access_control'
             - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
+<<<<<<< HEAD
             - '@enhavo_app.locale_resolver'
+=======
+            - '@enhavo_framework.locale_resolver'
+            - '%enhavo_translation.enable_doctrine%'
+>>>>>>> 22f808f67 (feat: inject translation data on normalization (#2457))
         calls:
             - [setContainer, ['@service_container']]
         tags:

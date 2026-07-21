@@ -46,6 +46,7 @@ class DoctrineTranslationSubscriberTest extends TestCase
             $dependencies->accessControl,
             $dependencies->metadataRepository,
             $dependencies->localeResolver,
+            true,
         );
 
         /** @var ContainerInterface|MockObject $container */

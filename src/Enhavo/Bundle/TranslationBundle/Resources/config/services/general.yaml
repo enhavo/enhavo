@@ -77,3 +77,23 @@ services:
     Enhavo\Bundle\TranslationBundle\Client\ContextNormalizer:
         arguments:
             - '@serializer'
+
+    Enhavo\Bundle\TranslationBundle\Router\TranslationRouteStrategy:
+        public: true
+        arguments:
+            - '@router'
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '@enhavo_translation.translation.access_control'
+            - '@enhavo_framework.locale_resolver'
+        tags:
+            - { name: 'enhavo_route.strategy', alias: 'translation_route' }
+
+    Enhavo\Bundle\TranslationBundle\Normalizer\TranslationNormalizer:
+        arguments:
+            - '@enhavo_translation.translation.access_control'
+            - '@Enhavo\Component\Metadata\MetadataRepository[Translation]'
+            - '@enhavo_framework.locale_resolver'
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '%enhavo_translation.enable_serialization%'
+        tags:
+            - { name: serializer.normalizer }
