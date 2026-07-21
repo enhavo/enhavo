@@ -40,6 +40,7 @@ class EnhavoContentExtension extends Extension implements PrependExtensionInterf
         $configFiles = [
             'services/services.yaml',
             'services/structured_data.yaml',
+            'services/twig.yaml',
         ];
 
         foreach ($configFiles as $configFile) {

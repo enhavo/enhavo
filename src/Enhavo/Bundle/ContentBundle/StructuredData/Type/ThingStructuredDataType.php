@@ -15,6 +15,7 @@ use Enhavo\Bundle\ContentBundle\StructuredData\AbstractStructuredDataType;
 use Enhavo\Bundle\ContentBundle\StructuredData\Context;
 use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataBag;
 use Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTransformer;
+use Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -42,13 +43,26 @@ class ThingStructuredDataType extends AbstractStructuredDataType
     ];
 
     public function __construct(
-        private StructuredDataTransformer $transformer,
+        private readonly StructuredDataTransformer $transformer,
+        private readonly ResourceExpressionLanguage $expressionLanguage,
     )
     {
     }
 
     public function buildData(array $options, object $model, StructuredDataBag $bag, Context $context): void
     {
+        if ($options['condition'] !== null) {
+            $result = $this->expressionLanguage->evaluate('expr:' . $options['condition'], [
+                'options' => $options,
+                'model' => $model,
+                'bag' => $bag,
+                'context' => $context,
+            ]);
+            if (!$result) {
+                return;
+            }
+        }
+
         if ($context->isClassAttribute()) {
             if ($options['append_type']) {
                 // must be created, so other mappings can apply on it, even if it won't be used
@@ -132,6 +146,7 @@ class ThingStructuredDataType extends AbstractStructuredDataType
             'strict' => true,
             'append_type' => null,
             'append_property' => null,
+            'condition' => null,
         ]);
 
         $resolver->setNormalizer('append_type', function ($options, $value) {
