@@ -39,6 +39,7 @@ services:
     Enhavo\Bundle\ContentBundle\StructuredData\Type\ThingStructuredDataType:
         arguments:
             - '@Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTransformer'
+            - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
         tags:
             - { name: enhavo_content.structured_data }
 
@@ -54,6 +55,14 @@ services:
 
     Enhavo\Bundle\ContentBundle\StructuredData\StructuredDataTransformer:
 
+    Enhavo\Bundle\ContentBundle\StructuredData\Transformer\DateTimeTransformer:
+        tags:
+            - { name: enhavo_content.structured_data_transformer }
+
+    Enhavo\Bundle\ContentBundle\StructuredData\Transformer\DateTransformer:
+        tags:
+            - { name: enhavo_content.structured_data_transformer }
+
     Enhavo\Bundle\ContentBundle\StructuredData\Transformer\HtmlTextTransformer:
         tags:
             - { name: enhavo_content.structured_data_transformer }
@@ -61,5 +70,11 @@ services:
     Enhavo\Bundle\ContentBundle\StructuredData\Transformer\MediaUrlTransformer:
         arguments:
             - '@Enhavo\Bundle\MediaBundle\Routing\ThemeUrlGenerator'
+        tags:
+            - { name: enhavo_content.structured_data_transformer }
+
+    Enhavo\Bundle\ContentBundle\StructuredData\Transformer\RouteUrlTransformer:
+        arguments:
+            - '@router'
         tags:
             - { name: enhavo_content.structured_data_transformer }
