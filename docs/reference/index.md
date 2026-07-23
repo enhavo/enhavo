@@ -16,6 +16,7 @@
 * [Search index](search-index/index.md)
 * [Template expression](template-expression/index.md)
 * [Toolbar widget](toolbar-widget/index.md)
+* [Translation](translation/index.md)
 * [Twig filter](twig-filter/index.md)
 * [Twig function](twig-function/index.md)
 * [Validation](validation/index.md)

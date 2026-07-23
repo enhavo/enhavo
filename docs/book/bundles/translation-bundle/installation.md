@@ -8,10 +8,9 @@ $ composer require enhavo/translation-bundle
 $ yarn add @enhavo/translation
 ```
 
-```ts
-// import statement
-import TranslationFormRegistryPackage from "@enhavo/translation/Form/FormRegistryPackage";
 
-// register the package
-this.registerPackage(new TranslationFormRegistryPackage(application));
+```yaml
+# assets/admin/container.di.yaml
+imports:
+    - path: '@enhavo/translation/services/admin/*'
 ```
