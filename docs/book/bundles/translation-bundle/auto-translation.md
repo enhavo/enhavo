@@ -1,7 +1,7 @@
 ## Auto translation
 
 Auto translation allows you to automatically translate your content using external translation services
-like DeepL or Claude. The system translates all properties marked as translatable and supports auto translation.
+like DeepL or Claude. The system translates all properties that are marked as translatable and support auto-translation.
 
 ### Clients
 

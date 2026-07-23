@@ -1,14 +1,14 @@
 ## Form
 
-To allow user to edit the translation within a form. The translation bundle uses form hooks and extensions 
-to inject and overwrite additional form fields. After the form was submitted, the translation data is stored
-into a buffer and only saved to the database on the next doctrine flush.
+To allow users to edit translations within a form, the translation bundle uses form hooks and extensions
+to inject and overwrite additional form fields. After the form is submitted, the translation data is stored
+into a buffer and only saved to the database on the next Doctrine flush.
 
 ![image](/images/translation-form-data.png)
 
 ### Access control
 
-The hooks are only applied to forms, that was configured in the access control before.
+The hooks are only applied to forms that are configured in the access control.
 You can use `access_control` to restrict or allow specific routes using regex patterns.
 
 ```yaml

@@ -5,4 +5,4 @@ Translation is an additional layer, making it easy to add or remove translation 
 Translation data is therefore stored in separate database tables with a reference to the original data.
 This bundle supports simple text translations as well as route and media translations.
 
-The bundle uses the `Enhavo\Bundle\FrameworkBundle\Locale\LocaleResolverInterface` to decide which locale should be load.
+The bundle uses the `Enhavo\Bundle\FrameworkBundle\Locale\LocaleResolverInterface` to decide which locale should be loaded.

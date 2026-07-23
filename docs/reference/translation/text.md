@@ -48,7 +48,7 @@ Whether to fall back to the default locale if no translation exists.
 
 **type**: `boolean` **default**: `true`
 
-Only if `true` the auto translation will be applied on this property.
+Only if `true`, the auto-translation will be applied to this property.
 
 ### html
 
@@ -60,7 +60,7 @@ Whether the content should be treated as HTML. This is useful for auto translati
 
 **type**: `boolean` **default**: `false`
 
-Use overwrite `true` to overwrite existing translations during auto translate.
+Set to `true` to overwrite existing translations during auto-translation.
 
 ### context_groups
 

@@ -20,7 +20,7 @@ enhavo_routing:
                     property: title
 ```
 
-The `property` option defines which property is used to generate the url slug.
+The `property` option defines which property is used to generate the URL slug.
 
 ### Route strategy
 
