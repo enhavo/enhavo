@@ -21,7 +21,7 @@
                 v-model="data.children"
                 group="list"
                 item-key="id"
-                v-on:change="save($event, null)"
+                v-on:change="save($event, data)"
                 @start="data.dragging = true"
                 @end="data.dragging = false"
                 :class="{'dragging':data.dragging == true}"
