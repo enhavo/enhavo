@@ -54,7 +54,7 @@ class AnalyzeCommand extends Command
 
         $entity = null;
         if (class_exists($entityName)) {
-            $repository = $this->em->getRepository($entity);
+            $repository = $this->em->getRepository($entityName);
             $entity = $repository->find($id);
         } elseif ($this->resourceManager->getMetadata($entityName)) {
             $repository = $this->resourceManager->getRepository($entityName);

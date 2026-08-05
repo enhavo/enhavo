@@ -42,6 +42,10 @@ class CollectionIndexType extends AbstractIndexType implements IndexTypeInterfac
                 if (is_string($item)) {
                     $index = new IndexData(trim($value), $options['weight']);
                     $builder->addIndex($index);
+                } elseif ($options['item_property'] !== null) {
+                    $value = $this->propertyAccessor->getValue($item, $options['item_property']);
+                    $index = new IndexData(trim($value), $options['weight']);
+                    $builder->addIndex($index);
                 } elseif (is_object($value)) {
                     $indexes = $this->indexDataProvider->getIndexData($item);
                     foreach ($indexes as $index) {
@@ -58,6 +62,7 @@ class CollectionIndexType extends AbstractIndexType implements IndexTypeInterfac
 
         $resolver->setDefaults([
             'weight' => 0,
+            'item_property' => null,
         ]);
     }
 
