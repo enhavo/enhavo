@@ -59,6 +59,7 @@ class ElasticSearchEngine implements SearchEngineInterface
         $dsn,
         private readonly ?array $indexSettings,
         private readonly int $pageSize = 100,
+        private readonly array $fuzzyOptions,
     ) {
         if (!self::supports($dsn)) {
             return;
@@ -162,7 +163,11 @@ class ElasticSearchEngine implements SearchEngineInterface
                 ]);
 
                 if ($filter->isFuzzy()) {
-                    $termQuery->setFieldParam($fieldName, 'fuzziness', 2);
+                    $termQuery->setFieldParam($fieldName, 'fuzziness', $this->fuzzyOptions['fuzziness']);
+                    $termQuery->setFieldParam($fieldName, 'max_expansions', $this->fuzzyOptions['max_expansions']);
+                    $termQuery->setFieldParam($fieldName, 'prefix_length', $this->fuzzyOptions['prefix_length']);
+                    $termQuery->setFieldParam($fieldName, 'fuzzy_transpositions', $this->fuzzyOptions['transpositions']);
+                    $termQuery->setFieldParam($fieldName, 'fuzzy_rewrite', $this->fuzzyOptions['rewrite']);
                 }
 
                 $constantScoreQuery = new ConstantScore($termQuery);
