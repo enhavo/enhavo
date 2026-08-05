@@ -58,8 +58,8 @@ class ElasticSearchEngine implements SearchEngineInterface
         ClientFactory $clientFactory,
         $dsn,
         private readonly ?array $indexSettings,
-        private readonly int $pageSize = 100,
         private readonly array $fuzzyOptions,
+        private readonly int $pageSize = 100,
     ) {
         if (!self::supports($dsn)) {
             return;
