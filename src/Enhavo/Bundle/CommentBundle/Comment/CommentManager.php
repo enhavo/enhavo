@@ -75,7 +75,9 @@ class CommentManager
      */
     public function handleSubmitForm(Request $request, CommentSubjectInterface $subject): SubmitContext
     {
-        $this->checkThread($subject);
+        if ($this->hasThread($subject)) {
+            throw CommentSubjectException::createNoThreadException($subject);
+        }
         $form = $this->createSubmitForm();
         $form->handleRequest($request);
         $insert = false;
@@ -91,12 +93,10 @@ class CommentManager
         return new SubmitContext($form, $insert);
     }
 
-    private function checkThread(CommentSubjectInterface $subject)
+    public function hasThread(CommentSubjectInterface $subject): bool
     {
         $thread = $subject->getThread();
-        if (null === $thread) {
-            throw CommentSubjectException::createNoThreadException($subject);
-        }
+        return null !== $thread;
     }
 
     public function publishComment(CommentInterface $comment)
