@@ -12,6 +12,7 @@ services:
             - '@Enhavo\Bundle\SearchBundle\Engine\ElasticSearch\ClientFactory'
             - '%enhavo_search.search.dsn%'
             - '%enhavo_search.elastic.index_settings%'
+            - '%enhavo_search.elastic.fuzzy%'
         tags:
             - { name: enhavo_search.engine }
 

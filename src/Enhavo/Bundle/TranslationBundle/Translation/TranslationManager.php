@@ -236,7 +236,7 @@ class TranslationManager
     /**
      * @return Translation
      */
-    private function getTranslation($data, $propertyName)
+    public function getTranslation($data, $propertyName)
     {
         /** @var Metadata $metadata */
         $metadata = $this->metadataRepository->getMetadata($data);

@@ -1,0 +1,4 @@
+services:
+    Enhavo\Bundle\ContentBundle\Twig\StructuredDataExtension:
+        tags:
+            - { name: twig.extension }
