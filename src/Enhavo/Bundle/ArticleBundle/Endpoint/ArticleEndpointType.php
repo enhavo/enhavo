@@ -54,14 +54,17 @@ class ArticleEndpointType extends AbstractEndpointType
             throw $this->createNotFoundException();
         }
 
-        $commentContext = $this->commentManager->handleSubmitForm($request, $resource);
-        if ($commentContext->isInsert()) {
-            $context->setResponse(new RedirectResponse($request->getRequestUri()));
+        if ($this->commentManager->hasThread($resource)) {
+            $commentContext = $this->commentManager->handleSubmitForm($request, $resource);
+            if ($commentContext->isInsert()) {
+                $context->setResponse(new RedirectResponse($request->getRequestUri()));
+            }
+
+            $data->set('commentForm', $this->normalize($commentContext->getForm(), null, ['groups' => ['endpoint']]));
         }
 
         $context->set('resource', $resource);
         $data->set('resource', $this->normalize($resource, null, ['groups' => ['endpoint']]));
-        $data->set('commentForm', $this->normalize($commentContext->getForm(), null, ['groups' => ['endpoint']]));
         $data->set('structuredData', $this->structuredDataManager->getData($resource, $options['structured_data_groups']));
     }
 
