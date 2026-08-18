@@ -1,5 +1,18 @@
 {% extends template('theme/base.html.twig') %}
 
 {% block main %}
-    {{ component('user_login', {error: error}) }}
+    <div data-controller="form" data-form-form-value="{{ form|json_encode|e }}">
+        <form-form :form="form">
+            {% if error %}
+                <div>
+                    <div>{{ error|trans|nl2br }}</div>
+                </div>
+            {% endif %}
+            <form-row :form="form.get('userIdentifier')"></form-row>
+            <form-row :form="form.get('password')"></form-row>
+            <form-row :form="form.get('rememberMe')"></form-row>
+            <form-row :form="form.get('csrfToken')"></form-row>
+            <button type="submit">Senden</button>
+        </form-form>
+    </div>
 {% endblock main %}

@@ -198,6 +198,7 @@ services:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@security.firewall.map'
             - '@security.token_storage'
+            - '@Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError'
         calls:
 #            - [setVueForm, ['@Enhavo\Bundle\VueFormBundle\Form\VueForm']]
             - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
