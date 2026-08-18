@@ -2,10 +2,12 @@
 {% trans_default_domain 'EnhavoUserBundle' %}
 
 {% block main %}
-    <form action="{{ path('enhavo_user_theme_change_password_change') }}" method="POST">
-        {{ form_row(form.current_password) }}
-        {{ form_row(form.plainPassword) }}
-        {{ form_row(form._token) }}
-        <button type="submit">{{ 'change_password.form.submit'|trans }}</button>
-    </form>
-{% endblock %}
+    <div data-controller="form" data-form-form-value="{{ form|json_encode|e }}">
+        <form-form :form="form">
+            <form-row :form="form.get('currentPassword')"></form-row>
+            <form-row :form="form.get('plainPassword')"></form-row>
+            <form-row :form="form.get('_token')"></form-row>
+            <button type="submit">{{ 'change_password.form.submit'|trans }}</button>
+        </form-form>
+    </div>
+{% endblock main %}

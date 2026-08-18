@@ -1,4 +1,8 @@
 login:
+    action:
+        login: 'Login'
+        reset_password: 'Reset password'
+        registration: 'Register'
     error:
         general: 'An Error Occured'
         invalid_csrf_token: 'Invalid Csrf token'
@@ -65,7 +69,7 @@ reset_password:
     mail:
         subject: 'Reset Password'
         text: |
-            Hello %username%!
+            Hello!
 
             To reset your password, please visit %confirmation_url%
 
@@ -98,7 +102,7 @@ confirmation:
     mail:
         subject: 'Account Confirmed'
         text: |
-            Hello %username%!
+            Hello!
 
             Your account is now enabled.
 
@@ -133,7 +137,7 @@ registration:
     mail:
         subject: Registration
         text: |
-            Hello %username%!
+            Hello!
 
             Please click on the following link to to verify your email address %confirmation_url%
 
@@ -159,7 +163,7 @@ verification:
     mail:
         subject: Verify your Email
         text:  |
-            Hello %username%!
+            Hello!
 
             Please click on the following link to to verify your email address %confirmation_url%
 

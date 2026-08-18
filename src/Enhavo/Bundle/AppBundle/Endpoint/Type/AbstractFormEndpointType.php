@@ -42,7 +42,11 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
 
                 $url = $this->getRedirectUrl($options, $request, $data, $context, $form);
                 if ($url) {
+<<<<<<< HEAD:src/Enhavo/Bundle/AppBundle/Endpoint/Type/AbstractFormEndpointType.php
                     if ('html' === $request->get('_format')) {
+=======
+                    if ('html' === $request->attributes->get('_format')) {
+>>>>>>> 9adde3f9e (fix: user forms (#2473)):src/Enhavo/Bundle/FrameworkBundle/Endpoint/Type/AbstractFormEndpointType.php
                         $context->setResponse($this->redirect($url));
 
                         return;
