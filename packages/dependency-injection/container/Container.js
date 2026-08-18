@@ -11,18 +11,20 @@ export class Container
         /** @type {Array<Service>} */
         this._resolveStack = [];
         this._resolveCallStack = [];
-        this._pending = {};
+        this._queue = Promise.resolve();
     }
 
     async get(name) {
-        // sync concurrency calls on the same name to avoid returning unfinished services
-        if (this._pending[name]) {
-            return await this._pending[name];
+        // sync concurrency get calls to avoid returning unfinished services
+        let resolve;
+        const previous = this._queue;
+        this._queue = new Promise(r => resolve = r);
+        await previous;
+        try {
+            return await this._get(name);
+        } finally {
+            resolve();
         }
-        this._pending[name] = this._get(name).finally(() => {
-            delete this._pending[name];
-        });
-        return await this._pending[name];
     }
 
     async _get(name) {
