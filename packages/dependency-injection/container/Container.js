@@ -15,7 +15,7 @@ export class Container
     }
 
     async get(name) {
-        // serialize all get calls so one fully completes before the next starts
+        // sync concurrency get calls to avoid returning unfinished services
         let resolve;
         const previous = this._queue;
         this._queue = new Promise(r => resolve = r);
