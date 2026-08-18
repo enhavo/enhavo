@@ -4,6 +4,7 @@ enhavo_user_theme_login:
     defaults:
         _config: theme
         _expose: [theme]
+        _format: html
         _endpoint:
             type: Enhavo\Bundle\UserBundle\Endpoint\Type\Login\LoginEndpointType
 

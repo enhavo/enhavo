@@ -17,6 +17,7 @@ use Enhavo\Bundle\AppBundle\Endpoint\Type\AbstractFormEndpointType;
 use Enhavo\Bundle\AppBundle\Endpoint\Type\AreaEndpointType;
 use Enhavo\Bundle\AppBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
+use Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError;
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -34,6 +35,7 @@ class LoginEndpointType extends AbstractFormEndpointType
         private readonly ConfigurationProvider $provider,
         private readonly FirewallMap $firewallMap,
         private readonly TokenStorageInterface $tokenStorage,
+        private readonly AuthenticationError $authenticationError,
     ) {
     }
 
@@ -42,8 +44,9 @@ class LoginEndpointType extends AbstractFormEndpointType
         if ($this->tokenStorage->getToken()) {
             $redirect = $this->getSuccessRedirect($request);
 
-            if ('html' === $request->get('_format')) {
+            if ('html' === $request->attributes->get('_format')) {
                 $context->setResponse(new RedirectResponse($redirect));
+
             } else {
                 $data->set('redirect', $redirect);
             }
@@ -51,6 +54,7 @@ class LoginEndpointType extends AbstractFormEndpointType
 
         $data->set('component', $options['component']);
         $data->set('props', $options['props']);
+        $data->set('error', $this->authenticationError->getError());
     }
 
     protected function getForm($options, Request $request, Data $data, Context $context): FormInterface
@@ -91,7 +95,7 @@ class LoginEndpointType extends AbstractFormEndpointType
         $failurePath = $request->get('failureRedirect');
 
         if ($failurePath) {
-            if ('html' === $request->get('_format')) {
+            if ('html' === $request->query->get('_format')) {
                 $context->setResponse(new RedirectResponse($failurePath));
             } else {
                 $data->set('redirect', $failurePath);

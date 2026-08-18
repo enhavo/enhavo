@@ -143,7 +143,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
         if (null === $user) {
             try {
-                $user = $this->userBadge->getUser();
+                $user = $this->userBadge?->getUser();
             } catch (UserNotFoundException $e) {
             }
         }

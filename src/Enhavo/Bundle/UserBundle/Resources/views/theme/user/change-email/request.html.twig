@@ -2,9 +2,10 @@
 {% trans_default_domain 'EnhavoUserBundle' %}
 
 {% block main %}
-    <div>Current Email-Address: {{ app.user.email }}</div>
-    <form action="{{ path('enhavo_user_theme_change_email_request') }}" method="POST">
-        <button type="submit">{{ 'change_email.form.submit'|trans }}</button>
-        {{ form_row(form._token) }}
-    </form>
-{% endblock %}
+    <div data-controller="form" data-form-form-value="{{ form|json_encode|e }}">
+        <form-form :form="form">
+            <form-row :form="form.get('_token')"></form-row>
+            <button type="submit">{{ 'change_email.form.submit'|trans }}</button>
+        </form-form>
+    </div>
+{% endblock main %}

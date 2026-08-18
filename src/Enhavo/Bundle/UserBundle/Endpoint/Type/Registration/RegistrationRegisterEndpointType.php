@@ -73,7 +73,7 @@ class RegistrationRegisterEndpointType extends AbstractFormEndpointType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $configuration = $this->provider->getChangeEmailRequestConfiguration();
+        $configuration = $this->provider->getRegistrationRegisterConfiguration();
 
         $resolver->setDefaults([
             'template' => $this->resolveTemplate($configuration->getTemplate()),

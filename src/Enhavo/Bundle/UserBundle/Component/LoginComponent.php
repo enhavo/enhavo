@@ -81,8 +81,4 @@ class LoginComponent
             'targetPath' => $options['target_path'],
         ];
     }
-
-    private function getError()
-    {
-    }
 }
