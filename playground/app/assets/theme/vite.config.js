@@ -4,6 +4,7 @@ import liveReload from 'vite-plugin-live-reload'
 import path from 'node:path'
 import 'dotenv/config'
 import containerDIPlugin from '@enhavo/app/vite/rollup-plugin-container-di'
+import {jqueryGlobalPlugin} from '@enhavo/app/vite/jquery-global-plugin.js'
 
 export default defineConfig({
     optimizeDeps: {
@@ -13,9 +14,11 @@ export default defineConfig({
             'jquery',
             'select2',
             'axios',
+            'icheck',
         ],
     },
     plugins: [
+        jqueryGlobalPlugin(['icheck', 'select2']),
         vue(),
         liveReload([
             __dirname + '/../../src/**/*.php',

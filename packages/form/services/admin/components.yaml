@@ -1,0 +1,12 @@
+services:
+    '@enhavo/form/components/FormICheckCheckbox.vue':
+        static: true
+        chunk: 'form'
+        tags:
+            - { name: vue.component, component: 'form-icheck-checkbox' }
+
+    '@enhavo/form/components/FormICheckRadio.vue':
+        static: true
+        chunk: 'form'
+        tags:
+            - { name: vue.component, component: 'form-icheck-radio' }
