@@ -18,7 +18,7 @@ export default defineConfig({
         ],
     },
     plugins: [
-        jqueryGlobalPlugin(['icheck', 'select2']),
+        jqueryGlobalPlugin(['icheck']),
         vue(),
         liveReload([
             __dirname + '/../../src/**/*.php',
