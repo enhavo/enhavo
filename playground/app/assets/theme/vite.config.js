@@ -21,26 +21,27 @@ export default defineConfig({
         jqueryGlobalPlugin(['icheck', 'select2']),
         vue(),
         liveReload([
-            __dirname + '/../../src/**/*.php',
-            __dirname + '/../../templates/**/*.twig',
+            import.meta.dirname + '/../../src/**/*.php',
+            import.meta.dirname + '/../../templates/**/*.twig',
         ]),
         containerDIPlugin(),
     ],
 
     // config
-    root: path.resolve(__dirname),
+    root: path.resolve(import.meta.dirname),
     base: '/build/theme',
     build: {
         // output dir for production build
         outDir: '../../public/build/theme',
         emptyOutDir: true,
+        chunkSizeWarningLimit: 1024,
 
         // emit manifest so PHP can find the hashed files
         manifest: true,
 
         rollupOptions: {
             input: '/entrypoints/main.js'
-        }
+        },
     },
     server: {
         strictPort: true,
