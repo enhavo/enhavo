@@ -143,18 +143,6 @@ services:
         tags:
             - { name: vue.component, component: 'form-choice-tree-row' }
 
-    '@enhavo/form/components/FormICheckCheckbox.vue':
-        static: true
-        chunk: 'form'
-        tags:
-            - { name: vue.component, component: 'form-icheck-checkbox' }
-
-    '@enhavo/form/components/FormICheckRadio.vue':
-        static: true
-        chunk: 'form'
-        tags:
-            - { name: vue.component, component: 'form-icheck-radio' }
-
     '@enhavo/form/components/FormAutoComplete.vue':
         static: true
         chunk: 'form'
