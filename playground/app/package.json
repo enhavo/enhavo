@@ -1,5 +1,6 @@
 {
   "packageManager": "yarn@4.12.0",
+  "type": "module",
   "scripts": {
     "admin:dev": "vite --config assets/admin/vite.config.js",
     "admin:build": "vite build --config assets/admin/vite.config.js",

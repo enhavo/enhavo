@@ -6,6 +6,7 @@ import containerDIPlugin from '@enhavo/app/vite/rollup-plugin-container-di'
 import {fantasticon} from "@enhavo/app/vite/fantasticon-plugin/plugin.js";
 import {fantasticonSetting} from "@enhavo/app/vite/fantasticon-settings.js";
 import {watchNodeModules} from "@enhavo/app/vite/watch-node-modules-plugin.js";
+import {jqueryGlobalPlugin} from "@enhavo/app/vite/jquery-global-plugin.js";
 
 export default defineConfig({
     optimizeDeps: {
@@ -29,10 +30,11 @@ export default defineConfig({
         ],
     },
     plugins: [
+        jqueryGlobalPlugin(['icheck', 'select2']),
         vue(),
         containerDIPlugin(),
         fantasticon(fantasticonSetting({
-            outputDir: path.resolve(__dirname, '../../public/build/admin'),
+            outputDir: path.resolve(import.meta.dirname, '../../public/build/admin'),
         })),
         watchNodeModules([
             '@enhavo/app',
@@ -63,12 +65,13 @@ export default defineConfig({
     ],
 
     // config
-    root: path.resolve(__dirname),
+    root: path.resolve(import.meta.dirname),
     base: '/build/admin/',
     build: {
         // output dir for production build
         outDir: '../../public/build/admin',
         emptyOutDir: true,
+        chunkSizeWarningLimit: 1024,
 
         // emit manifest so PHP can find the hashed files
         manifest: true,
