@@ -12,6 +12,8 @@ export default class ContainerBuilder
         this.definitions = new Map();
         /** @type {Map<CompilerPass>} */
         this.compilerPasses = new Map();
+        /** @type {Map<Object|String|Number>} */
+        this.parameters = new Map();
 
         this.files = [];
     }
@@ -126,10 +128,39 @@ export default class ContainerBuilder
         this._prepared = true;
     }
 
+    addParameters(parameters) {
+        if (this._prepared) {
+            throw 'Can\'t add parameter to prepared builder';
+        }
+        for (let key in parameters) {
+            this.setParameter(key, parameters[key]);
+        }
+    }
+
+    setParameter(key, value) {
+        if (this._prepared) {
+            throw 'Can\'t add parameter to prepared builder';
+        }
+        this.parameters.add(key, value);
+    }
+
+    getParameterKeys() {
+        return this.parameters.getKeys();
+    }
+
+    getParameter(key) {
+        return this.parameters.get(key);
+    }
+
+    hasParameter(key) {
+        return this.parameters.has(key);
+    }
+
     reset() {
         this._prepared = false;
         this.definitions = new Map();
         this.compilerPasses = new Map();
+        this.parameters = new Map();
         this.files = [];
     }
 

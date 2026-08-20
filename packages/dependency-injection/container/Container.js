@@ -184,6 +184,10 @@ export class Container
     getParameter(key) {
         return this._parameters.get(key);
     }
+
+    hasParameter(key) {
+        return this._parameters.has(key);
+    }
 }
 
 class Service
