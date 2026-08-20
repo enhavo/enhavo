@@ -75,7 +75,7 @@ class CommentManager
      */
     public function handleSubmitForm(Request $request, CommentSubjectInterface $subject): SubmitContext
     {
-        if ($this->hasThread($subject)) {
+        if (!$this->hasThread($subject)) {
             throw CommentSubjectException::createNoThreadException($subject);
         }
         $form = $this->createSubmitForm();
