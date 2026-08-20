@@ -1,0 +1,6 @@
+[
+  { "path": "/", "name": "index", "component": "page-index" },
+  { "path": "/application", "name": "application", "component": "page-application" },
+  { "path": "/select", "name": "select", "component": "page-select" },
+  { "path": "/datepicker", "name": "datepicker", "component": "page-datepicker" }
+]

@@ -1,0 +1,8 @@
+{
+  "name": "@enhavo/playground-ui",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite"
+  }
+}

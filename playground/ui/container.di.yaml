@@ -1,0 +1,22 @@
+imports:
+    - path: '@enhavo/app/services/*'
+    - path: '@enhavo/ui/app/services.yaml'
+    - path: '@enhavo/ui/datepicker/services.yaml'
+    - path: '@enhavo/ui/select/services.yaml'
+
+compiler_pass:
+    vue_routes:
+        path: "@enhavo/app/compiler-pass/parameter-loader.js"
+        file: "./routes.json"
+        parameter: vue_routes
+    stimulus_controller:
+        path: '@enhavo/app/compiler-pass/stimulus-controller-register.js'
+        dir: './controllers'
+        priority: 110
+    vue_factory:
+        path: '@enhavo/app/compiler-pass/vue-factory.js'
+        priority: 50
+    vue_components:
+        path: '@enhavo/app/compiler-pass/vue-components.js'
+        dir: './components'
+        priority: 40
