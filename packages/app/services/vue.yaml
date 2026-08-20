@@ -18,3 +18,9 @@ services:
             - 'string:vue_routes'
             - 'string:vue_routes'
             - 'container:'
+
+    '@enhavo/app/controllers/VueController':
+        chunk: 'app'
+        static: true
+        tags:
+            - { name: stimulus.controller, key: 'vue' }
