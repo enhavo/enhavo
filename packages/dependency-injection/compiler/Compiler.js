@@ -17,6 +17,7 @@ export default class Compiler
         content += this._generateServiceFunctions(builder) + `\n`;
         content += `}\n\n`;
         content += `let container = new CompiledContainer;\n`;
+        content += this._generateSetParameters(builder) + `\n`;
         content += `export default container;\n\n`;
 
         return content;
@@ -198,6 +199,19 @@ export default class Compiler
         }
 
         content += `}\n`;
+        return content;
+    }
+
+    /**
+     * @param {ContainerBuilder} builder
+     * @returns {string}
+     * @private
+     */
+    _generateSetParameters(builder) {
+        let content = '';
+        for (let parameterName of builder.getParameterKeys()) {
+            content += `container.setParameter("`+parameterName+`", JSON.parse('`+JSON.stringify(builder.getParameter(parameterName))+`'));\n`
+        }
         return content;
     }
 }

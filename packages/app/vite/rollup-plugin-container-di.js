@@ -8,6 +8,7 @@ const defaults = {
     transform: null,
     extensions: ['.di.yaml'],
     enableChunks: true,
+    parameters: {},
     manualChunks: function (id, { getModuleInfo }) {
         return null
     }
@@ -29,6 +30,7 @@ export default async function (opts = {}) {
 
             // load and compile container
             if (!builder.isPrepared()) {
+                builder.addParameters(options.parameters);
                 let loader = new Loader();
                 loader.loadFile(id, builder)
 

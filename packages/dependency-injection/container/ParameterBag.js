@@ -38,4 +38,21 @@ export default class ParameterBag
         }
         return temp;
     }
+
+    has(key)
+    {
+        if (typeof key !== "string") {
+            throw "Key should be a string"
+        }
+
+        let parts = key.split(".");
+        let temp = this._data;
+        for (let part of parts) {
+            if (!temp[part]) {
+                return false;
+            }
+            temp = temp[part];
+        }
+        return true;
+    }
 }
