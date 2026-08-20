@@ -5,7 +5,7 @@ export default class DataLoader
     private readonly id: string;
     private readonly parameter: string;
     private loaded: boolean = false;
-    private container: Container = false;
+    private container: Container = null;
 
     constructor(id: string, parameter: string, container: Container)
     {
