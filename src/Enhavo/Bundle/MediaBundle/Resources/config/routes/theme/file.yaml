@@ -10,7 +10,7 @@ enhavo_media_theme_file:
             type: media_file
             permission: ~
             repository_arguments:
-                - token: expr:request.attributes,get("token")
+                - token: expr:request.attributes.get("token")
                   filename: 'expr:pathinfo(request.attributes.get("basename"),8)'
                   extension: 'expr:pathinfo(request.attributes.get("basename"),4)'
                   shortChecksum: expr:request.attributes.get("shortChecksum")
