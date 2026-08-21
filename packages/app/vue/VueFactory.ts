@@ -1,4 +1,5 @@
-import {createApp, Component, App, Plugin, reactive} from "vue";
+import {App, Component, createApp, defineAsyncComponent, Plugin, reactive} from "vue";
+import {ContainerInterface} from "@enhavo/dependency-injection/container/ContainerInterface"
 
 export class VueFactory
 {
@@ -6,6 +7,11 @@ export class VueFactory
     private components: Array<RegistryComponent> = [];
     private services: Array<RegistryService> = [];
     private directives: Array<RegistryDirective> = [];
+
+    constructor(
+        private container: ContainerInterface
+    ) {
+    }
 
     registerPlugin(plugin: Plugin)
     {
@@ -24,22 +30,22 @@ export class VueFactory
         this.directives.push(new RegistryDirective(name, directive));
     }
 
-    registerService(name: string, service: any, reactive: boolean|null = false)
+    registerService(name: string, service: string, reactive: boolean = false, lazy: boolean = false)
     {
-        this.services.push(new RegistryService(name, service, reactive));
+        this.services.push(new RegistryService(name, service, reactive, lazy));
     }
 
-    getComponent(name: string): Component|null
+    getComponent(name: string): Promise<Component|null>
     {
         for (let component of this.components) {
             if (name === component.name) {
-                return component.component;
+                return this.container.get(component.component)
             }
         }
-        return null;
+        return Promise.resolve(null);
     }
 
-    createApp(rootComponent: Component, rootProps?: any|null): App
+    async createApp(rootComponent: Component, rootProps?: any|null): App
     {
         const app = createApp(rootComponent, rootProps);
 
@@ -52,11 +58,33 @@ export class VueFactory
         }
 
         for (let component of this.components) {
-            app.component(component.name, component.component);
+            app.component(component.name, defineAsyncComponent(() =>
+                this.container.get(component.component)
+            ));
         }
 
         for (let service of this.services) {
-            app.provide(service.name, service.reactive ? reactive(service.service) : service.service);
+            if (service.lazy) {
+                let cachedPromise: Promise<any> | null = null;
+                // new Promise would load service immediately, so we need a thenable object here
+                const lazyPromise = {
+                    then: (onFulfilled?: any, onRejected?: any) => {
+                        if (!cachedPromise) {
+                            cachedPromise = this.container.get(service.service).then(innerService =>
+                                service.reactive ? reactive(innerService) : innerService
+                            );
+                        }
+                        return cachedPromise.then(onFulfilled, onRejected);
+                    },
+                    catch(onRejected?: any) {
+                        return this.then(undefined, onRejected);
+                    }
+                };
+                app.provide(service.name, lazyPromise);
+            } else {
+                const resolved = await this.container.get(service.service);
+                app.provide(service.name, service.reactive ? reactive(resolved) : resolved);
+            }
         }
 
         return app;
@@ -97,8 +125,9 @@ class RegistryService
 {
     constructor(
         public name: string,
-        public service: any,
+        public service: string,
         public reactive: boolean,
+        public lazy: boolean,
     ) {
     }
 }

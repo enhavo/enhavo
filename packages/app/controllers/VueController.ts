@@ -20,8 +20,8 @@ export default class extends AbstractController
     {
         const vueFactory: VueFactory = await this.application.container.get('@enhavo/app/vue/VueFactory');
         const vueRouterFactory: VueRouterFactory = await this.application.container.get('@enhavo/app/vue/VueRouterFactory');
-        const component = vueFactory.getComponent(this.componentValue);
-        const app = vueFactory.createApp(component, this.propsValue);
+        const component = await vueFactory.getComponent(this.componentValue);
+        const app = await vueFactory.createApp(component, this.propsValue);
         app.use(vueRouterFactory.createRouter());
         app.mount(this.element);
     }
