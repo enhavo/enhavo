@@ -38,7 +38,7 @@ export class VueRouterFactory
                 name: routesConfig[routeName]["name"],
                 meta: routesConfig[routeName]["meta"],
                 children: [],
-                component: this.vueFactory.getComponent(
+                component: () => this.vueFactory.getComponent(
                     routesConfig[routeName]["component"],
                 ),
             }

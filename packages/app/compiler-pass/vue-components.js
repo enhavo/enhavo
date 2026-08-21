@@ -61,7 +61,7 @@ export default function(builder, options, context)
 
         registry.addCall(new Call('registerComponent', [
             new Argument(componentName, 'string'),
-            new Argument(definition.getName()),
+            new Argument(definition.getName(), 'string'),
         ]));
     }
 };

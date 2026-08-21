@@ -23,11 +23,13 @@ export default function(builder, options, context)
 {
     let factory = createVueFactoryDefinition(builder, context);
 
+    factory.addArgument(new Argument('container:'))
+
     let componentDefinitions = builder.getDefinitionsByTagName('vue.component');
     for (let definition of componentDefinitions) {
         factory.addCall(new Call('registerComponent', [
             new Argument(definition.getTag('vue.component').getParameter('component'), 'string'),
-            new Argument(definition.getName()),
+            new Argument(definition.getName(), 'string'),
         ]));
     }
 
@@ -42,8 +44,9 @@ export default function(builder, options, context)
     for (let definition of serviceDefinitions) {
         factory.addCall(new Call('registerService', [
             new Argument(definition.getTag('vue.service').getParameter('service'), 'string'),
-            new Argument(definition.getName()),
+            new Argument(definition.getName(), 'string'),
             new Argument(definition.getTag('vue.service').getParameter('reactive'), 'boolean'),
+            new Argument(definition.getTag('vue.service').getParameter('lazy'), 'boolean'),
         ]));
     }
 
