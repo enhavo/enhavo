@@ -10,7 +10,14 @@ enhavo_media_theme_file:
             type: media_file
             permission: ~
             repository_arguments:
+<<<<<<< HEAD
                 - token: expr:request.get("token")
                   filename: 'expr:pathinfo(request.get("basename"),8)'
                   extension: 'expr:pathinfo(request.get("basename"),4)'
                   shortChecksum: expr:request.get("shortChecksum")
+=======
+                - token: expr:request.attributes.get("token")
+                  filename: 'expr:pathinfo(request.attributes.get("basename"),8)'
+                  extension: 'expr:pathinfo(request.attributes.get("basename"),4)'
+                  shortChecksum: expr:request.attributes.get("shortChecksum")
+>>>>>>> e1ce29dcf (fix: fix error in FileEndpointType when trying to access route parameter token (#2483))
