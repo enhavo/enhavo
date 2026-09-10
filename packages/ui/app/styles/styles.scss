@@ -1,0 +1,200 @@
+.app {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: 40px 1fr;
+    grid-template-areas:
+        "toolbar toolbar"
+        "menu content";
+    height: 100vh;
+
+    > .toolbar {
+        grid-area: toolbar;
+    }
+
+    > .menu {
+        grid-area: menu;
+
+        &.is-collapsed {
+            grid-template-columns: 60px 1fr;
+        }
+    }
+
+    &:has(> .menu.is-collapsed) {
+        grid-template-columns: 60px 1fr;
+    }
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    background: #1e2130;
+    overflow: hidden;
+
+    .menu-main {
+        flex: 1;
+        overflow-y: auto;
+        padding: 8px 0;
+    }
+
+    .menu-bottom {
+        padding: 8px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    &.is-collapsed {
+        width: 60px;
+    }
+
+    .menu-item-list {
+        display: flex;
+        flex-direction: column;
+
+        > .menu-item-list-container {
+            display: none;
+            flex-direction: column;
+
+            &.is-expanded {
+                display: flex;
+            }
+
+            .menu-item {
+                padding-left: 32px;
+            }
+        }
+    }
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 16px;
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 14px;
+        cursor: pointer;
+        border-radius: 4px;
+        margin: 2px 8px;
+        transition: background 0.15s, color 0.15s;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        user-select: none;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        &.active,
+        &[data-active="true"] {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+    }
+}
+
+.frames {
+    grid-area: content;
+    display: flex;
+    overflow: hidden;
+
+    .frame {
+        flex: 1;
+        overflow: auto;
+        background: #fff;
+    }
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 0;
+
+    .toolbar-brand {
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        border-right: 1px solid #ddd;
+        height: 100%;
+        font-weight: 600;
+        white-space: nowrap;
+        width: 220px;
+        transition: width 0.2s;
+
+        &.is-collapsed {
+            width: 60px;
+        }
+    }
+
+    .toolbar-action,
+    .toolbar-action-dropdown {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: 0 10px;
+        cursor: pointer;
+        color: #444;
+        font-size: 13px;
+        white-space: nowrap;
+        user-select: none;
+        transition: background 0.15s, color 0.15s;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: #000;
+        }
+
+        .icon {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    }
+
+    .toolbar-action-dropdown {
+        position: relative;
+
+        > div:last-child {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            min-width: 160px;
+            z-index: 100;
+        }
+
+        &:hover > div:last-child {
+            display: block;
+        }
+    }
+
+    .toolbar-divider {
+        width: 1px;
+        height: 20px;
+        background: #ddd;
+        margin: 0 4px;
+        flex-shrink: 0;
+    }
+
+    .toolbar-left {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        height: 100%;
+    }
+
+    .toolbar-right {
+        display: flex;
+        align-items: center;
+        border-left: 1px solid #ddd;
+        padding: 0 16px;
+        height: 100%;
+        white-space: nowrap;
+    }
+}

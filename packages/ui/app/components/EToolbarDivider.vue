@@ -1,9 +1,6 @@
 <template>
-    <div class="app">
-        <slot></slot>
-    </div>
+    <div class="toolbar-divider"></div>
 </template>
 
 <script lang="ts" setup>
-
 </script>
