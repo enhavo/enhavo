@@ -1,1 +1,96 @@
 services:
+    '@enhavo/ui/app/components/EApp.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-app' }
+
+    '@enhavo/ui/app/components/EMenu.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-menu' }
+
+    '@enhavo/ui/app/components/EMenuBottom.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-menu-bottom' }
+
+    '@enhavo/ui/app/components/EMenuItem.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-menu-item' }
+
+    '@enhavo/ui/app/components/EMenuItemList.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-menu-item-list' }
+
+    '@enhavo/ui/app/components/EMenuMain.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-menu-main' }
+
+    '@enhavo/ui/app/components/EToolbar.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-toolbar' }
+
+    '@enhavo/ui/app/components/EToolbarBrand.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-toolbar-brand' }
+
+    '@enhavo/ui/app/components/EToolbarLeft.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-toolbar-left' }
+
+    '@enhavo/ui/app/components/EToolbarRight.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-toolbar-right' }
+
+    '@enhavo/ui/app/components/EToolbarAction.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-toolbar-action' }
+
+    '@enhavo/ui/app/components/EToolbarActionDropdown.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-toolbar-action-dropdown' }
+
+    '@enhavo/ui/app/components/EToolbarDivider.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-toolbar-divider' }
+
+    '@enhavo/ui/app/components/EFrames.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-frames' }
+
+    '@enhavo/ui/app/components/EFrame.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-frame' }
+
+    '@enhavo/ui/app/components/EFrameIframe.vue':
+        static: true
+        chunk: 'app'
+        tags:
+            - { name: vue.component, component: 'e-frame-iframe' }

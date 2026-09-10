@@ -1,5 +1,5 @@
 <template>
-    <div class="app">
+    <div class="frames">
         <slot></slot>
     </div>
 </template>
