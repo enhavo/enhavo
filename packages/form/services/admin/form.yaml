@@ -10,7 +10,7 @@ services:
         chunk: 'form'
         import: AutoCompleteForm
         arguments:
-            - '@enhavo/app/routing/Router'
+            - '@enhavo/framework/routing/Router'
             - '@enhavo/app/frame/FrameManager'
         tags:
             - { name: form.model }

@@ -1,9 +1,9 @@
 import {ActionManager} from "@enhavo/app/action/ActionManager";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {ActionInterface} from "@enhavo/app/action/ActionInterface";
-import {Router} from "@enhavo/app/routing/Router";
+import {Router} from "@enhavo/framework/routing/Router";
 import Cropper from "cropperjs";
 
 export class ImageCropperManager

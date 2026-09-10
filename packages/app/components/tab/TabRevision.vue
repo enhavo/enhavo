@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import {RevisionTab} from "../../tab/model/RevisionTab";
 import {inject} from "vue";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 
 const translator = inject<Translator>('translator');
 

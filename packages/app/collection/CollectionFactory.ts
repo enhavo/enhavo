@@ -1,8 +1,8 @@
-import {ModelRegisterFactory} from "@enhavo/app/factory/ModelFactory";
+import {ModelRegisterFactory} from "@enhavo/framework/factory/ModelFactory";
 import {FilterInterface} from "@enhavo/app/filter/FilterInterface";
 import {ColumnInterface} from "@enhavo/app/column/ColumnInterface";
 import {CollectionInterface} from "@enhavo/app/collection/CollectionInterface";
-import {RouteContainer} from "@enhavo/app/routing/RouteContainer";
+import {RouteContainer} from "@enhavo/framework/routing/RouteContainer";
 import {BatchInterface} from "../batch/BatchInterface";
 
 export class CollectionFactory extends ModelRegisterFactory

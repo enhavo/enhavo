@@ -3,7 +3,7 @@ services:
         import: FileResolver
         chunk: 'media'
         arguments:
-            - '@enhavo/app/routing/Router'
+            - '@enhavo/framework/routing/Router'
             - ["enhavo_media_admin_api_file", "enhavo_media_theme_file"]
             - ["enhavo_media_admin_api_file_format", "enhavo_media_theme_format"]
 

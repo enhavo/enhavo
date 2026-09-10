@@ -1,5 +1,5 @@
 import {ActionInterface} from "./ActionInterface";
-import {ModelFactory} from "@enhavo/app/factory/ModelFactory";
+import {ModelFactory} from "@enhavo/framework/factory/ModelFactory";
 
 export class ActionFactory extends ModelFactory
 {

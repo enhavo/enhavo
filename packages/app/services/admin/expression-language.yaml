@@ -1,5 +1,5 @@
 services:
-    '@enhavo/app/expression-language/ExpressionLanguage':
+    '@enhavo/framework/expression-language/ExpressionLanguage':
         import: ExpressionLanguage
         chunk: 'app'
 

@@ -1,5 +1,5 @@
 import {ColumnInterface} from "@enhavo/app/column/ColumnInterface";
-import {ModelFactory} from "@enhavo/app/factory/ModelFactory";
+import {ModelFactory} from "@enhavo/framework/factory/ModelFactory";
 
 export class ColumnFactory extends ModelFactory
 {

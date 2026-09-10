@@ -5,8 +5,8 @@ services:
         arguments:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/app/routing/Router'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/routing/Router'
+            - '@enhavo/framework/translation/Translator'
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/filter/FilterManager'
             - '@enhavo/app/column/ColumnManager'
@@ -21,7 +21,7 @@ services:
         arguments:
             - '@enhavo/app/frame/FrameEventDispatcher'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/core/Router'
+            - '@enhavo/framework/router/Router'
         tags:
             - 'enhavo_app.form'
 
@@ -49,7 +49,7 @@ services:
         chunk: 'media-library'
         arguments:
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
             - '@enhavo/app/flash-message/FlashMessenger'
         tags:
             - 'enhavo_app.action'
@@ -70,7 +70,7 @@ services:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/manager/ResourceInputManager'
             - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
             - '@enhavo/app/client/Client'
         tags:
             - { name: 'enhavo_app.action', class: 'MediaLibraryApplyAction' }
@@ -79,12 +79,12 @@ services:
         import: MediaLibraryCollection
         chunk: 'media-library'
         arguments:
-            - '@enhavo/app/routing/Router'
+            - '@enhavo/framework/routing/Router'
             - '@enhavo/app/filter/FilterManager'
             - '@enhavo/app/column/ColumnManager'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
             - '@enhavo/app/client/Client'
         tags:
             - { name: enhavo_app.collection }

@@ -1,12 +1,4 @@
 services:
-    '@enhavo/newsletter/stats/StatsApp':
-        chunk: 'newsletter'
-        arguments:
-            - 'param:data.resource'
-            - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/action/ActionManager'
-            - '@enhavo/app/vue/VueRegistry'
-
     '@enhavo/newsletter/components/stats/IndexComponent.vue':
         chunk: 'newsletter'
         static: true
@@ -15,8 +7,8 @@ services:
         chunk: 'newsletter'
         import: NewsletterSendAction
         arguments:
-            - '@enhavo/app/translation/Translator'
-            - '@enhavo/app/routing/Router'
+            - '@enhavo/framework/translation/Translator'
+            - '@enhavo/framework/routing/Router'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/manager/ResourceInputManager'
@@ -29,7 +21,7 @@ services:
         import: NewsletterSendTestAction
         arguments:
             - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
             - '@enhavo/app/modal/ModalManager'
             - '@enhavo/app/manager/ResourceInputManager'
             - '@enhavo/vue-form/form/FormFactory'

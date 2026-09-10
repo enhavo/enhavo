@@ -60,7 +60,7 @@
 <script setup lang="ts">
 import {inject, watch} from "vue";
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 
 const translator = inject<Translator>('translator');
 

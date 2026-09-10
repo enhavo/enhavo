@@ -11,7 +11,7 @@ services:
         arguments:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/dashboard/dashboard/DashboardWidgetManager'
-            - '@enhavo/app/routing/Router'
+            - '@enhavo/framework/routing/Router'
         tags:
             - { name: vue.service, service: 'dashboardManager', reactive: true }
 

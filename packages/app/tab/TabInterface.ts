@@ -1,5 +1,5 @@
 import { ComponentAwareInterface } from "@enhavo/app/model/ComponentAwareInterface";
-import { ModelAwareInterface } from "@enhavo/app/model/ModelAwareInterface";
+import { ModelAwareInterface } from "@enhavo/framework/model/ModelAwareInterface";
 
 export interface TabInterface extends ComponentAwareInterface, ModelAwareInterface
 {

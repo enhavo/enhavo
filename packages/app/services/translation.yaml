@@ -1,5 +1,5 @@
 services:
-    '@enhavo/app/translation/Translator':
+    '@enhavo/framework/translation/Translator':
         chunk: 'app'
         import: Translator
         calls:

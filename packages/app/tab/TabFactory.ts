@@ -1,5 +1,5 @@
 import {TabInterface} from "./TabInterface";
-import {ModelFactory} from "@enhavo/app/factory/ModelFactory";
+import {ModelFactory} from "@enhavo/framework/factory/ModelFactory";
 
 export class TabFactory extends ModelFactory
 {

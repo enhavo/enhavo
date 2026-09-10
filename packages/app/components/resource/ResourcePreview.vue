@@ -15,7 +15,7 @@ import '@enhavo/app/assets/styles/view.scss'
 import {inject, onMounted} from "vue";
 import {useRoute} from 'vue-router'
 import {ResourcePreviewManager} from "../../manager/ResourcePreviewManager";
-import {Router} from "@enhavo/app/routing/Router";
+import {Router} from "@enhavo/framework/routing/Router";
 
 const manager = inject<ResourcePreviewManager>('resourcePreviewManager');
 const route = useRoute();

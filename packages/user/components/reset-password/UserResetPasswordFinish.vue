@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {inject} from "vue";
 
 const translator = inject('translator') as Translator

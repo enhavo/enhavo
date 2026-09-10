@@ -1,7 +1,7 @@
 import {DashboardWidgetManager} from "@enhavo/dashboard/dashboard/DashboardWidgetManager";
 import {DashboardWidgetInterface} from "@enhavo/dashboard/dashboard/DashboardWidgetInterface";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
-import {Router} from "@enhavo/app/routing/Router";
+import {Router} from "@enhavo/framework/routing/Router";
 
 export class DashboardManager
 {

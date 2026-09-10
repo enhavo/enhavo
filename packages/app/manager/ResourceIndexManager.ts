@@ -8,11 +8,11 @@ import {ColumnManager} from "@enhavo/app/column/ColumnManager";
 import {CollectionFactory} from "@enhavo/app/collection/CollectionFactory";
 import {BatchManager} from "@enhavo/app/batch/BatchManager";
 import {BatchInterface} from "@enhavo/app/batch/BatchInterface";
-import {RouteContainer} from "@enhavo/app/routing/RouteContainer";
+import {RouteContainer} from "@enhavo/framework/routing/RouteContainer";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {ClientInterface} from "@enhavo/app/client/ClientInterface";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {Metadata} from "@enhavo/app/model/Metadata";
 
 export class ResourceIndexManager

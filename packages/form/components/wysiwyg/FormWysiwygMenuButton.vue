@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
 import {WysiwygMenuButton} from "../../wysiwyg/WysiwygMenuButton";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {inject} from "vue";
 
 const translator = inject<Translator>('translator');

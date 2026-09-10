@@ -9,7 +9,7 @@ import '@enhavo/app/assets/styles/view.scss'
 import {inject, onMounted} from "vue";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 
 const uiManager = inject<UiManager>('uiManager');
 const frameManager = inject<FrameManager>('frameManager');

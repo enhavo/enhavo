@@ -2,7 +2,7 @@ import {ClientInterface, ErrorHandlerInterface, Options, Transport} from "@enhav
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 
 export class DefaultErrorHandler implements ErrorHandlerInterface
 {

@@ -22,7 +22,7 @@ import '@enhavo/app/assets/styles/view.scss'
 import Receiver from "@enhavo/newsletter/model/Receiver";
 import moment from "moment";
 import StatsApp from "@enhavo/newsletter/stats/StatsApp";
-import Translator from "@enhavo/core/Translator";
+import {Translator} from "@enhavo/framework/translator/Translator";
 
 const statsApp = inject<StatsApp>('statsApp');
 const translator = inject<Translator>('translator');

@@ -10,7 +10,7 @@ services:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
         tags:
             - { name: enhavo_app.client_error_handler, priority: -10 }
 
@@ -19,7 +19,7 @@ services:
         chunk: 'app'
         arguments:
             - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
         tags:
             - { name: enhavo_app.client_error_handler, priority: 10 }
 
@@ -30,7 +30,7 @@ services:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
         tags:
             - { name: enhavo_app.client_error_handler, priority: 10 }
 

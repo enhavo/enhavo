@@ -3,7 +3,7 @@ services:
         chunk: 'user'
         import: UserManager
         arguments:
-            - '@enhavo/app/routing/Router'
+            - '@enhavo/framework/routing/Router'
             - '@enhavo/vue-form/form/FormFactory'
             - '@enhavo/app/vue/VueRouterFactory'
         tags:
@@ -84,7 +84,7 @@ services:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
         tags:
             - { name: enhavo_app.client_error_handler, priority: 20 }
 
@@ -95,6 +95,6 @@ services:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
         tags:
             - { name: enhavo_app.client_error_handler, priority: 30 }

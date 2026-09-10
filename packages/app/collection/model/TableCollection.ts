@@ -11,9 +11,9 @@ import {BatchInterface} from "../../batch/BatchInterface";
 import {FrameManager} from "../../frame/FrameManager";
 import {Event} from "../../frame/FrameEventDispatcher";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {ClientInterface, Transport} from "@enhavo/app/client/ClientInterface";
-import {UrlUtil} from "../../util/UrlUtil";
+import {UrlUtil} from "@enhavo/framework/util/UrlUtil";
 
 
 export class TableCollection implements CollectionInterface

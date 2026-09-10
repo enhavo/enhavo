@@ -1,5 +1,5 @@
 import {FilterInterface} from "./FilterInterface";
-import {ModelFactory} from "@enhavo/app/factory/ModelFactory";
+import {ModelFactory} from "@enhavo/framework/factory/ModelFactory";
 
 export class FilterFactory extends ModelFactory
 {

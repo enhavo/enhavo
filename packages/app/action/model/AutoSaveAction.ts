@@ -2,7 +2,7 @@ import {AbstractAction} from "@enhavo/app/action/model/AbstractAction";
 import {ResourceInputManager} from "../../manager/ResourceInputManager";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {FlashMessenger, FlashMessage} from "@enhavo/app/flash-message/FlashMessenger";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {FormEventDispatcher} from "@enhavo/vue-form/form/FormEventDispatcher";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {InputChangedEvent} from "@enhavo/app/manager/ResourceInputManager";

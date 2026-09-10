@@ -30,7 +30,7 @@ services:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
             - '@enhavo/app/manager/ResourceInputManager'
         tags:
             - { name: 'enhavo_app.tab' }

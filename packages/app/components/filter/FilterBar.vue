@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import {inject} from "vue";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {FilterInterface} from "@enhavo/app/filter/FilterInterface";
 import {FilterManager} from "@enhavo/app/filter/FilterManager";
 

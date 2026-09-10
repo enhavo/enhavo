@@ -3,7 +3,7 @@ import {ResourceInputManager, InputChangedEvent} from "@enhavo/app/manager/Resou
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {ClientInterface} from "@enhavo/app/client/ClientInterface";
 import {ActionInterface} from "../ActionInterface";
 

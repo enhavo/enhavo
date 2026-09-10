@@ -8,7 +8,7 @@ services:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/menu/MenuManager'
             - '@enhavo/app/toolbar/ToolbarWidgetManager'
-            - '@enhavo/app/routing/Router'
+            - '@enhavo/framework/routing/Router'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/ui/UiManager'
         tags:
@@ -26,7 +26,7 @@ services:
             - '@enhavo/app/collection/CollectionFactory'
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/client/Client'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
         tags:
             - { name: vue.service, service: 'resourceIndexManager', reactive: true }
 
@@ -38,9 +38,9 @@ services:
             - '@enhavo/app/tab/TabManager'
             - '@enhavo/vue-form/form/FormFactory'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/vue/VueRouterFactory'
+            - '@enhavo/framework/vue/VueRouterFactory'
             - '@enhavo/app/client/Client'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
         tags:
             - { name: vue.service, service: 'resourceInputManager', reactive: true }
 
@@ -52,6 +52,6 @@ services:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/client/Client'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
         tags:
             - { name: vue.service, service: 'resourcePreviewManager', reactive: true }

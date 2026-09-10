@@ -19,7 +19,7 @@
 import {inject, ref} from "vue";
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
 import {WysiwygMenuSubmenu} from "@enhavo/form/wysiwyg/menu/WysiwygMenuSubmenu";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 
 const translator = inject<Translator>('translator');
 

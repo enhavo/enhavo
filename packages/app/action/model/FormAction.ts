@@ -1,10 +1,10 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
 import View from "@enhavo/app/view/View";
 import ModalManager from "@enhavo/app/modal/ModalManager";
-import Router from "@enhavo/core/Router";
+import {Router} from "@enhavo/framework/router/Router";
 import AjaxFormModal from "@enhavo/app/modal/model/AjaxFormModal";
-import Translator from "@enhavo/core/Translator";
-import {AxiosResponseHandler} from "@enhavo/app/util/AxiosResponseHandler";
+import {Translator} from "@enhavo/framework/translator/Translator";
+import {AxiosResponseHandler} from "@enhavo/framework/util/AxiosResponseHandler";
 import axios, {AxiosResponse} from "axios";
 import $ from "jquery";
 

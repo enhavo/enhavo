@@ -1,5 +1,5 @@
 import {Form} from "@enhavo/vue-form/model/Form"
-import {Router} from "@enhavo/app/routing/Router";
+import {Router} from "@enhavo/framework/routing/Router";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {InputChangedEvent} from "@enhavo/app/manager/ResourceInputManager";
 

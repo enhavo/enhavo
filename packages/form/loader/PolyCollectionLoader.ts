@@ -5,7 +5,7 @@ import $ from "jquery";
 import prototypeManager from "@enhavo/form/prototype/PrototypeManager";
 import FormRegistry from "@enhavo/app/form/FormRegistry";
 import View from "@enhavo/app/view/View";
-import Translator from "@enhavo/core/Translator";
+import {Translator} from "@enhavo/framework/translator/Translator";
 import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 
 export default class PolyCollectionLoader extends AbstractLoader

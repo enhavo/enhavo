@@ -50,7 +50,7 @@
 import {inject, onMounted} from "vue";
 import {UserManager, ResetPasswordData} from "../../manager/UserManager";
 import {useRouter, useRoute} from "vue-router";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 
 const router = useRouter();
 const token = useRoute().params.token as string;

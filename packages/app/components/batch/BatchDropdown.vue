@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import {inject} from "vue";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {BatchInterface} from "@enhavo/app/batch/BatchInterface";
 
 const translator = inject<Translator>('translator');

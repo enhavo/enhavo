@@ -16,7 +16,7 @@ import { inject } from 'vue'
 
 import '@enhavo/app/assets/styles/view.scss'
 import DeleteApp from "@enhavo/app/delete/DeleteApp";
-import Translator from "@enhavo/core/Translator";
+import {Translator} from "@enhavo/framework/translator/Translator";
 
 const deleteApp = inject<DeleteApp>('deleteApp');
 const translator = inject<Translator>('translator');

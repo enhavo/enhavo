@@ -1,9 +1,9 @@
 import axios, {CancelTokenSource} from "axios";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
-import {Router} from "@enhavo/app/routing/Router";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Router} from "@enhavo/framework/routing/Router";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
-import {RouteContainer} from "@enhavo/app/routing/RouteContainer";
+import {RouteContainer} from "@enhavo/framework/routing/RouteContainer";
 import {ActionInterface} from "@enhavo/app/action/ActionInterface";
 import {FilterInterface} from "@enhavo/app/filter/FilterInterface";
 import {ColumnInterface} from "@enhavo/app/column/ColumnInterface";

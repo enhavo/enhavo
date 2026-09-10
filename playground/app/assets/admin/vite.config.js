@@ -2,11 +2,11 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'node:path'
 import 'dotenv/config'
-import containerDIPlugin from '@enhavo/app/vite/rollup-plugin-container-di'
-import {fantasticon} from "@enhavo/app/vite/fantasticon-plugin/plugin.js";
-import {fantasticonSetting} from "@enhavo/app/vite/fantasticon-settings.js";
-import {watchNodeModules} from "@enhavo/app/vite/watch-node-modules-plugin.js";
-import {jqueryGlobalPlugin} from "@enhavo/app/vite/jquery-global-plugin.js";
+import containerDIPlugin from '@enhavo/framework/vite/rollup-plugin-container-di'
+import {fantasticon} from "@enhavo/framework/vite/fantasticon-plugin/plugin.js";
+import {fantasticonSetting} from "@enhavo/framework/vite/fantasticon-settings.js";
+import {watchNodeModules} from "@enhavo/framework/vite/watch-node-modules-plugin.js";
+import {jqueryGlobalPlugin} from "@enhavo/framework/vite/jquery-global-plugin.js";
 
 export default defineConfig({
     optimizeDeps: {

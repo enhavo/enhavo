@@ -1,6 +1,6 @@
 import {ActionManager} from "@enhavo/app/action/ActionManager";
 import {ActionInterface} from "@enhavo/app/action/ActionInterface";
-import {RouteContainer} from "@enhavo/app/routing/RouteContainer";
+import {RouteContainer} from "@enhavo/framework/routing/RouteContainer";
 import {TabManager} from "@enhavo/app/tab/TabManager";
 import {TabInterface} from "@enhavo/app/tab/TabInterface";
 import {Form} from "@enhavo/vue-form/model/Form";
@@ -9,10 +9,10 @@ import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
 import {FormVisitorInterface} from "@enhavo/vue-form/form/FormVisitor";
 import {Theme} from "@enhavo/vue-form/form/Theme";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
-import {VueRouterFactory} from "@enhavo/app/vue/VueRouterFactory";
+import {VueRouterFactory} from "@enhavo/framework/vue/VueRouterFactory";
 import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
 import {ClientInterface, Transport} from "@enhavo/app/client/ClientInterface";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {Metadata} from "@enhavo/app/model/Metadata";
 
 export class ResourceInputManager

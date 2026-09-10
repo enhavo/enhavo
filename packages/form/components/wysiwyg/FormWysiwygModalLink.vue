@@ -33,7 +33,7 @@ import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
 import {inject, onMounted, ref} from "vue";
 import select2 from "select2";
 import $ from 'jquery';
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 
 const translator = inject<Translator>('translator');
 

@@ -46,7 +46,7 @@ export default function(builder, options, context)
         }
     }
 
-    let registry = builder.getDefinition('@enhavo/app/vue/VueFactory');
+    let registry = builder.getDefinition('@enhavo/framework/vue/VueFactory');
 
     for (let file of files) {
         let componentName = componentNameFromPath(file.fullPath);

@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import { inject } from 'vue'
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {FormModal} from "@enhavo/app/modal/model/FormModal";
 
 const translator = inject<Translator>('translator');

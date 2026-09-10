@@ -26,9 +26,9 @@ import '@enhavo/app/assets/styles/view.scss'
 import {inject} from "vue";
 import {useRoute} from 'vue-router'
 import {ResourceIndexManager} from "@enhavo/app/manager/ResourceIndexManager";
-import {ExpressionLanguage} from "@enhavo/app/expression-language/ExpressionLanguage";
-import {HtmlEntities} from '@enhavo/app/util/HtmlEntities';
-import {Router} from "@enhavo/app/routing/Router";
+import {ExpressionLanguage} from "@enhavo/framework/expression-language/ExpressionLanguage";
+import {HtmlEntities} from '@enhavo/framework/util/HtmlEntities';
+import {Router} from "@enhavo/framework/routing/Router";
 
 const manager = inject<ResourceIndexManager>('resourceIndexManager');
 const expressionLanguage = inject<ExpressionLanguage>('expressionLanguage');

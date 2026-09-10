@@ -1,5 +1,5 @@
 import {DashboardWidgetInterface} from "@enhavo/dashboard/dashboard/DashboardWidgetInterface";
-import {ModelFactory} from "@enhavo/app/factory/ModelFactory";
+import {ModelFactory} from "@enhavo/framework/factory/ModelFactory";
 
 export class DashboardWidgetFactory extends ModelFactory
 {

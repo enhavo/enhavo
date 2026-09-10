@@ -44,7 +44,7 @@
 
 <script setup lang="ts">
 import {inject} from 'vue'
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {TableCollection} from "../../collection/model/TableCollection";
 
 const props = defineProps<{

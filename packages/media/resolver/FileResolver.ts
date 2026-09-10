@@ -1,6 +1,6 @@
 import {FileUrlResolverInterface} from "@enhavo/media/resolver/FileUrlResolverInterface";
 import {File} from '@enhavo/media/model/File';
-import {Router} from '@enhavo/app/routing/Router';
+import {Router} from '@enhavo/framework/routing/Router';
 
 export class FileResolver implements FileUrlResolverInterface
 {

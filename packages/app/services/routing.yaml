@@ -1,5 +1,5 @@
 services:
-    '@enhavo/app/routing/Router':
+    '@enhavo/framework/routing/Router':
         import: Router
         arguments:
             - 'param:routes'

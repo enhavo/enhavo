@@ -1,5 +1,5 @@
 import {ToolbarWidgetInterface} from "./ToolbarWidgetInterface";
-import {ModelFactory} from "@enhavo/app/factory/ModelFactory";
+import {ModelFactory} from "@enhavo/framework/factory/ModelFactory";
 
 export class ToolbarWidgetFactory extends ModelFactory
 {

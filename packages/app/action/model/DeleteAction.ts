@@ -2,7 +2,7 @@ import {AbstractAction} from "@enhavo/app/action/model/AbstractAction";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 import {UiManager} from "@enhavo/app/ui/UiManager";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
 
 export class DeleteAction extends AbstractAction

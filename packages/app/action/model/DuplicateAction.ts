@@ -3,7 +3,7 @@ import {UiManager} from "@enhavo/app/ui/UiManager";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {ResourceInputManager} from "@enhavo/app/manager/ResourceInputManager";
 
 export class DuplicateAction extends AbstractAction

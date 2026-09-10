@@ -162,7 +162,7 @@ services:
         tags:
             - { name: vue.component, component: 'form-hidden-row' }
 
-    '@enhavo/app/controllers/FormController':
+    '@enhavo/framework/controllers/FormController':
         static: true
         chunk: 'app'
         tags:

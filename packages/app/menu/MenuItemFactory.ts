@@ -1,4 +1,4 @@
-import {ModelFactory} from "@enhavo/app/factory/ModelFactory";
+import {ModelFactory} from "@enhavo/framework/factory/ModelFactory";
 import {MenuItemInterface} from "./MenuItemInterface";
 
 export class MenuItemFactory extends ModelFactory

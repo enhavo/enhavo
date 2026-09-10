@@ -3,7 +3,7 @@ import {UiManager} from "@enhavo/app/ui/UiManager";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {ClientInterface} from "@enhavo/app/client/ClientInterface";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {InputChangedEvent, ResourceInputManager} from "@enhavo/app/manager/ResourceInputManager";
 
 export class MediaLibraryApplyAction extends AbstractAction

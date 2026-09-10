@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import {inject} from "vue";
 import {UiManager} from "@enhavo/app/ui/UiManager";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 
 const uiManager = inject<UiManager>('uiManager');
 const translator = inject<Translator>('translator');

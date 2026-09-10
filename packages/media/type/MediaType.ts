@@ -6,7 +6,7 @@ import "blueimp-file-upload/js/vendor/jquery.ui.widget.js";
 import "blueimp-file-upload/js/jquery.iframe-transport";
 import "blueimp-file-upload/js/jquery.fileupload";
 import { FlashMessenger, FlashMessage } from "@enhavo/app/flash-message/FlashMessenger";
-import Translator from "@enhavo/core/Translator";
+import {Translator} from "@enhavo/framework/translator/Translator";
 
 export default class MediaType extends FormType
 {

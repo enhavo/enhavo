@@ -27,7 +27,7 @@ services:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
         tags:
             - { name: 'enhavo_app.action', class: 'DeleteAction' }
 
@@ -52,7 +52,7 @@ services:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
             - '@enhavo/app/manager/ResourceInputManager'
         tags:
             - { name: 'enhavo_app.action', class: 'DuplicateAction' }
@@ -84,9 +84,9 @@ services:
         chunk: 'app'
         arguments:
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/routing/Router'
+            - '@enhavo/framework/routing/Router'
             - '@enhavo/app/modal/ModalManager'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
         tags:
             - { name: 'enhavo_app.action', class: 'FormAction' }
 
@@ -117,7 +117,7 @@ services:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/manager/ResourceInputManager'
             - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
             - '@enhavo/app/client/Client'
         tags:
             - { name: 'enhavo_app.action', class: 'SaveAction' }
@@ -129,7 +129,7 @@ services:
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/manager/ResourceInputManager'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
             - '@enhavo/vue-form/form/FormEventDispatcher'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/client/Client'
@@ -151,7 +151,7 @@ services:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
             - '@enhavo/app/manager/ResourceInputManager'
             - '@enhavo/app/client/Client'
         tags:
@@ -164,7 +164,7 @@ services:
             - '@enhavo/app/ui/UiManager'
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
         tags:
             - { name: 'enhavo_app.action' }
 

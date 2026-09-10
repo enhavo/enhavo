@@ -9,8 +9,8 @@ services:
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/action/ActionManager'
             - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/app/translation/Translator'
-            - '@enhavo/app/routing/Router'
+            - '@enhavo/framework/translation/Translator'
+            - '@enhavo/framework/routing/Router'
         tags:
             - { name: vue.service, service: 'imageCropperManager', reactive: true }
 
@@ -47,6 +47,6 @@ services:
         chunk: 'media'
         arguments:
             - '@enhavo/app/frame/FrameManager'
-            - '@enhavo/app/routing/Router'
+            - '@enhavo/framework/routing/Router'
         tags:
             - { name: enhavo_app.action }

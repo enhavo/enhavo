@@ -1,5 +1,5 @@
 import {DropdownMenuItem} from "@enhavo/app/menu/model/DropdownMenuItem";
-import {Router} from "@enhavo/app/routing/Router";
+import {Router} from "@enhavo/framework/routing/Router";
 
 export class SwitchTenantMenuItem extends DropdownMenuItem
 {

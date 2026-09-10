@@ -1,4 +1,4 @@
-import {ModelFactory} from "@enhavo/app/factory/ModelFactory";
+import {ModelFactory} from "@enhavo/framework/factory/ModelFactory";
 import {ModalInterface} from "@enhavo/app/modal/ModalInterface";
 
 export class ModalFactory extends ModelFactory

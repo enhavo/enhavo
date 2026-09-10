@@ -1,5 +1,5 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import {AxiosResponseHandler} from "@enhavo/app/util/AxiosResponseHandler";
+import {AxiosResponseHandler} from "@enhavo/framework/util/AxiosResponseHandler";
 import axios from 'axios';
 import $ from 'jquery';
 

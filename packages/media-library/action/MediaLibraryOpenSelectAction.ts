@@ -1,6 +1,6 @@
 import {AbstractAction} from "@enhavo/app/action/model/AbstractAction";
 import {FrameManager} from "@enhavo/app/frame/FrameManager"
-import {Translator} from "@enhavo/app/translation/Translator"
+import {Translator} from "@enhavo/framework/translation/Translator"
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger"
 import {ActionMediaInterface} from "@enhavo/media/action/ActionMediaInterface"
 import {MediaForm} from "@enhavo/media/form/model/MediaForm";

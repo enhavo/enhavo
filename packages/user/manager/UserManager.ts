@@ -1,4 +1,4 @@
-import {Router} from "@enhavo/app/routing/Router";
+import {Router} from "@enhavo/framework/routing/Router";
 import {Form} from "@enhavo/vue-form/model/Form";
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
 import {FormUtil} from "@enhavo/vue-form/form/FormUtil";

@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import {PolyCollectionForm} from "@enhavo/form/form/model/PolyCollectionForm";
 import {inject, ref} from "vue";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {Form} from "@enhavo/vue-form/model/Form";
 
 const translator = inject<Translator>('translator');

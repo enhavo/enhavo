@@ -1,6 +1,6 @@
 import { AbstractModal } from "@enhavo/app/modal/model/AbstractModal";
 import axios from "axios";
-import Router from "@enhavo/core/Router";
+import {Router} from "@enhavo/framework/router/Router";
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
 import {Form} from "@enhavo/vue-form/model/Form";
 import {FormUtil} from "@enhavo/vue-form/form/FormUtil";

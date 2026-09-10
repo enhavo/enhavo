@@ -2,7 +2,7 @@ import {MenuManager} from '@enhavo/app/menu/MenuManager';
 import {Branding} from '@enhavo/app/model/Branding';
 import {ToolbarWidgetManager} from "@enhavo/app/toolbar/ToolbarWidgetManager";
 import {ToolbarWidgetInterface} from "@enhavo/app/toolbar/ToolbarWidgetInterface";
-import {Router} from "@enhavo/app/routing/Router";
+import {Router} from "@enhavo/framework/routing/Router";
 import {FrameStackSubscriber} from "@enhavo/app/frame/FrameStackSubscriber";
 import {FrameStateManager} from "@enhavo/app/frame/FrameStateManager";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";

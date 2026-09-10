@@ -23,7 +23,7 @@ services:
         import: FormModal
         chunk: 'app'
         arguments:
-            - '@enhavo/app/routing/Router'
+            - '@enhavo/framework/routing/Router'
             - '@enhavo/vue-form/form/FormFactory'
         tags:
             - { name: enhavo_app.modal }

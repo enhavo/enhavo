@@ -37,9 +37,9 @@ import {ResourceInputManager} from "../../manager/ResourceInputManager";
 import {TabInterface} from "../../tab/TabInterface";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {Frame} from "@enhavo/app/frame/Frame";
-import {Router} from "@enhavo/app/routing/Router";
-import {HtmlEntities} from "../../util/HtmlEntities";
-import {ExpressionLanguage} from "../../expression-language/ExpressionLanguage";
+import {Router} from "@enhavo/framework/routing/Router";
+import {HtmlEntities} from "@enhavo/framework/util/HtmlEntities";
+import {ExpressionLanguage} from "@enhavo/framework/expression-language/ExpressionLanguage";
 
 const manager = inject<ResourceInputManager>('resourceInputManager');
 const frameManager = inject<FrameManager>('frameManager');

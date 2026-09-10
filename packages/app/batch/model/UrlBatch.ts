@@ -1,7 +1,7 @@
 import {AbstractBatch} from "@enhavo/app/batch/model/AbstractBatch";
 import axios from "axios";
 import {FlashMessenger, FlashMessage} from "@enhavo/app/flash-message/FlashMessenger";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 
 export class UrlBatch extends AbstractBatch

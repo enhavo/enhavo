@@ -1,6 +1,6 @@
 import {ClientInterface, ErrorHandlerInterface, Options, Transport} from "@enhavo/app/client/ClientInterface"
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 
 export class ValidationErrorHandler implements ErrorHandlerInterface
 {

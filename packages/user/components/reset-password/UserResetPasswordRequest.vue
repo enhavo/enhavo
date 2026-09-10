@@ -30,7 +30,7 @@
 import {inject} from "vue";
 import {UserManager, ResetPasswordData} from "../../manager/UserManager";
 import {useRouter} from "vue-router";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 
 const router = useRouter();
 const userManger = inject('userManager') as UserManager

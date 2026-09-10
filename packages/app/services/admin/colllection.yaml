@@ -7,12 +7,12 @@ services:
         import: TableCollection
         chunk: 'app'
         arguments:
-            - '@enhavo/app/routing/Router'
+            - '@enhavo/framework/routing/Router'
             - '@enhavo/app/filter/FilterManager'
             - '@enhavo/app/column/ColumnManager'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
             - '@enhavo/app/client/Client'
         tags:
             - { name: enhavo_app.collection }
@@ -21,12 +21,12 @@ services:
         import: ListCollection
         chunk: 'app'
         arguments:
-            - '@enhavo/app/routing/Router'
+            - '@enhavo/framework/routing/Router'
             - '@enhavo/app/filter/FilterManager'
             - '@enhavo/app/column/ColumnManager'
             - '@enhavo/app/frame/FrameManager'
             - '@enhavo/app/flash-message/FlashMessenger'
-            - '@enhavo/app/translation/Translator'
+            - '@enhavo/framework/translation/Translator'
             - '@enhavo/app/client/Client'
         tags:
             - { name: enhavo_app.collection }

@@ -1,6 +1,6 @@
 import AutoSuggestType from "@enhavo/form/type/AutoSuggestType";
 import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
-import Router from "@enhavo/core/Router";
+import {Router} from "@enhavo/framework/router/Router";
 import FormRegistry from "@enhavo/app/form/FormRegistry";
 
 export default class AutoCompleteLoader extends AbstractLoader

@@ -1,9 +1,9 @@
 import { UrlBatch } from "@enhavo/app/batch/model/UrlBatch";
 import { AjaxFormModal } from "@enhavo/app/modal/model/AjaxFormModal";
 import { FlashMessenger, FlashMessage } from "@enhavo/app/flash-message/FlashMessenger";
-import Translator from "@enhavo/core/Translator";
+import {Translator} from "@enhavo/framework/translator/Translator";
 import View from "@enhavo/app/view/View";
-import Router from "@enhavo/core/Router";
+import {Router} from "@enhavo/framework/router/Router";
 import { ModalManager } from "@enhavo/app/modal/ModalManager";
 
 export class FormBatch extends UrlBatch

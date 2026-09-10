@@ -2,7 +2,7 @@ import AutoCompleteType from "@enhavo/form/type/AutoCompleteType";
 import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
 import View from "@enhavo/app/view/View";
 import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
-import Router from "@enhavo/core/Router";
+import {Router} from "@enhavo/framework/router/Router";
 import FormRegistry from "@enhavo/app/form/FormRegistry";
 
 export default class AutoCompleteLoader extends AbstractLoader

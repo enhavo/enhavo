@@ -6,8 +6,8 @@ import Call from "@enhavo/dependency-injection/container/Call.js"
 
 function createVueFactoryDefinition(builder, context)
 {
-    let definition = new Definition('@enhavo/app/vue/VueFactory', context);
-    definition.setFrom('@enhavo/app/vue/VueFactory');
+    let definition = new Definition('@enhavo/framework/vue/VueFactory', context);
+    definition.setFrom('@enhavo/framework/vue/VueFactory');
     definition.setImport('VueFactory');
     definition.setChunkName('vue')
     definition.addTag(new Tag('vue.service', {

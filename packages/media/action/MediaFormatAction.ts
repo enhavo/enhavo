@@ -1,6 +1,6 @@
 import {AbstractAction} from "@enhavo/app/action/model/AbstractAction";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
-import {Router} from "@enhavo/app/routing/Router";
+import {Router} from "@enhavo/framework/routing/Router";
 import {MediaItemForm} from "@enhavo/media/form/model/MediaItemForm";
 import {ActionMediaItemInterface} from "@enhavo/media/action/ActionMediaItemInterface";
 

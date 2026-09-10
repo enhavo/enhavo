@@ -1,6 +1,6 @@
 import {WysiwygMenuButton} from "@enhavo/form/wysiwyg/menu/WysiwygMenuButton";
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
-import {Translator} from "@enhavo/app/translation/Translator";
+import {Translator} from "@enhavo/framework/translation/Translator";
 
 export class WysiwygSpecialCharactersButton extends WysiwygMenuButton
 {
