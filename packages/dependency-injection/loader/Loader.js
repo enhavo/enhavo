@@ -46,6 +46,10 @@ export default class Loader
             this._addCompilerPass(data, builder, cwd);
         }
 
+        if (options.loadStyles) {
+            this._addStyles(data, builder, cwd);
+        }
+
         return this;
     }
 
@@ -269,14 +273,27 @@ export default class Loader
             }
         }
     }
+
+    /**
+     * @param {object} data
+     * @param {ContainerBuilder} builder
+     * @param {string} cwd
+     */
+    _addStyles(data, builder, cwd) {
+        if (data && data.styles) {
+            for (let path of data.styles) {
+                builder.addStyle(this._buildFilepath(path, cwd))
+            }
+        }
+    }
 }
 
 class Configuration
 {
     constructor() {
-        this.loadImports = true;
         this.loadDefinition = true;
         this.loadCompilerPasses = true;
+        this.loadStyles= true;
     }
 }
 

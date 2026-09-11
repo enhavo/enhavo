@@ -15,6 +15,8 @@ export default class ContainerBuilder
         /** @type {Map<Object|String|Number>} */
         this.parameters = new Map();
 
+        this.styles = [];
+
         this.files = [];
     }
 
@@ -28,6 +30,18 @@ export default class ContainerBuilder
 
     getFiles() {
         return this.files;
+    }
+
+    addStyle(fileName) {
+        if (this._prepared) {
+            throw 'Can\'t add file to prepared builder';
+        }
+
+        this.styles.push(fileName);
+    }
+
+    getStyles() {
+        return this.styles;
     }
 
     /**

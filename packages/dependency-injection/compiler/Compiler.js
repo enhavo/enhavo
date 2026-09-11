@@ -11,6 +11,11 @@ export default class Compiler
         let content = '';
 
         content += `import {Container} from '@enhavo/dependency-injection/container/Container'\n`;
+
+        for (let style of builder.getStyles()) {
+            content += `import '` + style + `'\n`;
+        }
+
         content += `class CompiledContainer extends Container {\n`;
         content += this._generateConstructor(builder) + `\n`;
         content += this._generateInitFunction(builder) + `\n`;
