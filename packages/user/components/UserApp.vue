@@ -19,7 +19,6 @@
 
 <script setup lang="ts">
 import {inject} from "vue";
-import '@enhavo/user/assets/styles/login.scss'
 import {UserManager} from "@enhavo/user/manager/UserManager";
 
 const userManager = inject('userManager') as UserManager

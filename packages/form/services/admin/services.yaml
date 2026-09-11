@@ -8,12 +8,6 @@ compiler_pass:
         tag: 'enhavo_form.wysiwyg_config'
 
 services:
-    '@enhavo/form/controllers/FormStyleController':
-        chunk: 'form'
-        static: true
-        tags:
-            - { name: stimulus.controller, key: 'form-style' }
-
     '@enhavo/form/wysiwyg/WysiwygDefaultConfig':
         chunk: 'form'
         import: WysiwygDefaultConfig

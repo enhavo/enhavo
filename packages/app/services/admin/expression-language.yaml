@@ -4,4 +4,4 @@ services:
         chunk: 'app'
 
         tags:
-            - { name: vue.service, service: 'expressionLanguage' }
+            - { name: vue.service, service: 'expressionLanguage' , lazy: true }

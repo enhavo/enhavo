@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import '@enhavo/app/assets/styles/view.scss'
 import {inject, onMounted} from "vue";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";

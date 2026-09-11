@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import '@enhavo/app/assets/styles/view.scss'
 import {inject, onMounted} from "vue";
 import {useRoute} from 'vue-router'
 import {ResourcePreviewManager} from "../../manager/ResourcePreviewManager";

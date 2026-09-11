@@ -18,7 +18,6 @@
 
 <script setup lang="ts">
 import {inject} from "vue";
-import '@enhavo/app/assets/styles/view.scss'
 import Receiver from "@enhavo/newsletter/model/Receiver";
 import moment from "moment";
 import StatsApp from "@enhavo/newsletter/stats/StatsApp";

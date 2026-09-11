@@ -1,7 +1,6 @@
 import { AbstractController } from "@enhavo/framework/controllers/AbstractController"
 import { VueFactory } from "@enhavo/framework/vue/VueFactory";
 import { VueRouterFactory } from "@enhavo/framework/vue/VueRouterFactory";
-import UserApp from "../components/UserApp.vue";
 
 export default class extends AbstractController
 {
@@ -17,7 +16,8 @@ export default class extends AbstractController
     async init() {
         const vueFactory = await this.get("@enhavo/framework/vue/VueFactory") as VueFactory;
         const vueRouterFactory = await this.application.container.get("@enhavo/framework/vue/VueRouterFactory") as VueRouterFactory;
-        const app = await vueFactory.createApp(UserApp);
+        const component = await vueFactory.getComponent('user-app');
+        const app = await vueFactory.createApp(component);
         app.use(vueRouterFactory.createRouter());
         app.mount(this.element);
     }

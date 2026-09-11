@@ -21,7 +21,6 @@
 
 <script setup lang="ts">
 import {FormTranslation} from "@enhavo/translation/form/model/TranslationForm";
-import "@enhavo/translation/assets/styles/style.scss";
 import {inject, onMounted} from "vue";
 import {TranslationManager} from "@enhavo/translation/manager/TranslationManager";
 import {Form} from "@enhavo/vue-form/model/Form";

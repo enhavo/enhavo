@@ -5,7 +5,7 @@ services:
         arguments:
             - '@enhavo/app/frame/FrameEventDispatcher'
         tags:
-            - { name: vue.service, service: 'frameStack', reactive: true }
+            - { name: vue.service, service: 'frameStack', reactive: true , lazy: true }
 
     '@enhavo/app/frame/FrameStackSubscriber':
         import: FrameStackSubscriber
@@ -26,7 +26,7 @@ services:
         arguments:
             - '@enhavo/app/frame/FrameEventDispatcher'
         tags:
-            - { name: vue.service, service: 'frameManager', reactive: true }
+            - { name: vue.service, service: 'frameManager', reactive: true , lazy: true }
 
     '@enhavo/app/frame/FrameArrangeManager':
          import: FrameArrangeManager
@@ -35,7 +35,7 @@ services:
              - '@enhavo/app/frame/FrameStack'
              - '@enhavo/app/menu/MenuManager'
          tags:
-             - { name: vue.service, service: 'frameArrangeManager', reactive: true }
+             - { name: vue.service, service: 'frameArrangeManager', reactive: true , lazy: true }
 
     '@enhavo/app/frame/FrameStateManager':
         import: FrameStateManager
@@ -45,4 +45,4 @@ services:
             - '@enhavo/app/frame/FrameArrangeManager'
             - '@enhavo/app/menu/MenuManager'
         tags:
-            - { name: vue.service, service: 'frameStateManager' }
+            - { name: vue.service, service: 'frameStateManager' , lazy: true }

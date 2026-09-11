@@ -12,19 +12,13 @@ services:
             - '@enhavo/framework/translation/Translator'
             - '@enhavo/framework/routing/Router'
         tags:
-            - { name: vue.service, service: 'imageCropperManager', reactive: true }
+            - { name: vue.service, service: 'imageCropperManager', reactive: true , lazy: true }
 
     '@enhavo/media/components/MediaImageCropper.vue':
         static: true
         chunk: 'media'
         tags:
             - { name: vue.component, component: 'media-image-cropper' }
-
-    '@enhavo/media/controllers/MediaStyleController':
-        chunk: 'media'
-        static: true
-        tags:
-            - { name: stimulus.controller, key: 'media-style' }
 
     '@enhavo/media/action/MediaCropAction':
         import: MediaCropAction

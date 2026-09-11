@@ -10,8 +10,6 @@
 
 <script setup lang="ts">
 import {inject} from "vue";
-import '@enhavo/app/assets/styles/view.scss';
-import '@enhavo/dashboard/assets/styles/dashboard.scss';
 import {DashboardManager} from "@enhavo/dashboard/manager/DashboardManager";
 
 const dashboardManager = inject<DashboardManager>('dashboardManager');

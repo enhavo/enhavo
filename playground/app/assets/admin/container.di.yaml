@@ -9,6 +9,7 @@ imports:
     - path: '@enhavo/newsletter/services/admin/*'
     - path: '@enhavo/translation/services/admin/*'
     - path: '@enhavo/user/services/admin/*'
+    - path: '@enhavo/ui/services/*'
 
 compiler_pass:
     vue_components:
@@ -16,6 +17,9 @@ compiler_pass:
         dir: './components'
         chunkName: 'admin'
         priority: 40
+
+styles:
+    - '@enhavo/ui/styles.scss'
 
 services:
     'manager/FrameTestManager':
@@ -25,5 +29,5 @@ services:
         arguments:
             - '@enhavo/app/frame/FrameManager'
         tags:
-            - { name: vue.service, service: frameTestManager, reactive: true }
+            - { name: vue.service, service: frameTestManager, reactive: true, lazy: true }
 

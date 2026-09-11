@@ -8,4 +8,4 @@ services:
         arguments:
             - '@enhavo/app/action/ActionFactory'
         tags:
-            - { name: vue.service, service: 'actionManager' }
+            - { name: vue.service, service: 'actionManager', lazy: true }

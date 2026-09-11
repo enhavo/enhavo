@@ -69,7 +69,6 @@
 import {inject} from "vue";
 import {Translator} from "@enhavo/framework/translation/Translator";
 import {MediaLibraryManager} from "@enhavo/media-library/manager/MediaLibraryManager";
-import '@enhavo/media-library/assets/styles.scss';
 import {useRoute} from "vue-router";
 import {HtmlEntities} from "@enhavo/framework/util/HtmlEntities";
 import {ExpressionLanguage} from "@enhavo/framework/expression-language/ExpressionLanguage";

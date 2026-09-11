@@ -1,13 +1,8 @@
 services:
-    '@enhavo/framework/vue/ClickOutside':
+    '@enhavo/app/vue/ClickOutside':
         chunk: 'app'
         import: ClickOutside
         arguments:
             - '@enhavo/app/frame/FrameManager'
         tags:
             - { name: vue.directive, directive: 'click-outside' }
-
-
-    # missing services
-    # app.provide('eventDispatcher', this.eventDispatcher);
-    # app.component('draggable', draggable);

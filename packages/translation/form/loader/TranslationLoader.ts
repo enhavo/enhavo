@@ -1,6 +1,5 @@
 import TranslationType from "@enhavo/translation/form/type/TranslationType";
 import AbstractLoader from "@enhavo/form/loader/AbstractLoader";
-import "@enhavo/translation/assets/styles/style.scss";
 import {FrameEventDispatcher} from "@enhavo/app/frame/FrameEventDispatcher";
 
 export default class TranslationLoader extends AbstractLoader

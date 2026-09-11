@@ -9,7 +9,7 @@ services:
         arguments:
             - '@enhavo/app/modal/ModalFactory'
         tags:
-            - { name: vue.service, service: 'modalManager', reactive: true }
+            - { name: vue.service, service: 'modalManager', reactive: true , lazy: true }
 
     '@enhavo/app/modal/model/IframeModal':
         import: IframeModal

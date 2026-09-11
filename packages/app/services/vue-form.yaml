@@ -6,14 +6,14 @@ services:
         arguments:
             - '@enhavo/vue-form/form/FormEventDispatcher'
         tags:
-            - { name: vue.service, service: 'formFactory' }
+            - { name: vue.service, service: 'formFactory' , lazy: true }
 
     '@enhavo/vue-form/form/FormEventDispatcher':
         chunk: 'app'
         from: '@enhavo/vue-form/form/FormEventDispatcher'
         import: FormEventDispatcher
         tags:
-            - { name: vue.service, service: 'formEventDispatcher' }
+            - { name: vue.service, service: 'formEventDispatcher' , lazy: true }
 
     '@enhavo/vue-form/model/CheckboxForm':
         chunk: 'app'

@@ -1,50 +1,134 @@
 <template>
-    <div class="app" :class="{ 'menu-collapsed':!menuManager.menuOpen}" v-if="!mainManager.loading">
-        <flash-messages></flash-messages>
-        <toolbar-toolbar
-            :primary="mainManager.primaryToolbarWidgets"
-            :secondary="mainManager.secondaryToolbarWidgets"
-            :menu-open="menuManager.menuOpen"
-            :logo="mainManager.branding ? mainManager.branding.logo : null"
-            @toggle-menu="menuManager.toggleMenu()"
-        />
-        <frame-stack-mobile-dropdown></frame-stack-mobile-dropdown>
-        <div class="sidebar" :class="{ 'menu-collapsed':!menuManager.menuOpen}">
-            <div class="mobile-branding-container" :style="getBrandingImageStyles()" @click="home"></div>
-            <menu-menu></menu-menu>
-        </div>
-        <div class="toolbar-viewstack-container" :class="{ 'menu-collapsed':!menuManager.menuOpen}">
-            <frame-stack></frame-stack>
-        </div>
-    </div>
+    <e-app>
+        <e-toolbar>
+            <e-toolbar-brand :collapsed="menuCollapsed"></e-toolbar-brand>
+            <e-toolbar-left>
+                <button @click="menuCollapsed = !menuCollapsed">Toogle Menu</button>
+            </e-toolbar-left>
+            <e-toolbar-right>
+                <e-toolbar-action :action="menuPage"></e-toolbar-action>
+                <e-toolbar-action-dropdown :action="{label: 'Lang'}"></e-toolbar-action-dropdown>
+            </e-toolbar-right>
+        </e-toolbar>
+        <e-menu :collapsed="menuCollapsed">
+            <e-menu-main>
+                <e-menu-item :item="menuPage" />
+                <e-menu-item-list :item="menuArticle" />
+            </e-menu-main>
+            <e-menu-bottom>
+                <e-menu-item :item="menuUser" />
+            </e-menu-bottom>
+        </e-menu>
+        <e-frames>
+            <e-frame :frame="frameOne">Das ist ein Frame</e-frame>
+            <e-frame :frame="frameTwo">Das ist ein Frame</e-frame>
+        </e-frames>
+    </e-app>
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue'
-import '@enhavo/app/assets/styles/app.scss'
-import {MainManager} from "@enhavo/app/manager/MainManager";
-import {MenuManager} from "../../menu/MenuManager";
-import FrameStackMobileDropdown from "../frame/FrameStackMobileDropdown.vue";
-import FlashMessages from "@enhavo/app/components/flash-message/FlashMessages.vue";
+import { inject, ref, reactive } from 'vue'
 
-const mainManager = inject<MainManager>('mainManager');
-const menuManager = inject<MenuManager>('menuManager');
+// import {MainManager} from "@enhavo/app/manager/MainManager";
+// import {MenuManager} from "../../menu/MenuManager";
+// import FrameStackMobileDropdown from "../frame/FrameStackMobileDropdown.vue";
+// import FlashMessages from "@enhavo/app/components/flash-message/FlashMessages.vue";
+//
+// const mainManager = inject<MainManager>('mainManager');
+// const menuManager = inject<MenuManager>('menuManager');
+//
+// mainManager.load();
+//
+// function getBrandingImageStyles()
+// {
+//     if (mainManager.branding && mainManager.branding.logo) {
+//         return {
+//             backgroundImage: 'url(' + mainManager.branding.logo + ')',
+//         }
+//     }
+//     return {};
+// }
+//
+// function home()
+// {
+//     window.location.href = '/admin/'
+// }
 
-mainManager.load();
+const menuCollapsed = ref(false)
 
-function getBrandingImageStyles()
-{
-    if (mainManager.branding && mainManager.branding.logo) {
-        return {
-            backgroundImage: 'url(' + mainManager.branding.logo + ')',
+const menuPage = reactive({
+    "key": "page",
+    "label": "Page",
+    "component": "e-menu-item",
+    "open": () => {
+        console.log('open page');
+    },
+});
+
+const menuArticle = reactive({
+    "key": "article",
+    "label": "Article",
+    "component": "e-menu-item",
+    "expanded": false,
+    "open": function() {
+        this.expanded = !this.expanded;
+    },
+    children: [
+        {
+            "key": "category",
+            "label": "Category",
+            "component": "e-menu-item",
+            "open": () => {
+                console.log('open category');
+            }
         }
-    }
-    return {};
-}
+    ]
+});
 
-function home()
-{
-    window.location.href = '/admin/'
-}
+const menuUser = reactive({
+    "key": "user",
+    "label": "User",
+    "component": "e-menu-item",
+    "open": () => {
+        console.log('open user');
+    }
+});
+
+const frameOne = reactive({
+    "id": "b9f3cbd2-b7b8-4f08-afb2-3799bfa7a07f",
+    "component": "e-frame-iframe",
+    "url": "/admin/dashboard/dashboard",
+    "parent": null,
+    "label": "Dashboard",
+    "wait": true,
+    "keepAlive": false,
+    "display": true,
+    "closeable": true,
+    "minimize": false,
+    "position": 0,
+    "width": 30,
+    "loaded": true,
+    "keepMinimized": false,
+    "focus": false,
+    "removed": false
+});
+
+const frameTwo = reactive({
+    "id": "cb028e50-0555-4753-b5ca-bfba6e79fdbb",
+    "component": "e-frame",
+    "parent": null,
+    "label": "cb028e50-0555-4753-b5ca-bfba6e79fdbb",
+    "wait": true,
+    "keepAlive": false,
+    "display": true,
+    "closeable": true,
+    "minimize": false,
+    "position": 1,
+    "width": null,
+    "loaded": true,
+    "keepMinimized": false,
+    "focus": true,
+    "removed": false
+});
 
 </script>

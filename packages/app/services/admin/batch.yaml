@@ -9,7 +9,7 @@ services:
         arguments:
             - '@enhavo/app/batch/BatchFactory'
         tags:
-            - { name: vue.service, service: 'batchManager' }
+            - { name: vue.service, service: 'batchManager' , lazy: true }
 
     '@enhavo/app/batch/model/UrlBatch':
         import: UrlBatch

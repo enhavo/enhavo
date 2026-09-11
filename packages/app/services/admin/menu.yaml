@@ -9,7 +9,7 @@ services:
         arguments:
             - '@enhavo/app/menu/MenuItemFactory'
         tags:
-            - { name: vue.service, service: 'menuManager', reactive: true }
+            - { name: vue.service, service: 'menuManager', reactive: true , lazy: true }
 
     '@enhavo/app/menu/model/BaseMenuItem':
         import: BaseMenuItem

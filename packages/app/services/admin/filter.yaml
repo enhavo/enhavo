@@ -9,7 +9,7 @@ services:
         arguments:
             - '@enhavo/app/filter/FilterFactory'
         tags:
-            - { name: vue.service, service: 'filterManager' }
+            - { name: vue.service, service: 'filterManager' , lazy: true }
 
     '@enhavo/app/filter/model/BooleanFilter':
         import: BooleanFilter
