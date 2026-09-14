@@ -63,6 +63,40 @@ class ActionManagerTest extends TestCase
         $this->assertEquals('test', $actions['create']->createViewData()['name']);
     }
 
+    public function testArrangement()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->checker->method('isGranted')->willReturn(true);
+        $dependencies->factory->method('create')->willReturnCallback(function ($options, $key) {
+            $action = $this->getMockBuilder(Action::class)->disableOriginalConstructor()->getMock();
+            $action->method('isEnabled')->willReturn(true);
+            $action->method('getPermission')->willReturn(null);
+            $action->method('createViewData')->willReturn(['name' => $key]);
+
+            return $action;
+        });
+        $manager = $this->createInstance($dependencies);
+
+        $configuration = [
+            'preview' => ['type' => 'test'],
+            'delete' => ['type' => 'test'],
+            'duplicate' => ['type' => 'test'],
+            'save' => ['type' => 'test'],
+        ];
+
+        $actions = $manager->getActions($configuration, null, 'save duplicate  preview unknown');
+        $this->assertSame(['save', 'duplicate', 'preview', 'delete'], array_keys($actions));
+
+        $actions = $manager->getActions($configuration, null, ['delete', 'save']);
+        $this->assertSame(['delete', 'save', 'preview', 'duplicate'], array_keys($actions));
+
+        $actions = $manager->getActions($configuration, null, null);
+        $this->assertSame(['preview', 'delete', 'duplicate', 'save'], array_keys($actions));
+
+        $data = $manager->createViewData($configuration, null, 'save');
+        $this->assertSame('save', $data[0]['name']);
+    }
+
     public function testNotEnabled()
     {
         $dependencies = $this->createDependencies();

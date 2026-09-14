@@ -71,7 +71,7 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
      *
      * @return Action[]
      */
-    protected function createActions($configuration, ?object $resource = null): array
+    protected function createActions($configuration, ?object $resource = null, string|array|null $arrangement = null): array
     {
         if (!$this->container->has(ActionManager::class)) {
             throw GridException::missingService(ActionManager::class);
@@ -80,7 +80,7 @@ abstract class AbstractGrid implements GridInterface, ServiceSubscriberInterface
         /** @var ActionManager $actionManager */
         $actionManager = $this->container->get(ActionManager::class);
 
-        return $actionManager->getActions($configuration, $resource);
+        return $actionManager->getActions($configuration, $resource, $arrangement);
     }
 
     /**
