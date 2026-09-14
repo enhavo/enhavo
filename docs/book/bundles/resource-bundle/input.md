@@ -20,6 +20,7 @@ enhavo_resource:
             form: App\Form\Type\BookType
             form_options: []
             actions: []
+            actions_arrangement: null
             actions_secondary: []
             tabs: []
             factory_method: createNew
@@ -31,6 +32,23 @@ enhavo_resource:
             serialization_groups: endpoint
             validation_groups: ['default']
 ```
+
+### Action arrangement
+
+Actions are rendered in the order they are defined. Since actions are merged when an input is extended,
+a project can't reorder inherited actions without redefining all of them. Use `actions_arrangement`
+to define the order by action key instead. Keys that are not listed
+keep their configured order and are appended after the arranged ones.
+
+```yaml
+enhavo_resource:
+    inputs:
+        app.book:
+            extends: enhavo_resource.input
+            actions_arrangement: 'save duplicate preview'
+```
+
+The value can also be given as a list: `actions_arrangement: [save, duplicate, preview]`.
 
 ### Routes
 

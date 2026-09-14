@@ -31,6 +31,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
     {
         $resolver->setDefaults([
             'actions' => [],
+            'actions_arrangement' => null,
             'actions_secondary' => [],
             'tabs' => [],
             'form' => null,
@@ -77,7 +78,7 @@ class Input extends AbstractInput implements ConfigMergeInterface
             return $this->actions;
         }
 
-        $this->actions = $this->createActions($this->options['actions'], $resource);
+        $this->actions = $this->createActions($this->options['actions'], $resource, $this->options['actions_arrangement']);
 
         return $this->actions;
     }
