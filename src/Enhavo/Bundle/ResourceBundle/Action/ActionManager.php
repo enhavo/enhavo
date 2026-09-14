@@ -43,7 +43,7 @@ class ActionManager
             $actions[$key] = $action;
         }
 
-        return $actions;
+        return $this->sortActions($actions);
     }
 
     public function createViewData(array $configuration, ?object $resource = null): array
@@ -55,5 +55,24 @@ class ActionManager
         }
 
         return $data;
+    }
+
+    private function sortActions(array $actions): array
+    {
+        usort($actions, function (Action $a, Action $b) {
+            if (null === $a->getPosition() && null === $b->getPosition()) {
+                return 0;
+            }
+            if (null !== $a->getPosition() && null === $b->getPosition()) {
+                return -1;
+            }
+            if (null === $a->getPosition() && null !== $b->getPosition()) {
+                return 1;
+            }
+
+            return $a->getPosition() <=> $b->getPosition();
+        });
+
+        return $actions;
     }
 }

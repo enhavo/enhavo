@@ -55,6 +55,11 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
         ]);
     }
 
+    public function getPosition(array $options): ?int
+    {
+        return $options['position'];
+    }
+
     public function getLabel(array $options): string
     {
         return $this->translator->trans($options['label'], [], $options['translation_domain']);
@@ -71,6 +76,7 @@ class BaseActionType extends AbstractType implements ActionTypeInterface
             'confirm_label_ok' => null,
             'confirm_label_cancel' => null,
             'component' => 'action-action',
+            'position' => null,
         ]);
 
         $resolver->setRequired([
