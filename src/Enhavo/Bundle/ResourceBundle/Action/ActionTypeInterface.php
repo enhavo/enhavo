@@ -23,6 +23,4 @@ interface ActionTypeInterface extends TypeInterface
     public function isEnabled(array $options, ?object $resource = null): bool;
 
     public function getLabel(array $options): string;
-
-    public function getPosition(array $options): ?int;
 }

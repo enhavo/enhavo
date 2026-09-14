@@ -43,9 +43,4 @@ class Action extends AbstractContainerType
     {
         return $this->type->isEnabled($this->options, $resource);
     }
-
-    public function getPosition(): ?int
-    {
-        return $this->type->getPosition($this->options);
-    }
 }

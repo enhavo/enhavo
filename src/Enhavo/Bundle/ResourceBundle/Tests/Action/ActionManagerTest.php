@@ -45,7 +45,6 @@ class ActionManagerTest extends TestCase
             if ('test' === $options['type']) {
                 $action = $this->getMockBuilder(Action::class)->disableOriginalConstructor()->getMock();
                 $action->method('isEnabled')->willReturn(true);
-                $action->method('getPosition')->willReturn(null);
                 $action->method('getPermission')->willReturn(true);
                 $action->method('createViewData')->willReturn(['name' => 'test']);
 

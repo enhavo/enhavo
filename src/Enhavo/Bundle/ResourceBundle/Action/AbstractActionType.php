@@ -39,11 +39,6 @@ abstract class AbstractActionType extends AbstractType implements ActionTypeInte
         return $this->parent->getLabel($options);
     }
 
-    public function getPosition(array $options): ?int
-    {
-        return $this->parent->getPosition($options);
-    }
-
     public static function getParentType(): ?string
     {
         return BaseActionType::class;
