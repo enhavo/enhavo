@@ -24,6 +24,7 @@ enhavo_resource:
             routes: {} # route options
             collection: {} # collection options
             actions: {} # list of actions
+            actions_arrangement: null # order of action keys, e.g. 'create export' (see input docs)
             filters: {} # list of filters
             batches: {}  # list of batches
             columns: {} # list of columns
