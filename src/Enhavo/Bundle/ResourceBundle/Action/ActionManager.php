@@ -59,7 +59,7 @@ class ActionManager
 
     private function sortActions(array $actions): array
     {
-        usort($actions, function (Action $a, Action $b) {
+        uasort($actions, function (Action $a, Action $b) {
             if (null === $a->getPosition() && null === $b->getPosition()) {
                 return 0;
             }
