@@ -34,6 +34,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
     {
         $resolver->setDefaults([
             'actions' => [],
+            'actions_arrangement' => null,
             'actions_secondary' => [],
             'columns' => [],
             'filters' => [],
@@ -115,7 +116,7 @@ class Grid extends AbstractGrid implements ConfigMergeInterface
             return $this->actions;
         }
 
-        $this->actions = $this->createActions($this->options['actions']);
+        $this->actions = $this->createActions($this->options['actions'], null, $this->options['actions_arrangement']);
 
         return $this->actions;
     }

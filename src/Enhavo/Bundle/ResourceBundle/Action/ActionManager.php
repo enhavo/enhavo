@@ -25,7 +25,7 @@ class ActionManager
     /**
      * @return Action[]
      */
-    public function getActions(array $configuration, ?object $resource = null): array
+    public function getActions(array $configuration, ?object $resource = null, string|array|null $arrangement = null): array
     {
         $actions = [];
         foreach ($configuration as $key => $options) {
@@ -43,17 +43,51 @@ class ActionManager
             $actions[$key] = $action;
         }
 
-        return $actions;
+        return $this->arrangeActions($actions, $arrangement);
     }
 
-    public function createViewData(array $configuration, ?object $resource = null): array
+    public function createViewData(array $configuration, ?object $resource = null, string|array|null $arrangement = null): array
     {
         $data = [];
-        $actions = $this->getActions($configuration, $resource);
+        $actions = $this->getActions($configuration, $resource, $arrangement);
         foreach ($actions as $action) {
             $data[] = $action->createViewData($resource);
         }
 
         return $data;
+    }
+
+    private function arrangeActions(array $actions, string|array|null $arrangement): array
+    {
+        $keys = $this->normalizeArrangement($arrangement);
+        if (empty($keys)) {
+            return $actions;
+        }
+
+        $arranged = [];
+        foreach ($keys as $key) {
+            if (array_key_exists($key, $actions)) {
+                $arranged[$key] = $actions[$key];
+                unset($actions[$key]);
+            }
+        }
+
+        return $arranged + $actions;
+    }
+
+    /**
+     * @return string[]
+     */
+    private function normalizeArrangement(string|array|null $arrangement): array
+    {
+        if (null === $arrangement) {
+            return [];
+        }
+
+        if (is_string($arrangement)) {
+            $arrangement = preg_split('/\s+/', trim($arrangement), -1, PREG_SPLIT_NO_EMPTY);
+        }
+
+        return array_values(array_unique(array_map('strval', $arrangement)));
     }
 }

@@ -64,7 +64,7 @@ abstract class AbstractInput implements InputInterface, ServiceSubscriberInterfa
      *
      * @return Action[]
      */
-    protected function createActions($configuration, ?object $resource = null): array
+    protected function createActions($configuration, ?object $resource = null, string|array|null $arrangement = null): array
     {
         if (!$this->container->has(ActionManager::class)) {
             throw InputException::missingService(ActionManager::class);
@@ -73,7 +73,7 @@ abstract class AbstractInput implements InputInterface, ServiceSubscriberInterfa
         /** @var ActionManager $actionManager */
         $actionManager = $this->container->get(ActionManager::class);
 
-        return $actionManager->getActions($configuration, $resource);
+        return $actionManager->getActions($configuration, $resource, $arrangement);
     }
 
     /**
