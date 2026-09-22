@@ -1,6 +1,6 @@
 <template>
-    <div class="translation">
-        <div class="translation-switcher">
+    <div class="translation" v-show="form.children.length > 0 && form.children[0].isVisible()">
+        <div class="translation-switcher" v-if="form.translationLocales.length > 1">
             <div class="translation-switcher-current">{{ translationManager.locale }}</div>
             <div class="translation-switcher-menu">
                 <div v-for="locale in form.translationLocales"
@@ -15,6 +15,7 @@
         <div v-for="child of form.children" :style="{display: showForm(child)}">
             <form-row :form="child" />
         </div>
+        <form-errors :form="form"></form-errors>
     </div>
 </template>
 
