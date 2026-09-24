@@ -1,0 +1,25 @@
+.e-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin: 2px 8px;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: none;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(0, 0, 0, 0.9);
+  }
+
+  &.is-active {
+    background: rgba(0, 0, 0, 0.08);
+    color: #000;
+  }
+}

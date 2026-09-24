@@ -48,7 +48,7 @@ class LinkMenuType extends AbstractMenuType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'menu-item',
+            'component' => 'e-menu-item',
             'model' => 'BaseMenuItem',
             'translation_domain' => null,
             'icon' => null,

@@ -1,0 +1,13 @@
+.e-frames {
+  grid-area: content;
+  display: flex;
+  overflow: hidden;
+
+  .frame {
+    flex: 1;
+    overflow: auto;
+    background: #fff;
+  }
+}
+
+

@@ -1,0 +1,83 @@
+.e-toolbar {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+
+  .toolbar-brand {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border-right: 0;
+    height: 100%;
+    font-weight: 600;
+    white-space: nowrap;
+    width: 250px;
+
+    &.is-collapsed {
+      width: 60px;
+    }
+  }
+
+  .toolbar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 100%;
+    cursor: pointer;
+    color: #444;
+    flex-shrink: 0;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  .toolbar-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    height: 100%;
+  }
+
+  .toolbar-right {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  .toolbar-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 100%;
+    padding: 0 12px;
+    cursor: pointer;
+    color: #444;
+    font-size: 13px;
+    white-space: nowrap;
+    user-select: none;
+    background: none;
+    border: none;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: #000;
+    }
+  }
+
+  .toolbar-divider {
+    width: 1px;
+    height: 24px;
+    background: #ddd;
+    margin: 0 8px;
+    flex-shrink: 0;
+    overflow: hidden;
+    font-size: 0;
+    color: transparent;
+  }
+}

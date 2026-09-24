@@ -1,9 +1,15 @@
 import {defineConfig} from 'vitepress'
 import {vitepressDemoPlugin} from 'vitepress-demo-plugin/markdown';
 import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs'
+import { fantasticon } from '@enhavo/framework/vite/fantasticon-plugin/plugin.js'
+import { fantasticonSetting } from '@enhavo/ui/icon/fantasticon-settings.js'
 
 export default defineConfig({
     vite: {
+        plugins: [
+            // need fixes:
+            // fantasticon(fantasticonSetting({})),
+        ],
         css: {
             preprocessorOptions: {
                 scss: {
@@ -19,6 +25,7 @@ export default defineConfig({
             {text: 'Guides', link: '/guides/'},
             {text: 'Book', link: '/book/'},
             {text: 'Reference', link: '/reference/'},
+            {text: 'UI', link: '/ui/'},
         ],
         search: {
             provider: 'local'
@@ -140,6 +147,15 @@ export default defineConfig({
                         { text: 'Translation', link: '/book/bundles/translation-bundle/index' },
                         { text: 'User', link: '/book/bundles/user-bundle/index' },
                         { text: 'Vue Form', link: '/book/bundles/vue-form-bundle/index' },
+                    ]
+                },
+            ],
+            '/ui/': [
+                {
+                    text: 'User Interface',
+                    items: [
+                        { text: 'Icons', link: '/ui/icons/index' },
+                        { text: 'Toolbar', link: '/ui/toolbar/index' },
                     ]
                 },
             ],

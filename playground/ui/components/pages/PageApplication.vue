@@ -2,31 +2,42 @@
     <div>
         <h1>Application</h1>
 
-        <e-app>
-            <e-toolbar>
-                <e-toolbar-brand :collapsed="menuCollapsed"></e-toolbar-brand>
-                <e-toolbar-left>
-                    <button @click="menuCollapsed = !menuCollapsed">Toogle Menu</button>
-                </e-toolbar-left>
-                <e-toolbar-right>
-                    <e-toolbar-action :action="menuPage"></e-toolbar-action>
-                    <e-toolbar-action-dropdown :action="{label: 'Lang'}"></e-toolbar-action-dropdown>
-                </e-toolbar-right>
-            </e-toolbar>
-            <e-menu :collapsed="menuCollapsed">
-                <e-menu-main>
-                    <e-menu-item :item="menuPage" />
-                    <e-menu-item-list :item="menuArticle" />
-                </e-menu-main>
-                <e-menu-bottom>
-                    <e-menu-item :item="menuUser" />
-                </e-menu-bottom>
-            </e-menu>
-            <e-frames>
-                <e-frame :frame="frameOne">Das ist ein Frame</e-frame>
-                <e-frame :frame="frameTwo">Das ist ein Frame</e-frame>
-            </e-frames>
-        </e-app>
+        <div class="e-app">
+
+            <div class="e-toolbar">
+                <div class="toolbar-brand is-collapsed"> Brand </div>
+                <div class="toolbar-left">
+                    <button>Toogle Menu</button>
+                </div>
+                <div class="toolbar-right"></div>
+                <div class="e-btn"></div>
+            </div>
+
+            <div class="e-menubar">
+                <div class="menubar-main">
+                    <div class="menu-item-list">
+                        <div class="e-menu-item">Page</div>
+
+                        <div class="e-menu-item-list">
+                            <div class="menu-item">Article</div>
+                            <div class="menu-item-list-container is-expanded">
+                                <div class="e-menu-item">Tag</div>
+                                <div class="e-menu-item">Category</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="menu-bottom">
+
+                </div>
+            </div>
+
+            <div class="e-frames">
+                <div class="frame">
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 

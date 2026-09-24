@@ -4,7 +4,7 @@ import path from 'node:path'
 import 'dotenv/config'
 import containerDIPlugin from '@enhavo/framework/vite/rollup-plugin-container-di'
 import {fantasticon} from "@enhavo/framework/vite/fantasticon-plugin/plugin.js";
-import {fantasticonSetting} from "@enhavo/framework/vite/fantasticon-settings.js";
+import {fantasticonSetting} from "@enhavo/ui/icon/fantasticon-settings.js";
 import {watchNodeModules} from "@enhavo/framework/vite/watch-node-modules-plugin.js";
 import {jqueryGlobalPlugin} from "@enhavo/framework/vite/jquery-global-plugin.js";
 
@@ -24,8 +24,6 @@ export default defineConfig({
             'select2',
             'icheck',
             'html-entities',
-            'expression-language/lib/index',
-            'vue-routes',
             'cropperjs',
         ],
     },
@@ -49,16 +47,19 @@ export default defineConfig({
             '@enhavo/dashboard',
             '@enhavo/dependency-injection',
             '@enhavo/form',
+            '@enhavo/framework',
             '@enhavo/media',
             '@enhavo/media-library',
             '@enhavo/multi-tenancy',
             '@enhavo/newsletter',
             '@enhavo/payment',
+            '@enhavo/resource',
             '@enhavo/search',
             '@enhavo/shop',
             '@enhavo/slider',
             '@enhavo/theme',
             '@enhavo/translation',
+            '@enhavo/ui',
             '@enhavo/user',
             '@enhavo/vue-form',
         ]),

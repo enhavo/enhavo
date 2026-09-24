@@ -1,8 +1,6 @@
 imports:
     - path: '@enhavo/app/services/*'
-    - path: '@enhavo/ui/app/services.yaml'
-    - path: '@enhavo/ui/datepicker/services.yaml'
-    - path: '@enhavo/ui/select/services.yaml'
+    - path: '@enhavo/ui/services/s*'
 
 compiler_pass:
     vue_routes:

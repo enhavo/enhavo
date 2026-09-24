@@ -1,33 +1,67 @@
 <template>
-    <e-app>
-        <e-toolbar>
-            <e-toolbar-brand :collapsed="menuCollapsed"></e-toolbar-brand>
-            <e-toolbar-left>
-                <button @click="menuCollapsed = !menuCollapsed">Toogle Menu</button>
-            </e-toolbar-left>
-            <e-toolbar-right>
-                <e-toolbar-action :action="menuPage"></e-toolbar-action>
-                <e-toolbar-action-dropdown :action="{label: 'Lang'}"></e-toolbar-action-dropdown>
-            </e-toolbar-right>
-        </e-toolbar>
-        <e-menu :collapsed="menuCollapsed">
-            <e-menu-main>
-                <e-menu-item :item="menuPage" />
-                <e-menu-item-list :item="menuArticle" />
-            </e-menu-main>
-            <e-menu-bottom>
-                <e-menu-item :item="menuUser" />
-            </e-menu-bottom>
-        </e-menu>
-        <e-frames>
-            <e-frame :frame="frameOne">Das ist ein Frame</e-frame>
-            <e-frame :frame="frameTwo">Das ist ein Frame</e-frame>
-        </e-frames>
-    </e-app>
+    <div class="e-app">
+        <div class="e-toolbar">
+            <div class="toolbar-brand">Brand</div>
+            <div class="toolbar-toggle"></div>
+            <div class="toolbar-left">
+                <!-- Breadcrumb -->
+                <div class="e-breadcrumb">
+                    <div class="breadcrumb-path"></div>
+                    <div class="breadcrumb-divider"></div>
+                    <div class="breadcrumb-path"></div>
+                </div>
+            </div>
+            <div class="toolbar-right">
+                <button class="toolbar-btn">Translate <i class="e-icon e-icon-zoom_out_map"></i></button>
+                <button class="toolbar-btn">Magic <i class="icon-3d_rotation"></i></button>
+                <div class="toolbar-divider"></div>
+                <button class="toolbar-btn">DE <i class="e-icon"></i></button>
+                <div class="toolbar-divider"></div>
+                <button class="toolbar-btn">Settings <i class="e-icon"></i></button>
+                <button class="toolbar-btn">Johannes <i class="e-icon"></i></button>
+            </div>
+        </div>
+
+        <div class="e-menubar">
+            <div class="menubar-main">
+                <div class="menu-item-list">
+                    <div class="e-menu-item">Dashboard</div>
+                    <div class="e-menu-item-list">
+                        <div class="menu-item">Articles</div>
+                        <div class="menu-item-list-container is-expanded">
+                            <div class="e-menu-item">Tag</div>
+                            <div class="e-menu-item">Category</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-bottom"></div>
+        </div>
+
+        <div class="e-frames">
+            <div class="frame"></div>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
 import { inject, ref, reactive } from 'vue'
+import { MainManager } from "@enhavo/app/manager/MainManager"
+import { MenuManager } from "@enhavo/app/menu/MenuManager"
+
+const mainManager = ref<MainManager | null>(null)
+const menuManager = ref<MenuManager | null>(null)
+
+const mainManagerPromise = inject<Promise<MainManager>>('mainManager')
+const menuManagerPromise = inject<Promise<MenuManager>>('menuManager')
+
+;(async () => {
+    mainManager.value = await mainManagerPromise
+    await mainManager.value.load()
+
+    menuManager.value = await menuManagerPromise
+})()
+
 
 // import {MainManager} from "@enhavo/app/manager/MainManager";
 // import {MenuManager} from "../../menu/MenuManager";

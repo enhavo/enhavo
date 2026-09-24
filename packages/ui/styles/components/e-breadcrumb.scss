@@ -1,0 +1,23 @@
+.e-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #444;
+
+  .breadcrumb-path {
+    cursor: pointer;
+
+    &:hover {
+      color: #000;
+    }
+  }
+
+  .breadcrumb-divider {
+    color: #aaa;
+
+    &::after {
+      content: '/';
+    }
+  }
+}

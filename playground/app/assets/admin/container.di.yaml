@@ -18,9 +18,6 @@ compiler_pass:
         chunkName: 'admin'
         priority: 40
 
-styles:
-    - '@enhavo/ui/styles.scss'
-
 services:
     'manager/FrameTestManager':
         from: './manager/FrameTestManager'

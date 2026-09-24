@@ -4,9 +4,9 @@ import {MenuManager} from "../MenuManager";
 
 export class ListMenuItem extends AbstractMenuItem
 {
-    public items: Array<MenuItemInterface>;
-    public isOpen: boolean = false;
+    public children: Array<MenuItemInterface>;
     public icon: string;
+    public expanded: boolean = false;
 
     constructor(
         private menuManager: MenuManager,
@@ -16,24 +16,19 @@ export class ListMenuItem extends AbstractMenuItem
 
     onInit()
     {
-        for (let i in this.items) {
-            this.items[i] = this.menuManager.createMenuItem(this.items[i]);
+        for (let i in this.children) {
+            this.children[i] = this.menuManager.createMenuItem(this.children[i]);
         }
-    }
-
-    children(): Array<MenuItemInterface>
-    {
-        return this.items;
     }
 
     open()
     {
-        this.isOpen = true;
+        this.expanded = !this.expanded;
     }
 
     close()
     {
-        this.isOpen = false;
+        this.expanded = false;
     }
 
     isMainMenuOpen()
@@ -65,7 +60,7 @@ export class ListMenuItem extends AbstractMenuItem
 
     isActive(): boolean
     {
-        for (let child of this.items) {
+        for (let child of this.children) {
             if (child.isActive()) {
                 return true;
             }

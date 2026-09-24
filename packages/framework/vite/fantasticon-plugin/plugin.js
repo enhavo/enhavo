@@ -2,6 +2,7 @@ import { assetBuilder } from "@enhavo/framework/vite/fantasticon-plugin/build-as
 import { defaults } from "@enhavo/framework/vite/fantasticon-plugin/defaults.js";
 import { hmrLinkTag, hmrTemplate } from "@enhavo/framework/vite/fantasticon-plugin/hmr-template.js";
 import { middleware } from "@enhavo/framework/vite/fantasticon-plugin/middleware.js";
+import path from 'node:path'
 
 export async function fantasticon(options) {
     const {
@@ -9,6 +10,9 @@ export async function fantasticon(options) {
         injectHtml = true,
         ...config
     } = defaults(options ?? {});
+
+    console.log(config);
+
     const builder = await assetBuilder(config, generateFonts);
     const name = `fantasticon:${config.name}`;
     const virtual = `\0${name}`;

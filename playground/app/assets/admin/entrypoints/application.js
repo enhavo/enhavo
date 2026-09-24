@@ -1,7 +1,7 @@
 import container from "../container.di.yaml";
 import {Kernel} from "@enhavo/app/kernel/Kernel";
 import $ from 'jquery';
-import "fantasticon:icon";
+import "fantasticon:e-icon";
 
 window.$ = $;
 window.jQuery = $;

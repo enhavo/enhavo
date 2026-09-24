@@ -35,7 +35,7 @@ class ListMenuType extends AbstractMenuType
         $data->add([
             'label' => $this->translator->trans($options['label'], [], $options['translation_domain']),
             'icon' => $options['icon'],
-            'items' => $items,
+            'children' => $items,
         ]);
     }
 
@@ -54,7 +54,7 @@ class ListMenuType extends AbstractMenuType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'component' => 'menu-list',
+            'component' => 'e-menu-item-list',
             'model' => 'ListMenuItem',
             'translation_domain' => null,
             'icon' => null,

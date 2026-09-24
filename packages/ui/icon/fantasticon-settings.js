@@ -4,14 +4,11 @@ import { fileURLToPath } from 'node:url';
 export function fantasticonSetting(setting)
 {
     let defaultSettings =  {
-        name: "icon",
-        inputDir: path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../app/assets/icons'),
+        name: "e-icon",
+        inputDir: path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'icons'),
         assetTypes: ["css", "html"],
-        prefix: 'icon',
+        prefix: 'e-icon',
         tag: '*',
-        templates: {
-            html: path.resolve(import.meta.dirname, './fantasticon-plugin/html.hbs'),
-        },
         codepoints: {
             '3d_rotation': 0xf101,
             'ac_unit': 0xf102,

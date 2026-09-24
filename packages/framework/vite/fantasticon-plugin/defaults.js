@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { fontAssetTypes } from "@enhavo/framework/vite/fantasticon-plugin/build-assets.js";
 
 export function defaults(options)
@@ -15,6 +16,11 @@ export function defaults(options)
         descent: 60,
         normalize: true,
         assetVersion: Date.now(),
+        templates: {
+            html: path.resolve(import.meta.dirname, './html.hbs'),
+            css: path.resolve(import.meta.dirname, './css.hbs'),
+            scss: path.resolve(import.meta.dirname, './scss.hbs'),
+        },
         formatOptions: {
             svg: { ascent: 0 },
             json: { indent: 2 },

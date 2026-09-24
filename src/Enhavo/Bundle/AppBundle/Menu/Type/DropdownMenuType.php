@@ -65,7 +65,7 @@ class DropdownMenuType extends AbstractMenuType
         $resolver->setDefaults([
             'model' => 'DropdownMenuItem',
             'translation_domain' => null,
-            'component' => 'menu-dropdown',
+            'component' => 'e-menu-dropdown',
             'value' => null,
             'label' => null,
         ]);
