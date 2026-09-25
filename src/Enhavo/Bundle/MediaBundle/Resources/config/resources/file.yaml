@@ -26,12 +26,9 @@ enhavo_resource:
                     type: property
                     groups: [ 'duplicate', 'revision', 'restore' ]
                 content:
-                    -   type: Enhavo\Bundle\MediaBundle\Duplicate\Type\ContentDuplicateType
-                        groups: ['duplicate']
-                        copy_content: true
-                    -   type: Enhavo\Bundle\MediaBundle\Duplicate\Type\ContentDuplicateType
-                        groups: ['revision', 'restore']
-                        copy_content: false
+                    type: Enhavo\Bundle\MediaBundle\Duplicate\Type\ContentDuplicateType
+                    groups: ['duplicate', 'revision', 'restore']
+                    copy_content: false
                 token:
                     type: Enhavo\Bundle\MediaBundle\Duplicate\Type\FileTokenDuplicateType
                     groups: [ 'duplicate', 'revision', 'restore' ]
