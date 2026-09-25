@@ -26,9 +26,11 @@ class SymlinkEnhancedFileStorage implements StorageInterface
 
     public function deleteContent(FormatInterface|FileInterface $file): void
     {
-        $path = $this->getSymlinkPath($file);
-        if ($this->fs->exists($path)) {
-            $this->fs->remove($path);
+        if (!($file instanceof FormatInterface && $file->getFile() === null)) {
+            $path = $this->getSymlinkPath($file);
+            if ($this->fs->exists($path)) {
+                $this->fs->remove($path);
+            }
         }
 
         $this->storage->deleteContent($file);
@@ -38,15 +40,17 @@ class SymlinkEnhancedFileStorage implements StorageInterface
     {
         $content = $this->storage->saveContent($file);
 
-        $path = $this->getSymlinkPath($file);
+        if (!($file instanceof FormatInterface && $file->getFile() === null)) {
+            $path = $this->getSymlinkPath($file);
 
-        $dir = dirname($path);
-        if (!$this->fs->exists($dir)) {
-            $this->fs->mkdir($dir);
-        }
+            $dir = dirname($path);
+            if (!$this->fs->exists($dir)) {
+                $this->fs->mkdir($dir);
+            }
 
-        if (!$this->fs->exists($path)) {
-            $this->fs->symlink($content->getFilePath(), $path);
+            if (!$this->fs->exists($path)) {
+                $this->fs->symlink($content->getFilePath(), $path);
+            }
         }
 
         return $content;
@@ -55,15 +59,18 @@ class SymlinkEnhancedFileStorage implements StorageInterface
     public function getContent(FormatInterface|FileInterface $file): ContentInterface
     {
         $content = $this->storage->getContent($file);
-        $path = $this->getSymlinkPath($file);
 
-        $dir = dirname($path);
-        if (!$this->fs->exists($dir)) {
-            $this->fs->mkdir($dir);
-        }
+        if (!($file instanceof FormatInterface && $file->getFile() === null)) {
+            $path = $this->getSymlinkPath($file);
 
-        if (!$this->fs->exists($path)) {
-            $this->fs->symlink($content->getFilePath(), $path);
+            $dir = dirname($path);
+            if (!$this->fs->exists($dir)) {
+                $this->fs->mkdir($dir);
+            }
+
+            if (!$this->fs->exists($path)) {
+                $this->fs->symlink($content->getFilePath(), $path);
+            }
         }
 
         return $content;

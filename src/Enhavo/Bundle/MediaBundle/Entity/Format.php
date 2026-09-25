@@ -87,12 +87,12 @@ class Format implements FormatInterface
         return $filename;
     }
 
-    public function getFile(): FileInterface
+    public function getFile(): ?FileInterface
     {
         return $this->file;
     }
 
-    public function setFile(FileInterface $file): void
+    public function setFile(?FileInterface $file): void
     {
         $this->file = $file;
     }

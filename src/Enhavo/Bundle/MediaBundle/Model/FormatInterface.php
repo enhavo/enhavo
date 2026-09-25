@@ -31,9 +31,9 @@ interface FormatInterface extends FileContentInterface
 
     public function setContent(ContentInterface $content);
 
-    public function setFile(FileInterface $file);
+    public function setFile(?FileInterface $file);
 
-    public function getFile(): FileInterface;
+    public function getFile(): ?FileInterface;
 
     public function getLockAt(): ?\DateTime;
 
