@@ -188,14 +188,14 @@ class TranslationManager
         }
     }
 
-    private function isTranslated($entity): bool
+    public function isTranslated($entity): bool
     {
         $oid = spl_object_hash($entity);
 
         return isset($this->translatedLocale[$oid]);
     }
 
-    private function getTranslatedLocale($object): ?string
+    public function getTranslatedLocale($object): ?string
     {
         $oid = spl_object_hash($object);
 
