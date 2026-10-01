@@ -62,7 +62,19 @@ class RouteTranslator extends AbstractTranslator
             return;
         }
 
-        parent::detach($entity, $property, $locale, $options);
+        $accessor = PropertyAccess::createPropertyAccessor();
+
+        $originalValue = $this->originalData->load($entity, $property, null);
+        $translationValue = $accessor->getValue($entity, $property);
+
+        // If no translation exists and allow_null is false, the translation keeps the original value
+        // In that case we don't need to detach it
+        if (!($originalValue === $translationValue && !$options['allow_null'])) {
+            $this->setTranslation($entity, $property, $locale, $translationValue);
+            $accessor->setValue($entity, $property, $originalValue);
+        }
+
+        $this->originalData->delete($entity, $property, $locale);
     }
 
     protected function createTranslation($entity, $property, $locale, $value): ?object
@@ -80,7 +92,9 @@ class RouteTranslator extends AbstractTranslator
         }
 
         $value->setContent($entity);
-        $value->generateRouteName();
+        if (null === $value->getName()) {
+            $value->generateRouteName();
+        }
 
         $translationRoute = new TranslationRoute();
         $translationRoute->setLocale($locale);
