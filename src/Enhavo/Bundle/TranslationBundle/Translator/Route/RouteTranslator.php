@@ -69,7 +69,8 @@ class RouteTranslator extends AbstractTranslator
 
         // If no translation exists and allow_null is false, the translation keeps the original value
         // In that case we don't need to detach it
-        if (!($originalValue === $translationValue && !$options['allow_null'])) {
+        // If allow_null is not set, we assume default value (false)
+        if (!($originalValue === $translationValue && (!isset($options['allow_null']) || !$options['allow_null']))) {
             $this->setTranslation($entity, $property, $locale, $translationValue);
             $accessor->setValue($entity, $property, $originalValue);
         }
@@ -92,7 +93,7 @@ class RouteTranslator extends AbstractTranslator
         }
 
         $value->setContent($entity);
-        if (null === $value->getName()) {
+        if (empty($value->getName())) {
             $value->generateRouteName();
         }
 
