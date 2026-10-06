@@ -11,8 +11,18 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Slugifier;
 
-use Behat\Transliterator\Transliterator;
-
-class Urlizer extends Transliterator
+/**
+ * @deprecated Use Slugifier::slugify() instead
+ */
+class Urlizer
 {
+    public static function urlize($text, $separator = '-')
+    {
+        return Slugifier::slugify($text, $separator);
+    }
+
+    public static function transliterate($text, $separator = '-')
+    {
+        return Slugifier::slugify($text, $separator);
+    }
 }

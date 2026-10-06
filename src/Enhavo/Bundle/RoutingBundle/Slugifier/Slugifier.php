@@ -11,14 +11,20 @@
 
 namespace Enhavo\Bundle\RoutingBundle\Slugifier;
 
+use Symfony\Component\String\Slugger\AsciiSlugger;
+
 class Slugifier implements SlugifierInterface
 {
+    private static ?AsciiSlugger $slugger = null;
+
     public static function slugify($content, $separator = '-')
     {
-        $urlizer = new Urlizer();
-        $content = $urlizer->urlize($content, $separator);
-        $content = $urlizer->transliterate($content, $separator);
+        // Remove apostrophes between word characters (e.g. "don't" => "dont") to keep existing slugs stable
+        $content = preg_replace('/(\w)\'(\w)/u', '${1}${2}', (string) $content);
 
-        return $content;
+        // The "de" locale transliterates umlauts and ß (e.g. "Übel weiß" => "uebel-weiss")
+        self::$slugger ??= new AsciiSlugger('de');
+
+        return self::$slugger->slug($content, $separator)->lower()->toString();
     }
 }
