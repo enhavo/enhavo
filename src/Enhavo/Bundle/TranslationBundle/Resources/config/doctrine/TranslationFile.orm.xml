@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
     <entity name="Enhavo\Bundle\TranslationBundle\Entity\TranslationFile" table="translation_translation_file" repository-class="Enhavo\Bundle\TranslationBundle\Repository\TranslationFileRepository">
+        <indexes>
+            <index name="IDX_REFERENCE" columns="refId,class,property,locale" />
+        </indexes>
+
         <id name="id" type="integer" column="id">
             <generator />
         </id>
