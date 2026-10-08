@@ -41,6 +41,7 @@ class Configuration implements ConfigurationInterface
 
         $this->addParametersSection($rootNode);
         $this->addUserIdentifierSection($rootNode);
+        $this->addTwoFactorSection($rootNode);
         $this->addConfigNode($rootNode);
 
         return $treeBuilder;
@@ -63,6 +64,21 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('user_identifiers')
                     ->prototype('scalar')
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addTwoFactorSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('two_factor')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('default_method')->defaultValue('email')->end()
+                        ->booleanNode('default_enabled')->defaultFalse()->end()
+                    ->end()
                 ->end()
             ->end()
         ;
