@@ -2,6 +2,7 @@ import {Router} from "@enhavo/app/routing/Router";
 import {Form} from "@enhavo/vue-form/model/Form";
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
 import {FormUtil} from "@enhavo/vue-form/form/FormUtil";
+import {VueRouterFactory} from "@enhavo/framework/vue/VueRouterFactory";
 
 export class UserManager
 {
@@ -9,6 +10,7 @@ export class UserManager
     public loadingData: boolean = true;
 
     public loginForm: Form
+    public twoFactorForm: Form
 
     public resetPasswordRequestForm: Form
     public resetPasswordConfirmForm: Form
@@ -19,6 +21,7 @@ export class UserManager
     constructor(
         private router: Router,
         private formFactory: FormFactory,
+        private vueRouterFactory: VueRouterFactory,
     ) {
 
     }
@@ -72,13 +75,62 @@ export class UserManager
         }).then((response) => {
             response.json().then((data: any) => {
                 if (data.success) {
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    }
+                    if (data.push) {
+                        this.vueRouterFactory.getRouter().push(data.push);
+                    }
+                    return;
+                }
+
+                this.loading = false;
+                this.loginForm = this.formFactory.create(data.form);
+            });
+        });
+    }
+
+    public getLogoutUrl(): string
+    {
+        return this.router.generate('enhavo_user_admin_logout');
+    }
+
+    public loadTwoFactor()
+    {
+        this.twoFactorForm = null;
+        this.loading = true;
+        const url = this.router.generate('enhavo_user_admin_api_two_factor_form');
+        fetch(url).then((response) => {
+            response.json().then((data: any) => {
+                this.loading = false;
+                this.twoFactorForm = this.formFactory.create(data.form);
+            });
+        });
+    }
+
+    public submitTwoFactor()
+    {
+        this.loading = true;
+        if (this.twoFactorForm) {
+            this.twoFactorForm.errors = [];
+        }
+
+        const url = this.router.generate('enhavo_user_admin_api_two_factor_form');
+        const data = FormUtil.serializeForm(this.twoFactorForm);
+
+        fetch(url, {
+            method: 'POST',
+            body: data,
+        }).then((response) => {
+            response.json().then((data: any) => {
+                if (data.success) {
                     // @ts-ignore
                     window.location.href = data.redirect;
                     return;
                 }
 
                 this.loading = false;
-                this.loginForm = this.formFactory.create(data.form);
+                this.twoFactorForm = this.formFactory.create(data.form);
             });
         });
     }

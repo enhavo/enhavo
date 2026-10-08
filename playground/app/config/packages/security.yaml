@@ -24,6 +24,12 @@ security:
             logout:
                 path: enhavo_user_admin_logout
                 target: enhavo_user_admin_login
+            two_factor:
+                auth_form_path: enhavo_user_admin_two_factor
+                check_path: enhavo_user_admin_api_two_factor_form
+                prepare_on_login: true
+                failure_handler: Enhavo\Bundle\UserBundle\TwoFactor\TwoFactorFailureHandler
+                success_handler: Enhavo\Bundle\UserBundle\TwoFactor\TwoFactorSuccessHandler
 
         main:
             pattern: .*
@@ -38,6 +44,8 @@ security:
 
     access_control:
         - { path: ^/admin/login$, role: PUBLIC_ACCESS }
+        - { path: ^/admin/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
+        - { path: ^/admin/api/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         - { path: ^/admin/logout$, role: PUBLIC_ACCESS }
         - { path: ^/admin/reset-password/.+, role: PUBLIC_ACCESS }
         - { path: ^/admin/api/login/.+, role: PUBLIC_ACCESS }

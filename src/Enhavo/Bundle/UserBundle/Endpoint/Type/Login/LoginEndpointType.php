@@ -18,31 +18,29 @@ use Enhavo\Bundle\FrameworkBundle\Endpoint\Type\AreaEndpointType;
 use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverTrait;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError;
-use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
+use Enhavo\Bundle\UserBundle\User\TargetPathResolver;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class LoginEndpointType extends AbstractFormEndpointType
 {
     use TemplateResolverTrait;
-    use TargetPathTrait;
 
     public function __construct(
         private readonly ConfigurationProvider $provider,
-        private readonly FirewallMap $firewallMap,
         private readonly TokenStorageInterface $tokenStorage,
         private readonly AuthenticationError $authenticationError,
+        private readonly TargetPathResolver $targetPathResolver,
     ) {
     }
 
     protected function init($options, Request $request, Data $data, Context $context): void
     {
         if ($this->tokenStorage->getToken()) {
-            $redirect = $this->getSuccessRedirect($request);
+            $redirect = $this->targetPathResolver->resolveTargetPath($request);
 
             if ('html' === $request->attributes->get('_format')) {
                 $context->setResponse(new RedirectResponse($redirect));
@@ -54,7 +52,10 @@ class LoginEndpointType extends AbstractFormEndpointType
 
         $data->set('component', $options['component']);
         $data->set('props', $options['props']);
-        $data->set('error', $this->authenticationError->getError());
+
+        $error = $this->authenticationError->getError();
+        $data->set('error', $error);
+        $context->set('error', $error);
     }
 
     protected function getForm($options, Request $request, Data $data, Context $context): FormInterface
@@ -66,28 +67,21 @@ class LoginEndpointType extends AbstractFormEndpointType
 
     protected function handleSuccess($options, Request $request, Data $data, Context $context, FormInterface $form): void
     {
-        // handled already by authenticator
+        // if success, then handled already by authenticator
+
+        if ($context->get('error')) {
+            $data->set('success', false);
+            $context->setStatusCode(400);
+        }
     }
 
     protected function getRedirectUrl($options, Request $request, Data $data, Context $context, FormInterface $form): ?string
     {
-        return $this->getSuccessRedirect($request);
-    }
-
-    private function getSuccessRedirect(Request $request)
-    {
-        $firewallName = $this->firewallMap->getFirewallConfig($request)->getName();
-
-        $targetPath = $request->query->get('redirect') ?? $this->getTargetPath($request->getSession(), $firewallName);
-        $this->removeTargetPath($request->getSession(), $firewallName);
-        $request->getSession()->set('_security.credentials', null);
-
-        if (null === $targetPath) {
-            $configuration = $this->provider->getLoginConfiguration();
-            $targetPath = $this->generateUrl($configuration->getRedirectRoute());
+        if ($context->get('error')) {
+            return null;
         }
 
-        return $targetPath;
+        return $this->targetPathResolver->resolveTargetPath($request);
     }
 
     protected function handleFailed($options, Request $request, Data $data, Context $context, FormInterface $form): void

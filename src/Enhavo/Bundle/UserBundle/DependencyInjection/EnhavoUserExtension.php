@@ -45,6 +45,10 @@ class EnhavoUserExtension extends Extension implements PrependExtensionInterface
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
         }
+
+        if (class_exists('Scheb\\TwoFactorBundle\\SchebTwoFactorBundle')) {
+            $loader->load('services/two_factor.yaml');
+        }
     }
 
     protected function prependFiles(): array

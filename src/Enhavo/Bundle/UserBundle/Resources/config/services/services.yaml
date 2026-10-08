@@ -1,4 +1,10 @@
 services:
+    Enhavo\Bundle\UserBundle\User\TargetPathResolver:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@security.firewall.map'
+            - '@router'
+
     Enhavo\Bundle\UserBundle\User\UserManager:
         arguments:
             - '@doctrine.orm.entity_manager'

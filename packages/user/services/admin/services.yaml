@@ -5,6 +5,7 @@ services:
         arguments:
             - '@enhavo/app/routing/Router'
             - '@enhavo/vue-form/form/FormFactory'
+            - '@enhavo/app/vue/VueRouterFactory'
         tags:
             - { name: vue.service, service: userManager, reactive: true }
 
@@ -25,6 +26,12 @@ services:
         chunk: 'user'
         tags:
             - { name: vue.component, component: 'user-login' }
+
+    '@enhavo/user/components/UserTwoFactor.vue':
+        static: true
+        chunk: 'user'
+        tags:
+            - { name: vue.component, component: 'user-two-factor' }
 
     '@enhavo/user/components/reset-password/UserResetPasswordRequest.vue':
         static: true

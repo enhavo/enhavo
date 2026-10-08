@@ -23,6 +23,9 @@
         <field name="apiToken" length="255" nullable="true" />
         <field name="apiAccess" type="boolean" nullable="true" />
         <field name="apiTokenCreatedAt" type="datetime" nullable="true" />
+        <field name="twoFactorMethod" length="255" nullable="true" />
+        <field name="twoFactorRecoveryCode" length="255" nullable="true" />
+        <field name="twoFactorSecretData" type="json" nullable="true" />
 
         <many-to-many field="groups" target-entity="Enhavo\Bundle\UserBundle\Model\GroupInterface" inversed-by="users">
             <join-table name="user_user_group">

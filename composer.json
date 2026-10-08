@@ -42,6 +42,7 @@
     "nikic/php-parser": "^5.0",
     "pagerfanta/doctrine-orm-adapter": "^4.2",
     "ruflin/elastica": "^7.1",
+    "scheb/2fa-bundle": "^8.6",
     "simshaun/recurr": "^6.0",
     "spatie/image-optimizer": "^1.0",
     "symfony-cmf/routing-bundle": "^3.0",
@@ -57,8 +58,8 @@
     "symfony/mailer": "^7.4",
     "symfony/mime": "^7.4",
     "symfony/monolog-bundle": "^3.1",
-    "symfony/orm-pack": "^1.0",
     "symfony/options-resolver": "^7.4",
+    "symfony/orm-pack": "^1.0",
     "symfony/password-hasher": "^7.4",
     "symfony/process": "^7.4",
     "symfony/property-info": "^7.4",
@@ -76,8 +77,8 @@
     "symfony/web-link": "^7.4",
     "symfony/yaml": "^7.4",
     "tecnickcom/tcpdf": "^6.2",
-    "winzou/state-machine-bundle": "^0.6.2",
-    "twig/twig": "^3.14"
+    "twig/twig": "^3.14",
+    "winzou/state-machine-bundle": "^0.6.2"
   },
   "require-dev": {
     "behat/behat": "^3.10",
@@ -127,6 +128,7 @@
     "sort-packages": true,
     "allow-plugins": {
       "composer/package-versions-deprecated": true,
+      "php-http/discovery": false,
       "symfony/runtime": true
     }
   },

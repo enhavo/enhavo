@@ -11,22 +11,17 @@
 
 namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
-use Enhavo\Bundle\ApiBundle\Endpoint\Endpoint;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
-use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Exception\ConfigurationException;
 use Enhavo\Bundle\UserBundle\Model\CredentialsInterface;
-use Enhavo\Component\Type\FactoryInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Enhavo\Bundle\UserBundle\Security\Authentication\Handler\AuthenticationFailureHandler;
+use Enhavo\Bundle\UserBundle\Security\Authentication\Handler\AuthenticationSuccessHandler;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
@@ -35,7 +30,6 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
-use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 /**
  * @author gseidel
@@ -43,15 +37,12 @@ use Symfony\Component\Security\Http\SecurityRequestAttributes;
  */
 class FormLoginAuthenticator extends AbstractAuthenticator
 {
-    private ?UserBadge $userBadge = null;
-
     public function __construct(
         private readonly ConfigurationProvider $configurationProvider,
-        private readonly UrlGeneratorInterface $urlGenerator,
-        private readonly EventDispatcherInterface $eventDispatcher,
         private readonly FormFactoryInterface $formFactory,
-        private readonly FactoryInterface $endpointFactory,
         private readonly TokenStorageInterface $tokenStorage,
+        private readonly AuthenticationSuccessHandler $successHandler,
+        private readonly AuthenticationFailureHandler $failureHandler,
         string $className,
     ) {
     }
@@ -85,10 +76,8 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
         $tokenBadge = new CsrfTokenBadge('authenticate', $credentials->getCsrfToken());
 
-        $this->userBadge = new UserBadge($credentials->getUserIdentifier());
-
         return new Passport(
-            $this->userBadge,
+            new UserBadge($credentials->getUserIdentifier()),
             new PasswordCredentials($credentials->getPassword()),
             [$rememberMeBadge, $tokenBadge],
         );
@@ -111,81 +100,11 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $firewallName): ?Response
     {
-        /** @var UserInterface $user */
-        $user = $token->getUser();
-        $event = $this->dispatchSuccess($user);
-
-        if (null !== $event->getResponse()) {
-            return $event->getResponse();
-        }
-
-        $endpointConfig = $request->attributes->get('_endpoint');
-        if ($endpointConfig) {
-            /** @var Endpoint $endpoint */
-            $endpoint = $this->endpointFactory->create($endpointConfig);
-
-            return $endpoint->getResponse($request);
-        }
-
-        return null;
+        return $this->successHandler->onAuthenticationSuccess($request, $token);
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
-        $credentials = $this->getCredentials($request);
-
-        if ($request->hasSession()) {
-            $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);
-            $request->getSession()->set('_security.credentials', $credentials);
-        }
-
-        $user = $exception->getToken()?->getUser();
-
-        if (null === $user) {
-            try {
-                $user = $this->userBadge?->getUser();
-            } catch (UserNotFoundException $e) {
-            }
-        }
-
-        $event = $this->dispatchFailure($user, $exception);
-
-        if ($event->getResponse()) {
-            return $event->getResponse();
-        }
-
-        $endpointConfig = $request->attributes->get('_endpoint');
-        if ($endpointConfig) {
-            /** @var Endpoint $endpoint */
-            $endpoint = $this->endpointFactory->create($endpointConfig);
-
-            return $endpoint->getResponse($request);
-        }
-
-        return new RedirectResponse($this->getLoginUrl());
-    }
-
-    private function dispatchSuccess(UserInterface $user): UserEvent
-    {
-        $event = new UserEvent($user);
-        $this->eventDispatcher->dispatch($event, UserEvent::LOGIN_SUCCESS);
-
-        return $event;
-    }
-
-    private function dispatchFailure(?UserInterface $user, AuthenticationException $exception): UserEvent
-    {
-        $event = new UserEvent($user);
-        $event->setException($exception);
-        $this->eventDispatcher->dispatch($event, UserEvent::LOGIN_FAILURE);
-
-        return $event;
-    }
-
-    private function getLoginUrl(): string
-    {
-        $loginRoute = $this->configurationProvider->getLoginConfiguration()->getRoute();
-
-        return $this->urlGenerator->generate($loginRoute);
+        return $this->failureHandler->onAuthenticationFailure($request, $exception);
     }
 }
