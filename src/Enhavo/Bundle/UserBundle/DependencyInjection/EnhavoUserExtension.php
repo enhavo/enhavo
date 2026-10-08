@@ -32,6 +32,8 @@ class EnhavoUserExtension extends Extension implements PrependExtensionInterface
         $container->setParameter('enhavo_user.default_firewall', $config['default_firewall']);
         $container->setParameter('enhavo_user.config', $config['config']);
         $container->setParameter('enhavo_user.user_identifiers', $config['user_identifiers']);
+        $container->setParameter('enhavo_user.two_factor.default_enabled', $config['two_factor']['default_enabled']);
+        $container->setParameter('enhavo_user.two_factor.default_method', $config['two_factor']['default_method']);
 
         $configFiles = [
             'services/services.yaml',
@@ -44,6 +46,10 @@ class EnhavoUserExtension extends Extension implements PrependExtensionInterface
         ];
         foreach ($configFiles as $configFile) {
             $loader->load($configFile);
+        }
+
+        if (class_exists('Scheb\\TwoFactorBundle\\SchebTwoFactorBundle')) {
+            $loader->load('services/two_factor.yaml');
         }
     }
 

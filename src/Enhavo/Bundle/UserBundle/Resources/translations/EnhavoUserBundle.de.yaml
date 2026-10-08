@@ -159,6 +159,18 @@ profile:
         success: 'Profil wurde erfolgreich aktualisiert'
         error: 'Fehler bei der Aktualisierung des Profils'
 
+two_factor:
+    auth_code: 'Authentifizierungscode'
+    mail:
+        subject: 'Ihr Authentifizierungscode'
+        text: |
+            Hallo!
+
+            Ihr Authentifizierungscode lautet: %code%
+
+            Mit besten Grüßen,
+            das Team.
+
 verification:
     mail:
         subject: Verifizierung der Email

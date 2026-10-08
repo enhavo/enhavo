@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\UserBundle\Configuration;
 
+use Enhavo\Bundle\UserBundle\Configuration\TwoFactor\TwoFactorEmailConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailCheckConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailConfirmConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ChangeEmail\ChangeEmailFinishConfiguration;
@@ -247,6 +248,15 @@ class ConfigurationProvider
     {
         $configuration = new VerificationConfirmConfiguration();
         $config = $this->getConfig($key, 'verification_confirm');
+        $this->autoApply($configuration, $config);
+
+        return $configuration;
+    }
+
+    public function getTwoFactorEmailConfiguration(?string $key = null): TwoFactorEmailConfiguration
+    {
+        $configuration = new TwoFactorEmailConfiguration();
+        $config = $this->getConfig($key, 'two_factor_email');
         $this->autoApply($configuration, $config);
 
         return $configuration;

@@ -159,6 +159,18 @@ profile:
         success: 'Profile updated successfully'
         error: 'Update failed'
 
+two_factor:
+    auth_code: 'Authentication Code'
+    mail:
+        subject: 'Your authentication code'
+        text: |
+            Hello!
+
+            Your authentication code is: %code%
+
+            Regards,
+            the Team.
+
 verification:
     mail:
         subject: Verify your Email

@@ -25,3 +25,6 @@ enhavo_user:
             password: 'Password'
             remember_me: 'Remember me'
             submit: 'Log in'
+    two_factor:
+        submit: 'Verify'
+        cancel: 'Cancel'

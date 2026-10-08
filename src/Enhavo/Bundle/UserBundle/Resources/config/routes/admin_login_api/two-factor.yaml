@@ -1,0 +1,8 @@
+enhavo_user_admin_api_two_factor_form:
+    path: /2fa/form
+    methods: [GET, POST]
+    controller: "scheb_two_factor.form_controller::form"
+    defaults:
+        _format: json
+        _config: admin
+        _expose: admin_login

@@ -1,4 +1,17 @@
 services:
+    enhavo_user.user.factory:
+        class: Enhavo\Bundle\UserBundle\Factory\UserFactory
+        arguments:
+            - '%enhavo_user.user.model.class%'
+        calls:
+            - [setTwoFactorConfig, ['%enhavo_user.two_factor.default_enabled%', '%enhavo_user.two_factor.default_method%']]
+
+    Enhavo\Bundle\UserBundle\User\TargetPathResolver:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@security.firewall.map'
+            - '@router'
+
     Enhavo\Bundle\UserBundle\User\UserManager:
         arguments:
             - '@doctrine.orm.entity_manager'

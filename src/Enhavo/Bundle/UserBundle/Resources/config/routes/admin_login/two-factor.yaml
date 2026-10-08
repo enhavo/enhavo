@@ -1,0 +1,12 @@
+enhavo_user_admin_two_factor:
+    path: /2fa
+    methods: [GET]
+    defaults:
+        _expose: admin_login
+        _area: admin_login
+        _config: admin
+        _vue:
+            component: user-two-factor
+            groups: admin_login
+        _endpoint:
+            type: admin

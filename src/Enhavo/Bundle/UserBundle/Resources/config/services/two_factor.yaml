@@ -1,0 +1,36 @@
+services:
+    Enhavo\Bundle\UserBundle\TwoFactor\TwoFactorLoginSubscriber:
+        arguments:
+            - '@security.token_storage'
+            - '@scheb_two_factor.firewall_context'
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    Enhavo\Bundle\UserBundle\TwoFactor\TwoFactorSuccessHandler:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\User\TargetPathResolver'
+
+    Enhavo\Bundle\UserBundle\TwoFactor\TwoFactorFailureHandler:
+        arguments:
+            - '@security.token_storage'
+            - '@scheb_two_factor.provider_registry'
+            - '@scheb_two_factor.firewall_context'
+            - '@security.logout_url_generator'
+
+    Enhavo\Bundle\UserBundle\TwoFactor\TwoFactorJsonFormRenderer:
+        arguments:
+            - '@form.factory'
+            - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'
+            - '@security.csrf.token_manager'
+            - '@translator'
+
+    Enhavo\Bundle\UserBundle\TwoFactor\Email\EmailTwoFactorProvider:
+        arguments:
+            - '@Enhavo\Bundle\UserBundle\TwoFactor\TwoFactorJsonFormRenderer'
+            - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\FrameworkBundle\Mailer\MailerManager'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@translator'
+        tags:
+            - { name: scheb_two_factor.provider, alias: enhavo_email_two_factor_provider }

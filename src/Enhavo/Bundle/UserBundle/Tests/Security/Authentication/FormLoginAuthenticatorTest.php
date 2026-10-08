@@ -13,16 +13,14 @@ namespace Enhavo\Bundle\UserBundle\Tests\Security\Authentication;
 
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
 use Enhavo\Bundle\UserBundle\Configuration\Login\LoginConfiguration;
-use Enhavo\Bundle\UserBundle\Event\UserEvent;
 use Enhavo\Bundle\UserBundle\Model\Credentials;
 use Enhavo\Bundle\UserBundle\Model\User;
-use Enhavo\Bundle\UserBundle\Repository\UserRepository;
 use Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator;
+use Enhavo\Bundle\UserBundle\Security\Authentication\Handler\AuthenticationFailureHandler;
+use Enhavo\Bundle\UserBundle\Security\Authentication\Handler\AuthenticationSuccessHandler;
 use Enhavo\Bundle\UserBundle\Tests\Mocks\UserMock;
-use Enhavo\Component\Type\FactoryInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\InputBag;
@@ -30,7 +28,6 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -49,11 +46,10 @@ class FormLoginAuthenticatorTest extends TestCase
 
         return new FormLoginAuthenticator(
             $dependencies->configurationProvider,
-            $dependencies->urlGenerator,
-            $dependencies->eventDispatcher,
             $dependencies->formFactory,
-            $dependencies->endpointFactory,
             $dependencies->tokenStorage,
+            $dependencies->successHandler,
+            $dependencies->failureHandler,
             $className,
         );
     }
@@ -61,14 +57,9 @@ class FormLoginAuthenticatorTest extends TestCase
     private function createDependencies(): FormLoginAuthenticatorTestDependencies
     {
         $dependencies = new FormLoginAuthenticatorTestDependencies();
-        $dependencies->endpointFactory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $dependencies->configurationProvider = $this->getMockBuilder(ConfigurationProvider::class)->disableOriginalConstructor()->getMock();
-        $dependencies->urlGenerator = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
-        $dependencies->urlGenerator->method('generate')->willReturnCallback(function ($route) {
-            return $route.'.generated';
-        });
-        $dependencies->eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
-        $dependencies->userRepository = $this->getMockBuilder(UserRepository::class)->disableOriginalConstructor()->getMock();
+        $dependencies->successHandler = $this->getMockBuilder(AuthenticationSuccessHandler::class)->disableOriginalConstructor()->getMock();
+        $dependencies->failureHandler = $this->getMockBuilder(AuthenticationFailureHandler::class)->disableOriginalConstructor()->getMock();
 
         $dependencies->request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
         $dependencies->request->attributes = new ParameterBag();
@@ -169,112 +160,53 @@ class FormLoginAuthenticatorTest extends TestCase
         $user = new UserMock();
         $dependencies = $this->createDependencies();
 
-        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) use ($user) {
-            $this->assertInstanceOf(UserEvent::class, $event);
-            $this->assertEquals($user, $event->getUser());
-            $this->assertEquals(UserEvent::LOGIN_SUCCESS, $name);
-            $event->setResponse(new RedirectResponse('_security.user.target_path.session'));
-
-            return $event;
-        });
+        $expectedResponse = new RedirectResponse('/admin');
+        $dependencies->successHandler->expects($this->once())->method('onAuthenticationSuccess')->willReturn($expectedResponse);
 
         $instance = $this->createInstance($dependencies);
 
         /** @var TokenInterface|MockObject $token */
         $token = $this->getMockBuilder(TokenInterface::class)->getMock();
-        $token->expects($this->once())->method('getUser')->willReturn($user);
+        $token->method('getUser')->willReturn($user);
 
         $response = $instance->onAuthenticationSuccess($dependencies->request, $token, 'user');
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals('_security.user.target_path.session', $response->getTargetUrl());
+        $this->assertEquals('/admin', $response->getTargetUrl());
     }
 
     public function testAuthenticationFailure()
     {
         $dependencies = $this->createDependencies();
 
-        $dependencies->userRepository->method('loadUserByIdentifier')->willReturnCallback(function ($name) {
-            if ('1337.user@enhavo.com' === $name) {
-                $user = new UserMock();
-                $user->setUserIdentifier($name);
-
-                return $user;
-            }
-
-            return null;
-        });
-
-        $dependencies->eventDispatcher->expects($this->once())->method('dispatch')->willReturnCallback(function ($event, $name) {
-            $this->assertInstanceOf(UserEvent::class, $event);
-            $this->assertEquals(UserEvent::LOGIN_FAILURE, $name);
-            $this->assertEquals('1337.user@enhavo.com', $event->getUser()->getUserIdentifier());
-
-            return $event;
-        });
-
-        $dependencies->configurationProvider->method('getLoginConfiguration')->willReturnCallback(function ($name) {
-            $loginConfiguration = new LoginConfiguration();
-            $loginConfiguration->setRoute('login_route');
-            $loginConfiguration->setFormClass('formClass');
-            $loginConfiguration->setFormOptions([]);
-
-            return $loginConfiguration;
-        });
-
-        $dependencies->formFactory->method('create')->willReturn($dependencies->form);
-
-        $credentials = new Credentials();
-        $credentials->setUserIdentifier('1337.user@enhavo.com');
-        $credentials->setPassword('__PW__');
-        $credentials->setCsrfToken('__CSRF__');
-        $dependencies->form->method('getData')->willReturn($credentials);
+        $expectedResponse = new RedirectResponse('/login');
+        $dependencies->failureHandler->expects($this->once())->method('onAuthenticationFailure')->willReturn($expectedResponse);
 
         $instance = $this->createInstance($dependencies);
-
-        $dependencies->formFactory->method('create')->willReturn($dependencies->form);
-
-        $credentials = new Credentials();
-        $credentials->setUserIdentifier('1337.user@enhavo.com');
-        $dependencies->form->method('getData')->willReturn($credentials);
-
-        $instance = $this->createInstance($dependencies);
-
-        // need to call authenticate first, to set the userBadge
-        $passport = $instance->authenticate($dependencies->request);
-        /** @var UserBadge $userBadge */
-        $userBadge = $passport->getBadge(UserBadge::class);
-        $userBadge->setUserLoader([$dependencies->userRepository, 'loadUserByIdentifier']);
 
         $response = $instance->onAuthenticationFailure($dependencies->request, new AuthenticationException());
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals('login_route.generated', $response->getTargetUrl());
+        $this->assertEquals('/login', $response->getTargetUrl());
     }
 }
 
 class FormLoginAuthenticatorTestDependencies
 {
-    /** @var FactoryInterface|MockObject */
-    public $endpointFactory;
-
     /** @var ConfigurationProvider|MockObject */
     public $configurationProvider;
 
-    /** @var UrlGeneratorInterface|MockObject */
-    public $urlGenerator;
+    /** @var AuthenticationSuccessHandler|MockObject */
+    public $successHandler;
 
-    /** @var EventDispatcherInterface|MockObject */
-    public $eventDispatcher;
+    /** @var AuthenticationFailureHandler|MockObject */
+    public $failureHandler;
 
     /** @var Request|MockObject */
     public $request;
 
     /** @var Session */
     public $session;
-
-    /** @var UserRepository|MockObject */
-    public $userRepository;
 
     /** @var FormFactoryInterface|MockObject */
     public $formFactory;

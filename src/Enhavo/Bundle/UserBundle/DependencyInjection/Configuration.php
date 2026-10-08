@@ -41,6 +41,7 @@ class Configuration implements ConfigurationInterface
 
         $this->addParametersSection($rootNode);
         $this->addUserIdentifierSection($rootNode);
+        $this->addTwoFactorSection($rootNode);
         $this->addConfigNode($rootNode);
 
         return $treeBuilder;
@@ -68,6 +69,21 @@ class Configuration implements ConfigurationInterface
         ;
     }
 
+    private function addTwoFactorSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('two_factor')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('default_method')->defaultValue('email')->end()
+                        ->booleanNode('default_enabled')->defaultFalse()->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
     private function addConfigNode(NodeDefinition $node)
     {
         $prototype = $node
@@ -88,6 +104,7 @@ class Configuration implements ConfigurationInterface
         $this->addConfigChangePasswordSection($prototype);
         $this->addConfigDeleteSection($prototype);
         $this->addConfigVerificationSection($prototype);
+        $this->addConfigTwoFactorEmailSection($prototype);
     }
 
     private function addConfigGeneralSection(NodeDefinition $node)
@@ -362,6 +379,31 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('verification_confirm')
                     ->children()
                         ->scalarNode('template')->defaultValue('{{ area }}/user/verification/confirm.html.twig')->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addConfigTwoFactorEmailSection(NodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('two_factor_email')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('mail')
+                            ->canBeDisabled()
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('template')->defaultValue('@EnhavoUser/mail/security/two-factor.html.twig')->end()
+                                ->scalarNode('subject')->defaultValue('two_factor.mail.subject')->end()
+                                ->scalarNode('from')->defaultValue(null)->end()
+                                ->scalarNode('sender_name')->defaultValue(null)->end()
+                                ->scalarNode('content_type')->defaultValue('text/plain')->end()
+                            ->end()
+                        ->end()
+                        ->scalarNode('translation_domain')->defaultValue('EnhavoUserBundle')->end()
                     ->end()
                 ->end()
             ->end()

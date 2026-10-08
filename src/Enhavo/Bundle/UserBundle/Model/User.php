@@ -14,7 +14,7 @@ namespace Enhavo\Bundle\UserBundle\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Enhavo\Bundle\AppBundle\Model\TimestampableTrait;
 
-class User implements UserInterface, ApiTokenAwareInterface
+class User implements UserInterface, ApiTokenAwareInterface, TwoFactorInterface
 {
     use TimestampableTrait;
 
@@ -44,6 +44,9 @@ class User implements UserInterface, ApiTokenAwareInterface
 
     private ?int $failedLoginAttempts = null;
     private ?\DateTime $passwordUpdatedAt = null;
+    private ?string $twoFactorMethod = null;
+    private ?string $twoFactorRecoveryCode = null;
+    private mixed $twoFactorSecretData = null;
 
     /**
      * Constructor
@@ -359,5 +362,35 @@ class User implements UserInterface, ApiTokenAwareInterface
     public function setApiTokenCreatedAt(?\DateTime $apiTokenCreatedAt): void
     {
         $this->apiTokenCreatedAt = $apiTokenCreatedAt;
+    }
+
+    public function getTwoFactorMethod(): ?string
+    {
+        return $this->twoFactorMethod;
+    }
+
+    public function setTwoFactorMethod(?string $method): void
+    {
+        $this->twoFactorMethod = $method;
+    }
+
+    public function getTwoFactorRecoveryCode(): ?string
+    {
+        return $this->twoFactorRecoveryCode;
+    }
+
+    public function setTwoFactorRecoveryCode(?string $code): void
+    {
+        $this->twoFactorRecoveryCode = $code;
+    }
+
+    public function getTwoFactorSecretData(): mixed
+    {
+        return $this->twoFactorSecretData;
+    }
+
+    public function setTwoFactorSecretData(mixed $data): void
+    {
+        $this->twoFactorSecretData = $data;
     }
 }
