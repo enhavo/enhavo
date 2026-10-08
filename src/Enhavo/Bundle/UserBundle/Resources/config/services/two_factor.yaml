@@ -29,7 +29,6 @@ services:
         arguments:
             - '@Enhavo\Bundle\UserBundle\TwoFactor\TwoFactorJsonFormRenderer'
             - '@doctrine.orm.entity_manager'
-            - '@Enhavo\Bundle\FrameworkBundle\Util\SecureUrlTokenGenerator'
             - '@Enhavo\Bundle\FrameworkBundle\Mailer\MailerManager'
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
             - '@translator'
