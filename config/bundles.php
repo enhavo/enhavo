@@ -41,4 +41,5 @@ return [
     Enhavo\Bundle\TemplateBundle\EnhavoTemplateBundle::class => ['all' => true],
     Enhavo\Bundle\MultiTenancyBundle\EnhavoMultiTenancyBundle::class => ['all' => true],
     Enhavo\Bundle\VueFormBundle\EnhavoVueFormBundle::class => ['all' => true],
+    Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
 ];

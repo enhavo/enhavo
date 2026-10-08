@@ -13,3 +13,4 @@ enhavo_user:
         exists: 'The email address is already used'
     login:
         bad_credentials: 'Bad credentials'
+code_invalid: 'The verification code is not valid.'

@@ -57,14 +57,28 @@ services:
         tags:
             - { name: security.voter }
 
+    Enhavo\Bundle\UserBundle\Security\Authentication\Handler\AuthenticationSuccessHandler:
+        arguments:
+            - '@event_dispatcher'
+            - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
+
+    Enhavo\Bundle\UserBundle\Security\Authentication\Handler\AuthenticationFailureHandler:
+        arguments:
+            - '@event_dispatcher'
+            - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
+            - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
+            - '@router'
+            - '@form.factory'
+        calls:
+            - setUserLoader: [['@enhavo_user.user.repository', 'loadUserByIdentifier']]
+
     Enhavo\Bundle\UserBundle\Security\Authentication\FormLoginAuthenticator:
         arguments:
             - '@Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider'
-            - '@router'
-            - '@event_dispatcher'
             - '@form.factory'
-            - '@Enhavo\Component\Type\FactoryInterface[Endpoint]'
             - '@security.token_storage'
+            - '@Enhavo\Bundle\UserBundle\Security\Authentication\Handler\AuthenticationSuccessHandler'
+            - '@Enhavo\Bundle\UserBundle\Security\Authentication\Handler\AuthenticationFailureHandler'
             - '%enhavo_user.user.model.class%'
 
     Enhavo\Bundle\UserBundle\Security\Authentication\ApiTokenAuthenticator:

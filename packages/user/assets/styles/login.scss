@@ -26,6 +26,7 @@
                 }
             }
             .login-button {margin-left:auto;background: variables.$color5;font-weight:600;border-radius:20px;padding:6px 20px 4px 20px;border:0;@include mixins.transition(none);}
+            .cancel-button {background: variables.$color2;color: variables.$color3;font-weight:600;border-radius:20px;padding:6px 20px 4px 20px;}
         }
         .feedback-messages {margin-top:15px;}
         .feedback-message {padding:6px 10px 4px 10px;background: variables.$color2;
