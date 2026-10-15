@@ -19,7 +19,7 @@ class TermRepository extends EntityRepository
     public function findByTaxonomyName($name, ?FilterQuery $filterQuery = null, $pagination = true)
     {
         if ($filterQuery) {
-            $query = $this->buildFilterQuery($filterQuery);
+            $query = $filterQuery->build()->getQueryBuilder();
             $pagination = $filterQuery->isPaginated();
         } else {
             $query = $this->createQueryBuilder('a');
@@ -40,7 +40,7 @@ class TermRepository extends EntityRepository
     {
         $pagination = true;
         if ($filterQuery) {
-            $query = $this->buildFilterQuery($filterQuery);
+            $query = $filterQuery->build()->getQueryBuilder();
             $pagination = $filterQuery->isPaginated();
         } else {
             $query = $this->createQueryBuilder('a');
