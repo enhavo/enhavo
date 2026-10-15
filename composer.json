@@ -43,7 +43,7 @@
     "nikic/php-parser": "^5.0",
     "pagerfanta/doctrine-orm-adapter": "^4.2",
     "ruflin/elastica": "^7.1",
-    "scheb/2fa-bundle": "^8.6",
+    "scheb/2fa-bundle": "^7.14",
     "simshaun/recurr": "^2.2",
     "spatie/image-optimizer": "^1.0",
     "symfony-cmf/routing-bundle": "^3.0",

@@ -3,6 +3,7 @@ services:
         arguments:
             - '@security.authentication_utils'
             - '@translator'
+            - '@request_stack'
 
     Enhavo\Bundle\UserBundle\Security\Authentication\ErrorMessage\InvalidCsrfToken:
         arguments:
