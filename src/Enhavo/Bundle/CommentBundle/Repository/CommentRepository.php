@@ -35,7 +35,7 @@ class CommentRepository extends EntityRepository
     {
         $pagination = true;
         if ($filterQuery) {
-            $query = $this->buildFilterQuery($filterQuery);
+            $query = $filterQuery->build()->getQueryBuilder();
             $pagination = $filterQuery->isPaginated();
         } else {
             $query = $this->createQueryBuilder('a');
