@@ -18,7 +18,7 @@ class LocalSubscriberRepository extends EntityRepository
 {
     public function findByGroupId($groupId, ?FilterQuery $filterQuery = null)
     {
-        $query = $this->buildFilterQuery($filterQuery);
+        $query = $filterQuery->build()->getQueryBuilder();
         $query
             ->join('a.groups', 'gr')
             ->andWhere('gr.id = :id')
