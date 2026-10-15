@@ -15,6 +15,8 @@ use Enhavo\Bundle\UserBundle\Security\Authentication\AuthenticationError;
 use Enhavo\Bundle\UserBundle\Security\Authentication\ErrorMessage\BadCredentialsError;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -26,6 +28,7 @@ class AuthenticationErrorTest extends TestCase
         return new AuthenticationError(
             $dependencies->authenticationUtils,
             $dependencies->translator,
+            $dependencies->requestStack,
         );
     }
 
@@ -37,6 +40,7 @@ class AuthenticationErrorTest extends TestCase
             return $message.'.translated';
         });
         $dependencies->authenticationUtils = $this->getMockBuilder(AuthenticationUtils::class)->disableOriginalConstructor()->getMock();
+        $dependencies->requestStack = new RequestStack();
 
         return $dependencies;
     }
@@ -52,6 +56,43 @@ class AuthenticationErrorTest extends TestCase
         $message = $instance->getError();
         $this->assertEquals('login.error.credentials.translated', $message);
     }
+
+    public function testErrorIsKeptForSameRequest()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->authenticationUtils->method('getLastAuthenticationError')->willReturnOnConsecutiveCalls(new BadCredentialsException(), null);
+        $dependencies->requestStack->push(new Request());
+        $instance = $this->createInstance($dependencies);
+
+        $this->assertEquals('login.error.general.translated', $instance->getError());
+        $this->assertEquals('login.error.general.translated', $instance->getError());
+    }
+
+    public function testErrorIsNotKeptForOtherRequest()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->authenticationUtils->method('getLastAuthenticationError')->willReturnOnConsecutiveCalls(new BadCredentialsException(), null);
+        $dependencies->requestStack->push(new Request());
+        $instance = $this->createInstance($dependencies);
+
+        $this->assertEquals('login.error.general.translated', $instance->getError());
+
+        $dependencies->requestStack->pop();
+        $dependencies->requestStack->push(new Request());
+
+        $this->assertNull($instance->getError());
+    }
+
+    public function testEmptyErrorIsNotKept()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->authenticationUtils->method('getLastAuthenticationError')->willReturnOnConsecutiveCalls(null, new BadCredentialsException());
+        $dependencies->requestStack->push(new Request());
+        $instance = $this->createInstance($dependencies);
+
+        $this->assertNull($instance->getError());
+        $this->assertEquals('login.error.general.translated', $instance->getError());
+    }
 }
 
 class AuthenticationErrorDependencies
@@ -61,4 +102,7 @@ class AuthenticationErrorDependencies
 
     /** @var TranslatorInterface|MockObject */
     public $translator;
+
+    /** @var RequestStack */
+    public $requestStack;
 }

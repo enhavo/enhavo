@@ -12,6 +12,9 @@
 namespace Enhavo\Bundle\UserBundle\Security\Authentication;
 
 use Enhavo\Bundle\FrameworkBundle\Util\PriorityCollection;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -19,9 +22,13 @@ class AuthenticationError
 {
     private PriorityCollection $errorMessages;
 
+    private ?Request $request = null;
+    private ?AuthenticationException $error = null;
+
     public function __construct(
         private AuthenticationUtils $authenticationUtils,
         private TranslatorInterface $translator,
+        private RequestStack $requestStack,
     ) {
         $this->errorMessages = new PriorityCollection();
     }
@@ -33,7 +40,7 @@ class AuthenticationError
 
     public function getError(): ?string
     {
-        $error = $this->authenticationUtils->getLastAuthenticationError();
+        $error = $this->getLastAuthenticationError();
         if (null === $error) {
             return null;
         }
@@ -46,5 +53,19 @@ class AuthenticationError
         }
 
         return $this->translator->trans('login.error.general', [], 'EnhavoUserBundle');
+    }
+
+    private function getLastAuthenticationError(): ?AuthenticationException
+    {
+        // reading the error removes it from the session, so keep it for further reads in the same request
+        $request = $this->requestStack->getCurrentRequest();
+        if (null !== $this->error && $request === $this->request) {
+            return $this->error;
+        }
+
+        $this->request = $request;
+        $this->error = $this->authenticationUtils->getLastAuthenticationError();
+
+        return $this->error;
     }
 }
