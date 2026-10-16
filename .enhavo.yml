@@ -205,6 +205,10 @@ subtrees:
         url: 'git@github.com:enhavo/Type'
         prefix: 'src/Enhavo/Component/Type'
         package: 'enhavo/type'
+    ComposerPlugin:
+        url: 'git@github.com:enhavo/ComposerPlugin.git'
+        prefix: 'src/Enhavo/Component/ComposerPlugin'
+        package: 'enhavo/composer-plugin'
 
     docs:
         url: 'git@github.com:enhavo/enhavo-docs.git'
