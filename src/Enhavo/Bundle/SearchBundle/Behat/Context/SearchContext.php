@@ -11,6 +11,8 @@
 
 namespace Enhavo\Bundle\SearchBundle\Behat\Context;
 
+use Behat\Step\Given;
+use Behat\Step\Then;
 use Enhavo\Bundle\AppBundle\Behat\Context\KernelContext;
 use Enhavo\Bundle\PageBundle\Entity\Page;
 use Enhavo\Bundle\SearchBundle\Metadata\Metadata;
@@ -31,33 +33,25 @@ class SearchContext extends KernelContext
 
     public static $result;
 
-    /**
-     * @Given search metadata repository
-     */
+    #[Given('search metadata repository')]
     public function searchMetadataRepository()
     {
         self::$repository = $this->get('enhavo_search.metadata.repository');
     }
 
-    /**
-     * @Given search resource
-     */
+    #[Given('search resource')]
     public function searchResource()
     {
         self::$resource = new Page();
     }
 
-    /**
-     * @Given get metadata result from repository for search resource
-     */
+    #[Given('get metadata result from repository for search resource')]
     public function getMetadataResultFromRepositoryForSearchResource()
     {
         self::$result = self::$repository->getMetadata(self::$resource);
     }
 
-    /**
-     * @Then the metadata result should be ok
-     */
+    #[Then('the metadata result should be ok')]
     public function theMetadataResultShouldBeOk()
     {
         Assert::assertInstanceOf(Metadata::class, self::$result);

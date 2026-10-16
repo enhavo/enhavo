@@ -8,6 +8,6 @@ Feature: Article CRUD
 
   Scenario: See Index
     Given I am logged in as admin
-    Given I am on "/admin/enhavo/article/article/index"
-    Then I should be on "/admin/enhavo/article/article/index"
+    Given I am on "/admin/article/article/index"
+    Then I should be on "/admin/article/article/index"
     And the response status code should be 200

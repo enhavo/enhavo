@@ -29,7 +29,7 @@ class Subscriber implements EventSubscriberInterface
         $this->clientManager = $clientManager;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             SuiteTested::AFTER => 'shutdown',

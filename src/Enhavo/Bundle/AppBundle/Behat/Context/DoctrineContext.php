@@ -12,22 +12,20 @@
 namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 use Behat\Gherkin\Node\TableNode;
+use Behat\Step\Given;
+use Behat\Step\Then;
 
 class DoctrineContext implements KernelAwareContext
 {
     use ManagerAwareTrait;
 
-    /**
-     * @Then flush doctrine
-     */
+    #[Then('/^(?:|I )flush doctrine$/')]
     public function iFlushDoctrine()
     {
         $this->getManager()->flush();
     }
 
-    /**
-     * @Given table :tableName has rows
-     */
+    #[Given('table :tableName has rows')]
     public function insertRows($tableName, TableNode $table)
     {
         $connection = $this->getManager()->getConnection();
@@ -45,9 +43,7 @@ class DoctrineContext implements KernelAwareContext
         }
     }
 
-    /**
-     * @Given table :tableName is empty
-     */
+    #[Given('table :tableName is empty')]
     public function emptyTable($tableName)
     {
         $connection = $this->getManager()->getConnection();

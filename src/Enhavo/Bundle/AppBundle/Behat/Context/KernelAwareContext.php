@@ -12,7 +12,9 @@
 namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 use Behat\Behat\Context\Context;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 interface KernelAwareContext extends Context
 {
+    public function setKernel(KernelInterface $kernel);
 }

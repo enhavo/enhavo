@@ -10,3 +10,4 @@
 /.env.*.local
 /var/
 /node_modules
+/drivers

@@ -12,7 +12,7 @@
             <form-row :form="form.get('password')"></form-row>
             <form-row :form="form.get('rememberMe')"></form-row>
             <form-row :form="form.get('csrfToken')"></form-row>
-            <button type="submit">Senden</button>
+            <button type="submit">{{ 'login.action.login'|trans([], 'EnhavoUserBundle') }}</button>
         </form-form>
     </div>
 {% endblock main %}

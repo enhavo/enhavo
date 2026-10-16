@@ -30,7 +30,7 @@ class ClientAwareInitializer implements ContextInitializer
         $this->clientManager = $clientManager;
     }
 
-    public function initializeContext(Context $context)
+    public function initializeContext(Context $context): void
     {
         if (!$context instanceof ClientAwareContext) {
             return;

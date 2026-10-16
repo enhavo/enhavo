@@ -8,6 +8,6 @@ Feature: Appointment CRUD
 
   Scenario: See Index
     Given I am logged in as admin
-    Given I am on "/admin/enhavo/newsletter/newsletter/index"
-    Then I should be on "/admin/enhavo/newsletter/newsletter/index"
+    Given I am on "/admin/calendar/appointment/index"
+    Then I should be on "/admin/calendar/appointment/index"
     And the response status code should be 200

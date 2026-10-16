@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 use Behat\Gherkin\Node\PyStringNode;
+use Behat\Step\Given;
 
 /**
  * Defines application features from the specific context.
@@ -26,9 +27,7 @@ class EmailContext extends KernelContext
         return $profile;
     }
 
-    /**
-     * @Given /^I should get an email on "(?P<email>[^"]+)" with:$/
-     */
+    #[Given('/^I should get an email on "(?P<email>[^"]+)" with:$/')]
     public function iShouldGetAnEmail($email, PyStringNode $text)
     {
         $error = sprintf('No message sent to "%s"', $email);

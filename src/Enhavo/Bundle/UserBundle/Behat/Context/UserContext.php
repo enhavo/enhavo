@@ -13,6 +13,7 @@ namespace Enhavo\Bundle\UserBundle\Behat\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;
+use Behat\Step\Given;
 use Enhavo\Bundle\AppBundle\Behat\Context\ClientAwareContext;
 use Enhavo\Bundle\AppBundle\Behat\Context\ClientAwareTrait;
 use Enhavo\Bundle\AppBundle\Behat\Context\KernelAwareContext;
@@ -31,13 +32,11 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
     use ManagerAwareTrait;
     use ClientAwareTrait;
 
-    /**
-     * @Given following users
-     */
+    #[Given('following users')]
     public function followingUsers(TableNode $table)
     {
         foreach ($table->getHash() as $data) {
-            $user = $this->findOrCreateUser($data['username'], $data['email']);
+            $user = $this->findOrCreateUser($data['username'] ?? null, $data['email']);
             $user->setEnabled(true);
             if (array_key_exists('enabled', $data)) {
                 $user->setEnabled($data['enabled']);
@@ -52,13 +51,11 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
                 }, $roles);
                 $user->setRoles($roles);
             }
+            $this->getContainer()->get('Enhavo\Bundle\UserBundle\User\UserManager')->update($user);
         }
-        $this->getContainer()->get('Enhavo\Bundle\UserBundle\User\UserManager')->update($user);
     }
 
-    /**
-     * @Given admin user
-     */
+    #[Given('admin user')]
     public function adminUser()
     {
         $user = $this->findUser('admin@enhavo.com');
@@ -67,6 +64,7 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
             $group = $this->createAdminGroup();
             $user = $this->createAdminUser($group);
             $em->persist($group);
+            $em->persist($user);
         }
         $user->setEnabled(true);
         $user->setRoles(['ROLE_SUPER_ADMIN']);
@@ -75,10 +73,9 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
     }
 
     /**
-     * @Given /^I am logged in as user "([^""]*)"$/
-     *
      * @throws UserLoginException
      */
+    #[Given('/^I am logged in as user "([^""]*)"$/')]
     public function iAmLoggedInAsUser($username)
     {
         /** @var RouterInterface $router */
@@ -92,17 +89,13 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
         }
     }
 
-    /**
-     * @Given /^I am logged in as admin$/
-     */
+    #[Given('/^I am logged in as admin$/')]
     public function iAmLoggedInAsAdmin()
     {
         $this->iAmLoggedInAsUser('admin@enhavo.com');
     }
 
-    /**
-     * @Given /^I am not logged in$/
-     */
+    #[Given('/^I am not logged in$/')]
     public function iAmNotLoggedIn()
     {
         $this->getClient()->getCookieJar()->clear();
@@ -146,22 +139,23 @@ class UserContext implements Context, ClientAwareContext, KernelAwareContext
     private function findOrCreateUser($username, $email)
     {
         $user = $this->get('enhavo_user.user.repository')->findOneBy([
-            'username' => $username,
+            'email' => $email,
         ]);
 
         if (null === $user) {
             $user = new User();
             $user->setEmail($email);
-            $this->get('Enhavo\Bundle\UserBundle\User\UserManager')->update($user);
+            $user->setUsername($username);
+            $this->getManager()->persist($user);
         }
 
         return $user;
     }
 
-    private function findUser($username): ?UserInterface
+    private function findUser($userIdentifier): ?UserInterface
     {
         return $this->get('enhavo_user.user.repository')->findOneBy([
-            'username' => $username,
+            'userIdentifier' => $userIdentifier,
         ]);
     }
 }

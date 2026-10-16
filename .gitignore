@@ -30,3 +30,7 @@
 /config/reference.php
 /.env.local
 /.env.*.local
+/var
+/.env.local.php
+/public/bundles/
+/.php-cs-fixer.php

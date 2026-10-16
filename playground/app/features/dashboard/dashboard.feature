@@ -8,6 +8,6 @@ Feature: Dashboard
 
   Scenario: See Index
     Given I am logged in as admin
-    Given I am on "/admin/enhavo/dashboard"
-    Then I should be on "/admin/enhavo/dashboard"
+    Given I am on "/admin/dashboard/dashboard"
+    Then I should be on "/admin/dashboard/dashboard"
     And the response status code should be 200

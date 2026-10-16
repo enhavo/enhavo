@@ -12,6 +12,9 @@
 namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 use Behat\Gherkin\Node\PyStringNode;
+use Behat\Step\Given;
+use Behat\Step\Then;
+use Behat\Step\When;
 use PHPUnit\Framework\Assert;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,41 +45,31 @@ class HttpContext implements KernelAwareContext
         $this->kernel = $kernel;
     }
 
-    /**
-     * @When request was send
-     */
+    #[When('request was send')]
     public function requestWasSend()
     {
         $this->response = $this->kernel->handle($this->request);
     }
 
-    /**
-     * @Given parameter :key is :value
-     */
+    #[Given('parameter :key is :value')]
     public function parameterIs($key, $value)
     {
         $this->kernel->getContainer()->setParameter($key, $value);
     }
 
-    /**
-     * @Given request path is :path
-     */
+    #[Given('request path is :path')]
     public function requestPathIs($path)
     {
         $this->request->server->set('REQUEST_URI', $path);
     }
 
-    /**
-     * @Given request hostname is :hostname
-     */
+    #[Given('request hostname is :hostname')]
     public function requestHostNameIs($hostname)
     {
         $this->request->server->set('SERVER_NAME', $hostname);
     }
 
-    /**
-     * @Given request post data is:
-     */
+    #[Given('request post data is:')]
     public function requestPostDataIs(PyStringNode $string)
     {
         $data = Yaml::parse((string) $string);
@@ -84,17 +77,13 @@ class HttpContext implements KernelAwareContext
         $this->request->request->add($data);
     }
 
-    /**
-     * @Then response code is :code
-     */
+    #[Then('response code is :code')]
     public function responseCodeIs($code)
     {
         Assert::assertEquals($code, $this->response->getStatusCode());
     }
 
-    /**
-     * @Then response body is:
-     */
+    #[Then('response body is:')]
     public function responeBodyIs(PyStringNode $string)
     {
         Assert::assertEquals((string) $string, $this->response->getContent());

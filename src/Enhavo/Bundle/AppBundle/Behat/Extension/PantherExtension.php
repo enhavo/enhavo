@@ -25,16 +25,16 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class PantherExtension implements ExtensionInterface
 {
-    public function getConfigKey()
+    public function getConfigKey(): string
     {
         return 'panther';
     }
 
-    public function initialize(ExtensionManager $extensionManager)
+    public function initialize(ExtensionManager $extensionManager): void
     {
     }
 
-    public function configure(ArrayNodeDefinition $builder)
+    public function configure(ArrayNodeDefinition $builder): void
     {
         $builder
             ->addDefaultsIfNotSet()
@@ -43,7 +43,7 @@ class PantherExtension implements ExtensionInterface
             ->end();
     }
 
-    public function load(ContainerBuilder $container, array $config)
+    public function load(ContainerBuilder $container, array $config): void
     {
         $this->buildParameters($container, $config);
         $this->loadClientManager($container);
@@ -63,7 +63,7 @@ class PantherExtension implements ExtensionInterface
         }
     }
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
     }
 

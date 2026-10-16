@@ -45,7 +45,7 @@ export class VueFactory
         return Promise.resolve(null);
     }
 
-    async createApp(rootComponent: Component, rootProps?: any|null): App
+    async createApp(rootComponent: Component, rootProps?: any|null): Promise<App>
     {
         const app = createApp(rootComponent, rootProps);
 

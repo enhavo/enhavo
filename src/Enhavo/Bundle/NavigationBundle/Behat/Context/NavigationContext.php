@@ -11,70 +11,61 @@
 
 namespace Enhavo\Bundle\NavigationBundle\Behat\Context;
 
-use Enhavo\Bundle\AppBundle\Behat\Context\KernelContext;
+use Behat\Step\Given;
+use Behat\Step\Then;
+use Enhavo\Bundle\AppBundle\Behat\Context\KernelAwareContext;
+use Enhavo\Bundle\AppBundle\Behat\Context\ManagerAwareTrait;
+use Enhavo\Bundle\NavigationBundle\Entity\Content;
 use Enhavo\Bundle\NavigationBundle\Entity\Node;
 use Enhavo\Bundle\PageBundle\Entity\Page;
 use PHPUnit\Framework\Assert;
 
-class NavigationContext extends KernelContext
+class NavigationContext implements KernelAwareContext
 {
-    /**
-     * @var Page
-     */
-    public static $page;
+    use ManagerAwareTrait;
 
-    /**
-     * @var Node
-     */
-    public static $node;
+    private ?Page $page = null;
+    private ?Node $node = null;
 
-    /**
-     * @Given node navigation object
-     */
+    #[Given('node navigation object')]
     public function nodeNavigationObject()
     {
-        self::$page = new Page();
-        $this->getManager()->persist(self::$page);
+        $this->node = new Node();
+        $this->getManager()->persist($this->node);
     }
 
-    /**
-     * @Given page navigation object
-     */
+    #[Given('page navigation object')]
     public function pageNavigationObject()
     {
-        self::$node = new Node();
-        $this->getManager()->persist(self::$node);
+        $this->page = new Page();
+        $this->getManager()->persist($this->page);
     }
 
-    /**
-     * @Given node navigation has type :type
-     */
-    public function nodeNavigationHasType($type)
-    {
-        self::$node->setType($type);
-    }
-
-    /**
-     * @Then I add page navigation object to node navigation object
-     */
+    #[Then('I add page navigation object to node navigation object')]
     public function iAddPageNavigationObjectToNodeNavigationObject()
     {
-        self::$node->setContent(self::$page);
+        $content = new Content();
+        $content->setContent($this->page);
+        $this->node->setSubject($content);
     }
 
-    /**
-     * @Then node navigation object content class should be :class
-     */
+    #[Then('node navigation object content class should be :class')]
     public function nodeNavigationObjectContentClassShouldBe($class)
     {
-        Assert::assertEquals($class, self::$node->getContentClass());
+        Assert::assertEquals($class, $this->getContent()->getContentClass());
     }
 
-    /**
-     * @Then node navigation object content id should be same as page navigation object
-     */
+    #[Then('node navigation object content id should be same as page navigation object')]
     public function nodeNavigationObjectContentIdShouldBeSameAsPageNavigationObject()
     {
-        Assert::assertEquals(self::$page->getId(), self::$node->getContentId());
+        Assert::assertEquals($this->page->getId(), $this->getContent()->getContentId());
+    }
+
+    private function getContent(): Content
+    {
+        $content = $this->node->getSubject();
+        Assert::assertInstanceOf(Content::class, $content);
+
+        return $content;
     }
 }

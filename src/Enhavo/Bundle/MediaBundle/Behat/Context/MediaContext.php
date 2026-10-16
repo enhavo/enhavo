@@ -11,6 +11,8 @@
 
 namespace Enhavo\Bundle\MediaBundle\Behat\Context;
 
+use Behat\Step\Given;
+use Behat\Step\Then;
 use Enhavo\Bundle\AppBundle\Behat\Context\KernelContext;
 use Enhavo\Bundle\MediaBundle\Content\ContentInterface;
 use Enhavo\Bundle\MediaBundle\Content\PathContent;
@@ -32,17 +34,13 @@ class MediaContext extends KernelContext
      */
     public static $setting;
 
-    /**
-     * @Given A new filter setting
-     */
+    #[Given('A new filter setting')]
     public function aNewFilterSetting()
     {
         self::$setting = new FilterSetting();
     }
 
-    /**
-     * @Given A image with ":width"px width and ":height"px height
-     */
+    #[Given('A image with ":width"px width and ":height"px height')]
     public function aImageWithPxHeightAndPxWidth($width, $height)
     {
         $imagine = new Imagine();
@@ -57,17 +55,13 @@ class MediaContext extends KernelContext
         self::$image = new PathContent($tempPath);
     }
 
-    /**
-     * @Given A filter setting ":key" with value ":value"
-     */
+    #[Given('A filter setting ":key" with value ":value"')]
     public function aFilterSetting($key, $value)
     {
         self::$setting->setSetting($key, $value);
     }
 
-    /**
-     * @Then I apply image on filter ":type"
-     */
+    #[Then('I apply image on filter ":type"')]
     public function iApplyImageOnFilter($type)
     {
         $filterCollector = $this->get('enhavo_media.filter_collector');
@@ -76,9 +70,7 @@ class MediaContext extends KernelContext
         $filter->apply(self::$image, self::$setting);
     }
 
-    /**
-     * @Then the image size should be ":width"px width and ":height"px height
-     */
+    #[Then('the image size should be ":width"px width and ":height"px height')]
     public function theImageSizeShouldBePxHeightAndPxWidth($height, $width)
     {
         $imagine = new Imagine();

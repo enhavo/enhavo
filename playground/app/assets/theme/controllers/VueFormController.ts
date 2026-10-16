@@ -34,7 +34,7 @@ export default class extends Controller
 
         console.log(form);
 
-        const app = vueFactory.createApp({}, {
+        const app = await vueFactory.createApp({}, {
             form: reactive(form)
         });
 

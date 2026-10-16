@@ -17,15 +17,15 @@ Feature: User Login
   Scenario: Log in with bad credentials
     Given I am on "/user/login"
     When I fill in the following:
-      | username | paul   |
-      | password | notMyPW |
-    And I press "Log in"
+      | E-Mail   | paul@enhavo.com |
+      | Password | notMyPW         |
+    And I press "Login"
     Then I should be on "/user/login"
 
   Scenario: Log in correctly
     Given I am on "/user/login"
     When I fill in the following:
-      | username | peter  |
-      | password | savePW |
-    And I press "Log in"
+      | E-Mail   | peter@enhavo.com |
+      | Password | savePW           |
+    And I press "Login"
     Then I should be on "/user/profile"

@@ -12,15 +12,14 @@
 namespace Enhavo\Bundle\AppBundle\Behat\Context;
 
 use Behat\Behat\Context\Context;
+use Behat\Step\Given;
 use Symfony\Component\Filesystem\Filesystem;
 
 class DebugContext implements ClientAwareContext, Context
 {
     use ClientAwareTrait;
 
-    /**
-     * @Given save DOM as :name
-     */
+    #[Given('save DOM as :name')]
     public function saveDOM($name)
     {
         $html = $this->getClient()->getCrawler()->html();
@@ -29,18 +28,14 @@ class DebugContext implements ClientAwareContext, Context
         $fs->dumpFile($file, $html);
     }
 
-    /**
-     * @Given take a screenshot as :name
-     */
+    #[Given('take a screenshot as :name')]
     public function takeScreenshot($name)
     {
         $file = sprintf('%s/%s.png', $this->getScreenshotDir(), $name);
         $this->getClient()->takeScreenshot($file);
     }
 
-    /**
-     * @Given clear logs
-     */
+    #[Given('clear logs')]
     public function clearLogs()
     {
         $file = sprintf('%s/%s.log', $this->getLogDir(), getenv('APP_ENV'));

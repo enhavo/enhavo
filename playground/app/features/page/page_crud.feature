@@ -8,6 +8,6 @@ Feature: Page CRUD
 
   Scenario: See Index
     Given I am logged in as admin
-    Given I am on "/admin/enhavo/page/page/index"
-    Then I should be on "/admin/enhavo/page/page/index"
+    Given I am on "/admin/page/page/index"
+    Then I should be on "/admin/page/page/index"
     And the response status code should be 200

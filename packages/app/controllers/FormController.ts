@@ -36,7 +36,7 @@ export default class extends AbstractController
             component = vueFactory.getComponent(this.componentValue);
         }
 
-        const app = vueFactory.createApp(component, {
+        const app = await vueFactory.createApp(component, {
             form: reactive(form),
         });
 
