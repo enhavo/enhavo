@@ -18,6 +18,12 @@
       "App\\": "playground/app/src"
     }
   },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "src/Enhavo/Component/ComposerPlugin"
+    }
+  ],
   "require": {
     "php": "^8.4",
     "ext-ctype": "*",
@@ -29,6 +35,7 @@
     "composer/package-versions-deprecated": "1.11.*",
     "doctrine/collections": "^2.5",
     "doctrine/dbal": "^4.0",
+    "doctrine/doctrine-bundle": "^3.3",
     "doctrine/doctrine-migrations-bundle": "^4.0",
     "doctrine/orm": "^3.6",
     "ezyang/htmlpurifier": "^4.12",
@@ -59,7 +66,6 @@
     "symfony/mime": "^7.4",
     "symfony/monolog-bundle": "^3.1",
     "symfony/options-resolver": "^7.4",
-    "symfony/orm-pack": "^1.0",
     "symfony/password-hasher": "^7.4",
     "symfony/process": "^7.4",
     "symfony/property-info": "^7.4",
@@ -81,17 +87,22 @@
     "winzou/state-machine-bundle": "^0.6.2"
   },
   "require-dev": {
-    "behat/behat": "^3.10",
+    "behat/behat": "v4.0.0-alpha1",
+    "dbrekelmans/bdi": "^1.4",
+    "enhavo/composer-plugin": "@dev",
     "friendsofphp/php-cs-fixer": "^3.75",
     "overtrue/phplint": "^9.0",
     "phpunit/php-code-coverage": "^9.2",
     "phpunit/phpunit": "^9.6",
     "rector/rector": "^2.0",
-    "symfony/debug-pack": "^1.0",
+    "symfony/browser-kit": "7.4.*",
+    "symfony/css-selector": "7.4.*",
+    "symfony/debug-bundle": "7.4.*",
     "symfony/maker-bundle": "^1.0",
     "symfony/panther": "^2.0",
-    "symfony/profiler-pack": "^1.0",
-    "symfony/test-pack": "^1.0"
+    "symfony/phpunit-bridge": "^7.4",
+    "symfony/stopwatch": "7.4.*",
+    "symfony/web-profiler-bundle": "7.4.*"
   },
   "replace": {
     "enhavo/app-bundle": "self.version",
@@ -128,6 +139,7 @@
     "sort-packages": true,
     "allow-plugins": {
       "composer/package-versions-deprecated": true,
+      "enhavo/composer-plugin": true,
       "php-http/discovery": false,
       "symfony/runtime": true
     }
@@ -141,7 +153,7 @@
   "extra": {
     "symfony": {
       "allow-contrib": false,
-      "require": "6.4.*",
+      "require": "7.4.*",
       "docker": false
     }
   }

@@ -1,0 +1,24 @@
+{
+  "name": "enhavo/composer-plugin",
+  "type": "composer-plugin",
+  "description": "Composer plugin for enhavo",
+  "keywords": ["framework", "composer"],
+  "homepage": "https://enhavo.com",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Gerhard Seidel",
+      "email": "gseidel.message@googlemail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "composer-plugin-api": "^2.0"
+  },
+  "autoload": {
+    "psr-4": { "Enhavo\\Component\\ComposerPlugin\\": "" }
+  },
+  "extra": {
+    "class": "Enhavo\\Component\\ComposerPlugin\\SymfonyRequirePlugin"
+  }
+}
