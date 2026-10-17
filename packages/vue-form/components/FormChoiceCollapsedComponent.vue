@@ -16,7 +16,6 @@
 
 <script setup lang="ts">
 import {ChoiceForm} from "../model/ChoiceForm";
-import * as _ from "lodash";
 
 const props = defineProps<{
     form: ChoiceForm
@@ -24,7 +23,7 @@ const props = defineProps<{
 
 function size(object: object)
 {
-    return _.size((object));
+    return object ? Object.keys(object).length : 0;
 }
 
 function isRequired()

@@ -18,7 +18,6 @@
 
 <script setup lang="ts">
 import {onMounted, onUpdated, ref} from "vue";
-import * as _ from "lodash";
 import {ChoiceForm} from "@enhavo/vue-form/model/ChoiceForm";
 import $ from "jquery";
 import select2 from "select2";
@@ -29,7 +28,7 @@ const props = defineProps<{
 
 function size(object: object)
 {
-    return _.size((object));
+    return object ? Object.keys(object).length : 0;
 }
 
 function getChoiceComponent(choice: any)

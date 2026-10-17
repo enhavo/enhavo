@@ -1,4 +1,3 @@
-import * as _ from "lodash";
 import {Form} from "@enhavo/vue-form/model/Form";
 import {Theme} from "@enhavo/vue-form/form/Theme";
 import {FormVisitorInterface} from "@enhavo/vue-form/form/FormVisitor";
@@ -19,7 +18,7 @@ export class FormFactory
     {
         let form = this.getModel(data);
 
-        form = _.extend(form, data);
+        form = Object.assign(form, data);
         form.parent = parent;
         form.key = generateId();
 
@@ -75,7 +74,7 @@ export class FormFactory
 
     private createFormData(form: Form)
     {
-        form = _.assign(this.getModel(form), form);
+        form = Object.assign(this.getModel(form), form);
         form.key = generateId();
         for (let key in form.children) {
             form.children[key] = this.createFormData(form.children[key]);
@@ -170,7 +169,7 @@ export class FormFactory
         if ((<Form>form).componentModel) {
             let entry = this.getModelEntry((<Form>form).componentModel);
             if (entry) {
-                let clone = _.clone(entry.model);
+                let clone = Object.assign(Object.create(Object.getPrototypeOf(entry.model)), entry.model);
                 clone.eventDispatcher = this.eventDispatcher;
                 return clone;
             }

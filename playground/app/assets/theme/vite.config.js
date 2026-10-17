@@ -10,7 +10,6 @@ export default defineConfig({
     optimizeDeps: {
         include: [
             'vuedraggable',
-            'lodash',
             'jquery',
             'select2',
             'icheck',

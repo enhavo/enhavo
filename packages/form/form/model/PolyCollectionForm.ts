@@ -1,6 +1,5 @@
 import {ListForm} from "@enhavo/form/form/model/ListForm";
 import {Form} from "@enhavo/vue-form/model/Form";
-import {indexOf} from "lodash";
 
 export class PolyCollectionForm extends ListForm
 {

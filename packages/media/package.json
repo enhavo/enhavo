@@ -12,8 +12,7 @@
     "@enhavo/app": "^0.15",
     "async": "^2.6.2",
     "blueimp-file-upload": "^9.22.1",
-    "cropperjs": "~1.2.2",
-    "lodash": "^4.17.11"
+    "cropperjs": "~1.2.2"
   },
   "peerDependencies": {
     "jquery": "^3.7.1"

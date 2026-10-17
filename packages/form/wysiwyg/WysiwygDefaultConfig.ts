@@ -27,7 +27,6 @@ import TableCell from "@tiptap/extension-table-cell";
 import TextAlign from "@tiptap/extension-text-align";
 import TextStyle from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
-import * as _ from "lodash";
 
 export class WysiwygDefaultConfig implements WysiwygConfigInterface
 {
@@ -121,14 +120,14 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
     menu: WysiwygMenuGroup[] = [
         {
             items: [
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'undo',
                     tooltip: 'enhavo_form.wysiwyg_form.command.undo',
                     translationDomain: 'javascript',
                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().undo().run(); },
                     disabled: (form: WysiwygForm) => { return !form.editor.can().chain().focus().undo().run(); }
                 }),
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'redo',
                     tooltip: 'enhavo_form.wysiwyg_form.command.redo',
                     translationDomain: 'javascript',
@@ -139,7 +138,7 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
         },
         {
             items: [
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'format_bold',
                     tooltip: 'enhavo_form.wysiwyg_form.command.bold',
                     translationDomain: 'javascript',
@@ -147,7 +146,7 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
                     disabled: (form: WysiwygForm) => { return !form.editor.can().chain().focus().toggleBold().run(); },
                     class: (form: WysiwygForm) => { return form.editor.isActive('bold') ? 'is-active' : ''; }
                 }),
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'format_italic',
                     tooltip: 'enhavo_form.wysiwyg_form.command.italic',
                     translationDomain: 'javascript',
@@ -155,7 +154,7 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
                     disabled: (form: WysiwygForm) => { return !form.editor.can().chain().focus().toggleItalic().run(); },
                     class: (form: WysiwygForm) => { return form.editor.isActive('italic') ? 'is-active' : ''; }
                 }),
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'format_underlined',
                     tooltip: 'enhavo_form.wysiwyg_form.command.underlined',
                     translationDomain: 'javascript',
@@ -163,7 +162,7 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
                     disabled: (form: WysiwygForm) => { return !form.editor.can().chain().focus().toggleUnderline().run(); },
                     class: (form: WysiwygForm) => { return form.editor.isActive('underline') ? 'is-active' : ''; }
                 }),
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'strikethrough_s',
                     tooltip: 'enhavo_form.wysiwyg_form.command.strikethrough',
                     translationDomain: 'javascript',
@@ -171,7 +170,7 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
                     disabled: (form: WysiwygForm) => { return !form.editor.can().chain().focus().toggleStrike().run(); },
                     class: (form: WysiwygForm) => { return form.editor.isActive('strike') ? 'is-active' : ''; }
                 }),
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'format_subscript',
                     tooltip: 'enhavo_form.wysiwyg_form.command.subscript',
                     translationDomain: 'javascript',
@@ -179,7 +178,7 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
                     disabled: (form: WysiwygForm) => { return !form.editor.can().chain().focus().toggleSubscript().run(); },
                     class: (form: WysiwygForm) => { return form.editor.isActive('subscript') ? 'is-active' : ''; }
                 }),
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'format_superscript',
                     tooltip: 'enhavo_form.wysiwyg_form.command.superscript',
                     translationDomain: 'javascript',
@@ -187,7 +186,7 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
                     disabled: (form: WysiwygForm) => { return !form.editor.can().chain().focus().toggleSuperscript().run(); },
                     class: (form: WysiwygForm) => { return form.editor.isActive('superscript') ? 'is-active' : ''; }
                 }),
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'format_clear',
                     tooltip: 'enhavo_form.wysiwyg_form.command.clear_format',
                     translationDomain: 'javascript',
@@ -197,11 +196,11 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
         },
         {
             items: [
-                _.assign(new WysiwygColorButton(), {
+                Object.assign(new WysiwygColorButton(), {
                     tooltip: 'enhavo_form.wysiwyg_form.command.color.label',
                     translationDomain: 'javascript',
                 }),
-                _.assign(new WysiwygBackgroundColorButton(), {
+                Object.assign(new WysiwygBackgroundColorButton(), {
                     tooltip: 'enhavo_form.wysiwyg_form.command.background_color.label',
                     translationDomain: 'javascript',
                 }),
@@ -209,7 +208,7 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
         },
         {
             items: [
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'link',
                     tooltip: 'enhavo_form.wysiwyg_form.command.link.label',
                     translationDomain: 'javascript',
@@ -240,33 +239,33 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
                     class: (form: WysiwygForm) => { return form.editor.isActive('link') ? 'is-active' : ''; }
                 }),
                 new WysiwygMenuSpacer(),
-                _.assign(new WysiwygMenuSubmenu(), {
+                Object.assign(new WysiwygMenuSubmenu(), {
                     label: 'enhavo_form.wysiwyg_form.command.menu_format.label',
                     translationDomain: 'javascript',
                     items: [
-                        _.assign(new WysiwygMenuSubmenu(), {
+                        Object.assign(new WysiwygMenuSubmenu(), {
                             label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_headings.label',
                             translationDomain: 'javascript',
                             items: [
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_headings.heading1',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleHeading({ level: 1 }).run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('heading', { level: 1 }) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_headings.heading2',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleHeading({ level: 2 }).run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('heading', { level: 2 }) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_headings.heading3',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleHeading({ level: 3 }).run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('heading', { level: 3 }) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_headings.heading4',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleHeading({ level: 4 }).run(); },
@@ -274,64 +273,64 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
                                 }),
                             ]
                         }),
-                        _.assign(new WysiwygMenuSubmenu(), {
+                        Object.assign(new WysiwygMenuSubmenu(), {
                             label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_formats.label',
                             translationDomain: 'javascript',
                             items: [
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_formats.bold',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleBold().run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('bold') ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_formats.italic',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleItalic().run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('italic') ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_formats.underlined',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleUnderline().run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('underline') ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_formats.strikethrough',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStrike().run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('strike') ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_formats.subscript',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleSubscript().run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('subscript') ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_formats.superscript',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleSuperscript().run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('superscript') ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_formats.clear_format',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().unsetAllMarks().run(); },
                                 }),
                             ]
                         }),
-                        _.assign(new WysiwygMenuSubmenu(), {
+                        Object.assign(new WysiwygMenuSubmenu(), {
                             label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_blocks.label',
                             translationDomain: 'javascript',
                             items: [
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_blocks.paragraph',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().setParagraph().run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('paragraph') ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_blocks.blockquote',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleBlockquote().run(); },
@@ -339,29 +338,29 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
                                 }),
                             ]
                         }),
-                        _.assign(new WysiwygMenuSubmenu(), {
+                        Object.assign(new WysiwygMenuSubmenu(), {
                             label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_align.label',
                             translationDomain: 'javascript',
                             items: [
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_align.left',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().setTextAlign('left').run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_align.center',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().setTextAlign('center').run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_align.right',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().setTextAlign('right').run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_align.justify',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().setTextAlign('justify').run(); },
@@ -369,59 +368,59 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
                                 }),
                             ]
                         }),
-                        _.assign(new WysiwygMenuSubmenu(), {
+                        Object.assign(new WysiwygMenuSubmenu(), {
                             label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.label',
                             translationDomain: 'javascript',
                             items: [
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.bullet_list_disc',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('disc').run(); },
                                     class: (form: WysiwygForm) => { return (form.editor.isActive('customBulletList', { listStyle: 'disc' }) || form.editor.isActive('customBulletList', { listStyle: null })) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.bullet_list_circle',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('circle').run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('customBulletList', { listStyle: 'circle' }) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.bullet_list_square',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('square').run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('customBulletList', { listStyle: 'square' }) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.numbered_list_decimal',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('decimal').run(); },
                                     class: (form: WysiwygForm) => { return (form.editor.isActive('customOrderedList', { listStyle: 'decimal' }) || form.editor.isActive('customOrderedList', { listStyle: null })) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.numbered_list_lower_alpha',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('lower-alpha').run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'lower-alpha' }) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.numbered_list_upper_alpha',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('upper-alpha').run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'upper-alpha' }) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.numbered_list_lower_roman',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('lower-roman').run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'lower-roman' }) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.numbered_list_upper_roman',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('upper-roman').run(); },
                                     class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'upper-roman' }) ? 'is-active' : ''; }
                                 }),
-                                _.assign(new WysiwygMenuButton(), {
+                                Object.assign(new WysiwygMenuButton(), {
                                     label: 'enhavo_form.wysiwyg_form.command.menu_format.menu_list.numbered_list_lower_greek',
                                     translationDomain: 'javascript',
                                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('lower-greek').run(); },
@@ -435,28 +434,28 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
         },
         {
             items: [
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'format_align_left',
                     tooltip: 'enhavo_form.wysiwyg_form.command.align_left',
                     translationDomain: 'javascript',
                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().setTextAlign('left').run(); },
                     class: (form: WysiwygForm) => { return form.editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''; }
                 }),
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'format_align_center',
                     tooltip: 'enhavo_form.wysiwyg_form.command.align_center',
                     translationDomain: 'javascript',
                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().setTextAlign('center').run(); },
                     class: (form: WysiwygForm) => { return form.editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''; }
                 }),
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'format_align_right',
                     tooltip: 'enhavo_form.wysiwyg_form.command.align_right',
                     translationDomain: 'javascript',
                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().setTextAlign('right').run(); },
                     class: (form: WysiwygForm) => { return form.editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''; }
                 }),
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'format_align_justify',
                     tooltip: 'enhavo_form.wysiwyg_form.command.align_justify',
                     translationDomain: 'javascript',
@@ -467,26 +466,26 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
         },
         {
             items: [
-                _.assign(new WysiwygMenuSubmenu(), {
+                Object.assign(new WysiwygMenuSubmenu(), {
                     icon: 'format_list_bulleted',
                     tooltip: 'enhavo_form.wysiwyg_form.command.bullet_list',
                     translationDomain: 'javascript',
                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('disc').run(); },
                     class: (form: WysiwygForm) => { return (form.editor.isActive('customBulletList', { listStyle: 'disc' }) || form.editor.isActive('customBulletList', { listStyle: null })) ? 'is-active' : ''; },
                     items: [
-                        _.assign(new WysiwygMenuButton(), {
+                        Object.assign(new WysiwygMenuButton(), {
                             label: 'enhavo_form.wysiwyg_form.command.bullet_list_disc',
                             translationDomain: 'javascript',
                             click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('disc').run(); },
                             class: (form: WysiwygForm) => { return (form.editor.isActive('customBulletList', { listStyle: 'disc' }) || form.editor.isActive('customBulletList', { listStyle: null })) ? 'is-active' : ''; },
                         }),
-                        _.assign(new WysiwygMenuButton(), {
+                        Object.assign(new WysiwygMenuButton(), {
                             label: 'enhavo_form.wysiwyg_form.command.bullet_list_circle',
                             translationDomain: 'javascript',
                             click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('circle').run(); },
                             class: (form: WysiwygForm) => { return form.editor.isActive('customBulletList', { listStyle: 'circle' }) ? 'is-active' : ''; },
                         }),
-                        _.assign(new WysiwygMenuButton(), {
+                        Object.assign(new WysiwygMenuButton(), {
                             label: 'enhavo_form.wysiwyg_form.command.bullet_list_square',
                             translationDomain: 'javascript',
                             click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledBulletList('square').run(); },
@@ -494,44 +493,44 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
                         }),
                     ],
                 }),
-                _.assign(new WysiwygMenuSubmenu(), {
+                Object.assign(new WysiwygMenuSubmenu(), {
                     icon: 'format_list_numbered',
                     tooltip: 'enhavo_form.wysiwyg_form.command.numbered_list',
                     translationDomain: 'javascript',
                     click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('decimal').run(); },
                     class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList') ? 'is-active' : ''; },
                     items: [
-                        _.assign(new WysiwygMenuButton(), {
+                        Object.assign(new WysiwygMenuButton(), {
                             label: 'enhavo_form.wysiwyg_form.command.numbered_list_decimal',
                             translationDomain: 'javascript',
                             click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('decimal').run(); },
                             class: (form: WysiwygForm) => { return (form.editor.isActive('customOrderedList', { listStyle: 'decimal' }) || form.editor.isActive('customOrderedList', { listStyle: null })) ? 'is-active' : ''; },
                         }),
-                        _.assign(new WysiwygMenuButton(), {
+                        Object.assign(new WysiwygMenuButton(), {
                             label: 'enhavo_form.wysiwyg_form.command.numbered_list_lower_alpha',
                             translationDomain: 'javascript',
                             click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('lower-alpha').run(); },
                             class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'lower-alpha' }) ? 'is-active' : ''; },
                         }),
-                        _.assign(new WysiwygMenuButton(), {
+                        Object.assign(new WysiwygMenuButton(), {
                             label: 'enhavo_form.wysiwyg_form.command.numbered_list_upper_alpha',
                             translationDomain: 'javascript',
                             click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('upper-alpha').run(); },
                             class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'upper-alpha' }) ? 'is-active' : ''; },
                         }),
-                        _.assign(new WysiwygMenuButton(), {
+                        Object.assign(new WysiwygMenuButton(), {
                             label: 'enhavo_form.wysiwyg_form.command.numbered_list_lower_roman',
                             translationDomain: 'javascript',
                             click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('lower-roman').run(); },
                             class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'lower-roman' }) ? 'is-active' : ''; },
                         }),
-                        _.assign(new WysiwygMenuButton(), {
+                        Object.assign(new WysiwygMenuButton(), {
                             label: 'enhavo_form.wysiwyg_form.command.numbered_list_upper_roman',
                             translationDomain: 'javascript',
                             click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('upper-roman').run(); },
                             class: (form: WysiwygForm) => { return form.editor.isActive('customOrderedList', { listStyle: 'upper-roman' }) ? 'is-active' : ''; },
                         }),
-                        _.assign(new WysiwygMenuButton(), {
+                        Object.assign(new WysiwygMenuButton(), {
                             label: 'enhavo_form.wysiwyg_form.command.numbered_list_lower_greek',
                             translationDomain: 'javascript',
                             click: (event: Event, form: WysiwygForm) => { form.editor.chain().focus().toggleStyledOrderedList('lower-greek').run(); },
@@ -543,7 +542,7 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
         },
         {
             items: [
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'search',
                     tooltip: 'enhavo_form.wysiwyg_form.command.search.label',
                     translationDomain: 'javascript',
@@ -556,7 +555,7 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
         },
         {
             items: [
-                _.assign(new WysiwygMenuButton(), {
+                Object.assign(new WysiwygMenuButton(), {
                     icon: 'table',
                     tooltip: 'enhavo_form.wysiwyg_form.command.table.label',
                     translationDomain: 'javascript',
@@ -567,7 +566,7 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
         },
         {
             items: [
-                _.assign(new WysiwygSourceCodeButton(), {
+                Object.assign(new WysiwygSourceCodeButton(), {
                     tooltip: 'enhavo_form.wysiwyg_form.command.source_code.label',
                     translationDomain: 'javascript',
                 }),
@@ -575,7 +574,7 @@ export class WysiwygDefaultConfig implements WysiwygConfigInterface
         },
         {
             items: [
-                _.assign(new WysiwygSpecialCharactersButton(), {
+                Object.assign(new WysiwygSpecialCharactersButton(), {
                     icon: 'omega',
                     tooltip: 'enhavo_form.wysiwyg_form.command.special_characters.label',
                     translationDomain: 'javascript',

@@ -28,7 +28,6 @@
     "fantasticon": "^3.0.0",
     "html-entities": "^2.5.2",
     "jexl": "^2.1.1",
-    "lodash": "^4.17.11",
     "morphdom": "^2.7.4",
     "pako": "^1.0.10",
     "popper.js": "^1.16.0",

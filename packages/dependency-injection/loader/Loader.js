@@ -7,7 +7,6 @@ import FileLoadException from '@enhavo/dependency-injection/exception/FileLoadEx
 import glob from 'glob'
 import path from 'path'
 import YAML from 'yaml'
-import _ from 'lodash'
 import fs from 'fs'
 
 export default class Loader
@@ -92,7 +91,7 @@ export default class Loader
     }
 
     _configureOptions(options) {
-        options = _.merge(new Configuration(), options);
+        options = Object.assign(new Configuration(), options);
         return options;
     }
 

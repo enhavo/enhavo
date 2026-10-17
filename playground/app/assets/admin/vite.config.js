@@ -16,7 +16,6 @@ export default defineConfig({
             'jquery',
             'async',
             'pako',
-            'lodash',
             'ansi-to-html',
             'jexl',
             'blueimp-file-upload',
