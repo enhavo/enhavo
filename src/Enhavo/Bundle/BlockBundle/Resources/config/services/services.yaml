@@ -2,6 +2,7 @@ services:
     Enhavo\Bundle\BlockBundle\Twig\BlockTwigExtension:
         arguments:
             - '%enhavo_block.render.sets%'
+            - '%enhavo_block.render.debug_comment%'
         calls:
             - [setTwig, ['@twig']]
         tags:

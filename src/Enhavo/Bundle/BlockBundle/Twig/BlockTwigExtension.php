@@ -21,6 +21,7 @@ class BlockTwigExtension extends AbstractExtension
 
     public function __construct(
         private readonly array $renderSets,
+        private readonly bool $debugComment = false,
     ) {
     }
 
@@ -43,7 +44,9 @@ class BlockTwigExtension extends AbstractExtension
         }
 
         if ('block' === $node['type'] && (empty($onlyRenderTypes) || in_array($node['name'], $onlyRenderTypes))) {
-            return $this->twig->render($this->getTemplate($node, $renderSet), $node['data']);
+            $html = $this->twig->render($this->getTemplate($node, $renderSet), $node['data']);
+
+            return $this->debugComment ? $this->wrapDebugComment($node, $html) : $html;
         }
 
         if (count($node['children'])) {
@@ -56,6 +59,13 @@ class BlockTwigExtension extends AbstractExtension
         }
 
         return '';
+    }
+
+    private function wrapDebugComment(array $node, string $html): string
+    {
+        $label = sprintf('block "%s" id %s', $node['name'] ?? '?', $node['data']['block']['id'] ?? '?');
+
+        return sprintf("<!-- %s -->\n%s\n<!-- /%s -->", $label, $html, $label);
     }
 
     private function getTemplate(array $node, string|array|null $renderSet): string
