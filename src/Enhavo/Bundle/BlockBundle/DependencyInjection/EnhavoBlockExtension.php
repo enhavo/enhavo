@@ -38,6 +38,7 @@ class EnhavoBlockExtension extends Extension implements PrependExtensionInterfac
         $container->setParameter('enhavo_block.column.width_form', $config['column']['width_form']);
         $container->setParameter('enhavo_block.column.styles', $config['column']['styles']);
         $container->setParameter('enhavo_block.render.sets', $config['render']['sets']);
+        $container->setParameter('enhavo_block.render.debug_comment', $config['render']['debug_comment']);
 
         if ($config['doctrine']['enable_columns']) {
             $container->setParameter('enhavo_block.doctrine.enable_columns', true);

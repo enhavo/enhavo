@@ -44,6 +44,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('render')
                     ->addDefaultsIfNotSet()
                     ->children()
+                        ->booleanNode('debug_comment')->defaultFalse()->info('Wrap every rendered block in html comments with its name and id')->end()
                         ->arrayNode('sets')
                             ->defaultValue([])
                             ->useAttributeAsKey('name')
