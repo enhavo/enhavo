@@ -12,7 +12,7 @@
 namespace Enhavo\Bundle\UserBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Enhavo\Bundle\AppBundle\Model\TimestampableTrait;
+use Enhavo\Bundle\FrameworkBundle\Entity\TimestampableTrait;
 
 class User implements UserInterface, ApiTokenAwareInterface, TwoFactorInterface
 {

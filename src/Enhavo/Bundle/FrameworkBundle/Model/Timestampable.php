@@ -9,15 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Enhavo\Bundle\AppBundle\Model;
+namespace Enhavo\Bundle\FrameworkBundle\Model;
 
 interface Timestampable
 {
-    public function getCreatedAt(): ?\DateTime;
-
-    public function setCreatedAt(?\DateTime $date);
-
-    public function getUpdatedAt(): ?\DateTime;
-
-    public function setUpdatedAt(?\DateTime $date);
+    public ?\DateTime $createdAt { get; set; }
+    public ?\DateTime $updatedAt { get; set; }
 }

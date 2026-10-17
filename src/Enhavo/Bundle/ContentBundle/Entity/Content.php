@@ -11,11 +11,11 @@
 
 namespace Enhavo\Bundle\ContentBundle\Entity;
 
-use Enhavo\Bundle\AppBundle\Model\Timestampable;
-use Enhavo\Bundle\AppBundle\Model\TimestampableTrait;
 use Enhavo\Bundle\ContentBundle\Content\Publishable;
 use Enhavo\Bundle\ContentBundle\Content\PublishableTrait;
 use Enhavo\Bundle\ContentBundle\Sitemap\SitemapInterface;
+use Enhavo\Bundle\FrameworkBundle\Entity\TimestampableTrait;
+use Enhavo\Bundle\FrameworkBundle\Model\Timestampable;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Routeable;
 use Enhavo\Bundle\RoutingBundle\Model\RouteInterface;

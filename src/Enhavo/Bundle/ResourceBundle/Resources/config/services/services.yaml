@@ -130,3 +130,7 @@ services:
             - '@Enhavo\Bundle\ResourceBundle\Form\FormDescriberInterface'
         tags:
             - { name: 'enhavo_resource.form_type_describer' }
+
+    Enhavo\Bundle\ResourceBundle\EventListener\TimestampableSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }

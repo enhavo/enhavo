@@ -13,7 +13,7 @@ namespace Enhavo\Bundle\ContentBundle\Sitemap;
 
 interface SitemapInterface
 {
-    public function getUpdatedAt(): ?\DateTime;
+    public ?\DateTime $updatedAt { get; }
 
     public function isNoIndex();
 }
