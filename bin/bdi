@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+
+chdir(dirname(__DIR__));
+
+// without arguments, detect browsers and install the drivers to /drivers
+if ($_SERVER['argc'] === 1) {
+    $_SERVER['argv'] = $argv = [$_SERVER['argv'][0], 'detect', 'drivers'];
+    $_SERVER['argc'] = $argc = 3;
+}
+
+require_once __DIR__.'/../vendor/dbrekelmans/bdi/bdi';

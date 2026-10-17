@@ -29,6 +29,7 @@ return (new Config())
             'env' => [
                 'PANTHER_APP_ENV' => 'test',
                 'PANTHER_WEB_SERVER_DIR' => __DIR__.'/public',
+                'PANTHER_CHROME_DRIVER_BINARY' => dirname(__DIR__, 2).'/drivers/chromedriver',
             ],
         ]))
         ->withFormatter(new PrettyFormatter(paths: false))

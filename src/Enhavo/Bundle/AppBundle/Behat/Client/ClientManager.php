@@ -103,7 +103,7 @@ class ClientManager
     public function createClient(array $webServerOptions = []): PantherClient
     {
         $this->startWebServer($webServerOptions);
-        $client = PantherClient::createChromeClient(null, null, [], $this->baseUri);
+        $client = PantherClient::createChromeClient($_SERVER['PANTHER_CHROME_DRIVER_BINARY'] ?? null, null, [], $this->baseUri);
         $this->pantherClients[] = $client;
 
         return $client;
