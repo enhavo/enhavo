@@ -11,7 +11,6 @@ import {Event} from "@enhavo/app/frame/FrameEventDispatcher";
 import {Translator} from "@enhavo/framework/translation/Translator";
 import {FlashMessage, FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 import jexl from "jexl";
-import axios from "axios";
 import {ClientInterface, Transport} from "@enhavo/app/client/ClientInterface";
 import {CollectionInterface} from "@enhavo/app/collection/CollectionInterface";
 import {Frame} from "@enhavo/app/frame/Frame";
@@ -224,10 +223,15 @@ export class ListCollection implements CollectionInterface
 
         let url = this.router.generate(route);
 
-        axios
-            .post(url, data)
-            // executed on success
+        fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data),
+        })
             .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText);
+                }
                 this.flashMessenger.add(
                     this.translator.trans('enhavo_app.list.message.save', {}, 'javascript')
                 )

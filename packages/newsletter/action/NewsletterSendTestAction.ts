@@ -25,10 +25,11 @@ export class NewsletterSendTestAction extends AbstractAction
         this.modalManager.push({
             model: 'FormModal',
             form: this.form,
-            actionHandler: (modal: AjaxFormModal, data: any, error: string) => {
-                return new Promise((resolve, reject) => {
-                    if (data.status == 400) {
-                        this.flashMessenger.error(data.data.message);
+            actionHandler: (modal: AjaxFormModal, response: Response, error: string) => {
+                return new Promise(async (resolve, reject) => {
+                    if (response.status == 400) {
+                        let data = await response.json();
+                        this.flashMessenger.error(data.message);
                         resolve(false);
                         return;
                     } else if (error) {
@@ -36,7 +37,8 @@ export class NewsletterSendTestAction extends AbstractAction
                         resolve(false);
                         return;
                     }
-                    this.flashMessenger.add(data.data.message, data.data.type);
+                    let data = await response.json();
+                    this.flashMessenger.add(data.message, data.type);
                     resolve(true);
                 })
             }

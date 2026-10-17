@@ -10,7 +10,6 @@
     "url": "https://github.com/enhavo/enhavo.git"
   },
   "dependencies": {
-    "axios": "^0.21.1",
     "qs": "^6.10.1",
     "uuid": "^3.3.2"
   }

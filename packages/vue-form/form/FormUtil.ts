@@ -1,4 +1,3 @@
-import axios, {AxiosPromise, Method} from "axios";
 import {Form} from "@enhavo/vue-form/model/Form";
 
 export class FormUtil
@@ -34,16 +33,23 @@ export class FormUtil
         return new FormData(<HTMLFormElement>form.element);
     }
 
-    static submitAsync(form: Form): AxiosPromise
+    static submitAsync(form: Form): Promise<Response>
     {
         let element: HTMLFormElement = <HTMLFormElement>form.element;
+        let method = element.method.toUpperCase();
+        let data = FormUtil.serializeForm(form);
+        let url = new URL(element.action, window.origin);
 
-        return axios({
-            method: <Method>element.method,
-            url: element.action,
-            data: FormUtil.serializeForm(form),
+        if (method === 'GET') {
+            for (let [key, value] of data.entries()) {
+                url.searchParams.append(key, value.toString());
+            }
+        }
+
+        return fetch(url.toString(), {
+            method: method,
+            body: method === 'GET' ? null : data,
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
                 'X-Requested-With': 'XMLHttpRequest'
             }
         });

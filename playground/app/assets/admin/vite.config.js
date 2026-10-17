@@ -11,7 +11,6 @@ import {jqueryGlobalPlugin} from "@enhavo/framework/vite/jquery-global-plugin.js
 export default defineConfig({
     optimizeDeps: {
         include: [
-            'axios',
             'uuid/v4',
             'vuedraggable',
             'jquery',

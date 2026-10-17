@@ -1,4 +1,3 @@
-import axios, {CancelTokenSource} from "axios";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
 import {Router} from "@enhavo/framework/routing/Router";
 import {Translator} from "@enhavo/framework/translation/Translator";
@@ -178,49 +177,50 @@ export class MediaLibraryManager
                 return;
             }
 
-            const CancelToken = axios.CancelToken;
-            const source = CancelToken.source();
+            // XMLHttpRequest instead of fetch, because fetch can't report upload progress
+            const request = new XMLHttpRequest();
 
             let fileUpload = new FileUpload();
             fileUpload.name = file.name;
             fileUpload.total = file.size;
-            fileUpload.source = source;
+            fileUpload.request = request;
             this.uploads.push(fileUpload);
             fileUpload = this.uploads[this.uploads.indexOf(fileUpload)]; // make reactive
 
             let data = new FormData();
             data.append('files', file);
 
-            axios.post(url, data, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
-                onUploadProgress: (progressEvent) => {
-                    fileUpload.progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-                    fileUpload.loaded = progressEvent.loaded;
-                },
-                cancelToken: source.token
-            })
-            .then((response) => {
+            request.upload.onprogress = (progressEvent) => {
+                fileUpload.progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+                fileUpload.loaded = progressEvent.loaded;
+            };
+            request.onload = () => {
                 this.uploads.splice(this.uploads.indexOf(fileUpload), 1);
-                resolve(true);
-            })
-            .catch((error) => {
-                this.uploads.splice(this.uploads.indexOf(fileUpload), 1);
-                if (axios.isCancel(error)) {
-                    resolve(false); // no error
-                } else {
-                    if (error.response.status === 400 && error.response.data.success === false) {
-                        for (let message of error.response.data.errors) {
-                            this.flashMessenger.error(message)
-                        }
-                    } else {
-                        this.flashMessenger.error('An error occurred')
-                        console.error(error);
-                        resolve(false);
+                if (request.status >= 200 && request.status < 300) {
+                    resolve(true);
+                } else if (request.status === 400 && request.response?.success === false) {
+                    for (let message of request.response.errors) {
+                        this.flashMessenger.error(message)
                     }
+                    resolve(false);
+                } else {
+                    this.flashMessenger.error('An error occurred')
+                    console.error(request.statusText);
+                    resolve(false);
                 }
-            });
+            };
+            request.onerror = () => {
+                this.uploads.splice(this.uploads.indexOf(fileUpload), 1);
+                this.flashMessenger.error('An error occurred')
+                resolve(false);
+            };
+            request.onabort = () => {
+                this.uploads.splice(this.uploads.indexOf(fileUpload), 1);
+                resolve(false); // no error
+            };
+            request.open('POST', url);
+            request.responseType = 'json';
+            request.send(data);
         });
     }
 
@@ -294,11 +294,11 @@ export class FileUpload
     progress: number = 0;
     loaded: number;
     total: number;
-    source: CancelTokenSource
+    request: XMLHttpRequest;
 
     cancel()
     {
-        this.source.cancel();
+        this.request.abort();
     }
 }
 

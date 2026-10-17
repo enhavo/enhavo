@@ -1,6 +1,5 @@
 import $ from "jquery";
 import * as async from "async";
-import axios, {CancelTokenSource} from "axios";
 import {ListForm} from "@enhavo/form/form/model/ListForm";
 import {Form} from "@enhavo/vue-form/model/Form";
 import {DeleteEvent} from "@enhavo/form/form/event/DeleteEvent";
@@ -137,47 +136,50 @@ export class MediaForm extends ListForm
     {
         return (callback) => {
 
-            const CancelToken = axios.CancelToken;
-            const source = CancelToken.source();
+            // XMLHttpRequest instead of fetch, because fetch can't report upload progress
+            const request = new XMLHttpRequest();
 
             let fileUpload = new FileUpload();
             fileUpload.name = file.name;
             fileUpload.total = file.size;
-            fileUpload.source = source;
+            fileUpload.request = request;
             this.uploads.push(fileUpload);
             fileUpload = this.uploads[this.uploads.indexOf(fileUpload)]; // make reactive
 
             let data = new FormData();
             data.append('files', file);
 
-            axios.post(this.uploadUrl, data, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
-                onUploadProgress: (progressEvent) => {
-                    fileUpload.progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-                    fileUpload.loaded = progressEvent.loaded;
-                },
-                cancelToken: source.token
-            })
-                .then((response) => {
-                    this.uploads.splice(this.uploads.indexOf(fileUpload), 1);
-                    for (let file of response.data) {
-                        this.addFile(file);
-                    }
+            const fail = (error: any) => {
+                this.uploads.splice(this.uploads.indexOf(fileUpload), 1);
+                this.addError('An error occurred');
+                console.error(error)
+                callback(null, error)
+            };
 
-                    callback();
-                })
-                .catch((error) => {
-                    this.uploads.splice(this.uploads.indexOf(fileUpload), 1);
-                    if (axios.isCancel(error)) {
-                        callback(); // no error
-                    } else {
-                        this.addError('An error occurred');
-                        console.error(error)
-                        callback(null, error)
-                    }
-                });
+            request.upload.onprogress = (progressEvent) => {
+                fileUpload.progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+                fileUpload.loaded = progressEvent.loaded;
+            };
+            request.onload = () => {
+                if (request.status < 200 || request.status >= 300) {
+                    fail(new Error(request.statusText));
+                    return;
+                }
+                this.uploads.splice(this.uploads.indexOf(fileUpload), 1);
+                for (let file of request.response) {
+                    this.addFile(file);
+                }
+
+                callback();
+            };
+            request.onerror = () => fail(new Error('Network error'));
+            request.onabort = () => {
+                this.uploads.splice(this.uploads.indexOf(fileUpload), 1);
+                callback(); // no error
+            };
+            request.open('POST', this.uploadUrl);
+            request.responseType = 'json';
+            request.send(data);
         }
     }
 
@@ -311,11 +313,11 @@ export class FileUpload
     progress: number = 0;
     loaded: number;
     total: number;
-    source: CancelTokenSource
+    request: XMLHttpRequest;
 
     cancel()
     {
-        this.source.cancel();
+        this.request.abort();
     }
 }
 

@@ -1,6 +1,5 @@
 import {AbstractAction} from "@enhavo/app/action/model/AbstractAction";
 import {FlashMessenger} from "@enhavo/app/flash-message/FlashMessenger";
-import axios from "axios";
 import {Translator} from "@enhavo/framework/translation/Translator";
 import {Router} from "@enhavo/framework/routing/Router";
 import {UiManager} from "@enhavo/app/ui/UiManager";
@@ -50,19 +49,26 @@ export class NewsletterSendAction extends AbstractAction
         let url = this.router.generate('enhavo_newsletter_newsletter_send', {
             id: this.resourceId,
         });
-        axios
-            .post(url, {})
-            .then((data) => {
+        fetch(url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({}),
+        })
+            .then(async (response) => {
                 this.uiManager.loading(false);
-                this.flashMessenger.add(data.data.message, data.data.type);
-            })
-            .catch((error) => {
-                this.uiManager.loading(false);
-                if(error.response.status == 400) {
-                    this.flashMessenger.error(error.response.data.message);
+                if (response.ok) {
+                    let data = await response.json();
+                    this.flashMessenger.add(data.message, data.type);
+                } else if (response.status == 400) {
+                    let data = await response.json();
+                    this.flashMessenger.error(data.message);
                 } else {
                     this.flashMessenger.error(this.translator.trans('enhavo_app.error'));
                 }
+            })
+            .catch((error) => {
+                this.uiManager.loading(false);
+                this.flashMessenger.error(this.translator.trans('enhavo_app.error'));
             })
     }
 

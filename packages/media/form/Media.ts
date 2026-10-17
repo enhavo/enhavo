@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import axios from "axios";
 import * as async from "async";
 
 export class Media
@@ -141,13 +140,18 @@ export class Media
         let url = '/file/add';
 
         return (callback) => {
-            axios.post(url, data, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+            fetch(url, {
+                method: 'POST',
+                body: data,
             })
                 .then((response) => {
-                    for (let file of response.data) {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+                    return response.json();
+                })
+                .then((files) => {
+                    for (let file of files) {
                         this.addFile(file);
                     }
                     callback();

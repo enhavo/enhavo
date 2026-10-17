@@ -11,8 +11,6 @@ export async function fantasticon(options) {
         ...config
     } = defaults(options ?? {});
 
-    console.log(config);
-
     const builder = await assetBuilder(config, generateFonts);
     const name = `fantasticon:${config.name}`;
     const virtual = `\0${name}`;

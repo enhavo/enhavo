@@ -1,5 +1,4 @@
 import { AbstractModal } from "@enhavo/app/modal/model/AbstractModal";
-import axios from "axios";
 import {Router} from "@enhavo/framework/router/Router";
 import {FormFactory} from "@enhavo/vue-form/form/FormFactory";
 import {Form} from "@enhavo/vue-form/model/Form";
@@ -20,7 +19,7 @@ export class FormModal extends AbstractModal
     public actionUrl: string;
     public actionFormParameter: string = 'form';
 
-    public actionHandler: (modal: FormModal, data: any, error: string) => Promise<boolean>;
+    public actionHandler: (modal: FormModal, response: Response, error: string) => Promise<boolean>;
     public submitHandler: (modal: FormModal, data: any) => Promise<boolean>;
 
     public saveLabel: string = 'enhavo_app.save.label.save';
@@ -56,8 +55,13 @@ export class FormModal extends AbstractModal
         this.loading = true;
 
         return new Promise((resolve, reject) => {
-            axios.get(url).then((data) => {
-                this.form = this.formFactory.create(data.data[this.actionFormParameter]);
+            fetch(url).then((response) => {
+                if (!response.ok) {
+                    throw new Error(response.statusText);
+                }
+                return response.json();
+            }).then((data) => {
+                this.form = this.formFactory.create(data[this.actionFormParameter]);
                 this.loading = false;
                 resolve();
             }).catch(() => {
@@ -85,21 +89,23 @@ export class FormModal extends AbstractModal
     {
         this.loading = true;
         return new Promise((resolve, reject) => {
-            axios.post(this.getActionUrl(), this.getFormData(), {
-                headers: {'Content-Type': 'application/x-www-form-urlencoded' },
-                responseType: 'arraybuffer'
-            }).then((responseData) => {
-                this.receiveForm(responseData, resolve, reject)
+            fetch(this.getActionUrl(), {
+                method: 'POST',
+                body: this.getFormData(),
+            }).then((response) => {
+                return this.receiveForm(response, resolve, reject);
             }).catch((error) => {
-                this.receiveForm(error.response, resolve, reject)
+                console.error(error);
+                this.loading = false;
+                reject();
             });
         });
     }
 
-    private receiveForm(responseData: any, resolve: (data?: any) => void, reject: () => void)
+    private async receiveForm(response: Response, resolve: (data?: any) => void, reject: () => void)
     {
         if (this.actionHandler) {
-            this.actionHandler(this, responseData, null)
+            this.actionHandler(this, response, null)
                 .then((value) => {
                     resolve(value);
                 })
@@ -108,7 +114,8 @@ export class FormModal extends AbstractModal
                     reject();
                 });
         } else {
-            let form = this.formFactory.create(responseData.data[this.actionFormParameter]);
+            let data = await response.json();
+            let form = this.formFactory.create(data[this.actionFormParameter]);
             this.form.morphStart();
             this.form.morphMerge(form);
             this.form.morphFinish();

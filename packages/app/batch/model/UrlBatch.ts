@@ -1,5 +1,4 @@
 import {AbstractBatch} from "@enhavo/app/batch/model/AbstractBatch";
-import axios from "axios";
 import {FlashMessenger, FlashMessage} from "@enhavo/app/flash-message/FlashMessenger";
 import {Translator} from "@enhavo/framework/translation/Translator";
 import {UiManager} from "@enhavo/app/ui/UiManager";
@@ -34,8 +33,15 @@ export class UrlBatch extends AbstractBatch
             }).then((accept: boolean) => {
                 if (accept) {
                     this.uiManager.loading(true);
-                    axios.post(this.url, data)
+                    fetch(this.url, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data),
+                    })
                         .then((response) => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText);
+                            }
                             this.uiManager.loading(false);
                             this.flashMessenger.add(this.translator.trans('enhavo_app.batch.message.success', {}, 'javascript'));
                             resolve(true);

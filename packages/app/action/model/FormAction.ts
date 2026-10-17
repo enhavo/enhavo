@@ -4,8 +4,7 @@ import ModalManager from "@enhavo/app/modal/ModalManager";
 import {Router} from "@enhavo/framework/router/Router";
 import AjaxFormModal from "@enhavo/app/modal/model/AjaxFormModal";
 import {Translator} from "@enhavo/framework/translator/Translator";
-import {AxiosResponseHandler} from "@enhavo/framework/util/AxiosResponseHandler";
-import axios, {AxiosResponse} from "axios";
+import {ResponseHandler} from "@enhavo/framework/util/ResponseHandler";
 import $ from "jquery";
 
 export class FormAction extends AbstractAction
@@ -42,19 +41,19 @@ export class FormAction extends AbstractAction
             component: 'ajax-form-modal',
             url: this.url,
             saveLabel: this.translator.trans(this.saveLabel),
-            actionHandler: async (modal: AjaxFormModal, data: any) => {
-                if (data.status === 200) {
+            actionHandler: async (modal: AjaxFormModal, response: Response) => {
+                if (response.status === 200) {
                     if (this.openType === FormAction.RELOAD) {
                         window.location.reload()
                     } else if (this.openRoute) {
-                        this.open(modal, data)
+                        await this.open(modal, response)
                     } else if (this.openType === FormAction.DOWNLOAD) {
-                        this.download(modal, data)
+                        await this.download(modal, response)
                     }
 
                     return true;
-                } else if (data.status === 400) {
-                    let html = AxiosResponseHandler.getBody(data).trim();
+                } else if (response.status === 400) {
+                    let html = (await ResponseHandler.getBody(response)).trim();
                     modal.element = <HTMLElement>$.parseHTML(html)[0];
                     return false;
                 }
@@ -65,9 +64,9 @@ export class FormAction extends AbstractAction
         this.modalManager.push(modalData);
     }
 
-    protected open(modal: AjaxFormModal, responseData: AxiosResponse<any>)
+    protected async open(modal: AjaxFormModal, response: Response)
     {
-        let data = AxiosResponseHandler.getBody(responseData)
+        let data = await ResponseHandler.getBody(response)
 
         let html = data.trim();
         modal.element = <HTMLElement>$.parseHTML(html)[0];
@@ -91,11 +90,16 @@ export class FormAction extends AbstractAction
             }
         } else if(this.openType === FormAction.DOWNLOAD) {
 
-            axios.post(url, {}, {
-                responseType: 'arraybuffer'
+            fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({}),
             })
                 .then((response) => {
-                    AxiosResponseHandler.download(response);
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+                    return ResponseHandler.download(response);
                 })
                 .catch(function (response) {
                     console.error(response);
@@ -103,8 +107,8 @@ export class FormAction extends AbstractAction
         }
     }
 
-    protected download(modal: AjaxFormModal, data: any)
+    protected download(modal: AjaxFormModal, response: Response)
     {
-        AxiosResponseHandler.download(data);
+        return ResponseHandler.download(response);
     }
 }

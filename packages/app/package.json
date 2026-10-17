@@ -23,7 +23,6 @@
     "ansi-to-html": "^0.6.11",
     "argparse": "^2.0.1",
     "async": "^2.6.2",
-    "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
     "compass-mixins": "^0.12.10",
     "fantasticon": "^3.0.0",

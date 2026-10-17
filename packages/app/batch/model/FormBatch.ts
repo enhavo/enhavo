@@ -34,10 +34,10 @@ export class FormBatch extends UrlBatch
         };
 
         this.modal.actionUrl = this.getUrl();
-        this.modal.actionHandler = (modal: AjaxFormModal, data: any, error: string) => {
-            return new Promise((resolve, reject) => {
-                if(data.status == 400) {
-                    this.flashMessenger.add( data.data, FlashMessage.ERROR);
+        this.modal.actionHandler = (modal: AjaxFormModal, response: Response, error: string) => {
+            return new Promise(async (resolve, reject) => {
+                if(response.status == 400) {
+                    this.flashMessenger.add(await response.text(), FlashMessage.ERROR);
                     resolve(true);
                     return;
                 } else if(error) {

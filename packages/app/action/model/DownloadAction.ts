@@ -1,6 +1,5 @@
 import { AbstractAction } from "@enhavo/app/action/model/AbstractAction";
-import {AxiosResponseHandler} from "@enhavo/framework/util/AxiosResponseHandler";
-import axios from 'axios';
+import {ResponseHandler} from "@enhavo/framework/util/ResponseHandler";
 import $ from 'jquery';
 
 export class DownloadAction extends AbstractAction
@@ -18,12 +17,16 @@ export class DownloadAction extends AbstractAction
             return;
         }
 
-        axios.post(this.url, $('form').serialize(), {
-            headers: {'Content-Type': 'multipart/form-data' },
-            responseType: 'arraybuffer'
+        fetch(this.url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: $('form').serialize(),
         })
         .then((response) => {
-            AxiosResponseHandler.download(response);
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return ResponseHandler.download(response);
         })
         .catch(function (response) {
             //handle error

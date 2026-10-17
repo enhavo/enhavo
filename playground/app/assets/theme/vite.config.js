@@ -13,7 +13,6 @@ export default defineConfig({
             'lodash',
             'jquery',
             'select2',
-            'axios',
             'icheck',
         ],
     },
