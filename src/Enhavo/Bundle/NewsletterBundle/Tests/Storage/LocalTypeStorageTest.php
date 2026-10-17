@@ -232,6 +232,8 @@ class LocalTypeStorageTest extends TestCase
 
 class NotNewsletter implements NewsletterInterface
 {
+    public ?\DateTime $createdAt = null;
+
     public function getId()
     {
     }
@@ -326,14 +328,6 @@ class NotNewsletter implements NewsletterInterface
     }
 
     public function setFinishAt(?\DateTime $finishAt): void
-    {
-    }
-
-    public function getCreatedAt(): ?\DateTime
-    {
-    }
-
-    public function setCreatedAt(?\DateTime $createdAt): void
     {
     }
 }

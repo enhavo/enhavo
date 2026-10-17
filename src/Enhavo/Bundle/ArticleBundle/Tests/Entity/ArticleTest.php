@@ -19,7 +19,7 @@ class ArticleTest extends TestCase
     {
         $article = new Article();
         $date = new \DateTime('1970-01-01 00:00:00');
-        $article->setCreatedAt($date);
-        $this->assertEquals('1970-01-01 00:00:00', $article->getCreatedAt()->format('Y-m-d H:i:s'));
+        $article->createdAt = $date;
+        $this->assertEquals('1970-01-01 00:00:00', $article->createdAt->format('Y-m-d H:i:s'));
     }
 }

@@ -20,8 +20,8 @@ class ContentFactory extends Factory
     {
         /** @var Content $resource */
         $resource = parent::createNew();
-        $resource->setCreatedAt(new \DateTime());
-        $resource->setUpdatedAt(new \DateTime());
+        $resource->createdAt = new \DateTime();
+        $resource->updatedAt = new \DateTime();
 
         return $resource;
     }

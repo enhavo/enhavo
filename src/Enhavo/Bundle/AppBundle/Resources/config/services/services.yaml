@@ -18,10 +18,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 300 }
 
-    Enhavo\Bundle\AppBundle\EventListener\TimestampableSubscriber:
-        tags:
-            - { name: kernel.event_subscriber }
-
     Enhavo\Bundle\AppBundle\Normalizer\FormDataNormalizer:
         arguments:
             - '@Enhavo\Bundle\VueFormBundle\Form\VueForm'

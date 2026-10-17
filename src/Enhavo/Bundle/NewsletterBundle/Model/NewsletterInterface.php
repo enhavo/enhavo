@@ -121,7 +121,5 @@ interface NewsletterInterface
 
     public function setFinishAt(?\DateTime $finishAt): void;
 
-    public function getCreatedAt(): ?\DateTime;
-
-    public function setCreatedAt(?\DateTime $createdAt): void;
+    public ?\DateTime $createdAt { get; set; }
 }

@@ -9,15 +9,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Enhavo\Bundle\AppBundle\EventListener;
+namespace Enhavo\Bundle\ResourceBundle\EventListener;
 
-use Enhavo\Bundle\AppBundle\Model\Timestampable;
 use Enhavo\Bundle\ResourceBundle\Event\ResourceEvent;
 use Enhavo\Bundle\ResourceBundle\Event\ResourceEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TimestampableSubscriber implements EventSubscriberInterface
 {
+    // referenced as string, so the framework bundle is not required
+    private const TIMESTAMPABLE = 'Enhavo\\Bundle\\FrameworkBundle\\Model\\Timestampable';
+
     public static function getSubscribedEvents()
     {
         return [
@@ -30,11 +32,11 @@ class TimestampableSubscriber implements EventSubscriberInterface
     {
         $resource = $event->getSubject();
 
-        if ($resource instanceof Timestampable) {
+        if (is_a($resource, self::TIMESTAMPABLE)) {
             $now = new \DateTime();
-            $resource->setUpdatedAt($now);
-            if (null === $resource->getCreatedAt()) {
-                $resource->setCreatedAt($now);
+            $resource->updatedAt = $now;
+            if (null === $resource->createdAt) {
+                $resource->createdAt = $now;
             }
         }
     }

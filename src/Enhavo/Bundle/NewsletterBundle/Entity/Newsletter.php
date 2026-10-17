@@ -13,9 +13,9 @@ namespace Enhavo\Bundle\NewsletterBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Enhavo\Bundle\AppBundle\Model\Timestampable;
-use Enhavo\Bundle\AppBundle\Model\TimestampableTrait;
 use Enhavo\Bundle\BlockBundle\Model\NodeInterface;
+use Enhavo\Bundle\FrameworkBundle\Entity\TimestampableTrait;
+use Enhavo\Bundle\FrameworkBundle\Model\Timestampable;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\NewsletterBundle\Model\NewsletterInterface;
 use Enhavo\Bundle\RoutingBundle\Model\Slugable;
@@ -114,16 +114,6 @@ class Newsletter implements Slugable, NewsletterInterface, Timestampable
     public function getContent()
     {
         return $this->content;
-    }
-
-    public function getCreatedAt(): ?\DateTime
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(?\DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
     }
 
     public function getStartAt(): ?\DateTime
