@@ -1,6 +1,0 @@
-#!/usr/bin/env php
-<?php
-
-chdir(__DIR__.'/../playground/app');
-
-require_once __DIR__.'/../vendor/behat/behat/bin/behat';
