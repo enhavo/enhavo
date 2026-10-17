@@ -1,4 +1,8 @@
 subtrees:
+    AiBundle:
+        url: 'git@github.com:enhavo/AiBundle.git'
+        prefix: src/Enhavo/Bundle/AiBundle
+        package: enhavo/ai-bundle
     ApiBundle:
         url: 'git@github.com:enhavo/EnhavoApiBundle.git'
         prefix: src/Enhavo/Bundle/ApiBundle
