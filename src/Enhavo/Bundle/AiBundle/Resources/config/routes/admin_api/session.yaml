@@ -1,0 +1,7 @@
+enhavo_ai_admin_api_session_list:
+    path: /session/list
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: ai_session_list

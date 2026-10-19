@@ -42,5 +42,7 @@ return [
     Enhavo\Bundle\TemplateBundle\EnhavoTemplateBundle::class => ['all' => true],
     Enhavo\Bundle\MultiTenancyBundle\EnhavoMultiTenancyBundle::class => ['all' => true],
     Enhavo\Bundle\VueFormBundle\EnhavoVueFormBundle::class => ['all' => true],
+    Symfony\AI\AiBundle\AiBundle::class => ['all' => true],
+    Enhavo\Bundle\AiBundle\EnhavoAiBundle::class => ['all' => true],
     Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
 ];
