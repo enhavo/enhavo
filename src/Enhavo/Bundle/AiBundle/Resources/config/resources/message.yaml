@@ -1,0 +1,8 @@
+enhavo_resource:
+    resources:
+        enhavo_ai.message:
+            priority: -10
+            classes:
+                model: Enhavo\Bundle\AiBundle\Entity\Message
+                factory: Enhavo\Bundle\ResourceBundle\Factory\Factory
+                repository: Enhavo\Bundle\AiBundle\Repository\MessageRepository

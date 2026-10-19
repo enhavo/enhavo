@@ -1,0 +1,8 @@
+enhavo_resource:
+    resources:
+        enhavo_ai.session:
+            priority: -10
+            classes:
+                model: Enhavo\Bundle\AiBundle\Entity\Session
+                factory: Enhavo\Bundle\ResourceBundle\Factory\Factory
+                repository: Enhavo\Bundle\AiBundle\Repository\SessionRepository

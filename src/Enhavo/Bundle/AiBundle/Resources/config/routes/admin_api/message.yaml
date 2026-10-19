@@ -1,0 +1,23 @@
+enhavo_ai_admin_api_message_add:
+    path: /session/{id}/message/add
+    methods: [POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: ai_message_add
+
+enhavo_ai_admin_api_message_delete:
+    path: /message/{id}/delete
+    methods: [DELETE, POST]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: ai_message_delete
+
+enhavo_ai_admin_api_message_history:
+    path: /session/{id}/message/history
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: ai_message_history

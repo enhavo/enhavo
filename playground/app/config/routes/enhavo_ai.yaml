@@ -1,0 +1,3 @@
+enhavo_ai_admin_api:
+    resource: "@EnhavoAiBundle/Resources/config/routes/admin_api/*"
+    prefix: /admin/api/ai

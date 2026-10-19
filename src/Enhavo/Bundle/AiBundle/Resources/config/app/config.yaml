@@ -1,0 +1,5 @@
+doctrine:
+    orm:
+        resolve_target_entities:
+            Enhavo\Bundle\AiBundle\Model\SessionInterface: Enhavo\Bundle\AiBundle\Entity\Session
+            Enhavo\Bundle\AiBundle\Model\MessageInterface: Enhavo\Bundle\AiBundle\Entity\Message

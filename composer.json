@@ -53,6 +53,7 @@
     "simshaun/recurr": "^6.0",
     "spatie/image-optimizer": "^1.0",
     "symfony-cmf/routing-bundle": "^3.0",
+    "symfony/ai-bundle": "^0.14",
     "symfony/asset": "^7.4",
     "symfony/console": "^7.4",
     "symfony/dotenv": "^7.4",
@@ -105,6 +106,7 @@
     "symfony/web-profiler-bundle": "7.4.*"
   },
   "replace": {
+    "enhavo/ai-bundle": "self.version",
     "enhavo/app-bundle": "self.version",
     "enhavo/article-bundle": "self.version",
     "enhavo/block-bundle": "self.version",

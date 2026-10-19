@@ -1,0 +1,32 @@
+services:
+    Enhavo\Bundle\AiBundle\Endpoint\Type\MessageAddEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+
+    Enhavo\Bundle\AiBundle\Endpoint\Type\MessageDeleteEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+
+    Enhavo\Bundle\AiBundle\Endpoint\Type\MessageHistoryEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+
+    Enhavo\Bundle\AiBundle\Endpoint\Type\SessionListEndpointType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
