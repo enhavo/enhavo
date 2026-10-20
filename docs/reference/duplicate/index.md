@@ -15,3 +15,6 @@ import ReferenceOption from '../../components/ReferenceOption.vue';
 <!--@include: ./property.md -->
 <!--@include: ./reference.md -->
 <!--@include: ./string.md -->
+<!--@include: ./translation-file.md -->
+<!--@include: ./translation-property.md -->
+<!--@include: ./translation-string.md -->

@@ -59,6 +59,7 @@ class EnhavoTranslationExtension extends Extension implements PrependExtensionIn
         $loader->load('services/form.yaml');
         $loader->load('services/metadata.yaml');
         $loader->load('services/general.yaml');
+        $loader->load('services/duplicate.yaml');
     }
 
     protected function prependFiles(): array

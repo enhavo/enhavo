@@ -6,5 +6,6 @@
 <!--@include: ./metadata.md -->
 <!--@include: ./form.md -->
 <!--@include: ./serialization.md -->
+<!--@include: ./resource.md -->
 <!--@include: ./routing.md -->
 <!--@include: ./auto-translation.md -->
