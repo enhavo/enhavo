@@ -101,3 +101,12 @@ enhavo_page_admin_api_page_revision_restore:
         _endpoint:
             type: revision_restore
             input: enhavo_page.page
+
+enhavo_page_admin_api_page_revision_diff:
+    path: /page/revision/diff/{id}/{revisionId}
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: revision_diff
+            input: enhavo_page.page
