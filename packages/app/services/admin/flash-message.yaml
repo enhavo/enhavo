@@ -5,4 +5,4 @@ services:
         arguments:
             - '@enhavo/app/frame/FrameManager'
         tags:
-            - { name: vue.service, service: 'flashMessenger', reactive: true , lazy: true }
+            - { name: vue.service, service: 'flashMessenger', reactive: true }

@@ -13,7 +13,7 @@ services:
             - '@enhavo/dashboard/dashboard/DashboardWidgetManager'
             - '@enhavo/framework/routing/Router'
         tags:
-            - { name: vue.service, service: 'dashboardManager', reactive: true , lazy: true }
+            - { name: vue.service, service: 'dashboardManager', reactive: true }
 
     '@enhavo/dashboard/dashboard/DashboardWidgetFactory':
         import: DashboardWidgetFactory
