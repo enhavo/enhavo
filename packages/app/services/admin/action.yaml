@@ -9,7 +9,7 @@ services:
         arguments:
             - '@enhavo/app/action/ActionFactory'
         tags:
-            - { name: vue.service, service: 'actionManager', lazy: true }
+            - { name: vue.service, service: 'actionManager' }
 
     '@enhavo/app/action/model/CloseAction':
         import: CloseAction

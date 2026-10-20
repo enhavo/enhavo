@@ -5,7 +5,7 @@ services:
             - 'param:routes'
         chunk: 'app'
         tags:
-            - { name: vue.service, service: 'router', reactive: false , lazy: true }
+            - { name: vue.service, service: 'router', reactive: false }
 
     '@enhavo/app/view/DataLoader[routes]':
         init: true

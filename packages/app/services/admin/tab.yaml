@@ -9,7 +9,7 @@ services:
         arguments:
             - '@enhavo/app/tab/TabFactory'
         tags:
-            - { name: vue.service, service: 'tabManager' , lazy: true }
+            - { name: vue.service, service: 'tabManager' }
 
     '@enhavo/app/tab/model/BaseTab':
         import: BaseTab

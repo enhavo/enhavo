@@ -42,11 +42,13 @@ export default function(builder, options, context)
 
     let serviceDefinitions = builder.getDefinitionsByTagName('vue.service');
     for (let definition of serviceDefinitions) {
+        let tag = definition.getTag('vue.service');
+        let lazy = tag.hasParameter('lazy') ? !!tag.getParameter('lazy') : true;
         factory.addCall(new Call('registerService', [
-            new Argument(definition.getTag('vue.service').getParameter('service'), 'string'),
+            new Argument(tag.getParameter('service'), 'string'),
             new Argument(definition.getName(), 'string'),
-            new Argument(definition.getTag('vue.service').getParameter('reactive'), 'boolean'),
-            new Argument(definition.getTag('vue.service').getParameter('lazy'), 'boolean'),
+            new Argument(tag.getParameter('reactive'), 'boolean'),
+            new Argument(lazy, 'boolean'),
         ]));
     }
 

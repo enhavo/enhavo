@@ -5,7 +5,7 @@ services:
         calls:
             - [ setData, [ 'param:translations' ] ]
         tags:
-            - { name: vue.service, service: 'translator' , lazy: true }
+            - { name: vue.service, service: 'translator' }
 
     '@enhavo/app/view/DataLoader[translations]':
         init: true

@@ -9,4 +9,4 @@ services:
         import: TranslationManager
         chunk: 'translation'
         tags:
-            - { name: vue.service, service: 'translationManager', reactive: true , lazy: true }
+            - { name: vue.service, service: 'translationManager', reactive: true }

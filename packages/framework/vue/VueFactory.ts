@@ -30,7 +30,7 @@ export class VueFactory
         this.directives.push(new RegistryDirective(name, directive));
     }
 
-    registerService(name: string, service: string, reactive: boolean = false, lazy: boolean = false)
+    registerService(name: string, service: string, reactive: boolean = false, lazy: boolean = true)
     {
         this.services.push(new RegistryService(name, service, reactive, lazy));
     }

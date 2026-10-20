@@ -12,7 +12,7 @@ services:
             - '@enhavo/framework/translation/Translator'
             - '@enhavo/framework/routing/Router'
         tags:
-            - { name: vue.service, service: 'imageCropperManager', reactive: true , lazy: true }
+            - { name: vue.service, service: 'imageCropperManager', reactive: true }
 
     '@enhavo/media/components/MediaImageCropper.vue':
         static: true

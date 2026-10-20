@@ -12,7 +12,7 @@ services:
             - '@enhavo/app/flash-message/FlashMessenger'
             - '@enhavo/app/ui/UiManager'
         tags:
-            - { name: vue.service, service: 'mainManager', reactive: true , lazy: true }
+            - { name: vue.service, service: 'mainManager', reactive: true }
 
     '@enhavo/app/manager/ResourceIndexManager':
         import: ResourceIndexManager
@@ -28,7 +28,7 @@ services:
             - '@enhavo/app/client/Client'
             - '@enhavo/framework/translation/Translator'
         tags:
-            - { name: vue.service, service: 'resourceIndexManager', reactive: true , lazy: true }
+            - { name: vue.service, service: 'resourceIndexManager', reactive: true }
 
     '@enhavo/app/manager/ResourceInputManager':
         import: ResourceInputManager
@@ -42,7 +42,7 @@ services:
             - '@enhavo/app/client/Client'
             - '@enhavo/framework/translation/Translator'
         tags:
-            - { name: vue.service, service: 'resourceInputManager', reactive: true , lazy: true }
+            - { name: vue.service, service: 'resourceInputManager', reactive: true }
 
     '@enhavo/app/manager/ResourcePreviewManager':
         import: ResourcePreviewManager
@@ -54,4 +54,4 @@ services:
             - '@enhavo/app/client/Client'
             - '@enhavo/framework/translation/Translator'
         tags:
-            - { name: vue.service, service: 'resourcePreviewManager', reactive: true , lazy: true }
+            - { name: vue.service, service: 'resourcePreviewManager', reactive: true }

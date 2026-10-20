@@ -19,6 +19,10 @@ export default class Tag
         return this.parameters[name];
     }
 
+    hasParameter(name) {
+        return typeof this.parameters[name] !== 'undefined';
+    }
+
     getParameters() {
         return this.parameters;
     }
