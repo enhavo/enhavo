@@ -42,22 +42,13 @@ services:
         arguments:
             - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
             - '@Enhavo\Bundle\RevisionBundle\Revision\RevisionManager'
-            - '@Enhavo\Bundle\RevisionBundle\Diff\SnapshotBuilder'
-            - '@Enhavo\Bundle\RevisionBundle\Diff\SnapshotDiffer'
+            - '@Enhavo\Bundle\ResourceBundle\Duplicate\DiffFactory'
             - '@translator'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
-
-    Enhavo\Bundle\RevisionBundle\Diff\SnapshotBuilder:
-        arguments:
-            - '@Enhavo\Component\Metadata\MetadataRepository[Duplicate]'
-            - '@doctrine.orm.entity_manager'
-            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
-
-    Enhavo\Bundle\RevisionBundle\Diff\SnapshotDiffer: ~
 
     Enhavo\Bundle\RevisionBundle\Endpoint\Type\ArchiveEndpointType:
         arguments:

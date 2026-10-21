@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Duplicate;
 
+use Enhavo\Bundle\ResourceBundle\Duplicate\Diff\Diff;
 use Enhavo\Component\Type\TypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,6 +22,11 @@ interface DuplicateTypeInterface extends TypeInterface
     public function duplicate($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void;
 
     public function finish($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void;
+
+    /**
+     * Adds the differences between two states of a property to $diff.
+     */
+    public function diff($options, SourceValue $oldValue, SourceValue $newValue, Diff $diff, $context): void;
 
     public function configureOptions(OptionsResolver $resolver);
 }

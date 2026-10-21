@@ -30,6 +30,17 @@ services:
             - '@Enhavo\Component\Metadata\MetadataRepository[Duplicate]'
             - '@Enhavo\Component\Type\FactoryInterface[Duplicate]'
 
+    Enhavo\Bundle\ResourceBundle\Duplicate\DiffFactory:
+        arguments:
+            - '@Enhavo\Component\Metadata\MetadataRepository[Duplicate]'
+            - '@Enhavo\Component\Type\FactoryInterface[Duplicate]'
+            - '@Enhavo\Bundle\ResourceBundle\Duplicate\Diff\DiffValueFormatter'
+            - '@doctrine.orm.entity_manager'
+
+    Enhavo\Bundle\ResourceBundle\Duplicate\Diff\DiffValueFormatter:
+        arguments:
+            - '@translator'
+
     Enhavo\Bundle\ResourceBundle\Duplicate\Type\BaseDuplicateType:
         tags:
             - { name: enhavo_resource.duplicate }

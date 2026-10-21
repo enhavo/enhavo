@@ -16,11 +16,10 @@ use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\AppBundle\Model\Timestampable;
 use Enhavo\Bundle\ResourceBundle\Authorization\Permission;
+use Enhavo\Bundle\ResourceBundle\Duplicate\Diff\Change;
+use Enhavo\Bundle\ResourceBundle\Duplicate\DiffFactory;
 use Enhavo\Bundle\ResourceBundle\Input\Input;
 use Enhavo\Bundle\ResourceBundle\Input\InputFactory;
-use Enhavo\Bundle\RevisionBundle\Diff\Change;
-use Enhavo\Bundle\RevisionBundle\Diff\SnapshotBuilder;
-use Enhavo\Bundle\RevisionBundle\Diff\SnapshotDiffer;
 use Enhavo\Bundle\RevisionBundle\Model\RevisionInterface;
 use Enhavo\Bundle\RevisionBundle\Revision\RevisionManager;
 use Enhavo\Bundle\RevisionBundle\Tab\Type\RevisionTabType;
@@ -37,8 +36,7 @@ class RevisionDiffEndpointType extends AbstractEndpointType
     public function __construct(
         private readonly InputFactory $inputFactory,
         private readonly RevisionManager $revisionManager,
-        private readonly SnapshotBuilder $snapshotBuilder,
-        private readonly SnapshotDiffer $snapshotDiffer,
+        private readonly DiffFactory $diffFactory,
         private readonly TranslatorInterface $translator,
     ) {
     }
@@ -88,10 +86,8 @@ class RevisionDiffEndpointType extends AbstractEndpointType
             $newerDate = $newer->getRevisionDate();
         }
 
-        $changes = $this->snapshotDiffer->diff(
-            $this->snapshotBuilder->build($older),
-            $this->snapshotBuilder->build($newer),
-        );
+        // only what a revision stores is compared
+        $changes = $this->diffFactory->diff($older, $newer, ['groups' => 'revision'])->getChanges();
 
         $data->set('first', false);
         $data->set('olderDate', $olderDate?->format(\DateTimeInterface::ATOM));
@@ -102,21 +98,21 @@ class RevisionDiffEndpointType extends AbstractEndpointType
     private function normalizeChange(Change $change, string $translationDomain): array
     {
         $section = null;
-        if (null !== $change->section) {
+        if (null !== $change->getSection()) {
             $section = [
                 'label' => $this->translator->trans('revision.diff.block', [
-                    '%position%' => $change->section->position,
-                    '%type%' => $change->section->label,
+                    '%position%' => $change->getSection()->getPosition(),
+                    '%type%' => $change->getSection()->getLabel(),
                 ], $translationDomain),
-                'status' => $change->section->status,
+                'status' => $change->getSection()->getStatus(),
             ];
         }
 
         return [
             'section' => $section,
-            'field' => $change->field,
-            'old' => $change->old,
-            'new' => $change->new,
+            'field' => $change->getField(),
+            'old' => $change->getOld(),
+            'new' => $change->getNew(),
         ];
     }
 

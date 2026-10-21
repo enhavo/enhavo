@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Duplicate;
 
+use Enhavo\Bundle\ResourceBundle\Duplicate\Diff\Diff;
 use Enhavo\Component\Type\AbstractContainerType;
 
 /**
@@ -60,5 +61,16 @@ class Duplicate extends AbstractContainerType
         }
 
         return $targetValue->getValue();
+    }
+
+    public function diff(SourceValue $oldValue, SourceValue $newValue, Diff $diff, array $context = []): void
+    {
+        if (!$this->options['diff']) {
+            return;
+        }
+
+        $diff->enter($diff->getFormatter()->getLabel($this->options['label'], $this->options['translation_domain'], $newValue->getPropertyName() ?? $oldValue->getPropertyName()));
+        $this->type->diff($this->options, $oldValue, $newValue, $diff, $context);
+        $diff->leave();
     }
 }

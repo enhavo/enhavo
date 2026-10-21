@@ -52,3 +52,7 @@ delete:
   action:
     ok: 'Löschen'
     cancel: 'Abbrechen'
+diff:
+  value:
+    yes: 'Ja'
+    no: 'Nein'

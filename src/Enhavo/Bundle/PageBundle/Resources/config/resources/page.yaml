@@ -127,3 +127,5 @@ enhavo_resource:
                 position:
                     type: property
                     groups: ['duplicate', 'revision', 'restore']
+                    # order in the page tree, not part of the page content
+                    diff: false

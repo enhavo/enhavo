@@ -52,3 +52,7 @@ delete:
     action:
         ok: 'Delete'
         cancel: 'Cancel'
+diff:
+  value:
+    yes: 'Yes'
+    no: 'No'
