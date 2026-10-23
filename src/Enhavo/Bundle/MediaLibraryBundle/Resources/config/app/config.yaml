@@ -109,6 +109,12 @@ enhavo_media_library:
                 - ^video/.+
 
 enhavo_media:
+    form:
+        default:
+            route: enhavo_media_library_admin_api_file_upload
+            actions:
+                media_library:
+                    type: media_library_open_select
     formats:
         enhavoMediaLibraryImage:
             type: image

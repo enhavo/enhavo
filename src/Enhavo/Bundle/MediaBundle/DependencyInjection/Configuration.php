@@ -101,7 +101,7 @@ class Configuration implements ConfigurationInterface
                             ->variableNode('actions_file')->defaultValue([])->end()
                             ->scalarNode('parameters_type')->defaultValue(FileParametersType::class)->end()
                             ->scalarNode('parameters_options')->defaultValue([])->end()
-                            ->scalarNode('route')->isRequired()->end()
+                            ->scalarNode('route')->defaultValue('enhavo_media_admin_api_file_upload')->end()
                         ->end()
                     ->end()
                 ->end()
