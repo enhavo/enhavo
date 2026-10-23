@@ -81,7 +81,7 @@ class ChangeEmailConfirmEndpointType extends AbstractFormEndpointType
         $configuration = $this->provider->getChangeEmailConfirmConfiguration();
         $route = $configuration->getRedirectRoute();
 
-        return $route ?? $this->generateUrl($route);
+        return $route ? $this->generateUrl($route) : null;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
