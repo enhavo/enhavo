@@ -13,10 +13,9 @@ namespace Enhavo\Bundle\MediaLibraryBundle\Media;
 
 use Enhavo\Bundle\AppBundle\Type\AbstractType;
 use Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverTrait;
-use Enhavo\Bundle\MediaBundle\Extension\ExtensionInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class MediaLibraryExtension extends AbstractType implements ExtensionInterface
+class MediaLibraryExtension extends AbstractType
 {
     use TemplateResolverTrait;
 
