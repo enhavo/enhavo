@@ -17,7 +17,7 @@ services:
 
     Enhavo\Bundle\AppBundle\Widget\Type\PaginationWidgetType:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
+        arguments:
+            - '@request_stack'
         tags:
             - { name: enhavo.widget, alias: 'pagination' }

@@ -59,7 +59,7 @@ class ChangeEmailRequestEndpointType extends AbstractFormEndpointType
         $configuration = $this->provider->getChangeEmailRequestConfiguration();
         $route = $configuration->getRedirectRoute();
 
-        return $route ?? $this->generateUrl($route);
+        return $route ? $this->generateUrl($route) : null;
     }
 
     public static function getParentType(): ?string
