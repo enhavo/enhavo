@@ -24,8 +24,6 @@ services:
         public: true
         arguments:
             - '@Enhavo\Bundle\FormBundle\Formatter\CurrencyFormatter'
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.column, alias: currency }
 

@@ -28,14 +28,6 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Enhavo\Bundle\MediaBundle\Form\Type\MediaType }
 
-    Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryExtension:
-        public: true
-        calls:
-            - [setContainer, ['@service_container']]
-            - [setTemplateResolver, ['@Enhavo\Bundle\FrameworkBundle\Template\TemplateResolverInterface']]
-        tags:
-            - { name: enhavo.media_extension , alias: media_library }
-
     Enhavo\Bundle\MediaLibraryBundle\Menu\MediaLibraryRootMenuType:
         tags:
             - { name: enhavo_app.menu }
