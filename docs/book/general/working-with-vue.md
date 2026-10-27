@@ -19,7 +19,178 @@ You can choose the component with the `data-vue-component-value` attribute and i
 
 ## Load components
 
-tbc. (compiler pass)
+Normally all components in enhavo are registered globally on the vue app. So you can use them in any template by their name,
+without importing them first.
+
+To register your own components, add the `vue_components` compiler pass to your `container.di.yaml`. It walks through
+the given directory recursively and registers each `.vue` file as a global component. The component name is the
+filename in kebab case, so `components/article/ArticleList.vue` will be available as `article-list`.
+
+```yaml
+# assets/admin/container.di.yaml
+compiler_pass:
+    vue_components:
+        path: '@enhavo/app/compiler-pass/vue-components.js'
+        dir: './components'
+        chunkName: 'admin'
+        priority: 40
+```
+
+| Option      | Description                                                                 |
+|-------------|-----------------------------------------------------------------------------|
+| `dir`       | The directory to search for `.vue` files, relative to the `container.di.yaml` |
+| `chunkName` | Optional chunk to put the components into                                     |
+| `priority`  | The compiler pass priority. Make sure a vue factory service already exsits    |    
+
+Components are loaded asynchronously with `defineAsyncComponent`, so a component is only loaded if it is rendered.
+
+::: tip Note
+Packages register their components with the `vue.component` tag on a service definition, e.g.
+`{ name: vue.component, component: 'form-choice' }`. You can use this as well, if you want to register a single component
+with a different name than its filename.
+:::
+
+### Overwrite components
+
+A big advantage of global components is, that you can overwrite any component, even those from packages in
+`node_modules`. Because components are always resolved by their name, you just have to register your own component
+with the same name. Every place that uses this name will render your component instead.
+
+::: warning
+Only the name is important, not the directory. If two of your files have the same filename, the last one wins.
+:::
+
+## Services
+
+Services from the javascript dependency injection container can be made available to all vue components of an app.
+They are passed to the app with vue's [provide/inject](https://vuejs.org/guide/components/provide-inject.html) mechanism.
+
+### Register a service
+
+To provide a service, add the `vue.service` tag to its definition. The `service` parameter is the name under which the
+service can be injected.
+
+```yaml
+# assets/admin/container.di.yaml
+services:
+    'manager/ArticleManager':
+        from: './manager/ArticleManager'
+        import: ArticleManager
+        chunk: 'admin'
+        arguments:
+            - '@enhavo/app/client/Client'
+        tags:
+            - { name: vue.service, service: articleManager, reactive: true }
+```
+
+| Parameter  | Default | Description                                                                          |
+|------------|---------|--------------------------------------------------------------------------------------|
+| `service`  |         | The injection key, which is used to inject the service in a component                 |
+| `reactive` | `false` | Wraps the service with vue's `reactive()`, so changes of its properties update the view |
+| `lazy`     | `true`  | Provide a promise instead of the service. The service is only loaded on first access  |
+
+### Lazy services
+
+By default, services are lazy. That means the app doesn't wait for the service to be loaded from the container on 
+startup. Instead, a promise is provided, and the service (including its chunk and dependencies) is only loaded when
+someone awaits this promise for the first time. Every following access returns the same instance.
+
+So if you inject a lazy service, you will not get the service itself, but a promise.
+
+```ts
+import {inject} from "vue";
+import {ArticleManager} from "@/admin/manager/ArticleManager";
+
+const articleManager = await inject<Promise<ArticleManager>>('articleManager');
+```
+
+::: warning
+Using `await` on the top level of `<script setup>` turns the component into an async component, which can only be
+rendered inside a [`<Suspense>`](https://vuejs.org/guide/built-ins/suspense.html) boundary. In most cases, you
+should use the [`useAsyncService`](#use-async-service) composable instead.
+:::
+
+If a service needs to be available immediately, e.g. because it is used in a lot of components or must exist before
+the app is mounted, you can disable lazy loading. Then the service is loaded before the app starts, and you can inject
+it directly.
+
+```yaml
+tags:
+    - { name: vue.service, service: articleManager, reactive: true, lazy: false }
+```
+
+```ts
+const articleManager = inject('articleManager') as ArticleManager;
+```
+
+### Use async service
+
+The `useAsyncService` composable injects a lazy service and returns a ref, which is `null` until the service is loaded.
+So you don't need `await` in your setup function, and you can simply wait in the template until the service is ready.
+
+```vue
+<template>
+    <div v-if="articleManager">
+        <div v-for="article of articleManager.articles">{{ article.title }}</div>
+    </div>
+    <div v-else>Loading ...</div>
+</template>
+
+<script setup lang="ts">
+import {useAsyncService} from "@enhavo/framework/composables/useAsyncService";
+import {ArticleManager} from "@/admin/manager/ArticleManager";
+
+const articleManager = useAsyncService<ArticleManager>('articleManager');
+</script>
+```
+
+::: warning
+Like `inject`, the composable must be called synchronously inside `setup()` or `<script setup>`. Don't call it 
+after an `await` or inside a callback.
+:::
+
+#### Initialize the service
+
+As a second argument you can pass an `init` callback. It is called with the loaded service, before the ref is set. If
+it returns a promise, the composable waits for it. This way, a non-null ref always means the service is loaded
+**and** initialized.
+
+```ts
+const articleManager = useAsyncService<ArticleManager>('articleManager', async (manager) => {
+    await manager.load();
+});
+```
+
+If `init` returns `false`, the ref stays `null`. You may use this for error handling, e.g. if the initialization
+failed and the component should not work with a broken service.
+
+```ts
+const error = ref<string|null>(null);
+
+const articleManager = useAsyncService<ArticleManager>('articleManager', async (manager) => {
+    try {
+        await manager.load();
+    } catch (e) {
+        error.value = 'Articles could not be loaded';
+        return false;
+    }
+});
+```
+
+#### Depend on other services
+
+Sometimes a service must be initialized after another one. Pass the refs of other `useAsyncService` calls as third
+argument. The service is only initialized after all of these refs are loaded.
+
+```ts
+const userManager = useAsyncService<UserManager>('userManager', (manager) => manager.load());
+
+const articleManager = useAsyncService<ArticleManager>('articleManager', (manager) => {
+    manager.setUser(userManager.value.getUser());
+}, [userManager]);
+```
+
+If a service fails to load or the `init` callback throws, the error is logged to the console and the ref stays `null`.
 
 ## Vue routing
 
