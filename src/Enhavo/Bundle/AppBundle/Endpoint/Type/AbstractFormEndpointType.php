@@ -14,6 +14,7 @@ namespace Enhavo\Bundle\AppBundle\Endpoint\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\AbstractEndpointType;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
+use Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -64,7 +65,7 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
             }
         }
 
-        $data->set('form', $this->normalize($form));
+        $data->set('form', $this->container->get(FormNormalizerInterface::class)->normalize($form));
         $this->final($options, $request, $data, $context, $form);
     }
 
@@ -92,5 +93,12 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
     public static function getParentType(): ?string
     {
         return AreaEndpointType::class;
+    }
+
+    public static function getSubscribedServices(): array
+    {
+        return array_merge(parent::getSubscribedServices(), [
+            FormNormalizerInterface::class,
+        ]);
     }
 }
