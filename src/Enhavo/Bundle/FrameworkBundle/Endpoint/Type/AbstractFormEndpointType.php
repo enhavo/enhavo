@@ -64,7 +64,7 @@ abstract class AbstractFormEndpointType extends AbstractEndpointType
             }
         }
 
-        $data->set('form', $this->normalize($form));
+        $data->set('form', $this->normalizeForm($form));
         $this->final($options, $request, $data, $context, $form);
     }
 

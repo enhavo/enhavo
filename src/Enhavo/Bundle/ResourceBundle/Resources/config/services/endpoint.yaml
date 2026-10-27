@@ -21,7 +21,6 @@ services:
         arguments:
             - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
-            - '@Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface'
             - '@Enhavo\Bundle\ResourceBundle\RouteResolver\RouteResolverInterface'
             - '@Enhavo\Bundle\ResourceBundle\ExpressionLanguage\ResourceExpressionLanguage'
             - '@Enhavo\Bundle\ResourceBundle\Form\FormDescriberInterface'
@@ -37,7 +36,6 @@ services:
         arguments:
             - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
-            - '@Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface'
             - '@Enhavo\Bundle\ResourceBundle\Form\FormDescriberInterface'
             - '@Enhavo\Bundle\ResourceBundle\Form\FormErrorNormalizer'
             - '@Enhavo\Bundle\ResourceBundle\Form\FormViewDataNormalizer'

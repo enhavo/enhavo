@@ -29,7 +29,6 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
     public function __construct(
         private readonly InputFactory $inputFactory,
         private readonly ResourceManager $resourceManager,
-        private readonly FormNormalizerInterface $formNormalizer,
         private readonly FormDescriber $formDescriber,
         private readonly FormNormalizerInterface $formErrorNormalizer,
         private readonly FormNormalizerInterface $formDataNormalizer,
@@ -68,7 +67,7 @@ class ResourceUpdateEndpointType extends AbstractEndpointType
             }
 
             $formFields = $request->query->get('form-fields') ? explode(',', $request->query->get('form-fields')) : null;
-            $data->set('form', $this->formNormalizer->normalize($form, ['fields' => $formFields]));
+            $data->set('form', $this->normalizeForm($form, ['fields' => $formFields]));
             $data->set('data', $this->formDataNormalizer->normalize($form));
             $data->set('url', $request->getPathInfo());
         }

@@ -31,7 +31,6 @@ class ResourceCreateEndpointType extends AbstractEndpointType
     public function __construct(
         private readonly InputFactory $inputFactory,
         private readonly ResourceManager $resourceManager,
-        private readonly FormNormalizerInterface $formNormalizer,
         private readonly RouteResolverInterface $routeResolver,
         private readonly ResourceExpressionLanguage $expressionLanguage,
         private readonly FormDescriber $formDescriber,
@@ -91,7 +90,7 @@ class ResourceCreateEndpointType extends AbstractEndpointType
             }
 
             $formFields = $request->query->get('form-fields') ? explode(',', $request->query->get('form-fields')) : null;
-            $data->set('form', $this->formNormalizer->normalize($form, ['fields' => $formFields]));
+            $data->set('form', $this->normalizeForm($form, ['fields' => $formFields]));
         }
 
         $viewData = $input->getViewData($resource);

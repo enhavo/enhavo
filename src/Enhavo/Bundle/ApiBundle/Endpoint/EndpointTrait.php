@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\ApiBundle\Endpoint;
 
+use Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Link\LinkInterface;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
@@ -62,6 +63,7 @@ trait EndpointTrait
             'security.token_storage' => '?'.TokenStorageInterface::class,
             'security.csrf.token_manager' => '?'.CsrfTokenManagerInterface::class,
             'parameter_bag' => '?'.ContainerBagInterface::class,
+            FormNormalizerInterface::class => '?'.FormNormalizerInterface::class,
         ];
     }
 
@@ -270,5 +272,10 @@ trait EndpointTrait
     protected function normalize(mixed $object, ?string $format = null, array $context = [])
     {
         return $this->container->get('serializer')->normalize($object, $format, $context);
+    }
+
+    protected function normalizeForm(FormInterface $form, array $options = []): array
+    {
+        return $this->container->get(FormNormalizerInterface::class)->normalize($form, $options);
     }
 }
