@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Enhavo\Bundle\TranslationBundle\Duplicate\Type;
+namespace Enhavo\Bundle\TranslationBundle\Duplicate\Extension;
 
-use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateType;
+use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateTypeExtension;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Type\PropertyDuplicateType;
@@ -19,9 +19,9 @@ use Enhavo\Bundle\TranslationBundle\Duplicate\TranslationDuplicateTrait;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 
 /**
- * Like the property type, but also copies the translations.
+ * Copies the translations of translatable properties duplicated by the property type.
  */
-class TranslationPropertyDuplicateType extends AbstractDuplicateType
+class TranslationPropertyDuplicateTypeExtension extends AbstractDuplicateTypeExtension
 {
     use TranslationDuplicateTrait;
 
@@ -35,13 +35,8 @@ class TranslationPropertyDuplicateType extends AbstractDuplicateType
         $this->duplicateTranslations($sourceValue, $targetValue);
     }
 
-    public static function getParentType(): ?string
+    public static function getExtendedTypes(): array
     {
-        return PropertyDuplicateType::class;
-    }
-
-    public static function getName(): ?string
-    {
-        return 'translation_property';
+        return [PropertyDuplicateType::class];
     }
 }

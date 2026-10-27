@@ -20,7 +20,7 @@ use Enhavo\Bundle\ResourceBundle\Duplicate\Metadata\Metadata as DuplicateMetadat
 use Enhavo\Bundle\ResourceBundle\Duplicate\Type\BaseDuplicateType;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Type\PropertyDuplicateType;
 use Enhavo\Bundle\TranslationBundle\Client\TranslationClientInterface;
-use Enhavo\Bundle\TranslationBundle\Duplicate\Type\TranslationPropertyDuplicateType;
+use Enhavo\Bundle\TranslationBundle\Duplicate\Extension\TranslationPropertyDuplicateTypeExtension;
 use Enhavo\Bundle\TranslationBundle\Entity\Translation as TranslationEntity;
 use Enhavo\Bundle\TranslationBundle\Locale\LocaleProviderInterface;
 use Enhavo\Bundle\TranslationBundle\Metadata\Metadata as TranslationMetadata;
@@ -117,7 +117,7 @@ class TranslationRestoreTest extends TestCase
     }
 
     /**
-     * The duplicate types keep a reference to the translation manager, so a new request means new duplicate services.
+     * The duplicate type extensions keep a reference to the translation manager, so a new request means new duplicate services.
      */
     private function newRequest(): TranslationManager
     {
@@ -132,17 +132,17 @@ class TranslationRestoreTest extends TestCase
         $container = new Container();
         $container->set(BaseDuplicateType::class, new BaseDuplicateType());
         $container->set(PropertyDuplicateType::class, new PropertyDuplicateType());
-        $container->set(TranslationPropertyDuplicateType::class, new TranslationPropertyDuplicateType($translationManager ?? $this->createTranslationManager()));
+        $container->set(TranslationPropertyDuplicateTypeExtension::class, new TranslationPropertyDuplicateTypeExtension($translationManager ?? $this->createTranslationManager()));
         $registry = new Registry('Duplicate');
         $registry->setContainer($container);
         $registry->register(BaseDuplicateType::class, BaseDuplicateType::class);
         $registry->register(PropertyDuplicateType::class, PropertyDuplicateType::class);
-        $registry->register(TranslationPropertyDuplicateType::class, TranslationPropertyDuplicateType::class);
+        $registry->registerExtension(TranslationPropertyDuplicateTypeExtension::class, TranslationPropertyDuplicateTypeExtension::class);
 
         $metadata = new DuplicateMetadata(RestoreEntity::class);
         $metadata->setProperties([
             'title' => [
-                ['type' => 'translation_property', 'groups' => ['revision', 'restore']],
+                ['type' => 'property', 'groups' => ['revision', 'restore']],
             ],
         ]);
         $metadataRepository = $this->getMockBuilder(MetadataRepository::class)->disableOriginalConstructor()->getMock();

@@ -15,7 +15,8 @@ use Enhavo\Component\Type\AbstractContainerType;
 
 /**
  * @property DuplicateTypeInterface   $type
- * @property DuplicateTypeInterface[] $parents
+ * @property DuplicateTypeInterface[]          $parents
+ * @property DuplicateTypeExtensionInterface[] $extensions
  */
 class Duplicate extends AbstractContainerType
 {
@@ -28,15 +29,35 @@ class Duplicate extends AbstractContainerType
     {
         foreach ($this->parents as $parent) {
             $parent->duplicate($this->options, $sourceValue, $targetValue, $context);
+            foreach ($this->extensions as $extension) {
+                if ($this->isExtendable($parent, $extension)) {
+                    $extension->duplicate($this->options, $sourceValue, $targetValue, $context);
+                }
+            }
         }
 
         $this->type->duplicate($this->options, $sourceValue, $targetValue, $context);
+        foreach ($this->extensions as $extension) {
+            if ($this->isExtendable($this->type, $extension)) {
+                $extension->duplicate($this->options, $sourceValue, $targetValue, $context);
+            }
+        }
 
         foreach ($this->parents as $parent) {
             $parent->finish($this->options, $sourceValue, $targetValue, $context);
+            foreach ($this->extensions as $extension) {
+                if ($this->isExtendable($parent, $extension)) {
+                    $extension->finish($this->options, $sourceValue, $targetValue, $context);
+                }
+            }
         }
 
         $this->type->finish($this->options, $sourceValue, $targetValue, $context);
+        foreach ($this->extensions as $extension) {
+            if ($this->isExtendable($this->type, $extension)) {
+                $extension->finish($this->options, $sourceValue, $targetValue, $context);
+            }
+        }
 
         return $targetValue->getValue();
     }

@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Duplicate;
 
+use Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateTypeInterface;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
@@ -52,12 +53,12 @@ trait TranslationDuplicateTrait
     }
 
     /**
-     * Runs the parent type on a single translated value and returns its result.
+     * Runs the extended type on a single translated value and returns its result.
      */
-    private function duplicateWithParent($options, mixed $value, $context): mixed
+    private function duplicateWithType(DuplicateTypeInterface $type, $options, mixed $value, $context): mixed
     {
         $translationTarget = new TargetValue();
-        $this->parent->duplicate($options, new SourceValue($value), $translationTarget, $context);
+        $type->duplicate($options, new SourceValue($value), $translationTarget, $context);
 
         return $translationTarget->getValue();
     }

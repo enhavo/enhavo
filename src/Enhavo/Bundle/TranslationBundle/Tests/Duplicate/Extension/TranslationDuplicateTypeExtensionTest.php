@@ -9,31 +9,32 @@
  * file that was distributed with this source code.
  */
 
-namespace Enhavo\Bundle\TranslationBundle\Tests\Duplicate\Type;
+namespace Enhavo\Bundle\TranslationBundle\Tests\Duplicate\Extension;
 
 use Enhavo\Bundle\MediaBundle\Duplicate\Type\FileDuplicateType;
 use Enhavo\Bundle\MediaBundle\Model\FileInterface;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Duplicate;
 use Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory;
+use Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateTypeExtensionInterface;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Type\BaseDuplicateType;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Type\PropertyDuplicateType;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Type\StringDuplicateType;
-use Enhavo\Bundle\TranslationBundle\Duplicate\Type\TranslationFileDuplicateType;
-use Enhavo\Bundle\TranslationBundle\Duplicate\Type\TranslationPropertyDuplicateType;
-use Enhavo\Bundle\TranslationBundle\Duplicate\Type\TranslationStringDuplicateType;
+use Enhavo\Bundle\TranslationBundle\Duplicate\Extension\TranslationFileDuplicateTypeExtension;
+use Enhavo\Bundle\TranslationBundle\Duplicate\Extension\TranslationPropertyDuplicateTypeExtension;
+use Enhavo\Bundle\TranslationBundle\Duplicate\Extension\TranslationStringDuplicateTypeExtension;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Component\Type\TypeInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class TranslationDuplicateTypeTest extends TestCase
+class TranslationDuplicateTypeExtensionTest extends TestCase
 {
-    public function createDependencies(array $sourceTranslations): TranslationDuplicateTypeDependencies
+    public function createDependencies(array $sourceTranslations): TranslationDuplicateTypeExtensionDependencies
     {
-        $dependencies = new TranslationDuplicateTypeDependencies();
+        $dependencies = new TranslationDuplicateTypeExtensionDependencies();
         $dependencies->translationManager = $this->getMockBuilder(TranslationManager::class)->disableOriginalConstructor()->getMock();
         $dependencies->translationManager->method('getDefaultLocale')->willReturn('de');
         $dependencies->translationManager->method('getLocales')->willReturn(['de', 'en', 'fr']);
@@ -49,21 +50,20 @@ class TranslationDuplicateTypeTest extends TestCase
     }
 
     /**
-     * Builds the duplicate container like the factory does: root parent first, each type knows its direct parent.
+     * Builds the duplicate container like the factory does: root parent first, followed by the extensions.
      */
-    private function createDuplicate(TypeInterface $type, TypeInterface $parent, array $options = []): Duplicate
+    private function createDuplicate(TypeInterface $type, DuplicateTypeExtensionInterface $extension, array $options = []): Duplicate
     {
         $base = new BaseDuplicateType();
-        $parent->setParent($base);
-        $type->setParent($parent);
+        $type->setParent($base);
 
-        return new Duplicate($type, [$base, $parent], $options);
+        return new Duplicate($type, [$base], $options, null, [$extension]);
     }
 
     public function testDuplicateProperty()
     {
         $dependencies = $this->createDependencies(['de' => 'Hallo', 'en' => 'Hello', 'fr' => null]);
-        $duplicate = $this->createDuplicate(new TranslationPropertyDuplicateType($dependencies->translationManager), new PropertyDuplicateType());
+        $duplicate = $this->createDuplicate(new PropertyDuplicateType(), new TranslationPropertyDuplicateTypeExtension($dependencies->translationManager));
 
         $targetValue = new TargetValue(null, new \stdClass(), 'title');
         $duplicate->duplicate(new SourceValue('Hallo', new \stdClass(), 'title'), $targetValue);
@@ -77,7 +77,20 @@ class TranslationDuplicateTypeTest extends TestCase
         $translationManager = $this->getMockBuilder(TranslationManager::class)->disableOriginalConstructor()->getMock();
         $translationManager->method('isTranslatable')->willReturn(false);
         $translationManager->expects($this->never())->method('setTranslation');
-        $duplicate = $this->createDuplicate(new TranslationPropertyDuplicateType($translationManager), new PropertyDuplicateType());
+        $duplicate = $this->createDuplicate(new PropertyDuplicateType(), new TranslationPropertyDuplicateTypeExtension($translationManager));
+
+        $targetValue = new TargetValue(null, new \stdClass(), 'title');
+        $duplicate->duplicate(new SourceValue('Hallo', new \stdClass(), 'title'), $targetValue);
+
+        $this->assertEquals('Hallo', $targetValue->getValue());
+    }
+
+    public function testNotExtendedType()
+    {
+        $translationManager = $this->getMockBuilder(TranslationManager::class)->disableOriginalConstructor()->getMock();
+        $translationManager->expects($this->never())->method('setTranslation');
+        $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
+        $duplicate = $this->createDuplicate(new StringDuplicateType($translator), new TranslationPropertyDuplicateTypeExtension($translationManager));
 
         $targetValue = new TargetValue(null, new \stdClass(), 'title');
         $duplicate->duplicate(new SourceValue('Hallo', new \stdClass(), 'title'), $targetValue);
@@ -90,9 +103,10 @@ class TranslationDuplicateTypeTest extends TestCase
         $dependencies = $this->createDependencies(['de' => 'Hallo', 'en' => 'Hello', 'fr' => 'Bonjour']);
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
         $translator->method('trans')->willReturnArgument(0);
+        $stringType = new StringDuplicateType($translator);
         $duplicate = $this->createDuplicate(
-            new TranslationStringDuplicateType($dependencies->translationManager),
-            new StringDuplicateType($translator),
+            $stringType,
+            new TranslationStringDuplicateTypeExtension($dependencies->translationManager, $stringType),
             ['postfix' => ' (Copy)'],
         );
 
@@ -115,7 +129,8 @@ class TranslationDuplicateTypeTest extends TestCase
         $duplicateFactory->method('duplicate')->willReturnCallback(function ($source) use ($file, $newFile, $newFileEn) {
             return $source === $file ? $newFile : $newFileEn;
         });
-        $duplicate = $this->createDuplicate(new TranslationFileDuplicateType($dependencies->translationManager), new FileDuplicateType($duplicateFactory));
+        $fileType = new FileDuplicateType($duplicateFactory);
+        $duplicate = $this->createDuplicate($fileType, new TranslationFileDuplicateTypeExtension($dependencies->translationManager, $fileType));
 
         $targetValue = new TargetValue(null, new \stdClass(), 'picture');
         $duplicate->duplicate(new SourceValue($file, new \stdClass(), 'picture'), $targetValue);
@@ -125,7 +140,7 @@ class TranslationDuplicateTypeTest extends TestCase
     }
 }
 
-class TranslationDuplicateTypeDependencies
+class TranslationDuplicateTypeExtensionDependencies
 {
     public TranslationManager|MockObject $translationManager;
     public array $translations = [];

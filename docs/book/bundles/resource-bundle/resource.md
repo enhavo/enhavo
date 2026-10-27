@@ -182,6 +182,31 @@ $target = $this->resourceManager->duplicate($source, $target, ['groups' => 'dupl
 
 On the [duplicate reference section](/reference/duplicate/index), you can find the possible duplicate types.
 
+To add behaviour to existing duplicate types, write a type extension and tag the service with `enhavo_resource.duplicate_extension`.
+The extension is called after the extended type and also applies to all types that use the extended type as parent.
+
+```php
+namespace App\Duplicate\Extension;
+
+use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateTypeExtension;
+use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
+use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
+use Enhavo\Bundle\ResourceBundle\Duplicate\Type\StringDuplicateType;
+
+class TrimDuplicateTypeExtension extends AbstractDuplicateTypeExtension
+{
+    public function duplicate($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void
+    {
+        $targetValue->setValue(trim($targetValue->getValue() ?? ''));
+    }
+
+    public static function getExtendedTypes(): array
+    {
+        return [StringDuplicateType::class];
+    }
+}
+```
+
 ### State Machine
 
 The resource bundle uses the winzou state machine. Here is a small graph example. 
