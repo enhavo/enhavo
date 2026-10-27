@@ -1,6 +1,6 @@
 <template>
     <user-app>
-        <form-form :form="userManager.twoFactorForm" v-if="userManager.twoFactorForm" class="login-form" :key="userManager.twoFactorForm.key">
+        <form-form :form="userManager.twoFactorForm" v-if="ready && userManager.twoFactorForm" class="login-form" :key="userManager.twoFactorForm.key">
 
             <div class="feedback-messages" v-if="userManager.twoFactorForm.errors.length > 0" style="margin-bottom: 15px">
                 <div class="feedback-message error">
@@ -25,14 +25,15 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted} from "vue";
+import {useAsyncService, useServicesReady, useWhenReady} from "@enhavo/framework/composables/service";
 import {UserManager} from "../manager/UserManager";
 import {Translator} from "@enhavo/app/translation/Translator";
 
-const userManager = inject('userManager') as UserManager
-const translator = inject('translator') as Translator
+const userManager = useAsyncService<UserManager>('userManager');
+const translator = useAsyncService<Translator>('translator');
+const ready = useServicesReady(userManager, translator);
 
-onMounted(() => {
+useWhenReady([userManager], (userManager) => {
     userManager.loadTwoFactor();
-})
+});
 </script>

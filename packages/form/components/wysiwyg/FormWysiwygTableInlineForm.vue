@@ -1,5 +1,5 @@
 <template>
-    <div class="wysiwyg-inline-menu-form wysiwyg-table-inline-modal">
+    <div class="wysiwyg-inline-menu-form wysiwyg-table-inline-modal" v-if="translator">
         <div class="form-row wysiwyg-inline-menu-form-row">
             <label>{{ translator.trans('enhavo_form.wysiwyg_form.command.table.inline_form.label', [], 'javascript') }}</label>
         </div>
@@ -85,11 +85,11 @@
     </div>
 </template>
 <script setup lang="ts">
-import {inject} from "vue";
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
 import {Translator} from "@enhavo/framework/translation/Translator";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 
-const translator = inject<Translator>('translator');
+const translator = useAsyncService<Translator>('translator');
 
 const props = defineProps<{
     form: WysiwygForm
@@ -98,7 +98,7 @@ const props = defineProps<{
 function deleteTable()
 {
     props.form.openModal('form-wysiwyg-modal-yes-no', {
-            prompt: translator.trans('enhavo_form.wysiwyg_form.command.table.inline_form.delete_table_prompt', {}, 'javascript'),
+            prompt: translator.value.trans('enhavo_form.wysiwyg_form.command.table.inline_form.delete_table_prompt', {}, 'javascript'),
         })
         .then(() => {
             props.form.editor.chain().focus().deleteTable().run();

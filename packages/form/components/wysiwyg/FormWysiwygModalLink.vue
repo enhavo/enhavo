@@ -1,5 +1,5 @@
 <template>
-    <div class="wysiwyg-modal">
+    <div class="wysiwyg-modal" v-if="translator">
         <div class="wysiwyg-modal-header">
             {{ translator.trans('enhavo_form.wysiwyg_form.command.link.modal.header', [], 'javascript') }}
         </div>
@@ -30,12 +30,13 @@
 
 <script setup lang="ts">
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
-import {inject, onMounted, ref} from "vue";
+import {ref, watch} from "vue";
 import select2 from "select2";
 import $ from 'jquery';
 import {Translator} from "@enhavo/framework/translation/Translator";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 
-const translator = inject<Translator>('translator');
+const translator = useAsyncService<Translator>('translator');
 
 const props = defineProps<{
     form: WysiwygForm
@@ -44,9 +45,12 @@ const props = defineProps<{
 const modalUrlInput = ref(null);
 const modalTargetInput = ref(null);
 
-onMounted(() => {
-    select2($);
-    $(modalTargetInput.value).select2({ width: 'style' });
+// the select is rendered after the translator is loaded
+watch(modalTargetInput, (element) => {
+    if (element) {
+        select2($);
+        $(element).select2({ width: 'style' });
+    }
 });
 
 function submit()

@@ -5,16 +5,16 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted} from "vue";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
 import {Translator} from "@enhavo/framework/translation/Translator";
+import {useAsyncService, useWhenReady} from "@enhavo/framework/composables/service";
 
-const uiManager = inject<UiManager>('uiManager');
-const frameManager = inject<FrameManager>('frameManager');
-const translator = inject<Translator>('translator');
+const uiManager = useAsyncService<UiManager>('uiManager');
+const frameManager = useAsyncService<FrameManager>('frameManager');
+const translator = useAsyncService<Translator>('translator');
 
-onMounted(() => {
+useWhenReady([uiManager, frameManager, translator], (uiManager, frameManager, translator) => {
     frameManager.loaded();
     uiManager.alert({
         message: translator.trans('enhavo_user.error.unauthenticated', {}, 'javascript'),
@@ -30,6 +30,6 @@ onMounted(() => {
             }
         }
     });
-})
+});
 
 </script>

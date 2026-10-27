@@ -1,6 +1,6 @@
 <template>
     <user-app>
-        <div class="login-form">
+        <div class="login-form" v-if="translator">
             <div class="feedback-messages">
                 <div class="feedback-message success">
                     <div>{{ translator.trans('enhavo_user.reset_password.request.email', null, 'javascript') }}</div>
@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import {Translator} from "@enhavo/framework/translation/Translator";
-import {inject} from "vue";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 
-const translator = inject('translator') as Translator
+const translator = useAsyncService<Translator>('translator')
 </script>

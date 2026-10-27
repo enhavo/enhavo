@@ -1,16 +1,16 @@
 <template>
-    <div class="table-batches">
+    <div class="table-batches" v-if="translator">
         <v-select :placeholder="getPlaceholder()" @update:modelValue="change" :options="getOptions()" :searchable="false"></v-select>
         <button @click="executeBatch" class="apply-button green"><i class="icon icon-check"></i></button>
     </div>
 </template>
 
 <script setup lang="ts">
-import {inject} from "vue";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 import {Translator} from "@enhavo/framework/translation/Translator";
 import {BatchInterface} from "@enhavo/app/batch/BatchInterface";
 
-const translator = inject<Translator>('translator');
+const translator = useAsyncService<Translator>('translator');
 
 const props = defineProps<{
     batches: BatchInterface[],
@@ -35,7 +35,7 @@ function getOptions()
 
 function getPlaceholder()
 {
-    return translator.trans('enhavo_app.batch.label.placeholder', {}, 'javascript')
+    return translator.value.trans('enhavo_app.batch.label.placeholder', {}, 'javascript')
 }
 
 async function executeBatch()

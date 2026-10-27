@@ -45,22 +45,17 @@
 </template>
 
 <script setup lang="ts">
-import { inject, ref, reactive } from 'vue'
+import { ref, reactive } from 'vue'
+import { useAsyncService, useWhenReady } from "@enhavo/framework/composables/service"
 import { MainManager } from "@enhavo/app/manager/MainManager"
 import { MenuManager } from "@enhavo/app/menu/MenuManager"
 
-const mainManager = ref<MainManager | null>(null)
-const menuManager = ref<MenuManager | null>(null)
+const mainManager = useAsyncService<MainManager>('mainManager')
+const menuManager = useAsyncService<MenuManager>('menuManager')
 
-const mainManagerPromise = inject<Promise<MainManager>>('mainManager')
-const menuManagerPromise = inject<Promise<MenuManager>>('menuManager')
-
-;(async () => {
-    mainManager.value = await mainManagerPromise
-    await mainManager.value.load()
-
-    menuManager.value = await menuManagerPromise
-})()
+useWhenReady([mainManager], (mainManager) => {
+    mainManager.load()
+})
 
 
 // import {MainManager} from "@enhavo/app/manager/MainManager";

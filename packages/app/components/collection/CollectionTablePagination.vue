@@ -1,5 +1,5 @@
 <template>
-    <div class="view-table-pagination" v-if="collection.count">
+    <div class="view-table-pagination" v-if="translator && collection.count">
         <div class="pagination-select">
             <div class="label">{{ translator.trans('enhavo_app.grid.label.entry_per_page', {}, 'javascript') }}:</div>
             <v-select
@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import {inject} from 'vue'
+import {useAsyncService} from "@enhavo/framework/composables/service";
 import {Translator} from "@enhavo/framework/translation/Translator";
 import {TableCollection} from "../../collection/model/TableCollection";
 
@@ -51,7 +51,7 @@ const props = defineProps<{
     collection: TableCollection,
 }>()
 
-const translator = inject<Translator>('translator');
+const translator = useAsyncService<Translator>('translator');
 const itemsAround: number = 2;
 
 

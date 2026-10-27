@@ -1,6 +1,6 @@
 <template>
     <user-app>
-        <form-form :form="userManger.loginForm" v-if="userManger.loginForm" class="login-form" :key="userManger.loginForm.key">
+        <form-form :form="userManger.loginForm" v-if="ready && userManger.loginForm" class="login-form" :key="userManger.loginForm.key">
 
             <div class="feedback-messages" v-if="userManger.loginForm.errors.length > 0" style="margin-bottom: 15px">
                 <div class="feedback-message error">
@@ -40,18 +40,19 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted} from "vue";
+import {useAsyncService, useServicesReady, useWhenReady} from "@enhavo/framework/composables/service";
 import {UserManager} from "../manager/UserManager";
 import {useRouter} from "vue-router";
 import {Translator} from "@enhavo/framework/translation/Translator";
 
 const router = useRouter();
-const userManger = inject('userManager') as UserManager
-const translator = inject('translator') as Translator
+const userManger = useAsyncService<UserManager>('userManager');
+const translator = useAsyncService<Translator>('translator');
+const ready = useServicesReady(userManger, translator);
 
-onMounted(() => {
-    userManger.loadLogin();
-})
+useWhenReady([userManger], (userManager) => {
+    userManager.loadLogin();
+});
 
 function redirectUrl(): string
 {

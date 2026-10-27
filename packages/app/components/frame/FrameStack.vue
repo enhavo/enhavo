@@ -1,6 +1,6 @@
 <template>
     <div class="frame">
-        <div class="view-container" :class="{'has-viewstack-dropdown': getHasMoreThanOneView()}">
+        <div class="view-container" v-if="frameStack" :class="{'has-viewstack-dropdown': getHasMoreThanOneView()}">
             <template v-for="frame in frameStack.getRenderFrames()">
                 <frame-stack-frame v-show="frame.display" :frame="frame" v-if="!frame.removed" :key="frame.id"></frame-stack-frame>
             </template>
@@ -9,14 +9,14 @@
 </template>
 
 <script setup lang="ts">
-import {inject} from "vue";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 import {FrameStack} from "@enhavo/app/frame/FrameStack";
 
-const frameStack = inject<FrameStack>('frameStack');
+const frameStack = useAsyncService<FrameStack>('frameStack');
 
 function getHasMoreThanOneView() 
 {
-    return frameStack.getFrames().length > 0;
+    return frameStack.value.getFrames().length > 0;
 }
 
 </script>

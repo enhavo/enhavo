@@ -1,5 +1,5 @@
 <template>
-    <div class="form-poly-collection-add-button-row" v-if="form.allowAdd" v-click-outside="() => { isOpen = false; }">
+    <div class="form-poly-collection-add-button-row" v-if="translator && form.allowAdd" v-click-outside="() => { isOpen = false; }">
         <slot name="buttons">
             <div class="form-poly-collection-add-button" @click.prevent="toggleMenu">
                 <slot name="add-button">
@@ -20,11 +20,12 @@
 
 <script setup lang="ts">
 import {PolyCollectionForm} from "@enhavo/form/form/model/PolyCollectionForm";
-import {inject, ref} from "vue";
+import {ref} from "vue";
 import {Translator} from "@enhavo/framework/translation/Translator";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 import {Form} from "@enhavo/vue-form/model/Form";
 
-const translator = inject<Translator>('translator');
+const translator = useAsyncService<Translator>('translator');
 
 const props = defineProps<{
     form: PolyCollectionForm,

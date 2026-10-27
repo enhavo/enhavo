@@ -1,5 +1,5 @@
 <template>
-    <div class="menu style-compact" :class="{ 'menu-collapsed':!menuManager.menuOpen}">
+    <div class="menu style-compact" v-if="menuManager" :class="{ 'menu-collapsed':!menuManager.menuOpen}">
         <template v-for="item in menuManager.menuItems">
             <component class="menu-child" :is="item.component" :data="item"></component>
         </template>
@@ -7,9 +7,9 @@
 </template>
 
 <script setup lang="ts">
-import {inject} from "vue";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 import {MenuManager} from "../../menu/MenuManager";
 
-const menuManager = inject<MenuManager>('menuManager');
+const menuManager = useAsyncService<MenuManager>('menuManager');
 
 </script>

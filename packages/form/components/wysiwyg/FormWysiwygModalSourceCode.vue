@@ -1,5 +1,5 @@
 <template>
-    <div class="wysiwyg-modal full-width">
+    <div class="wysiwyg-modal full-width" v-if="translator">
         <div class="wysiwyg-modal-header">
             {{ translator.trans('enhavo_form.wysiwyg_form.command.source_code.modal.header', [], 'javascript') }}
         </div>
@@ -19,10 +19,11 @@
 
 <script setup lang="ts">
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
-import {inject, ref} from "vue";
+import {ref} from "vue";
 import {Translator} from "@enhavo/framework/translation/Translator";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 
-const translator = inject<Translator>('translator');
+const translator = useAsyncService<Translator>('translator');
 
 const props = defineProps<{
     form: WysiwygForm

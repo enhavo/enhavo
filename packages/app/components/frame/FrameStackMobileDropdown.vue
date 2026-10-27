@@ -1,5 +1,5 @@
 <template>
-    <div class="viewstack-dropdown-container" v-if="getHasMoreThanOneView()" v-click-outside="close" :class="{'selected': isOpen}">
+    <div class="viewstack-dropdown-container" v-if="frameStack && getHasMoreThanOneView()" v-click-outside="close" :class="{'selected': isOpen}">
         <div class="dropdown-trigger" @click="toggle()">
             <span class="icon icon-more_horiz"></span>
         </div>
@@ -12,10 +12,10 @@
 </template>
 
 <script setup lang="ts">
-import {inject} from "vue";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 import {FrameStack} from "../../frame/FrameStack";
 
-const frameStack = inject<FrameStack>('frameStack');
+const frameStack = useAsyncService<FrameStack>('frameStack');
 let isOpen: boolean = false;
 
 function toggle(): void 
@@ -25,12 +25,12 @@ function toggle(): void
 
 function getHasMoreThanOneView() 
 {
-    return frameStack.getRenderFrames().length > 1;
+    return frameStack.value.getRenderFrames().length > 1;
 }
 
 function maximize(element) 
 {
-    for (let frame of frameStack.getFrames()) {
+    for (let frame of frameStack.value.getFrames()) {
         frame.minimize = true;
         frame.focus = false;
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="tab-container">
+    <div class="tab-container" v-if="translator">
         <div class="revisions view-table">
             <div class="view-table-head">
                 <i class="icon icon-library_books revision-icon-placeholder"></i>
@@ -38,10 +38,10 @@
 
 <script setup lang="ts">
 import {RevisionTab} from "../../tab/model/RevisionTab";
-import {inject} from "vue";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 import {Translator} from "@enhavo/framework/translation/Translator";
 
-const translator = inject<Translator>('translator');
+const translator = useAsyncService<Translator>('translator');
 
 const props = defineProps<{
     tab: RevisionTab,

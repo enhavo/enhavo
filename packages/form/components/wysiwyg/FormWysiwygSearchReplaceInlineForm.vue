@@ -1,5 +1,5 @@
 <template>
-    <div class="wysiwyg-inline-menu-form wysiwyg-search-replace-form">
+    <div class="wysiwyg-inline-menu-form wysiwyg-search-replace-form" v-if="translator">
         <div class="form-row wysiwyg-inline-menu-form-row">
             <label>{{ translator.trans('enhavo_form.wysiwyg_form.command.search.inline_form.label_search', [], 'javascript') }}</label>
             <div class="formwidget-container">
@@ -58,11 +58,12 @@
     </div>
 </template>
 <script setup lang="ts">
-import {inject, watch} from "vue";
+import {watch} from "vue";
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
 import {Translator} from "@enhavo/framework/translation/Translator";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 
-const translator = inject<Translator>('translator');
+const translator = useAsyncService<Translator>('translator');
 
 const props = defineProps<{
     form: WysiwygForm

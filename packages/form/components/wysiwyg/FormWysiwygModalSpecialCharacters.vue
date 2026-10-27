@@ -1,5 +1,6 @@
 <template>
     <div class="wysiwyg-modal wysiwyg-special-characters-modal"
+         v-if="translator"
          :class="{ 'filter-active': filterValue != '' }"
          @keyup="(event: KeyboardEvent) => { if (event.code === 'Escape') { cancel(); } }"
     >
@@ -74,12 +75,13 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted, ref} from "vue";
+import {ref, watch} from "vue";
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
 import {WysiwygSpecialCharactersButton} from "@enhavo/form/wysiwyg/menu/WysiwygSpecialCharactersButton";
 import {Translator} from "@enhavo/framework/translation/Translator";
+import {useAsyncService, useWhenReady} from "@enhavo/framework/composables/service";
 
-const translator = inject<Translator>('translator');
+const translator = useAsyncService<Translator>('translator');
 
 const props = defineProps<{
     form: WysiwygForm
@@ -89,9 +91,15 @@ const activeTabIndex = ref(-1);
 const filterValue = ref('');
 const filter = ref();
 
-onMounted(() => {
+useWhenReady([translator], (translator) => {
     (props.form.modal.options['configuration'] as WysiwygSpecialCharactersButton).generateSearchTags(translator, props.form);
-    filter.value.focus();
+});
+
+// the input is rendered after the translator is loaded
+watch(filter, (element) => {
+    if (element) {
+        element.focus();
+    }
 });
 
 function updateFilter()

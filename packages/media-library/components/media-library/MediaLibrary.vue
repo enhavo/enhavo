@@ -1,5 +1,6 @@
 <template>
     <div class="app-view"
+         v-if="manager"
          @dragover.prevent="manager.dragover"
          @dragleave.prevent="manager.dragleave"
          @dragdrop.prevent="manager.dragdrop"
@@ -66,27 +67,28 @@
 </template>
 
 <script setup lang="ts">
-import {inject} from "vue";
-import {Translator} from "@enhavo/framework/translation/Translator";
 import {MediaLibraryManager} from "@enhavo/media-library/manager/MediaLibraryManager";
 import {useRoute} from "vue-router";
 import {HtmlEntities} from "@enhavo/framework/util/HtmlEntities";
 import {ExpressionLanguage} from "@enhavo/framework/expression-language/ExpressionLanguage";
 import {FilterInterface} from "@enhavo/app/filter/FilterInterface";
+import {useAsyncService, useWhenReady} from "@enhavo/framework/composables/service";
 
-const translator = inject<Translator>('translator');
-const manager = inject<MediaLibraryManager>('mediaLibraryManager');
-const expressionLanguage = inject<ExpressionLanguage>('expressionLanguage');
+const manager = useAsyncService<MediaLibraryManager>('mediaLibraryManager');
+const expressionLanguage = useAsyncService<ExpressionLanguage>('expressionLanguage');
 const route = useRoute();
-const parameters = expressionLanguage.evaluateObject(HtmlEntities.encodeObject(route.meta.api_parameters as Object));
 
-manager.addListener();
-manager.load(route.meta.api as string, parameters);
+useWhenReady([manager, expressionLanguage], (manager, expressionLanguage) => {
+    const parameters = expressionLanguage.evaluateObject(HtmlEntities.encodeObject(route.meta.api_parameters as Object));
+
+    manager.addListener();
+    manager.load(route.meta.api as string, parameters);
+});
 
 
 function getFilter(key: string): FilterInterface
 {
-    for (let filter of manager.filters) {
+    for (let filter of manager.value.filters) {
         if (filter.key === key) {
             return filter;
         }
@@ -97,18 +99,18 @@ function getFilter(key: string): FilterInterface
 
 function applyFilter()
 {
-    manager.collection.load();
+    manager.value.collection.load();
 }
 
 function changeUpload(event)
 {
-    manager.changeUpload(event);
+    manager.value.changeUpload(event);
 }
 
 function batchExecuted()
 {
-    manager.collection.load()
-    manager.dispatchCollectionUpdate();
+    manager.value.collection.load()
+    manager.value.dispatchCollectionUpdate();
 }
 
 </script>

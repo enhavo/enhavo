@@ -1,5 +1,5 @@
 <template>
-    <div class="modal">
+    <div class="modal" v-if="translator">
         <div class="modal-form-container" v-show="!modal.loading">
             <form-form :form="modal.form"></form-form>
             <div class="buttons">
@@ -12,11 +12,11 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue'
+import {useAsyncService} from "@enhavo/framework/composables/service";
 import {Translator} from "@enhavo/framework/translation/Translator";
 import {FormModal} from "@enhavo/app/modal/model/FormModal";
 
-const translator = inject<Translator>('translator');
+const translator = useAsyncService<Translator>('translator');
 const props = defineProps<{
     modal: FormModal
 }>()
@@ -41,6 +41,6 @@ function close()
 
 function trans(text: string)
 {
-    return translator.trans(text);
+    return translator.value.trans(text);
 }
 </script>

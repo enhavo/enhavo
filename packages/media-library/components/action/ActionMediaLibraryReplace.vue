@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import {MediaLibraryReplaceAction} from "@enhavo/media-library/action/MediaLibraryReplaceAction";
-import {inject, onMounted} from "vue";
+import {onMounted} from "vue";
 
 const props = defineProps<{
     data: MediaLibraryReplaceAction,

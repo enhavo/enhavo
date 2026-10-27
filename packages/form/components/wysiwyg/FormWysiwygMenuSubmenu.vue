@@ -1,5 +1,6 @@
 <template>
     <div class="wysiwyg-submenu"
+         v-if="translator"
          :class="getClass()"
          :title="translator.trans(configuration.getTooltip(form), {}, configuration.getTranslationDomain(form))"
          :aria-label="translator.trans(configuration.getTooltip(form), {}, configuration.getTranslationDomain(form))"
@@ -16,12 +17,13 @@
 </template>
 
 <script setup lang="ts">
-import {inject, ref} from "vue";
+import {ref} from "vue";
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
 import {WysiwygMenuSubmenu} from "@enhavo/form/wysiwyg/menu/WysiwygMenuSubmenu";
 import {Translator} from "@enhavo/framework/translation/Translator";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 
-const translator = inject<Translator>('translator');
+const translator = useAsyncService<Translator>('translator');
 
 const props = defineProps<{
     configuration: WysiwygMenuSubmenu,
@@ -42,7 +44,7 @@ function getLabel(): string {
     }
     const label = props.configuration.getLabel(props.form);
     if (label) {
-        result += translator.trans(label, [], props.configuration.getTranslationDomain(props.form));
+        result += translator.value.trans(label, [], props.configuration.getTranslationDomain(props.form));
     }
     return result;
 }

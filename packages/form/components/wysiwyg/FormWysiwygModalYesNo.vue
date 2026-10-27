@@ -1,5 +1,5 @@
 <template>
-    <div class="wysiwyg-modal">
+    <div class="wysiwyg-modal" v-if="translator">
         <div class="wysiwyg-modal-header">
             {{ form.modal.options.hasOwnProperty('headline') ? form.modal.options['headline'] : '' }}
         </div>
@@ -20,10 +20,10 @@
 
 <script setup lang="ts">
 import {WysiwygForm} from "@enhavo/form/form/model/WysiwygForm";
-import {inject} from "vue";
 import {Translator} from "@enhavo/framework/translation/Translator";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 
-const translator = inject<Translator>('translator');
+const translator = useAsyncService<Translator>('translator');
 
 const props = defineProps<{
     form: WysiwygForm

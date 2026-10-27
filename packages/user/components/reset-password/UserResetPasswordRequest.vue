@@ -1,6 +1,6 @@
 <template>
     <user-app>
-        <form-form :form="userManger.resetPasswordRequestForm" v-if="userManger.resetPasswordRequestForm" class="login-form" :key="userManger.resetPasswordRequestForm.key">
+        <form-form :form="userManger.resetPasswordRequestForm" v-if="ready && userManger.resetPasswordRequestForm" class="login-form" :key="userManger.resetPasswordRequestForm.key">
 
             <div class="feedback-messages" v-if="userManger.resetPasswordRequestForm.errors.length > 0">
                 <div class="feedback-message error">
@@ -27,20 +27,23 @@
 </template>
 
 <script setup lang="ts">
-import {inject} from "vue";
+import {useAsyncService, useServicesReady, useWhenReady} from "@enhavo/framework/composables/service";
 import {UserManager, ResetPasswordData} from "../../manager/UserManager";
 import {useRouter} from "vue-router";
 import {Translator} from "@enhavo/framework/translation/Translator";
 
 const router = useRouter();
-const userManger = inject('userManager') as UserManager
-const translator = inject('translator') as Translator
+const userManger = useAsyncService<UserManager>('userManager');
+const translator = useAsyncService<Translator>('translator');
+const ready = useServicesReady(userManger, translator);
 
-userManger.loadResetPasswordRequest();
+useWhenReady([userManger], (userManager) => {
+    userManager.loadResetPasswordRequest();
+});
 
 function submit()
 {
-    userManger.resetPasswordRequest().then((data: ResetPasswordData) => {
+    userManger.value.resetPasswordRequest().then((data: ResetPasswordData) => {
         if (data.success) {
             router.push({path: data.url})
         }

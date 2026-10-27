@@ -1,6 +1,6 @@
 <template>
     <user-app>
-        <form-form :form="userManger.resetPasswordConfirmForm" v-if="userManger.resetPasswordConfirmForm" class="login-form" :key="userManger.resetPasswordConfirmForm.key">
+        <form-form :form="userManger.resetPasswordConfirmForm" v-if="ready && userManger.resetPasswordConfirmForm" class="login-form" :key="userManger.resetPasswordConfirmForm.key">
 
             <div class="feedback-messages" v-if="userManger.resetPasswordConfirmForm.errors.length > 0">
                 <div class="feedback-message error">
@@ -32,7 +32,7 @@
             <form-widget :form="userManger.resetPasswordConfirmForm.get('_token')"></form-widget>
         </form-form>
 
-        <div v-if="userManger.resetPasswordConfirmTokenError" class="login-form">
+        <div v-if="ready && userManger.resetPasswordConfirmTokenError" class="login-form">
             <div class="feedback-messages">
                 <div class="feedback-message error">
                     <div>{{ translator.trans('enhavo_user.reset_password.confirm.invalid_token', null, 'javascript') }}</div>
@@ -47,23 +47,24 @@
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted} from "vue";
+import {useAsyncService, useServicesReady, useWhenReady} from "@enhavo/framework/composables/service";
 import {UserManager, ResetPasswordData} from "../../manager/UserManager";
 import {useRouter, useRoute} from "vue-router";
 import {Translator} from "@enhavo/framework/translation/Translator";
 
 const router = useRouter();
 const token = useRoute().params.token as string;
-const userManger = inject('userManager') as UserManager
-const translator = inject('translator') as Translator
+const userManger = useAsyncService<UserManager>('userManager');
+const translator = useAsyncService<Translator>('translator');
+const ready = useServicesReady(userManger, translator);
 
-onMounted(() => {
-    userManger.loadResetPasswordConfirm(token);
-})
+useWhenReady([userManger], (userManager) => {
+    userManager.loadResetPasswordConfirm(token);
+});
 
 function submit()
 {
-    userManger.resetPasswordConfirm(token).then((data: ResetPasswordData) => {
+    userManger.value.resetPasswordConfirm(token).then((data: ResetPasswordData) => {
         if (data.success) {
             router.push({path: data.url})
         }

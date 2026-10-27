@@ -1,5 +1,5 @@
 <template>
-    <div class="view-component" :style="{order: frame.position, maxWidth: frame.width + '%'}" :class="{minimized: frame.minimize, focused: frame.focus}">
+    <div class="view-component" v-if="ready" :style="{order: frame.position, maxWidth: frame.width + '%'}" :class="{minimized: frame.minimize, focused: frame.focus}">
         <div class="toolbar">
             <strong v-if="!frame.minimize">{{ frame.label }}</strong>
             <div class="actions">
@@ -24,16 +24,17 @@
 </template>
 
 <script setup lang="ts">
-import {inject} from "vue";
+import {useAsyncService, useServicesReady} from "@enhavo/framework/composables/service";
 import {Frame} from "@enhavo/app/frame/Frame";
 import {FrameStack} from "@enhavo/app/frame/FrameStack";
 import {FrameUtil} from "@enhavo/app/frame/FrameUtil";
 import {FrameStateManager} from "@enhavo/app/frame/FrameStateManager";
 import {FrameArrangeManager} from "@enhavo/app/frame/FrameArrangeManager";
 
-const frameStack = inject<FrameStack>('frameStack');
-const frameStateManager = inject<FrameStateManager>('frameStateManager');
-const frameArrangeManager = inject<FrameArrangeManager>('frameArrangeManager');
+const frameStack = useAsyncService<FrameStack>('frameStack');
+const frameStateManager = useAsyncService<FrameStateManager>('frameStateManager');
+const frameArrangeManager = useAsyncService<FrameArrangeManager>('frameArrangeManager');
+const ready = useServicesReady(frameStack, frameStateManager, frameArrangeManager);
 
 const props = defineProps<{
     frame: Frame,
@@ -41,9 +42,9 @@ const props = defineProps<{
 
 async function close()
 {
-    await frameStack.removeFrame(props.frame);
-    frameStateManager.saveState();
-    frameArrangeManager.arrange();
+    await frameStack.value.removeFrame(props.frame);
+    frameStateManager.value.saveState();
+    frameArrangeManager.value.arrange();
 }
 
 function open()
@@ -58,14 +59,14 @@ function minimize()
 {
     props.frame.minimize = true;
     props.frame.keepMinimized = true;
-    frameArrangeManager.arrange();
+    frameArrangeManager.value.arrange();
 }
 
 function maximize()
 {
     props.frame.minimize = false;
     props.frame.keepMinimized = true;
-    frameArrangeManager.arrange();
+    frameArrangeManager.value.arrange();
 }
 
 function getUrl(): string

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="modalManager.modals.length" class="modal-container">
+    <div v-if="modalManager && modalManager.modals.length" class="modal-container">
         <template v-for="modal in modalManager.modals">
             <div class="modal-component">
                 <component :is="modal.component" :modal="modal"></component>
@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import {inject} from "vue";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 import { ModalManager } from "@enhavo/app/modal/ModalManager";
 
-const modalManager = inject<ModalManager>('modalManager');
+const modalManager = useAsyncService<ModalManager>('modalManager');
 </script>

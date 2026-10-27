@@ -4,34 +4,36 @@
             <ui-components></ui-components>
             <flash-messages></flash-messages>
             <modal-stack></modal-stack>
-            <action-bar :primary="manager.actions" :secondary="manager.actionsSecondary"></action-bar>
+            <template v-if="manager">
+                <action-bar :primary="manager.actions" :secondary="manager.actionsSecondary"></action-bar>
 
-            <div class="tab-header" v-if="manager.tabs && manager.tabs.length > 1">
-                <template v-for="tab in manager.tabs">
-                    <div class="tab-head" @click="selectTab(tab)" :class="{'selected': tab.active, 'has-error': tab.error}">
-                        {{ tab.label }}
-                    </div>
-                </template>
-            </div>
-
-            <div class="form-container" v-if="manager.tabs">
-                <form-form v-if="manager.form" :form="manager.form">
-                    <div class="form-errors-global" v-if="manager.form.errors && manager.form.errors.length > 0">
-                        <form-errors :form="manager.form"></form-errors>
-                    </div>
-                    <template v-for="tab of manager.tabs">
-                        <component v-show="tab.active" :tab="tab" :form="manager.form" :is="tab.component"></component>
+                <div class="tab-header" v-if="manager.tabs && manager.tabs.length > 1">
+                    <template v-for="tab in manager.tabs">
+                        <div class="tab-head" @click="selectTab(tab)" :class="{'selected': tab.active, 'has-error': tab.error}">
+                            {{ tab.label }}
+                        </div>
                     </template>
-                    <form-widget v-if="manager.form.has('_token')" :form="manager.form.get('_token')" />
-                </form-form>
-            </div>
+                </div>
+
+                <div class="form-container" v-if="manager.tabs">
+                    <form-form v-if="manager.form" :form="manager.form">
+                        <div class="form-errors-global" v-if="manager.form.errors && manager.form.errors.length > 0">
+                            <form-errors :form="manager.form"></form-errors>
+                        </div>
+                        <template v-for="tab of manager.tabs">
+                            <component v-show="tab.active" :tab="tab" :form="manager.form" :is="tab.component"></component>
+                        </template>
+                        <form-widget v-if="manager.form.has('_token')" :form="manager.form.get('_token')" />
+                    </form-form>
+                </div>
+            </template>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted} from "vue";
 import {useRoute} from 'vue-router'
+import {useAsyncService, useWhenReady} from "@enhavo/framework/composables/service";
 import {ResourceInputManager} from "../../manager/ResourceInputManager";
 import {TabInterface} from "../../tab/TabInterface";
 import {FrameManager} from "@enhavo/app/frame/FrameManager";
@@ -40,27 +42,24 @@ import {Router} from "@enhavo/framework/routing/Router";
 import {HtmlEntities} from "@enhavo/framework/util/HtmlEntities";
 import {ExpressionLanguage} from "@enhavo/framework/expression-language/ExpressionLanguage";
 
-const manager = inject<ResourceInputManager>('resourceInputManager');
-const frameManager = inject<FrameManager>('frameManager');
-const router = inject<Router>('router');
+const manager = useAsyncService<ResourceInputManager>('resourceInputManager');
+const frameManager = useAsyncService<FrameManager>('frameManager');
+const router = useAsyncService<Router>('router');
 const route = useRoute();
-const expressionLanguage = inject<ExpressionLanguage>('expressionLanguage');
+const expressionLanguage = useAsyncService<ExpressionLanguage>('expressionLanguage');
 
-let parameters = { id: route.params.id as number };
-if (route.meta.api_parameters) {
-    parameters = expressionLanguage.evaluateObject(HtmlEntities.encodeObject(route.meta.api_parameters as Object), {
-        route: route
-    });
-}
+useWhenReady([manager, router, expressionLanguage], (manager, router, expressionLanguage) => {
+    let parameters = { id: route.params.id as number };
+    if (route.meta.api_parameters) {
+        parameters = expressionLanguage.evaluateObject(HtmlEntities.encodeObject(route.meta.api_parameters as Object), {
+            route: route
+        });
+    }
 
-manager.load(router.generate(route.meta.api as string, parameters));
+    manager.load(router.generate(route.meta.api as string, parameters));
+});
 
-async function selectTab(tab: TabInterface)
-{
-    await manager.selectTab(tab.key);
-}
-
-onMounted( async () => {
+useWhenReady([manager, frameManager], async (manager, frameManager) => {
     let frame = await frameManager.getFrame();
     if (frame === null) {
         return;
@@ -72,6 +71,11 @@ onMounted( async () => {
             manager.initTab(frame.url);
         }
     });
-})
+});
+
+async function selectTab(tab: TabInterface)
+{
+    await manager.value.selectTab(tab.key);
+}
 
 </script>

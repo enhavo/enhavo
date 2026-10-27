@@ -1,5 +1,5 @@
 <template>
-    <div class="view">
+    <div class="view" v-if="ready">
         <div v-if="uiManager.confirmData" class="modal-confirm">
             <div>
                 <div class="message">{{ uiManager.confirmData.message }}</div>
@@ -22,19 +22,20 @@
 </template>
 
 <script setup lang="ts">
-import {inject} from "vue";
+import {useAsyncService, useServicesReady} from "@enhavo/framework/composables/service";
 import {UiManager} from "@enhavo/app/ui/UiManager";
 import {Translator} from "@enhavo/framework/translation/Translator";
 
-const uiManager = inject<UiManager>('uiManager');
-const translator = inject<Translator>('translator');
+const uiManager = useAsyncService<UiManager>('uiManager');
+const translator = useAsyncService<Translator>('translator');
+const ready = useServicesReady(uiManager, translator);
 
 function getLabel()
 {
-    if (uiManager.alertData.acceptLabel) {
-        return uiManager.alertData.acceptLabel;
+    if (uiManager.value.alertData.acceptLabel) {
+        return uiManager.value.alertData.acceptLabel;
     }
 
-    return translator.trans('enhavo_app.view.label.ok', {}, 'javascript');
+    return translator.value.trans('enhavo_app.view.label.ok', {}, 'javascript');
 }
 </script>

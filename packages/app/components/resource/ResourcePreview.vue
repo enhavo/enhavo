@@ -3,24 +3,26 @@
         <ui-components></ui-components>
         <flash-messages></flash-messages>
         <modal-stack></modal-stack>
-        <action-bar :primary="manager.actions" :secondary="manager.actionsSecondary"></action-bar>
-        <div :class="{'preview-view': true, 'tablet': manager.frameClass === 'tablet', 'mobile': manager.frameClass === 'mobile', 'desktop': manager.frameClass === 'desktop'}">
-            <iframe class="iframe" name="_preview" :ref="(el) => manager.iframe = el as HTMLIFrameElement" v-once></iframe>
-        </div>
+        <template v-if="manager">
+            <action-bar :primary="manager.actions" :secondary="manager.actionsSecondary"></action-bar>
+            <div :class="{'preview-view': true, 'tablet': manager.frameClass === 'tablet', 'mobile': manager.frameClass === 'mobile', 'desktop': manager.frameClass === 'desktop'}">
+                <iframe class="iframe" name="_preview" :ref="(el) => manager.iframe = el as HTMLIFrameElement" v-once></iframe>
+            </div>
+        </template>
     </div>
 </template>
 
 <script setup lang="ts">
-import {inject, onMounted} from "vue";
 import {useRoute} from 'vue-router'
+import {useAsyncService, useWhenReady} from "@enhavo/framework/composables/service";
 import {ResourcePreviewManager} from "../../manager/ResourcePreviewManager";
 import {Router} from "@enhavo/framework/routing/Router";
 
-const manager = inject<ResourcePreviewManager>('resourcePreviewManager');
+const manager = useAsyncService<ResourcePreviewManager>('resourcePreviewManager');
 const route = useRoute();
-const router = inject<Router>('router');
+const router = useAsyncService<Router>('router');
 
-onMounted(() => {
+useWhenReady([manager, router], (manager, router) => {
     if (!route.meta.api) {
         manager.loadDefaults();
     } else {
