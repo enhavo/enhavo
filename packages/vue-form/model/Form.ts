@@ -117,6 +117,21 @@ export class Form
         return parents;
     }
 
+    public getParent(name: string|null = null): Form|null
+    {
+        if (null === name) {
+            return this.parent;
+        }
+        let parent = this.parent;
+        while (parent) {
+            if (parent.name == name) {
+                return parent;
+            }
+            parent = parent.parent;
+        }
+        return null;
+    }
+
     public getValue(): any
     {
         if (this.compound) {
