@@ -137,7 +137,7 @@ So you don't need `await` in your setup function, and you can simply wait in the
 </template>
 
 <script setup lang="ts">
-import {useAsyncService} from "@enhavo/framework/composables/useAsyncService";
+import {useAsyncService} from "@enhavo/framework/composables/service";
 import {ArticleManager} from "@/admin/manager/ArticleManager";
 
 const articleManager = useAsyncService<ArticleManager>('articleManager');
@@ -147,6 +147,37 @@ const articleManager = useAsyncService<ArticleManager>('articleManager');
 ::: warning
 Like `inject`, the composable must be called synchronously inside `setup()` or `<script setup>`. Don't call it 
 after an `await` or inside a callback.
+:::
+
+#### Access the service
+
+In `<script>`, the service is a ref, so you need `.value`. Because it is `null` until loaded, use optional chaining
+or a guard.
+
+```ts
+const articles = articleManager.value?.getArticles();
+
+function reload()
+{
+    if (articleManager.value) {
+        articleManager.value.load();
+    }
+}
+```
+
+In `<template>`, refs are auto-unwrapped at the top level, so you don't need `.value`. Just guard the part that uses the
+service with `v-if`, or use optional chaining.
+
+```vue
+<template>
+    <div v-if="articleManager">{{ articleManager.articles.length }} articles</div>
+    <div>{{ articleManager?.articles.length }} articles</div>
+</template>
+```
+
+::: tip Note
+Functions that are only called from a template part, which is already guarded by `v-if`, can access
+`articleManager.value` directly, because they can't be called before the service is loaded.
 :::
 
 #### Initialize the service
@@ -191,6 +222,75 @@ const articleManager = useAsyncService<ArticleManager>('articleManager', (manage
 ```
 
 If a service fails to load or the `init` callback throws, the error is logged to the console and the ref stays `null`.
+
+#### Wait for multiple services
+
+If you need to run code once several services are loaded, use `useWhenReady`. It calls the callback once, as soon as
+all given refs are non-null. The loaded services are passed as arguments, so you don't need `.value` or null checks.
+
+```ts
+import {useAsyncService, useWhenReady} from "@enhavo/framework/composables/service";
+
+const articleManager = useAsyncService<ArticleManager>('articleManager');
+const translator = useAsyncService<Translator>('translator');
+
+useWhenReady([articleManager, translator], (articleManager, translator) => {
+    articleManager.setTitle(translator.trans('app.article.title'));
+});
+```
+
+Like `useAsyncService`, it must be called synchronously inside `setup()` or `<script setup>`.
+
+#### Computed values from services
+
+To derive a value from one or more services, use `computedWhenReady`. It returns a computed ref, which holds the
+`fallback` until all services are loaded, and the result of the getter afterward. The getter receives the loaded
+services as arguments, and like every computed, it is re-evaluated when reactive data in the services changes.
+
+```ts
+import {useAsyncService, computedWhenReady} from "@enhavo/framework/composables/service";
+
+const articleManager = useAsyncService<ArticleManager>('articleManager');
+const translator = useAsyncService<Translator>('translator');
+
+const title = computedWhenReady(
+    [articleManager, translator],
+    (articleManager, translator) => translator.trans('app.article.count', {count: articleManager.articles.length}),
+    '',
+);
+```
+
+```vue
+<template>
+    <h1>{{ title }}</h1>
+</template>
+```
+
+This way, the template doesn't need a `v-if` guard, because `title` is never `null`.
+
+#### Check if services are ready
+
+If a template part depends on multiple services, `useServicesReady` gives you a single flag to guard it. It returns a
+computed boolean, which is `true` once all given services are loaded.
+
+```vue
+<template>
+    <div v-if="ready">
+        <h1>{{ translator.trans('app.article.title') }}</h1>
+        <div v-for="article of articleManager.articles">{{ article.title }}</div>
+    </div>
+    <div v-else>Loading ...</div>
+</template>
+
+<script setup lang="ts">
+import {useAsyncService, useServicesReady} from "@enhavo/framework/composables/service";
+
+const articleManager = useAsyncService<ArticleManager>('articleManager');
+const translator = useAsyncService<Translator>('translator');
+
+const ready = useServicesReady(articleManager, translator);
+</script>
+```
 
 ## Vue routing
 
