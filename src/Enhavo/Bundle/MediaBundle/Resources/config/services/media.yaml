@@ -107,6 +107,10 @@ services:
             - '%enhavo_media.format.model.class%'
             - '@Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface'
 
+    enhavo_media.format.factory:
+        alias: enhavo_media.factory.format
+        public: true
+
     Enhavo\Bundle\MediaBundle\Cache\HttpCache:
         arguments:
             - '@request_stack'

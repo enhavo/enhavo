@@ -28,8 +28,6 @@ services:
 
     Enhavo\Bundle\SearchBundle\Widget\SearchWidgetType:
         public: true
-        calls:
-            - [setContainer, ['@service_container']]
         tags:
             - { name: enhavo.widget, alias: search }
 
