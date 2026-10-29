@@ -13,6 +13,7 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\EventListener;
 
 use Enhavo\Bundle\TranslationBundle\Entity\Translation;
 use Enhavo\Bundle\TranslationBundle\Form\EventListener\ReplaceTranslationTypeListener;
+use Enhavo\Bundle\TranslationBundle\Form\Locale\FormLocaleResolver;
 use Enhavo\Bundle\TranslationBundle\Form\Type\TranslationType;
 use Enhavo\Bundle\TranslationBundle\Tests\Mocks\TranslatableMock;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
@@ -44,7 +45,7 @@ class ReplaceTranslationTypeListenerTest extends TypeTestCase
         return [
             new PreloadedExtension([
                 new TranslatableMockFormType($this->listener),
-                new TranslationType($this->dependencies->translationManager),
+                new TranslationType($this->dependencies->translationManager, new FormLocaleResolver($this->dependencies->translationManager)),
             ], []),
         ];
     }
@@ -88,6 +89,7 @@ class ReplaceTranslationTypeListenerTest extends TypeTestCase
         $this->dependencies->translationManager->method('getLocales')->willReturn([
             'de', 'en',
         ]);
+        $this->dependencies->translationManager->method('getDefaultLocale')->willReturn('de');
         $this->dependencies->translationManager->method('getTranslations')->willReturnCallback(function ($data, $property) {
             if ('name' === $property) {
                 return [
