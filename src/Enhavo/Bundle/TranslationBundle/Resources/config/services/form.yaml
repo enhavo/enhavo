@@ -1,7 +1,15 @@
 services:
+    Enhavo\Bundle\TranslationBundle\Form\Locale\FormLocaleResolver:
+        arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+
+    Enhavo\Bundle\TranslationBundle\Form\Locale\FormLocaleResolverInterface:
+        alias: Enhavo\Bundle\TranslationBundle\Form\Locale\FormLocaleResolver
+
     Enhavo\Bundle\TranslationBundle\Form\Type\TranslationType:
         arguments:
             - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '@Enhavo\Bundle\TranslationBundle\Form\Locale\FormLocaleResolverInterface'
         tags:
             - { name: form.type }
 

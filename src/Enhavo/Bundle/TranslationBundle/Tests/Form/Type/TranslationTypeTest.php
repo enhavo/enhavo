@@ -13,6 +13,7 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\Form\Type;
 
 use Enhavo\Bundle\TranslationBundle\EventListener\AccessControlInterface;
 use Enhavo\Bundle\TranslationBundle\Form\Extension\TranslationExtension;
+use Enhavo\Bundle\TranslationBundle\Form\Locale\FormLocaleResolver;
 use Enhavo\Bundle\TranslationBundle\Form\Type\TranslationType;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Bundle\VueFormBundle\Form\Extension\VueTypeExtension;
@@ -36,7 +37,7 @@ class TranslationTypeTest extends TypeTestCase
     protected function getExtensions()
     {
         return [
-            new PreloadedExtension([new TranslationType($this->translationManager)], []),
+            new PreloadedExtension([new TranslationType($this->translationManager, new FormLocaleResolver($this->translationManager))], []),
         ];
     }
 

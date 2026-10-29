@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Form\Type;
 
+use Enhavo\Bundle\TranslationBundle\Form\Locale\FormLocaleResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Form\Transformer\TranslationValueTransformer;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Enhavo\Bundle\VueFormBundle\Form\AbstractVueType;
@@ -25,15 +26,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TranslationType extends AbstractVueType
 {
     public function __construct(
-        private readonly TranslationManager $translationManager
+        private readonly TranslationManager $translationManager,
+        private readonly FormLocaleResolverInterface $formLocaleResolver,
     ) {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->addModelTransformer(new TranslationValueTransformer($this->translationManager, $options['translation_data'], $options['translation_property']));
+        $builder->addModelTransformer(new TranslationValueTransformer($this->translationManager, $this->formLocaleResolver, $options['translation_data'], $options['translation_property']));
 
-        foreach ($this->translationManager->getLocales() as $locale) {
+        foreach ($this->formLocaleResolver->getLocales() as $locale) {
             $builder->add($locale, $options['form_type'], $options['form_options']);
         }
     }
@@ -48,7 +50,7 @@ class TranslationType extends AbstractVueType
         foreach ($errors as $error) {
             if (!preg_match('/^\(.+\) /', $error->getMessage())) {
                 $newErrors[] = new FormError(
-                    sprintf('(%s) %s', $this->translationManager->getDefaultLocale(), $error->getMessage()),
+                    sprintf('(%s) %s', $this->formLocaleResolver->getDefaultLocale(), $error->getMessage()),
                     $error->getMessageTemplate(),
                     $error->getMessageParameters(),
                     $error->getMessagePluralization(),
@@ -59,11 +61,11 @@ class TranslationType extends AbstractVueType
             }
         }
 
-        $help = $form->get($this->translationManager->getDefaultLocale())->getConfig()->getOption('help');
+        $help = $form->get($this->formLocaleResolver->getDefaultLocale())->getConfig()->getOption('help');
         $view->vars['help'] = $help;
 
         $view->vars['errors'] = new FormErrorIterator($errors->getForm(), $newErrors);
-        $view->vars['translation_locales'] = $this->translationManager->getLocales();
+        $view->vars['translation_locales'] = $this->formLocaleResolver->getLocales();
 
         parent::buildView($view, $form, $options);
     }

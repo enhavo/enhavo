@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Form\Transformer;
 
+use Enhavo\Bundle\TranslationBundle\Form\Locale\FormLocaleResolverInterface;
 use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 use Symfony\Component\Form\DataTransformerInterface;
 
@@ -18,6 +19,9 @@ class TranslationValueTransformer implements DataTransformerInterface
 {
     /** @var TranslationManager */
     private $translationManager;
+
+    /** @var FormLocaleResolverInterface */
+    private $formLocaleResolver;
 
     /** @var string */
     private $property;
@@ -28,19 +32,29 @@ class TranslationValueTransformer implements DataTransformerInterface
     /**
      * TranslationValueTransformer constructor.
      */
-    public function __construct(TranslationManager $translationManager, object $data, string $property)
+    public function __construct(TranslationManager $translationManager, FormLocaleResolverInterface $formLocaleResolver, object $data, string $property)
     {
         $this->translationManager = $translationManager;
+        $this->formLocaleResolver = $formLocaleResolver;
         $this->property = $property;
         $this->data = $data;
     }
 
     public function transform($value)
     {
-        $data = [$this->translationManager->getDefaultLocale() => $value];
+        $defaultLocale = $this->formLocaleResolver->getDefaultLocale();
+        $data = [$defaultLocale => $value];
+
+        $locales = array_diff($this->formLocaleResolver->getLocales(), [$defaultLocale]);
+        if (empty($locales)) {
+            return $data;
+        }
 
         $translations = $this->translationManager->getTranslations($this->data, $this->property);
         foreach ($translations as $locale => $value) {
+            if (!in_array($locale, $locales, true)) {
+                continue;
+            }
             $data[$locale] = $value;
         }
 
@@ -51,11 +65,11 @@ class TranslationValueTransformer implements DataTransformerInterface
     {
         $data = $value;
         foreach ($data as $locale => $value) {
-            if ($locale !== $this->translationManager->getDefaultLocale()) {
+            if ($locale !== $this->formLocaleResolver->getDefaultLocale()) {
                 $this->translationManager->setTranslation($this->data, $this->property, $locale, $value);
             }
         }
 
-        return $data[$this->translationManager->getDefaultLocale()];
+        return $data[$this->formLocaleResolver->getDefaultLocale()];
     }
 }
