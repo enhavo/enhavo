@@ -1,0 +1,20 @@
+services:
+    Enhavo\Bundle\TranslationBundle\Duplicate\Extension\TranslationPropertyDuplicateTypeExtension:
+        arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+        tags:
+            - { name: enhavo_resource.duplicate_extension }
+
+    Enhavo\Bundle\TranslationBundle\Duplicate\Extension\TranslationStringDuplicateTypeExtension:
+        arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '@Enhavo\Bundle\ResourceBundle\Duplicate\Type\StringDuplicateType'
+        tags:
+            - { name: enhavo_resource.duplicate_extension }
+
+    Enhavo\Bundle\TranslationBundle\Duplicate\Extension\TranslationFileDuplicateTypeExtension:
+        arguments:
+            - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '@Enhavo\Bundle\MediaBundle\Duplicate\Type\FileDuplicateType'
+        tags:
+            - { name: enhavo_resource.duplicate_extension }

@@ -36,6 +36,7 @@ use Enhavo\Bundle\ResourceBundle\Form\FormTypeDescriberInterface;
 use Enhavo\Bundle\ResourceBundle\Tab\Tab;
 use Enhavo\Bundle\ResourceBundle\Tab\TabTypeInterface;
 use Enhavo\Component\Type\TypeCompilerPass;
+use Enhavo\Component\Type\TypeExtensionCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -61,6 +62,7 @@ class EnhavoResourceBundle extends Bundle
         $container->addCompilerPass(new TypeCompilerPass('Filter', 'enhavo_resource.filter', Filter::class));
         $container->addCompilerPass(new TypeCompilerPass('Tab', 'enhavo_resource.tab', Tab::class));
         $container->addCompilerPass(new TypeCompilerPass('Duplicate', 'enhavo_resource.duplicate', Duplicate::class));
+        $container->addCompilerPass(new TypeExtensionCompilerPass('Duplicate', 'enhavo_resource.duplicate_extension'));
 
         $container
             ->registerForAutoconfiguration(ActionTypeInterface::class)
