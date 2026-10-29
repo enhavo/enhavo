@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\AppBundle\Widget\Type;
 
 use Enhavo\Bundle\AppBundle\Widget\AbstractWidgetType;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -19,12 +20,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PaginationWidgetType extends AbstractWidgetType
 {
-    public function createViewData(array $options, $resource = null)
+    public function __construct(
+        private readonly RequestStack $requestStack,
+    ) {
+    }
+
+    public function createViewData(array $options, $resource = null): array
     {
         $pageParameter = $options['page_parameter'];
         if (null === $options['route']) {
-            $request = $this->container->get('request_stack')->getCurrentRequest();
-            $route = $request->get('_route');
+            $request = $this->requestStack->getCurrentRequest();
+            $route = $request->attributes->get('_route');
             $routeParameters = $options['routeParameters'];
             foreach ($request->query as $key => $value) {
                 if ($key != $pageParameter) {
