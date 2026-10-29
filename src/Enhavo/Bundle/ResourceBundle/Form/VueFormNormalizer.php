@@ -9,8 +9,7 @@ class VueFormNormalizer implements FormNormalizerInterface
 {
     public function __construct(
         private readonly VueForm $vueForm,
-    )
-    {
+    ) {
     }
 
     public function normalize(FormInterface $form, array $options = []): array
