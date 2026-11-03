@@ -11,7 +11,6 @@
 
 namespace Enhavo\Bundle\TranslationBundle\Duplicate\Extension;
 
-use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateType;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Diff\Diff;
 use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateTypeExtension;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
@@ -27,8 +26,10 @@ class TranslationPropertyDuplicateTypeExtension extends AbstractDuplicateTypeExt
 {
     use TranslationDuplicateTrait;
 
-    public function __construct(TranslationManager $translationManager)
-    {
+    public function __construct(
+        TranslationManager $translationManager,
+        private readonly PropertyDuplicateType $propertyDuplicateType,
+    ) {
         $this->translationManager = $translationManager;
     }
 
@@ -39,8 +40,7 @@ class TranslationPropertyDuplicateTypeExtension extends AbstractDuplicateTypeExt
 
     public function diff($options, SourceValue $oldValue, SourceValue $newValue, Diff $diff, $context): void
     {
-        $this->parent->diff($options, $oldValue, $newValue, $diff, $context);
-        $this->diffTranslations($options, $oldValue, $newValue, $diff, $context);
+        $this->diffTranslations($this->propertyDuplicateType, $options, $oldValue, $newValue, $diff, $context);
     }
 
     public static function getExtendedTypes(): array

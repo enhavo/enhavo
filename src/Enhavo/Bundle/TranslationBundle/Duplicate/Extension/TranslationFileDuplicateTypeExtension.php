@@ -42,8 +42,7 @@ class TranslationFileDuplicateTypeExtension extends AbstractDuplicateTypeExtensi
 
     public function diff($options, SourceValue $oldValue, SourceValue $newValue, Diff $diff, $context): void
     {
-        $this->parent->diff($options, $oldValue, $newValue, $diff, $context);
-        $this->diffTranslations($options, $oldValue, $newValue, $diff, $context);
+        $this->diffTranslations($this->fileDuplicateType, $options, $oldValue, $newValue, $diff, $context);
     }
 
     public static function getExtendedTypes(): array

@@ -12,7 +12,6 @@
 namespace Enhavo\Bundle\TranslationBundle\Duplicate\Extension;
 
 use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateTypeExtension;
-use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateType;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Diff\Diff;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
@@ -43,8 +42,7 @@ class TranslationStringDuplicateTypeExtension extends AbstractDuplicateTypeExten
 
     public function diff($options, SourceValue $oldValue, SourceValue $newValue, Diff $diff, $context): void
     {
-        $this->parent->diff($options, $oldValue, $newValue, $diff, $context);
-        $this->diffTranslations($options, $oldValue, $newValue, $diff, $context);
+        $this->diffTranslations($this->stringDuplicateType, $options, $oldValue, $newValue, $diff, $context);
     }
 
     public static function getExtendedTypes(): array

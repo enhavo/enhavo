@@ -20,8 +20,6 @@ use Enhavo\Bundle\TranslationBundle\Translation\TranslationManager;
 /**
  * Copies the stored translations of the source property to the target property, and compares them in a diff.
  * The default locale is skipped, because its value lives in the property itself.
- *
- * Only for duplicate types extending AbstractType, the helpers use the parent type ($this->parent).
  */
 trait TranslationDuplicateTrait
 {
@@ -67,9 +65,9 @@ trait TranslationDuplicateTrait
     }
 
     /**
-     * Compares the translations of every locale with the parent type, labels get the locale as suffix.
+     * Compares the translations of every locale with the extended type, labels get the locale as suffix.
      */
-    private function diffTranslations($options, SourceValue $oldValue, SourceValue $newValue, Diff $diff, $context): void
+    private function diffTranslations(DuplicateTypeInterface $type, $options,SourceValue $oldValue, SourceValue $newValue, Diff $diff, $context): void
     {
         $old = $oldValue->getParent();
         $new = $newValue->getParent();
@@ -87,8 +85,8 @@ trait TranslationDuplicateTrait
             $oldTranslation = new SourceValue($old ? $this->translationManager->getProperty($old, $property, $locale) : null, $old, $property);
             $newTranslation = new SourceValue($new ? $this->translationManager->getProperty($new, $property, $locale) : null, $new, $property);
 
-            $diff->withSuffix($locale, function () use ($options, $oldTranslation, $newTranslation, $diff, $context) {
-                $this->parent->diff($options, $oldTranslation, $newTranslation, $diff, $context);
+            $diff->withSuffix($locale, function () use ($type, $options, $oldTranslation, $newTranslation, $diff, $context) {
+                $type->diff($options, $oldTranslation, $newTranslation, $diff, $context);
             });
         }
     }

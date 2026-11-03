@@ -70,7 +70,16 @@ class Duplicate extends AbstractContainerType
         }
 
         $diff->enter($diff->getFormatter()->getLabel($this->options['label'], $this->options['translation_domain'], $newValue->getPropertyName() ?? $oldValue->getPropertyName()));
+        // the type walks up its parents by itself, so every extension of the type or one of its parents runs once
         $this->type->diff($this->options, $oldValue, $newValue, $diff, $context);
+        foreach ($this->extensions as $extension) {
+            foreach (array_merge($this->parents, [$this->type]) as $type) {
+                if ($this->isExtendable($type, $extension)) {
+                    $extension->diff($this->options, $oldValue, $newValue, $diff, $context);
+                    break;
+                }
+            }
+        }
         $diff->leave();
     }
 }

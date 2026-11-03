@@ -20,6 +20,7 @@ use Enhavo\Bundle\ResourceBundle\Duplicate\Type\BaseDuplicateType;
 use Enhavo\Component\Metadata\MetadataRepository;
 use Enhavo\Component\Type\Factory;
 use Enhavo\Component\Type\Registry;
+use Enhavo\Component\Type\TypeExtensionInterface;
 use Enhavo\Component\Type\TypeInterface;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -32,8 +33,9 @@ trait DiffTestTrait
     /**
      * @param TypeInterface[]                           $types      duplicate types besides the base type, parents first
      * @param array<class-string, array<string, array>> $properties duplicate configs per class and property
+     * @param TypeExtensionInterface[]                  $extensions duplicate type extensions
      */
-    private function createDiffFactory(array $types, array $properties): DiffFactory
+    private function createDiffFactory(array $types, array $properties, array $extensions = []): DiffFactory
     {
         $container = new Container();
         $registry = new Registry('Duplicate');
@@ -41,6 +43,10 @@ trait DiffTestTrait
         foreach (array_merge([new BaseDuplicateType()], $types) as $type) {
             $container->set($type::class, $type);
             $registry->register($type::class, $type::class);
+        }
+        foreach ($extensions as $extension) {
+            $container->set($extension::class, $extension);
+            $registry->registerExtension($extension::class, $extension::class);
         }
 
         $metadataRepository = $this->getMockBuilder(MetadataRepository::class)->disableOriginalConstructor()->getMock();
