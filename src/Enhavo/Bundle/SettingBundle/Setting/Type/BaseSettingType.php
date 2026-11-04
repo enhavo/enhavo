@@ -17,15 +17,19 @@ use Enhavo\Bundle\ResourceBundle\Factory\Factory;
 use Enhavo\Bundle\SettingBundle\Entity\Setting as SettingEntity;
 use Enhavo\Bundle\SettingBundle\Exception\SettingNotExists;
 use Enhavo\Bundle\SettingBundle\Setting\AbstractSettingType;
+use Enhavo\Bundle\SettingBundle\Setting\SettingManager;
 use Enhavo\Bundle\SettingBundle\Setting\SettingTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BaseSettingType extends AbstractSettingType implements SettingTypeInterface
 {
+    private ?array $settingKeyPositions = null;
+
     public function __construct(
         private readonly EntityRepository $repository,
         private readonly Factory $factory,
         private readonly EntityManagerInterface $em,
+        private readonly SettingManager $settingManager,
     ) {
     }
 
@@ -42,8 +46,20 @@ class BaseSettingType extends AbstractSettingType implements SettingTypeInterfac
         $settingEntity->setLabel($options['label'] ?? $key);
         $settingEntity->setTranslationDomain($options['translation_domain']);
         $settingEntity->setGroup($options['group']);
+        $settingEntity->setPosition($this->getSettingKeyPosition($key));
 
         return $settingEntity;
+    }
+
+    protected function getSettingKeyPosition($key)
+    {
+        if (null === $this->settingKeyPositions) {
+            foreach ($this->settingManager->getKeys() as $position => $settingKey) {
+                $this->settingKeyPositions[$settingKey] = $position;
+            }
+        }
+
+        return $this->settingKeyPositions[$key] ?? 0;
     }
 
     public function init(array $options, $key = null)

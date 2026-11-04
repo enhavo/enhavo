@@ -20,6 +20,7 @@ services:
             - '@enhavo_setting.setting.repository'
             - '@enhavo_setting.setting.factory'
             - '@doctrine.orm.entity_manager'
+            - '@Enhavo\Bundle\SettingBundle\Setting\SettingManager'
         tags:
             - enhavo_setting.setting
 
