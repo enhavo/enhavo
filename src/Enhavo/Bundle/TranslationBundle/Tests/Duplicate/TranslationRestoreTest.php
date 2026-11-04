@@ -13,7 +13,7 @@ namespace Enhavo\Bundle\TranslationBundle\Tests\Duplicate;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\DoctrineExtensionBundle\EntityResolver\EntityResolverInterface;
-use Enhavo\Bundle\FrameworkBundle\Locale\LocaleResolverInterface;
+use Enhavo\Bundle\AppBundle\Locale\LocaleResolverInterface;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Duplicate;
 use Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Metadata\Metadata as DuplicateMetadata;
