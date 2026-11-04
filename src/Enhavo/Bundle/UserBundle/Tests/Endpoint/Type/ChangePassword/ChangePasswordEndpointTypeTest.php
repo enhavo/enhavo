@@ -15,6 +15,7 @@ use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\AppBundle\Tests\Mock\FormFactoryMock;
 use Enhavo\Bundle\AppBundle\Tests\Mock\TokenMock;
+use Enhavo\Bundle\ResourceBundle\Form\FormNormalizerInterface;
 use Enhavo\Bundle\ResourceBundle\Tests\Mock\ContainerMock;
 use Enhavo\Bundle\UserBundle\Configuration\ChangePassword\ChangePasswordConfiguration;
 use Enhavo\Bundle\UserBundle\Configuration\ConfigurationProvider;
@@ -48,6 +49,7 @@ class ChangePasswordEndpointTypeTest extends TestCase
         $dependencies->container->set('security.token_storage', $dependencies->tokenStorage);
         $dependencies->container->set('form.factory', $dependencies->formFactory);
         $dependencies->container->set('serializer', new Serializer());
+        $dependencies->container->set(FormNormalizerInterface::class, $this->getMockBuilder(FormNormalizerInterface::class)->disableOriginalConstructor()->getMock());
 
         return $dependencies;
     }
