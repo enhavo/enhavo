@@ -150,7 +150,6 @@ services:
             - '@enhavo_media_library.item.repository'
             - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
             - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
-            - '@validator'
         calls:
             - [setContainer, ['@Psr\Container\ContainerInterface']]
         tags:
