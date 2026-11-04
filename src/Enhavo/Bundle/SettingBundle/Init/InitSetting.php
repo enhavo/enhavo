@@ -14,7 +14,6 @@ namespace Enhavo\Bundle\SettingBundle\Init;
 use Doctrine\ORM\EntityManagerInterface;
 use Enhavo\Bundle\FrameworkBundle\Init\InitInterface;
 use Enhavo\Bundle\FrameworkBundle\Init\Output;
-use Enhavo\Bundle\SettingBundle\Entity\Setting;
 use Enhavo\Bundle\SettingBundle\Setting\SettingManager;
 
 class InitSetting implements InitInterface
@@ -36,9 +35,9 @@ class InitSetting implements InitInterface
 
     public function init(Output $io)
     {
-        foreach ($this->manager->getKeys() as $key) {
-            /** @var Setting $setting */
-            $change = $this->manager->getSetting($key)->init();
+        foreach ($this->manager->getKeys() as $position => $key) {
+            $setting = $this->manager->getSetting($key);
+            $change = $setting->init();
             if ($change) {
                 $io->writeln(sprintf('Update setting "%s"', $key));
             }

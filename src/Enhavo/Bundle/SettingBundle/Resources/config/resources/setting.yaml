@@ -25,6 +25,8 @@ enhavo_resource:
                     group: expr:request.query.get("group")
             resource: enhavo_setting.setting
             collection:
+                sorting:
+                    position: asc
                 criteria:
                     group: expr:request.query.get("group")
             columns:
