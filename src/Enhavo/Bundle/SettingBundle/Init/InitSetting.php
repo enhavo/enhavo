@@ -12,14 +12,9 @@
 namespace Enhavo\Bundle\SettingBundle\Init;
 
 use Doctrine\ORM\EntityManagerInterface;
-<<<<<<< HEAD
 use Enhavo\Bundle\AppBundle\Init\InitInterface;
 use Enhavo\Bundle\AppBundle\Init\Output;
 use Enhavo\Bundle\SettingBundle\Entity\Setting;
-=======
-use Enhavo\Bundle\FrameworkBundle\Init\InitInterface;
-use Enhavo\Bundle\FrameworkBundle\Init\Output;
->>>>>>> 5278518 (feat: automatically sort settings by order of configuration (#2516))
 use Enhavo\Bundle\SettingBundle\Setting\SettingManager;
 
 class InitSetting implements InitInterface
