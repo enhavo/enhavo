@@ -1,6 +1,8 @@
 <template>
-    <div v-for="row in rows" class="form-arrangement-row" :style="{'--form-arrangement-columns': getColumns(row)}">
-        <component :is="column.form.rowComponent" v-for="column in row" :form="column.form" />
+    <div v-for="row in rows" class="form-arrangement-row" :style="{'--form-arrangement-ratio': getRatio(row)}">
+        <div v-for="column in row" class="form-arrangement-column" :style="{flexGrow: column.size}">
+            <component :is="column.form.rowComponent" :form="column.form" />
+        </div>
     </div>
     <component :is="child.rowComponent" v-for="child of remainingChildren" :form="child" />
 </template>
@@ -36,8 +38,11 @@ const remainingChildren = computed<Form[]>(() => {
     return props.form.children.filter(child => !arranged.includes(child.name));
 });
 
-function getColumns(row: Column[]): string
+// Row width in multiples of its smallest column
+function getRatio(row: Column[]): number
 {
-    return row.map(column => `minmax(0, ${column.size}fr)`).join(' ');
+    const sizes = row.map(column => column.size);
+
+    return sizes.reduce((total, size) => total + size, 0) / Math.min(...sizes);
 }
 </script>
