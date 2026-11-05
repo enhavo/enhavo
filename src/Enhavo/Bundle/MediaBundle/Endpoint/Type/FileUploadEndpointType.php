@@ -67,7 +67,6 @@ class FileUploadEndpointType extends AbstractEndpointType
             }
         }
 
-        // Do not stop the context: child types work on the stored files.
         $context->set('files', $storedFiles);
         $context->setResponse($this->createFileResponse($storedFiles), false);
     }

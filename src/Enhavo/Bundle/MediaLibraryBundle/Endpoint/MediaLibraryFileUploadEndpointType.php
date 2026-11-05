@@ -24,9 +24,8 @@ use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Upload of an admin media field that also lands in the media library: the parent stores the file of the field,
- * this type adds a copy of it to the library as a new item and links the field's file to that item, like a library
- * select (MediaLibrarySelectEndpointType). A file whose checksum is already in the library reuses that item.
+ * Upload of an admin media field that also lands in the media library:
+ * The parent stores the file, this type adds a copy of it to the library as a new item and links to that item.
  */
 class MediaLibraryFileUploadEndpointType extends AbstractEndpointType
 {
