@@ -24,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TextPictureBlockType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('title', HeadLineType::class, [
             'label' => 'form.label.title',
@@ -77,14 +77,21 @@ class TextPictureBlockType extends AbstractType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => TextPictureBlock::class,
+            'arrangement' => [
+                'title',
+                'text',
+                'caption',
+                'file',
+                'textLeft | float | layout',
+            ],
         ]);
     }
 
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'enhavo_block_block_text_picture';
     }

@@ -81,8 +81,7 @@ enhavo_resource:
                         parent
                         special
                         type
-                        publication_date
-                        published_until
+                        publication_date | published_until{2}
                         public
                 content:
                     type: block
