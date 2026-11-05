@@ -11,9 +11,6 @@
       margin-top: 0;
     }
 
-    // Relative to the row and not to the viewport, as forms can be nested or shown in a narrow frame. Below the width at
-    // which the smallest column would get narrower than --form-arrangement-min-column, the basis gets huge and every
-    // column takes a full line. Above, it is negative and resolves to 0, so the columns share the row by their size.
     > .form-arrangement-column {
       flex-basis: calc((var(--form-arrangement-min-column, 400px) * var(--form-arrangement-ratio) - 100%) * 999);
       min-width: 0;
