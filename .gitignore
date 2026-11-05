@@ -16,6 +16,7 @@
 /elasticsearch
 /docs/build
 /vendor/
+/var/
 /.web-server-pid
 .phpunit
 /phpunit.xml

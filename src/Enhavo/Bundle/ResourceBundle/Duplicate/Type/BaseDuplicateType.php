@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Duplicate\Type;
 
+use Enhavo\Bundle\ResourceBundle\Duplicate\Diff\Diff;
 use Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateTypeInterface;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
@@ -32,10 +33,18 @@ class BaseDuplicateType extends AbstractType implements DuplicateTypeInterface
     {
     }
 
+    public function diff($options, SourceValue $oldValue, SourceValue $newValue, Diff $diff, $context): void
+    {
+        $diff->addValueChange($oldValue->getValue(), $newValue->getValue());
+    }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'groups' => null,
+            'diff' => true,
+            'label' => null,
+            'translation_domain' => null,
         ]);
     }
 

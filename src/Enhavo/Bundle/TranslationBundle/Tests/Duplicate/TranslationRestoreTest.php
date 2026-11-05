@@ -131,8 +131,9 @@ class TranslationRestoreTest extends TestCase
     {
         $container = new Container();
         $container->set(BaseDuplicateType::class, new BaseDuplicateType());
-        $container->set(PropertyDuplicateType::class, new PropertyDuplicateType());
-        $container->set(TranslationPropertyDuplicateTypeExtension::class, new TranslationPropertyDuplicateTypeExtension($translationManager ?? $this->createTranslationManager()));
+        $propertyType = new PropertyDuplicateType();
+        $container->set(PropertyDuplicateType::class, $propertyType);
+        $container->set(TranslationPropertyDuplicateTypeExtension::class, new TranslationPropertyDuplicateTypeExtension($translationManager ?? $this->createTranslationManager(), $propertyType));
         $registry = new Registry('Duplicate');
         $registry->setContainer($container);
         $registry->register(BaseDuplicateType::class, BaseDuplicateType::class);

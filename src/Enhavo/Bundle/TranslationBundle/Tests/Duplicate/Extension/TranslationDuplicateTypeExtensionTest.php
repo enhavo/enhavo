@@ -63,7 +63,8 @@ class TranslationDuplicateTypeExtensionTest extends TestCase
     public function testDuplicateProperty()
     {
         $dependencies = $this->createDependencies(['de' => 'Hallo', 'en' => 'Hello', 'fr' => null]);
-        $duplicate = $this->createDuplicate(new PropertyDuplicateType(), new TranslationPropertyDuplicateTypeExtension($dependencies->translationManager));
+        $propertyType = new PropertyDuplicateType();
+        $duplicate = $this->createDuplicate($propertyType, new TranslationPropertyDuplicateTypeExtension($dependencies->translationManager, $propertyType));
 
         $targetValue = new TargetValue(null, new \stdClass(), 'title');
         $duplicate->duplicate(new SourceValue('Hallo', new \stdClass(), 'title'), $targetValue);
@@ -77,7 +78,8 @@ class TranslationDuplicateTypeExtensionTest extends TestCase
         $translationManager = $this->getMockBuilder(TranslationManager::class)->disableOriginalConstructor()->getMock();
         $translationManager->method('isTranslatable')->willReturn(false);
         $translationManager->expects($this->never())->method('setTranslation');
-        $duplicate = $this->createDuplicate(new PropertyDuplicateType(), new TranslationPropertyDuplicateTypeExtension($translationManager));
+        $propertyType = new PropertyDuplicateType();
+        $duplicate = $this->createDuplicate($propertyType, new TranslationPropertyDuplicateTypeExtension($translationManager, $propertyType));
 
         $targetValue = new TargetValue(null, new \stdClass(), 'title');
         $duplicate->duplicate(new SourceValue('Hallo', new \stdClass(), 'title'), $targetValue);
@@ -90,7 +92,7 @@ class TranslationDuplicateTypeExtensionTest extends TestCase
         $translationManager = $this->getMockBuilder(TranslationManager::class)->disableOriginalConstructor()->getMock();
         $translationManager->expects($this->never())->method('setTranslation');
         $translator = $this->getMockBuilder(TranslatorInterface::class)->getMock();
-        $duplicate = $this->createDuplicate(new StringDuplicateType($translator), new TranslationPropertyDuplicateTypeExtension($translationManager));
+        $duplicate = $this->createDuplicate(new StringDuplicateType($translator), new TranslationPropertyDuplicateTypeExtension($translationManager, new PropertyDuplicateType()));
 
         $targetValue = new TargetValue(null, new \stdClass(), 'title');
         $duplicate->duplicate(new SourceValue('Hallo', new \stdClass(), 'title'), $targetValue);

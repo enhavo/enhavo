@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Duplicate;
 
+use Enhavo\Bundle\ResourceBundle\Duplicate\Diff\Diff;
 use Enhavo\Component\Type\AbstractTypeExtension;
 
 abstract class AbstractDuplicateTypeExtension extends AbstractTypeExtension implements DuplicateTypeExtensionInterface
@@ -20,6 +21,10 @@ abstract class AbstractDuplicateTypeExtension extends AbstractTypeExtension impl
     }
 
     public function finish($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void
+    {
+    }
+
+    public function diff($options, SourceValue $oldValue, SourceValue $newValue, Diff $diff, $context): void
     {
     }
 }

@@ -50,7 +50,7 @@ class RestoreEndpointType extends AbstractEndpointType
             return;
         }
 
-        $revisionId = $request->query->get('revisionId');
+        $revisionId = (int) $request->attributes->get('revisionId');
         $revision = $this->revisionManager->getRevision($resource, $revisionId);
 
         $this->revisionManager->restore($resource, $revision);

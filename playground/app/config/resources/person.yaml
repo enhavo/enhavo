@@ -61,6 +61,7 @@ enhavo_resource:
                     label: Revision
                     type: revision
                     enabled: 'expr:input.getResource()?.getId()'
+                    diff: true
             actions:
                 duplicate:
                     type: duplicate

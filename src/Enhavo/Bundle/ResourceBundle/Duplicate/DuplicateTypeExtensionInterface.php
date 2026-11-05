@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Duplicate;
 
+use Enhavo\Bundle\ResourceBundle\Duplicate\Diff\Diff;
 use Enhavo\Component\Type\TypeExtensionInterface;
 
 interface DuplicateTypeExtensionInterface extends TypeExtensionInterface
@@ -18,4 +19,9 @@ interface DuplicateTypeExtensionInterface extends TypeExtensionInterface
     public function duplicate($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void;
 
     public function finish($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void;
+
+    /**
+     * Adds further differences to $diff, called after the extended type compared the property.
+     */
+    public function diff($options, SourceValue $oldValue, SourceValue $newValue, Diff $diff, $context): void;
 }
