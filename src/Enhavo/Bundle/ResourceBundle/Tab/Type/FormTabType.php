@@ -14,13 +14,19 @@ namespace Enhavo\Bundle\ResourceBundle\Tab\Type;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ResourceBundle\Input\InputInterface;
 use Enhavo\Bundle\ResourceBundle\Tab\AbstractTabType;
+use Enhavo\Bundle\ResourceBundle\Tab\ArrangementParser;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FormTabType extends AbstractTabType
 {
+    public function __construct(
+        private readonly ArrangementParser $arrangementParser,
+    ) {
+    }
+
     public function createViewData(array $options, Data $data, ?InputInterface $input = null): void
     {
-        $data->set('arrangement', $this->generateArrangement($options['arrangement']));
+        $data->set('arrangement', $this->arrangementParser->parse($options['arrangement']));
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -35,43 +41,5 @@ class FormTabType extends AbstractTabType
     public static function getName(): ?string
     {
         return 'form';
-    }
-
-    private function generateArrangement($arrangement): array
-    {
-        if (null === $arrangement) {
-            return [];
-        }
-
-        $lines = is_array($arrangement) ? $arrangement : explode("\n", $arrangement);
-
-        $rows = [];
-        foreach ($lines as $line) {
-            $rows[] = $this->generateRow($line);
-        }
-
-        return $rows;
-    }
-
-    private function generateRow($line): array
-    {
-        $columns = explode('|', $line);
-        $data = [];
-        foreach ($columns as $column) {
-            preg_match('/([A-Za-z.-_]+)/', trim($column), $matches);
-            $key = $matches[1] ?? null;
-
-            preg_match('/\{([0-9]+)\}/', trim($column), $matches);
-            $size = intval($matches[1] ?? 1);
-
-            if (null !== $key && $size > 0) {
-                $data[] = [
-                    'key' => $key,
-                    'size' => $size,
-                ];
-            }
-        }
-
-        return $data;
     }
 }

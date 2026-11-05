@@ -1,6 +1,25 @@
 @use "../import/variables";
 @use "../import/blueprints";
 
+.form-arrangement-row {
+    display: grid;
+    grid-template-columns: var(--form-arrangement-columns);
+    gap: 15px;
+    margin-top: 15px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    > .form-row {
+      margin-top: 0;
+    }
+
+    @media (max-width: 767px) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+}
+
 .form-row {
     margin-top: 15px;
     &:first-child {
