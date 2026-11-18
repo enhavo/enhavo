@@ -48,8 +48,10 @@ class FileReplaceEndpointType extends AbstractEndpointType
             $response = new JsonResponse([
                 'success' => false,
                 'errors' => $errors,
-            ]);
+            ], 400);
             $context->setResponse($response);
+
+            return;
         }
 
         $newFile = $this->fileFactory->createFromUploadedFile($uploadedFile);

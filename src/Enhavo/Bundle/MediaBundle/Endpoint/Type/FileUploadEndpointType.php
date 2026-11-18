@@ -45,6 +45,10 @@ class FileUploadEndpointType extends AbstractEndpointType
                 try {
                     $errors = $this->getErrors($options, $uploadedFile);
                     if (count($errors)) {
+                        foreach ($storedFiles as $storedFile) {
+                            $this->resourceManager->delete($storedFile);
+                        }
+
                         $response = new JsonResponse([
                             'success' => false,
                             'errors' => $errors,
@@ -61,6 +65,13 @@ class FileUploadEndpointType extends AbstractEndpointType
                     foreach ($storedFiles as $file) {
                         $this->resourceManager->delete($file);
                     }
+
+                    $context->setResponse(new JsonResponse([
+                        'success' => false,
+                        'errors' => ['Error while storing file'],
+                    ], 400));
+
+                    return;
                 }
             }
         }
