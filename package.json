@@ -11,7 +11,8 @@
     "test:integration": "vitest -r tests/packages/integration -c ./vitest.integration.js "
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "playground/app"
   ],
   "dependencies": {
     "jquery": "^3.4.0"

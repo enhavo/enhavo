@@ -1,4 +1,6 @@
 {
+  "name": "enhavo-playground-app",
+  "private": true,
   "packageManager": "yarn@4.12.0",
   "type": "module",
   "scripts": {
@@ -10,5 +12,14 @@
     "theme:di": "node ../../packages/dependency-injection/bin/dependency-injection.js --file assets/theme/container.di.yaml",
     "build": "vite build --config assets/admin/vite.config.js && vite build --config assets/theme/vite.config.js",
     "clean": "rm -rf ./node_modules/.vite && rm -rf ./public/build/admin && rm -rf ./public/build/theme"
+  },
+  "devDependencies": {
+    "@enhavo/framework": "workspace:*",
+    "@enhavo/ui": "workspace:*",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "dotenv": "^16.4.5",
+    "vite": "^8.1.5",
+    "vite-plugin-live-reload": "^3.1.0",
+    "vue": "^3.5.0"
   }
 }
