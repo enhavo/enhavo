@@ -18,6 +18,7 @@ use Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Endpoint\Type\FileUploadEndpointType;
 use Enhavo\Bundle\MediaBundle\Entity\File;
+use Enhavo\Bundle\MediaBundle\Exception\StorageException;
 use Enhavo\Bundle\MediaBundle\Factory\FileFactory;
 use Enhavo\Bundle\ResourceBundle\Resource\ResourceManager;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -124,6 +125,19 @@ class FileUploadEndpointTypeTest extends TestCase
         $this->assertNull($context->get('files'));
         $this->assertEquals(400, $context->getResponse()->getStatusCode());
         $this->assertEquals(['success' => false, 'errors' => ['File too large']], json_decode($context->getResponse()->getContent(), true));
+    }
+
+    public function testStorageErrorReturnsErrorResponse()
+    {
+        $dependencies = $this->createDependencies();
+        $dependencies->resourceManager->method('save')->willThrowException(new StorageException('Disk full'));
+
+        $context = $this->handle($this->createInstance($dependencies));
+
+        $this->assertTrue($context->isStopped());
+        $this->assertNull($context->get('files'));
+        $this->assertEquals(400, $context->getResponse()->getStatusCode());
+        $this->assertEquals(['success' => false, 'errors' => ['Error while storing file']], json_decode($context->getResponse()->getContent(), true));
     }
 }
 
