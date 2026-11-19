@@ -1,3 +1,6 @@
+styles:
+    - '../../assets/styles/login.scss'
+
 services:
     '@enhavo/user/manager/UserManager':
         chunk: 'user'
@@ -5,7 +8,7 @@ services:
         arguments:
             - '@enhavo/framework/routing/Router'
             - '@enhavo/vue-form/form/FormFactory'
-            - '@enhavo/app/vue/VueRouterFactory'
+            - '@enhavo/framework/vue/VueRouterFactory'
         tags:
             - { name: vue.service, service: userManager, reactive: true }
 

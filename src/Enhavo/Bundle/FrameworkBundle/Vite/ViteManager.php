@@ -150,17 +150,34 @@ class ViteManager
 
     private function getCSSUrls(string $entrypoint, string $build): array
     {
-        $urls = [];
         $manifest = $this->getManifest($build);
         $buildPath = $this->getBuildPath($build);
 
-        if (!empty($manifest[$entrypoint]['css'])) {
-            foreach ($manifest[$entrypoint]['css'] as $file) {
-                $urls[] = $buildPath.'/'.$file;
-            }
+        $files = [];
+        $visited = [];
+        $this->collectCSSFiles($manifest, $entrypoint, $files, $visited);
+
+        return array_map(fn (string $file) => $buildPath.'/'.$file, array_keys($files));
+    }
+
+    /**
+     * Collect statically imported style chunks, as they're not injected by vite at runtime,
+     * so we need to collect it recursively over all static imports.
+     */
+    private function collectCSSFiles(array $manifest, string $chunk, array &$files, array &$visited): void
+    {
+        if (isset($visited[$chunk]) || !isset($manifest[$chunk])) {
+            return;
+        }
+        $visited[$chunk] = true;
+
+        foreach ($manifest[$chunk]['imports'] ?? [] as $import) {
+            $this->collectCSSFiles($manifest, $import, $files, $visited);
         }
 
-        return $urls;
+        foreach ($manifest[$chunk]['css'] ?? [] as $file) {
+            $files[$file] = true;
+        }
     }
 
     private function getBuildPath(string $build)
