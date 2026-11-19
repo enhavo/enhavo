@@ -2,6 +2,11 @@ import {FormVisitorInterface} from "@enhavo/vue-form/form/FormVisitor";
 import {FormEventDispatcherInterface} from "@enhavo/vue-form/form/FormEventDispatcherInterface";
 import {ChangeEvent} from "@enhavo/vue-form/event/ChangeEvent";
 
+export type FormArrangementColumn = {
+    key: string,
+    size: number,
+}
+
 export class Form
 {
     element: HTMLElement;
@@ -37,6 +42,7 @@ export class Form
     helpAttr: [];
     helpHtml: boolean;
     model: string;
+    arrangement: FormArrangementColumn[][] = null;
 
     protected morphStartValue: any;
     protected visibleValue: boolean = null;

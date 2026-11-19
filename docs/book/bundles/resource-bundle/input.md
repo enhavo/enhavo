@@ -123,6 +123,21 @@ enhavo_resource:
 
 ```
 
+An arrangement has one row per line. Columns are separated by `|`, and `{n}` sets the relative size of a column,
+e.g. `name | title{2}`.
+
+Every form type accepts the same syntax in its `arrangement` option, which is useful for nested forms like list
+entries. Children missing in such an arrangement are rendered below it. The arrangement of a tab takes precedence.
+
+```php
+$builder->add('chapters', ListType::class, [
+    'entry_type' => ChapterType::class,
+    'entry_options' => [
+        'arrangement' => 'title | pages{2}',
+    ],
+]);
+```
+
 ### Duplicate
 
 Define the action button.

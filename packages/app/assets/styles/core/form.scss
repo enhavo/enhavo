@@ -1,6 +1,27 @@
 @use "../import/variables";
 @use "../import/blueprints";
 
+.form-arrangement-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    > .form-arrangement-column {
+      flex-basis: calc((var(--form-arrangement-min-column, 400px) * var(--form-arrangement-ratio) - 100%) * 999);
+      min-width: 0;
+      max-width: 100%;
+
+      > .form-row {
+        margin-top: 0;
+      }
+    }
+}
+
 .form-row {
     margin-top: 15px;
     &:first-child {

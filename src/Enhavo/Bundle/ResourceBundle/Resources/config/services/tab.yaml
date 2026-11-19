@@ -12,6 +12,10 @@ services:
         tags:
             - { name: enhavo_resource.tab }
 
+    Enhavo\Bundle\ResourceBundle\Tab\ArrangementParser: ~
+
     Enhavo\Bundle\ResourceBundle\Tab\Type\FormTabType:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Tab\ArrangementParser'
         tags:
             - { name: enhavo_resource.tab }

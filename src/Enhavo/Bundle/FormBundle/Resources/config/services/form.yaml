@@ -72,6 +72,12 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
+    Enhavo\Bundle\FormBundle\Form\Extension\ArrangementVueTypeExtension:
+        arguments:
+            - '@Enhavo\Bundle\ResourceBundle\Tab\ArrangementParser'
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
+
     Enhavo\Bundle\FormBundle\Form\Extension\HtmlTagVueTypeExtension:
         tags:
             - { name: form.type_extension }

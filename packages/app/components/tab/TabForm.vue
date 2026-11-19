@@ -11,6 +11,7 @@
                 </div>
             </div>
         </template>
+        <form-rows v-else-if="form.arrangement?.length > 0" :form="form" />
         <template v-else>
             <div v-for="child in form.children" class="form-row">
                 <form-row :form="form.get(child.name)"></form-row>
