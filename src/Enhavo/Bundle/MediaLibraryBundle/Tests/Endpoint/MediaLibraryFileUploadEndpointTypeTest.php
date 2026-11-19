@@ -14,7 +14,7 @@ namespace Enhavo\Bundle\MediaLibraryBundle\Tests\Endpoint;
 use Enhavo\Bundle\ApiBundle\Data\Data;
 use Enhavo\Bundle\ApiBundle\Endpoint\Context;
 use Enhavo\Bundle\ApiBundle\Tests\EndpointTestTrait;
-use Enhavo\Bundle\FrameworkBundle\Util\TokenGeneratorInterface;
+use Enhavo\Bundle\AppBundle\Util\TokenGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Checksum\ChecksumGeneratorInterface;
 use Enhavo\Bundle\MediaBundle\Content\Content;
 use Enhavo\Bundle\MediaLibraryBundle\Endpoint\MediaLibraryFileUploadEndpointType;
