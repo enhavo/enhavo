@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\TranslationBundle\Duplicate\Extension;
 
 use Enhavo\Bundle\MediaBundle\Duplicate\Type\FileDuplicateType;
+use Enhavo\Bundle\ResourceBundle\Duplicate\Diff\Diff;
 use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateTypeExtension;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
@@ -37,6 +38,11 @@ class TranslationFileDuplicateTypeExtension extends AbstractDuplicateTypeExtensi
         $this->duplicateTranslations($sourceValue, $targetValue, function ($value) use ($options, $context) {
             return $this->duplicateWithType($this->fileDuplicateType, $options, $value, $context);
         });
+    }
+
+    public function diff($options, SourceValue $oldValue, SourceValue $newValue, Diff $diff, $context): void
+    {
+        $this->diffTranslations($this->fileDuplicateType, $options, $oldValue, $newValue, $diff, $context);
     }
 
     public static function getExtendedTypes(): array

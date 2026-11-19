@@ -14,7 +14,7 @@ enhavo_search:
                 blockquote:
                     type: text
                     weight: 8
-                    property: blockquote
+                    property: text
 
         Enhavo\Bundle\BlockBundle\Model\Block\PictureBlock:
             index:

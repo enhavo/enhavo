@@ -37,4 +37,60 @@
     margin-left: auto;
     cursor: pointer;
   }
+
+  .revision-hint {
+    padding: 10px 20px 0;
+    margin: 0;
+  }
+
+  .revision-row-expandable {
+    cursor: pointer;
+  }
+
+  .revision-diff {
+    padding: 10px 20px 25px;
+  }
+
+  .revision-diff-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+
+    th, td {
+      text-align: left;
+      padding: 6px;
+      word-break: break-word;
+    }
+  }
+
+  .revision-diff-col-field {
+    width: 20%;
+  }
+
+  .revision-diff-col-value {
+    width: 40%;
+  }
+
+  .revision-diff-section {
+    padding-top: 12px;
+    border-bottom: 1px solid variables.$grey5;
+  }
+
+  .revision-diff-change {
+    vertical-align: top;
+    border-bottom: 1px solid variables.$grey1;
+  }
+
+  .revision-diff-value {
+    white-space: pre-wrap;
+  }
+
+  .revision-diff-added {
+    background: rgba(variables.$color5, 0.2);
+  }
+
+  .revision-diff-removed {
+    background: rgba(variables.$color4, 0.15);
+    text-decoration: line-through;
+  }
 }

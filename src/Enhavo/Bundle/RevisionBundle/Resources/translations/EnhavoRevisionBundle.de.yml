@@ -28,3 +28,21 @@ bin:
 revision:
     label:
         revision: Revision
+    diff:
+        hint:
+            previous: Klicken Sie auf eine Revision, um zu sehen, was damit geändert wurde.
+            current: Klicken Sie auf eine Revision, um die Unterschiede zum aktuellen Stand zu sehen.
+        column:
+            before: Vorher
+            revision: Revision
+            current: Aktuell
+        no_changes:
+            previous: Keine Änderungen gegenüber der vorherigen Revision.
+            current: Keine Unterschiede zum aktuellen Stand.
+        first: Erste gespeicherte Revision, es gibt keine frühere Revision zum Vergleichen.
+        loading: Lädt…
+        error: Der Vergleich konnte nicht geladen werden.
+        block: 'Block %position%: %type%'
+        status:
+            added: hinzugefügt
+            removed: entfernt

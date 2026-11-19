@@ -11,6 +11,7 @@
 
 namespace Enhavo\Bundle\ResourceBundle\Duplicate;
 
+use Enhavo\Bundle\ResourceBundle\Duplicate\Diff\Diff;
 use Enhavo\Bundle\ResourceBundle\Duplicate\Type\BaseDuplicateType;
 use Enhavo\Component\Type\AbstractType;
 
@@ -30,6 +31,11 @@ abstract class AbstractDuplicateType extends AbstractType implements DuplicateTy
 
     public function finish($options, SourceValue $sourceValue, TargetValue $targetValue, $context): void
     {
+    }
+
+    public function diff($options, SourceValue $oldValue, SourceValue $newValue, Diff $diff, $context): void
+    {
+        $this->parent->diff($options, $oldValue, $newValue, $diff, $context);
     }
 
     public static function getParentType(): ?string

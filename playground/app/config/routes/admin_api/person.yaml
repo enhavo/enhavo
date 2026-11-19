@@ -93,6 +93,15 @@ app_admin_api_person_revision_restore:
             type: revision_restore
             input: app.person
 
+app_admin_api_person_revision_diff:
+    path: /person/revision/diff/{id}/{revisionId}
+    methods: [GET]
+    defaults:
+        _expose: admin_api
+        _endpoint:
+            type: revision_diff
+            input: app.person
+
 app_admin_api_person_revision_archive:
     path: /person/revision/archive/{id}
     defaults:

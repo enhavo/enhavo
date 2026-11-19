@@ -16,6 +16,8 @@ enhavo_resource:
                 slug:
                     type: property
                     groups: ['duplicate', 'revision', 'restore']
+                    # follows the title, a separate change would only be noise
+                    diff: false
                 metaDescription:
                     type: property
                     groups: ['duplicate', 'revision', 'restore']

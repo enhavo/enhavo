@@ -12,6 +12,7 @@
 namespace Enhavo\Bundle\ResourceBundle\Duplicate\Type;
 
 use Enhavo\Bundle\ResourceBundle\Duplicate\AbstractDuplicateType;
+use Enhavo\Bundle\ResourceBundle\Duplicate\Diff\Diff;
 use Enhavo\Bundle\ResourceBundle\Duplicate\DuplicateFactory;
 use Enhavo\Bundle\ResourceBundle\Duplicate\SourceValue;
 use Enhavo\Bundle\ResourceBundle\Duplicate\TargetValue;
@@ -33,6 +34,17 @@ class ModelDuplicateType extends AbstractDuplicateType
 
         $value = $this->duplicateFactory->duplicate($sourceValue->getValue(), $targetValue->getValue(), $context);
         $targetValue->setValue($value);
+    }
+
+    public function diff($options, SourceValue $oldValue, SourceValue $newValue, Diff $diff, $context): void
+    {
+        $old = $oldValue->getValue();
+        $new = $newValue->getValue();
+        if (null === $old && null === $new) {
+            return;
+        }
+
+        $diff->diffObject($old, $new, $context);
     }
 
     public static function getName(): ?string

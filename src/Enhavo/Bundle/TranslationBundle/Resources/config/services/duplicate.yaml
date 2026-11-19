@@ -2,6 +2,7 @@ services:
     Enhavo\Bundle\TranslationBundle\Duplicate\Extension\TranslationPropertyDuplicateTypeExtension:
         arguments:
             - '@Enhavo\Bundle\TranslationBundle\Translation\TranslationManager'
+            - '@Enhavo\Bundle\ResourceBundle\Duplicate\Type\PropertyDuplicateType'
         tags:
             - { name: enhavo_resource.duplicate_extension }
 
