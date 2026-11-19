@@ -16,7 +16,7 @@ use Enhavo\Bundle\MediaLibraryBundle\Model\LibraryFileInterface;
 
 class File extends \Enhavo\Bundle\MediaBundle\Entity\File implements LibraryFileInterface
 {
-    private ?ItemInterface $item;
+    private ?ItemInterface $item = null;
 
     public function getItem(): ?ItemInterface
     {

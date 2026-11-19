@@ -52,8 +52,10 @@ class FileUploadEndpointType extends AbstractEndpointType
                         $response = new JsonResponse([
                             'success' => false,
                             'errors' => $errors,
-                        ]);
+                        ], 400);
                         $context->setResponse($response);
+
+                        return;
                     }
                     $file = $this->fileFactory->createFromUploadedFile($uploadedFile);
 
@@ -76,7 +78,8 @@ class FileUploadEndpointType extends AbstractEndpointType
             }
         }
 
-        $context->setResponse($this->createFileResponse($storedFiles));
+        $context->set('files', $storedFiles);
+        $context->setResponse($this->createFileResponse($storedFiles), false);
     }
 
     public function describe($options, Path $path): void

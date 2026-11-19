@@ -144,6 +144,18 @@ services:
             - { name: enhavo_api.endpoint }
             - { name: container.service_subscriber }
 
+    Enhavo\Bundle\MediaLibraryBundle\Endpoint\MediaLibraryFileUploadEndpointType:
+        arguments:
+            - '@enhavo_media.file.factory'
+            - '@enhavo_media_library.item.repository'
+            - '@Enhavo\Bundle\MediaLibraryBundle\Media\MediaLibraryManager'
+            - '@Enhavo\Bundle\ResourceBundle\Resource\ResourceManager'
+        calls:
+            - [setContainer, ['@Psr\Container\ContainerInterface']]
+        tags:
+            - { name: enhavo_api.endpoint }
+            - { name: container.service_subscriber }
+
     Enhavo\Bundle\MediaLibraryBundle\Endpoint\MediaLibraryApplyEndpointType:
         arguments:
             - '@Enhavo\Bundle\ResourceBundle\Input\InputFactory'
